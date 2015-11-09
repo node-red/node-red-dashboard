@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_button',{
+        category: 'ui',
+        color: '#a6bbcf',
+        defaults: {
+            label: {value: ''},
+            group: {value: ''},
+        },
+        inputs:0,
+        outputs:1,
+        icon: "ui.png",
+        paletteLabel: 'button',
+        label: function() { return this.group + ':' + (this.label || 'button'); }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_button">
+    <div class="form-row">
+        <label for="node-input-label"><i class="icon-tag"></i> Label</label>
+        <input type="text" id="node-input-label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_button">
+    <p>A button input node.</p>
+</script>

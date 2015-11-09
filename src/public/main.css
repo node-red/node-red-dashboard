@@ -1,0 +1,21 @@
+md-sidenav,
+md-sidenav.md-locked-open,
+md-sidenav.md-closed.md-locked-open-add-active {
+    min-width: 200px !important;
+    width: 200px !important;
+    max-width: 200px !important;
+}
+
+md-content {
+    background: transparent;
+}
+
+md-card.group-card {
+    min-width: 280px;
+    max-width: 350px;
+    align-self: stretch
+}
+
+body {
+    background: #f0f0f0;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "node-red-contrib-ui",
+  "description": "UI nodes for node-red",
+  "main": "none",
+  "authors": [
+    "Andrei Tatar"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~0.11.4",
+    "angular-material-icons": "~0.6.0"
+  }
+}

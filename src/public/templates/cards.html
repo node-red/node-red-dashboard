@@ -1,0 +1,39 @@
+<md-toolbar class="md-whiteframe-z1">
+    <div class="md-toolbar-tools">
+        <md-button ng-click="main.toggleSidenav()" hide-gt-sm class="md-icon-button">
+            <ng-md-icon icon="menu"></ng-md-icon>
+        </md-button>
+        <h1 ng-show="main.loaded">{{main.selectedTab.header || 'UI missing'}}</h1>
+    </div>
+</md-toolbar>
+<md-content layout="row" flex>
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z1"
+                md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+        <md-list>
+            <md-subheader class="md-no-sticky">Pages</md-subheader>
+            <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
+                <ng-md-icon class="md-default-theme" icon="{{tab.icon}}" style="margin: 5px"></ng-md-icon>
+                <p>{{tab.header}}</p>
+            </md-list-item>
+            <md-subheader class="md-no-sticky">Other</md-subheader>
+            <md-list-item ng-click="main.openEditor()">
+                <ng-md-icon icon="open_in_browser" style="margin: 5px"></ng-md-icon>
+                <p>Edit flows</p>
+            </md-list-item>
+        </md-list>
+    </md-sidenav>
+
+    <md-content layout="column" flex>
+        <md-content layout="row" layout-align="center start" layout-wrap>
+            <md-card ng-repeat="group in main.selectedTab.items" flex class="group-card">
+                <md-card-content layout="column">
+                    <h2 ng-show="group.header" class="md-title">{{group.header}}</h2>
+                    <div ng-repeat="control in group.items" flex>
+                        <hap-control item="control"></hap-control>
+                        <md-divider ng-if="!$last"></md-divider>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </md-content>
+    </md-content>
+</md-content>

@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_toast', {
+        category: 'ui',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value: ''},
+        },
+        inputs:1,
+        outputs:0,
+        align: "right",
+        icon: "ui.png",
+        paletteLabel: 'show toast',
+        label: function() { return this.name || "show toast"; }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_toast">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_toast">
+    <p>Shows a toast message</p>
+</script>

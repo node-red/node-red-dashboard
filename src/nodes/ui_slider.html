@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_slider',{
+        category: 'ui',
+        color: '#a6bbcf',
+        defaults: {
+            label: {value: ''},
+            group: {value: ''},
+            min: {value: 0, required: true, validate: RED.validators.number()},
+            max: {value: 10, required: true, validate: RED.validators.number()},
+        },
+        inputs:1,
+        outputs:1,
+        icon: "ui.png",
+        paletteLabel: 'slider',
+        label: function() { return this.group + ':' + (this.label || 'button'); }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_slider">
+    <div class="form-row">
+        <label for="node-input-label"><i class="icon-tag"></i> Label</label>
+        <input type="text" id="node-input-label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+    <div class="form-row">
+        <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
+        <input type="text" id="node-input-min">
+    </div>
+    <div class="form-row">
+        <label for="node-input-max"><i class="fa fa-caret-right"></i> Max</label>
+        <input type="text" id="node-input-max">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_slider">
+    <p>Slider</p>
+</script>
