@@ -66,6 +66,11 @@ function init(server, app) {
 	io = socketio(server, {path: uiPath + '/socket.io'});
 	app.use(uiPath, express.static(path.join(__dirname, "public")));
 
+	var vendor_packages = ['angular', 'angular-animate', 'angular-aria', 'angular-material', 'angular-material-icons'];
+	vendor_packages.forEach(function (p) {
+		app.use(uiPath+'/vendor/'+p, express.static(path.join(__dirname, '../node_modules/', p)));
+	});
+
 	io.on('connection', function(socket) {
 		updateUi(socket);
 		
