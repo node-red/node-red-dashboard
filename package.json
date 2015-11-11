@@ -8,6 +8,10 @@
   },
   "author": "Andrei Tatar",
   "license": "MIT",
+  "repository": {
+    "type":"git",
+    "url":"https://github.com/andrei-tatar/node-red-contrib-ui.git"
+  },
   "node-red": {
     "nodes": {
       "ui_button": "src/nodes/ui_button.js",
