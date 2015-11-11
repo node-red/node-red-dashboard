@@ -3,7 +3,7 @@ var inited = false;
 module.exports = function(RED) {
 	if (!inited) {
 		inited = true;
-		init(RED.server, RED.httpAdmin);
+		init(RED.server, RED.httpAdmin, RED.log);
 	}
 	
 	return { add: add, emit: emit }
@@ -64,7 +64,7 @@ function add(node, group, control) {
 	}
 }
 
-function init(server, app) {	
+function init(server, app, log) {	
 	io = socketio(server, {path: config.path + '/socket.io'});
 	app.use(config.path, express.static(path.join(__dirname, "public")));
 
@@ -72,6 +72,8 @@ function init(server, app) {
 	vendor_packages.forEach(function (packageName) {
 		app.use(config.path + '/vendor/' + packageName, express.static(path.join(__dirname, '../node_modules/', packageName)));
 	});
+
+	log.info("UI started at " + config.path);
 
 	io.on('connection', function(socket) {
 		updateUi(socket);
