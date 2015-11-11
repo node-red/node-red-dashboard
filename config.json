@@ -1,3 +1,4 @@
 {
-	"path": "/ui"
+	"path": "/ui",
+	"title": "node-red UI"
 }

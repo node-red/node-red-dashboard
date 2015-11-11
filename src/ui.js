@@ -103,7 +103,7 @@ function updateUi(to) {
 
 	process.nextTick(function() {
 		to.emit('ui-controls', {
-			title: 'Home',
+			title: config.title,
 			tabs: [homeTab]
 		});
 		updateUiPending = false;
