@@ -1,4 +1,8 @@
 {
 	"path": "/ui",
-	"title": "node-red UI"
+	"title": "node-red UI",
+	
+	"defaultGroupHeader": "Default",
+	"defaultTabHeader": "Home",
+	"defaultTabIcon": "home"
 }

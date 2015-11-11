@@ -18,8 +18,8 @@ var express = require('express'),
 config.path = config.path || "/ui";
 	
 var homeTab = {
-	header: "Home",
-	icon: "home",
+	header: config.defaultTabHeader,
+	icon: config.defaultTabIcon,
 	items: []
 };
 
@@ -120,7 +120,7 @@ function findGroup(header) {
 
 function addControl(groupHeader, control) {
 	if (typeof control.type !== 'string') return;
-	groupHeader = groupHeader || 'Default';
+	groupHeader = groupHeader || config.defaultGroupHeader;
 	
 	var group = findGroup(groupHeader);
 	if (!group) {
