@@ -9,11 +9,13 @@ module.exports = function(RED) {
 	return { add: add, emit: emit }
 };
 
-var uiPath = '/ui';
 var express = require('express'),
 	socketio = require('socket.io'),
 	path = require('path'),
-	events = require('events');
+	events = require('events'),
+	config = require('../config');
+
+config.path = config.path || "/ui";
 	
 var homeTab = {
 	header: "Home",
@@ -63,12 +65,12 @@ function add(node, group, control) {
 }
 
 function init(server, app) {	
-	io = socketio(server, {path: uiPath + '/socket.io'});
-	app.use(uiPath, express.static(path.join(__dirname, "public")));
+	io = socketio(server, {path: config.path + '/socket.io'});
+	app.use(config.path, express.static(path.join(__dirname, "public")));
 
 	var vendor_packages = ['angular', 'angular-animate', 'angular-aria', 'angular-material', 'angular-material-icons'];
-	vendor_packages.forEach(function (p) {
-		app.use(uiPath+'/vendor/'+p, express.static(path.join(__dirname, '../node_modules/', p)));
+	vendor_packages.forEach(function (packageName) {
+		app.use(config.path + '/vendor/' + packageName, express.static(path.join(__dirname, '../node_modules/', packageName)));
 	});
 
 	io.on('connection', function(socket) {
