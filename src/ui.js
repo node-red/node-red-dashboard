@@ -9,7 +9,7 @@ module.exports = function(RED) {
 	return { add: add, emit: emit }
 };
 
-var express = require('express'),
+var serveStatic = require('serve-static'),
 	socketio = require('socket.io'),
 	path = require('path'),
 	events = require('events'),
@@ -72,11 +72,11 @@ function add(node, group, control, converter) {
 
 function init(server, app, log) {	
 	io = socketio(server, {path: config.path + '/socket.io'});
-	app.use(config.path, express.static(path.join(__dirname, "public")));
+	app.use(config.path, serveStatic(path.join(__dirname, "public")));
 
 	var vendor_packages = ['angular', 'angular-animate', 'angular-aria', 'angular-material', 'angular-material-icons'];
 	vendor_packages.forEach(function (packageName) {
-		app.use(config.path + '/vendor/' + packageName, express.static(path.join(__dirname, '../node_modules/', packageName)));
+		app.use(config.path + '/vendor/' + packageName, serveStatic(path.join(__dirname, '../node_modules/', packageName)));
 	});
 
 	log.info("UI started at " + config.path);
