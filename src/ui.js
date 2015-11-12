@@ -33,16 +33,22 @@ function emit(event, data) {
 	io.emit(event, data);
 }
 
-function add(node, group, control) {
+function dummyConverter(value) {
+	return value;
+}
+
+function add(node, group, control, converter) {
+	converter = converter || dummyConverter;
 	var remove = addControl(group, control);
 	control.id = node.id;
 	
 	node.on("input", function(msg) {
-		controlValues[node.id] = msg.payload;
+		var converted = converter(msg.payload);
+		controlValues[node.id] = converted;
 		
 		io.emit(updateValueEventName, {
 			id: node.id,
-			value: msg.payload
+			value: converted
 		});
 	});
 	

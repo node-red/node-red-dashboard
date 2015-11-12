@@ -9,6 +9,8 @@ module.exports = function(RED) {
             type: 'switch',
             label: config.label,
             value: false
+        }, function (payload) {
+            return payload?true:false;
         });
 
         node.on("close", done);
