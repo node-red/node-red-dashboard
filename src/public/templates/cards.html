@@ -1,6 +1,6 @@
 <md-toolbar class="md-whiteframe-z1">
     <div class="md-toolbar-tools">
-        <md-button ng-click="main.toggleSidenav()" hide-gt-sm class="md-icon-button">
+        <md-button ng-click="main.toggleSidenav()" class="md-icon-button">
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
         <h1 ng-show="main.loaded">{{main.selectedTab.header || 'UI missing'}}</h1>
@@ -8,7 +8,7 @@
 </md-toolbar>
 <md-content layout="row" flex>
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z1"
-                md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+                md-component-id="left">
         <md-list>
             <md-subheader class="md-no-sticky">Pages</md-subheader>
             <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
