@@ -1,7 +1,7 @@
-angular.module('hap').directive('hapControl', HapControl);
+angular.module('ui').directive('uiComponent', UiComponent);
 
-HapControl.$inject = ['$http', '$compile'];
-function HapControl($http, $compile) {
+UiComponent.$inject = ['$http', '$compile'];
+function UiComponent($http, $compile) {
     var templateCache = {};
 
     return {

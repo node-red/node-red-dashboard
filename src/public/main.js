@@ -1,4 +1,4 @@
-var app = angular.module('hap', ['ngMaterial', 'ngMdIcons']);
+var app = angular.module('ui', ['ngMaterial', 'ngMdIcons']);
 
 app.config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')

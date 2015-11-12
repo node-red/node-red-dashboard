@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="vendor/angular-material-icons/angular-material-icons.css">
     <link rel="stylesheet" href="main.css">
 </head>
-<body ng-app="hap" ng-controller="MainController as main" ng-cloak layout="column">
+<body ng-app="ui" ng-controller="MainController as main" ng-cloak layout="column">
 
 <md-content ng-if="main.loaded" ng-include="'templates/cards.html'" layout="column" flex></md-content>
 
@@ -20,6 +20,6 @@
 
 <script src="main.js"></script>
 <script src="services/events.js"></script>
-<script src="directives/hapcontrols.js"></script>
+<script src="directives/uicomponent.js"></script>
 </body>
 </html>

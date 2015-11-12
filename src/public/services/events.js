@@ -1,4 +1,4 @@
-angular.module('hap').service('WebEvents', WebEvents);
+angular.module('ui').service('WebEvents', WebEvents);
 
 WebEvents.$inject = ['$timeout', '$mdToast'];
 function WebEvents($timeout, $mdToast) {

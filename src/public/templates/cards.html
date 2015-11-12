@@ -29,7 +29,7 @@
                 <md-card-content layout="column">
                     <h2 ng-show="group.header" class="md-title">{{group.header}}</h2>
                     <div ng-repeat="control in group.items" flex>
-                        <hap-control item="control"></hap-control>
+                        <ui-component item="control"></ui-component>
                         <md-divider ng-if="!$last"></md-divider>
                     </div>
                 </md-card-content>
