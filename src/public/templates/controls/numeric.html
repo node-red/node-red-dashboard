@@ -4,7 +4,7 @@
         <md-button class="md-icon-button" ng-click="me.valueDown()" aria-label="{{me.item.label}}">
             <ng-md-icon icon="expand_more"></ng-md-icon>
         </md-button>
-        <h3>{{me.item.getText()}}</h3>
+        <h3 ng-bind-html="me.item.getText()"></h3>
         <md-button class="md-icon-button" ng-click="me.valueUp()" aria-label="{{me.item.label}}">
             <ng-md-icon icon="expand_less"></ng-md-icon>
         </md-button>

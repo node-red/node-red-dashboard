@@ -84,7 +84,12 @@ function init(server, app, log, settings) {
 	io = socketio(server, {path: socketIoPath});
 	app.use(config.path, serveStatic(path.join(__dirname, "public")));
 
-	var vendor_packages = ['angular', 'angular-animate', 'angular-aria', 'angular-material', 'angular-material-icons'];
+	var vendor_packages = [
+		'angular', 'angular-sanitize', 
+		'angular-animate', 'angular-aria', 
+		'angular-material', 'angular-material-icons'
+	];
+	
 	vendor_packages.forEach(function (packageName) {
 		app.use(config.path + '/vendor/' + packageName, serveStatic(path.join(__dirname, '../node_modules/', packageName)));
 	});
