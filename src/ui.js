@@ -6,7 +6,7 @@ module.exports = function(RED) {
 		init(RED.server, RED.httpAdmin, RED.log, RED.settings);
 	}
 	
-	return { add: add, emit: emit }
+	return { add: add, emit: emit };
 };
 
 var serveStatic = require('serve-static'),
@@ -67,7 +67,7 @@ function add(node, group, control, converter) {
 	return function() {
 		ev.removeListener(updateValueEventName, handler);
 		remove();
-	}
+	};
 }
 
 //from: http://stackoverflow.com/a/28592528/3016654
@@ -79,7 +79,7 @@ function join() {
 
 function init(server, app, log, settings) {
 	var fullPath = join(settings.httpAdminRoot, config.path);
-	var socketIoPath = 	join(fullPath, 'socket.io');
+	var socketIoPath = join(fullPath, 'socket.io');
 	
 	io = socketio(server, {path: socketIoPath});
 	app.use(config.path, serveStatic(path.join(__dirname, "public")));
@@ -145,7 +145,7 @@ function addControl(groupHeader, control) {
 		group = {
 			header: groupHeader,
 			items: []
-		}
+		};
 		homeTab.items.push(group);
 	}
 	group.items.push(control);
