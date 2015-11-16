@@ -3,7 +3,7 @@ var inited = false;
 module.exports = function(RED) {
 	if (!inited) {
 		inited = true;
-		init(RED.server, RED.httpAdmin, RED.log);
+		init(RED.server, RED.httpAdmin, RED.log, RED.settings);
 	}
 	
 	return { add: add, emit: emit }
@@ -70,8 +70,18 @@ function add(node, group, control, converter) {
 	}
 }
 
-function init(server, app, log) {	
-	io = socketio(server, {path: config.path + '/socket.io'});
+//from: http://stackoverflow.com/a/28592528/3016654
+function join() {
+	var trimRegex = new RegExp('^\\/|\\/$','g'),
+	paths = Array.prototype.slice.call(arguments);
+	return '/'+paths.map(function(e){return e.replace(trimRegex,"");}).filter(function(e){return e;}).join('/');
+}
+
+function init(server, app, log, settings) {
+	var fullPath = join(settings.httpAdminRoot, config.path);
+	var socketIoPath = 	join(fullPath, 'socket.io');
+	
+	io = socketio(server, {path: socketIoPath});
 	app.use(config.path, serveStatic(path.join(__dirname, "public")));
 
 	var vendor_packages = ['angular', 'angular-animate', 'angular-aria', 'angular-material', 'angular-material-icons'];
@@ -79,7 +89,7 @@ function init(server, app, log) {
 		app.use(config.path + '/vendor/' + packageName, serveStatic(path.join(__dirname, '../node_modules/', packageName)));
 	});
 
-	log.info("UI started at " + config.path);
+	log.info("UI started at " + fullPath);
 
 	io.on('connection', function(socket) {
 		updateUi(socket);
