@@ -29,17 +29,18 @@ function emit(event, data) {
 	io.emit(event, data);
 }
 
-function dummyConverter(value) {
+function noConvert(value) {
 	return value;
 }
 
-function add(node, tab, group, control, converter) {
-	converter = converter || dummyConverter;
+function add(node, tab, group, control, convert, convertBack) {
+	convert = convert || noConvert;
+	convertBack = convertBack || noConvert;
 	var remove = addControl(tab, group, control);
 	control.id = node.id;
 	
 	node.on("input", function(msg) {
-		var converted = converter(msg.payload);
+		var converted = convert(msg.payload);
 		controlValues[node.id] = converted;
 		
 		io.emit(updateValueEventName, {
@@ -50,9 +51,10 @@ function add(node, tab, group, control, converter) {
 	
 	var handler = function (msg) {
 		if (msg.id !== node.id) return;
+		var converted = convertBack(msg.value);
 		
-		node.send({payload: msg.value});
-		controlValues[msg.id] = msg.value;
+		node.send({payload: converted});
+		controlValues[msg.id] = converted;
 		
 		//fwd event
 		io.emit(updateValueEventName, msg);

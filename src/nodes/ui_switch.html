@@ -7,6 +7,8 @@
             name: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
+            onvalue: {value: 'true', required: true},
+            offvalue: {value: 'false', required: true},
         },
         inputs:1,
         outputs:1,
@@ -32,6 +34,14 @@
     <div class="form-row">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
         <input type="text" id="node-input-order">
+    </div>
+    <div class="form-row">
+        <label for="node-input-onvalue"><i class="fa fa-toggle-on"></i> On Value</label>
+        <input type="text" id="node-input-onvalue">
+    </div>
+    <div class="form-row">
+        <label for="node-input-offvalue"><i class="fa fa-toggle-off"></i> Off Value</label>
+        <input type="text" id="node-input-offvalue">
     </div>
 </script>
 

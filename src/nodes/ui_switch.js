@@ -14,7 +14,9 @@ module.exports = function(RED) {
             order: config.order,
             value: false
         }, function (payload) {
-            return payload?true:false;
+            return payload.toString() == config.offvalue ? false : true;
+        }, function (value) {
+            return value ? config.onvalue : config.offvalue;
         });
 
         node.on("close", done);
