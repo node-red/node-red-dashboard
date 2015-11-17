@@ -49,19 +49,19 @@ function add(node, tab, group, control, convert, convertBack) {
 				id: node.id,
 				value: newValue
 			});
-			
-			return msg;
+
+			//forward to output			
+			node.send(msg);
 		}
 	});
 	
 	var handler = function (msg) {
 		if (msg.id !== node.id) return;
 		var converted = convertBack(msg.value);
-		
-		node.send({payload: converted});
 		controlValues[msg.id] = converted;
+		node.send({payload: converted});
 		
-		//fwd event
+		//fwd to all UI clients
 		io.emit(updateValueEventName, msg);
 	};
 	
