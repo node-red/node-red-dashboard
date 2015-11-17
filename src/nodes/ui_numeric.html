@@ -3,7 +3,8 @@
         category: 'ui',
         color: '#a6bbcf',
         defaults: {
-            label: {value: ''},
+            tab: {type: 'ui_tab', required: true},
+            name: {value: ''},
             group: {value: ''},
             format: {value: '{{value}}'},
             min: {value: 0, required: true, validate: RED.validators.number()},
@@ -13,14 +14,18 @@
         outputs:1,
         icon: "ui.png",
         paletteLabel: 'numeric',
-        label: function() { return this.group + ':' + (this.label || 'numeric'); }
+        label: function() { return this.name || 'numeric'; }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_numeric">
     <div class="form-row">
-        <label for="node-input-label"><i class="icon-tag"></i> Label</label>
-        <input type="text" id="node-input-label">
+        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
+        <input type="text" id="node-input-tab">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>

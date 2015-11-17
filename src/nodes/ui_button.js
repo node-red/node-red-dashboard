@@ -6,9 +6,12 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
         
-        var done = ui.add(node, config.group, {
+        var tab = RED.nodes.getNode(config.tab);
+        if (!tab) return;
+        
+        var done = ui.add(node, tab, config.group, {
             type: 'button',
-            label: config.label,
+            label: config.name,
             value: node.id
         });
         

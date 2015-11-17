@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_tab',{
+        category: 'config',
+        defaults: {
+            name: {value: 'Home'},
+            icon: {value: 'dashboard'},
+            order: {value: 1, validate: RED.validators.number()}
+        },
+        label: function() { return this.name || 'Tab'; }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_tab">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-icon"><i class="fa fa-file-image-o"></i> Icon</label>
+        <input type="text" id="node-config-input-icon">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-order"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" id="node-config-input-order">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_tab">
+    <p>Tab</p>
+</script>

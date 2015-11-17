@@ -5,9 +5,12 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        var done = ui.add(node, config.group, {
+        var tab = RED.nodes.getNode(config.tab);
+        if (!tab) return;
+
+        var done = ui.add(node, tab, config.group, {
             type: 'slider',
-            label: config.label,
+            label: config.name,
             value: config.min,
             min: config.min,
             max: config.max

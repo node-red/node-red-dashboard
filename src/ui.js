@@ -17,11 +17,7 @@ var serveStatic = require('serve-static'),
 
 config.path = config.path || "/ui";
 	
-var homeTab = {
-	header: config.defaultTabHeader,
-	icon: config.defaultTabIcon,
-	items: []
-};
+var tabs = [];
 
 var updateValueEventName = 'update-value';
 
@@ -37,9 +33,9 @@ function dummyConverter(value) {
 	return value;
 }
 
-function add(node, group, control, converter) {
+function add(node, tab, group, control, converter) {
 	converter = converter || dummyConverter;
-	var remove = addControl(group, control);
+	var remove = addControl(tab, group, control);
 	control.id = node.id;
 	
 	node.on("input", function(msg) {
@@ -127,45 +123,64 @@ function updateUi(to) {
 	process.nextTick(function() {
 		to.emit('ui-controls', {
 			title: config.title,
-			tabs: [homeTab]
+			tabs: tabs
 		});
 		updateUiPending = false;
 	});
 }
 
-function findGroup(header) {
-	for (var j=0; j<homeTab.items.length; j++) {
-		var group = homeTab.items[j];
-		if (group.header === header) 
-			return group;
+function find(array, predicate) {
+	for (var i=0; i<array.length; i++) {
+		if (predicate(array[i]))
+			return array[i];
 	}
 }
 
-function addControl(groupHeader, control) {
+function addControl(tab, groupHeader, control) {
 	if (typeof control.type !== 'string') return;
 	groupHeader = groupHeader || config.defaultGroupHeader;
 	
-	var group = findGroup(groupHeader);
-	if (!group) {
-		group = {
+	var foundTab = find(tabs, function (t) {return t.id === tab.id });
+	if (!foundTab) {
+		foundTab = {
+			id: tab.id,
+			header: tab.config.name,
+			order: tab.config.order,
+			icon: tab.config.icon,
+			items: []
+		};
+		tabs.push(foundTab);
+		tabs.sort(function (t1, t2) {return t1.order - t2.order;});
+	}
+	
+	var foundGroup = find(foundTab.items, function (g) {return g.header === groupHeader;});
+	if (!foundGroup) {
+		foundGroup = {
 			header: groupHeader,
 			items: []
 		};
-		homeTab.items.push(group);
+		foundTab.items.push(foundGroup);
 	}
-	group.items.push(control);
+	foundGroup.items.push(control);
 	
 	updateUi();
 	
 	return function() {
-		var index = group.items.indexOf(control);
+		var index = foundGroup.items.indexOf(control);
 		if (index >= 0) {
-			group.items.splice(index, 1);
+			foundGroup.items.splice(index, 1);
 			
-			if (group.items.length === 0) {
-				index = homeTab.items.indexOf(group);
+			if (foundGroup.items.length === 0) {
+				index = foundTab.items.indexOf(foundGroup);
 				if (index >= 0) {
-					homeTab.items.splice(index, 1);
+					foundTab.items.splice(index, 1);
+					
+					if (foundTab.items.length === 0) {
+						index = tabs.indexOf(foundTab);
+						if (index >= 0) {
+							tabs.splice(index, 1);
+						}
+					}
 				}
 			}
 			

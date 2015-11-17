@@ -2,7 +2,5 @@
 	"path": "/ui",
 	"title": "node-red UI",
 	
-	"defaultGroupHeader": "Default",
-	"defaultTabHeader": "Home",
-	"defaultTabIcon": "home"
+	"defaultGroupHeader": "Default"
 }

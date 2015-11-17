@@ -19,7 +19,8 @@
       "ui_slider": "src/nodes/ui_slider.js",
       "ui_switch": "src/nodes/ui_switch.js",
       "ui_text": "src/nodes/ui_text.js",
-      "ui_toast": "src/nodes/ui_toast.js"
+      "ui_toast": "src/nodes/ui_toast.js",
+      "ui_tab": "src/nodes/ui_tab.js"
     }
   },
   "dependencies": {
