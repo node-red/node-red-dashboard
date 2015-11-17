@@ -6,6 +6,7 @@
             tab: {type: 'ui_tab', required: true},
             name: {value: ''},
             group: {value: ''},
+            order: {value: 1, validate: RED.validators.number()},
             format: {value: '{{value}}'}
         },
         inputs:1,
@@ -29,6 +30,10 @@
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
         <input type="text" id="node-input-group">
+    </div>
+    <div class="form-row">
+        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" id="node-input-order">
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>

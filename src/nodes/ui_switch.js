@@ -11,6 +11,7 @@ module.exports = function(RED) {
         var done = ui.add(node, tab, config.group, {
             type: 'switch',
             label: config.name,
+            order: config.order,
             value: false
         }, function (payload) {
             return payload?true:false;

@@ -11,6 +11,7 @@ module.exports = function(RED) {
         var done = ui.add(node, tab, config.group, {
             type: 'numeric',
             label: config.name,
+            order: config.order,
             format: config.format,
             value: config.min,
             min: config.min,

@@ -12,6 +12,7 @@ module.exports = function(RED) {
         var done = ui.add(node, tab, config.group, {
             type: 'button',
             label: config.name,
+            order: config.order,
             value: node.id
         });
         

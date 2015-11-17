@@ -11,6 +11,7 @@ module.exports = function(RED) {
         var done = ui.add(node, tab, config.group, {
             type: 'slider',
             label: config.name,
+            order: config.order,
             value: config.min,
             min: config.min,
             max: config.max

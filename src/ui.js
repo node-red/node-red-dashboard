@@ -136,6 +136,10 @@ function find(array, predicate) {
 	}
 }
 
+function itemSorter(item1, item2) {
+	return item1.order - item2.order;
+}
+
 function addControl(tab, groupHeader, control) {
 	if (typeof control.type !== 'string') return;
 	groupHeader = groupHeader || config.defaultGroupHeader;
@@ -150,7 +154,7 @@ function addControl(tab, groupHeader, control) {
 			items: []
 		};
 		tabs.push(foundTab);
-		tabs.sort(function (t1, t2) {return t1.order - t2.order;});
+		tabs.sort(itemSorter);
 	}
 	
 	var foundGroup = find(foundTab.items, function (g) {return g.header === groupHeader;});
@@ -162,6 +166,12 @@ function addControl(tab, groupHeader, control) {
 		foundTab.items.push(foundGroup);
 	}
 	foundGroup.items.push(control);
+	foundGroup.items.sort(itemSorter);
+	
+	foundTab.items.forEach(function (group) {
+		group.order = group.items.reduce(function (prev, c) { return prev + c}) / group.items.length;
+		foundTab.items.sort(itemSorter);
+	})
 	
 	updateUi();
 	
