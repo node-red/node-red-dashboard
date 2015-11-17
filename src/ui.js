@@ -40,13 +40,18 @@ function add(node, tab, group, control, convert, convertBack) {
 	control.id = node.id;
 	
 	node.on("input", function(msg) {
-		var converted = convert(msg.payload);
-		controlValues[node.id] = converted;
-		
-		io.emit(updateValueEventName, {
-			id: node.id,
-			value: converted
-		});
+		var newValue = convert(msg.payload);
+
+		if (controlValues[node.id] != newValue) {
+			controlValues[node.id] = newValue;
+			
+			io.emit(updateValueEventName, {
+				id: node.id,
+				value: newValue
+			});
+			
+			return msg;
+		}
 	});
 	
 	var handler = function (msg) {
