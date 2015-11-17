@@ -27,7 +27,7 @@ function MainController($mdSidenav, $window, events, $location, $document) {
     };
 
     this.openEditor = function() {
-        $window.open('/', '_blank');
+        $window.open('../', '_blank');
         $mdSidenav('left').close();
     };
 
