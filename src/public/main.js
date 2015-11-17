@@ -1,4 +1,4 @@
-var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize']);
+var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'mdColorPicker']);
 
 app.config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
