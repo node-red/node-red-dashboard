@@ -91,7 +91,6 @@ function init(server, app, log, settings) {
 		'angular', 'angular-sanitize', 
 		'angular-animate', 'angular-aria', 
 		'angular-material', 'angular-material-icons',
-		'md-color-picker', 'tinycolor2'
 	];
 	
 	vendor_packages.forEach(function (packageName) {
