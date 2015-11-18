@@ -16,6 +16,7 @@
     "nodes": {
       "ui_button": "src/nodes/ui_button.js",
       "ui_numeric": "src/nodes/ui_numeric.js",
+      "ui_paragraph": "src/nodes/ui_paragraph.js",
       "ui_slider": "src/nodes/ui_slider.js",
       "ui_switch": "src/nodes/ui_switch.js",
       "ui_text": "src/nodes/ui_text.js",

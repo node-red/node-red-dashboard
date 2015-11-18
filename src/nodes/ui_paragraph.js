@@ -1,7 +1,7 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
 
-    function TextNode(config) {
+    function ParagraphNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
         
@@ -14,8 +14,7 @@ module.exports = function(RED) {
             tab: tab, 
             group: config.group, 
             control: {
-                type: 'text',
-                label: config.name,
+                type: 'paragraph',
                 order: config.order,
                 format: config.format
             },
@@ -35,5 +34,5 @@ module.exports = function(RED) {
         node.on("close", done);
     }
 
-    RED.nodes.registerType("ui_text", TextNode);
+    RED.nodes.registerType("ui_paragraph", ParagraphNode);
 };
