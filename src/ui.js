@@ -16,11 +16,8 @@ module.exports = function(RED) {
 var serveStatic = require('serve-static'),
 	socketio = require('socket.io'),
 	path = require('path'),
-	events = require('events'),
-	config = require('../config');
+	events = require('events');
 
-config.path = config.path || "/ui";
-	
 var tabs = [];
 
 var updateValueEventName = 'update-value';
@@ -29,6 +26,7 @@ var io = undefined;
 var currentValues = {};
 var replayMessages = {};
 var ev = new events.EventEmitter();
+var settings = {};
 
 function toNumber(config, input) {
 	if (typeof input === "number")
@@ -129,12 +127,17 @@ function join() {
 	return '/'+paths.map(function(e){return e.replace(trimRegex,"");}).filter(function(e){return e;}).join('/');
 }
 
-function init(server, app, log, settings) {
-	var fullPath = join(settings.httpAdminRoot, config.path);
+function init(server, app, log, redSettings) {
+	var uiSettings = redSettings.ui || {};
+	settings.path = uiSettings.path || 'ui';
+	settings.title = uiSettings.title || 'Node-Red UI';
+	settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
+	
+	var fullPath = join(redSettings.httpAdminRoot, settings.path);
 	var socketIoPath = join(fullPath, 'socket.io');
 	
 	io = socketio(server, {path: socketIoPath});
-	app.use(config.path, serveStatic(path.join(__dirname, "public")));
+	app.use(join(settings.path), serveStatic(path.join(__dirname, "public")));
 
 	var vendor_packages = [
 		'angular', 'angular-sanitize', 
@@ -143,7 +146,7 @@ function init(server, app, log, settings) {
 	];
 	
 	vendor_packages.forEach(function (packageName) {
-		app.use(config.path + '/vendor/' + packageName, serveStatic(path.join(__dirname, '../node_modules/', packageName)));
+		app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, '../node_modules/', packageName)));
 	});
 
 	log.info("UI started at " + fullPath);
@@ -175,7 +178,7 @@ function updateUi(to) {
 
 	process.nextTick(function() {
 		to.emit('ui-controls', {
-			title: config.title,
+			title: settings.title,
 			tabs: tabs
 		});
 		updateUiPending = false;
@@ -195,7 +198,7 @@ function itemSorter(item1, item2) {
 
 function addControl(tab, groupHeader, control) {
 	if (typeof control.type !== 'string') return;
-	groupHeader = groupHeader || config.defaultGroupHeader;
+	groupHeader = groupHeader || settings.defaultGroupHeader;
 	
 	var foundTab = find(tabs, function (t) {return t.id === tab.id });
 	if (!foundTab) {
