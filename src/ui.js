@@ -60,7 +60,8 @@ function add(opt) {
 				value: newValue
 			});
  
-			//forward to output			
+ 			//forward to output
+ 			msg.payload = opt.convertBack(newValue);
 			opt.node.send(msg);
 		}
 	});

@@ -19,7 +19,12 @@ module.exports = function(RED) {
                 value: false
             }, 
             convert: function (payload) {
-                return payload.toString() == config.offvalue ? false : true;
+                switch (payload.toString()) {
+                    case config.onvalue: return true;
+                    case config.offvalue: return false;
+                    default:
+                        return payload ? true : false;
+                }
             }, 
             convertBack: function (value) {
                 return value ? config.onvalue : config.offvalue;
