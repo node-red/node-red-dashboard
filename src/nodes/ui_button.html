@@ -5,6 +5,7 @@
         defaults: {
             tab: {type: 'ui_tab', required: true},
             name: {value: ''},
+            topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
         },
@@ -24,6 +25,10 @@
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="icon-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>

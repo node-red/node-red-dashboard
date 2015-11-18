@@ -18,6 +18,9 @@ module.exports = function(RED) {
                 label: config.name,
                 order: config.order,
                 value: node.id
+            },
+            beforeSend: function (msg) {
+                msg.topic = config.topic;
             }
         });
         
