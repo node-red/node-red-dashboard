@@ -5,9 +5,9 @@ angular.module('ui')
 UiCompile.$inject = ['$compile', '$rootScope'];
 function UiCompile ($compile, $rootScope) {
     return function(scope, element, attrs) {
-        var newScope = $rootScope.$new();
+        var paragraphScope = $rootScope.$new();
         scope.$watch('me.item.msg', function (value) {
-            newScope.msg = value;
+            paragraphScope.msg = value;
         });
         scope.$watch(
             function(scope) {
@@ -15,7 +15,7 @@ function UiCompile ($compile, $rootScope) {
             },
             function(value) {
                 element.html(value);
-                $compile(element.contents())(newScope);
+                $compile(element.contents())(paragraphScope);
             }
         );
     };
