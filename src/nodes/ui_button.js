@@ -9,11 +9,16 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(config.tab);
         if (!tab) return;
         
-        var done = ui.add(node, tab, config.group, {
-            type: 'button',
-            label: config.name,
-            order: config.order,
-            value: node.id
+        var done = ui.add({
+            node: node, 
+            tab: tab, 
+            group: config.group, 
+            control: {
+                type: 'button',
+                label: config.name,
+                order: config.order,
+                value: node.id
+            }
         });
         
         node.on("close", done);

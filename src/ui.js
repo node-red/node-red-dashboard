@@ -33,33 +33,41 @@ function noConvert(value) {
 	return value;
 }
 
-function add(node, tab, group, control, convert, convertBack) {
-	convert = convert || noConvert;
-	convertBack = convertBack || noConvert;
-	var remove = addControl(tab, group, control);
-	control.id = node.id;
+/*
+	opt.convert - callback to convert the value before sending it to the front-end
+	opt.convertBack - callback to convert the message from front-end before sending it to the next connected node
+	opt.tab - tab config node that this control belongs to
+	opt.group - group name
+	opt.control - the control to be added
+	opt.node - the node that represents the control on a flow
+*/
+function add(opt) {
+	opt.convert = opt.convert || noConvert;
+	opt.convertBack = opt.convertBack || noConvert;
+	var remove = addControl(opt.tab, opt.group, opt.control);
+	opt.control.id = opt.node.id;
 	
-	node.on("input", function(msg) {
-		var newValue = convert(msg.payload);
+	opt.node.on("input", function(msg) {
+		var newValue = opt.convert(msg.payload);
 
-		if (controlValues[node.id] != newValue) {
-			controlValues[node.id] = newValue;
+		if (controlValues[opt.node.id] != newValue) {
+			controlValues[opt.node.id] = newValue;
 			
 			io.emit(updateValueEventName, {
-				id: node.id,
+				id: opt.node.id,
 				value: newValue
 			});
 
 			//forward to output			
-			node.send(msg);
+			opt.node.send(msg);
 		}
 	});
 	
 	var handler = function (msg) {
-		if (msg.id !== node.id) return;
-		var converted = convertBack(msg.value);
+		if (msg.id !== opt.node.id) return;
+		var converted = opt.convertBack(msg.value);
 		controlValues[msg.id] = converted;
-		node.send({payload: converted});
+		opt.node.send({payload: converted});
 		
 		//fwd to all UI clients
 		io.emit(updateValueEventName, msg);
