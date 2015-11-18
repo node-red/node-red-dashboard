@@ -59,6 +59,9 @@ function MainController($mdSidenav, $window, events, $location, $document) {
     
     events.on(function (msg) {
         var found = findControl(msg.id, main.tabs);
-        found.value = msg.value;
+        for (var key in msg) {
+            if (key === 'id') continue;
+            found[key] = msg[key];
+        }
     });
 }

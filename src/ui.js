@@ -45,8 +45,8 @@ function noConvert(value) {
 	return value;
 }
 
-function beforeEmit(newValue) {
-	return { value: newValue };
+function beforeEmit(msg, value) {
+	return { value: value };
 }
 
 function beforeSend(msg) {
@@ -81,7 +81,7 @@ function add(opt) {
 			
 			controlValues[opt.node.id] = newValue;
 			
-			var toEmit = beforeEmit(newValue);
+			var toEmit = opt.beforeEmit(msg, newValue);
 			toEmit.id = opt.node.id;
 			io.emit(updateValueEventName, toEmit);
  

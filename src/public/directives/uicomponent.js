@@ -37,8 +37,10 @@ function ControlController(events, $interpolate) {
     this.init = function() {
         switch (this.item.type) {
             case 'numeric':
-            case 'text': 
                 this.item.getText = $interpolate(this.item.format || '{{value}}').bind(null, this.item);
+                break;
+            case 'text': 
+                this.item.getText = $interpolate(this.item.format || '{{payload}}').bind(null, this.item);
                 break;
         }
     }
