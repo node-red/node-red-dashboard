@@ -8,15 +8,16 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(config.tab);
         if (!tab) return;
 
-        var done = ui.add(node, tab, config.group, {
-            type: 'color',
-            label: config.name,
-            order: config.order,
-            value: '#ffffff'
-        }, function (payload) {
-            return payload;
-        }, function (value) {
-            return value;
+        var done = ui.add({
+            node: node, 
+            tab: tab, 
+            group: config.group, 
+                control: {
+                type: 'color',
+                label: config.name,
+                order: config.order,
+                value: '#ffffff'
+            }
         });
 
         node.on("close", done);
