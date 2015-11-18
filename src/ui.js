@@ -34,12 +34,14 @@ function noConvert(value) {
 }
 
 /*
-	opt.convert - callback to convert the value before sending it to the front-end
-	opt.convertBack - callback to convert the message from front-end before sending it to the next connected node
-	opt.tab - tab config node that this control belongs to
-	opt.group - group name
-	opt.control - the control to be added
-	opt.node - the node that represents the control on a flow
+options:
+	node - the node that represents the control on a flow
+	control - the control to be added
+	tab - tab config node that this control belongs to
+	group - group name
+	
+	convert - callback to convert the value before sending it to the front-end
+	convertBack - callback to convert the message from front-end before sending it to the next connected node
 */
 function add(opt) {
 	opt.convert = opt.convert || noConvert;
@@ -57,7 +59,7 @@ function add(opt) {
 				id: opt.node.id,
 				value: newValue
 			});
-
+ 
 			//forward to output			
 			opt.node.send(msg);
 		}
