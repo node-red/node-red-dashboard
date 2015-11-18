@@ -27,7 +27,7 @@ module.exports = function(RED) {
                     clonedMsg[property] = msg[property];
                 }
                 
-                return clonedMsg;
+                return { msg: clonedMsg };
             }
         });
 

@@ -1,4 +1,25 @@
-angular.module('ui').directive('uiComponent', UiComponent);
+angular.module('ui')
+    .directive('uiComponent', UiComponent)
+    .directive('uiCompile', UiCompile);
+
+UiCompile.$inject = ['$compile', '$rootScope'];
+function UiCompile ($compile, $rootScope) {
+    return function(scope, element, attrs) {
+        var newScope = $rootScope.$new();
+        scope.$watch('me.item.msg', function (value) {
+            newScope.msg = value;
+        });
+        scope.$watch(
+            function(scope) {
+                return scope.$eval(attrs.uiCompile);
+            },
+            function(value) {
+                element.html(value);
+                $compile(element.contents())(newScope);
+            }
+        );
+    };
+}
 
 UiComponent.$inject = ['$http', '$compile'];
 function UiComponent($http, $compile) {
@@ -39,7 +60,6 @@ function ControlController(events, $interpolate) {
             case 'numeric':
                 this.item.getText = $interpolate(this.item.format || '{{value}}').bind(null, this.item);
                 break;
-            case 'paragraph': 
             case 'text': 
                 this.item.getText = $interpolate(this.item.format || '{{payload}}').bind(null, this.item);
                 break;
