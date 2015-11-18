@@ -9,6 +9,7 @@ module.exports = function(RED) {
         if (!tab) return;
         
         var done = ui.add({
+            emitOnlyNewValues: false,
             node: node, 
             tab: tab, 
             group: config.group, 

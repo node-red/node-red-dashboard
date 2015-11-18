@@ -26,7 +26,8 @@ var tabs = [];
 var updateValueEventName = 'update-value';
 
 var io = undefined;
-var controlValues = {};
+var currentValues = {};
+var replayMessages = {};
 var ev = new events.EventEmitter();
 
 function toNumber(config, input) {
@@ -59,31 +60,36 @@ options:
 	control - the control to be added
 	tab - tab config node that this control belongs to
 	group - group name
+	[emitOnlyNewValues] - boolean (default true). 
+		If true, it checks if the payload changed before sending it
+		to the front-end. If the payload is the same no message is sent.
 	
-	convert - callback to convert the value before sending it to the front-end
-	convertBack - callback to convert the message from front-end before sending it to the next connected node
+	[convert] - callback to convert the value before sending it to the front-end
+	[convertBack] - callback to convert the message from front-end before sending it to the next connected node
 	
-	beforeEmit - callback to prepare the message that is emitted to the front-end
-	beforeSend - callback to prepare the message that is sent to the output 
+	[beforeEmit] - callback to prepare the message that is emitted to the front-end
+	[beforeSend] - callback to prepare the message that is sent to the output 
 */
 function add(opt) {
+	if (typeof opt.emitOnlyNewValues === 'undefined')
+		opt.emitOnlyNewValues = true;
 	opt.beforeEmit = opt.beforeEmit || beforeEmit;
 	opt.beforeSend = opt.beforeSend || beforeSend;
 	opt.convert = opt.convert || noConvert;
 	opt.convertBack = opt.convertBack || noConvert;
-	var remove = addControl(opt.tab, opt.group, opt.control);
 	opt.control.id = opt.node.id;
+	var remove = addControl(opt.tab, opt.group, opt.control);
 	
 	opt.node.on("input", function(msg) {
 		var newValue = opt.convert(msg.payload);
 
-		if (controlValues[opt.node.id] != newValue) {
-			
-			controlValues[opt.node.id] = newValue;
+		if (!opt.emitOnlyNewValues || currentValues[opt.node.id] != newValue) {
+			currentValues[opt.node.id] = newValue;
 			
 			var toEmit = opt.beforeEmit(msg, newValue);
 			toEmit.id = opt.node.id;
 			io.emit(updateValueEventName, toEmit);
+			replayMessages[opt.node.id] = toEmit;
  
  			//forward to output
  			msg.payload = opt.convertBack(newValue);
@@ -95,7 +101,8 @@ function add(opt) {
 	var handler = function (msg) {
 		if (msg.id !== opt.node.id) return;
 		var converted = opt.convertBack(msg.value);
-		controlValues[msg.id] = converted;
+		currentValues[msg.id] = converted;
+		replayMessages[msg.id] = msg;
 		
 		var toSend = {payload: converted};
 		opt.beforeSend(toSend);
@@ -110,6 +117,8 @@ function add(opt) {
 	return function() {
 		ev.removeListener(updateValueEventName, handler);
 		remove();
+		delete currentValues[opt.node.id];
+		delete replayMessages[opt.node.id];
 	};
 }
 
@@ -146,12 +155,9 @@ function init(server, app, log, settings) {
 			ev.emit.bind(ev, updateValueEventName));
 		
 		socket.on('ui-replay-state', function() {
-			var ids = Object.getOwnPropertyNames(controlValues);
+			var ids = Object.getOwnPropertyNames(replayMessages);
 			ids.forEach(function (id) {
-				socket.emit(updateValueEventName, {
-					id: id,
-					value: controlValues[id]
-				})
+				socket.emit(updateValueEventName, replayMessages[id]);
 			});
 			
 			socket.emit('ui-replay-done');
