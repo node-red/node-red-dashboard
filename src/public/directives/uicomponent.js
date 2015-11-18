@@ -66,6 +66,11 @@ function ControlController(events, $interpolate) {
         }
     }
 
+    this.buttonClick = function (payload) {
+        if (payload) this.item.value = payload;
+        this.valueChanged(0);
+    }
+
     this.valueChanged = function(throttleTime) {
         throttle({
             id: this.item.id,
