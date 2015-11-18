@@ -8,14 +8,19 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(config.tab);
         if (!tab) return;
 
-        var done = ui.add(node, tab, config.group, {
-            type: 'numeric',
-            label: config.name,
-            order: config.order,
-            format: config.format,
-            value: config.min,
-            min: config.min,
-            max: config.max,
+        var done = ui.add({
+            node: node, 
+            tab: tab, 
+            group: config.group, 
+            control: {
+                type: 'numeric',
+                label: config.name,
+                order: config.order,
+                format: config.format,
+                value: config.min,
+                min: config.min,
+                max: config.max,
+            }
         });
 
         node.on("close", done);

@@ -8,12 +8,17 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(config.tab);
         if (!tab) return;
         
-        var done = ui.add(node, tab, config.group, {
-            type: 'text',
-            label: config.name,
-            order: config.order,
-            format: config.format,
-            value: false
+        var done = ui.add({
+            node: node, 
+            tab: tab, 
+            group: config.group, 
+            control: {
+                type: 'text',
+                label: config.name,
+                order: config.order,
+                format: config.format,
+                value: false
+            }
         });
 
         node.on("close", done);
