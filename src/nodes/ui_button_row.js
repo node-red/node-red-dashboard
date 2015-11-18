@@ -2,7 +2,7 @@ module.exports = function(RED) {
 
     var ui = require('../ui')(RED);
 
-    function ButtonNode(config) {
+    function ButtonRowNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
         
@@ -14,10 +14,10 @@ module.exports = function(RED) {
             tab: tab, 
             group: config.group, 
             control: {
-                type: 'button',
-                label: config.name,
+                type: 'button-row',
                 order: config.order,
-                value: node.id
+                value: node.id,
+                buttons: config.buttons
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;
@@ -27,5 +27,5 @@ module.exports = function(RED) {
         node.on("close", done);
     }
 
-    RED.nodes.registerType("ui_button", ButtonNode);
+    RED.nodes.registerType("ui_button_row", ButtonRowNode);
 };

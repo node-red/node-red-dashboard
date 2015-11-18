@@ -28,6 +28,9 @@ module.exports = function(RED) {
             }, 
             convertBack: function (value) {
                 return value ? config.onvalue : config.offvalue;
+            },
+            beforeSend: function (msg) {
+                msg.topic = config.topic;
             }
         });
 

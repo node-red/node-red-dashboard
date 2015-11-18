@@ -1,4 +1,25 @@
-angular.module('ui').directive('uiComponent', UiComponent);
+angular.module('ui')
+    .directive('uiComponent', UiComponent)
+    .directive('uiCompile', UiCompile);
+
+UiCompile.$inject = ['$compile', '$rootScope'];
+function UiCompile ($compile, $rootScope) {
+    return function(scope, element, attrs) {
+        var paragraphScope = $rootScope.$new();
+        scope.$watch('me.item.msg', function (value) {
+            paragraphScope.msg = value;
+        });
+        scope.$watch(
+            function(scope) {
+                return scope.$eval(attrs.uiCompile);
+            },
+            function(value) {
+                element.html(value);
+                $compile(element.contents())(paragraphScope);
+            }
+        );
+    };
+}
 
 UiComponent.$inject = ['$http', '$compile'];
 function UiComponent($http, $compile) {
@@ -37,10 +58,17 @@ function ControlController(events, $interpolate) {
     this.init = function() {
         switch (this.item.type) {
             case 'numeric':
-            case 'text': 
                 this.item.getText = $interpolate(this.item.format || '{{value}}').bind(null, this.item);
                 break;
+            case 'text': 
+                this.item.getText = $interpolate(this.item.format || '{{payload}}').bind(null, this.item);
+                break;
         }
+    }
+
+    this.buttonClick = function (payload) {
+        if (payload) this.item.value = payload;
+        this.valueChanged(0);
     }
 
     this.valueChanged = function(throttleTime) {

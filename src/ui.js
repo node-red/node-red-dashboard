@@ -6,24 +6,35 @@ module.exports = function(RED) {
 		init(RED.server, RED.httpAdmin, RED.log, RED.settings);
 	}
 	
-	return { add: add, emit: emit };
+	return { 
+		add: add, 
+		emit: emit,
+		toNumber: toNumber,
+	};
 };
 
 var serveStatic = require('serve-static'),
 	socketio = require('socket.io'),
 	path = require('path'),
-	events = require('events'),
-	config = require('../config');
+	events = require('events');
 
-config.path = config.path || "/ui";
-	
 var tabs = [];
 
 var updateValueEventName = 'update-value';
 
 var io = undefined;
-var controlValues = {};
+var currentValues = {};
+var replayMessages = {};
 var ev = new events.EventEmitter();
+var settings = {};
+
+function toNumber(config, input) {
+	if (typeof input === "number")
+		return input;
+	
+	var nr = parseInt(input.toString());
+	return isNaN(nr) ? config.min : nr;
+}
 
 function emit(event, data) {
 	io.emit(event, data);
@@ -33,35 +44,54 @@ function noConvert(value) {
 	return value;
 }
 
+function beforeEmit(msg, value) {
+	return { value: value };
+}
+
+function beforeSend(msg) {
+	//do nothing
+}
+
 /*
 options:
 	node - the node that represents the control on a flow
 	control - the control to be added
 	tab - tab config node that this control belongs to
 	group - group name
+	[emitOnlyNewValues] - boolean (default true). 
+		If true, it checks if the payload changed before sending it
+		to the front-end. If the payload is the same no message is sent.
 	
-	convert - callback to convert the value before sending it to the front-end
-	convertBack - callback to convert the message from front-end before sending it to the next connected node
+	[convert] - callback to convert the value before sending it to the front-end
+	[convertBack] - callback to convert the message from front-end before sending it to the next connected node
+	
+	[beforeEmit] - callback to prepare the message that is emitted to the front-end
+	[beforeSend] - callback to prepare the message that is sent to the output 
 */
 function add(opt) {
+	if (typeof opt.emitOnlyNewValues === 'undefined')
+		opt.emitOnlyNewValues = true;
+	opt.beforeEmit = opt.beforeEmit || beforeEmit;
+	opt.beforeSend = opt.beforeSend || beforeSend;
 	opt.convert = opt.convert || noConvert;
 	opt.convertBack = opt.convertBack || noConvert;
-	var remove = addControl(opt.tab, opt.group, opt.control);
 	opt.control.id = opt.node.id;
+	var remove = addControl(opt.tab, opt.group, opt.control);
 	
 	opt.node.on("input", function(msg) {
 		var newValue = opt.convert(msg.payload);
 
-		if (controlValues[opt.node.id] != newValue) {
-			controlValues[opt.node.id] = newValue;
+		if (!opt.emitOnlyNewValues || currentValues[opt.node.id] != newValue) {
+			currentValues[opt.node.id] = newValue;
 			
-			io.emit(updateValueEventName, {
-				id: opt.node.id,
-				value: newValue
-			});
+			var toEmit = opt.beforeEmit(msg, newValue);
+			toEmit.id = opt.node.id;
+			io.emit(updateValueEventName, toEmit);
+			replayMessages[opt.node.id] = toEmit;
  
  			//forward to output
  			msg.payload = opt.convertBack(newValue);
+			opt.beforeSend(msg);
 			opt.node.send(msg);
 		}
 	});
@@ -69,8 +99,12 @@ function add(opt) {
 	var handler = function (msg) {
 		if (msg.id !== opt.node.id) return;
 		var converted = opt.convertBack(msg.value);
-		controlValues[msg.id] = converted;
-		opt.node.send({payload: converted});
+		currentValues[msg.id] = converted;
+		replayMessages[msg.id] = msg;
+		
+		var toSend = {payload: converted};
+		opt.beforeSend(toSend);
+		opt.node.send(toSend);
 		
 		//fwd to all UI clients
 		io.emit(updateValueEventName, msg);
@@ -81,6 +115,8 @@ function add(opt) {
 	return function() {
 		ev.removeListener(updateValueEventName, handler);
 		remove();
+		delete currentValues[opt.node.id];
+		delete replayMessages[opt.node.id];
 	};
 }
 
@@ -91,12 +127,17 @@ function join() {
 	return '/'+paths.map(function(e){return e.replace(trimRegex,"");}).filter(function(e){return e;}).join('/');
 }
 
-function init(server, app, log, settings) {
-	var fullPath = join(settings.httpAdminRoot, config.path);
+function init(server, app, log, redSettings) {
+	var uiSettings = redSettings.ui || {};
+	settings.path = uiSettings.path || 'ui';
+	settings.title = uiSettings.title || 'Node-Red UI';
+	settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
+	
+	var fullPath = join(redSettings.httpAdminRoot, settings.path);
 	var socketIoPath = join(fullPath, 'socket.io');
 	
 	io = socketio(server, {path: socketIoPath});
-	app.use(config.path, serveStatic(path.join(__dirname, "public")));
+	app.use(join(settings.path), serveStatic(path.join(__dirname, "public")));
 
 	var vendor_packages = [
 		'angular', 'angular-sanitize', 
@@ -105,7 +146,7 @@ function init(server, app, log, settings) {
 	];
 	
 	vendor_packages.forEach(function (packageName) {
-		app.use(config.path + '/vendor/' + packageName, serveStatic(path.join(__dirname, '../node_modules/', packageName)));
+		app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, '../node_modules/', packageName)));
 	});
 
 	log.info("UI started at " + fullPath);
@@ -117,12 +158,9 @@ function init(server, app, log, settings) {
 			ev.emit.bind(ev, updateValueEventName));
 		
 		socket.on('ui-replay-state', function() {
-			var ids = Object.getOwnPropertyNames(controlValues);
+			var ids = Object.getOwnPropertyNames(replayMessages);
 			ids.forEach(function (id) {
-				socket.emit(updateValueEventName, {
-					id: id,
-					value: controlValues[id]
-				})
+				socket.emit(updateValueEventName, replayMessages[id]);
 			});
 			
 			socket.emit('ui-replay-done');
@@ -140,7 +178,7 @@ function updateUi(to) {
 
 	process.nextTick(function() {
 		to.emit('ui-controls', {
-			title: config.title,
+			title: settings.title,
 			tabs: tabs
 		});
 		updateUiPending = false;
@@ -160,7 +198,7 @@ function itemSorter(item1, item2) {
 
 function addControl(tab, groupHeader, control) {
 	if (typeof control.type !== 'string') return;
-	groupHeader = groupHeader || config.defaultGroupHeader;
+	groupHeader = groupHeader || settings.defaultGroupHeader;
 	
 	var foundTab = find(tabs, function (t) {return t.id === tab.id });
 	if (!foundTab) {
