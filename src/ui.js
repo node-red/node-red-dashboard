@@ -33,6 +33,14 @@ function noConvert(value) {
 	return value;
 }
 
+function beforeEmit(newValue) {
+	return { value: newValue };
+}
+
+function beforeSend(msg) {
+	//do nothing
+}
+
 /*
 options:
 	node - the node that represents the control on a flow
@@ -42,8 +50,13 @@ options:
 	
 	convert - callback to convert the value before sending it to the front-end
 	convertBack - callback to convert the message from front-end before sending it to the next connected node
+	
+	beforeEmit - callback to prepare the message that is emitted to the front-end
+	beforeSend - callback to prepare the message that is sent to the output 
 */
 function add(opt) {
+	opt.beforeEmit = opt.beforeEmit || beforeEmit;
+	opt.beforeSend = opt.beforeSend || beforeSend;
 	opt.convert = opt.convert || noConvert;
 	opt.convertBack = opt.convertBack || noConvert;
 	var remove = addControl(opt.tab, opt.group, opt.control);
@@ -53,15 +66,16 @@ function add(opt) {
 		var newValue = opt.convert(msg.payload);
 
 		if (controlValues[opt.node.id] != newValue) {
+			
 			controlValues[opt.node.id] = newValue;
 			
-			io.emit(updateValueEventName, {
-				id: opt.node.id,
-				value: newValue
-			});
+			var toEmit = beforeEmit(newValue);
+			toEmit.id = opt.node.id;
+			io.emit(updateValueEventName, toEmit);
  
  			//forward to output
  			msg.payload = opt.convertBack(newValue);
+			opt.beforeSend(msg);
 			opt.node.send(msg);
 		}
 	});
@@ -70,7 +84,10 @@ function add(opt) {
 		if (msg.id !== opt.node.id) return;
 		var converted = opt.convertBack(msg.value);
 		controlValues[msg.id] = converted;
-		opt.node.send({payload: converted});
+		
+		var toSend = {payload: converted};
+		opt.beforeSend(toSend);
+		opt.node.send(toSend);
 		
 		//fwd to all UI clients
 		io.emit(updateValueEventName, msg);
