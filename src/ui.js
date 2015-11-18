@@ -6,7 +6,11 @@ module.exports = function(RED) {
 		init(RED.server, RED.httpAdmin, RED.log, RED.settings);
 	}
 	
-	return { add: add, emit: emit };
+	return { 
+		add: add, 
+		emit: emit,
+		toNumber: toNumber,
+	};
 };
 
 var serveStatic = require('serve-static'),
@@ -24,6 +28,14 @@ var updateValueEventName = 'update-value';
 var io = undefined;
 var controlValues = {};
 var ev = new events.EventEmitter();
+
+function toNumber(config, input) {
+	if (typeof input === "number")
+		return input;
+	
+	var nr = parseInt(input.toString());
+	return isNaN(nr) ? config.min : nr;
+}
 
 function emit(event, data) {
 	io.emit(event, data);
