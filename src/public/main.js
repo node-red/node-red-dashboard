@@ -1,10 +1,10 @@
 var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize']);
 
-app.config(function($mdThemingProvider) {
+app.config(['$mdThemingProvider', function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('light-green')
         .accentPalette('red');
-});
+}]);
 
 app.controller('MainController', MainController);
 
