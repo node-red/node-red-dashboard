@@ -14,16 +14,16 @@
   },
   "node-red": {
     "nodes": {
-      "ui_button": "src/nodes/ui_button.js",
-      "ui_button_row": "src/nodes/ui_button_row.js",
-      "ui_color": "src/nodes/ui_color.js",
-      "ui_numeric": "src/nodes/ui_numeric.js",
-      "ui_paragraph": "src/nodes/ui_paragraph.js",
-      "ui_slider": "src/nodes/ui_slider.js",
-      "ui_switch": "src/nodes/ui_switch.js",
-      "ui_tab": "src/nodes/ui_tab.js",
-      "ui_text": "src/nodes/ui_text.js",
-      "ui_toast": "src/nodes/ui_toast.js"
+      "ui_button": "nodes/ui_button.js",
+      "ui_button_row": "nodes/ui_button_row.js",
+      "ui_color": "nodes/ui_color.js",
+      "ui_numeric": "nodes/ui_numeric.js",
+      "ui_paragraph": "nodes/ui_paragraph.js",
+      "ui_slider": "nodes/ui_slider.js",
+      "ui_switch": "nodes/ui_switch.js",
+      "ui_tab": "nodes/ui_tab.js",
+      "ui_text": "nodes/ui_text.js",
+      "ui_toast": "nodes/ui_toast.js"
     }
   },
   "dependencies": {
