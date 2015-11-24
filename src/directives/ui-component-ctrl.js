@@ -5,8 +5,8 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                 case 'numeric':
                     this.item.getText = $interpolate(this.item.format || '{{value}}').bind(null, this.item);
                     break;
-                case 'text': 
-                    this.item.getText = $interpolate(this.item.format || '{{payload}}').bind(null, this.item);
+                case 'text':
+                    this.item.getText = $interpolate(this.item.format || '{{msg.payload}}').bind(null, this.item); 
                     break;
             }
         }
