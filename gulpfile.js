@@ -12,9 +12,14 @@ var
   minifyHTML = require('gulp-minify-html'),
   
   path = require('path'),
+  spawn = require('child_process').spawn,
   merge = require('merge-stream');
 
 gulp.task('build', ['js', 'css', 'index']);
+
+gulp.task('publish', ['build'], function (done) {
+  spawn('npm', ['publish'], { stdio: 'inherit' }).on('close', done);
+});    
     
 gulp.task('index', function() {
   return gulp.src('src/index.html')
