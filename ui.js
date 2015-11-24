@@ -144,7 +144,7 @@ function init(server, app, log, redSettings) {
 			app.use(join(settings.path), serveStatic(path.join(__dirname, "dist"))); 
 		} else {
 			log.info("Using development folder");
-			app.use(join(settings.path), serveStatic(path.join(__dirname, "public")));
+			app.use(join(settings.path), serveStatic(path.join(__dirname, "src")));
 			
 			var vendor_packages = [
 				'angular', 'angular-sanitize', 
