@@ -16,6 +16,7 @@
     "nodes": {
       "ui_button": "nodes/ui_button.js",
       "ui_button_row": "nodes/ui_button_row.js",
+      "ui_chart": "nodes/ui_chart.js",
       "ui_numeric": "nodes/ui_numeric.js",
       "ui_paragraph": "nodes/ui_paragraph.js",
       "ui_slider": "nodes/ui_slider.js",

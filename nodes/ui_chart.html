@@ -1,0 +1,39 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_chart',{
+        category: 'ui',
+        color: '#a6bbcf',
+        defaults: {
+            tab: {type: 'ui_tab', required: true},
+            name: {value: ''},
+            group: {value: ''},
+            order: {value: 1, validate: RED.validators.number()},
+        },
+        inputs:1,
+        outputs:0,
+        align: "right",
+        icon: "ui_text.png",
+        paletteLabel: 'chart',
+        label: function() { return this.name || 'chart'; }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_chart">
+    <div class="form-row">
+        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
+        <input type="text" id="node-input-tab">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_chart">
+    <p>Chart</p>
+</script>
