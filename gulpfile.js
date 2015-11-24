@@ -31,6 +31,7 @@ gulp.task('js', function () {
     .pipe(ghtmlSrc({getFileName: getFileName.bind(this, 'src')}));
     
   var templates = gulp.src('src/templates/**/*.html')
+    .pipe(minifyHTML({spare: true, quotes: true}))
     .pipe(templateCache('templates.js',  {root: 'templates/', module: 'ui'}));
     
   return merge(scripts, templates)
