@@ -3,15 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- build:css -->
     <link rel="stylesheet" href="vendor/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="vendor/angular-material-icons/angular-material-icons.css">
     <link rel="stylesheet" href="main.css">
+    <!-- endbuild -->
 </head>
 <body ng-app="ui" ng-controller="MainController as main" ng-cloak layout="column">
 
 <md-content ng-if="main.loaded" ng-include="'templates/cards.html'" layout="column" flex></md-content>
 
 <script src="socket.io/socket.io.js"></script>
+
+<!-- build:js -->
 <script src="vendor/angular/angular.min.js"></script>
 <script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="vendor/angular-animate/angular-animate.min.js"></script>
@@ -22,5 +26,7 @@
 <script src="main.js"></script>
 <script src="services/events.js"></script>
 <script src="directives/uicomponent.js"></script>
+<!-- endbuild -->
+
 </body>
 </html>

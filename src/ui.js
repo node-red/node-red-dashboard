@@ -16,6 +16,7 @@ module.exports = function(RED) {
 var serveStatic = require('serve-static'),
 	socketio = require('socket.io'),
 	path = require('path'),
+	fs = require('fs'),
 	events = require('events');
 
 var tabs = [];
@@ -137,17 +138,25 @@ function init(server, app, log, redSettings) {
 	var socketIoPath = join(fullPath, 'socket.io');
 	
 	io = socketio(server, {path: socketIoPath});
-	app.use(join(settings.path), serveStatic(path.join(__dirname, "public")));
 
-	var vendor_packages = [
-		'angular', 'angular-sanitize', 
-		'angular-animate', 'angular-aria', 
-		'angular-material', 'angular-material-icons',
-	];
-	
-	vendor_packages.forEach(function (packageName) {
-		app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, '../node_modules/', packageName)));
-	});
+	fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) { 
+		if (!err) { 
+			app.use(join(settings.path), serveStatic(path.join(__dirname, "dist"))); 
+		} else {
+			log.info("Using development folder");
+			app.use(join(settings.path), serveStatic(path.join(__dirname, "public")));
+			
+			var vendor_packages = [
+				'angular', 'angular-sanitize', 
+				'angular-animate', 'angular-aria', 
+				'angular-material', 'angular-material-icons',
+			];
+			
+			vendor_packages.forEach(function (packageName) {
+				app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, '../node_modules/', packageName)));
+			});
+		}
+	}); 
 
 	log.info("UI started at " + fullPath);
 

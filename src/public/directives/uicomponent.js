@@ -21,8 +21,8 @@ function UiCompile ($compile, $rootScope) {
     };
 }
 
-UiComponent.$inject = ['$http', '$compile'];
-function UiComponent($http, $compile) {
+UiComponent.$inject = ['$http', '$compile', '$templateCache', '$q'];
+function UiComponent($http, $compile, $templateCache, $q) {
     var templateCache = {};
 
     return {
@@ -36,9 +36,15 @@ function UiComponent($http, $compile) {
         link: function (scope, element, attributes, ctrl) {
             var template = templateCache[ctrl.item.type];
             if (!template) {
-                template =
-                    $http.get('templates/controls/' + ctrl.item.type +'.html')
-                        .then(function(resp) {return resp.data;});
+                var link = 'templates/controls/' + ctrl.item.type +'.html';
+                var templateFromCache = $templateCache.get(link);
+                if (templateFromCache) {
+                    template = $q.when(templateFromCache);
+                } else { 
+                    template =
+                        $http.get(link)
+                            .then(function(resp) {return resp.data;});
+                }
                 templateCache[ctrl.item.type] = template;
             }
 
