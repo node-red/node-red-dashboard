@@ -9,6 +9,7 @@ var
   minifyCss = require('gulp-minify-css'),
   gulpif = require('gulp-if'),
   htmlreplace = require('gulp-html-replace'),
+  minifyHTML = require('gulp-minify-html'),
   
   path = require('path'),
   merge = require('merge-stream');
@@ -21,6 +22,7 @@ gulp.task('index', function() {
         'css': 'app.min.css',
         'js': 'app.min.js'
     }))
+    .pipe(minifyHTML({spare: true, quotes: true}))
     .pipe(gulp.dest('dist/'));
 });
     
