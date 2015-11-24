@@ -153,7 +153,7 @@ function init(server, app, log, redSettings) {
 			];
 			
 			vendor_packages.forEach(function (packageName) {
-				app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, '../node_modules/', packageName)));
+				app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));
 			});
 		}
 	}); 
