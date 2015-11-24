@@ -150,6 +150,8 @@ function init(server, app, log, redSettings) {
 				'angular', 'angular-sanitize', 
 				'angular-animate', 'angular-aria', 
 				'angular-material', 'angular-material-icons',
+				
+				'd3', 'nvd3', 'angularjs-nvd3-directives'
 			];
 			
 			vendor_packages.forEach(function (packageName) {

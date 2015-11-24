@@ -37,6 +37,8 @@
     "angular-material": "^0.11.4",
     "angular-material-icons": "^0.6.0",
     "angular-sanitize": "^1.4.7",
+    "angularjs-nvd3-directives": "0.0.8",
+    "d3": "^3.5.9",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.8.0",
     "gulp-concat": "^2.6.0",
@@ -47,6 +49,7 @@
     "gulp-minify-html": "^1.0.4",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
-    "merge-stream": "^1.0.0"
+    "merge-stream": "^1.0.0",
+    "nvd3": "^1.8.1"
   }
 }

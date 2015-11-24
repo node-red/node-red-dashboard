@@ -1,1 +1,15 @@
-<p>This will be a chart...</p>
+<nvd3-line-chart
+	data="me.exampleData"
+	width="320"
+	height="150"
+	margin="{left:30,top:10,bottom:20,right:10}"
+	showXAxis="true"
+	showYAxis="true"
+	objectequality="true"
+	xAxisTickFormat="me.formatTime"
+	yaxisdomain='$parent.me.getRange()'
+	
+	tooltips="true"
+	interactive="true">
+	<svg></svg>
+</nvd3-line-chart>

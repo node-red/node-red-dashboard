@@ -1,5 +1,5 @@
-angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpolate',
-    function (events, $interpolate) {
+angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpolate', '$interval', '$scope',
+    function (events, $interpolate, $interval, $scope) {
         this.init = function() {
             switch (this.item.type) {
                 case 'numeric':
@@ -7,6 +7,26 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     break;
                 case 'text': 
                     this.item.getText = $interpolate(this.item.format || '{{payload}}').bind(null, this.item);
+                    break;
+                case 'chart':
+                    this.exampleData = [{ 
+                        key: "Series 1",
+                        values: []
+ 		            }];
+                     
+                    this.formatTime = function(d){  
+                        return d3.time.format('%H:%M:%S')(new Date(d));  
+                    };
+                     
+                    this.getRange = function() {
+                        var min = d3.min(this.exampleData, function (a) { return d3.min(a.values, function(b){return b[1];}); });
+                        var max = d3.max(this.exampleData, function (a) { return d3.max(a.values, function(b){return b[1];}); });
+                        return [Math.floor(min - 1), Math.ceil(max + 1)];
+                    };
+                     
+                    $scope.$watch('me.item.value', function (val) {
+                        this.exampleData[0].values.push([new Date().getTime(), val]);
+                    }.bind(this))
                     break;
             }
         }
