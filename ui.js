@@ -41,7 +41,7 @@ function emit(event, data) {
 	io.emit(event, data);
 }
 
-function noConvert(value, oldValue) {
+function noConvert(value) {
 	return value;
 }
 
@@ -86,7 +86,7 @@ function add(opt) {
 	
 	opt.node.on("input", function(msg) {
 		var oldValue = currentValues[opt.node.id];
-		var newValue = opt.convert(msg.payload, oldValue);
+		var newValue = opt.convert(msg.payload, oldValue, msg);
 
 		if (!opt.emitOnlyNewValues || oldValue != newValue) {
 			currentValues[opt.node.id] = newValue;

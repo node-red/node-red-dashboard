@@ -19,15 +19,35 @@ module.exports = function(RED) {
                 order: config.order,
                 format: config.format
             },
-            convert: function(value, oldValue) {
-                if (!oldValue) {
-                    oldValue = [{ 
-                        key: "Series 1",
+            convert: function(value, oldValue, msg) {
+                var topic = msg.topic || 'Data';
+                
+                if (!oldValue) oldValue = []; 
+                
+                var found;
+                for (var i=0; i<oldValue.length; i++) {
+                    if (oldValue[i].key === topic) {
+                        found = oldValue[i];
+                        break;
+                    }
+                }
+                if (!found) {
+                    found = {
+                        key: topic,
                         values: []
- 		            }]; 
+                    }
+                    oldValue.push(found);
                 }
                 
-                oldValue[0].values.push([new Date().getTime(), value]);
+                var point = [new Date().getTime(), value];
+                found.values.push(point);
+                
+                ui.emit('update-value-chart', {
+                    id: node.id,
+                    key: topic,
+                    value: point
+                });
+                
                 return oldValue;
             }
         });

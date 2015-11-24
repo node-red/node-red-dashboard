@@ -18,10 +18,27 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                         var max = d3.max(this.item.value, function (a) { return d3.max(a.values, function(b){return b[1];}); });
                         return [Math.floor(min), Math.ceil(max)];
                     };
-                     
-                    /*$scope.$watch('me.item.value', function (val) {
-                        this.exampleData[0].values.push([new Date().getTime(), val]);
-                    }.bind(this))*/
+                    
+                    events.on(function (msg) {
+                        if (msg.id !== this.item.id) return;
+                        
+                        if (!this.item.value) this.item.value = []; 
+                        var found;
+                        for (var i=0; i<this.item.value.length; i++) {
+                            if (this.item.value[i].key === msg.key) {
+                                found = this.item.value[i];
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            found = {
+                                key: msg.key,
+                                values: []
+                            }
+                            this.item.value.push(found);
+                        }
+                        found.values.push(msg.value);
+                    }.bind(this), "chart");
                     break;
             }
         }
