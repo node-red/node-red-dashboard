@@ -9,24 +9,19 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     this.item.getText = $interpolate(this.item.format || '{{payload}}').bind(null, this.item);
                     break;
                 case 'chart':
-                    this.exampleData = [{ 
-                        key: "Series 1",
-                        values: []
- 		            }];
-                     
                     this.formatTime = function(d){  
                         return d3.time.format('%H:%M:%S')(new Date(d));  
                     };
                      
                     this.getRange = function() {
-                        var min = d3.min(this.exampleData, function (a) { return d3.min(a.values, function(b){return b[1];}); });
-                        var max = d3.max(this.exampleData, function (a) { return d3.max(a.values, function(b){return b[1];}); });
+                        var min = d3.min(this.item.value, function (a) { return d3.min(a.values, function(b){return b[1];}); });
+                        var max = d3.max(this.item.value, function (a) { return d3.max(a.values, function(b){return b[1];}); });
                         return [Math.floor(min), Math.ceil(max)];
                     };
                      
-                    $scope.$watch('me.item.value', function (val) {
+                    /*$scope.$watch('me.item.value', function (val) {
                         this.exampleData[0].values.push([new Date().getTime(), val]);
-                    }.bind(this))
+                    }.bind(this))*/
                     break;
             }
         }

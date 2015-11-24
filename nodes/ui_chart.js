@@ -9,6 +9,7 @@ module.exports = function(RED) {
         if (!tab) return;
         
         var done = ui.add({
+            emitOnInput: false,
             emitOnlyNewValues: false,
             node: node, 
             tab: tab, 
@@ -17,6 +18,17 @@ module.exports = function(RED) {
                 type: 'chart',
                 order: config.order,
                 format: config.format
+            },
+            convert: function(value, oldValue) {
+                if (!oldValue) {
+                    oldValue = [{ 
+                        key: "Series 1",
+                        values: []
+ 		            }]; 
+                }
+                
+                oldValue[0].values.push([new Date().getTime(), value]);
+                return oldValue;
             }
         });
 
