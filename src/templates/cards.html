@@ -28,10 +28,7 @@
             <md-card ng-repeat="group in main.selectedTab.items" flex class="group-card">
                 <md-card-content layout="column">
                     <h2 ng-show="group.header" class="md-title">{{group.header}}</h2>
-                    <div ng-repeat="control in group.items" flex>
-                        <ui-component item="control"></ui-component>
-                        <md-divider ng-if="!$last"></md-divider>
-                    </div>
+                    <ui-component ng-repeat="control in group.items" flex item="control"></ui-component>
                 </md-card-content>
             </md-card>
         </md-content>
