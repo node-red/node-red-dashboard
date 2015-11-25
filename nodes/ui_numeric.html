@@ -4,7 +4,7 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: ''},
+            name: {value: 'Numeric'},
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
@@ -54,5 +54,13 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_numeric">
-    <p>Numeric</p>
+    <p>Shows a numeric input on the user interface. The user can change it's value between
+    the limits (<b>Min/Max</b>). Each value change will generate a message with the value set
+    as <b>payload</b>.<br>
+    If a topic is specified, it will be appended to the message.<br>
+    Each input message will be converted to a number (<b>Min</b> will be used if conversion fails)
+    and it will update the user interface. Also if the value changes, it will be passed to the output.<br>
+    The <b>Template</b> field can be used to change the displayed format. For example, a template of <b>{{value}} %</b>
+    with a value of <b>23</b> will show <b>23 %</b> on the user interface. The <b>Template</b> field can contain
+    HTML to format the output (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
 </script>

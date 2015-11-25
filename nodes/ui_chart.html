@@ -35,5 +35,9 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_chart">
-    <p>Chart</p>
+    <p>Plots the input values on a time based line chart.<br>
+    Each input (<code>msg.payload</code>) value will be converted to a number. If the
+    conversion fails, the message is ignored.<br>
+    Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
+    value on each input message.</p>
 </script>

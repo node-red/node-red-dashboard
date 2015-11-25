@@ -20,8 +20,10 @@ module.exports = function(RED) {
                 format: config.format
             },
             convert: function(value, oldValue, msg) {
-                var topic = msg.topic || 'Data';
+                value = parseFloat(value);
+                if (isNaN(value)) return;
                 
+                var topic = msg.topic || 'Data';
                 if (!oldValue) oldValue = []; 
                 
                 var found;
@@ -32,10 +34,7 @@ module.exports = function(RED) {
                     }
                 }
                 if (!found) {
-                    found = {
-                        key: topic,
-                        values: []
-                    }
+                    found = { key: topic, values: [] };
                     oldValue.push(found);
                 }
                 

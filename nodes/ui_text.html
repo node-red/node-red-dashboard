@@ -4,7 +4,7 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: ''},
+            name: {value: 'Text'},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
             format: {value: '{{msg.payload}}'}
@@ -40,5 +40,8 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_text">
-    <p>Text</p>
+    <p>Will display a non-editable text on the user interface. Each received message will update 
+    the text based on the provided <b>Template</b>.<br>
+    The <b>Template</b> field can be used to change the displayed format and can contain
+    valid HTML (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
 </script>

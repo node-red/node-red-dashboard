@@ -4,7 +4,7 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: ''},
+            name: {value: 'Button'},
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
@@ -39,5 +39,7 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_button">
-    <p>A button input node.</p>
+    <p>Shows a button on the user interface. Clicking the button, generates a message 
+    with the payload set to be the node id. The topic field will be appended to the message
+    as a <b>topic</b> property.</p>
 </script>
