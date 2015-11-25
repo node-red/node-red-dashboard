@@ -17,7 +17,8 @@ module.exports = function(RED) {
             control: {
                 type: 'chart',
                 order: config.order,
-                interpolate: config.interpolate
+                interpolate: config.interpolate,
+                nodata: config.nodata
             },
             convert: function(value, oldValue, msg) {
                 value = parseFloat(value);

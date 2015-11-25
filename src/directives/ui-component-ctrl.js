@@ -31,6 +31,8 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     break;
                     
                 case 'chart':
+                    if (!me.item.value) me.item.value = [];
+                
                     me.formatTime = function(d){  
                         return d3.time.format('%H:%M:%S')(new Date(d));  
                     };
@@ -42,8 +44,6 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     };
                     
                     me.item.addPoint = function (p) {
-                        if (!me.item.value) me.item.value = []; 
-            
                         var series;
                         for (var i=0; i<me.item.value.length; i++) {
                             if (me.item.value[i].key === p.key) {
