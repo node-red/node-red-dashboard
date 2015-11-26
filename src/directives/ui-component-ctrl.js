@@ -1,3 +1,5 @@
+/* global angular */
+/* global d3 */
 angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpolate',
     function (events, $interpolate) {
         var me = this;
