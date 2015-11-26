@@ -35,29 +35,14 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                 case 'chart':
                     if (!me.item.value) me.item.value = [];
                 
-                    me.formatTime = function(d){  
-                        return d3.time.format('%H:%M:%S')(new Date(d));  
+                    me.formatTime = function(d) {  
+                        return d3.time.format('%H:%M:%S')(new Date(d * 100 + 1448528370000));  
                     };
                      
                     me.getRange = function() {                   
                         var min = d3.min(me.item.value, function (a) { return d3.min(a.values, function(b){return b[1];}); });
                         var max = d3.max(me.item.value, function (a) { return d3.max(a.values, function(b){return b[1];}); });
                         return [Math.floor(min), Math.ceil(max)];
-                    };
-                    
-                    me.item.addPoint = function (p) {
-                        var series;
-                        for (var i=0; i<me.item.value.length; i++) {
-                            if (me.item.value[i].key === p.key) {
-                                series = me.item.value[i];
-                                break;
-                            }
-                        }
-                        if (!series) {
-                            series = {key: p.key, values: []};
-                            me.item.value.push(series);
-                        }
-                        series.values.push(p.value);
                     };
                     break;
             }

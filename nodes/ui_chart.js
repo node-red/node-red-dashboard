@@ -8,8 +8,7 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(config.tab);
         if (!tab) return;
         
-        var done = ui.add({
-            emitOnInput: false,
+        var options = {
             emitOnlyNewValues: false,
             node: node, 
             tab: tab, 
@@ -21,36 +20,37 @@ module.exports = function(RED) {
                 nodata: config.nodata
             },
             convert: function(value, oldValue, msg) {
-                value = parseFloat(value);
-                if (isNaN(value)) return;
-                
-                var topic = msg.topic || 'Data';
-                if (!oldValue) oldValue = []; 
-                
-                var found;
-                for (var i=0; i<oldValue.length; i++) {
-                    if (oldValue[i].key === topic) {
-                        found = oldValue[i];
-                        break;
+                if (value instanceof Array) {
+                    oldValue = value;
+                } else {
+                    value = parseFloat(value);
+                    if (isNaN(value)) return;
+                    var topic = msg.topic || 'Data';
+                    if (!oldValue) oldValue = []; 
+                    
+                    var found;
+                    for (var i=0; i<oldValue.length; i++) {
+                        if (oldValue[i].key === topic) {
+                            found = oldValue[i];
+                            break;
+                        }
                     }
+                    if (!found) {
+                        found = { key: topic, values: [] };
+                        oldValue.push(found);
+                    }
+                    
+                    var time = Math.floor((new Date().getTime() - 1448528370000) / 100);
+                    var point = [time, value];
+                    found.values.push(point);
                 }
-                if (!found) {
-                    found = { key: topic, values: [] };
-                    oldValue.push(found);
-                }
-                
-                var point = [new Date().getTime(), value];
-                found.values.push(point);
-                
-                ui.emit('update-value-chart', {
-                    id: node.id,
-                    key: topic,
-                    value: point
-                });
                 
                 return oldValue;
             }
-        });
+        };
+        var done = ui.add(options);
+        
+        setTimeout(function() {node.send([null, {payload: "restore", for: node.id}]);}, 100);
 
         node.on("close", done);
     }

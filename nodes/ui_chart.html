@@ -11,7 +11,7 @@
             nodata: {value: 'No Data'},
         },
         inputs:1,
-        outputs:0,
+        outputs:2,
         align: "right",
         icon: "ui_chart.png",
         paletteLabel: 'chart',
@@ -54,5 +54,7 @@
     Each input (<code>msg.payload</code>) value will be converted to a number. If the
     conversion fails, the message is ignored.<br>
     Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
-    value on each input message.</p>
+    value on each input message.<br>
+    The first ouput contains the chart state that can be persisted if needed. The second output 
+    sends a "restore" message that can be used to restore the state of the chart.</p>
 </script>

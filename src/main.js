@@ -63,9 +63,4 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 found[key] = msg[key];
             }
         });
-        
-         events.on(function (msg) {
-            var found = findControl(msg.id, main.tabs);
-            found.addPoint(msg);
-        }, "chart");
     }]);

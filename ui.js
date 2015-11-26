@@ -62,9 +62,6 @@ options:
 	[emitOnlyNewValues] - boolean (default true). 
 		If true, it checks if the payload changed before sending it
 		to the front-end. If the payload is the same no message is sent.
-	[emitOnInput] - boolean (default true)
-		If true, it emits the message when an input message is received on
-		a node. If false, it doesn't emit it but does all the other things.
 	
 	[convert] - callback to convert the value before sending it to the front-end
 	[convertBack] - callback to convert the message from front-end before sending it to the next connected node
@@ -75,8 +72,6 @@ options:
 function add(opt) {
 	if (typeof opt.emitOnlyNewValues === 'undefined')
 		opt.emitOnlyNewValues = true;
-	if (typeof opt.emitOnInput === 'undefined')
-		opt.emitOnInput = true;
 	opt.beforeEmit = opt.beforeEmit || beforeEmit;
 	opt.beforeSend = opt.beforeSend || beforeSend;
 	opt.convert = opt.convert || noConvert;
@@ -88,13 +83,12 @@ function add(opt) {
 		var oldValue = currentValues[opt.node.id];
 		var newValue = opt.convert(msg.payload, oldValue, msg);
 
-		if (!opt.emitOnlyNewValues || oldValue != newValue) {
+		if (typeof newValue !== 'undefined' && (!opt.emitOnlyNewValues || oldValue != newValue)) {
 			currentValues[opt.node.id] = newValue;
 			
 			var toEmit = opt.beforeEmit(msg, newValue);
 			toEmit.id = opt.node.id;
-			if (opt.emitOnInput)
-				io.emit(updateValueEventName, toEmit);
+			io.emit(updateValueEventName, toEmit);
 			replayMessages[opt.node.id] = toEmit;
  
  			if (opt.node._wireCount) {
