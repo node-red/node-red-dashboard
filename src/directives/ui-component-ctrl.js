@@ -56,7 +56,7 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                             me.item.value.push(series);
                         }
                         series.values.push(p.value);
-                    }.bind(me);
+                    };
                     break;
             }
         }
