@@ -65,7 +65,7 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
             throttle({
                 id: me.item.id,
                 value: me.item.value
-            }, typeof throttleTime === "number" ? throttleTime : 200);
+            }, typeof throttleTime === "number" ? throttleTime : 50);
         };
         
         var timer;
