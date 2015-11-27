@@ -1,0 +1,16 @@
+<nvd3-line-chart
+	data="me.item.value"
+	width="320"
+	height="150"
+	margin="{left:30,top:10,bottom:20,right:10}"
+	showXAxis="true"
+	showYAxis="true"
+	objectequality="true"
+	xAxisTickFormat="me.formatTime"
+	yaxisdomain='$parent.me.getRange()'
+	
+	tooltips="true"
+	interactive="true"
+	interpolate="{{me.item.interpolate}}">
+	<svg></svg>
+</nvd3-line-chart>

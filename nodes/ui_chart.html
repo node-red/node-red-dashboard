@@ -1,24 +1,24 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_text',{
+    RED.nodes.registerType('ui_chart',{
         category: 'ui',
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: 'Text'},
+            name: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
-            format: {value: '{{msg.payload}}'}
+            interpolate: {value: 'linear', required: true}
         },
         inputs:1,
         outputs:0,
         align: "right",
-        icon: "ui_text.png",
-        paletteLabel: 'text',
-        label: function() { return this.name || 'text'; }
+        icon: "ui_chart.png",
+        paletteLabel: 'chart',
+        label: function() { return this.name || 'chart'; }
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_text">
+<script type="text/x-red" data-template-name="ui_chart">
     <div class="form-row">
         <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
         <input type="text" id="node-input-tab">
@@ -34,14 +34,20 @@
         <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row">
-        <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
-        <input type="text" id="node-input-format" placeholder="{{msg.payload}}">
+        <label for="node-input-interpolate"><i class="fa fa-line-chart"></i> Interpolate</label>
+        <select id="node-input-interpolate">
+            <option value="linear">linear</option>
+            <option value="step-after">step</option>
+            <option value="basis">b-spline</option>
+            <option value="cardinal">cardinal</option>
+        </select>
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_text">
-    <p>Will display a non-editable text on the user interface. Each received message will update 
-    the text based on the provided <b>Template</b>.<br>
-    The <b>Template</b> field can be used to change the displayed format and can contain
-    valid HTML (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
+<script type="text/x-red" data-help-name="ui_chart">
+    <p>Plots the input values on a time based line chart.<br>
+    Each input (<code>msg.payload</code>) value will be converted to a number. If the
+    conversion fails, the message is ignored.<br>
+    Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
+    value on each input message.</p>
 </script>

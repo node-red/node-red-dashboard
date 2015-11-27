@@ -62,6 +62,9 @@ options:
 	[emitOnlyNewValues] - boolean (default true). 
 		If true, it checks if the payload changed before sending it
 		to the front-end. If the payload is the same no message is sent.
+	[emitOnInput] - boolean (default true)
+		If true, it emits the message when an input message is received on
+		a node. If false, it doesn't emit it but does all the other things.
 	
 	[convert] - callback to convert the value before sending it to the front-end
 	[convertBack] - callback to convert the message from front-end before sending it to the next connected node
@@ -72,6 +75,8 @@ options:
 function add(opt) {
 	if (typeof opt.emitOnlyNewValues === 'undefined')
 		opt.emitOnlyNewValues = true;
+	if (typeof opt.emitOnInput === 'undefined')
+		opt.emitOnInput = true;
 	opt.beforeEmit = opt.beforeEmit || beforeEmit;
 	opt.beforeSend = opt.beforeSend || beforeSend;
 	opt.convert = opt.convert || noConvert;
@@ -80,20 +85,24 @@ function add(opt) {
 	var remove = addControl(opt.tab, opt.group, opt.control);
 	
 	opt.node.on("input", function(msg) {
-		var newValue = opt.convert(msg.payload);
+		var oldValue = currentValues[opt.node.id];
+		var newValue = opt.convert(msg.payload, oldValue, msg);
 
-		if (!opt.emitOnlyNewValues || currentValues[opt.node.id] != newValue) {
+		if (!opt.emitOnlyNewValues || oldValue != newValue) {
 			currentValues[opt.node.id] = newValue;
 			
 			var toEmit = opt.beforeEmit(msg, newValue);
 			toEmit.id = opt.node.id;
-			io.emit(updateValueEventName, toEmit);
+			if (opt.emitOnInput)
+				io.emit(updateValueEventName, toEmit);
 			replayMessages[opt.node.id] = toEmit;
  
- 			//forward to output
- 			msg.payload = opt.convertBack(newValue);
-			opt.beforeSend(msg);
-			opt.node.send(msg);
+ 			if (opt.node._wireCount) {
+				//forward to output
+				msg.payload = opt.convertBack(newValue);
+				opt.beforeSend(msg);
+				opt.node.send(msg);
+			}
 		}
 	});
 	
@@ -150,6 +159,8 @@ function init(server, app, log, redSettings) {
 				'angular', 'angular-sanitize', 
 				'angular-animate', 'angular-aria', 
 				'angular-material', 'angular-material-icons',
+				
+				'd3', 'nvd3', 'angularjs-nvd3-directives'
 			];
 			
 			vendor_packages.forEach(function (packageName) {

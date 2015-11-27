@@ -4,7 +4,7 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: ''},
+            name: {value: 'Switch'},
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
@@ -49,5 +49,7 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_switch">
-    <p>Switch</p>
+    <p>Shows a switch on the user interface. Each change in the state of the switch will generate
+    a message on the output with the specified <b>on/off</b> value.<br>
+    If a topic is specified, it will be appended to the message.</p>
 </script>

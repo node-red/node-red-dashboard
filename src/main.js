@@ -1,4 +1,4 @@
-var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize']);
+var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'nvd3ChartDirectives']);
 
 app.config(['$mdThemingProvider', 
     function($mdThemingProvider) {
@@ -63,4 +63,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 found[key] = msg[key];
             }
         });
+        
+         events.on(function (msg) {
+            var found = findControl(msg.id, main.tabs);
+            found.addPoint(msg);
+        }, "chart");
     }]);
