@@ -213,13 +213,14 @@ function itemSorter(item1, item2) {
 function addControl(tab, groupHeader, control) {
 	if (typeof control.type !== 'string') return;
 	groupHeader = groupHeader || settings.defaultGroupHeader;
+	control.order = parseInt(control.order);
 	
 	var foundTab = find(tabs, function (t) {return t.id === tab.id });
 	if (!foundTab) {
 		foundTab = {
 			id: tab.id,
 			header: tab.config.name,
-			order: tab.config.order,
+			order: parseInt(tab.config.order),
 			icon: tab.config.icon,
 			items: []
 		};
@@ -238,10 +239,8 @@ function addControl(tab, groupHeader, control) {
 	foundGroup.items.push(control);
 	foundGroup.items.sort(itemSorter);
 	
-	foundTab.items.forEach(function (group) {
-		group.order = group.items.reduce(function (prev, c) { return prev + c.order; }, 0) / group.items.length;
-		foundTab.items.sort(itemSorter);
-	})
+	foundGroup.order = foundGroup.items.reduce(function (prev, c) { return prev + c.order; }, 0) / foundGroup.items.length;
+	foundTab.items.sort(itemSorter);
 	
 	updateUi();
 	
