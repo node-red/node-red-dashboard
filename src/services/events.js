@@ -5,21 +5,19 @@ angular.module('ui').service('UiEvents', ['$timeout', '$mdToast',
         this.connect = function(onuiloaded, replaydone) {
             var socket = io({path: location.pathname + 'socket.io'});
             
-            this.emit = function (msg, filter) {
-                filter = filter ? '-' + filter : '';
-                socket.emit(updateValueEventName + filter, msg);
+            this.emit = function (msg) {
+                socket.emit(updateValueEventName, msg);
             };
             
-            this.on = function(handler, filter) {
-                filter = filter ? '-' + filter : '';
+            this.on = function(handler) {
                 var socketHandler = function(data) {
                     $timeout(function() {
                         handler(data);
                     }, 0);
                 };
-                socket.on(updateValueEventName + filter, socketHandler);
+                socket.on(updateValueEventName, socketHandler);
                 return function() {
-                    socket.removeListener(updateValueEventName + filter, socketHandler);
+                    socket.removeListener(updateValueEventName, socketHandler);
                 };
             };
             

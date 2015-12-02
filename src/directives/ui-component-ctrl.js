@@ -1,3 +1,5 @@
+/* global angular */
+/* global d3 */
 angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpolate',
     function (events, $interpolate) {
         var me = this;
@@ -31,8 +33,10 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     break;
                     
                 case 'chart':
-                    me.formatTime = function(d){  
-                        return d3.time.format('%H:%M:%S')(new Date(d));  
+                    if (!me.item.value) me.item.value = [];
+                
+                    me.formatTime = function(d) {  
+                        return d3.time.format('%H:%M:%S')(new Date(d * 100 + 1448528370000));  
                     };
                      
                     me.getRange = function() {                   
@@ -40,23 +44,6 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                         var max = d3.max(me.item.value, function (a) { return d3.max(a.values, function(b){return b[1];}); });
                         return [Math.floor(min), Math.ceil(max)];
                     };
-                    
-                    me.item.addPoint = function (p) {
-                        if (!me.item.value) me.item.value = []; 
-            
-                        var series;
-                        for (var i=0; i<me.item.value.length; i++) {
-                            if (me.item.value[i].key === p.key) {
-                                series = me.item.value[i];
-                                break;
-                            }
-                        }
-                        if (!series) {
-                            series = {key: p.key, values: []};
-                            me.item.value.push(series);
-                        }
-                        series.values.push(p.value);
-                    }.bind(me);
                     break;
             }
         }
