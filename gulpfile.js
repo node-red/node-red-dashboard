@@ -13,7 +13,7 @@ var
   
   path = require('path'),
   spawn = require('child_process').spawn,
-  merge = require('merge-stream');
+  streamqueue = require('streamqueue');
 
 gulp.task('build', ['js', 'css', 'index']);
 
@@ -39,10 +39,10 @@ gulp.task('js', function () {
     .pipe(minifyHTML({spare: true, quotes: true}))
     .pipe(templateCache('templates.js',  {root: 'templates/', module: 'ui'}));
     
-  return merge(scripts, templates)
+  return  streamqueue({ objectMode: true }, scripts, templates)
     .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
     .pipe(concat('app.min.js'))
-    .pipe(gulp.dest('dist/'));;
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('css', function () {
