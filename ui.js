@@ -245,7 +245,7 @@ function addControl(tab, groupHeader, control) {
 	foundGroup.items.sort(itemSorter);
 	
 	foundTab.items.forEach(function (group) {
-		group.order = group.items.reduce(function (prev, c) { return prev + c}) / group.items.length;
+		group.order = group.items.reduce(function (prev, c) { return prev + c.order; }, 0) / group.items.length;
 		foundTab.items.sort(itemSorter);
 	})
 	
