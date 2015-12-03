@@ -2,5 +2,6 @@
     <p>{{me.item.label}}</p>
     <md-slider flex="60" min="{{me.item.min}}" max="{{me.item.max}}"
             ng-model="me.item.value" aria-label="{{me.item.label}}"
-            ng-change="me.valueChanged()"/>
+            ng-change="me.valueChanged()"
+            ng-disabled="me.item.disabled"/>
 </div>
