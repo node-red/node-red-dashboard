@@ -1,5 +1,4 @@
 module.exports = function(RED) {
-
     var ui = require('../ui')(RED);
 
     function RadioButtonNode(config) {
