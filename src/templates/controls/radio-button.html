@@ -1,0 +1,5 @@
+<div flex layout="row" layout-align="space-between center">
+  <md-radio-group ng-model="me.item.value" ng-change="me.valueChanged()">
+    <md-radio-button ng-repeat="button in me.item.buttons" value="{{button.payload}}">{{button.payload}}</md-radio-button>
+  </md-radio-group>
+</div>

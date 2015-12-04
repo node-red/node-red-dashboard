@@ -19,6 +19,7 @@
       "ui_chart": "nodes/ui_chart.js",
       "ui_numeric": "nodes/ui_numeric.js",
       "ui_paragraph": "nodes/ui_paragraph.js",
+      "ui_radio_button": "nodes/ui_radio_button.js",
       "ui_slider": "nodes/ui_slider.js",
       "ui_switch": "nodes/ui_switch.js",
       "ui_tab": "nodes/ui_tab.js",

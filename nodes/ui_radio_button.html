@@ -1,0 +1,160 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_radio_button',{
+        category: 'ui',
+        color: '#a6bbcf',
+        defaults: {
+            tab: {type: 'ui_tab', required: true},
+            name: {value: ''},
+            topic: {value: ''},
+            group: {value: ''},
+            order: {value: 1, validate: RED.validators.number()},
+            buttons: {
+                value: [{
+                    icon: 'alarm',
+                    payload: 'alarm'
+                }]
+            }
+        },
+        inputs:0,
+        outputs:1,
+        icon: "ui_button.png",
+        paletteLabel: 'radio button',
+        label: function() { return this.name || 'radio button'; },
+
+        oneditprepare: function() {
+
+            function resizeButton(button, width) {
+                var iconField = button.find(".node-input-button-icon");
+                iconField.width(120);
+
+                var payloadField = button.find(".node-input-button-payload");
+                payloadField.width(width - 210);
+            }
+
+            function generateButton(button) {
+                var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px; border-bottom: 1px solid #ccc;"});
+                var row = $('<div/>').appendTo(container);
+                $('<i style="color: #eee; cursor: move;" class="node-input-button-handle fa fa-bars"></i>').appendTo(row);
+
+                var iconField = $('<input/>',{class:"node-input-button-icon",type:"text",style:"margin-left: 5px; width: 145px;", placeholder: 'Icon'}).appendTo(row);
+                var payloadField = $('<input/>',{class:"node-input-button-payload",type:"text",style:"margin-left: 5px; width: 145px;", placeholder: 'Payload'}).appendTo(row);
+                iconField.val(button.icon);
+                payloadField.val(button.payload);
+
+                var finalspan = $('<span/>',{style:"float: right;margin-right: 10px;"}).appendTo(row);
+                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"margin-top: 7px; margin-left: 5px;"}).appendTo(finalspan);
+                $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
+
+                deleteButton.click(function() {
+                    container.css({"background":"#fee"});
+                    container.fadeOut(300, function() {
+                        $(this).remove();
+                    });
+                });
+
+                $("#node-input-buttons-container").append(container);
+
+                var width = $("#node-input-buttons-container").width();
+                resizeButton(container,width);
+            }
+
+            $("#node-input-add-button").click(function() {
+                generateButton({icon: '', payload: ''});
+                $("#node-input-buttons-container-div").scrollTop($("#node-input-buttons-container-div").get(0).scrollHeight);
+            });
+
+            for (var i=0;i<this.buttons.length;i++) {
+                var rule = this.buttons[i];
+                generateButton(rule);
+            }
+
+            function switchDialogResize() {
+                var rows = $("#dialog-form>div:not(.node-input-buttons-container-row)");
+                var height = $("#dialog-form").height();
+                for (var i=0;i<rows.size();i++) {
+                    height -= $(rows[i]).outerHeight(true);
+                }
+                var editorRow = $("#dialog-form>div.node-input-buttons-container-row");
+                height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+                $("#node-input-buttons-container-div").css("height",height+"px");
+
+                var buttons = $("#node-input-buttons-container").children();
+                var newWidth = $("#node-input-buttons-container").width();
+                buttons.each(function(i) {
+                    resizeButton($(this), newWidth);
+                });
+            };
+
+            $( "#node-input-buttons-container" ).sortable({
+                axis: "y",
+                handle:".node-input-button-handle",
+                cursor: "move"
+            });
+            $( "#node-input-buttons-container .node-input-button-handle" ).disableSelection();
+
+            $( "#dialog" ).on("dialogresize", switchDialogResize);
+            $( "#dialog" ).one("dialogopen", function(ev) {
+                var size = $( "#dialog" ).dialog('option','sizeCache-switch');
+                if (size) {
+                    $("#dialog").dialog('option','width',size.width);
+                    $("#dialog").dialog('option','height',size.height);
+                    switchDialogResize();
+                } else {
+                    setTimeout(switchDialogResize,10);
+                }
+            });
+            $( "#dialog" ).one("dialogclose", function(ev,ui) {
+                $( "#dialog" ).off("dialogresize",switchDialogResize);
+            });
+        },
+        oneditsave: function() {
+            var buttons = $("#node-input-buttons-container").children();
+            var node = this;
+            node.buttons= [];
+            buttons.each(function(i) {
+                var button = $(this);
+                node.buttons.push({
+                    icon: button.find(".node-input-button-icon").val(),
+                    payload: button.find(".node-input-button-payload").val()
+                });
+            });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_radio_button">
+    <div class="form-row">
+        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
+        <input type="text" id="node-input-tab">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="icon-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row node-input-buttons-container-row" style="margin-bottom: 0px;">
+        <div id="node-input-buttons-container-div" style="box-sizing: border-box; border-radius: 5px; height: 210px; padding: 5px; border: 1px solid #ccc; overflow-y:scroll;">
+            <ol id="node-input-buttons-container" style=" list-style-type:none; margin: 0;"></ol>
+        </div>
+    </div>
+    <div class="form-row">
+        <a href="#" class="editor-button editor-button-small" id="node-input-add-button" style="margin-top: 4px;"><i class="fa fa-plus"></i> add</a>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_radio_button">
+    <p>Shows a row of round icon buttons on the user interface. Each button has an assigned
+    icon and a payload.<br>
+    The icon must be one of (<a href="https://klarsys.github.io/angular-material-icons/" target="_blank">https://klarsys.github.io/angular-material-icons/</a>).<br>
+    The specific payload is sent in a message once a button is clicked. <br>
+    If a topic is specified, it will be appended to the message.</p>
+</script>
