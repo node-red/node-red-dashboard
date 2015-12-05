@@ -10,6 +10,7 @@
             order: {value: 1, validate: RED.validators.number()},
             buttons: {
                 value: [{
+                    label: '',
                     payload: ''
                 }]
             }
@@ -23,8 +24,11 @@
         oneditprepare: function() {
 
             function resizeButton(button, width) {
+                var labelField = button.find(".node-input-button-icon");
+                labelField.width(120);
+
                 var payloadField = button.find(".node-input-button-payload");
-                payloadField.width(width - 90);
+                payloadField.width(width - 210);
             }
 
             function generateButton(button) {
@@ -32,7 +36,9 @@
                 var row = $('<div/>').appendTo(container);
                 $('<i style="color: #eee; cursor: move;" class="node-input-button-handle fa fa-bars"></i>').appendTo(row);
 
+                var labelField = $('<input/>',{class:"node-input-button-icon",type:"text",style:"margin-left: 5px; width: 145px;", placeholder: 'Label'}).appendTo(row);
                 var payloadField = $('<input/>',{class:"node-input-button-payload",type:"text",style:"margin-left: 5px; width: 145px;", placeholder: 'Payload'}).appendTo(row);
+                labelField.val(button.label);
                 payloadField.val(button.payload);
 
                 var finalspan = $('<span/>',{style:"float: right;margin-right: 10px;"}).appendTo(row);
@@ -53,7 +59,7 @@
             }
 
             $("#node-input-add-button").click(function() {
-                generateButton({icon: '', payload: ''});
+                generateButton({label: '', payload: ''});
                 $("#node-input-buttons-container-div").scrollTop($("#node-input-buttons-container-div").get(0).scrollHeight);
             });
 
@@ -108,6 +114,7 @@
             buttons.each(function(i) {
                 var button = $(this);
                 node.buttons.push({
+                    label: button.find(".node-input-button-icon").val(),
                     payload: button.find(".node-input-button-payload").val()
                 });
             });
