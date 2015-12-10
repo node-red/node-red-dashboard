@@ -40,9 +40,26 @@ module.exports = function(RED) {
                         oldValue.push(found);
                     }
                     
-                    var time = Math.floor((new Date().getTime() - 1448528370000) / 100);
+                    var time = new Date().getTime();
                     var point = [time, value];
                     found.values.push(point);
+                    
+                    var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
+                    var limitTime = new Date().getTime() - limitOffsetSec * 1000;
+                    
+                    var remove = [];
+                    oldValue.forEach(function (series, index) {
+                        var i=0;
+                        while (i<series.values.length && series.values[i][0]<limitTime) i++;
+                        if (i) series.values.splice(0, i);
+                        
+                        if (series.values.length === 0)
+                            remove.push(index);
+                    });
+                    
+                    remove.forEach(function (index) {
+                        oldValue.splice(index, 1);
+                    });
                 }
                 
                 return oldValue;
