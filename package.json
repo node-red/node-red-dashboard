@@ -17,6 +17,7 @@
       "ui_button": "nodes/ui_button.js",
       "ui_button_row": "nodes/ui_button_row.js",
       "ui_chart": "nodes/ui_chart.js",
+      "ui_gauge": "nodes/ui_gauge.js",
       "ui_numeric": "nodes/ui_numeric.js",
       "ui_paragraph": "nodes/ui_paragraph.js",
       "ui_radio_button": "nodes/ui_radio_button.js",
@@ -50,7 +51,9 @@
     "gulp-minify-html": "^1.0.4",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
+    "justgage": "^1.1.0",
     "nvd3": "^1.8.1",
+    "raphael": "^2.1.4",
     "streamqueue": "^1.1.1"
   }
 }

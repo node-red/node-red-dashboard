@@ -163,6 +163,8 @@ function init(server, app, log, redSettings) {
 				'angular-animate', 'angular-aria', 
 				'angular-material', 'angular-material-icons',
 				
+				'raphael', 'justgage',
+				
 				'd3', 'nvd3', 'angularjs-nvd3-directives'
 			];
 			
