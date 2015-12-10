@@ -10,10 +10,8 @@ md-content {
     background: transparent;
 }
 
-md-card.group-card {
-    min-width: 280px;
-    max-width: 350px;
-    align-self: stretch
+.group-card {
+    width: 316px;
 }
 
 body {

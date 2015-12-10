@@ -23,14 +23,15 @@
         </md-list>
     </md-sidenav>
 
-    <md-content layout="column" flex>
-        <md-content layout="row" layout-align="center start" layout-wrap>
-            <md-card ng-repeat="group in main.selectedTab.items" flex class="group-card">
+    <md-content layout="row" flex layout-align="center start">
+        <masonry masonry-options="{isFitWidth: true, columnWidth: '.group-card', gutter: 16}">
+            <md-card class="masonry-brick group-card" ng-repeat="group in main.selectedTab.items"
+                     style="margin: 16px 0 0 0">
                 <md-card-content layout="column">
                     <h2 ng-show="group.header" class="md-title">{{group.header}}</h2>
                     <ui-component ng-repeat="control in group.items" flex item="control"></ui-component>
                 </md-card-content>
             </md-card>
-        </md-content>
+        </masonry>
     </md-content>
 </md-content>

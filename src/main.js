@@ -1,4 +1,4 @@
-var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'nvd3ChartDirectives']);
+var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'nvd3ChartDirectives', 'wu.masonry']);
 
 app.config(['$mdThemingProvider', 
     function($mdThemingProvider) {

@@ -163,6 +163,8 @@ function init(server, app, log, redSettings) {
 				'angular-animate', 'angular-aria', 
 				'angular-material', 'angular-material-icons',
 				
+				'angular-masonry', 'masonry-layout', 'jquery', 'jquery-bridget', 'imagesloaded',
+				
 				'raphael', 'justgage',
 				
 				'd3', 'nvd3', 'angularjs-nvd3-directives'
