@@ -17,7 +17,7 @@ module.exports = function(RED) {
                 type: 'button',
                 label: config.name,
                 order: config.order,
-                value: node.id
+                value: config.payload || node.id
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;

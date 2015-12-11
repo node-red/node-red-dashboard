@@ -5,6 +5,7 @@
         defaults: {
             tab: {type: 'ui_tab', required: true},
             name: {value: 'Button'},
+            payload: {value: ''},
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
@@ -27,6 +28,10 @@
         <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
+        <label for="node-input-payload"><i class="fa fa-envelope"></i> Payload</label>
+        <input type="text" id="node-input-payload">
+    </div>
+    <div class="form-row">
         <label for="node-input-topic"><i class="icon-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic">
     </div>
@@ -40,6 +45,7 @@
 
 <script type="text/x-red" data-help-name="ui_button">
     <p>Shows a button on the user interface. Clicking the button, generates a message 
-    with the payload set to be the node id. The topic field will be appended to the message
+    with the payload set to be the <b>Payload</b> field. If no payload is specified, 
+    the node id is used. The topic field will be appended to the message
     as a <b>topic</b> property.</p>
 </script>
