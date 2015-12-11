@@ -36,7 +36,7 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     if (!me.item.value) me.item.value = [];
                 
                     me.formatTime = function(d) {  
-                        return d3.time.format('%H:%M:%S')(new Date(d * 100 + 1448528370000));  
+                        return d3.time.format('%H:%M:%S')(new Date(d));  
                     };
                      
                     me.getRange = function() {                   
