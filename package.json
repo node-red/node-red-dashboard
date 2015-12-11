@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-ui",
-  "version": "1.1.25",
+  "version": "1.1.26",
   "description": "UI nodes for node-red",
   "main": "none",
   "scripts": {
