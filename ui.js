@@ -162,6 +162,7 @@ function init(server, app, log, redSettings) {
 				'angular', 'angular-sanitize', 
 				'angular-animate', 'angular-aria', 
 				'angular-material', 'angular-material-icons',
+				'sprintf-js',
 				
 				'angular-masonry', 'masonry-layout', 'jquery', 'jquery-bridget', 'imagesloaded',
 				

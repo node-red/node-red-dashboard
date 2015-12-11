@@ -59,6 +59,7 @@
     "masonry-layout": "^3.3.2",
     "nvd3": "^1.8.1",
     "raphael": "^2.1.4",
+    "sprintf-js": "^1.0.3",
     "streamqueue": "^1.1.1"
   }
 }
