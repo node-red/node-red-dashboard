@@ -7,6 +7,7 @@
             name: {value: 'Gauge'},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
+            format: {value: '{{value}}'},
             min: {value: 0, required: true, validate: RED.validators.number()},
             max: {value: 10, required: true, validate: RED.validators.number()},
         },
@@ -32,6 +33,10 @@
         <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
         <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
         <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
+        <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
+        <input type="text" id="node-input-format">
     </div>
     <div class="form-row">
         <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>

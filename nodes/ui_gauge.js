@@ -17,6 +17,7 @@ module.exports = function(RED) {
                 label: config.name,
                 order: config.order,
                 value: config.min,
+                format: config.format,
                 min: config.min,
                 max: config.max
             },

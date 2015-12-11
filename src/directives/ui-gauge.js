@@ -1,7 +1,7 @@
 /* global JustGage */
 /* global angular */
-angular.module('ui').directive('uiGauge', [ '$timeout',
-    function ($timeout) {
+angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
+    function ($timeout, $interpolate) {
         return {
 			restrict: 'E',
 			replace: true,
@@ -13,7 +13,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout',
 						value: scope.$eval('me.item.value'),
 						min: scope.$eval('me.item.min'),
 						max: scope.$eval('me.item.max'),
-						title: scope.$eval('me.item.label')
+						title: scope.$eval('me.item.label'),
+						textRenderer: function(v) {
+							return scope.$eval('me.item.getText()');
+						}
 					});
 					
 					scope.$watch('me.item.value', function (newValue) {
