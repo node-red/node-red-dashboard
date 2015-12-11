@@ -1,13 +1,15 @@
 <div flex layout="row" layout-align="space-between center">
     <p>{{me.item.label}}</p>
     <div layout="row" layout-align="center center">
-        <md-button class="md-icon-button" ng-click="me.valueDown()" aria-label="{{me.item.label}}"
-                   ng-disabled="me.item.disabled">
+        <md-button class="md-icon-button" aria-label="{{me.item.label}}"
+                   ng-disabled="me.item.disabled" 
+                   ng-mousedown="me.periodicChange(-1)" ng-mouseup="me.stopPeriodic()">
             <ng-md-icon icon="expand_more"></ng-md-icon>
         </md-button>
         <h3 ng-bind-html="me.item.getText()"></h3>
-        <md-button class="md-icon-button" ng-click="me.valueUp()" aria-label="{{me.item.label}}"
-                   ng-disabled="me.item.disabled">
+        <md-button class="md-icon-button" aria-label="{{me.item.label}}"
+                   ng-disabled="me.item.disabled"
+                   ng-mousedown="me.periodicChange(1)" ng-mouseup="me.stopPeriodic()">
             <ng-md-icon icon="expand_less"></ng-md-icon>
         </md-button>
     </div>

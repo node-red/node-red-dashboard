@@ -1,7 +1,7 @@
 /* global angular */
 /* global d3 */
-angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpolate',
-    function (events, $interpolate) {
+angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpolate', '$interval',
+    function (events, $interpolate, $interval) {
         var me = this;
         if (typeof me.item.format === "string")
             me.item.getText = $interpolate(me.item.format).bind(null, me.item);
@@ -17,18 +17,34 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     break;
                     
                 case 'numeric':
-                    me.valueDown = function() {
-                        if (me.item.value > me.item.min) {
-                            me.item.value --;
-                            me.valueChanged(0);
+                    var changeValue = function(delta) {
+                        if (delta > 0) {
+                            if (me.item.value < me.item.max) {
+                                me.item.value = Math.min(me.item.value + delta, me.item.max);
+                            }
+                        } else if (delta < 0) {
+                            if (me.item.value > me.item.min) {
+                                me.item.value = Math.max(me.item.value + delta, me.item.min);
+                            }
                         }
                     };
-                
-                    me.valueUp = function() {
-                        if (me.item.value < me.item.max) {
-                            me.item.value++;
-                            me.valueChanged(0);
-                        }
+                    
+                    var range = me.item.max - me.item.min;
+                    var promise;
+                    me.periodicChange = function(delta) {
+                        changeValue(delta);
+                        var i=0;
+                        promise = $interval(function() {
+                            i++;
+                            if (i>35) changeValue(Math.sign(delta) * Math.floor(range / 10));
+                            else if (i>25) changeValue(delta*2);
+                            else if (i>15) changeValue(delta);
+                            else if (i>5 && i%2) changeValue(delta);
+                        }, 100);
+                    };
+                    me.stopPeriodic = function() {
+                        $interval.cancel(promise);
+                        me.valueChanged(0);
                     };
                     break;
                     
