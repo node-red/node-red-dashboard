@@ -38,13 +38,6 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     me.formatTime = function(d) {  
                         return d3.time.format('%H:%M:%S')(new Date(d));  
                     };
-                     
-                    me.getRange = function() {                   
-                        var min = d3.min(me.item.value, function (a) { return d3.min(a.values, function(b){return b[1];}); });
-                        var max = d3.max(me.item.value, function (a) { return d3.max(a.values, function(b){return b[1];}); });
-                        return [Math.floor(min), Math.ceil(max)];
-                    };
-                    break;
             }
         }
     
