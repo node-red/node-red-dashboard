@@ -3,7 +3,7 @@ var inited = false;
 module.exports = function(RED) {
 	if (!inited) {
 		inited = true;
-		init(RED.server, RED.httpAdmin, RED.log, RED.settings);
+		init(RED.server, RED.httpNode || RED.httpAdmin, RED.log, RED.settings);
 	}
 	
 	return { 
