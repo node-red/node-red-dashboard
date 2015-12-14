@@ -28,6 +28,8 @@ var io = undefined;
 var currentValues = {};
 var replayMessages = {};
 var ev = new events.EventEmitter();
+ev.setMaxListeners(0);
+
 var settings = {};
 
 function toNumber(keepDecimals, config, input) {
