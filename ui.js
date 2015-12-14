@@ -9,7 +9,8 @@ module.exports = function(RED) {
 	return { 
 		add: add, 
 		emit: emit,
-		toNumber: toNumber,
+		toNumber: toNumber.bind(null, false),
+		toFloat: toNumber.bind(null, true)
 	};
 };
 
@@ -29,11 +30,12 @@ var replayMessages = {};
 var ev = new events.EventEmitter();
 var settings = {};
 
-function toNumber(config, input) {
+function toNumber(keepDecimals, config, input) {
 	if (typeof input === "number")
 		return input;
 	
-	var nr = parseInt(input.toString());
+	var inputString = input.toString();
+	var nr = keepDecimals ? parseFloat(inputString) : parseInt(inputString);
 	return isNaN(nr) ? config.min : nr;
 }
 

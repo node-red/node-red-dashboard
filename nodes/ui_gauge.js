@@ -24,7 +24,7 @@ module.exports = function(RED) {
             beforeSend: function (msg) {
                 msg.topic = config.topic;
             },
-            convert: ui.toNumber.bind(this, config)
+            convert: ui.toFloat.bind(this, config)
         });
 
         node.on("close", done);
