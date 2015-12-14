@@ -148,7 +148,7 @@ function init(server, app, log, redSettings) {
 	settings.title = uiSettings.title || 'Node-Red UI';
 	settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
 	
-	var fullPath = join(redSettings.httpAdminRoot, settings.path);
+	var fullPath = join(redSettings.httpNodeRoot, settings.path);
 	var socketIoPath = join(fullPath, 'socket.io');
 	
 	io = socketio(server, {path: socketIoPath});
