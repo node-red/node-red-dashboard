@@ -57,10 +57,6 @@ function beforeSend(msg) {
 	//do nothing
 }
 
-function beforeProcessReceived(msg) {
-	return msg;
-}
-
 /*
 options:
 	node - the node that represents the control on a flow
@@ -74,14 +70,12 @@ options:
 	[convert] - callback to convert the value before sending it to the front-end
 	[convertBack] - callback to convert the message from front-end before sending it to the next connected node
 	
-	[beforeProcessReceived] - callback that is invoked right after a message is received before it's processed 
 	[beforeEmit] - callback to prepare the message that is emitted to the front-end
 	[beforeSend] - callback to prepare the message that is sent to the output 
 */
 function add(opt) {
 	if (typeof opt.emitOnlyNewValues === 'undefined')
 		opt.emitOnlyNewValues = true;
-	opt.beforeProcessReceived = opt.beforeProcessReceived || beforeProcessReceived;
 	opt.beforeEmit = opt.beforeEmit || beforeEmit;
 	opt.beforeSend = opt.beforeSend || beforeSend;
 	opt.convert = opt.convert || noConvert;
@@ -122,15 +116,12 @@ function add(opt) {
 	var handler = function (msg) {
 		if (msg.id !== opt.node.id) return;
 		
-		msg = opt.beforeProcessReceived(msg);
-		if (!msg) return;
-		
 		var converted = opt.convertBack(msg.value);
 		currentValues[msg.id] = converted;
 		replayMessages[msg.id] = msg;
 		
 		var toSend = {payload: converted};
-		opt.beforeSend(toSend);
+		toSend = opt.beforeSend(toSend, msg) || toSend;
 		opt.node.send(toSend);
 		
 		//fwd to all UI clients

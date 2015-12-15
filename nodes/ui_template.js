@@ -29,8 +29,8 @@ module.exports = function(RED) {
                 
                 return { msg: clonedMsg };
             },
-            beforeProcessReceived: function (msg) {
-                node.send(msg.value);
+            beforeSend: function (msg, original) {
+                return original.msg;
             }
         });
        

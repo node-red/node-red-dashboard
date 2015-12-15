@@ -3,10 +3,8 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
         function createInnerScope(id) {
             var innerScope = $rootScope.$new();
             innerScope.send = function(msg) {
-                events.emit({
-                    id: id,
-                    value: msg
-                });
+                msg.id = id;
+                events.emit(msg);
             };
             return innerScope;
         }
@@ -14,11 +12,6 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
         return function(scope, element, attrs) {
             var id = scope.$eval('me.item.id');
             var innerScope;
-            
-            scope.$watch('me.item.msg', function (value) {
-                if (innerScope)
-                    innerScope.msg = value;
-            });
             
             scope.$watch(attrs.uiCompile,
                 function(value) {
@@ -30,6 +23,11 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
                     $compile(element.contents())(innerScope);
                 }
             );
+            
+            scope.$watch('me.item.msg', function (value) {
+                if (innerScope)
+                    innerScope.msg = value;
+            });
             
             scope.$on('$destroy', function() {
                 if (innerScope)
