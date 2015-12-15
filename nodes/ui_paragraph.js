@@ -28,10 +28,13 @@ module.exports = function(RED) {
                 }
                 
                 return { msg: clonedMsg };
+            },
+            beforeProcessReceived: function (msg) {
+                node.send(msg.value);
             }
         });
-
-        node.on("close", done);
+       
+         node.on("close", done);
     }
 
     RED.nodes.registerType("ui_paragraph", ParagraphNode);
