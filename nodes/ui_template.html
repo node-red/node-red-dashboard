@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_paragraph',{
+    RED.nodes.registerType('ui_template',{
         category: 'ui',
         color: '#a6bbcf',
         defaults: {
@@ -10,11 +10,10 @@
             format: {value: '{{msg.payload}}'}
         },
         inputs:1,
-        outputs:0,
-        align: "right",
-        icon: "ui_paragraph.png",
-        paletteLabel: 'paragraph',
-        label: function() { return this.name || 'paragraph'; },
+        outputs:1,
+        icon: "ui_template.png",
+        paletteLabel: 'template',
+        label: function() { return this.name || 'template'; },
         oneditprepare: function() {
             var that = this;
 
@@ -67,7 +66,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_paragraph">
+<script type="text/x-red" data-template-name="ui_template">
     <div class="form-row">
         <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
         <input type="text" id="node-input-tab">
@@ -91,9 +90,9 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_paragraph">
-    <p>Shows a paragraph on the user interface. The Template can contain any valid html and angular/angular-material directives.<br>
-    You can use this node to create a dynamic user interface element that changes it's appearence based on the input message.<br>
+<script type="text/x-red" data-help-name="ui_template">
+    <p>The Template can contain any valid html and angular/angular-material directives.<br>
+    You can use this node to create a dynamic user interface element that changes it's appearence based on the input message and can send back messages to Node-RED.<br>
     <br>
     <b>For example:</b><br>
     <pre>&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
@@ -103,7 +102,12 @@
     &lt;/p&gt;
 &lt;/div&gt;</pre>
     Will display if the number received as <code>msg.payload</code> is even or odd. It will also
-    change the color of the text to green if the number is even or red if odd.
+    change the color of the text to green if the number is even or red if odd.<br><br>
+    <b>Sending a message:</b><br>
+    <pre>&lt;md-button ng-click=&quot;send({payload: 'Hello World'})&quot;&gt;
+    Click me to send a hello world
+&lt;/md-button&gt;</pre>
+    Will display a button that when clicked will send a message with the payload <code>'Hello world'</code>.
     </p>
     
 </script>

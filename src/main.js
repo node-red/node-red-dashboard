@@ -7,8 +7,8 @@ app.config(['$mdThemingProvider',
             .accentPalette('red');
     }]);
 
-app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document',
-    function($mdSidenav, $window, events, $location, $document) {
+app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$rootScope',
+    function($mdSidenav, $window, events, $location, $document, $mdToast, $rootScope) {
         var main = this;
     
         this.tabs = [];
@@ -62,5 +62,16 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (key === 'id') continue;
                 found[key] = msg[key];
             }
+        });
+        
+        events.on('show-toast', function (msg) {
+            var toastScope = $rootScope.$new();
+            toastScope.toast = msg;
+            $mdToast.show({
+                scope: toastScope,
+                templateUrl: 'templates/controls/toast.html',
+                hideDelay: 3000,
+                position: 'top right'
+            });
         });
     }]);

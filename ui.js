@@ -115,12 +115,13 @@ function add(opt) {
 	
 	var handler = function (msg) {
 		if (msg.id !== opt.node.id) return;
+		
 		var converted = opt.convertBack(msg.value);
 		currentValues[msg.id] = converted;
 		replayMessages[msg.id] = msg;
 		
 		var toSend = {payload: converted};
-		opt.beforeSend(toSend);
+		toSend = opt.beforeSend(toSend, msg) || toSend;
 		opt.node.send(toSend);
 		
 		//fwd to all UI clients
@@ -147,7 +148,7 @@ function join() {
 function init(server, app, log, redSettings) {
 	var uiSettings = redSettings.ui || {};
 	settings.path = uiSettings.path || 'ui';
-	settings.title = uiSettings.title || 'Node-Red UI';
+	settings.title = uiSettings.title || 'Node-RED UI';
 	settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
 	
 	var fullPath = join(redSettings.httpNodeRoot, settings.path);

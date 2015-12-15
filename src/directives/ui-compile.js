@@ -1,18 +1,37 @@
-angular.module('ui').directive('uiCompile', ['$compile', '$rootScope',
-    function ($compile, $rootScope) {
+angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents',
+    function ($compile, $rootScope, events) {
+        function createInnerScope(id) {
+            var innerScope = $rootScope.$new();
+            innerScope.send = function(msg) {
+                msg.id = id;
+                events.emit(msg);
+            };
+            return innerScope;
+        }
+        
         return function(scope, element, attrs) {
-            var paragraphScope = $rootScope.$new();
-            scope.$watch('me.item.msg', function (value) {
-                paragraphScope.msg = value;
-            });
-            scope.$watch(
-                function(scope) {
-                    return scope.$eval(attrs.uiCompile);
-                },
+            var id = scope.$eval('me.item.id');
+            var innerScope;
+            
+            scope.$watch(attrs.uiCompile,
                 function(value) {
+                    if (innerScope) innerScope.$destroy();
+                    innerScope = createInnerScope(id);
+                    window.scope = innerScope;
                     element.html(value);
-                    $compile(element.contents())(paragraphScope);
+                    delete window.scope;
+                    $compile(element.contents())(innerScope);
                 }
             );
+            
+            scope.$watch('me.item.msg', function (value) {
+                if (innerScope)
+                    innerScope.msg = value;
+            });
+            
+            scope.$on('$destroy', function() {
+                if (innerScope)
+                    innerScope.$destroy();
+            });
         };
     }]);

@@ -1,7 +1,7 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
 
-    function ParagraphNode(config) {
+    function TemplateNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
         
@@ -14,7 +14,7 @@ module.exports = function(RED) {
             tab: tab, 
             group: config.group, 
             control: {
-                type: 'paragraph',
+                type: 'template',
                 order: config.order,
                 format: config.format
             },
@@ -28,11 +28,14 @@ module.exports = function(RED) {
                 }
                 
                 return { msg: clonedMsg };
+            },
+            beforeSend: function (msg, original) {
+                return original.msg;
             }
         });
-
-        node.on("close", done);
+       
+         node.on("close", done);
     }
 
-    RED.nodes.registerType("ui_paragraph", ParagraphNode);
+    RED.nodes.registerType("ui_template", TemplateNode);
 };
