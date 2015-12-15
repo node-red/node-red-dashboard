@@ -1,7 +1,7 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
 
-    function TextFieldNode(config) {
+    function TextInputNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
@@ -13,8 +13,9 @@ module.exports = function(RED) {
             tab: tab,
             group: config.group,
             control: {
-                type: 'text_field',
-                label: config.label,
+                type: 'text_input',
+                label: config.name,
+                mode:  config.mode,
                 order: config.order,
                 value: ''
             },
@@ -26,5 +27,5 @@ module.exports = function(RED) {
         node.on("close", done);
     }
 
-    RED.nodes.registerType("ui_text_field", TextFieldNode);
+    RED.nodes.registerType("ui_text_input", TextInputNode);
 };

@@ -1,0 +1,10 @@
+<div flex layout="row" layout-align="space-between center">
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>{{me.item.label}}</label>
+      <input ng-model="me.item.value"
+             ng-change="me.valueChanged()"
+             ng-disabled="me.item.disabled"
+             aria-label="{{me.item.label}}"
+             type="{{me.item.mode}}"/>
+    </md-input-container>
+</div>

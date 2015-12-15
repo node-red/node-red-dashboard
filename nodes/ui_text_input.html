@@ -1,27 +1,34 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_text_field',{
+    RED.nodes.registerType('ui_text_input',{
         category: 'ui',
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: 'Text field'},
+            mode: {value: 'text', required: true},
+            name: {value: ''},
             topic: {value: ''},
-            label: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()}
         },
         inputs:1,
         outputs:1,
         icon: "ui_text.png",
-        paletteLabel: 'text field',
-        label: function() { return this.name || 'text field'; }
+        paletteLabel: 'text input',
+        label: function() { return this.name || 'text input'; }
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_text_field">
+<script type="text/x-red" data-template-name="ui_text_input">
     <div class="form-row">
         <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
         <input type="text" id="node-input-tab">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-line-chart"></i> Mode</label>
+        <select id="node-input-mode">
+            <option value="text">text</option>
+            <option value="email">email</option>
+        </select>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -32,10 +39,6 @@
         <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="icon-tag"></i> Label</label>
-        <input type="text" id="node-input-label">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
         <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
         <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
@@ -43,7 +46,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_text_field">
+<script type="text/x-red" data-help-name="ui_text_input">
     <p>Shows a slider on the user interface. The user can change it's value between
     the limits (<b>Min/Max</b>). Each value change will generate a message with the value set
     as <b>payload</b>.<br>
