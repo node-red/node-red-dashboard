@@ -3,8 +3,7 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
         function createInnerScope(id) {
             var innerScope = $rootScope.$new();
             innerScope.send = function(msg) {
-                msg.id = id;
-                events.emit(msg);
+                events.emit({id: id, msg: msg});
             };
             return innerScope;
         }
