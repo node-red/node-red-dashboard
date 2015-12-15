@@ -14,12 +14,11 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
                 innerScope.msg = value;
             });
             
-            scope.$watch(
-                function(scope) {
-                    return scope.$eval(attrs.uiCompile);
-                },
+            scope.$watch(attrs.uiCompile,
                 function(value) {
+                    window.scope = innerScope;
                     element.html(value);
+                    delete window.scope;
                     $compile(element.contents())(innerScope);
                 }
             );
