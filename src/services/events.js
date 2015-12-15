@@ -1,23 +1,32 @@
-angular.module('ui').service('UiEvents', ['$timeout', '$mdToast', '$rootScope',
-    function ($timeout, $mdToast, $rootScope) {
+angular.module('ui').service('UiEvents', ['$timeout',
+    function ($timeout) {
         var updateValueEventName = 'update-value';
         
         this.connect = function(onuiloaded, replaydone) {
             var socket = io({path: location.pathname + 'socket.io'});
             
-            this.emit = function (msg) {
-                socket.emit(updateValueEventName, msg);
+            this.emit = function (event, msg) {
+                if (typeof msg === 'undefined') {
+                    msg = event;
+                    event = updateValueEventName;
+                }
+                socket.emit(event, msg);
             };
             
-            this.on = function(handler) {
+            this.on = function(event, handler) {
+                if (typeof handler === 'undefined') {
+                    handler = event;
+                    event = updateValueEventName;
+                }
+                
                 var socketHandler = function(data) {
                     $timeout(function() {
                         handler(data);
                     }, 0);
                 };
-                socket.on(updateValueEventName, socketHandler);
+                socket.on(event, socketHandler);
                 return function() {
-                    socket.removeListener(updateValueEventName, socketHandler);
+                    socket.removeListener(event, socketHandler);
                 };
             };
             
@@ -29,17 +38,6 @@ angular.module('ui').service('UiEvents', ['$timeout', '$mdToast', '$rootScope',
             
             socket.on('ui-replay-done', function() {
                 $timeout(replaydone, 0);
-            });
-            
-            socket.on('show-toast', function (msg) {
-                var toastScope = $rootScope.$new();
-                toastScope.toast = msg;
-                $mdToast.show({
-                    scope: toastScope,
-                    templateUrl: 'templates/controls/toast.html',
-                    hideDelay: 3000,
-                    position: 'top right'
-                });
             });
         };
     }]);
