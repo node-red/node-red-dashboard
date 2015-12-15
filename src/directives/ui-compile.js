@@ -1,9 +1,9 @@
 angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents',
     function ($compile, $rootScope, events) {
         return function(scope, element, attrs) {
-            var paragraphScope = $rootScope.$new();
+            var innerScope = $rootScope.$new();
             
-            paragraphScope.send = function(msg) {
+            innerScope.send = function(msg) {
                 events.emit({
                     id: scope.$eval('me.item.id'),
                     value: msg
@@ -11,7 +11,7 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
             };
             
             scope.$watch('me.item.msg', function (value) {
-                paragraphScope.msg = value;
+                innerScope.msg = value;
             });
             
             scope.$watch(
@@ -20,7 +20,7 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
                 },
                 function(value) {
                     element.html(value);
-                    $compile(element.contents())(paragraphScope);
+                    $compile(element.contents())(innerScope);
                 }
             );
         };
