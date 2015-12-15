@@ -1,26 +1,39 @@
 angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents',
     function ($compile, $rootScope, events) {
-        return function(scope, element, attrs) {
+        function createInnerScope(id) {
             var innerScope = $rootScope.$new();
-            
             innerScope.send = function(msg) {
                 events.emit({
-                    id: scope.$eval('me.item.id'),
+                    id: id,
                     value: msg
                 });
             };
+            return innerScope;
+        }
+        
+        return function(scope, element, attrs) {
+            var id = scope.$eval('me.item.id');
+            var innerScope;
             
             scope.$watch('me.item.msg', function (value) {
-                innerScope.msg = value;
+                if (innerScope)
+                    innerScope.msg = value;
             });
             
             scope.$watch(attrs.uiCompile,
                 function(value) {
+                    if (innerScope) innerScope.$destroy();
+                    innerScope = createInnerScope(id);
                     window.scope = innerScope;
                     element.html(value);
                     delete window.scope;
                     $compile(element.contents())(innerScope);
                 }
             );
+            
+            scope.$on('$destroy', function() {
+                if (innerScope)
+                    innerScope.$destroy();
+            });
         };
     }]);
