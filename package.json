@@ -25,6 +25,7 @@
       "ui_switch": "nodes/ui_switch.js",
       "ui_tab": "nodes/ui_tab.js",
       "ui_text": "nodes/ui_text.js",
+      "ui_text_field": "nodes/ui_text_field.js",
       "ui_toast": "nodes/ui_toast.js"
     }
   },
