@@ -6,6 +6,10 @@ md-sidenav.md-closed.md-locked-open-add-active {
     max-width: 200px !important;
 }
 
+md-toast .md-toast-content {
+    height: auto;
+}
+
 md-content {
     background: transparent;
 }

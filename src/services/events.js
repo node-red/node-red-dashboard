@@ -1,5 +1,5 @@
-angular.module('ui').service('UiEvents', ['$timeout', '$mdToast',
-    function ($timeout, $mdToast) {
+angular.module('ui').service('UiEvents', ['$timeout', '$mdToast', '$rootScope',
+    function ($timeout, $mdToast, $rootScope) {
         var updateValueEventName = 'update-value';
         
         this.connect = function(onuiloaded, replaydone) {
@@ -32,12 +32,14 @@ angular.module('ui').service('UiEvents', ['$timeout', '$mdToast',
             });
             
             socket.on('show-toast', function (msg) {
-                var toast = $mdToast.simple()
-                    .content(msg.message)
-                    .position('top right')
-                    .hideDelay(3000);
-        
-                $mdToast.show(toast);
+                var toastScope = $rootScope.$new();
+                toastScope.toast = msg;
+                $mdToast.show({
+                    scope: toastScope,
+                    templateUrl: 'templates/controls/toast.html',
+                    hideDelay: 3000,
+                    position: 'top right'
+                });
             });
         };
     }]);

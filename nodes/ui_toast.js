@@ -7,6 +7,7 @@ module.exports = function(RED) {
 
         this.on('input', function(msg) {
             ui.emit('show-toast', {
+                title: msg.topic,
                 message: msg.payload
             });
         });
