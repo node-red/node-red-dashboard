@@ -107,6 +107,7 @@ function add(opt) {
  			if (opt.node._wireCount) {
 				//forward to output
 				msg.payload = opt.convertBack(newValue);
+				msg = opt.beforeSend(msg) || msg;
 				opt.beforeSend(msg);
 				opt.node.send(msg);
 			}

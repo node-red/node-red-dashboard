@@ -30,7 +30,8 @@ module.exports = function(RED) {
                 return { msg: clonedMsg };
             },
             beforeSend: function (msg, original) {
-                return original.msg;
+                if (original)
+                    return original.msg;
             }
         });
        
