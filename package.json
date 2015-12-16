@@ -21,7 +21,7 @@
       "ui_slider": "nodes/ui_slider.js",
       "ui_numeric": "nodes/ui_numeric.js",
       "ui_text": "nodes/ui_text.js",
-      "ui_text_field": "nodes/ui_text_input.js",
+      "ui_text_input": "nodes/ui_text_input.js",
       "ui_gauge": "nodes/ui_gauge.js",
       "ui_chart": "nodes/ui_chart.js",
       "ui_toast": "nodes/ui_toast.js",
