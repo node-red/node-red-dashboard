@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_link',{
+        category: 'ui',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value: 'Google'},
+			link: {value: 'http://www.google.com'},
+            icon: {value: 'open_in_browser'},
+            order: {value: 1, validate: RED.validators.number()},
+
+        },
+        inputs:0,
+        outputs:0,
+        align: "right",
+        icon: "ui_link.png",
+        paletteLabel: 'link',
+        label: function() { return this.name || 'link'; }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_link">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-link"><i class="fa fa-link"></i> Link</label>
+        <input type="text" id="node-input-link">
+    </div>
+    <div class="form-row">
+        <label for="node-input-icon"><i class="fa fa-image"></i> Icon</label>
+        <input type="text" id="node-input-icon">
+    </div>
+    <div class="form-row">
+        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" id="node-input-order">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_link">
+    <p>Will add a link in the left side menu. The icon must be one of 
+    (<a href="https://klarsys.github.io/angular-material-icons/" target="_blank">https://klarsys.github.io/angular-material-icons/</a>).</p>
+</script>

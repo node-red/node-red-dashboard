@@ -30,7 +30,8 @@ module.exports = function(RED) {
                 return { msg: clonedMsg };
             },
             beforeSend: function (msg, original) {
-                return original.msg;
+                if (original)
+                    return original.msg;
             }
         });
        
@@ -38,4 +39,5 @@ module.exports = function(RED) {
     }
 
     RED.nodes.registerType("ui_template", TemplateNode);
+    RED.library.register("uitemplates");
 };

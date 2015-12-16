@@ -12,6 +12,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         var main = this;
     
         this.tabs = [];
+        this.links = [];
         this.selectedTab = null;
         this.loaded = false;
     
@@ -25,13 +26,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             $location.path(index);
         };
     
-        this.openEditor = function() {
-            $window.open('../', '_blank');
-            $mdSidenav('left').close();
+        this.open = function(link) {
+             $window.open(link, '_blank');
+             $mdSidenav('left').close();
         };
-    
+        
         events.connect(function (ui, done) {
             main.tabs = ui.tabs;
+            main.links = ui.links;
             $document[0].title = ui.title;
             
             var prevTabIndex = parseInt($location.path().substr(1));

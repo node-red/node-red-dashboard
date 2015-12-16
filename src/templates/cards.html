@@ -15,10 +15,10 @@
                 <ng-md-icon class="md-default-theme" icon="{{tab.icon}}" style="margin: 5px"></ng-md-icon>
                 <p>{{tab.header}}</p>
             </md-list-item>
-            <md-subheader class="md-no-sticky">Other</md-subheader>
-            <md-list-item ng-click="main.openEditor()">
-                <ng-md-icon icon="open_in_browser" style="margin: 5px"></ng-md-icon>
-                <p>Edit flows</p>
+            <md-subheader class="md-no-sticky" ng-if="main.links.length">Links</md-subheader>
+            <md-list-item ng-click="main.open(link.link)" ng-repeat="link in main.links">
+                <ng-md-icon icon="{{link.icon}}" style="margin: 5px"></ng-md-icon>
+                <p>{{link.name}}</p>
             </md-list-item>
         </md-list>
     </md-sidenav>

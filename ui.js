@@ -7,7 +7,8 @@ module.exports = function(RED) {
 	}
 	
 	return { 
-		add: add, 
+		add: add,
+		addLink: addLink, 
 		emit: emit,
 		toNumber: toNumber.bind(null, false),
 		toFloat: toNumber.bind(null, true)
@@ -21,6 +22,7 @@ var serveStatic = require('serve-static'),
 	events = require('events');
 
 var tabs = [];
+var links = [];
 
 var updateValueEventName = 'update-value';
 
@@ -107,6 +109,7 @@ function add(opt) {
  			if (opt.node._wireCount) {
 				//forward to output
 				msg.payload = opt.convertBack(newValue);
+				msg = opt.beforeSend(msg) || msg;
 				opt.beforeSend(msg);
 				opt.node.send(msg);
 			}
@@ -212,7 +215,8 @@ function updateUi(to) {
 	process.nextTick(function() {
 		to.emit('ui-controls', {
 			title: settings.title,
-			tabs: tabs
+			tabs: tabs,
+			links: links
 		});
 		updateUiPending = false;
 	});
@@ -284,5 +288,26 @@ function addControl(tab, groupHeader, control) {
 			
 			updateUi();
 		}
+	}
+}
+
+function addLink(name, link, icon, order) {
+	var newLink = {
+		name: name,
+		link: link,
+		icon: icon,
+		order: order || 1
+	};
+	
+	links.push(newLink);
+	links.sort(itemSorter);
+	updateUi();
+	
+	return function() {
+		var index = links.indexOf(newLink);
+		if (index < 0) return;
+		
+		links.splice(index, 1);
+		updateUi();
 	}
 }
