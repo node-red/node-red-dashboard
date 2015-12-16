@@ -48,6 +48,14 @@
                 value: $("#node-input-format").val()
             });
 
+            RED.library.create({
+                url:"uitemplates", // where to get the data from
+                type:"ui_template", // the type of object the library is for
+                editor:this.editor, // the field name the main text body goes to
+                mode:"ace/mode/html",
+                fields:['name']
+            });
+
             this.editor.focus();
         },
         oneditsave: function() {

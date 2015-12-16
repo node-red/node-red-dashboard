@@ -38,4 +38,5 @@ module.exports = function(RED) {
     }
 
     RED.nodes.registerType("ui_template", TemplateNode);
+    RED.library.register("uitemplates");
 };
