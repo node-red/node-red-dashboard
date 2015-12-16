@@ -24,7 +24,7 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
-        <label for="node-input-mode"><i class="fa fa-line-chart"></i> Mode</label>
+        <label for="node-input-mode"><i class="fa fa-keyboard-o"></i> Mode</label>
         <select id="node-input-mode">
             <option value="text">text</option>
             <option value="email">email</option>
@@ -47,11 +47,8 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_text_input">
-    <p>Shows a slider on the user interface. The user can change it's value between
-    the limits (<b>Min/Max</b>). Each value change will generate a message with the value set
-    as <b>payload</b>.<br>
-    If a topic is specified, it will be appended to the message.<br>
-    Each input message will be converted to a number (<b>Min</b> will be used if conversion fails)
-    and it will update the user interface. Also if the value changes, it will be passed to the output.<br>
-    </p>
+  <p>Shows a text input field on the user interface. Mode can be regular text
+  or email. The email mode will color in red if it is not a valid address.
+  Text written by the user is sent in realtime as the payload.  You can also
+  set the text of the input field by sending in a <b>payload</b>.
 </script>
