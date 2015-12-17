@@ -5,6 +5,7 @@
         defaults: {
             tab: {type: 'ui_tab', required: true},
             mode: {value: 'text', required: true},
+            delay: {value: 300, validate: RED.validators.number()},
             name: {value: ''},
             topic: {value: ''},
             group: {value: ''},
@@ -28,7 +29,10 @@
         <select id="node-input-mode">
             <option value="text">text</option>
             <option value="email">email</option>
+            <option value="color">color</option>
         </select>
+        <label for="node-input-delay" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Delay</label>
+        <input type="text" style="width: 50px" id="node-input-delay">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>

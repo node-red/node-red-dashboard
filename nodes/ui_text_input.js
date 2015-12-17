@@ -16,6 +16,7 @@ module.exports = function(RED) {
                 type: 'text_input',
                 label: config.name,
                 mode:  config.mode,
+                delay: config.delay,
                 order: config.order,
                 value: ''
             },
