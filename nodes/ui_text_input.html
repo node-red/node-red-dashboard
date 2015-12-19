@@ -1,0 +1,59 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_text_input',{
+        category: 'ui',
+        color: '#a6bbcf',
+        defaults: {
+            tab: {type: 'ui_tab', required: true},
+            mode: {value: 'text', required: true},
+            delay: {value: 300, validate: RED.validators.number()},
+            name: {value: ''},
+            topic: {value: ''},
+            group: {value: ''},
+            order: {value: 1, validate: RED.validators.number()}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "ui_text.png",
+        paletteLabel: 'text input',
+        label: function() { return this.name || 'text input'; }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_text_input">
+    <div class="form-row">
+        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
+        <input type="text" id="node-input-tab">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><i class="fa fa-keyboard-o"></i> Mode</label>
+        <select style="width: calc(64% - 132px)" id="node-input-mode">
+            <option value="text">text</option>
+            <option value="email">email</option>
+            <option value="color">color</option>
+        </select>
+        <label for="node-input-delay" style="text-align: right; width: 100px"><i class="fa fa-clock-o"></i> Delay (ms)</label>
+        <input type="text" style="width: 50px" id="node-input-delay">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="icon-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_text_input">
+  <p>Shows a text input field on the user interface. Mode can be regular text, email or color.
+  The email mode will color in red if it is not a valid address and will return undefined.
+  The delay sets the amount of time in milliseconds before the output is sent.
+  Text written by the user is sent in realtime as the <b>payload</b>. You can also
+  set the text of the input field by sending in a <b>payload</b>.
+</script>

@@ -15,7 +15,7 @@ var
   spawn = require('child_process').spawn,
   streamqueue = require('streamqueue');
 
-gulp.task('build', ['js', 'css', 'index']);
+gulp.task('build', ['icon', 'js', 'css', 'index']);
 
 gulp.task('publish', ['build'], function (done) {
   spawn('npm', ['publish'], { stdio: 'inherit' }).on('close', done);
@@ -29,6 +29,10 @@ gulp.task('index', function() {
     }))
     .pipe(minifyHTML({spare: true, quotes: true}))
     .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('icon', function() {
+   return gulp.src('src/icon.png').pipe(gulp.dest('dist/')); 
 });
     
 gulp.task('js', function () {
