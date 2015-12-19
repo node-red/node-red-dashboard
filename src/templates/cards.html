@@ -10,12 +10,10 @@
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z1"
                 md-component-id="left">
         <md-list>
-            <md-subheader class="md-no-sticky">Pages</md-subheader>
             <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
                 <ng-md-icon class="md-default-theme" icon="{{tab.icon}}" style="margin: 5px"></ng-md-icon>
                 <p>{{tab.header}}</p>
             </md-list-item>
-            <md-subheader class="md-no-sticky" ng-if="main.links.length">Links</md-subheader>
             <md-list-item ng-click="main.open(link.link)" ng-repeat="link in main.links">
                 <ng-md-icon icon="{{link.icon}}" style="margin: 5px"></ng-md-icon>
                 <p>{{link.name}}</p>
