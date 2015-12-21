@@ -189,5 +189,10 @@
     icon and a payload.<br> 
     The icon must be one of (<a href="https://klarsys.github.io/angular-material-icons/" target="_blank">https://klarsys.github.io/angular-material-icons/</a>).<br>
     The specific payload is sent in a message once a button is clicked. <br>
-    If a topic is specified, it will be appended to the message.</p>
+    If a topic is specified, it will be appended to the message.<br>
+    If the "Switch buttons" checkbox is checked, the buttons will act as switch buttons, each state having different icon/color. 
+    Pressing a button will change it's state and generate an output message with the current state of all the buttons.<br> 
+    An input message with a string payload will toggle the state of that specific button.<br>
+    An input message with an object payload (ex: <code>{alarm: true, play: false}</code>) will
+    set the states for those buttons (alarm/play) and any other buttons will be left as they were.</p>
 </script>
