@@ -62,6 +62,7 @@
     "nvd3": "^1.8.1",
     "raphael": "^2.1.4",
     "sprintf-js": "^1.0.3",
-    "streamqueue": "^1.1.1"
+    "streamqueue": "^1.1.1",
+    "svg-morpheus": "git://github.com/alexk111/SVG-Morpheus.git#master"
   }
 }

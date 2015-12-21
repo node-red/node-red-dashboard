@@ -8,12 +8,18 @@
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
+            toggle: {value: false},
             buttons: {
                 value: [{
-                    icon: 'alarm',
-                    payload: 'alarm'
+                    payload: 'alarm',
+                    
+                    icon: 'alarm_off',
+                    color: 'black',
+                    on_icon: 'alarm_on',
+                    on_color: 'red'
                 }]
-            }
+            },
+            inputs: {value: 0}
         },
         inputs:0,
         outputs:1,
@@ -24,11 +30,8 @@
         oneditprepare: function() {
 
             function resizeButton(button, width) {
-                var iconField = button.find(".node-input-button-icon");
-                iconField.width(120);
-                
                 var payloadField = button.find(".node-input-button-payload");
-                payloadField.width(width - 210);
+                payloadField.width(width - 310);
             }
 
             function generateButton(button) {
@@ -36,14 +39,22 @@
                 var row = $('<div/>').appendTo(container);
                 $('<i style="color: #eee; cursor: move;" class="node-input-button-handle fa fa-bars"></i>').appendTo(row);
 
-                var iconField = $('<input/>',{class:"node-input-button-icon",type:"text",style:"margin-left: 5px; width: 145px;", placeholder: 'Icon'}).appendTo(row);
-                var payloadField = $('<input/>',{class:"node-input-button-payload",type:"text",style:"margin-left: 5px; width: 145px;", placeholder: 'Payload'}).appendTo(row);
+                var iconField = $('<input/>',{class:"node-input-button-icon",type:"text",style:"margin-left: 5px; width: 100px;", placeholder: 'Icon'}).appendTo(row);
+                var colorField = $('<input/>',{class:"node-input-button-color",type:"text",style:"margin-left: 5px; width: 100px;", placeholder: 'Color'}).appendTo(row);
+                var payloadField = $('<input/>',{class:"node-input-button-payload",type:"text",style:"margin-left: 5px; width: 100px;", placeholder: 'Payload'}).appendTo(row);
                 iconField.val(button.icon);
+                colorField.val(button.color);
                 payloadField.val(button.payload);
                 
                 var finalspan = $('<span/>',{style:"float: right;margin-right: 10px;"}).appendTo(row);
                 var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"margin-top: 7px; margin-left: 5px;"}).appendTo(finalspan);
                 $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
+                
+                $('<br>', {class: 'show-if-switch'}).appendTo(row);
+                var onIconField = $('<input/>',{class:"node-input-button-onicon show-if-switch",type:"text",style:"margin-left: 17px; width: 100px;", placeholder: 'On Icon'}).appendTo(row);
+                var onColorField = $('<input/>',{class:"node-input-button-oncolor show-if-switch",type:"text",style:"margin-left: 5px; width: 100px;", placeholder: 'On Color'}).appendTo(row);
+                onIconField.val(button.on_icon);
+                onColorField.val(button.on_color);
 
                 deleteButton.click(function() {
                     container.css({"background":"#fee"});
@@ -59,7 +70,7 @@
             }
 
             $("#node-input-add-button").click(function() {
-                generateButton({icon: '', payload: ''});
+                generateButton({icon:'', payload:'', color:'', on_icon:'', on_color:''});
                 $("#node-input-buttons-container-div").scrollTop($("#node-input-buttons-container-div").get(0).scrollHeight);
             });
 
@@ -106,16 +117,33 @@
             $( "#dialog" ).one("dialogclose", function(ev,ui) {
                 $( "#dialog" ).off("dialogresize",switchDialogResize);
             });
+            var node = this;
+            $('#node-input-toggle').on('change', function() {
+                if ($(this).is(':checked')) {
+                    node.inputs = 1;
+                    $("#node-input-buttons-container .show-if-switch").show();
+                } else {
+                    node.inputs = 0;
+                    $("#node-input-buttons-container .show-if-switch").hide();
+                }
+            });
         },
         oneditsave: function() {
             var buttons = $("#node-input-buttons-container").children();
             var node = this;
-            node.buttons= [];
+            node.buttons = [];
             buttons.each(function(i) {
                 var button = $(this);
+                var icon = button.find(".node-input-button-icon").val(),
+                    color = button.find(".node-input-button-color").val(),
+                    payload = button.find(".node-input-button-payload").val();
                 node.buttons.push({
-                    icon: button.find(".node-input-button-icon").val(),
-                    payload: button.find(".node-input-button-payload").val()
+                    payload: payload,
+                    
+                    icon: icon,
+                    color: color,
+                    on_icon: button.find(".node-input-button-onicon").val() || icon,
+                    on_color: button.find(".node-input-button-oncolor").val() || color,
                 });
             });
         }
@@ -134,6 +162,11 @@
     <div class="form-row">
         <label for="node-input-topic"><i class="icon-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic">
+    </div>
+    <div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-toggle" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-toggle" style="width: 70%;">Switch buttons</label>
     </div>
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
