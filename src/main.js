@@ -1,10 +1,13 @@
 var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'nvd3ChartDirectives', 'wu.masonry', 'sprintf']);
 
-app.config(['$mdThemingProvider', 
-    function($mdThemingProvider) {
+app.config(['$mdThemingProvider', '$compileProvider', 
+    function($mdThemingProvider, $compileProvider) {
         $mdThemingProvider.theme('default')
             .primaryPalette('light-green')
             .accentPalette('red');
+            
+        //white-list all protocolos
+        $compileProvider.aHrefSanitizationWhitelist(/.*/);
     }]);
 
 app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$rootScope',
