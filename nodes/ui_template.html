@@ -7,7 +7,9 @@
             name: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
-            format: {value: '{{msg.payload}}'}
+            format: {value: '{{msg.payload}}'},
+            storeOutMessages: {value: true},
+            fwdInMessages: {value: true},
         },
         inputs:1,
         outputs:1,
@@ -16,7 +18,14 @@
         label: function() { return this.name || 'template'; },
         oneditprepare: function() {
             var that = this;
-
+            if (typeof this.storeOutMessages === 'undefined') {
+                this.storeOutMessages = true;
+                $('#node-input-storeOutMessages').prop('checked', true);
+            }
+            if (typeof this.fwdInMessages === 'undefined') {
+                this.fwdInMessages = true;
+                $('#node-input-fwdInMessages').prop('checked', true);
+            }
             function functionDialogResize() {
                 var rows = $("#dialog-form>div:not(.node-text-editor-row)");
                 var height = $("#dialog-form").height();
@@ -88,6 +97,16 @@
         <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
         <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
         <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-storeOutMessages" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-storeOutMessages" style="width: 70%;">Replay output messages</label>
+    </div>
+    <div class="form-row">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-fwdInMessages" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-fwdInMessages" style="width: 70%;">Forward input messages</label>
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>

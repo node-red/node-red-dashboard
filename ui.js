@@ -73,11 +73,18 @@ options:
 	[convertBack] - callback to convert the message from front-end before sending it to the next connected node
 	
 	[beforeEmit] - callback to prepare the message that is emitted to the front-end
-	[beforeSend] - callback to prepare the message that is sent to the output 
+	[beforeSend] - callback to prepare the message that is sent to the output
+    
+    [forwardInputMessages] - default true. If true, forwards input messages to the output
+    [storeFrontEndInputAsState] - default true. If true, any message received from front-end is stored as state 
 */
 function add(opt) {
 	if (typeof opt.emitOnlyNewValues === 'undefined')
 		opt.emitOnlyNewValues = true;
+    if (typeof opt.forwardInputMessages === 'undefined')
+		opt.forwardInputMessages = true;
+    if (typeof opt.storeFrontEndInputAsState === 'undefined')
+		opt.storeFrontEndInputAsState = true;
 	opt.beforeEmit = opt.beforeEmit || beforeEmit;
 	opt.beforeSend = opt.beforeSend || beforeSend;
 	opt.convert = opt.convert || noConvert;
@@ -106,7 +113,7 @@ function add(opt) {
 			io.emit(updateValueEventName, toEmit);
 			replayMessages[opt.node.id] = toEmit;
  
- 			if (opt.node._wireCount) {
+ 			if (opt.forwardInputMessages && opt.node._wireCount) {
 				//forward to output
 				msg.payload = opt.convertBack(newValue);
 				msg = opt.beforeSend(msg) || msg;
@@ -120,15 +127,19 @@ function add(opt) {
 		if (msg.id !== opt.node.id) return;
 		
 		var converted = opt.convertBack(msg.value);
-		currentValues[msg.id] = converted;
-		replayMessages[msg.id] = msg;
+        if (opt.storeFrontEndInputAsState) {
+            currentValues[msg.id] = converted;
+            replayMessages[msg.id] = msg;
+        }
 		
 		var toSend = {payload: converted};
 		toSend = opt.beforeSend(toSend, msg) || toSend;
 		opt.node.send(toSend);
 		
-		//fwd to all UI clients
-		io.emit(updateValueEventName, msg);
+        if (opt.storeFrontEndInputAsState) {
+            //fwd to all UI clients
+            io.emit(updateValueEventName, msg);
+        }
 	};
 	
 	ev.on(updateValueEventName, handler);
