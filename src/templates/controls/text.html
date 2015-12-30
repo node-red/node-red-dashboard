@@ -1,4 +1,5 @@
-<div flex layout="row" layout-align="space-between center">
-    <p>{{me.item.label}}</p>
-	<h4 ng-bind-html="me.item.getText()"></h4>
+<div flex layout="row" layout-align="space-between center"
+     class="control-text">
+    <p class="label">{{me.item.label}}</p>
+	<p class="value" ng-bind-html="me.item.getText()"></p>
 </div>

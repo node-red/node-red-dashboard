@@ -21,3 +21,15 @@ md-content {
 body {
     background: #f0f0f0;
 }
+
+.control-text p {
+    margin: 0.2em 0;
+}
+
+.control-text .value {
+    font-weight: bold;
+}
+
+.control-numeric .value {
+    font-weight: bold;
+}

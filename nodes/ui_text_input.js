@@ -13,7 +13,7 @@ module.exports = function(RED) {
             tab: tab,
             group: config.group,
             control: {
-                type: 'text_input',
+                type: 'text-input',
                 label: config.name,
                 mode:  config.mode,
                 delay: config.delay,
