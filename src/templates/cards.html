@@ -11,11 +11,11 @@
                 md-component-id="left">
         <md-list>
             <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
-                <ng-md-icon class="md-default-theme" icon="{{tab.icon}}" style="margin: 5px"></ng-md-icon>
+                <ui-icon class="md-default-theme" icon="{{tab.icon}}" style="margin: 5px"></ui-icon>
                 <p>{{tab.header}}</p>
             </md-list-item>
             <md-list-item ng-click="main.open(link.link)" ng-repeat="link in main.links">
-                <ng-md-icon icon="{{link.icon}}" style="margin: 5px"></ng-md-icon>
+                <ui-icon icon="{{link.icon}}" style="margin: 5px"></ui-icon>
                 <p>{{link.name}}</p>
             </md-list-item>
         </md-list>

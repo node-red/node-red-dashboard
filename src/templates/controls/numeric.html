@@ -5,13 +5,13 @@
         <md-button class="md-icon-button down-button" aria-label="{{me.item.label}}"
                    ng-disabled="me.item.disabled" 
                    ng-mousedown="me.periodicChange(-1)" ng-mouseup="me.stopPeriodic()">
-            <ng-md-icon icon="expand_more"></ng-md-icon>
+            <ui-icon icon="expand_more"></ui-icon>
         </md-button>
         <p class="value" ng-bind-html="me.item.getText()"></p>
         <md-button class="md-icon-button up-button" aria-label="{{me.item.label}}"
                    ng-disabled="me.item.disabled"
                    ng-mousedown="me.periodicChange(1)" ng-mouseup="me.stopPeriodic()">
-            <ng-md-icon icon="expand_less"></ng-md-icon>
+            <ui-icon icon="expand_less"></ui-icon>
         </md-button>
     </div>
 </div>

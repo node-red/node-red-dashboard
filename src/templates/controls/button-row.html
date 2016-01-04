@@ -5,6 +5,6 @@
                ng-click="me.rowButtonClick(button)"
                ng-style="{color: me.item.toggle && me.item.value[button.payload] ?  button.on_color : button.color}" 
                aria-label="unknown">
-        <ng-md-icon icon="{{me.item.toggle && me.item.value[button.payload] ?  button.on_icon : button.icon}}"></ng-md-icon>
+        <ui-icon icon="{{me.item.toggle && me.item.value[button.payload] ?  button.on_icon : button.icon}}"></ui-icon>
     </md-button>
 </div>
