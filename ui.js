@@ -180,7 +180,7 @@ function init(server, app, log, redSettings) {
 			var vendor_packages = [
 				'angular', 'angular-sanitize', 
 				'angular-animate', 'angular-aria', 
-				'angular-material', 'angular-material-icons',
+				'angular-material', 'angular-material-icons', 'svg-morpheus',
 				'sprintf-js',
 				
 				'angular-masonry', 'masonry-layout', 'jquery', 'jquery-bridget', 'imagesloaded',
