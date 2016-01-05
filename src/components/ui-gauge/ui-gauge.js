@@ -5,7 +5,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
         return {
 			restrict: 'E',
 			replace: true,
-			template: '<div id="gauge_{{$id}}" class="200x160px"></div>',
+			templateUrl: 'components/ui-gauge/ui-gauge.html',
 			link: function(scope, element, attrs) {
 				$timeout(function() {
 					var gauge = new JustGage({

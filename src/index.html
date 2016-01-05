@@ -19,7 +19,7 @@
 </head>
 <body ng-app="ui" ng-controller="MainController as main" ng-cloak layout="column">
 
-<md-content ng-if="main.loaded" ng-include="'templates/cards.html'" layout="column" flex></md-content>
+<md-content ng-if="main.loaded" ng-include="'partials/main.html'" layout="column" flex></md-content>
 
 <script src="socket.io/socket.io.js"></script>
 
@@ -53,10 +53,10 @@
 <script src="main.js"></script>
 <script src="services/events.js"></script>
 <script src="directives/ui-compile.js"></script>
-<script src="directives/ui-component.js"></script>
-<script src="directives/ui-component-ctrl.js"></script>
-<script src="directives/ui-gauge.js"></script>
-<script src="directives/ui-icon.js"></script>
+<script src="components/ui-component/ui-component.js"></script>
+<script src="components/ui-component/ui-component-ctrl.js"></script>
+<script src="components/ui-gauge/ui-gauge.js"></script>
+<script src="components/ui-icon/ui-icon.js"></script>
 
 <script src="filters/chartGetRange.js"></script>
 <script src="filters/trusted.js"></script>

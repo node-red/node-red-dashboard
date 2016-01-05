@@ -13,7 +13,7 @@ angular.module('ui').directive('uiComponent', ['$http', '$compile', '$templateCa
             link: function (scope, element, attributes, ctrl) {
                 var template = templateCache[ctrl.item.type];
                 if (!template) {
-                    var link = 'templates/controls/' + ctrl.item.type +'.html';
+                    var link = 'components/ui-component/templates/' + ctrl.item.type +'.html';
                     var templateFromCache = $templateCache.get(link);
                     if (templateFromCache) {
                         template = $q.when(templateFromCache);

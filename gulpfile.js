@@ -43,9 +43,9 @@ gulp.task('js', function () {
   var scripts = gulp.src('src/index.html')
     .pipe(ghtmlSrc({getFileName: getFileName.bind(this, 'src')}));
     
-  var templates = gulp.src('src/templates/**/*.html')
+  var templates = gulp.src(['src/**/*.html', '!src/index.html'])
     .pipe(minifyHTML({spare: true, quotes: true}))
-    .pipe(templateCache('templates.js',  {root: 'templates/', module: 'ui'}));
+    .pipe(templateCache('templates.js',  {root: '', module: 'ui'}));
     
   return  streamqueue({ objectMode: true }, scripts, templates)
     .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))

@@ -5,7 +5,7 @@ angular.module('ui').directive('uiIcon',
         var fa = /^fa-/i;
         return {
             restrict: 'E',
-            templateUrl: 'templates/ui-icon.html',
+            templateUrl: 'components/ui-icon/ui-icon.html',
             scope: {
                 icon: '@'
             },
