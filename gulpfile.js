@@ -15,7 +15,7 @@ var
   spawn = require('child_process').spawn,
   streamqueue = require('streamqueue');
 
-gulp.task('build', ['icon', 'js', 'css', 'index']);
+gulp.task('build', ['icon', 'js', 'css', 'index', 'fonts']);
 
 gulp.task('publish', ['build'], function (done) {
   spawn('npm', ['publish'], { stdio: 'inherit' }).on('close', done);
@@ -24,8 +24,8 @@ gulp.task('publish', ['build'], function (done) {
 gulp.task('index', function() {
   return gulp.src('src/index.html')
     .pipe(htmlreplace({
-        'css': 'app.min.css',
-        'js': 'app.min.js'
+        'css': 'css/app.min.css',
+        'js': 'js/app.min.js'
     }))
     .pipe(minifyHTML({spare: true, quotes: true}))
     .pipe(gulp.dest('dist/'));
@@ -33,6 +33,10 @@ gulp.task('index', function() {
 
 gulp.task('icon', function() {
    return gulp.src('src/icon.png').pipe(gulp.dest('dist/')); 
+});
+
+gulp.task('fonts', function() {
+   return gulp.src('node_modules/font-awesome/fonts/*').pipe(gulp.dest('dist/fonts/')); 
 });
     
 gulp.task('js', function () {
@@ -46,7 +50,7 @@ gulp.task('js', function () {
   return  streamqueue({ objectMode: true }, scripts, templates)
     .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
     .pipe(concat('app.min.js'))
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('css', function () {
@@ -54,7 +58,7 @@ gulp.task('css', function () {
     .pipe(ghtmlSrc({getFileName: getFileName.bind(this, 'href'), presets: 'css'}))
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(concat('app.min.css'))
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/css/'));
 });
 
 var vendorPrefix = "vendor/";
