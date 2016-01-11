@@ -29,6 +29,8 @@ var updateValueEventName = 'update-value';
 var io = undefined;
 var currentValues = {};
 var replayMessages = {};
+var removeStateTimers = {};
+var removeStateTimeout = 1000;
 var ev = new events.EventEmitter();
 ev.setMaxListeners(0);
 
@@ -79,6 +81,9 @@ options:
     [storeFrontEndInputAsState] - default true. If true, any message received from front-end is stored as state 
 */
 function add(opt) {
+    clearTimeout(removeStateTimers[opt.node.id]);
+    delete removeStateTimers[opt.node.id];
+    
 	if (typeof opt.emitOnlyNewValues === 'undefined')
 		opt.emitOnlyNewValues = true;
     if (typeof opt.forwardInputMessages === 'undefined')
@@ -147,8 +152,10 @@ function add(opt) {
 	return function() {
 		ev.removeListener(updateValueEventName, handler);
 		remove();
-		delete currentValues[opt.node.id];
-		delete replayMessages[opt.node.id];
+        removeStateTimers[opt.node.id] = setTimeout(function() {
+            delete currentValues[opt.node.id];
+            delete replayMessages[opt.node.id];  
+        }, removeStateTimeout);
 	};
 }
 
