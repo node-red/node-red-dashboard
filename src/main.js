@@ -74,7 +74,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             toastScope.toast = msg;
             $mdToast.show({
                 scope: toastScope,
-                templateUrl: 'templates/controls/toast.html',
+                templateUrl: 'partials/toast.html',
                 hideDelay: 3000,
                 position: 'top right'
             });

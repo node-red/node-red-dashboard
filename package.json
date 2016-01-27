@@ -39,7 +39,7 @@
     "angular-animate": "^1.4.8",
     "angular-aria": "^1.4.8",
     "angular-masonry": "^0.14.0",
-    "angular-material": "^1.0.0",
+    "angular-material": "^1.0.2",
     "angular-material-icons": "^0.6.0",
     "angular-sanitize": "^1.4.8",
     "angularjs-nvd3-directives": "0.0.8",
