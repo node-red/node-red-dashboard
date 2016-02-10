@@ -25,35 +25,35 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
-        <label for="node-input-mode"><i class="fa fa-keyboard-o"></i> Mode</label>
-        <select style="width: calc(64% - 132px)" id="node-input-mode">
-            <option value="text">text</option>
-            <option value="email">email</option>
-            <option value="color">color</option>
-        </select>
-        <label for="node-input-delay" style="text-align: right; width: 100px"><i class="fa fa-clock-o"></i> Delay (ms)</label>
-        <input type="text" style="width: 50px" id="node-input-delay">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic">
+        <label for="node-input-mode"><i class="fa fa-keyboard-o"></i> Mode</label>
+        <select style="width: calc(64% - 132px)" id="node-input-mode">
+            <option value="plain text">text</option>
+            <option value="email address">email</option>
+            <option value="color picker">color</option>
+        </select>
+        <label for="node-input-delay" style="text-align: right; width: 100px"><i class="fa fa-clock-o"></i> Delay (ms)</label>
+        <input type="text" style="width: 50px" id="node-input-delay">
     </div>
     <div class="form-row">
-        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
-        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
-        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" style="width: 50px" id="node-input-order">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic">
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="ui_text_input">
-  <p>Shows a text input field on the user interface. Mode can be regular text, email or color.
-  The email mode will color in red if it is not a valid address and will return undefined.
-  The delay sets the amount of time in milliseconds before the output is sent.
-  Text written by the user is sent in realtime as the <b>payload</b>. You can also
-  set the text of the input field by sending in a <b>payload</b>.
+  <p>Shows a text input field on the user interface. Mode can be regular text, email or color picker.</p>
+  <p>Text written by the user is sent in realtime as the <code>msg.payload</code>. You can also
+  preset the text of the input field by sending in a <code>msg.payload</code>.</p>
+  <p>The <i>Delay</i> sets the amount of time in milliseconds before the output is sent.</p>
+  <p>The email mode will color in red if it is not a valid address and will return undefined.</p>
 </script>

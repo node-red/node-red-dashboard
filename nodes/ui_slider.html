@@ -4,7 +4,7 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: 'Slider'},
+            name: {value: 'slider'},
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
@@ -25,18 +25,18 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic">
-    </div>
-    <div class="form-row">
-        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
-        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
-        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row">
         <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
@@ -49,11 +49,10 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_slider">
-    <p>Shows a slider on the user interface. The user can change it's value between
-    the limits (<b>Min/Max</b>). Each value change will generate a message with the value set
-    as <b>payload</b>.<br>
-    If a topic is specified, it will be appended to the message.<br>
-    Each input message will be converted to a number (<b>Min</b> will be used if conversion fails)
-    and it will update the user interface. Also if the value changes, it will be passed to the output.<br>
-    </p>
+    <p>Shows a slider widget on the user interface.</p>
+    <p>The user can change its value between the limits (<b>Min/Max</b>). Each value change
+    will generate a message with the value set as <b>payload</b>.</p>
+    <p>If a <i>Topic</i> is specified, it will be added as <code>msg.topic</code>.</p>
+    <p>Each input message will be converted to a number,(<b>Min</b> will be used if conversion fails),
+    and it will update the user interface. Also if the value changes, it will be passed to the output.</p>
 </script>

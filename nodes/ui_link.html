@@ -6,8 +6,7 @@
             name: {value: 'Google'},
 			link: {value: 'http://www.google.com'},
             icon: {value: 'open_in_browser'},
-            order: {value: 1, validate: RED.validators.number()},
-
+            order: {value: 1, validate: RED.validators.number()}
         },
         inputs:0,
         outputs:0,
@@ -33,11 +32,11 @@
     </div>
     <div class="form-row">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order">
+        <input type="text" id="node-input-order" style="width:50px">
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="ui_link">
-    <p>Will add a link in the left side menu. The icon must be one of 
-    (<a href="https://klarsys.github.io/angular-material-icons/" target="_blank">https://klarsys.github.io/angular-material-icons/</a>).</p>
+    <p>Adds a web link to the left side menu of the user interface.</p>
+    <p>The icon must be one of <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">these Angular Material icons</a>.</p>
 </script>

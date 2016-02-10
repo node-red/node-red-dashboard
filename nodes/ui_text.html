@@ -4,7 +4,7 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: 'Text'},
+            name: {value: 'text'},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
             format: {value: '{{msg.payload}}'}
@@ -24,14 +24,14 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
         <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
         <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
         <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
@@ -40,8 +40,9 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_text">
-    <p>Will display a non-editable text on the user interface. Each received message will update 
-    the text based on the provided <b>Template</b>.<br>
-    The <b>Template</b> field can be used to change the displayed format and can contain
-    valid HTML (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
+    <p>Will display a non-editable text field on the user interface.</p>
+    <p>Each received <code>msg.payload</code> will update the text based on the provided <i>Template</i>.</p>
+    <p>The <i>Template</i> field can be used to change the displayed format and can contain valid HTML and
+    <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
+    <p>For example: <code>{{msg.payload | uppercase}} &deg;</code> will uppercase the text and add the degree symbol.</p>
 </script>

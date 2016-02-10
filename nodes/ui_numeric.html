@@ -4,13 +4,13 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: 'Numeric'},
+            name: {value: 'numeric'},
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
             format: {value: '{{value}}'},
             min: {value: 0, required: true, validate: RED.validators.number()},
-            max: {value: 10, required: true, validate: RED.validators.number()},
+            max: {value: 10, required: true, validate: RED.validators.number()}
         },
         inputs:1,
         outputs:1,
@@ -26,18 +26,18 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic">
-    </div>
-    <div class="form-row">
-        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
-        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
-        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
@@ -54,13 +54,14 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_numeric">
-    <p>Shows a numeric input on the user interface. The user can change it's value between
+    <p>Adds a numeric input widget to the user interface.</p>
+    <p>The user can change its value between
     the limits (<b>Min/Max</b>). Each value change will generate a message with the value set
-    as <b>payload</b>.<br>
-    If a topic is specified, it will be appended to the message.<br>
-    Each input message will be converted to a number (<b>Min</b> will be used if conversion fails)
-    and it will update the user interface. Also if the value changes, it will be passed to the output.<br>
-    The <b>Template</b> field can be used to change the displayed format. For example, a template of <b>{{value}} %</b>
-    with a value of <b>23</b> will show <b>23 %</b> on the user interface. The <b>Template</b> field can contain
-    HTML to format the output (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
+    as <code>msg.payload</code>.</p>
+    <p>If <i>Topic</i> is specified, it will be added as <code>msg.topic</code>.<p>
+    <p>Each input message will be converted to a number, (<b>Min</b> will be used if conversion fails),
+    and it will update the user interface. Also if the value changes, it will be passed to the output.</p>
+    <p>The <i>Template</i> field can be used to change the displayed format. For example, a template of <code>{{value}} %</code>
+    with a value of <b>23</b> will show <b>23 %</b> on the user interface. The <i>Template</i> field can contain
+    HTML or Angular filters to format the output (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
 </script>

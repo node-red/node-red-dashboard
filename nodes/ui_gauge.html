@@ -4,7 +4,7 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: 'Gauge'},
+            name: {value: 'gauge'},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
             format: {value: '{{value}}'},
@@ -26,14 +26,14 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
         <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
         <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
         <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
@@ -50,5 +50,8 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_gauge">
-    <p>TODO</p>
+    <p>Adds a guage type widget to the user interface.</p>
+    <p>The <code>msg.payload</code> is searched for a numeric value - which can then be formatted using
+    <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
+    <p>For example : <code>{{value | number:1}}%</code> will round the value to one dicimal place and add % sign to the label.
 </script>

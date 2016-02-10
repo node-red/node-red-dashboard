@@ -9,7 +9,7 @@
             order: {value: 1, validate: RED.validators.number()},
             format: {value: '{{msg.payload}}'},
             storeOutMessages: {value: true},
-            fwdInMessages: {value: true},
+            fwdInMessages: {value: true}
         },
         inputs:1,
         outputs:1,
@@ -89,14 +89,14 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
         <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
         <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
         <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label>&nbsp;</label>
@@ -118,8 +118,9 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_template">
-    <p>The Template can contain any valid html and angular/angular-material directives.<br>
-    You can use this node to create a dynamic user interface element that changes it's appearence based on the input message and can send back messages to Node-RED.<br>
+    <p>The Template widget can contain any valid html and Angular/Angular-Material directives.</p>
+    <p>This node can be used to create a dynamic user interface element that changes its appearence
+    based on the input message and can send back messages to Node-RED.</p>
     <br>
     <b>For example:</b><br>
     <pre>&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
@@ -135,6 +136,5 @@
     Click me to send a hello world
 &lt;/md-button&gt;</pre>
     Will display a button that when clicked will send a message with the payload <code>'Hello world'</code>.
-    </p>
-    
+    </p>    
 </script>

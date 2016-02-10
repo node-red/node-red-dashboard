@@ -20,13 +20,10 @@
         icon: "ui_radio.png",
         paletteLabel: 'radio button',
         label: function() { return this.name || 'radio button'; },
-
         oneditprepare: function() {
-
             function resizeButton(button, width) {
                 var labelField = button.find(".node-input-button-icon");
                 labelField.width(120);
-
                 var payloadField = button.find(".node-input-button-payload");
                 payloadField.width(width - 210);
             }
@@ -83,7 +80,7 @@
                 buttons.each(function(i) {
                     resizeButton($(this), newWidth);
                 });
-            };
+            }
 
             $( "#node-input-buttons-container" ).sortable({
                 axis: "y",
@@ -128,18 +125,18 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic">
-    </div>
-    <div class="form-row">
-        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
-        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
-        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row node-input-buttons-container-row" style="margin-bottom: 0px;">
         <div id="node-input-buttons-container-div" style="box-sizing: border-box; border-radius: 5px; height: 210px; padding: 5px; border: 1px solid #ccc; overflow-y:scroll;">
@@ -152,8 +149,9 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_radio_button">
-    <p>Shows a row of radio buttons on the user interface. The label corresponds to the name of the button.<br>
-    The specific payload is sent in a message once a radio button is selected. <br>
-    If a topic is specified, it will be appended to the message.</p> <br>
-    You can also set the input from Node-RED by sending the corresponding payload as a string.
+    <p>Shows a row of radio buttons on the user interface.</p>
+    <p>The label corresponds to the name of the button.<br>
+    The specific payload is sent in a message once a radio button is selected.</p>
+    <p>If a <i>Topic</i> is specified, it will be added as <code>msg.topic</code>.</p>
+    <p>You can also set the input from Node-RED by sending the corresponding payload as a string.</p>
 </script>

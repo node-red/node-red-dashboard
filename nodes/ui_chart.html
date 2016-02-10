@@ -27,14 +27,14 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
         <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
         <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
         <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-removeOlder"><i class="fa fa-trash"></i> Old after</label>
@@ -63,11 +63,11 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_chart">
-    <p>Plots the input values on a time based line chart.<br>
-    Each input (<code>msg.payload</code>) value will be converted to a number. If the
-    conversion fails, the message is ignored.<br>
-    Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
-    value on each input message.<br>
-    The first ouput contains the chart state that can be persisted if needed. The second output 
+    <p>Plots the input values on a time based line chart.</p>
+    <p>Each input <code>msg.payload</code> value will be converted to a number. If the
+    conversion fails, the message is ignored.</p>
+    <p>Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
+    value on each input message.</p>
+    <p>The first output contains the chart state that can be persisted if needed. The second output
     sends a "restore" message that can be used to restore the state of the chart.</p>
 </script>

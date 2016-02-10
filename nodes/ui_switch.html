@@ -9,7 +9,7 @@
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
             onvalue: {value: 'true', required: true},
-            offvalue: {value: 'false', required: true},
+            offvalue: {value: 'false', required: true}
         },
         inputs:1,
         outputs:1,
@@ -25,18 +25,18 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic">
-    </div>
-    <div class="form-row">
-        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
-        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
-        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row">
         <label for="node-input-onvalue"><i class="fa fa-toggle-on"></i> On Value</label>
@@ -49,7 +49,9 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_switch">
-    <p>Shows a switch on the user interface. Each change in the state of the switch will generate
-    a message on the output with the specified <b>on/off</b> value.<br>
-    If a topic is specified, it will be appended to the message.</p>
+    <p>Adds a switch to the user interface.</p>
+    <p>Each change in the state of the switch will generate
+    a message on the output with the specified <b>on/off</b> value.</p>
+    <p>The widget can be updated by an incoming <code>msg.payload</code> with the specified values.</p>
+    <p>If a <i>Topic</i> is specified, it will be add as <code>msg.topic</code>.</p>
 </script>

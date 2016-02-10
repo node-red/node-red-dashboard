@@ -4,11 +4,11 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: 'Button'},
+            name: {value: 'button'},
             payload: {value: ''},
             topic: {value: ''},
             group: {value: ''},
-            order: {value: 1, validate: RED.validators.number()},
+            order: {value: 1, validate: RED.validators.number()}
         },
         inputs:0,
         outputs:1,
@@ -24,6 +24,12 @@
         <input type="text" id="node-input-tab">
     </div>
     <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
+        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
+        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" style="width: 50px" id="node-input-order">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
@@ -35,17 +41,11 @@
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic">
     </div>
-    <div class="form-row">
-        <label for="node-input-group"><i class="fa fa-object-group"></i> Group</label>
-        <input type="text" style="width: calc(70% - 132px)" id="node-input-group">
-        <label for="node-input-order" style="text-align: right; width: 60px"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" style="width: 50px" id="node-input-order">
-    </div>
 </script>
 
 <script type="text/x-red" data-help-name="ui_button">
-    <p>Shows a button on the user interface. Clicking the button, generates a message 
-    with the payload set to be the <b>Payload</b> field. If no payload is specified, 
-    the node id is used. The topic field will be appended to the message
-    as a <b>topic</b> property.</p>
+    <p>Adds a button to the user interface.</p>
+    <p>Clicking the button generates a message with <code>msg.payload</code> set to the <i>Payload</i> field.
+    If no payload is specified, the node id is used.</p>
+    <p>The <i>Topic</i> field can be used to set the <code>msg.topic</code> property.</p>
 </script>
