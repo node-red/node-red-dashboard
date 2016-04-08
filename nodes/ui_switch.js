@@ -13,10 +13,15 @@ module.exports = function(RED) {
             tab: tab, 
             group: config.group, 
             control: {
-                type: 'switch',
+                type: 'switch' + (config.style ? '-' + config.style : ''),
                 label: config.name,
                 order: config.order,
-                value: false
+                value: false,
+
+                onicon: config.onicon,
+                officon: config.officon,
+                oncolor: config.oncolor,
+                offcolor: config.offcolor
             }, 
             convert: function (payload) {
                 switch (payload.toString()) {

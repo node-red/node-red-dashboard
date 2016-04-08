@@ -1,4 +1,4 @@
-angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents',
+angular.module('ui').directive('uiTemplate', ['$compile', '$rootScope', 'UiEvents',
     function ($compile, $rootScope, events) {
         function createInnerScope(id) {
             var innerScope = $rootScope.$new();
@@ -7,12 +7,12 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
             };
             return innerScope;
         }
-        
+
         return function(scope, element, attrs) {
             var id = scope.$eval('me.item.id');
             var innerScope;
-            
-            scope.$watch(attrs.uiCompile,
+
+            scope.$watch(attrs.uiTemplate,
                 function(value) {
                     if (innerScope) innerScope.$destroy();
                     innerScope = createInnerScope(id);
@@ -22,12 +22,12 @@ angular.module('ui').directive('uiCompile', ['$compile', '$rootScope', 'UiEvents
                     $compile(element.contents())(innerScope);
                 }
             );
-            
+
             scope.$watch('me.item.msg', function (value) {
                 if (innerScope)
                     innerScope.msg = value;
             });
-            
+
             scope.$on('$destroy', function() {
                 if (innerScope)
                     innerScope.$destroy();

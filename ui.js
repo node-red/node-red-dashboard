@@ -189,7 +189,7 @@ function init(server, app, log, redSettings) {
                 'angular-material-icons', 'svg-morpheus', 'font-awesome',
 				'sprintf-js',
 				
-				'angular-masonry', 'masonry-layout', 'jquery', 'jquery-bridget', 'imagesloaded',
+				'jquery', 'jquery-ui',
 				
 				'raphael', 'justgage',
 				
@@ -253,14 +253,14 @@ function itemSorter(item1, item2) {
 function addControl(tab, groupHeader, control) {
 	if (typeof control.type !== 'string') return;
 	groupHeader = groupHeader || settings.defaultGroupHeader;
-	control.order = parseInt(control.order);
+	control.order = parseFloat(control.order);
 	
 	var foundTab = find(tabs, function (t) {return t.id === tab.id });
 	if (!foundTab) {
 		foundTab = {
 			id: tab.id,
 			header: tab.config.name,
-			order: parseInt(tab.config.order),
+			order: parseFloat(tab.config.order),
 			icon: tab.config.icon,
 			items: []
 		};

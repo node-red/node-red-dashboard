@@ -1,0 +1,11 @@
+.control-numeric {
+    padding: 0 0 0 10px;
+}
+
+.control-numeric .value {
+    font-weight: bold;
+}
+
+.control-numeric .md-button {
+    margin: 0;
+}

@@ -12,15 +12,6 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
                     me.buttonClick = function () {
                         me.valueChanged(0);
                     };
-                case 'button-row':
-                    me.rowButtonClick = function (button) {
-                        if (me.item.toggle)
-                            me.item.value[button.payload] = !me.item.value[button.payload];
-                        else 
-                            me.item.value = button.payload;
-                        me.valueChanged(0);
-                    };
-                    break;
                     
                 case 'numeric':
                     var changeValue = function(delta) {

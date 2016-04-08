@@ -1,0 +1,11 @@
+.control-text {
+    padding: 0 10px;
+}
+
+.control-text p {
+    margin: 0.2em 0;
+}
+
+.control-text .value {
+    font-weight: bold;
+}

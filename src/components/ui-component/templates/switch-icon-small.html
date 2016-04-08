@@ -1,0 +1,10 @@
+<md-card ui-card-size="1x1" layout-align="center center"
+         class="control-switch-icon-small">
+    <md-button class="md-raised"
+           ng-click="me.item.value=!me.item.value;me.valueChanged(0)"
+           ng-style="{color: me.item.value ?  me.item.oncolor : me.item.offcolor}"
+           aria-label="unknown">
+        <ui-icon icon="{{me.item.value ? me.item.onicon : me.item.officon}}"></ui-icon>
+    </md-button>
+</md-card>
+

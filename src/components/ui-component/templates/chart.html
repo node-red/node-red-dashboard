@@ -1,18 +1,20 @@
-<nvd3-line-chart
-    class="control-chart"
-	data="me.item.value"
-	width="320"
-	height="150"
-	margin="{left:30,top:10,bottom:20,right:10}"
-	showXAxis="true"
-	showYAxis="true"
-	objectequality="true"
-	xAxisTickFormat="me.formatTime"
-	yaxisdomain='$parent.me.item.value | chartGetRange'
-	
-	tooltips="true"
-	interactive="true"
-	interpolate="{{me.item.interpolate}}"
-	noData="{{me.item.nodata}}">
-	<svg></svg>
-</nvd3-line-chart>
+<md-card ui-card-size="6x3">
+    <nvd3-line-chart
+        class="control-chart"
+        data="me.item.value"
+        width="280"
+        height="135"
+        margin="{left:30,top:10,bottom:20,right:20}"
+        showXAxis="true"
+        showYAxis="true"
+        objectequality="true"
+        xAxisTickFormat="me.formatTime"
+        yaxisdomain='$parent.me.item.value | chartGetRange'
+
+        tooltips="true"
+        interactive="true"
+        interpolate="{{me.item.interpolate}}"
+        noData="{{me.item.nodata}}">
+        <svg></svg>
+    </nvd3-line-chart>
+</md-card>

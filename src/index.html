@@ -14,6 +14,14 @@
     <link rel="stylesheet" href="vendor/nvd3/build/nv.d3.min.css">
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
     
+    <link rel="stylesheet" href="components/ui-component/templates/button.css">
+    <link rel="stylesheet" href="components/ui-component/templates/numeric.css">
+    <link rel="stylesheet" href="components/ui-component/templates/slider.css">
+    <link rel="stylesheet" href="components/ui-component/templates/switch.css">
+    <link rel="stylesheet" href="components/ui-component/templates/switch-icon-small.css">
+    <link rel="stylesheet" href="components/ui-component/templates/text.css">
+    <link rel="stylesheet" href="components/ui-card-panel/ui-card-panel.css">
+
     <link rel="stylesheet" href="main.css">
     <!-- endbuild -->
 </head>
@@ -25,10 +33,6 @@
 
 <!-- build:js -->
 <script src="vendor/jquery/dist/jquery.min.js"></script>
-<script src="vendor/jquery-bridget/jquery.bridget.js"></script>
-<script src="vendor/masonry-layout/dist/masonry.pkgd.min.js"></script>
-<script src="vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-
 <script src="vendor/angular/angular.min.js"></script>
 <script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="vendor/angular-animate/angular-animate.min.js"></script>
@@ -38,8 +42,6 @@
 <script src="vendor/sprintf-js/dist/sprintf.min.js"></script>
 <script src="vendor/sprintf-js/dist/angular-sprintf.min.js"></script>
 <script src="vendor/svg-morpheus/compile/unminified/svg-morpheus.js"></script>
-
-<script src="vendor/angular-masonry/angular-masonry.min.js"></script>
 
 <!--for charts-->
 <script src="vendor/d3/d3.min.js"></script>
@@ -52,10 +54,16 @@
 
 <script src="main.js"></script>
 <script src="services/events.js"></script>
-<script src="directives/ui-compile.js"></script>
+<script src="services/sizes.js"></script>
+<script src="directives/ui-template.js"></script>
+<script src="directives/ui-highlight.js"></script>
 <script src="components/ui-component/ui-component.js"></script>
 <script src="components/ui-component/ui-component-ctrl.js"></script>
 <script src="components/ui-gauge/ui-gauge.js"></script>
+<script src="components/ui-card-panel/ui-card-panel.js"></script>
+<script src="components/ui-card-panel/ui-card-panel-ctrl.js"></script>
+<script src="components/ui-card-panel/ui-card-size.js"></script>
+<script src="components/ui-card-panel/ui-masonry.js"></script>
 <script src="components/ui-icon/ui-icon.js"></script>
 
 <script src="filters/chartGetRange.js"></script>

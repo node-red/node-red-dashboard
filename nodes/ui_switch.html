@@ -8,14 +8,46 @@
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
+            style: {value: ''},
             onvalue: {value: 'true', required: true},
-            offvalue: {value: 'false', required: true}
+            onicon: {value: 'check', required: true},
+            oncolor: {value: 'green', required: true},
+            offvalue: {value: 'false', required: true},
+            officon: {value: 'close', required: true},
+            offcolor: {value: 'red', required: true}
         },
         inputs:1,
         outputs:1,
         icon: "ui_switch.png",
         paletteLabel: 'switch',
-        label: function() { return this.name || 'switch'; }
+        label: function() { return this.name || 'switch'; },
+
+        oneditprepare: function() {
+            $('#node-input-style').on('change', function() {
+                function all(action) {
+                    ['color', 'icon'].forEach(function(p2) {
+                        ['off', 'on'].forEach(function(p1) {
+                            var sel = "node-input-"+p1+p2;
+                            $('[for="'+sel+'"]')[action]();
+                            $('#'+sel)[action]();
+                        });
+                    });
+                }
+
+                switch ($(this).val()) {
+                    case '':
+                        all('hide');
+                        $('#node-input-onvalue').css('width', '70%');
+                        $('#node-input-offvalue').css('width', '70%');
+                        break;
+                    case 'icon-small':
+                        all('show');
+                        $('#node-input-onvalue').css('width', 'calc(70% - 285px)');
+                        $('#node-input-offvalue').css('width', 'calc(70% - 285px)');
+                        break;
+                }
+            });
+        }
     });
 </script>
 
@@ -40,11 +72,19 @@
     </div>
     <div class="form-row">
         <label for="node-input-onvalue"><i class="fa fa-toggle-on"></i> On Value</label>
-        <input type="text" id="node-input-onvalue">
+        <input type="text" id="node-input-onvalue" style="width:calc(70% - 285px);">
+        <label for="node-input-oncolor" style="width:40px;text-align:right;">Color</label>
+        <input type="text" id="node-input-oncolor" style="width:65px">
+        <label for="node-input-onicon" style="width:35px;text-align:right;">Icon</label>
+        <input type="text" id="node-input-onicon" style="width:100px">
     </div>
     <div class="form-row">
         <label for="node-input-offvalue"><i class="fa fa-toggle-off"></i> Off Value</label>
-        <input type="text" id="node-input-offvalue">
+        <input type="text" id="node-input-offvalue" style="width:calc(70% - 285px);">
+        <label for="node-input-offcolor" style="width:40px;text-align:right;">Color</label>
+        <input type="text" id="node-input-offcolor" style="width:65px">
+        <label for="node-input-officon" style="width:35px;text-align:right;">Icon</label>
+        <input type="text" id="node-input-officon" style="width:100px">
     </div>
 </script>
 

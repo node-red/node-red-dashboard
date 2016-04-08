@@ -1,0 +1,32 @@
+.masonry-container {
+    position: relative;
+    width: 100%;
+}
+
+.masonry-container > * {
+    position: absolute;
+    opacity: 0;
+}
+
+.masonry-container > .visible {
+    opacity: 1;
+}
+
+.card-panel > p {
+    margin-bottom: 3px;
+    margin-left: 9px
+}
+
+.card-container {
+    position: relative;
+}
+
+.card-container > * {
+    margin: 0 !important;
+    position: absolute;
+    opacity: 0;
+}
+
+.card-container > .visible {
+    opacity: 1;
+}

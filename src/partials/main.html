@@ -1,4 +1,17 @@
-<md-toolbar class="md-whiteframe-z1">
+<md-sidenav layout="column" class="md-sidenav-left"
+            md-component-id="left">
+    <md-list>
+        <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
+            <ui-icon icon="{{tab.icon}}" style="margin: 5px"></ui-icon>
+            <p>{{tab.header}}</p>
+        </md-list-item>
+        <md-list-item ng-click="main.open(link.link)" ng-repeat="link in main.links">
+            <ui-icon icon="{{link.icon}}" style="margin: 5px"></ui-icon>
+            <p>{{link.name}}</p>
+        </md-list-item>
+    </md-list>
+</md-sidenav>
+<md-toolbar>
     <div class="md-toolbar-tools">
         <md-button ng-click="main.toggleSidenav()" class="md-icon-button">
             <ng-md-icon icon="menu"></ng-md-icon>
@@ -6,30 +19,10 @@
         <h1 ng-show="main.loaded">{{main.selectedTab.header}}</h1>
     </div>
 </md-toolbar>
-<md-content layout="row" flex>
-    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z1"
-                md-component-id="left">
-        <md-list>
-            <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
-                <ui-icon class="md-default-theme" icon="{{tab.icon}}" style="margin: 5px"></ui-icon>
-                <p>{{tab.header}}</p>
-            </md-list-item>
-            <md-list-item ng-click="main.open(link.link)" ng-repeat="link in main.links">
-                <ui-icon icon="{{link.icon}}" style="margin: 5px"></ui-icon>
-                <p>{{link.name}}</p>
-            </md-list-item>
-        </md-list>
-    </md-sidenav>
-
-    <md-content layout="row" flex layout-align="center start">
-        <masonry masonry-options="{isFitWidth: true, columnWidth: '.group-card', gutter: 16}">
-            <md-card class="masonry-brick group-card" ng-repeat="group in main.selectedTab.items"
-                     style="margin: 16px 0 0 0">
-                <md-card-content layout="column">
-                    <h2 ng-show="group.header" class="md-title">{{group.header}}</h2>
-                    <ui-component ng-repeat="control in group.items" flex item="control"></ui-component>
-                </md-card-content>
-            </md-card>
-        </masonry>
-    </md-content>
+<md-content flex>
+    <div ui-masonry>
+        <ui-card-panel ng-repeat="group in main.selectedTab.items">
+            <ui-component ng-repeat="control in group.items" item="control"></ui-component>
+        </ui-card-panel>
+    </div>
 </md-content>
