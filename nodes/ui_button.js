@@ -5,7 +5,7 @@ module.exports = function(RED) {
     function ButtonNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
-        
+
         var tab = RED.nodes.getNode(config.tab);
         if (!tab) return;
         
@@ -17,7 +17,9 @@ module.exports = function(RED) {
                 type: 'button',
                 label: config.name,
                 order: config.order,
-                value: config.payload || node.id
+                value: config.payload || node.id,
+				width: config.width,
+				height: config.height
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;

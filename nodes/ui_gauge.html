@@ -10,6 +10,8 @@
             format: {value: '{{value}}'},
             min: {value: 0, required: true, validate: RED.validators.number()},
             max: {value: 10, required: true, validate: RED.validators.number()},
+            width: {value: 3, validate: RED.validators.number()},
+            height: {value: 3, validate: function(value) { return value >= 3;}}
         },
         inputs:1,
         outputs:0,
@@ -46,6 +48,12 @@
     <div class="form-row">
         <label for="node-input-max"><i class="fa fa-caret-right"></i> Max</label>
         <input type="text" id="node-input-max">
+    </div>
+    <div class="form-row">
+        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
+        <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-height" placeholder="height > 3">
     </div>
 </script>
 

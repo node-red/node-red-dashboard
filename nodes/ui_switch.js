@@ -17,11 +17,12 @@ module.exports = function(RED) {
                 label: config.name,
                 order: config.order,
                 value: false,
-
                 onicon: config.onicon,
                 officon: config.officon,
                 oncolor: config.oncolor,
-                offcolor: config.offcolor
+                offcolor: config.offcolor,
+				width: config.width,
+				height: config.height
             }, 
             convert: function (payload) {
                 switch (payload.toString()) {

@@ -14,7 +14,9 @@
             oncolor: {value: 'green', required: true},
             offvalue: {value: 'false', required: true},
             officon: {value: 'close', required: true},
-            offcolor: {value: 'red', required: true}
+            offcolor: {value: 'red', required: true},
+            width: {value: 6, validate: function(value) { return (value >= 1 && value <=6);}},
+            height: {value: 1, validate: function(value) { return (value >= 1 && value <=6);}}
         },
         inputs:1,
         outputs:1,
@@ -85,6 +87,12 @@
         <input type="text" id="node-input-offcolor" style="width:65px">
         <label for="node-input-officon" style="width:35px;text-align:right;">Icon</label>
         <input type="text" id="node-input-officon" style="width:100px">
+    </div>
+    <div class="form-row">
+        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
+        <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-height">
     </div>
 </script>
 
