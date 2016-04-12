@@ -1,0 +1,12 @@
+/*
+overwrite the default md-errors-spacer min-height
+reason: https://github.com/angular/material/issues/6214
+*/
+
+md-input-container {
+	padding: 0px 10px;
+}
+
+md-input-container .md-errors-spacer {
+	min-height: 0;
+}

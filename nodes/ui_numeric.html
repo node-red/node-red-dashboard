@@ -66,10 +66,11 @@
     <p>The user can change its value between
     the limits (<b>Min/Max</b>). Each value change will generate a message with the value set
     as <code>msg.payload</code>.</p>
-    <p>If <i>Topic</i> is specified, it will be added as <code>msg.topic</code>.<p>
+    <p>If <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.<p>
     <p>Each input message will be converted to a number, (<b>Min</b> will be used if conversion fails),
     and it will update the user interface. Also if the value changes, it will be passed to the output.</p>
-    <p>The <i>Template</i> field can be used to change the displayed format. For example, a template of <code>{{value}} %</code>
-    with a value of <b>23</b> will show <b>23 %</b> on the user interface. The <i>Template</i> field can contain
+    <p>The <b>Template</b> field can be used to change the displayed format. For example, a <b>Template</b> of <code>{{value}} %</code>
+    with a value of <b>23</b> will show <b>23 %</b> on the user interface. The <b>Template</b> field can contain
     HTML or Angular filters to format the output (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
+	<p>The <b>Width</b> <i>(default : 3)</i> and <b>Height</b> <i>(default : 1)</i> of the numeric can be defined as a number between 1 and 6. As an example, a value of 4 results in a height of 4 rows and a width of 4/6 of a group's width.</p>
 </script>

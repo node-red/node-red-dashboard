@@ -4,7 +4,7 @@
         color: '#a6bbcf',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: 'Switch'},
+            name: {value: 'switch'},
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
@@ -99,7 +99,8 @@
 <script type="text/x-red" data-help-name="ui_switch">
     <p>Adds a switch to the user interface.</p>
     <p>Each change in the state of the switch will generate
-    a message on the output with the specified <b>on/off</b> value.</p>
+    a message on the output with the specified <b>On/Off</b> value.</p>
     <p>The widget can be updated by an incoming <code>msg.payload</code> with the specified values.</p>
-    <p>If a <i>Topic</i> is specified, it will be add as <code>msg.topic</code>.</p>
+    <p>If a <b>Topic</b> is specified, it will be add as <code>msg.topic</code>.</p>
+	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 1)</i> of the switch can be defined as a number between 1 and 6. As an example, a value of 4 results in a height of 4 rows and a width of 4/6 of a group's width.</p>
 </script>
