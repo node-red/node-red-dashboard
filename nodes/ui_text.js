@@ -15,7 +15,7 @@ module.exports = function(RED) {
             group: config.group, 
             control: {
                 type: 'text',
-                label: config.name,
+                label: config.label,
                 order: config.order,
                 format: config.format,
 				width: config.width,

@@ -5,6 +5,7 @@
         defaults: {
             tab: {type: 'ui_tab', required: true},
             name: {value: 'numeric'},
+            label: {value: 'label'},
             topic: {value: ''},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
@@ -34,8 +35,14 @@
         <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
+        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
+        <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-height">
+    </div>
+    <div class="form-row">
+        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
@@ -47,17 +54,13 @@
     </div>
     <div class="form-row">
         <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
-        <input type="text" id="node-input-min">
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-min">
+        <label for="node-input-max" style="text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-caret-right"></i> Max</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-max">
     </div>
     <div class="form-row">
-        <label for="node-input-max"><i class="fa fa-caret-right"></i> Max</label>
-        <input type="text" id="node-input-max">
-    </div>
-    <div class="form-row">
-        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
-        <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-height">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
     </div>
 </script>
 

@@ -14,7 +14,7 @@ module.exports = function(RED) {
             group: config.group, 
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),
-                label: config.name,
+                label: config.label,
                 order: config.order,
                 value: false,
                 onicon: config.onicon,

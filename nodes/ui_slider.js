@@ -14,7 +14,7 @@ module.exports = function(RED) {
             group: config.group, 
             control: {
                 type: 'slider',
-                label: config.name,
+                label: config.label,
                 order: config.order,
                 value: config.min,
                 min: config.min,

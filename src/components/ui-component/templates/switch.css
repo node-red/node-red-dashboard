@@ -1,3 +1,7 @@
-.control-switch {
+.control-switch p {
     padding: 0 0 0 10px;
+}
+
+.control-switch md-switch {
+    padding: 0 0 0 8px;
 }

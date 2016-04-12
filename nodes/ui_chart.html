@@ -4,7 +4,7 @@
         color: '#3fadb5',
         defaults: {
             tab: {type: 'ui_tab', required: true},
-            name: {value: ''},
+            name: {value: 'chart'},
             group: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
             interpolate: {value: 'linear', required: true},
@@ -33,10 +33,6 @@
         <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
-    </div>
-    <div class="form-row">
         <label for="node-input-removeOlder"><i class="fa fa-trash"></i> Old after</label>
         <input type="text" id="node-input-removeOlder" style="width: calc(70% - 220px)">
         <select id="node-input-removeOlderUnit">
@@ -59,6 +55,10 @@
             <option value="basis">b-spline</option>
             <option value="cardinal">cardinal</option>
         </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
     </div>
 </script>
 

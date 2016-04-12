@@ -14,7 +14,7 @@ module.exports = function(RED) {
             group: config.group,
             control: {
                 type: 'text-input',
-                label: config.name,
+                label: config.label,
                 mode:  config.mode,
                 delay: config.delay,
                 order: config.order,

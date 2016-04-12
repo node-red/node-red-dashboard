@@ -14,7 +14,7 @@ module.exports = function(RED) {
             group: config.group, 
             control: {
                 type: 'numeric',
-                label: config.name,
+                label: config.label,
                 order: config.order,
                 format: config.format,
                 value: config.min,

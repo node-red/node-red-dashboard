@@ -15,7 +15,7 @@ module.exports = function(RED) {
             group: config.group, 
             control: {
                 type: 'button',
-                label: config.name,
+                label: config.label,
                 order: config.order,
                 value: config.payload || node.id,
 				width: config.width,

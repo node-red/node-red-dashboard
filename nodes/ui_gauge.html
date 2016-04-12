@@ -34,8 +34,10 @@
         <input type="text" style="width: 50px" id="node-input-order">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
+        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
+        <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-height" placeholder="height > 3">
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
@@ -43,17 +45,13 @@
     </div>
     <div class="form-row">
         <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
-        <input type="text" id="node-input-min">
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-min">
+        <label for="node-input-max" style="text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-caret-right"></i> Max</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-max">
     </div>
     <div class="form-row">
-        <label for="node-input-max"><i class="fa fa-caret-right"></i> Max</label>
-        <input type="text" id="node-input-max">
-    </div>
-    <div class="form-row">
-        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
-        <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-height" placeholder="height > 3">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
     </div>
 </script>
 
@@ -61,6 +59,6 @@
     <p>Adds a gauge type widget to the user interface.</p>
     <p>The <code>msg.payload</code> is searched for a numeric value and is formatted in accordance with the defined <b>Template</b>, which can then be formatted using
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
-    <p>For example : <code>{{value | number:1}}%</code> will round the value to one dicimal place and add % sign to the label.</p>
+    <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and add % sign to the label.</p>
 	<p>The <b>Width</b> <i>(default : 3)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as a number between 3 and 6. As an example, a value of 4 results in a height of 4 rows and a width of 4/6 of a group's width.</p>
 </script>
