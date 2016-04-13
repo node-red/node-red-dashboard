@@ -6,7 +6,8 @@ module.exports = function(RED) {
         var node = this;
         
         var tab = RED.nodes.getNode(config.tab);
-        if (!tab) return;
+        var group = RED.nodes.getNode(config.group);
+        if (!tab || !group) return;
         
         var done = ui.add({
             forwardInputMessages: config.fwdInMessages,
@@ -14,7 +15,7 @@ module.exports = function(RED) {
             emitOnlyNewValues: false,
             node: node, 
             tab: tab, 
-            group: config.group, 
+            group: group,
             control: {
                 type: 'template',
                 order: config.order,

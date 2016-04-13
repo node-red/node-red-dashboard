@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_group',{
+        category: 'config',
+        defaults: {
+            name: {value: 'Default'},
+			width: {value: 6},
+            order: {value: 1, validate: RED.validators.number()}
+        },
+        label: function() { return this.name || 'Group'; }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_group">
+    <div class="form-row">
+        <label for="node-config-input-order"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" id="node-config-input-order">
+    </div>
+	<div class="form-row">
+        <label for="node-config-input-width"><i class="fa fa-sort"></i> Width</label>
+        <input type="text" id="node-config-input-width">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_group">
+    <p>Group</p>
+</script>

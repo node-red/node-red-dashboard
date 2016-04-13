@@ -6,12 +6,13 @@ module.exports = function(RED) {
         var node = this;
 
         var tab = RED.nodes.getNode(config.tab);
-        if (!tab) return;
+        var group = RED.nodes.getNode(config.group);
+        if (!tab || !group) return;
 
         var done = ui.add({
             node: node, 
             tab: tab, 
-            group: config.group, 
+            group: group,
             control: {
                 type: 'gauge',
                 label: config.name,

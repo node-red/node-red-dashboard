@@ -6,13 +6,14 @@ module.exports = function(RED) {
         var node = this;
         
         var tab = RED.nodes.getNode(config.tab);
-        if (!tab) return;
+        var group = RED.nodes.getNode(config.group);
+        if (!tab || !group) return;
         
         var options = {
             emitOnlyNewValues: false,
             node: node, 
             tab: tab, 
-            group: config.group, 
+            group: group,
             control: {
                 type: 'chart',
                 order: config.order,
