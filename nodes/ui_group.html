@@ -3,12 +3,17 @@
         category: 'config',
         defaults: {
             name: {value: 'Default'},
+			width: {value: 6}
         },
         label: function() { return this.name || 'Group'; }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_group">
+    <div class="form-row">
+        <label for="node-config-input-width"><i class="fa fa-tag"></i> Width</label>
+        <input type="text" id="node-config-input-width">
+    </div>
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-config-input-name">

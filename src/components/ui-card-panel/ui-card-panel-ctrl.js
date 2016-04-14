@@ -1,10 +1,10 @@
 /* global angular */
 /* global $ */
-angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
-    function(sizes, $timeout) {
+angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout', '$scope',
+    function(sizes, $timeout, $scope) {
         var ctrl = this;
-        ctrl.width = sizes.columns * sizes.sx + sizes.px * 2 + (sizes.columns - 1) * sizes.gx;
-        var defaultWidth = sizes.columns;
+        ctrl.width = sizes.columns($scope.group) * sizes.sx + sizes.px * 2 + (sizes.columns($scope.group) - 1) * sizes.gx;
+        var defaultWidth = sizes.columns($scope.group);
         var defaultHeight = 1;
 
         var root;
@@ -31,7 +31,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                 var child = $(this);
                 var size = child.find('[ui-card-size]:first').attr('ui-card-size') || child.attr('ui-card-size');
                 var result = extract.exec(size);
-                var width = Math.max(1, Math.min(sizes.columns, result ? parseInt(result[1]) || defaultWidth : defaultWidth));
+                var width = Math.max(1, Math.min(sizes.columns($scope.group), result ? parseInt(result[1]) || defaultWidth : defaultWidth));
                 var height = Math.max(1, result ? parseInt(result[2]) || defaultHeight : defaultHeight);
                 var position = getNextPosition(width, height);
                 child.css({
@@ -56,7 +56,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
         }
 
         function getFreeAndOccupy(width, height) {
-            var maxx = sizes.columns - width;
+            var maxx = sizes.columns($scope.group) - width;
             for (var y=0;y<1000;y++)
                 for (var x=0;x<=maxx;x++) {
                     if (isFree(x, y, width, height)) {
@@ -69,7 +69,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
         function occupy(x, y, width, height) {
             for (var dy=0; dy<height; dy++) {
                 var row = rows[y+dy];
-                if (!row) rows[y+dy] = row = new Array(sizes.columns);
+                if (!row) rows[y+dy] = row = new Array(sizes.columns($scope.group));
                 for (var dx=0; dx<width; dx++)
                     row[x+dx] = true;
             }

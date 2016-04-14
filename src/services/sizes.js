@@ -4,8 +4,11 @@ var sizes = {
     gx: 7,
     gy: 7,
     px: 7,
-    py: 0,
-    columns: 6
+    py: 0
+};
+
+sizes.columns = function (group) {
+	return parseInt(group.header.config.width);
 };
 
 if (window.innerWidth < 350)

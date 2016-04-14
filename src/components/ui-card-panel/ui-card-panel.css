@@ -1,32 +1,37 @@
 .masonry-container {
-    position: relative;
-    width: 100%;
+	position: relative;
+	width: 100%;
 }
 
 .masonry-container > * {
-    position: absolute;
-    opacity: 0;
+	position: absolute;
+	opacity: 0;
+}
+
+.card-panel .card-container:last-of-type {
+	margin-bottom: 9px;
 }
 
 .masonry-container > .visible {
-    opacity: 1;
+	opacity: 1;
 }
 
 .card-panel > p {
-    margin-bottom: 3px;
-    margin-left: 9px
+	margin-bottom: 3px;
+	margin-left: 9px;
+	margin-top: 9px;
 }
 
 .card-container {
-    position: relative;
+	position: relative;
 }
 
 .card-container > * {
-    margin: 0 !important;
-    position: absolute;
-    opacity: 0;
+	margin: 0 !important;
+	position: absolute;
+	opacity: 0;
 }
 
 .card-container > .visible {
-    opacity: 1;
+	opacity: 1;
 }
