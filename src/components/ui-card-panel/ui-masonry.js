@@ -46,7 +46,8 @@ function MasonryController(sizes, $timeout) {
         for (var i=0; i<firstRow; i++) {
 			groupsWidth += getPxWidth(children[i]);
 		}
-        var leftPadding = Math.max(0, (availableWidth - groupsWidth) / 2);// + minPadding;
+		groupsWidth += (sizes.px * (children.length - 1)); // add gap between groups
+        var leftPadding = Math.max(0, (availableWidth - groupsWidth) / 2);
 		leftPadding = (getMaxWidth(children) + leftPadding > availableWidth) ? sizes.px : leftPadding;
         var maxy = 0;
         children.each(function (c) {
@@ -85,7 +86,7 @@ function MasonryController(sizes, $timeout) {
 		for (var c = 0; c < index; c++) {
 			var child = $(children[c]);
 			// only offset the x if it can't go directly beneath the child
-			x += ((child.height() + parseInt(child.css('top'))) > y) ? (child.width()) : 0;// + sizes.px) : 0;
+			x += ((child.height() + parseInt(child.css('top'))) > y) ? (child.width() + sizes.px) : 0;// + sizes.px) : 0;
 		}
 		return x;
 	}
