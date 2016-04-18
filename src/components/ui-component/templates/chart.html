@@ -1,10 +1,10 @@
-<md-card ui-card-size="6x3">
+<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}">
     <nvd3-line-chart
         class="control-chart"
         data="me.item.value"
-        width="280"
-        height="135"
-        margin="{left:30,top:10,bottom:20,right:20}"
+        width="{{ me.item.width * 50 - (me.item.width - 1)*7}}"
+        height="{{ me.item.height * 50 - (me.item.height - 1)*7 }}"
+        margin="{left:30,top:10,bottom:30,right:30}"
         showXAxis="true"
         showYAxis="true"
         objectequality="true"

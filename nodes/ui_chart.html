@@ -6,6 +6,8 @@
             tab: {type: 'ui_tab', required: true},
             group: {type: 'ui_group', required: true},
             order: {value: 1, validate: RED.validators.number()},
+            width: {value: 6, validate: function(value) { return value >= 6; }},
+            height: {value: 3, validate: function(value) { return value >= 3; }},
             name: {value: 'chart'},
             interpolate: {value: 'linear', required: true},
             nodata: {value: 'No Data'},
@@ -33,6 +35,12 @@
     <div class="form-row">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
         <input type="text" id="node-input-order">
+    </div>
+    <div class="form-row">
+        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
+        <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-height" placeholder="height > 3">
     </div>
     <div class="form-row">
         <label for="node-input-removeOlder"><i class="fa fa-trash"></i> Old after</label>

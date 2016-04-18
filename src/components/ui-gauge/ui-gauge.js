@@ -13,7 +13,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
 						value: scope.$eval('me.item.value'),
 						min: scope.$eval('me.item.min'),
 						max: scope.$eval('me.item.max'),
-						title: scope.$eval('me.item.label'),
+						title: scope.$eval('me.item.title'),
+						label: scope.$eval('me.item.label'),
 						textRenderer: function(v) {
 							return scope.$eval('me.item.getText()');
 						}

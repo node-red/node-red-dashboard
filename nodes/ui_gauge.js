@@ -15,7 +15,9 @@ module.exports = function(RED) {
             group: group,
             control: {
                 type: 'gauge',
-                label: config.name,
+                name: config.name,
+                title: config.title,
+                label: config.label,
                 order: config.order,
                 value: config.min,
                 format: config.format,

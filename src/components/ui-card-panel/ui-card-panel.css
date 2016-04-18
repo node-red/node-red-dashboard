@@ -6,6 +6,7 @@
 .masonry-container > * {
 	position: absolute;
 	opacity: 0;
+	outline: 1px solid #989898;
 }
 
 .card-panel .card-container:last-of-type {

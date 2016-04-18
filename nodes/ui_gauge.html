@@ -9,6 +9,8 @@
             width: {value: 3, validate: RED.validators.number()},
             height: {value: 3, validate: function(value) { return value >= 3;}},
             name: {value: 'gauge'},
+            title: {value: 'Title'},
+            label: {value: 'Label'},
             format: {value: '{{value}}'},
             min: {value: 0, required: true, validate: RED.validators.number()},
             max: {value: 10, required: true, validate: RED.validators.number()}
@@ -37,13 +39,21 @@
     </div>
     <div class="form-row">
         <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
+        <input type="text" style="width: calc(35% - 67px)" id="node-input-width" placeholder="width > 6">
         <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
         <input type="text" style="width: calc(35% - 67px)" id="node-input-height" placeholder="height > 3">
     </div>
     <div class="form-row">
+        <label for="node-input-title"><i class="fa fa-copy"></i> Title</label>
+        <input type="text" id="node-input-title">
+    </div>
+    <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
         <input type="text" id="node-input-format">
+    </div>
+    <div class="form-row">
+        <label for="node-input-label"><i class="fa fa-copy"></i> Label</label>
+        <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
         <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
@@ -62,5 +72,5 @@
     <p>The <code>msg.payload</code> is searched for a numeric value and is formatted in accordance with the defined <b>Template</b>, which can then be formatted using
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
     <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and add % sign to the label.</p>
-	<p>The <b>Width</b> <i>(default : 3)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as a number between 3 and 6. As an example, a value of 4 results in a height of 4 rows and a width of 4/6 of a group's width.</p>
+	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as a number between 3 and 6. As an example, a value of 4 results in a height of 4 rows and a width of 4/6 of a group's width.</p>
 </script>

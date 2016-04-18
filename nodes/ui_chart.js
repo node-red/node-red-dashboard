@@ -18,7 +18,9 @@ module.exports = function(RED) {
                 type: 'chart',
                 order: config.order,
                 interpolate: config.interpolate,
-                nodata: config.nodata
+                nodata: config.nodata,
+				width: config.width,
+				height: config.height
             },
             convert: function(value, oldValue, msg) {
                 if (value instanceof Array) {
