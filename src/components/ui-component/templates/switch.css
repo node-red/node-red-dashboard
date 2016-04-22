@@ -1,7 +1,33 @@
+.control-switch:focus {
+	outline: 0px;
+}
+
+.control-switch:hover {
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
 .control-switch p {
     padding: 0 0 0 10px;
 }
 
 .control-switch md-switch {
     padding: 0 0 0 8px;
+}
+
+.control-switch md-switch:hover {
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.control-switch md-switch.center{
+    margin: 0px auto;
+}
+
+.control-switch ui-icon {
+    padding: 0 8px;
+}
+
+.control-switch ui-icon.center{
+    margin: 0px auto;
 }

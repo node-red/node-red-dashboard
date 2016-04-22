@@ -18,7 +18,7 @@
 .control-button{box-shadow:none!important;width:100%!important;height:100%!important;margin:0!important;min-width:0!important;min-height:0!important}
 .control-numeric{padding:0 0 0 10px}.control-numeric .value{font-weight:700}.control-numeric .md-button{margin:0}
 .control-slider{padding:0 10px}
-.control-switch p{padding:0 0 0 10px}.control-switch md-switch{padding:0 0 0 8px}
+.control-switch md-switch.center,.control-switch ui-icon.center{margin:0 auto}.control-switch:focus{outline:0}.control-switch:hover{cursor:-webkit-grab;cursor:grab}.control-switch p{padding:0 0 0 10px}.control-switch md-switch{padding:0 0 0 8px}.control-switch md-switch:hover{cursor:-webkit-grab;cursor:grab}.control-switch ui-icon{padding:0 8px}
 .control-switch-icon-small button{box-shadow:none!important;width:100%!important;height:100%!important;margin:0!important;min-width:0!important;min-height:0!important}
 md-input-container{padding:0 10px}md-input-container .md-errors-spacer{min-height:0}md-input-container .md-placeholder,md-input-container label:not(.md-no-float):not(.md-container-ignore){padding-left:10px}
 .control-text{padding:0 10px}.control-text p{margin:.2em 0}.control-text .value{font-weight:700}
