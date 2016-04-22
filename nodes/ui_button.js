@@ -17,6 +17,8 @@ module.exports = function(RED) {
             control: {
                 type: 'button',
                 label: config.label,
+                color: config.color,
+                icon: config.icon,
                 order: config.order,
                 value: config.payload || node.id,
 				width: config.width,
