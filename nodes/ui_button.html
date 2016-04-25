@@ -43,12 +43,12 @@
         <input type="text" style="width: calc(35% - 67px)" id="node-input-height">
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
-        <input type="text" id="node-input-label" style="width:calc(70% - 285px);">
+        <label for="node-input-icon"><i class="fa fa-tag"></i> Icon</label>
+        <input type="text" id="node-input-icon" style="width: 83px" placeholder="(optional)">
+        <label for="node-input-label" style="width:40px;text-align:right;"> Label</label>
+        <input type="text" id="node-input-label" style="width:calc(70% - 290px);" placeholder="(optional)">
         <label for="node-input-color" style="width:40px;text-align:right;"> Color</label>
         <input type="text" id="node-input-color" style="width: 83px" placeholder="(optional)">
-        <label for="node-input-icon" style="width:35px;text-align:right;"> Icon</label>
-        <input type="text" id="node-input-icon" style="width: 83px" placeholder="(optional)">
     </div>
     <div class="form-row">
         <label for="node-input-payload"><i class="fa fa-envelope"></i> Payload</label>
@@ -66,7 +66,7 @@
 
 <script type="text/x-red" data-help-name="ui_button">
     <p>Adds a button to the user interface.</p>
-	<p>If the <b>Color</b> is defined, the color of the buttons content changes accordingly. If an <b>Icon</b> is defined, as either a <a href="https://design.google.com/icons/" target="_blank">Material Design icon</a> <i>(e.g. 'check', 'close')</i> or a <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icon</a> <i>(e.g. 'fa-fire')</i>, then the <b>Label</b> is overwritten and the icon is shown instead.</p>
+	<p>If the <b>Color</b> is defined, the color of the buttons content changes accordingly. The <b>Icon</b> can be defined, as either a <a href="https://design.google.com/icons/" target="_blank">Material Design icon</a> <i>(e.g. 'check', 'close')</i> or a <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icon</a> <i>(e.g. 'fa-fire')</i>.</p>
 	<p>The <b>Width</b> <i>(default : 3)</i> and <b>Height</b> <i>(default : 1)</i> of the button can be defined as a number between 1 and 6. As an example, a value of 4 results in a height of 4 rows and a width of 4/6 of a group's width.</p>
     <p>Clicking the button generates a message with <code>msg.payload</code> set to the <b>Payload</b> field.
     If no payload is specified, the node id is used.</p>

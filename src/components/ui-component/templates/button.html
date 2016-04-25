@@ -3,7 +3,7 @@
                ng-click="me.buttonClick()"
                aria-label="{{me.item.label}}"
 			   ng-style="{color: me.item.color }">
-            <span ng-show="!me.item.icon.length">{{me.item.label}}</span>
 			<ui-icon ng-show="me.item.icon.length" icon="{{ me.item.icon }}" ng-style="{color: me.item.color }"></ui-icon>
+            <span>{{me.item.label}}</span>
     </md-button>
 </md-card>
