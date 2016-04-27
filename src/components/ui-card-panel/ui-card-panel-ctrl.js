@@ -14,12 +14,16 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
 
         var refreshInProgress = false;
         ctrl.refreshLayout = function(done) {
-            if (refreshInProgress) return;
+            if (refreshInProgress) {
+				return;
+			}
             refreshInProgress = true;
             $timeout(function() {
                 refreshSizes();
                 refreshInProgress = false;
-                if (done) done();
+                if (done) {
+					done();
+				}
             }, 0);
         };
 
@@ -52,38 +56,45 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
             return {
                 top: sizes.py + pos.y * sizes.sy + pos.y * sizes.gy,
                 left: sizes.px + pos.x * sizes.sx + pos.x * sizes.gx
-            }
+            };
         }
 
         function getFreeAndOccupy(width, height) {
             var maxx = sizes.columns($scope.group) - width;
-            for (var y=0;y<1000;y++)
+            for (var y=0;y<1000;y++) {
                 for (var x=0;x<=maxx;x++) {
                     if (isFree(x, y, width, height)) {
                         occupy(x,y,width,height);
                         return {x:x, y:y};
                     }
                 }
+			}
         }
 
         function occupy(x, y, width, height) {
             for (var dy=0; dy<height; dy++) {
                 var row = rows[y+dy];
-                if (!row) rows[y+dy] = row = new Array(sizes.columns($scope.group));
-                for (var dx=0; dx<width; dx++)
+                if (!row) {
+					rows[y+dy] = row = new Array(sizes.columns($scope.group));
+				}
+                for (var dx=0; dx<width; dx++) {
                     row[x+dx] = true;
+				}
             }
         }
 
         function isFree(x, y, width, height) {
             for (var dy=0;dy<height; dy++) {
                 var row = rows[y+dy];
-                if (!row) break;
-                for (var dx=0;dx<width;dx++)
-                    if (row[x+dx])
+                if (!row) {
+					break;
+				}
+                for (var dx=0;dx<width;dx++) {
+                    if (row[x+dx]) {
                         return false;
+					}
+				}
             }
-
             return true;
         }
     }]);

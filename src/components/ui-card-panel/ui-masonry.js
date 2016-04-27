@@ -42,25 +42,30 @@ function MasonryController(sizes, $timeout) {
 			c++;
 		}
         var firstRow = Math.max(1, Math.min(children.length, (sum > availableWidth) ? (c-1) : c));
+
 		var groupsWidth = 0;
         for (var i=0; i<firstRow; i++) {
 			groupsWidth += getPxWidth(children[i]);
 		}
 		groupsWidth += (sizes.px * (children.length - 1)); // add gap between groups
+
         var leftPadding = Math.max(0, (availableWidth - groupsWidth) / 2);
 		leftPadding = (getMaxWidth(children) + leftPadding > availableWidth) ? sizes.px : leftPadding;
+
         var maxy = 0;
         children.each(function (c) {
             var child = $(this);
             var x = 0, y = sizes.gy;
             for (var j = 0; j < maxy; j++) {
 				if (j === maxy - 1) {
+					// place the group on a new row
 					x = 0;
 					y = j;
 					break;
 				}
-				var openX = getPxXOffset(children, c, j); // for the given y, what's the next available x-coordinate?
-				if ( openX >= 0 && (openX + getPxWidth(child)) <= availableWidth - 2 * leftPadding) {
+				var maxx = availableWidth - 2 * leftPadding;
+				var openX = getPxXOffset(children, c, maxx, j); // for the given y, what's the next available x-coordinate?
+				if ( openX >= 0 && (openX + getPxWidth(child)) <= maxx) {
 					y += j;
 					x = openX
 					break;
@@ -81,12 +86,18 @@ function MasonryController(sizes, $timeout) {
 		return (cols * sizes.sx) + (sizes.px * 2) + ((cols - 1) * sizes.gx); // the width in px of this group/child
 	}
 
-	function getPxXOffset (children, index, y) {
+	function getPxXOffset (children, index, maxx, y) {
 		var x = 0;
 		for (var c = 0; c < index; c++) {
 			var child = $(children[c]);
 			// only offset the x if it can't go directly beneath the child
-			x += ((child.height() + parseInt(child.css('top'))) > y) ? (child.width() + sizes.px) : 0;// + sizes.px) : 0;
+
+			// if the child exists at the same <y>
+			if (child.height() + parseInt(child.css('top')) > y) {
+				if (x + $(children[index]).width() >= parseInt(child.css('left'))) {
+					x += child.width() + sizes.px;
+				}
+			}
 		}
 		return x;
 	}

@@ -279,7 +279,7 @@ function addControl(tab, groupHeader, control) {
 	foundGroup.items.push(control);
 	foundGroup.items.sort(itemSorter);
 	
-	foundGroup.order = foundGroup.items.reduce(function (prev, c) { return prev + c.order; }, 0) / foundGroup.items.length;
+	foundGroup.order = groupHeader.config.order;
 	foundTab.items.sort(itemSorter);
 	
 	updateUi();

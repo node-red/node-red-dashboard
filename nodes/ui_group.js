@@ -4,7 +4,8 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         this.config = {
             name: config.name,
-			width: config.width
+			width: config.width,
+			order: config.order
         };
     }
 

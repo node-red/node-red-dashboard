@@ -2,6 +2,7 @@
     RED.nodes.registerType('ui_group',{
         category: 'config',
         defaults: {
+            order: {value: 1},
             name: {value: 'Default'},
 			width: {value: 6}
         },
@@ -10,6 +11,10 @@
 </script>
 
 <script type="text/x-red" data-template-name="ui_group">
+    <div class="form-row">
+        <label for="node-config-input-order"><i class="fa fa-tag"></i> Order</label>
+        <input type="text" id="node-config-input-order">
+    </div>
     <div class="form-row">
         <label for="node-config-input-width"><i class="fa fa-tag"></i> Width</label>
         <input type="text" id="node-config-input-width">
