@@ -1,11 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('ui_link',{
         category: 'ui',
-        color: '#fdf0c2',
+        color: 'rgb(119, 198, 204)',
         defaults: {
             name: {value: 'Google'},
 			link: {value: 'http://www.google.com'},
             icon: {value: 'open_in_browser'},
+            target: {value: 'newtab', validate : function() {
+				return true;
+			}},
             order: {value: 1, validate: RED.validators.number()}
         },
         inputs:0,
@@ -13,7 +16,14 @@
         align: "right",
         icon: "ui_link.png",
         paletteLabel: 'link',
-        label: function() { return this.name || 'link'; }
+        label: function() { return this.name || 'link'; },
+		oneditprepare: function() {
+			document.getElementById('node-input-target-opentab').checked = (this.target === 'newtab');
+			document.getElementById('node-input-target-openiframe').checked = (this.target === 'iframe');
+		},
+		oneditsave : function () {
+			this.target = document.getElementById('node-input-target-opentab').checked ? 'newtab' : 'iframe';
+		}
     });
 </script>
 
@@ -31,6 +41,13 @@
         <input type="text" id="node-input-icon">
     </div>
     <div class="form-row">
+        <label><i class="fa fa-link"></i> Open in</label>
+        <input type="radio" id="node-input-target-opentab" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px" checked>
+        <label for="node-input-target-opentab">New Tab</label>
+        <input type="radio" id="node-input-target-openiframe" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px">
+        <label for="node-input-target-openiframe">iframe</label>
+    </div>
+    <div class="form-row">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
         <input type="text" id="node-input-order" style="width:50px">
     </div>
@@ -38,5 +55,6 @@
 
 <script type="text/x-red" data-help-name="ui_link">
     <p>Adds a web link to the left side menu of the user interface.</p>
-    <p>The icon must be one of <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">these Angular Material icons</a>.</p>
+    <p>The <b>Icon</b> field can be either <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a> <i>(e.g. 'check', 'close')</i> or <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
+    <p>The <b>Open in</b> field controls whether the link opens in a <i>New Tab</i>, or if the link is opened within an <i>iframe</i> on the same page. Some sites, including Google, do not allow the rendering of their page inside an iframe. If you select the <i>iframe</i> option and the site does not show, this is simply because that site forbids the use of it inside an iframe.</p>
 </script>

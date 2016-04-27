@@ -5,7 +5,7 @@
             <ui-icon icon="{{tab.icon}}" style="margin: 5px"></ui-icon>
             <p>{{tab.header}}</p>
         </md-list-item>
-        <md-list-item ng-click="main.open(link.link)" ng-repeat="link in main.links">
+        <md-list-item ng-click="main.open(link, $index)" ng-repeat="link in main.links">
             <ui-icon icon="{{link.icon}}" style="margin: 5px"></ui-icon>
             <p>{{link.name}}</p>
         </md-list-item>
@@ -16,13 +16,17 @@
         <md-button ng-click="main.toggleSidenav()" class="md-icon-button">
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
-        <h1 ng-show="main.loaded">{{main.selectedTab.header}}</h1>
+        <h1 ng-show="main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
     </div>
 </md-toolbar>
 <md-content flex>
-    <div ui-masonry>
+    <div ui-masonry ng-show="main.selectedTab.header">
         <ui-card-panel ng-repeat="group in main.selectedTab.items">
             <ui-component ng-repeat="control in group.items" item="control"></ui-component>
         </ui-card-panel>
     </div>
+	<div class="node-red-ui--inline-link" ng-show="!main.selectedTab.header">
+		<iframe class="iframe" src="{{ main.selectedTab.link }}"></iframe>
+		<div>The url {{ }} cannot be loaded into an iframe.</div>
+	</div>
 </md-content>

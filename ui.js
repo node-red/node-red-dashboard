@@ -308,12 +308,13 @@ function addControl(tab, groupHeader, control) {
 	}
 }
 
-function addLink(name, link, icon, order) {
+function addLink(name, link, icon, order, target) {
 	var newLink = {
 		name: name,
 		link: link,
 		icon: icon,
-		order: order || 1
+		order: order || 1,
+		target: target
 	};
 	
 	links.push(newLink);

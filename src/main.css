@@ -1,19 +1,30 @@
 md-sidenav,
 md-sidenav.md-locked-open,
 md-sidenav.md-closed.md-locked-open-add-active {
-    min-width: 200px !important;
-    width: 200px !important;
-    max-width: 200px !important;
+	min-width: 200px !important;
+	width: 200px !important;
+	max-width: 200px !important;
 }
 
 md-toast .md-toast-content {
-    height: auto;
+	height: auto;
 }
 
 md-content {
-    background: transparent;
+	background: transparent;
 }
 
 body {
-    background: #f0f0f0;
+	background: #f0f0f0;
+}
+
+.node-red-ui--inline-link {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+.node-red-ui--inline-link iframe {
+	width: 100%;
+	height: 100%;
 }
