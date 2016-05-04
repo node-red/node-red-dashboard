@@ -6,8 +6,8 @@
             tab: {type: 'ui_tab', required: true},
             group: {type: 'ui_group', required: true},
             order: {value: 1, validate: RED.validators.number()},
-            width: {value: 3, validate: function(value) { return (value >= 1 && value <=6);}},
-            height: {value: 1, validate: function(value) { return (value >= 1 && value <=6);}},
+            width: {value: 3},
+            height: {value: 1},
             name: {value: 'numeric'},
             label: {value: 'label'},
             topic: {value: ''},
@@ -19,7 +19,21 @@
         outputs:1,
         icon: "ui_numeric.png",
         paletteLabel: 'numeric',
-        label: function() { return this.name || 'numeric'; }
+        label: function() { return this.name || 'numeric'; },
+		oneditprepare: function() {
+            var that = this;
+            $( "#node-input-width" ).spinner({
+                min:1
+            });
+            $( "#node-input-height" ).spinner({
+                min:1
+            });
+        },
+		oneditresize: function() {
+			var parent = $( "#width-height" ).width();
+			$( "#node-input-width" ).width((parent - 287)/2);
+			$( "#node-input-height" ).width((parent - 287)/2);
+		}
     });
 </script>
 
@@ -37,10 +51,12 @@
         <input type="text" id="node-input-order">
     </div>
     <div class="form-row">
-        <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-width">
-        <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-height">
+		<div id="width-height" style="width: calc(70% + 118px);">
+			<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+			<input type="text" id="node-input-width" style="width:15%">
+			<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+			<input type="text" id="node-input-height" style="width:15%">
+		</div>
     </div>
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
