@@ -22,6 +22,9 @@
         label: function() { return this.name || 'chart'; },
 		oneditprepare: function() {
             var that = this;
+            $( "#node-input-order" ).spinner({
+                min:1
+            });
             $( "#node-input-width" ).spinner({
                 min:1
             });
@@ -31,6 +34,7 @@
         },
 		oneditresize: function() {
 			var parent = $( "#width-height" ).width();
+			$( "#node-input-order" ).width((parent - 135));
 			$( "#node-input-width" ).width((parent - 287)/2);
 			$( "#node-input-height" ).width((parent - 287)/2);
 		}
@@ -60,7 +64,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-removeOlder"><i class="fa fa-trash"></i> Old after</label>
-        <input type="text" id="node-input-removeOlder" style="width: calc(70% - 220px)">
+        <input type="text" id="node-input-removeOlder" style="width: calc(70% - 224px)">
         <select id="node-input-removeOlderUnit">
             <option value="1">sec(s)</option>
             <option value="60">min(s)</option>

@@ -6,7 +6,21 @@
             name: {value: 'Default'},
 			width: {value: 6}
         },
-        label: function() { return this.name || 'Group'; }
+        label: function() { return this.name || 'Group'; },
+		oneditprepare: function() {
+            var that = this;
+            $( "#node-config-input-order" ).spinner({
+                min:1
+            });
+            $( "#node-config-input-width" ).spinner({
+                min:1
+            });
+        },
+		oneditresize: function() {
+			var parent = $( ".form-row" )[0].width();
+			$( "#node-input-order" ).width((parent - 135));
+			$( "#node-config-input-width" ).width((parent - 287)/2);
+		}
     });
 </script>
 

@@ -22,6 +22,9 @@
         label: function() { return this.name || 'numeric'; },
 		oneditprepare: function() {
             var that = this;
+            $( "#node-input-order" ).spinner({
+                min:1
+            });
             $( "#node-input-width" ).spinner({
                 min:1
             });
@@ -31,6 +34,7 @@
         },
 		oneditresize: function() {
 			var parent = $( "#width-height" ).width();
+			$( "#node-input-order" ).width((parent - 135));
 			$( "#node-input-width" ).width((parent - 287)/2);
 			$( "#node-input-height" ).width((parent - 287)/2);
 		}
