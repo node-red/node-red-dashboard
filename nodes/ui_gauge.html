@@ -89,8 +89,8 @@
 
 <script type="text/x-red" data-help-name="ui_gauge">
     <p>Adds a gauge type widget to the user interface.</p>
+	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
     <p>The <code>msg.payload</code> is searched for a numeric value and is formatted in accordance with the defined <b>Template</b>, which can then be formatted using
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
     <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and add % sign to the label.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as a number between 3 and 6. As an example, a value of 4 results in a height of 4 rows and a width of 4/6 of a group's width.</p>
 </script>

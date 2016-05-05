@@ -76,9 +76,9 @@
 
 <script type="text/x-red" data-help-name="ui_text">
     <p>Will display a non-editable text field on the user interface.</p>
+	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
     <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Template</b>.</p>
     <p>The <b>Template</b> field can be used to change the displayed format and can contain valid HTML and
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
     <p>For example: <code>{{msg.payload | uppercase}} &deg;</code> will uppercase the text and add the degree symbol.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 1)</i> of the text can be defined as a number between 1 and 6. As an example, a value of 4 results in a height of 4 rows and a width of 4/6 of a group's width.</p>
 </script>
