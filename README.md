@@ -1,4 +1,11 @@
-# node-red-contrib-ui
+# node-red-dashboard
+
+This module provides a set of nodes in Node-RED to quickly create a live data
+dashboard.
+
+It is a continuation of the work done by Andrei Tatar under the node-red-contrib-ui
+module.
+
 
 ## Install
 
