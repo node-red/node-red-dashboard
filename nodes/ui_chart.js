@@ -8,7 +8,6 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(config.tab);
         var group = RED.nodes.getNode(config.group);
         if (!tab || !group) return;
-        console.log(config);
         var options = {
             emitOnlyNewValues: false,
             node: node, 
