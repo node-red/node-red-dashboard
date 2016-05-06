@@ -9,7 +9,7 @@
         showYAxis="true"
         objectequality="true"
         xAxisTickFormat="me.formatTime"
-        yaxisdomain='$parent.me.item.value | chartGetRange'
+        yaxisdomain='$parent.me.item.value | chartGetRange : [$parent.me.item.ymin, $parent.me.item.ymax]'
 
         tooltips="true"
         interactive="true"

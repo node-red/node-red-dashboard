@@ -8,7 +8,7 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(config.tab);
         var group = RED.nodes.getNode(config.group);
         if (!tab || !group) return;
-        
+        console.log(config);
         var options = {
             emitOnlyNewValues: false,
             node: node, 
@@ -20,7 +20,9 @@ module.exports = function(RED) {
                 interpolate: config.interpolate,
                 nodata: config.nodata,
 				width: config.width,
-				height: config.height
+				height: config.height,
+				ymin: config.ymin,
+				ymax: config.ymax
             },
             convert: function(value, oldValue, msg) {
                 if (value instanceof Array) {

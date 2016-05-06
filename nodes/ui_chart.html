@@ -11,6 +11,8 @@
             name: {value: 'chart'},
             interpolate: {value: 'linear', required: true},
             nodata: {value: 'No Data'},
+            ymin: {value: null, validate: RED.validators.number()},
+            ymax: {value: null, validate: RED.validators.number()},
             removeOlder: {value: 1, validate: RED.validators.number(), required: true},
             removeOlderUnit: {value: '86400', required: true}
         },
@@ -31,12 +33,16 @@
             $( "#node-input-height" ).spinner({
                 min:1
             });
+            $( "#node-input-ymin" ).spinner();
+            $( "#node-input-ymax" ).spinner();
         },
 		oneditresize: function() {
 			var parent = $( "#width-height" ).width();
 			$( "#node-input-order" ).width((parent - 135));
 			$( "#node-input-width" ).width((parent - 287)/2);
 			$( "#node-input-height" ).width((parent - 287)/2);
+			$( "#node-input-ymin" ).width((parent - 287)/2);
+			$( "#node-input-ymax" ).width((parent - 287)/2);
 		}
     });
 </script>
@@ -63,6 +69,15 @@
 		</div>
     </div>
     <div class="form-row">
+        <label for="node-input-interpolate"><i class="fa fa-line-chart"></i> Interpolate</label>
+        <select id="node-input-interpolate" style="width: calc(70% + 15px);">
+            <option value="linear">linear</option>
+            <option value="step-after">step</option>
+            <option value="basis">b-spline</option>
+            <option value="cardinal">cardinal</option>
+        </select>
+    </div>
+    <div class="form-row">
         <label for="node-input-removeOlder"><i class="fa fa-trash"></i> Old after</label>
         <input type="text" id="node-input-removeOlder" style="width: calc(70% - 224px)">
         <select id="node-input-removeOlderUnit">
@@ -74,17 +89,16 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-nodata"><i class="fa fa-exclamation"></i> No data</label>
-        <input type="text" id="node-input-nodata">
+		<div id="min-max" style="width: calc(70% + 118px);">
+			<label for="node-input-ymin"><i class="fa fa-minus"></i> Ymin</label>
+			<input type="text" id="node-input-ymin" style="width:15%">
+			<label for="node-input-ymax" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-plus"></i> Ymax</label>
+			<input type="text" id="node-input-ymax" style="width:15%">
+		</div>
     </div>
     <div class="form-row">
-        <label for="node-input-interpolate"><i class="fa fa-line-chart"></i> Interpolate</label>
-        <select id="node-input-interpolate">
-            <option value="linear">linear</option>
-            <option value="step-after">step</option>
-            <option value="basis">b-spline</option>
-            <option value="cardinal">cardinal</option>
-        </select>
+        <label for="node-input-nodata"><i class="fa fa-exclamation"></i> No data</label>
+        <input type="text" id="node-input-nodata">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
