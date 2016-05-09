@@ -18,8 +18,8 @@ module.exports = function(RED) {
                 order: config.order,
                 interpolate: config.interpolate,
                 nodata: config.nodata,
-				width: config.width,
-				height: config.height,
+				width: config.width || 6,
+				height: config.height || 3,
 				ymin: config.ymin,
 				ymax: config.ymax
             },

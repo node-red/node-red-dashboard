@@ -20,14 +20,16 @@
         paletteLabel: 'slider',
         label: function() { return this.name || 'slider'; },
 		oneditprepare: function() {
-            var that = this;
+			this.width = this.width || 6;
+			this.height = this.height || 1;
+
             $( "#node-input-order" ).spinner({
                 min:1
             });
-            $( "#node-input-width" ).spinner({
+            $( "#node-input-width" ).val(this.width).spinner({
                 min:1
             });
-            $( "#node-input-height" ).spinner({
+            $( "#node-input-height" ).val(this.height).spinner({
                 min:1
             });
         },

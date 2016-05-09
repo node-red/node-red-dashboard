@@ -22,8 +22,8 @@ module.exports = function(RED) {
                 officon: config.officon,
                 oncolor: config.oncolor,
                 offcolor: config.offcolor,
-				width: config.width,
-				height: config.height
+				width: config.width || 6,
+				height: config.height || 1
             }, 
             convert: function (payload) {
                 switch (payload.toString()) {

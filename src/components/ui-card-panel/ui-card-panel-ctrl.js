@@ -37,12 +37,16 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                 var result = extract.exec(size);
                 var width = Math.max(1, Math.min(sizes.columns($scope.group), result ? parseInt(result[1]) || defaultWidth : defaultWidth));
                 var height = Math.max(1, result ? parseInt(result[2]) || defaultHeight : defaultHeight);
+				if (!size /*is template node*/) {
+					// template node will size the height based upon it's content
+					height = Math.ceil((child.height() + sizes.gy)/(sizes.gy + sizes.sy));
+				}
                 var position = getNextPosition(width, height);
                 child.css({
                     left: position.left,
                     top: position.top,
                     width: sizes.sx * width + sizes.gx * (width-1),
-                    height: sizes.sx * height + sizes.gy * (height-1)
+                    height: sizes.sy * height + sizes.gy * (height-1)
                 });
                 child.addClass('visible');
             });

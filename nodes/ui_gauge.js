@@ -23,8 +23,8 @@ module.exports = function(RED) {
                 format: config.format,
                 min: config.min,
                 max: config.max,
-				width: config.width,
-				height: config.height
+				width: config.width || 3,
+				height: config.height || 3
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;

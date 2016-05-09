@@ -20,8 +20,8 @@ module.exports = function(RED) {
                 delay: config.delay,
                 order: config.order,
                 value: '',
-				width: config.width,
-				height: config.height
+				width: config.width || 6,
+				height: config.height || 1
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;

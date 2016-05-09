@@ -21,8 +21,8 @@ module.exports = function(RED) {
                 value: config.min,
                 min: config.min,
                 max: config.max,
-				width: config.width,
-				height: config.height
+				width: config.width || 3,
+				height: config.height || 1
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;
