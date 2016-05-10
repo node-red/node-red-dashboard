@@ -55,7 +55,6 @@ angular.module('ui').controller('uiComponentController', ['UiEvents', '$interpol
         }
     
         me.valueChanged = function(throttleTime) {
-			console.log(me.item);
             throttle({
                 id: me.item.id,
                 value: me.item.value

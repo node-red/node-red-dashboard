@@ -5,6 +5,13 @@ reason: https://github.com/angular/material/issues/6214
 
 md-input-container {
 	padding: 0px 10px;
+	margin: 15px 0px;
+	transition: 0.3s margin;
+	-webkit-transition: 0.3s margin;
+}
+
+md-input-container md-input {
+	height: 28px;
 }
 
 md-input-container .md-errors-spacer {
@@ -14,4 +21,19 @@ md-input-container .md-errors-spacer {
 md-input-container .md-placeholder,
 md-input-container label:not(.md-no-float):not(.md-container-ignore) {
 	padding-left: 10px;
+    margin-bottom: 3px;
+}
+
+md-input-container.md-input-focused.has-label label:not(.md-no-float):not(.md-container-ignore),
+md-input-container.md-input-has-value.has-label label:not(.md-no-float):not(.md-container-ignore) {
+	margin-bottom: -2px;
+}
+
+md-input-container.md-input-focused.has-label,
+md-input-container.md-input-has-value.has-label {
+	margin: 15px 0px 5px;
+}
+
+md-input-container .md-input:invalid {
+    color: #FF2D2D;
 }
