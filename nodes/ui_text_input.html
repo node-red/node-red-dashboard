@@ -9,10 +9,7 @@
             width: {value: 6},
             height: {value: 1},
             name: {value: ''},
-            mode: {value: 'text', required: true, validate: function() {
-				console.log(this);
-				return true;
-			}},
+            mode: {value: 'text', required: true},
             delay: {value: 300, validate: RED.validators.number()},
             label: {value: ''},
             topic: {value: ''}
