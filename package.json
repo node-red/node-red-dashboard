@@ -50,7 +50,7 @@
         "angular-sanitize": "^1.4.8",
         "angularjs-nvd3-directives": "0.0.8",
         "d3": "^3.5.11",
-        "font-awesome": "^4.5.0",
+        "font-awesome": "^4.6.2",
         "gulp": "^3.9.0",
         "gulp-angular-templatecache": "^1.8.0",
         "gulp-concat": "^2.6.0",
