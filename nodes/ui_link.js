@@ -5,7 +5,6 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
         var done = ui.addLink(config.name, config.link, config.icon, config.order, config.target);
-		console.log('node close');
         node.on("close", done);
     }
 

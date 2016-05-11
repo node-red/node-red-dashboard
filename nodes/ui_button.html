@@ -8,8 +8,8 @@
             order: {value: 1, validate: RED.validators.number()},
             width: {value: 3},
             height: {value: 1},
-            name: {value: 'button'},
-			label: {value: 'label'},
+            name: {value: ''},
+			label: {value: 'button'},
 			color: {value: ''},
 			icon: {value: ''},
             payload: {value: ''},
@@ -21,7 +21,7 @@
         paletteLabel: 'button',
         label: function() { return this.name || 'button'; },
 		oneditprepare: function() {
-			this.width = this.width || 3;
+			this.width = this.width || 6;
 			this.height = this.height || 1;
 
             $( "#node-input-order" ).spinner({
