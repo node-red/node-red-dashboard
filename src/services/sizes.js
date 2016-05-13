@@ -1,10 +1,10 @@
 var sizes = {
-    sx: 50,
-    sy: 50,
-    gx: 7,
-    gy: 7,
-    px: 7,
-    py: 0
+    sx: 50, // width of <1> grid square
+    sy: 50, // height of <1> grid square
+    gx: 7, // gap between components
+    gy: 7, // gap between components
+    px: 7, // padding of group's cards
+    py: 7 // padding of group's cards
 };
 
 sizes.columns = function (group) {

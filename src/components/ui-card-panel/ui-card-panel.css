@@ -9,18 +9,14 @@
 	outline: 1px solid #989898;
 }
 
-.card-panel .card-container:last-of-type {
-	margin-bottom: 9px;
-}
-
 .masonry-container > .visible {
 	opacity: 1;
 }
 
 .card-panel > p {
-	margin-bottom: 3px;
 	margin-left: 9px;
-	margin-top: 9px;
+	margin-top: 7px;
+	margin-bottom: 3px;
 }
 
 .card-container {

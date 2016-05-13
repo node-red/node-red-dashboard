@@ -11,8 +11,12 @@
             name: {value: ''},
             interpolate: {value: 'linear', required: true},
             nodata: {value: 'No Data'},
-            ymin: {value: null, validate: RED.validators.number()},
-            ymax: {value: null, validate: RED.validators.number()},
+            ymin: {value: '', validate: function(value) {
+				return value === '' || RED.validators.number();
+			}},
+            ymax: {value: '', validate: function(value) {
+				return value === '' || RED.validators.number();
+			}},
             removeOlder: {value: 1, validate: RED.validators.number(), required: true},
             removeOlderUnit: {value: '86400', required: true}
         },

@@ -86,7 +86,7 @@ function MasonryController(sizes, $timeout) {
 
 	function getPxWidth(group) {
 		var cols = parseInt(angular.element(group).scope().group.header.config.width); // the number of columns defined for this group/child
-		return (cols * sizes.sx) + (sizes.px * 2) + ((cols - 1) * sizes.gx); // the width in px of this group/child
+		return (cols * sizes.sx) + (sizes.gx * 2) + ((cols - 1) * sizes.px); // the width in px of this group/child
 	}
 
 	// calculate the next available x-coordinate in the x-axis for a given y for <child>
