@@ -63,7 +63,7 @@
         "gulp-util": "^3.0.7",
         "jquery": "^2.1.4",
         "justgage": "^1.1.0",
-        "nvd3": "1.8.3",
+        "nvd3": "1.8.1",
         "raphael": "^2.1.4",
         "sprintf-js": "^1.0.3",
         "streamqueue": "^1.1.1",
