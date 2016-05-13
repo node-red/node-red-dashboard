@@ -1,0 +1,16 @@
+{
+    "fileExtensions": [ ".js", "jscs" ],
+    "excludeFiles": [ "node_modules/**" ],
+    "validateIndentation": 4,
+    "requireCurlyBraces": true,
+    "disallowMixedSpacesAndTabs": true,
+    "disallowMultipleSpaces": {"allowEOLComments": true},
+    "disallowKeywordsOnNewLine": [],
+    "requireSpaceBeforeBlockStatements": 1,
+    //"requireSpaceBeforeObjectValues": false,
+    //"requireSemicolons": true,
+    //"validateParameterSeparator": ", ",
+    //"validateQuoteMarks": false,
+    "requireSpaceAfterKeywords": ["do","for","if","else","switch","case","try","while"],
+    "maximumLineLength": 255
+}

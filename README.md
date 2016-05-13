@@ -31,12 +31,22 @@ should be uninstalled before installing node-red-dashboard.
 
  (( Lots more details to be added here ))
 
-### Changed 
+### Changed
 
  (( Lots more details to be added here ))
 
 ## Discussions and suggestions
+
 There is a google group: <https://groups.google.com/forum/#!forum/node-red>
+
+## Contributing
+
+Before raising a pull-request, please read our
+[contributing guide](https://github.com/node-red/node-red-dashboard/blob/master/CONTRIBUTING.md).
+
+This project adheres to the [Contributor Covenant 1.4](http://contributor-covenant.org/version/1/4/).
+ By participating, you are expected to uphold this code. Please report unacceptable
+ behavior to any of the [project's core team](https://github.com/orgs/node-red/teams/core).
 
 ## Developers
 
