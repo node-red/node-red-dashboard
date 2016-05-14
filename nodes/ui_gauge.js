@@ -10,8 +10,8 @@ module.exports = function(RED) {
         if (!tab || !group) return;
 
         var done = ui.add({
-            node: node, 
-            tab: tab, 
+            node: node,
+            tab: tab,
             group: group,
             control: {
                 type: 'gauge',
@@ -23,7 +23,7 @@ module.exports = function(RED) {
                 format: config.format,
                 min: config.min,
                 max: config.max,
-				width: config.width || 3,
+				width: config.width || 6,
 				height: config.height || 3
             },
             beforeSend: function (msg) {

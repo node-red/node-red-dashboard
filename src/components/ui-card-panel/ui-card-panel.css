@@ -7,6 +7,7 @@
 	position: absolute;
 	opacity: 0;
 	outline: 1px solid #989898;
+    background-color: #fff;
 }
 
 .masonry-container > .visible {
@@ -17,6 +18,8 @@
 	margin-left: 9px;
 	margin-top: 7px;
 	margin-bottom: 3px;
+    font-size: larger;
+    font-weight: 500;
 }
 
 .card-container {

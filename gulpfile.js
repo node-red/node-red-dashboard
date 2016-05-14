@@ -5,10 +5,10 @@ var
     templateCache = require('gulp-angular-templatecache'),
     ghtmlSrc = require('gulp-html-src'),
     gutil = require('gulp-util'),
-    minifyCss = require('gulp-minify-css'),
+    minifyCss = require('gulp-clean-css'),
     gulpif = require('gulp-if'),
     htmlreplace = require('gulp-html-replace'),
-    minifyHTML = require('gulp-minify-html'),
+    minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
     spawn = require('child_process').spawn,
     streamqueue = require('streamqueue');
@@ -25,7 +25,7 @@ gulp.task('index', function() {
         'css': 'css/app.min.css',
         'js': 'js/app.min.js'
     }))
-    .pipe(minifyHTML({spare:true, quotes:true}))
+    .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(gulp.dest('dist/'));
 });
 
@@ -42,7 +42,7 @@ gulp.task('js', function () {
     .pipe(ghtmlSrc({getFileName:getFileName.bind(this, 'src')}));
 
     var templates = gulp.src(['src/**/*.html', '!src/index.html'])
-    .pipe(minifyHTML({spare: true, quotes: true}))
+    .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(templateCache('templates.js', {root:'', module:'ui'}));
 
     return streamqueue({ objectMode:true }, scripts, templates)

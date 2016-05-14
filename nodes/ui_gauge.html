@@ -6,7 +6,7 @@
             tab: {type: 'ui_tab', required: true},
             group: {type: 'ui_group', required: true},
             order: {value: 1, validate: RED.validators.number()},
-            width: {value: 3},
+            width: {value: 6},
             height: {value: 3},
             name: {value: ''},
             title: {value: 'Title'},
@@ -22,7 +22,7 @@
         paletteLabel: 'gauge',
         label: function() { return this.name || 'gauge'; },
 		oneditprepare: function() {
-			this.width = this.width || 3;
+			this.width = this.width || 6;
 			this.height = this.height || 3;
 
             $( "#node-input-order" ).spinner({

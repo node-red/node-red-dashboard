@@ -3,15 +3,15 @@
         category: 'dashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
+            name: {value: ''},
             tab: {type: 'ui_tab', required: true},
             group: {type: 'ui_group', required: true},
             order: {value: 1, validate: RED.validators.number()},
             width: {value: 3},
             height: {value: 1},
-            name: {value: ''},
-			label: {value: 'button'},
-			color: {value: ''},
-			icon: {value: ''},
+            label: {value: 'button'},
+            color: {value: ''},
+            icon: {value: ''},
             payload: {value: ''},
             topic: {value: ''}
         },
@@ -20,9 +20,9 @@
         icon: "ui_button.png",
         paletteLabel: 'button',
         label: function() { return this.name || 'button'; },
-		oneditprepare: function() {
-			this.width = this.width || 6;
-			this.height = this.height || 1;
+        oneditprepare: function() {
+            this.width = this.width || 3;
+            this.height = this.height || 1;
 
             $( "#node-input-order" ).spinner({
                 min:1
@@ -34,12 +34,12 @@
                 min:1
             });
         },
-		oneditresize: function() {
-			var parent = $( "#width-height" ).width();
-			$( "#node-input-order" ).width((parent - 135));
-			$( "#node-input-width" ).width((parent - 287)/2);
-			$( "#node-input-height" ).width((parent - 287)/2);
-		}
+        oneditresize: function() {
+            var parent = $( "#width-height" ).width();
+            $( "#node-input-order" ).width((parent - 135));
+            $( "#node-input-width" ).width((parent - 287)/2);
+            $( "#node-input-height" ).width((parent - 287)/2);
+        }
     });
 </script>
 
@@ -88,8 +88,11 @@
 
 <script type="text/x-red" data-help-name="ui_button">
     <p>Adds a button to the user interface.</p>
-	<p>The <b>Width</b> <i>(default : 3)</i> and <b>Height</b> <i>(default : 1)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
-	<p>If the <b>Color</b> is defined, the color of the buttons content changes accordingly. The <b>Icon</b> can be defined, as either a <a href="https://design.google.com/icons/" target="_blank">Material Design icon</a> <i>(e.g. 'check', 'close')</i> or a <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icon</a> <i>(e.g. 'fa-fire')</i>.</p>
+	<p>The <b>Width</b> <i>(default : 3)</i> and <b>Height</b> <i>(default : 1)</i> of the button can be defined as an
+    integer, where the value defines the size as a number in rows/columns.</p>
+	<p>If the <b>Color</b> is defined, the color of the buttons content changes accordingly. The <b>Icon</b> can be
+    defined, as either a <a href="https://design.google.com/icons/" target="_blank">Material Design icon</a> <i>(e.g. 'check', 'close')</i>
+    or a <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icon</a> <i>(e.g. 'fa-fire')</i>.</p>
     <p>Clicking the button generates a message with <code>msg.payload</code> set to the <b>Payload</b> field.
     If no payload is specified, the node id is used.</p>
     <p>The <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>

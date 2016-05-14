@@ -1,7 +1,7 @@
 <md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}">
     <md-button class="control-button md-raised"
                ng-click="me.buttonClick()"
-               aria-label="{{me.item.label}}"
+               aria-label="{{'button' + me.item.label}}"
 			   ng-style="{color: me.item.color }">
 			<ui-icon ng-show="me.item.icon.length" icon="{{ me.item.icon }}" ng-style="{color: me.item.color }"></ui-icon>
             <span>{{me.item.label}}</span>
