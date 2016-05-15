@@ -18,7 +18,7 @@
         outputs:1,
         icon: "ui_slider.png",
         paletteLabel: 'slider',
-        label: function() { return this.name || 'slider'; },
+        label: function() { return this.name || this.label || 'slider'; },
 		oneditprepare: function() {
 			this.width = this.width || 6;
 			this.height = this.height || 1;
@@ -69,7 +69,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic">
+        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
     </div>
     <div class="form-row">
         <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>

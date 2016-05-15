@@ -20,7 +20,7 @@
         align: "right",
         icon: "ui_gauge.png",
         paletteLabel: 'gauge',
-        label: function() { return this.name || 'gauge'; },
+        label: function() { return this.name || this.label || 'gauge'; },
 		oneditprepare: function() {
 			this.width = this.width || 6;
 			this.height = this.height || 3;

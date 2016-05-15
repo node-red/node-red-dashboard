@@ -19,7 +19,7 @@
         outputs:1,
         icon: "ui_button.png",
         paletteLabel: 'button',
-        label: function() { return this.name || 'button'; },
+        label: function() { return this.name || this.label || 'button'; },
         oneditprepare: function() {
             this.width = this.width || 3;
             this.height = this.height || 1;
@@ -78,7 +78,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic">
+        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

@@ -17,7 +17,7 @@
         align: "right",
         icon: "ui_text.png",
         paletteLabel: 'text',
-        label: function() { return this.name || 'text'; },
+        label: function() { return this.name || this.label || 'text'; },
 		oneditprepare: function() {
 			this.width = this.width || 6;
 			this.height = this.height || 1;

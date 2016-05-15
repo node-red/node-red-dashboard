@@ -8,10 +8,11 @@ var sizes = {
 };
 
 sizes.columns = function (group) {
-	return parseInt(group.header.config.width);
+    return parseInt(group.header.config.width);
 };
 
-if (window.innerWidth < 350)
+if (window.innerWidth < 350) {
     sizes.sx = sizes.sy = 45;
+}
 
 angular.module('ui').value('uiSizes', sizes);

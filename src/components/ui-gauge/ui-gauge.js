@@ -15,6 +15,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         max: scope.$eval('me.item.max'),
                         title: scope.$eval('me.item.title'),
                         label: scope.$eval('me.item.label'),
+                        pointer: true,
                         textRenderer: function(v) {
                             return scope.$eval('me.item.getText()');
                         }
