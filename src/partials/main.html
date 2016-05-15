@@ -13,7 +13,7 @@
 </md-sidenav>
 <md-toolbar>
     <div class="md-toolbar-tools">
-        <md-button ng-click="main.toggleSidenav()" class="md-icon-button">
+        <md-button ng-click="main.toggleSidenav()" class="md-icon-button" aria-label="menu button">
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
         <h1 ng-show="main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>

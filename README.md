@@ -5,11 +5,10 @@ dashboard.
 
 It is a continuation of the work done by Andrei Tatar under the node-red-contrib-ui module.
 
-
 ## Install
 
 ```
-cd ~\.node-red
+cd ~/.node-red
 npm install node-red-dashboard
 ```
 
@@ -22,18 +21,26 @@ These nodes will replace the contrib-ui versions. node-red-contrib-ui
 should be uninstalled before installing node-red-dashboard.
 
  ```
- cd ~\.node-red
+ cd ~/.node-red
  npm uninstall node-red-contrib-ui
  ```
  In addition - some functionality is not exactly equivalent...
 
-### New features
+#### New features
 
  (( Lots more details to be added here ))
 
-### Changed
+ Ability to specify sizes. The width and height of widgets can now be set, as can the width
+ of *groups*. These are all specified in units of approximately 50 pixels. The default width is 6 as it was in contrib-ui.
+
+  - Button - icon can be set using Material or Fa-Icons - as can the colour. If set to 1 wide the icon has precedence.
+  - Switch - can now also set two icons and/or colours depending on state.
+
+#### Changed
 
  (( Lots more details to be added here ))
+
+ Radio buttons have been removed.
 
 ## Discussions and suggestions
 
