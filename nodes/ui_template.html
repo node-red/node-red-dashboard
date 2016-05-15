@@ -8,6 +8,8 @@
             name: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
             format: {value: '{{msg.payload}}'},
+            width: {value: 3},
+            height: {value: 1},
             storeOutMessages: {value: true},
             fwdInMessages: {value: true}
         },
@@ -108,6 +110,14 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
+    </div>
+    <div class="form-row">
+    <div id="width-height" style="width: calc(70% + 118px);">
+		<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+		<input type="text" id="node-input-width" style="width:15%">
+		<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+	 	<input type="text" id="node-input-height" style="width:15%">
+    </div>
     </div>
     <div class="form-row">
         <label>&nbsp;</label>
