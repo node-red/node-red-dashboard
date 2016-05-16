@@ -19,7 +19,9 @@ module.exports = function(RED) {
             control: {
                 type: 'template',
                 order: config.order,
-                format: config.format
+                format: config.format,
+		width: config.width || 3,
+		height: config.height || 1
             },
             beforeEmit: function(msg, value) {
                 var properties = Object.getOwnPropertyNames(msg).filter(function (p) {return p[0] != '_';});
