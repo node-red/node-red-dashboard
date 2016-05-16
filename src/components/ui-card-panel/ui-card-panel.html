@@ -1,5 +1,5 @@
 <div layout="column" class="card-panel">
-    <p ng-if="group.header && group.header[group.header.length-1]!='!'">{{group.header.name}}</p>
+    <p ng-if="group.header && group.header.config.disp && group.header[group.header.length-1]!='!'">{{group.header.name}}</p>
     <div class="card-container" ng-transclude ng-style="{width: ctrl.width, height: ctrl.height}">
     </div>
 </div>

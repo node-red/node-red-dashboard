@@ -2,12 +2,14 @@
     RED.nodes.registerType('ui_group',{
         category: 'config',
         defaults: {
-            order: {value: 1},
             name: {value: 'Default'},
-			width: {value: 6}
+            order: {value: 1},
+            disp: {value: true},
+            width: {value: 6}
         },
+        paletteLabel: 'dashboard group',
         label: function() { return this.name || 'Group'; },
-		oneditprepare: function() {
+        oneditprepare: function() {
             var that = this;
             $( "#node-config-input-order" ).spinner({
                 min:1
@@ -16,26 +18,29 @@
                 min:1
             });
         },
-		oneditresize: function() {
-			var parent = $( ".form-row" )[0].width();
-			$( "#node-input-order" ).width((parent - 135));
-			$( "#node-config-input-width" ).width((parent - 287)/2);
-		}
+        oneditresize: function() {
+            var parent = $( ".form-row" )[0].width();
+            $( "#node-config-input-order" ).width((parent - 287)/2);
+            $( "#node-config-input-width" ).width((parent - 287)/2);
+        }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_group">
     <div class="form-row">
-        <label for="node-config-input-order"><i class="fa fa-tag"></i> Order</label>
+        <label for="node-config-input-order"><i class="fa fa-sort"></i> Order</label>
         <input type="text" id="node-config-input-order">
     </div>
     <div class="form-row">
-        <label for="node-config-input-width"><i class="fa fa-tag"></i> Width</label>
+        <label for="node-config-input-width"><i class="fa fa-arrows-h"></i> Width</label>
         <input type="text" id="node-config-input-width">
     </div>
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <input style="margin:8px 0 10px 102px; width:20px;" type="checkbox" checked id="node-config-input-disp"> Display group Name ?
     </div>
 </script>
 

@@ -4,9 +4,12 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         this.config = {
             name: config.name,
-			width: config.width,
-			order: config.order
+            disp: config.disp,
+            width: config.width,
+            order: config.order
         };
+        if (!this.config.hasOwnProperty("disp")) { this.config.disp = true; }
+        if (this.config.disp !== false) { this.config.disp = true; }
     }
 
     RED.nodes.registerType("ui_group", GroupNode);
