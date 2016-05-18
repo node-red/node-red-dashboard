@@ -51,12 +51,12 @@ body.nr-dashboard-theme-dark md-sidenav {
 
 /* Button */
 .nr-dashboard-theme-dark .nr-dashboard-button .md-button {
-	background-color: #097479;
+	background-color: #06575A;
 	color: white;
 }
 
 .nr-dashboard-theme-dark .nr-dashboard-button .md-button:hover {
-	background-color: #06575A;
+	background-color: #097479;
 }
 
 /* Chart */
