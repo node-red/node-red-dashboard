@@ -45,12 +45,12 @@ body.nr-dashboard-theme-light md-sidenav {}
 /* Button */
 
 .nr-dashboard-theme-light .nr-dashboard-button .md-button {
-	background-color: #4FBAE4;
+	background-color: #9EE3F9;
 	color: #eee;
 }
 
 .nr-dashboard-theme-light .nr-dashboard-button .md-button:hover {
-	background-color: #0094CE;
+	background-color: #4FBAE4;
 }
 
 
