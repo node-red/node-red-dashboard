@@ -30,11 +30,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 		};
 
 		this.open = function (link, index) {
-			console.log(link);
+			//console.log(link);
 
 			// open in iframe
 			if (link.target === 'newtab') {
-				$window.open(link.link, '_blank');
+				$window.open(link.link, link.name);
 			// TODO : check iframe options (see Google)
 			}
 			// open in new tab
