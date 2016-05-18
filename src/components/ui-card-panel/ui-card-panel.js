@@ -8,7 +8,7 @@ angular.module('ui').directive('uiCardPanel', [
             controller: 'uiCardPanelController',
             controllerAs: 'ctrl',
             link: function (scope, element, attrs, controller) {
-                var root = element.find(".card-container");
+                var root = element.find(".nr-dashboard-cardcontainer");
                 controller.init(root);
             }
         };

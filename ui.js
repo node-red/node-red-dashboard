@@ -261,6 +261,7 @@ function addControl(tab, groupHeader, control) {
 			id: tab.id,
 			header: tab.config.name,
 			order: parseFloat(tab.config.order),
+			theme: tab.config.theme,
 			icon: tab.config.icon,
 			items: []
 		};

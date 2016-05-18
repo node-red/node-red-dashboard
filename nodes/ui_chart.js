@@ -65,7 +65,6 @@ module.exports = function(RED) {
                         oldValue.splice(index, 1);
                     });
                 }
-                
                 return oldValue;
             }
         };

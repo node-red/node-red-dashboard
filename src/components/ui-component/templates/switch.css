@@ -1,33 +1,33 @@
-.control-switch:focus {
+.nr-dashboard-switch:focus {
 	outline: 0px;
 }
 
-.control-switch:hover {
+.nr-dashboard-switch:hover {
     cursor: -webkit-grab;
     cursor: grab;
 }
 
-.control-switch p {
+.nr-dashboard-switch p {
     padding: 0 0 0 10px;
 }
 
-.control-switch md-switch {
+.nr-dashboard-switch md-switch {
     padding: 0 0 0 8px;
 }
 
-.control-switch md-switch:hover {
+.nr-dashboard-switch md-switch:hover {
     cursor: -webkit-grab;
     cursor: grab;
 }
 
-.control-switch md-switch.center{
+.nr-dashboard-switch md-switch.center{
     margin: 0px auto;
 }
 
-.control-switch ui-icon {
+.nr-dashboard-switch ui-icon {
     padding: 0 8px;
 }
 
-.control-switch ui-icon.center{
+.nr-dashboard-switch ui-icon.center{
     margin: 0px auto;
 }

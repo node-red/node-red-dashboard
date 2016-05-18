@@ -1,11 +1,11 @@
-.control-numeric {
+.nr-dashboard-numeric {
     padding: 0 0 0 10px;
 }
 
-.control-numeric .value {
+.nr-dashboard-numeric .value {
     font-weight: bold;
 }
 
-.control-numeric .md-button {
+.nr-dashboard-numeric .md-button {
     margin: 0;
 }

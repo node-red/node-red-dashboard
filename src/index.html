@@ -18,17 +18,19 @@
     <link rel="stylesheet" href="components/ui-component/templates/numeric.css">
     <link rel="stylesheet" href="components/ui-component/templates/slider.css">
     <link rel="stylesheet" href="components/ui-component/templates/switch.css">
-    <link rel="stylesheet" href="components/ui-component/templates/switch-icon-small.css">
     <link rel="stylesheet" href="components/ui-component/templates/text-input.css">
     <link rel="stylesheet" href="components/ui-component/templates/text.css">
     <link rel="stylesheet" href="components/ui-component/templates/template.css">
     <link rel="stylesheet" href="components/ui-card-panel/ui-card-panel.css">
 
     <link rel="stylesheet" href="main.css">
+
+	<link rel="stylesheet" href="themes/light.css">
+	<link rel="stylesheet" href="themes/dark.css">
     <!-- endbuild -->
     <title>Node-RED Dashboard</title>
 </head>
-<body ng-app="ui" ng-controller="MainController as main" ng-cloak layout="column">
+<body ng-app="ui" ng-controller="MainController as main" ng-cloak layout="column" class="{{ 'nr-dashboard-' + (main.selectedTab.theme || 'theme-light') }}">
 
 <md-content ng-if="main.loaded" ng-include="'partials/main.html'" layout="column" flex></md-content>
 
