@@ -27,19 +27,19 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
             }, 0);
         };
 
-        var extract = /(\d+)x(\d+)/;
         var rows;
         function refreshSizes() {
             rows = [];
             root.children().each(function () {
                 var child = $(this);
                 var size = child.find('[ui-card-size]:first').attr('ui-card-size') || child.attr('ui-card-size');
-                var result = extract.exec(size);
-                var width = Math.max(1, Math.min(sizes.columns($scope.group), result ? parseInt(result[1]) || defaultWidth : defaultWidth));
-                var height = Math.max(1, result ? parseInt(result[2]) || defaultHeight : defaultHeight);
-				if (!size /*is template node*/) {
-					// template node will size the height based upon it's content
-					height = Math.ceil((child.height() + sizes.gy)/(sizes.gy + sizes.sy));
+                var result = size.split('x');
+                var width = Math.max(1, Math.min(sizes.columns($scope.group), result ? parseInt(result[0]) || defaultWidth : defaultWidth));
+                var height = Math.max(1, result ? parseInt(result[1]) || defaultHeight : defaultHeight);
+				if (!parseInt(result[1]) /*is template node*/) {
+					// template node will size the height based upon it's content - child.height() defaults to calculating based on width of group
+					var ch = child.height() * parseInt($scope.group.header.config.width)/width;
+					height = Math.ceil((ch + sizes.gy)/(sizes.gy + sizes.sy));
 				}
                 var position = getNextPosition(width, height);
                 child.css({
