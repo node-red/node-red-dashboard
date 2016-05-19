@@ -25,7 +25,6 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             convert: function (payload) {
-                console.log("P",payload);
                 switch (payload.toString()) {
                     case config.onvalue: { return true; }
                     case config.offvalue: { return false; }
@@ -33,7 +32,6 @@ module.exports = function(RED) {
                 }
             },
             convertBack: function (value) {
-                console.log("V",value);
                 return value ? config.onvalue : config.offvalue;
             },
             beforeSend: function (msg) {
