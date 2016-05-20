@@ -3,7 +3,7 @@
 angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout', '$scope',
     function(sizes, $timeout, $scope) {
         var ctrl = this;
-        ctrl.width = sizes.columns($scope.group) * sizes.sx + sizes.px * 2 + (sizes.columns($scope.group) - 1) * sizes.gx;
+        ctrl.width = sizes.columns($scope.group) * sizes.sx + sizes.px * 2 + (sizes.columns($scope.group) - 1) * sizes.cx;
         var defaultWidth = sizes.columns($scope.group);
         var defaultHeight = 1;
 
@@ -39,27 +39,27 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
 				if (!parseInt(result[1]) /*is template node*/) {
 					// template node will size the height based upon it's content - child.height() defaults to calculating based on width of group
 					var ch = child.height() * parseInt($scope.group.header.config.width)/width;
-					height = Math.ceil((ch + sizes.gy)/(sizes.gy + sizes.sy));
+					height = Math.ceil((ch + sizes.cy)/(sizes.cy + sizes.sy));
 				}
                 var position = getNextPosition(width, height);
                 child.css({
                     left: position.left,
                     top: position.top,
-                    width: sizes.sx * width + sizes.gx * (width-1),
-                    height: sizes.sy * height + sizes.gy * (height-1)
+                    width: sizes.sx * width + sizes.cx * (width-1),
+                    height: sizes.sy * height + sizes.cy * (height-1)
                 });
                 child.addClass('visible');
             });
             ctrl.height = rows.length ?
-                sizes.py * 2 + rows.length * sizes.sy + (rows.length - 1) * sizes.gy :
+                sizes.py * 2 + rows.length * sizes.sy + (rows.length - 1) * sizes.cy :
                 0;
         }
 
         function getNextPosition(width, height) {
             var pos = getFreeAndOccupy(width, height);
             return {
-                top: sizes.py + pos.y * sizes.sy + pos.y * sizes.gy,
-                left: sizes.px + pos.x * sizes.sx + pos.x * sizes.gx
+                top: sizes.py + pos.y * sizes.sy + pos.y * sizes.cy,
+                left: sizes.px + pos.x * sizes.sx + pos.x * sizes.cx
             };
         }
 

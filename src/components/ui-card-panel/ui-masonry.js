@@ -41,17 +41,17 @@ function MasonryController(sizes, $timeout) {
 		while (sum < availableWidth && c < (children.length)) {
 			// how many groups can fit into one row/screen width?
 			sum += getPxWidth(children[c]);
-			sum += sizes.px;
+			sum += sizes.gx;
 			c++;
 		}
-		sum -= sizes.px;
+		sum -= sizes.gx;
 		var firstRow = Math.max(1, Math.min(children.length, (sum > availableWidth) ? (c - 1) : c));
 
 		var groupsWidth = 0;
 		for (var i = 0; i < firstRow; i++) {
 			groupsWidth += getPxWidth(children[i]);
 		}
-		groupsWidth += (sizes.px * (children.length - 1)); // add gap between groups
+		groupsWidth += (sizes.gx * (firstRow - 1)); // add gap between groups
 		var leftPadding = Math.max(0, (availableWidth - groupsWidth) / 2);
 		leftPadding = (getMaxWidth(children) + leftPadding > availableWidth) ? sizes.px : leftPadding;
 
@@ -86,7 +86,7 @@ function MasonryController(sizes, $timeout) {
 
 	function getPxWidth(group) {
 		var cols = parseInt(angular.element(group).scope().group.header.config.width); // the number of columns defined for this group/child
-		return (cols * sizes.sx) + (sizes.gx * 2) + ((cols - 1) * sizes.px); // the width in px of this group/child
+		return (cols * sizes.sx) + (sizes.px * 2) + ((cols - 1) * sizes.gx); // the width in px of this group/child
 	}
 
 	// calculate the next available x-coordinate in the x-axis for a given y for <child>
@@ -98,7 +98,7 @@ function MasonryController(sizes, $timeout) {
 			var c = $(children[i]);
 			// if the child exists at the same <y>
 			if (c.height() + parseInt(c.css('top')) > y) {
-				x += c.width() + sizes.px;
+				x += c.width() + sizes.gx;
 			}
 		}
 		return x;
