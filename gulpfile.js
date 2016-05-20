@@ -11,7 +11,10 @@ var
     minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
     spawn = require('child_process').spawn,
-    streamqueue = require('streamqueue');
+    streamqueue = require('streamqueue'),
+    jshint = require('gulp-jshint');
+
+gulp.task('default', ['lint']);
 
 gulp.task('build', ['icon', 'js', 'css', 'index', 'fonts']);
 
@@ -57,6 +60,13 @@ gulp.task('css', function () {
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(concat('app.min.css'))
     .pipe(gulp.dest('dist/css/'));
+});
+
+gulp.task('lint', function() {
+    return gulp.src('**/*.js')
+    .pipe(jshint('.jshintrc'))
+    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter('fail'));
 });
 
 var vendorPrefix = "vendor/";

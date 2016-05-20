@@ -8,7 +8,7 @@ module.exports = function(RED) {
 
         var tab = RED.nodes.getNode(config.tab);
         var group = RED.nodes.getNode(config.group);
-        if (!tab || !group) return;
+        if (!tab || !group) { return; }
 
         var done = ui.add({
             node: node,
@@ -19,17 +19,15 @@ module.exports = function(RED) {
                 label: config.label,
                 order: config.order,
                 value: config.payload || node.id,
-				width: config.width || 6,
-				height: config.height || 1,
-				options: config.options
+                width: config.width || 6,
+                height: config.height || 1,
+                options: config.options
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;
             }
         });
-
         node.on("close", done);
     }
-
     RED.nodes.registerType("ui_dropdown", DropdownNode);
 };
