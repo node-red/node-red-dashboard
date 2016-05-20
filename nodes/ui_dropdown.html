@@ -1,0 +1,163 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_dropdown',{
+        category: 'dashboard',
+        color: 'rgb(176, 223, 227)',
+        defaults: {
+            name: {value: ''},
+            label: {value: ''},
+            tab: {type: 'ui_tab', required: true},
+            group: {type: 'ui_group', required: true},
+            order: {value: 1, validate: RED.validators.number()},
+            width: {value: 6},
+            height: {value: 1},
+            options: {value:[{value: '', label : ''}], validate: function(value) {
+				return value.length > 0;
+			}},
+            payload: {value: ''},
+            topic: {value: ''}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "ui_dropdown.png",
+        paletteLabel: 'dropdown',
+        label: function() { return this.name || this.label || 'dropdown'; },
+        oneditprepare: function() {
+            this.width = this.width || 3;
+            this.height = this.height || 1;
+
+            $( "#node-input-order" ).spinner({
+                min:1
+            });
+            $( "#node-input-width" ).val(this.width).spinner({
+                min:1
+            });
+            $( "#node-input-height" ).val(this.height).spinner({
+                min:1
+            });
+
+			this.resizeRule = function(option,newWidth) {
+				option.find(".node-input-option-label").width(newWidth);
+				option.find(".node-input-option-value").width(newWidth);
+            }
+
+            function generateOption(i, option) {
+                var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
+                var row = $('<div/>').appendTo(container);
+                var row2 = $('<div/>',{style:"padding-top: 5px; padding-left: 175px;"}).appendTo(container);
+                var row3 = $('<div/>',{style:"padding-top: 5px; padding-left: 120px;"}).appendTo(container);
+
+                $('<i style="color: #eee; cursor: move; margin-left: 3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
+
+                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:'str',types:['str','num','bool']});
+                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Label', value:option.label}).appendTo(row).typedInput({default:'str',types:['str', 'num']});
+
+                var finalspan = $('<span/>',{style:"float: right;margin-right: 10px;"}).appendTo(row);
+                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"margin-top: 7px; margin-left: 5px;"}).appendTo(finalspan);
+                $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
+
+                deleteButton.click(function() {
+                    container.css({"background":"#fee"});
+                    container.fadeOut(300, function() {
+                        $(this).remove();
+                    });
+                });
+
+                $("#node-input-option-container").append(container);
+            }
+
+            $("#node-input-add-option").click(function() {
+                generateOption($("#node-input-option-container").children().length+1, {});
+                $("#node-input-option-container-div").scrollTop($("#node-input-option-container-div").get(0).scrollHeight);
+            });
+
+            for (var i=0;i<this.options.length;i++) {
+                var option = this.options[i];
+                generateOption(i+1,option);
+            }
+
+			$( "#node-input-option-container" ).sortable({
+                axis: "y",
+                handle:".node-input-option-handle",
+                cursor: "move"
+            });
+        },
+        oneditsave: function() {
+            var options = $("#node-input-option-container").children();
+            var node = this;
+            node.options = [];
+            options.each(function(i) {
+                var option = $(this);
+                var o = {
+					label: option.find(".node-input-option-label").typedInput('value'),
+					value: option.find(".node-input-option-value").typedInput('value')
+				};
+                node.options.push(o);
+            });
+        },
+        oneditresize: function() {
+            var parent = $( "#width-height" ).width();
+            $( "#node-input-order" ).width((parent - 135));
+            $( "#node-input-width" ).width((parent - 287)/2);
+            $( "#node-input-height" ).width((parent - 287)/2);
+
+			var options = $("#node-input-option-container").children();
+            var newWidth = ($("#node-input-option-container").width() - 175)/2;
+            var node = this;
+            options.each(function(i) {
+                node.resizeRule($(this),newWidth);
+            });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_dropdown">
+    <div class="form-row">
+        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
+        <input type="text" id="node-input-tab">
+	</div>
+	<div class="form-row">
+        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+    <div class="form-row">
+        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
+        <input type="text" id="node-input-order">
+    </div>
+    <div class="form-row">
+		<div id="width-height" style="width: calc(70% + 118px);">
+			<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+			<input type="text" id="node-input-width" style="width:15%">
+			<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+			<input type="text" id="node-input-height" style="width:15%">
+		</div>
+    </div>
+    <div class="form-row">
+        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <input type="text" id="node-input-label">
+    </div>
+    <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%">
+		<label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Options</label>
+        <div id="node-input-option-container-div" style="box-sizing: border-box; border-radius: 5px; height: 257px; padding: 5px; border: 1px solid #ccc; overflow-y:scroll;display: inline-block; width: calc(70% + 15px);">
+            <ol id="node-input-option-container" style=" list-style-type:none; margin: 0;"></ol>
+        </div>
+    </div>
+    <div class="form-row">
+        <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top: 4px; margin-left: 103px;"><i class="fa fa-plus"></i> <span>option</span></a>
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_dropdown">
+    <p>Adds a dropdown select box to the user interface.</p>
+	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 1)</i> of the dropdown can be defined as an
+    integer, where the value defines the size as a number in rows/columns.</p>
+    <p>Upon selecting an item from the list...</p>
+    <p>The <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+</script>

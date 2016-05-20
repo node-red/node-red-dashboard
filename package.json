@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.0.1",
+    "version": "2.0.0",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -23,6 +23,7 @@
     "node-red": {
         "nodes": {
             "ui_button": "nodes/ui_button.js",
+            "ui_dropdown": "nodes/ui_dropdown.js",
             "ui_switch": "nodes/ui_switch.js",
             "ui_slider": "nodes/ui_slider.js",
             "ui_numeric": "nodes/ui_numeric.js",

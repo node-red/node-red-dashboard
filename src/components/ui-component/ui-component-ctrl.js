@@ -18,6 +18,15 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 				me.buttonClick = function () {
 					me.valueChanged(0);
 				};
+				break;
+			case 'dropdown':
+				if (me.item.value !== me.item.id) {
+					// push through any already selected value
+					me.valueChanged(0);
+				}
+				me.itemChanged = function () {
+					me.valueChanged(0);
+				};
 
 			case 'numeric':
 				var changeValue = function (delta) {
@@ -64,7 +73,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 				var lineColors = {
 					'theme-dark': ['#0FBBC3', 'orange', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47']
 				};
-				me.item.value.forEach(function(line, index) {
+				me.item.value.forEach(function (line, index) {
 					if (lineColors[$scope.main.selectedTab.theme]) {
 						line.color = lineColors[$scope.main.selectedTab.theme][index];
 					}
