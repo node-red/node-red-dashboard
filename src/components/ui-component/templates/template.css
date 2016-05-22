@@ -1,23 +1,24 @@
-.control-template {
-    padding: 6px 0px 8px 10px;
+.nd-dashboard-template {
+	padding: 8px 10px;
+	overflow-y: scroll;
 }
 
-.control-template p {
-    margin: 0.2em 0;
+.nd-dashboard-template p {
+	margin: 0.2em 0;
 }
 
-.control-template h4 {
-    margin: 0.2em 0;
+.nd-dashboard-template h4 {
+	margin: 0.2em 0;
 }
 
-.control-template h3 {
-    margin: 0.2em 0;
+.nd-dashboard-template h3 {
+	margin: 0.2em 0;
 }
 
-.control-template h2 {
-    margin: 0.3em 0;
+.nd-dashboard-template h2 {
+	margin: 0.3em 0;
 }
 
-.control-template h1 {
-    margin: 0.4em 0;
+.nd-dashboard-template h1 {
+	margin: 0.4em 0;
 }

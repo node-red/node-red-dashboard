@@ -1,11 +1,11 @@
-.control-text {
+.nd-dashboard-text {
     padding: 0 10px;
 }
 
-.control-text p {
+.nd-dashboard-text p {
     margin: 0.2em 0;
 }
 
-.control-text .value {
+.nd-dashboard-text .value {
     font-weight: bold;
 }

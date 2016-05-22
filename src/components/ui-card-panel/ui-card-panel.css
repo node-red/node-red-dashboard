@@ -6,32 +6,30 @@
 .masonry-container > * {
 	position: absolute;
 	opacity: 0;
-	outline: 1px solid #989898;
-    background-color: #fff;
 }
 
 .masonry-container > .visible {
 	opacity: 1;
 }
 
-.card-panel > p {
-	margin-left: 9px;
-	margin-top: 7px;
-	margin-bottom: 3px;
-    font-size: larger;
+.nr-dashboard-cardpanel > p {
+	margin-left: 14px;
+	margin-top: 17px;
+	margin-bottom: 7px;
+    font-size: 1.2em;
     font-weight: 500;
 }
 
-.card-container {
+.nr-dashboard-cardcontainer {
 	position: relative;
 }
 
-.card-container > * {
+.nr-dashboard-cardcontainer > * {
 	margin: 0 !important;
 	position: absolute;
 	opacity: 0;
 }
 
-.card-container > .visible {
+.nr-dashboard-cardcontainer > .visible {
 	opacity: 1;
 }

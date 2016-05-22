@@ -1,3 +1,7 @@
-.control-slider {
+.nr-dashboard-slider {
     padding: 0 10px;
+}
+
+.nr-dashboard-slider p.label {
+    margin-right: 10px;
 }

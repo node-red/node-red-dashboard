@@ -7,11 +7,11 @@ module.exports = function(RED) {
 
         var tab = RED.nodes.getNode(config.tab);
         var group = RED.nodes.getNode(config.group);
-        if (!tab || !group) return;
+        if (!tab || !group) { return; }
 
         var done = ui.add({
-            node: node, 
-            tab: tab, 
+            node: node,
+            tab: tab,
             group: group,
             control: {
                 type: 'numeric',
@@ -21,17 +21,15 @@ module.exports = function(RED) {
                 value: config.min,
                 min: config.min,
                 max: config.max,
-				width: config.width || 3,
-				height: config.height || 1
+                width: config.width || 3,
+                height: config.height || 1
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;
             },
             convert: ui.toNumber.bind(this, config)
         });
-
         node.on("close", done);
     }
-
     RED.nodes.registerType("ui_numeric", NumericNode);
 };

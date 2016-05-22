@@ -1,0 +1,146 @@
+/*
+	ALL COMPONENTS/CONTENT
+*/
+
+body.nr-dashboard-theme-light {
+	background: #f0f0f0;
+}
+
+body.nr-dashboard-theme-light md-content {}
+
+body.nr-dashboard-theme-light md-content md-card {}
+
+
+/*
+	DASHBOARD HEADER
+*/
+
+body.nr-dashboard-theme-light md-toolbar {
+	background-color: #0094CE;
+}
+
+
+/*
+	DASHBOARD SIDEBAR
+*/
+
+body.nr-dashboard-theme-light md-sidenav {}
+
+
+/*
+	GROUP SPECIFIC
+*/
+
+.nr-dashboard-theme-light ui-card-panel {
+	background: white;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+}
+
+
+/*
+	COMPONENT-SPECIFIC
+*/
+
+
+/* Button */
+
+.nr-dashboard-theme-light .nr-dashboard-button .md-button {
+	background-color: #9EE3F9;
+	color: #eee;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-button .md-button:hover {
+	background-color: #4FBAE4;
+}
+
+
+/* Chart */
+
+.nr-dashboard-theme-light .nr-dashboard-linechart {}
+
+.nr-dashboard-theme-light .nr-dashboard-linechart text {}
+
+.nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis path,
+.nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis line {}
+
+
+/* Gauge */
+
+.nr-dashboard-theme-light .nr-dashboard-gauge {}
+
+.nr-dashboard-theme-light .nr-dashboard-gauge text {}
+
+
+/* Numeric */
+
+.nr-dashboard-theme-light .nr-dashboard-numeric {}
+
+
+/* Slider */
+
+.nr-dashboard-theme-light .nr-dashboard-slider {}
+
+.nr-dashboard-theme-light .nr-dashboard-slider .md-track {
+	background-color: #E1E1E1;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-slider .md-track-fill {
+	background-color: #4FBAE4;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-slider .md-thumb:after {
+	background-color: #4FBAE4;
+	border-color: #4FBAE4;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-slider .md-focus-ring {
+	background-color: #4FBAE4;
+}
+
+
+/* Switch */
+
+.nr-dashboard-theme-light .nr-dashboard-switch {}
+
+.nr-dashboard-theme-light .nr-dashboard-switch md-switch .md-bar {}
+
+.nr-dashboard-theme-light .nr-dashboard-switch md-switch.md-checked .md-bar {
+	background-color: rgba(79, 186, 228, 0.5);
+}
+
+.nr-dashboard-theme-light .nr-dashboard-switch md-switch .md-thumb {}
+
+.nr-dashboard-theme-light .nr-dashboard-switch md-switch.md-checked .md-thumb {
+	background-color: #4FBAE4;
+}
+
+
+/* Template */
+
+.nr-dashboard-theme-light .nr-dashboard-template {}
+
+
+/* Text-Input */
+
+.nr-dashboard-theme-light .nr-dashboard-textinput {}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput label {}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput md-input-container.md-input-has-value label {}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput md-input-container.md-input-focused label {
+	color: #0094CE;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput md-input-container.md-input-focused input {
+	border-color: #0094CE;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput md-input-container .md-input:invalid {
+	color: #FF2D2D;
+}
+
+
+/* Text */
+
+.nr-dashboard-theme-light .nr-dashboard-text {}

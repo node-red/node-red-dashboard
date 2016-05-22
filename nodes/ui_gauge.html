@@ -21,9 +21,9 @@
         icon: "ui_gauge.png",
         paletteLabel: 'gauge',
         label: function() { return this.name || this.label || 'gauge'; },
-		oneditprepare: function() {
-			this.width = this.width || 6;
-			this.height = this.height || 3;
+        oneditprepare: function() {
+            this.width = this.width || 6;
+            this.height = this.height || 3;
 
             $( "#node-input-order" ).spinner({
                 min:1
@@ -35,12 +35,12 @@
                 min:1
             });
         },
-		oneditresize: function() {
-			var parent = $( "#width-height" ).width();
-			$( "#node-input-order" ).width((parent - 135));
-			$( "#node-input-width" ).width((parent - 287)/2);
-			$( "#node-input-height" ).width((parent - 287)/2);
-		}
+        oneditresize: function() {
+            var parent = $( "#width-height" ).width();
+            $( "#node-input-order" ).width((parent - 135));
+            $( "#node-input-width" ).width((parent - 287)/2);
+            $( "#node-input-height" ).width((parent - 287)/2);
+        }
     });
 </script>
 
@@ -49,7 +49,7 @@
         <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
         <input type="text" id="node-input-tab">
     </div>
-	<div class="form-row">
+    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
@@ -58,12 +58,12 @@
         <input type="text" id="node-input-order">
     </div>
     <div class="form-row">
-		<div id="width-height" style="width: calc(70% + 118px);">
-			<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-			<input type="text" id="node-input-width" style="width:15%">
-			<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
-			<input type="text" id="node-input-height" style="width:15%">
-		</div>
+        <div id="width-height" style="width: calc(70% + 118px);">
+            <label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+            <input type="text" id="node-input-width" style="width:15%">
+            <label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
+            <input type="text" id="node-input-height" style="width:15%">
+        </div>
     </div>
     <div class="form-row">
         <label for="node-input-title"><i class="fa fa-copy"></i> Title</label>
@@ -91,7 +91,7 @@
 
 <script type="text/x-red" data-help-name="ui_gauge">
     <p>Adds a gauge type widget to the user interface.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
+    <p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
     <p>The <code>msg.payload</code> is searched for a numeric value and is formatted in accordance with the defined <b>Template</b>, which can then be formatted using
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
     <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and add % sign to the label.</p>

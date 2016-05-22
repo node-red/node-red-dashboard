@@ -2,7 +2,7 @@ module.exports = function(RED) {
 
     var ui = require('../ui')(RED);
 
-    function ButtonNode(config) {
+    function DropdownNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
@@ -15,14 +15,13 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             control: {
-                type: 'button',
+                type: 'dropdown',
                 label: config.label,
-                color: config.color,
-                icon: config.icon,
                 order: config.order,
                 value: config.payload || node.id,
-                width: config.width || 3,
-                height: config.height || 1
+                width: config.width || 6,
+                height: config.height || 1,
+                options: config.options
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;
@@ -30,5 +29,5 @@ module.exports = function(RED) {
         });
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_button", ButtonNode);
+    RED.nodes.registerType("ui_dropdown", DropdownNode);
 };

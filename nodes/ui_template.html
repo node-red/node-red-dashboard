@@ -7,6 +7,8 @@
             group: {type: 'ui_group', required: true},
             name: {value: ''},
             order: {value: 1, validate: RED.validators.number()},
+            width: {value: 6, validate: RED.validators.number()},
+            height: {value: ''},
             format: {value: '{{msg.payload}}'},
             storeOutMessages: {value: true},
             fwdInMessages: {value: true}
@@ -20,6 +22,12 @@
             var that = this;
 
             $( "#node-input-order" ).spinner({
+                min:1
+            });
+            $( "#node-input-width" ).val(this.width).spinner({
+                min:1
+            });
+            $( "#node-input-height" ).val(this.height).spinner({
                 min:1
             });
 
@@ -87,7 +95,10 @@
         },
 		oneditresize: function() {
 			var parent = $( "#form-row-order" ).width();
-			$( "#node-input-order" ).width(parent * 0.6 + 33);
+			var container = parent * 0.6;
+			$( "#node-input-order" ).width(container + 33);
+			$( "#node-input-width" ).width((container - 106)/2);
+			$( "#node-input-height" ).width((container - 106)/2);
 		}
     });
 </script>
@@ -104,6 +115,14 @@
     <div class="form-row" id="form-row-order">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
         <input type="text" id="node-input-order">
+    </div>
+    <div class="form-row">
+		<div id="width-height" style="width: calc(60% + 168px);">
+			<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+			<input type="text" id="node-input-width" style="width:15%">
+			<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 25px;"><i class="fa fa-arrows-v"></i> Height</label>
+			<input type="text" id="node-input-height" style="width:15%">
+		</div>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -130,6 +149,7 @@
 
 <script type="text/x-red" data-help-name="ui_template">
     <p>The Template widget can contain any valid html and Angular/Angular-Material directives.</p>
+	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : '')</i> of the template can be defined as an integer, where the value defines the size as a number in rows/columns. With a <b>Height</b> of '', the container's height will size to the templates content.</p>
     <p>This node can be used to create a dynamic user interface element that changes its appearence
     based on the input message and can send back messages to Node-RED.</p>
     <br>
