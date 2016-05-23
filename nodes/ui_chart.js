@@ -20,6 +20,7 @@ module.exports = function(RED) {
             control: {
                 type: 'chart',
                 order: config.order,
+                label: config.label,
                 interpolate: config.interpolate,
                 nodata: config.nodata,
                 width: config.width || group.config.width || 6,

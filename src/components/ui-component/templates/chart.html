@@ -1,9 +1,10 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}">
+<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" class="nr-dashboard-chart">
+    <p class="label">{{ me.item.label }}</p>
     <nvd3-line-chart
         class="nr-dashboard-linechart"
         data="me.item.value"
         width="{{ me.item.width * 50 - (me.item.width - 1)*7}}"
-        height="{{ me.item.height * 50 - (me.item.height - 1)*7 }}"
+        height="{{ me.item.height * 50 - (me.item.height - 1)*7 - 20}}"
         margin="{left:30,top:10,bottom:30,right:30}"
         showXAxis="true"
         showYAxis="true"
