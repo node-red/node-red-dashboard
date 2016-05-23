@@ -63,6 +63,21 @@ body.nr-dashboard-theme-light md-sidenav {}
 .nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis path,
 .nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis line {}
 
+/* Dropdown */
+
+.nr-dashboard-theme-light md-select-menu md-option {
+	background-color: #fff;
+	color: #000;
+}
+
+.nr-dashboard-theme-light md-select-menu.md-default-theme md-option:focus:not([disabled]):not([selected]),
+md-select-menu md-option:focus:not([disabled]):not([selected]) {
+	background-color: #fff;
+}
+
+.nr-dashboard-theme-light md-select-menu md-option:hover {
+	background-color: #eee;
+}
 
 /* Gauge */
 
