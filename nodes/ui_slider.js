@@ -19,7 +19,7 @@ module.exports = function(RED) {
                 value: config.min,
                 min: config.min,
                 max: config.max,
-                width: config.width || 6,
+                width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
             beforeSend: function (msg) {

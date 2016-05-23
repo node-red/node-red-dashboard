@@ -26,19 +26,13 @@
 
             $( "#node-input-order" ).spinner({
                 min:1
-            });
+            }).width(25);
             $( "#node-input-width" ).val(this.width).spinner({
                 min:1
-            });
+            }).width(25);
             $( "#node-input-height" ).val(this.height).spinner({
                 min:1
-            });
-        },
-        oneditresize: function() {
-            var parent = $( "#width-height" ).width();
-            $( "#node-input-order" ).width((parent - 135));
-            $( "#node-input-width" ).width((parent - 287)/2);
-            $( "#node-input-height" ).width((parent - 287)/2);
+            }).width(25);
         }
     });
 </script>
@@ -55,22 +49,18 @@
     <div class="form-row">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
         <input type="text" id="node-input-order">
-    </div>
-    <div class="form-row">
-		<div id="width-height" style="width: calc(70% + 118px);">
-			<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-			<input type="text" id="node-input-width" style="width:15%">
-			<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
-			<input type="text" id="node-input-height" style="width:15%">
-		</div>
+        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
+        <input type="text" id="node-input-width">
+        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
+        <input type="text" id="node-input-height">
     </div>
     <div class="form-row">
         <label for="node-input-icon"><i class="fa fa-tag"></i> Icon</label>
-        <input type="text" id="node-input-icon" style="width: 83px" placeholder="(optional)">
-        <label for="node-input-label" style="width:40px;text-align:right;"> Label</label>
-        <input type="text" id="node-input-label" style="width:calc(70% - 290px);" placeholder="(optional)">
-        <label for="node-input-color" style="width:40px;text-align:right;"> Color</label>
-        <input type="text" id="node-input-color" style="width: 83px" placeholder="(optional)">
+        <input type="text" id="node-input-icon" style="width:10%" placeholder="(optional)">
+        <label for="node-input-label" style="width:40px; text-align:right;"> Label</label>
+        <input type="text" id="node-input-label" style="width:10%;" placeholder="(optional)">
+        <label for="node-input-color" style="width:40px; text-align:right;"> Color</label>
+        <input type="text" id="node-input-color" style="width:10%" placeholder="(optional)">
     </div>
     <div class="form-row">
         <label for="node-input-payload"><i class="fa fa-envelope"></i> Payload</label>

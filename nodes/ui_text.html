@@ -3,10 +3,10 @@
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
-            tab: {type: 'ui_tab', required: true},
-            group: {type: 'ui_group', required: true},
-            order: {value: 1, validate: RED.validators.number()},
-            width: {value: 6},
+            tab: {type: 'ui_tab', required:true},
+            group: {type: 'ui_group', required:true},
+            order: {value: 1, validate:RED.validators.number()},
+            width: {value: ''},
             height: {value: 1},
             name: {value: ''},
             label: {value: 'text'},
@@ -18,26 +18,20 @@
         icon: "ui_text.png",
         paletteLabel: 'text',
         label: function() { return this.name || this.label || 'text'; },
-		oneditprepare: function() {
-			this.width = this.width || 6;
-			this.height = this.height || 1;
+        oneditprepare: function() {
+            //this.width = this.width || 6;
+            //this.height = this.height || 1;
 
             $( "#node-input-order" ).spinner({
                 min:1
-            });
+            }).width(25);
             $( "#node-input-width" ).val(this.width).spinner({
-                min:1
-            });
+                min:0
+            }).width(25);
             $( "#node-input-height" ).val(this.height).spinner({
                 min:1
-            });
-        },
-		oneditresize: function() {
-			var parent = $( "#width-height" ).width();
-			$( "#node-input-order" ).width((parent - 135));
-			$( "#node-input-width" ).width((parent - 287)/2);
-			$( "#node-input-height" ).width((parent - 287)/2);
-		}
+            }).width(25);
+        }
     });
 </script>
 
@@ -46,21 +40,17 @@
         <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
         <input type="text" id="node-input-tab">
     </div>
-	<div class="form-row">
+    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order" style="width: 70%">
-    </div>
-    <div class="form-row">
-		<div id="width-height" style="width: calc(70% + 118px);">
-			<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-			<input type="text" id="node-input-width" style="width:15%">
-			<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
-			<input type="text" id="node-input-height" style="width:15%">
-		</div>
+        <input type="text" id="node-input-order">
+        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
+        <input type="text" id="node-input-width">
+        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
+        <input type="text" id="node-input-height">
     </div>
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
@@ -78,7 +68,8 @@
 
 <script type="text/x-red" data-help-name="ui_text">
     <p>Will display a non-editable text field on the user interface.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
+    <p>The <b>Width</b> and <b>Height</b> of the gauge can be defined as an integer, where the value defines the size as
+    a number in rows/columns. A width of 0 (or blank) will set the widget to the full width of the group.</p>
     <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Template</b>.</p>
     <p>The <b>Template</b> field can be used to change the displayed format and can contain valid HTML and
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>

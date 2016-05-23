@@ -3,19 +3,19 @@
         category: 'dashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
-            tab: {type: 'ui_tab', required: true},
-            group: {type: 'ui_group', required: true},
-            order: {value: 1, validate: RED.validators.number()},
-            width: {value: 6},
+            tab: {type: 'ui_tab', required:true},
+            group: {type: 'ui_group', required:true},
+            order: {value: 1, validate:RED.validators.number()},
+            width: {value: ''},
             height: {value: 1},
             name: {value: ''},
             label: {value: 'switch'},
             topic: {value: ''},
             style: {value: ''},
-            onvalue: {value: 'true', required: true},
-            onicon: {value: '', validate: function(value) { console.log(this); return true;}},
+            onvalue: {value: 'true', required:true},
+            onicon: {value: '', validate:function(value) { console.log(this); return true;}},
             oncolor: {value: ''},
-            offvalue: {value: 'false', required: true},
+            offvalue: {value: 'false', required:true},
             officon: {value: ''},
             offcolor: {value: ''},
         },
@@ -25,18 +25,15 @@
         paletteLabel: 'switch',
         label: function() { return this.name || this.label || 'switch'; },
         oneditprepare: function() {
-			this.width = this.width || 6;
-			this.height = this.height || 1;
-
             $( "#node-input-order" ).spinner({
                 min:1
-            });
+            }).width(25);
             $( "#node-input-width" ).val(this.width).spinner({
-                min:1
-            });
+                min:0
+            }).width(25);
             $( "#node-input-height" ).val(this.height).spinner({
                 min:1
-            });
+            }).width(25);
 
             $('#node-input-style').on('change', function() {
                 function all(action) {
@@ -50,25 +47,21 @@
                 }
 
                 switch ($(this).val()) {
-                    case '':
+                    case '': {
                         all('hide');
                         $('#node-input-onvalue').css('width', '70%');
                         $('#node-input-offvalue').css('width', '70%');
                         break;
-                    case 'icon-small':
+                    }
+                    case 'icon-small': {
                         all('show');
                         $('#node-input-onvalue').css('width', 'calc(70% - 285px)');
                         $('#node-input-offvalue').css('width', 'calc(70% - 285px)');
                         break;
+                    }
                 }
             });
-        },
-		oneditresize: function() {
-			var parent = $( "#width-height" ).width();
-			$( "#node-input-order" ).width((parent - 135));
-			$( "#node-input-width" ).width((parent - 287)/2);
-			$( "#node-input-height" ).width((parent - 287)/2);
-		}
+        }
     });
 </script>
 
@@ -84,14 +77,10 @@
     <div class="form-row">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
         <input type="text" id="node-input-order">
-    </div>
-    <div class="form-row">
-		<div id="width-height" style="width: calc(70% + 118px);">
-			<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-			<input type="text" id="node-input-width" style="width:15%">
-			<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-arrows-v"></i> Height</label>
-			<input type="text" id="node-input-height" style="width:15%">
-		</div>
+        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
+        <input type="text" id="node-input-width">
+        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
+        <input type="text" id="node-input-height">
     </div>
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>

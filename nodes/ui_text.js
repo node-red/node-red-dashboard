@@ -18,7 +18,7 @@ module.exports = function(RED) {
                 label: config.label,
                 order: config.order,
                 format: config.format,
-                width: config.width || 6,
+                width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
             beforeEmit: function(msg, value) {

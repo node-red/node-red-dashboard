@@ -3,11 +3,11 @@
         category: 'dashboard',
         color: 'rgb( 63, 173, 181)',
         defaults: {
-            tab: {type: 'ui_tab', required: true},
-            group: {type: 'ui_group', required: true},
+            tab: {type: 'ui_tab', required:true},
+            group: {type: 'ui_group', required:true},
             name: {value: ''},
-            order: {value: 1, validate: RED.validators.number()},
-            width: {value: 6, validate: RED.validators.number()},
+            order: {value: 1, validate:RED.validators.number()},
+            width: {value: ''},
             height: {value: ''},
             format: {value: '{{msg.payload}}'},
             storeOutMessages: {value: true},
@@ -20,16 +20,15 @@
         label: function() { return this.name || 'template'; },
         oneditprepare: function() {
             var that = this;
-
             $( "#node-input-order" ).spinner({
                 min:1
-            });
+            }).width(25);
             $( "#node-input-width" ).val(this.width).spinner({
-                min:1
-            });
+                min:0
+            }).width(25);
             $( "#node-input-height" ).val(this.height).spinner({
                 min:1
-            });
+            }).width(25);
 
             if (typeof this.storeOutMessages === 'undefined') {
                 this.storeOutMessages = true;
@@ -92,14 +91,7 @@
             }
             $("#node-input-format").val(this.editor.getValue());
             delete this.editor;
-        },
-		oneditresize: function() {
-			var parent = $( "#form-row-order" ).width();
-			var container = parent * 0.6;
-			$( "#node-input-order" ).width(container + 33);
-			$( "#node-input-width" ).width((container - 106)/2);
-			$( "#node-input-height" ).width((container - 106)/2);
-		}
+        }
     });
 </script>
 
@@ -112,17 +104,14 @@
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
-    <div class="form-row" id="form-row-order">
+    <div class="form-row">
         <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
         <input type="text" id="node-input-order">
-    </div>
-    <div class="form-row">
-		<div id="width-height" style="width: calc(60% + 168px);">
-			<label for="node-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-			<input type="text" id="node-input-width" style="width:15%">
-			<label for="node-input-height" style=" text-align: right; width: 60px; margin-right: 15px; margin-left: 25px;"><i class="fa fa-arrows-v"></i> Height</label>
-			<input type="text" id="node-input-height" style="width:15%">
-		</div>
+        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
+        <input type="text" id="node-input-width">
+        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
+        <input type="text" id="node-input-height">
+        </div>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
