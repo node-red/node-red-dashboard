@@ -19,7 +19,7 @@ module.exports = function(RED) {
             control: {
                 type: 'template',
                 order: config.order,
-                width: config.width || 6,
+                width: config.width || group.config.width || 6,
                 height: config.height,
                 format: config.format
             },

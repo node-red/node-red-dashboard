@@ -8,6 +8,8 @@ module.exports = function (RED) {
         var tab = RED.nodes.getNode(config.tab);
         var group = RED.nodes.getNode(config.group);
         if (!tab || !group) { return; }
+        if (config.width === "0") { delete config.width; }
+        if (config.height === "0") { delete config.height; }
 
         var colors = {
             background: {'theme-dark': '#515151' },
@@ -30,8 +32,8 @@ module.exports = function (RED) {
                 format: config.format,
                 min: config.min,
                 max: config.max,
-                width: config.width || 6,
-                height: config.height || 3,
+                width: config.width || group.config.width || 6,
+                height: config.height || parseInt(group.config.width/2+0.5) || 3,
                 background: colors.background,
                 lineWidth: lineWidth,
                 pointerOptions: pointerOptions,

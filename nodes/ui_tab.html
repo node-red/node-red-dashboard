@@ -4,8 +4,8 @@
         defaults: {
             name: {value: 'Home'},
             icon: {value: 'dashboard'},
-			theme: {value: 'theme-light', required: true},
-            order: {value: 1, validate: RED.validators.number()}
+            theme: {value: 'theme-light', required:true},
+            order: {value: 1, validate:RED.validators.number()}
         },
         paletteLabel: 'dashboard tab',
         label: function() { return this.name || 'Tab'; },
@@ -14,10 +14,6 @@
             $( "#node-config-input-order" ).spinner({
                 min:1
             });
-        },
-        oneditresize: function() {
-            var parent = $( "#form-row-order" ).width();
-            $( "#node-config-input-order" ).width((parent - 287)/2);
         }
     });
 </script>
@@ -33,7 +29,7 @@
     </div>
     <div class="form-row">
         <label for="node-config-input-theme"><i class="fa fa-paint-brush"></i> Theme</label>
-        <select id="node-config-input-theme" style="width: calc(70% + 15px);">
+        <select id="node-config-input-theme" style="width:calc(70% + 15px);">
             <option value="theme-light">Light (default)</option>
             <option value="theme-dark">Dark</option>
         </select>
@@ -45,5 +41,5 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_tab">
-    <p>Tab</p>
+    <p>Tab configuration for Dashboard</p>
 </script>

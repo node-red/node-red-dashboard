@@ -8,6 +8,10 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(config.tab);
         var group = RED.nodes.getNode(config.group);
         if (!tab || !group) { return; }
+        if (config.width === "0") { delete config.width; }
+        if (config.height === "0") { delete config.height; }
+
+        if (!tab || !group) { return; }
         var options = {
             emitOnlyNewValues: false,
             node: node,
@@ -18,8 +22,8 @@ module.exports = function(RED) {
                 order: config.order,
                 interpolate: config.interpolate,
                 nodata: config.nodata,
-                width: config.width || 6,
-                height: config.height || 3,
+                width: config.width || group.config.width || 6,
+                height: config.height || parseInt(group.config.width/2+0.5) || 3,
                 ymin: config.ymin,
                 ymax: config.ymax
             },

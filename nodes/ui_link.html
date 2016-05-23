@@ -4,12 +4,10 @@
         color: 'rgb( 63, 173, 181)',
         defaults: {
             name: {value: 'Google'},
-			link: {value: 'http://www.google.com'},
+            link: {value: 'http://www.google.com'},
             icon: {value: 'open_in_browser'},
-            target: {value: 'newtab', validate : function() {
-				return true;
-			}},
-            order: {value: 1, validate: RED.validators.number()}
+            target: {value: 'newtab', validate :function() { return true; }},
+            order: {value: 1, validate:RED.validators.number()}
         },
         inputs:0,
         outputs:0,
@@ -17,13 +15,13 @@
         icon: "ui_link.png",
         paletteLabel: 'link',
         label: function() { return this.name || 'link'; },
-		oneditprepare: function() {
-			document.getElementById('node-input-target-opentab').checked = (this.target === 'newtab');
-			document.getElementById('node-input-target-openiframe').checked = (this.target === 'iframe');
-		},
-		oneditsave : function () {
-			this.target = document.getElementById('node-input-target-opentab').checked ? 'newtab' : 'iframe';
-		}
+        oneditprepare: function() {
+            document.getElementById('node-input-target-opentab').checked = (this.target === 'newtab');
+            document.getElementById('node-input-target-openiframe').checked = (this.target === 'iframe');
+        },
+        oneditsave : function () {
+            this.target = document.getElementById('node-input-target-opentab').checked ? 'newtab' : 'iframe';
+        }
     });
 </script>
 
