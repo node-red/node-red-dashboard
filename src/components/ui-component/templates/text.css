@@ -1,11 +1,11 @@
-.nd-dashboard-text {
+.nr-dashboard-text {
     padding: 0 10px;
 }
 
-.nd-dashboard-text p {
+.nr-dashboard-text p {
     margin: 0.2em 0;
 }
 
-.nd-dashboard-text .value {
+.nr-dashboard-text .value {
     font-weight: bold;
 }
