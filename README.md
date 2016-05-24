@@ -1,3 +1,5 @@
+**Note: this is still under heavy development. It has not been published to npm and is not ready for general use.**
+
 # node-red-dashboard
 
 This module provides a set of nodes in Node-RED to quickly create a live data
