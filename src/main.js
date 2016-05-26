@@ -31,21 +31,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         this.open = function (link, index) {
             //console.log(link);
-
-            // open in iframe
+            // open in new tab
             if (link.target === 'newtab') {
                 $window.open(link.link, link.name);
-            // TODO : check iframe options (see Google)
             }
-            // open in new tab
+            // open in iframe // TODO : check iframe options (see Google)
             else {
-                main.links[index].link = $sce.trustAsResourceUrl(main.links[index].link);
+                main.links[index].link = main.links[index].link || $sce.trustAsResourceUrl(main.links[index].link);
                 main.selectedTab = main.links[index];
-                $timeout(function() {
-                    console.log(angular.element('.iframe'));
-                    console.log(angular.element('.iframe').find('body'));
-                    console.log(angular.element('.iframe').find('body').children());
-                }, 2000);
+                // $timeout(function() {
+                //     console.log(angular.element('.iframe'));
+                //     console.log(angular.element('.iframe').find('body'));
+                //     console.log(angular.element('.iframe').find('body').children());
+                // }, 2000);
             }
             $mdSidenav('left').close();
         };
