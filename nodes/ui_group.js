@@ -6,7 +6,8 @@ module.exports = function(RED) {
             name: config.name,
             disp: config.disp,
             width: config.width,
-            order: config.order
+            order: config.order,
+            tab: config.tab
         };
         if (!this.config.hasOwnProperty("disp")) { this.config.disp = true; }
         if (this.config.disp !== false) { this.config.disp = true; }

@@ -3,37 +3,37 @@
         category: 'config',
         defaults: {
             name: {value: 'Default'},
-            order: {value: 1},
+            tab: {type:"ui_tab",required: true },
+            order: {value: 0},
             disp: {value: true},
             width: {value: 6}
         },
         paletteLabel: 'dashboard group',
-        label: function() { return this.name || 'Group'; },
-        oneditprepare: function() {
-            var that = this;
-            $( "#node-config-input-order" ).spinner({
-                min:1
-            });
-            $( "#node-config-input-width" ).spinner({
-                min:1
-            });
+        label: function() {
+            var tabNode = RED.nodes.node(this.tab);
+            if (tabNode) {
+                return (this.name||"Group")+ " ["+(tabNode.name||"Tab")+"]"
+            }
+            return this.name || 'Group';
         },
-        oneditresize: function() {
-            var parent = $($( ".form-row" )[0]).width();
-            $( "#node-config-input-order" ).width((parent - 287)/2);
-            $( "#node-config-input-width" ).width((parent - 287)/2);
+        oneditprepare: function() {
+            $("#node-input-size").elementSizer({
+                width: "#node-config-input-width",
+                auto: false
+            });
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_group">
     <div class="form-row">
-        <label for="node-config-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-config-input-order">
+        <label for="node-config-input-tab"><i class="fa fa-table"></i> Tab</label>
+        <input type="text" id="node-config-input-tab">
     </div>
     <div class="form-row">
         <label for="node-config-input-width"><i class="fa fa-arrows-h"></i> Width</label>
-        <input type="text" id="node-config-input-width">
+        <input type="hidden" id="node-config-input-width">
+        <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>

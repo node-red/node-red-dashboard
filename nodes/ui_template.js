@@ -5,9 +5,10 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        var tab = RED.nodes.getNode(config.tab);
         var group = RED.nodes.getNode(config.group);
-        if (!tab || !group) { return; }
+        if (!group) { return; }
+        var tab = RED.nodes.getNode(group.config.tab);
+        if (!tab) { return; }
 
         var done = ui.add({
             forwardInputMessages: config.fwdInMessages,

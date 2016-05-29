@@ -250,6 +250,11 @@ function find(array, predicate) {
 }
 
 function itemSorter(item1, item2) {
+    if (item1.order === 0 && item2.order !== 0) {
+        return 1;
+    } else if (item1.order !== 0 && item2.order === 0) {
+        return -1;
+    }
     return item1.order - item2.order;
 }
 
@@ -288,16 +293,20 @@ function addControl(tab, groupHeader, control) {
 
     updateUi();
 
+    // Return the remove function for this control
     return function() {
         var index = foundGroup.items.indexOf(control);
         if (index >= 0) {
+            // Remove the item from the group
             foundGroup.items.splice(index, 1);
 
+            // If the group is now empty, remove it from the tab
             if (foundGroup.items.length === 0) {
                 index = foundTab.items.indexOf(foundGroup);
                 if (index >= 0) {
                     foundTab.items.splice(index, 1);
 
+                    // If the tab is now empty, remove it as well
                     if (foundTab.items.length === 0) {
                         index = tabs.indexOf(foundTab);
                         if (index >= 0) {

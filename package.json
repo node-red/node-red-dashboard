@@ -22,6 +22,7 @@
     },
     "node-red": {
         "nodes": {
+            "ui_base": "nodes/ui_base.js",
             "ui_button": "nodes/ui_button.js",
             "ui_dropdown": "nodes/ui_dropdown.js",
             "ui_switch": "nodes/ui_switch.js",

@@ -6,9 +6,10 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        var tab = RED.nodes.getNode(config.tab);
         var group = RED.nodes.getNode(config.group);
-        if (!tab || !group) { return; }
+        if (!group) { return; }
+        var tab = RED.nodes.getNode(group.config.tab);
+        if (!tab) { return; }
 
         var done = ui.add({
             node: node,
@@ -21,7 +22,7 @@ module.exports = function(RED) {
                 icon: config.icon,
                 order: config.order,
                 value: config.payload || node.id,
-                width: config.width || 3,
+                width: config.width  || group.config.width || 3,
                 height: config.height || 1
             },
             beforeSend: function (msg) {

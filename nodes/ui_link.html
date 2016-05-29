@@ -7,7 +7,7 @@
             link: {value: 'http://www.google.com'},
             icon: {value: 'open_in_browser'},
             target: {value: 'newtab', validate :function() { return true; }},
-            order: {value: 1, validate:RED.validators.number()}
+            order: {value: 0}
         },
         inputs:0,
         outputs:0,
@@ -44,10 +44,6 @@
         <label for="node-input-target-opentab">New Tab</label>
         <input type="radio" id="node-input-target-openiframe" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px">
         <label for="node-input-target-openiframe">iframe</label>
-    </div>
-    <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order" style="width:50px">
     </div>
 </script>
 
