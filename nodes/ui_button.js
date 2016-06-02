@@ -27,7 +27,8 @@ module.exports = function(RED) {
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;
-            }
+            },
+            storeFrontEndInputAsState: false
         });
         node.on("close", done);
     }
