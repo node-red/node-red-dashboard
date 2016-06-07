@@ -3,6 +3,7 @@
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
+            name: {value: ''},
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -13,7 +14,7 @@
                 return valid;
             }},
             height: {value: 0},
-            name: {value: ''},
+            gtype: {value: 'gage'},
             title: {value: 'Title'},
             label: {value: 'gauge'},
             format: {value: '{{value}}'},
@@ -32,6 +33,13 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+            $("#node-input-gtype").change(function() {
+                if ($(this).val() === "wave") {
+                    $("#ui-gauge-labels").hide();
+                } else {
+                    $("#ui-gauge-labels").show();
+                }
+            });
         }
     });
 </script>
@@ -48,16 +56,26 @@
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-title"><i class="fa fa-copy"></i> Title</label>
-        <input type="text" id="node-input-title">
+        <label for="node-input-gtype"><i class="fa fa-list"></i> Type</label>
+        <select id="node-input-gtype" style="width:200px !important">
+            <option value="gage">Gauge</option>
+            <option value="donut">Donut</option>
+            <option value="wave">Level</option>
+        </select>
     </div>
-    <div class="form-row">
-        <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
-        <input type="text" id="node-input-format">
-    </div>
-    <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-copy"></i> Label</label>
-        <input type="text" id="node-input-label">
+    <div id="ui-gauge-labels">
+        <div class="form-row">
+            <label for="node-input-title"><i class="fa fa-copy"></i> Title</label>
+            <input type="text" id="node-input-title">
+        </div>
+        <div class="form-row">
+            <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
+            <input type="text" id="node-input-format">
+        </div>
+        <div class="form-row">
+            <label for="node-input-label"><i class="fa fa-copy"></i> Label</label>
+            <input type="text" id="node-input-label">
+        </div>
     </div>
     <div class="form-row">
         <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>

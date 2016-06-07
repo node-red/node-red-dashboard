@@ -1,1 +1,5 @@
-<div id="gauge_{{$id}}" style="width:{{me.item.width*50}}px; height:{{me.item.height*50}}px;"></div>
+<div id="gauge_{{$id}}" style="width:{{me.item.width*55}}px; height:{{me.item.height*50}}px; margin-top:{{(me.item.gtype == 'donut')*25}}px">
+<!-- <p class="title">{{ me.item.title }}</p> -->
+<!-- <svg ng-if="me.item.gtype == 'wave'" id="gauge{{$id}}" width="100%" height="100%"></svg> -->
+<svg id="gauge{{$id}}" width="100%" height="100%"></svg>
+</div>
