@@ -9,17 +9,37 @@ var
     gulpif = require('gulp-if'),
     htmlreplace = require('gulp-html-replace'),
     minifyHTML = require('gulp-htmlmin'),
+    manifest = require('gulp-manifest'),
     path = require('path'),
     spawn = require('child_process').spawn,
     streamqueue = require('streamqueue'),
     jshint = require('gulp-jshint');
 
-gulp.task('default', ['lint']);
+gulp.task('default', ['manifest']);
 
 gulp.task('build', ['icon', 'js', 'css', 'index', 'fonts']);
 
 gulp.task('publish', ['build'], function (done) {
     spawn('npm', ['publish'], { stdio:'inherit' }).on('close', done);
+});
+
+gulp.task('manifest', ['build'], function() {
+    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/fonts/*'], { base: 'dist/' })
+    .pipe(manifest({
+        hash: true,
+        //preferOnline: true,
+        network: ['*'],
+        filename: 'dashboard.appcache',
+        exclude: 'dashboard.appcache'
+    }))
+    .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('lint', function() {
+    return gulp.src('**/*.js')
+    .pipe(jshint('.jshintrc'))
+    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('index', function() {
@@ -60,13 +80,6 @@ gulp.task('css', function () {
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(concat('app.min.css'))
     .pipe(gulp.dest('dist/css/'));
-});
-
-gulp.task('lint', function() {
-    return gulp.src('**/*.js')
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('default'))
-    .pipe(jshint.reporter('fail'));
 });
 
 var vendorPrefix = "vendor/";

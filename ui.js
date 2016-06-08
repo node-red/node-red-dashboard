@@ -190,11 +190,8 @@ function init(server, app, log, redSettings) {
                 'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material',
                 'angular-material-icons', 'svg-morpheus', 'font-awesome',
                 'sprintf-js',
-
                 'jquery', 'jquery-ui',
-
                 'raphael', 'justgage',
-
                 'd3', 'nvd3', 'angularjs-nvd3-directives'
             ];
 

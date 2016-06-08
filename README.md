@@ -66,4 +66,4 @@ cd node-red-dashboard
 npm install
 ```
 The plugin uses the ```dist``` folder if it exists and contains an ```index.html``` file. Make sure to delete it if you want to use the non-minified version.
-After changing the front-end code in the src folder, ```gulp build``` will update the minified files.
+After changing the front-end code in the src folder, ```gulp``` will update the minified files and update the appcache manifest.
