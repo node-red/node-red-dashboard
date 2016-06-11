@@ -9,6 +9,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var gauge;
+                    // Wave type gauge
                     if (scope.$eval('me.item.gtype') === 'wave') {
                         var gaugeConfig = liquidFillGaugeDefaultSettings();
                         gaugeConfig.minValue = scope.$eval('me.item.min');
@@ -31,6 +32,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             gauge.update(newValue);
                         });
                     }
+                    // Justgage type gauges
                     else {
                         var gaugeOptions = {
                             id: 'gauge_' + scope.$eval('$id'),
@@ -50,15 +52,30 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             gaugeOptions.pointer = false;
                         }
 
-                        //if (scope.main.selectedTab.theme !== 'theme-light') {
-                        gaugeOptions.gaugeWidthScale = scope.$eval('me.item.gageoptions.lineWidth')[scope.main.selectedTab.theme];
-                        gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.backgroundColor')[scope.main.selectedTab.theme];
-                        gaugeOptions.pointerOptions = scope.$eval('me.item.gageoptions.pointerOptions')[scope.main.selectedTab.theme];
-                        gaugeOptions.levelColors = scope.$eval('me.item.gageoptions.levelColors')[scope.main.selectedTab.theme];
-                        //}
+                        if (scope.main.selectedTab.theme !== 'theme-light') {
+                            gaugeOptions.gaugeWidthScale = scope.$eval('me.item.gageoptions.lineWidth')[scope.main.selectedTab.theme];
+                            gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.backgroundColor')[scope.main.selectedTab.theme];
+                            gaugeOptions.pointerOptions = scope.$eval('me.item.gageoptions.pointerOptions')[scope.main.selectedTab.theme];
+                            gaugeOptions.levelColors = scope.$eval('me.item.gageoptions.levelColors')[scope.main.selectedTab.theme];
+                        }
+
+                        if (scope.$eval('me.item.gtype') === 'compass') {
+                            gaugeOptions.donut = true;
+                            gaugeOptions.gaugeWidthScale = 0.2;
+                            gaugeOptions.pointer = true;
+                            gaugeOptions.refreshAnimationTime = 5;
+                            gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:scope.$eval('me.item.gageoptions.compassColor')[scope.main.selectedTab.theme]};
+                            gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor')[scope.main.selectedTab.theme];
+                            gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor')[scope.main.selectedTab.theme]];
+                        }
 
                         gauge = new JustGage(gaugeOptions);
                         scope.$watch('me.item.value', function (newValue) {
+                            if (scope.$eval('me.item.gtype') === 'compass') {
+                                var r = gaugeOptions.max - gaugeOptions.min;
+                                newValue = newValue % r;
+                                if (newValue < 0) { newValue += r; }
+                            }
                             gauge.refresh(newValue);
                         });
                     }

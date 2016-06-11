@@ -16,10 +16,11 @@ module.exports = function (RED) {
         if (config.gtype && config.gtype !== "gage") { node.autoheight = parseInt(group.config.width*0.75+0.5); }
 
         var gageoptions = {};
-        gageoptions.lineWidth = {'theme-dark': 0.75};
-        gageoptions.pointerOptions = {'theme-dark': {color: '#8e8e93'}};
-        gageoptions.backgroundColor = {'theme-dark': '#515151' };
-        gageoptions.levelColors = {'theme-dark': ['#00B500', '#E6E600', '#CA3838']};
+        gageoptions.lineWidth = {'theme-dark':0.75};
+        gageoptions.pointerOptions = {'theme-dark':{color:'#8e8e93'}};
+        gageoptions.backgroundColor = {'theme-dark':'#515151' };
+        gageoptions.levelColors = {'theme-dark':['#00B500', '#E6E600', '#CA3838']};
+        gageoptions.compassColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be'};
 
         var waveoptions = {};
         waveoptions.circleColor = {'theme-dark':'#097479', 'theme-light':'#0094ce'};
