@@ -1,6 +1,6 @@
 .nr-dashboard-template {
 	padding: 8px 10px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .nr-dashboard-template p {
