@@ -21,6 +21,7 @@
         "url": "https://github.com/node-red/node-red-dashboard.git"
     },
     "node-red": {
+        "version": ">=0.14.0",
         "nodes": {
             "ui_base": "nodes/ui_base.js",
             "ui_button": "nodes/ui_button.js",
