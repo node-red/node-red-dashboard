@@ -72,7 +72,7 @@
         "jquery": "^2.1.4",
         "jshint": "^2.9.2",
         "justgage": "^1.1.0",
-        "nvd3": "1.8.3",
+        "nvd3": "1.8.1",
         "sprintf-js": "^1.0.3",
         "streamqueue": "^1.1.1",
         "svg-morpheus": "^0.3.0"
