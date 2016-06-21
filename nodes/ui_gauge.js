@@ -49,7 +49,7 @@ module.exports = function (RED) {
                 waveoptions: waveoptions
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic;
+                //msg.topic = config.topic;
             },
             convert: ui.toFloat.bind(this, config)
         });

@@ -15,7 +15,6 @@ body.nr-dashboard-theme-dark md-content md-card {
 	color: #eee;
 }
 
-
 /*
 	DASHBOARD HEADER
 */
@@ -121,7 +120,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 }
 
 
-/* Numberic */
+/* Numeric */
 
 .nr-dashboard-theme-dark .nr-dashboard-numeric {}
 
@@ -171,8 +170,32 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 /* Template */
 
-.nr-dashboard-theme-dark .nr-dashboard-template {}
+.nr-dashboard-theme-dark .nr-dashboard-template .md-button {
+	background: #06575A;
+	color: white;
+    margin: 0px 6px;
+    padding: 0px 12px;
+    min-height: 26px;
+    min-width: unset;
+    line-height: unset;
+}
 
+.nr-dashboard-theme-dark .nr-dashboard-template .md-button:hover {
+	background-color: #097479;
+}
+
+.nr-dashboard-theme-dark .nr-dashboard-template {
+    ::-webkit-scrollbar {
+        height: 12px;
+        width: 12px;
+        background: #06575a;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #097479;
+        -webkit-border-radius: 1ex;
+        -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+    }
+}
 
 /* Text-Input */
 
