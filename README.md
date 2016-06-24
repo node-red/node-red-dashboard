@@ -78,7 +78,7 @@ This project adheres to the [Contributor Covenant 1.4](http://contributor-covena
 ## Developers
 
 ```
-cd ~\.node-red\node-modules
+cd ~\.node-red\node_modules
 git clone https://github.com/node-red/node-red-dashboard.git
 cd node-red-dashboard
 npm install
