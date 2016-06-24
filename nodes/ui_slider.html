@@ -50,14 +50,14 @@
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
-    </div>
-    <div class="form-row">
         <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
         <input type="text" style="width: calc(35% - 67px)" id="node-input-min">
         <label for="node-input-max" style="text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-caret-right"></i> Max</label>
         <input type="text" style="width: calc(35% - 67px)" id="node-input-max">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -67,10 +67,9 @@
 
 <script type="text/x-red" data-help-name="ui_slider">
     <p>Shows a slider widget on the user interface.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
-    <p>The user can change its value between the limits (<b>Min/Max</b>). Each value change
+	<p>The user can change its value between the limits (<b>Min/Max</b>). Each value change
     will generate a message with the value set as <b>payload</b>.</p>
     <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
-    <p>Each input message will be converted to a number,(<b>Min</b> will be used if conversion fails),
-    and it will update the user interface. Also if the value changes, it will be passed to the output.</p>
+    <p>Any input messages will be converted to a number,(<b>Min</b> will be used if conversion fails),
+    and it will update the user interface. If the value changes, it will also be passed to the output.</p>
 </script>

@@ -20,7 +20,7 @@
             ymin: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             ymax: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             removeOlder: {value: 1, validate:RED.validators.number(), required:true},
-            removeOlderUnit: {value:'86400', required:true}
+            removeOlderUnit: {value:'3600', required:true}
         },
         inputs:1,
         outputs:2,
@@ -56,16 +56,7 @@
         <input type="text" id="node-input-label" placeholder="(optional chart title)">
     </div>
     <div class="form-row">
-        <label for="node-input-interpolate"><i class="fa fa-line-chart"></i> Interpolate</label>
-        <select id="node-input-interpolate" style="width:70%;">
-            <option value="linear">linear</option>
-            <option value="step-after">step</option>
-            <option value="basis">b-spline</option>
-            <option value="cardinal">cardinal</option>
-        </select>
-    </div>
-    <div class="form-row">
-        <label for="node-input-removeOlder"><i class="fa fa-trash"></i> Old after</label>
+        <label for="node-input-removeOlder"><i class="fa fa-trash"></i>&#8239;Time&#8239;Window</label>
         <input type="text" id="node-input-removeOlder" style="width:20%">
         <select id="node-input-removeOlderUnit">
             <option value="1">sec(s)</option>
@@ -82,6 +73,15 @@
         <input type="text" id="node-input-ymax" style="width:20%">
     </div>
     <div class="form-row">
+        <label for="node-input-interpolate"><i class="fa fa-line-chart"></i> Interpolate</label>
+        <select id="node-input-interpolate" style="width:70%;">
+            <option value="linear">linear</option>
+            <option value="step-after">step</option>
+            <option value="basis">b-spline</option>
+            <option value="cardinal">cardinal</option>
+        </select>
+    </div>
+    <div class="form-row">
         <label for="node-input-nodata"><i class="fa fa-exclamation"></i> No data</label>
         <input type="text" id="node-input-nodata">
     </div>
@@ -93,11 +93,13 @@
 
 <script type="text/x-red" data-help-name="ui_chart">
     <p>Plots the input values on a time based line chart.</p>
-    <p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the chart can be defined as an integer definining the size as a number of columns/rows.</p>
     <p>Each input <code>msg.payload</code> value will be converted to a number. If the
     conversion fails, the message is ignored.</p>
+    <p>Data outside the selected <b>time window</b> will be automatically removed from the graph.</p>
+    <p>Minimum and Maximum Y axis values are optional. The graph will auto-scale to any values received.</p>
     <p>Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
     value on each input message.</p>
-    <p>The first output contains the chart state that can be persisted if needed. The second output
-    sends a "restore" message that can be used to restore the state of the chart.</p>
+    <p>The first output contains an array of the chart state that can be persisted if needed. The second
+    output sends a <code>msg.payload</code> of "restore" that can be used to trigger a restore of
+    the state of the chart.</p>
 </script>

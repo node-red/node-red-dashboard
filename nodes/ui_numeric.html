@@ -51,10 +51,6 @@
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
-    </div>
-    <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
         <input type="text" id="node-input-format">
     </div>
@@ -65,6 +61,10 @@
         <input type="text" style="width: calc(35% - 67px)" id="node-input-max">
     </div>
     <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
@@ -72,13 +72,11 @@
 
 <script type="text/x-red" data-help-name="ui_numeric">
     <p>Adds a numeric input widget to the user interface.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
-    <p>The user can change its value between
-    the limits (<b>Min/Max</b>). Each value change will generate a message with the value set
-    as <code>msg.payload</code>.</p>
+	<p>The user can set the value between
+    the limits (<b>Min/Max</b>). Each value change will generate a <code>msg.payload</code>.</p>
     <p>If <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.<p>
-    <p>Each input message will be converted to a number, (<b>Min</b> will be used if conversion fails),
-    and it will update the user interface. Also if the value changes, it will be passed to the output.</p>
+    <p>Any input messages will be converted to a number, (<b>Min</b> will be used if conversion fails),
+    and it will update the user interface. If the value changes, it will also be passed to the output.</p>
     <p>The <b>Template</b> field can be used to change the displayed format. For example, a <b>Template</b> of <code>{{value}} %</code>
     with a value of <b>23</b> will show <b>23 %</b> on the user interface. The <b>Template</b> field can contain
     HTML or Angular filters to format the output (eg: <code>&amp;deg;</code> will show the degree symbol).</p>

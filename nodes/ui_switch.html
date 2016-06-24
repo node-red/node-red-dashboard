@@ -81,10 +81,6 @@
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
-    </div>
-    <div class="form-row">
         <label for="node-input-onvalue"><i class="fa fa-toggle-on"></i> On Value</label>
         <input type="text" id="node-input-onvalue" style="width:calc(70% - 285px);">
         <label for="node-input-oncolor" style="width:40px;text-align:right;">Color</label>
@@ -101,6 +97,10 @@
         <input type="text" id="node-input-officon" style="width:100px" placeholder="(optional)">
     </div>
     <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
@@ -108,11 +108,12 @@
 
 <script type="text/x-red" data-help-name="ui_switch">
     <p>Adds a switch to the user interface.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 1)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
-    <p>Each change in the state of the switch will generate
-    a message on the output with the specified <b>On/Off</b> value.</p>
-    <p>The <b>On/Off Color</b> and <b>On/Off Icon</b> are optional fields. If they are all present, the default toggle switch will be replaced with the relevant icons and their respective colors.</p>
-    <p>The <b>On/Off Icon</b> field can be either <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a> <i>(e.g. 'check', 'close')</i> or <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
+	<p>Each change in the state of the switch will generate
+    a <code>msg.payload</code> with the specified <b>On/Off</b> value.</p>
+    <p>The <b>On/Off Color</b> and <b>On/Off Icon</b> are optional fields. If they are all present, the default
+    toggle switch will be replaced with the relevant icons and their respective colors.</p>
+    <p>The <b>On/Off Icon</b> field can be either <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a>
+    <i>(e.g. 'check', 'close')</i> or <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
     <p>The widget can be updated by an incoming <code>msg.payload</code> with the specified values.</p>
-    <p>If a <b>Topic</b> is specified, it will be add as <code>msg.topic</code>.</p>
+    <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
 </script>
