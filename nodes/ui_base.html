@@ -265,6 +265,7 @@ RED.nodes.registerType('ui_base',{
             addButton: false,
             addItem: function(container,i,tab) {
                 var newTab = false;
+                ensureDashboardNode(true);
                 if (!tab.node) {
                     tab.node = {
                         id: RED.nodes.id(),
@@ -273,13 +274,21 @@ RED.nodes.registerType('ui_base',{
                         users: [],
                         order: i+1,
                         name: "Tab "+(i+1),
-                        icon: "dashboard"
+                        icon: "dashboard",
+                        base: globalDashboardNode.id
                     };
                     listElements[tab.node.id] = container;
                     RED.nodes.add(tab.node);
                     tab.groups = [];
                     RED.nodes.dirty(true);
                     newTab = true;
+                } else if (tab.node.base != globalDashboardNode.id) {
+                    tab.node.base = globalDashboardNode.id;
+                    // Just in case anyone is trying this with <0.14.4
+                    RED.nodes.dirty(true);
+                }
+                if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                    RED.nodes.updateConfigNodeUsers(tab.node);
                 }
                 var tabNode = tab.node;
                 container.addClass("nr-db-sb-tab-list-item");
@@ -397,7 +406,14 @@ RED.nodes.registerType('ui_base',{
                                         changed = true;
                                     }
                                     if (node.group !== group.node.id) {
+
+                                        var oldGroupNode = RED.nodes.node(node.group);
+                                        if (oldGroupNode) {
+                                            var index = oldGroupNode.users.indexOf(node);
+                                            oldGroupNode.users.splice(index,1);
+                                        }
                                         node.group = group.node.id;
+                                        group.node.users.push(node);
                                         changed = true;
                                     }
                                     if (changed) {
@@ -437,7 +453,13 @@ RED.nodes.registerType('ui_base',{
                                 node.changed = true;
                             }
                             if (node.tab !== tabNode.id) {
+                                var oldTabNode = RED.nodes.node(node.tab);
+                                if (oldTabNode) {
+                                    var index = oldTabNode.users.indexOf(node);
+                                    oldTabNode.users.splice(index,1);
+                                }
                                 node.tab = tabNode.id;
+                                tabNode.users.push(node);
                                 changed = true;
                             }
                         })
@@ -499,18 +521,21 @@ RED.nodes.registerType('ui_base',{
             sortable: ".nr-db-sb-list-header",
             addButton: false,
             addItem: function(container,i,link) {
+                ensureDashboardNode(true);
                 if (!link.node) {
                     link.node = {
                         id: RED.nodes.id(),
                         _def: RED.nodes.getType("ui_link"),
                         type: "ui_link",
-                        users: [],
+                        users: [globalDashboardNode],
                         order: i+1,
                         icon: 'open_in_browser',
                         target: 'newtab'
                     }
                     RED.nodes.add(link.node);
                     RED.nodes.dirty(true);
+                } else if (link.node.users.length === 0) {
+                    link.node.users = [globalDashboardNode];
                 }
                 var linkNode = link.node;
                 linkNodes[linkNode.id] = container;
