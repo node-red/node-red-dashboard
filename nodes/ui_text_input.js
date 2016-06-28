@@ -25,7 +25,7 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic;
+                msg.topic = config.topic || msg.topic;
             },
         });
         node.on("close", done);

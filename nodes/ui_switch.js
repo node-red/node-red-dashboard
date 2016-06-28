@@ -37,7 +37,7 @@ module.exports = function(RED) {
                 return value ? config.onvalue : config.offvalue;
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic;
+                msg.topic = config.topic || msg.topic;
             }
         });
         node.on("close", done);

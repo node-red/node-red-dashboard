@@ -49,7 +49,7 @@
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
+        <label for="node-input-format"><i class="fa fa-copy"></i> Value</label>
         <input type="text" id="node-input-format" placeholder="{{msg.payload}}">
     </div>
     <div class="form-row">
@@ -60,8 +60,8 @@
 
 <script type="text/x-red" data-help-name="ui_text">
     <p>Will display a non-editable text field on the user interface.</p>
-    <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Template</b>.</p>
-    <p>The <b>Template</b> field can be used to change the displayed format and can contain valid HTML and
+    <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Value</b> format.</p>
+    <p>The <b>Value</b> field can be used to change the displayed format and can contain valid HTML and
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
     <p>For example: <code>{{msg.payload | uppercase}} &amp;deg;</code> will uppercase the text and add the degree symbol.</p>
 </script>
