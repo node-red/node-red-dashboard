@@ -14,8 +14,8 @@
 }
 .nr-db-sb .form-row input,
 .nr-db-sb .form-row select {
-    width: 90%;
-    max-width: 350px;
+    width: calc(100% - 20px);
+    margin-bottom:0;
 }
 .nr-db-sb .red-ui-editableList-container {
     padding:0;
@@ -54,6 +54,7 @@
     border: none;
 }
 .nr-db-sb-list-handle {
+    vertical-align: top;
     opacity: 0;
     cursor: move;
 }
@@ -89,6 +90,11 @@
 .nr-db-sb-group-list>li>.red-ui-editableList-item-handle {
     left: 10px;
 }
+.nr-db-sb-list-button-group {
+    position: absolute;
+    right: 3px;
+    top: 0px;
+}
 .nr-db-sb-list-header-button-group {
     position: absolute;
     right: 3px;
@@ -106,37 +112,139 @@
 .nr-db-sb-icon {
     margin-right: 10px;
 }
+.nr-db-sb-link {
+    display: inline-block;
+    padding-left: 3px;
+}
+.nr-db-sb-link-title {
+
+}
+.nr-db-sb-link-url {
+    font-size: 0.8em;
+    color: #999;
+}
 </style>
 <script type="text/javascript">
 RED.nodes.registerType('ui_base',{
     category: 'config',
     defaults: {
         name: {value: ''},
-        theme: {value: ''},
-        tabs: {value:[]},
-        links: {value:[]}
+        theme: {value: ''}
     },
     paletteLabel: 'Dashboard',
     label: function() { return this.name || 'Node-RED Dashboard'; },
     oneditprepare: function() {
     },
     onpaletteadd: function() {
-        var content = $("<div>").css({"position":"relative","height":"100%"});
-        // var toolbar = $('<div class="sidebar-header">'+
-        //     '</div>').appendTo(content);
+        var globalDashboardNode = null;
 
+        function ensureDashboardNode(createMissing) {
+            if (globalDashboardNode === null) {
+                RED.nodes.eachConfig(function(n) {
+                    if (globalDashboardNode === null && n.type === 'ui_base') {
+                        globalDashboardNode = n;
+                    }
+                });
+                if (globalDashboardNode === null && createMissing) {
+                    globalDashboardNode = {
+                        id: RED.nodes.id(),
+                        _def: RED.nodes.getType("ui_base"),
+                        type: "ui_base",
+                        name: "Node-RED Dashboard",
+                        theme: "theme-light",
+                        url: '/ui',
+                        users:[]
+                    }
+                    RED.nodes.add(globalDashboardNode);
+                    RED.nodes.dirty(true);
+                }
+            }
+        }
+        var content = $("<div>").css({"position":"relative","height":"100%"});
         var mainContent = $("<div>",{class:"nr-db-sb"}).appendTo(content);
 
         var form = $('<form class="dialog-form">').appendTo(mainContent);
 
         var divTitle = $('<div>',{class:"form-row"}).appendTo(form);
         $('<label>').html('Title').appendTo(divTitle);
-        $('<input type="text" id="nr-db-titlefield" value="'+this.label()+'" style="width:96%; max-width:unset;">').appendTo(divTitle);
+        $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 65px)")
+            .change(function() {
+                ensureDashboardNode(true);
+                var currentTitle = globalDashboardNode.name;
+                if (currentTitle !== $(this).val()) {
+                    globalDashboardNode.name = $(this).val();
+                    RED.nodes.dirty(true);
+                }
+            })
+            .appendTo(divTitle);
 
-        var divTabs = $('<div>',{class:"form-row"}).appendTo(form);
+        // var divUrl = $('<div>',{class:"form-row"}).appendTo(form);
+        // $('<label>').html('URL').appendTo(divUrl);
+        // $('<input type="text" id="nr-db-field-url">').css("width","calc(100% - 65px)")
+        //     .val("/url")
+        //     .change(function() {
+        //         ensureDashboardNode(true);
+        //         var currentUrl = globalDashboardNode.url;
+        //         if (currentUrl !== $(this).val()) {
+        //             globalDashboardNode.url = $(this).val();
+        //             RED.nodes.dirty(true);
+        //         }
+        //     })
+        //     .appendTo(divUrl);
+
+        $('<a href="#" class="editor-button" style="margin-left: 10px;"><i class="fa fa-external-link"></i></a>')
+            .click(function(evt) {
+                window.open(document.location.toString().replace(/#$/,"").replace(/\/$/,"")+"/ui");
+                evt.preventDefault();
+            })
+            .appendTo(divTitle);
+
+        var divTheme = $('<div>',{class:"form-row"}).appendTo(form);
+        $('<label>').html('Theme').appendTo(divTheme);
+        $('<select id="nr-db-field-theme">'+
+            '<option value="theme-light">Light (default)</option>'+
+            '<option value="theme-dark">Dark</option>'+
+            '</select>')
+            .change(function() {
+                ensureDashboardNode(true);
+                var currentTheme = globalDashboardNode.theme;
+                if (currentTheme !== $(this).val()) {
+                    globalDashboardNode.theme = $(this).val();
+                    RED.nodes.dirty(true);
+                }
+            })
+            .appendTo(divTheme);
+
+
+
+        var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
         $('<label>').html('Tabs').appendTo(divTabs);
+
+        var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
+        $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-up"></i></a>')
+            .click(function(evt) {
+                tabContainer.find(".nr-db-sb-group-list-container").slideUp().addClass('nr-db-sb-collapsed');
+                tabContainer.find(".nr-db-sb-tab-list-header>.nr-db-sb-list-chevron").css({"transform":"rotate(-90deg)"});
+                evt.preventDefault();
+            })
+            .appendTo(buttonGroup);
+        $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-down"></i></a>')
+            .click(function(evt) {
+                tabContainer.find(".nr-db-sb-group-list-container").slideDown().removeClass('nr-db-sb-collapsed');
+                tabContainer.find(".nr-db-sb-tab-list-header>.nr-db-sb-list-chevron").css({"transform":""});
+                evt.preventDefault();
+            })
+            .appendTo(buttonGroup);
+        $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> tab</a>')
+            .click(function(evt) {
+                tabContainer.editableList('addItem',{});
+                evt.preventDefault();
+            })
+            .appendTo(buttonGroup);
+
         var tabLists = {};
         var groupLists = {};
+        var linkNodes = {};
 
         function titleToggle(content,chevron) {
             return function(evt) {
@@ -152,10 +260,11 @@ RED.nodes.registerType('ui_base',{
             };
         }
 
-        var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css("min-height","400px").appendTo(divTabs).editableList({
+        var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css({"min-height":"200px","height":"350px"}).appendTo(divTabs).editableList({
             sortable:".nr-db-sb-tab-list-header",
-            addButton: "tab",
+            addButton: false,
             addItem: function(container,i,tab) {
+                var newTab = false;
                 if (!tab.node) {
                     tab.node = {
                         id: RED.nodes.id(),
@@ -170,6 +279,7 @@ RED.nodes.registerType('ui_base',{
                     RED.nodes.add(tab.node);
                     tab.groups = [];
                     RED.nodes.dirty(true);
+                    newTab = true;
                 }
                 var tabNode = tab.node;
                 container.addClass("nr-db-sb-tab-list-item");
@@ -184,6 +294,11 @@ RED.nodes.registerType('ui_base',{
                 var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
 
                 var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
+
+                if (!newTab) {
+                    chevron.css("transform","rotate(-90deg)");
+                    content.addClass('nr-db-sb-collapsed').css('display','none');
+                }
                 if (listStates.hasOwnProperty(tabNode.id) && !listStates[tabNode.id]) {
                     content.hide();
                     chevron.css({"transform":"rotate(-90deg)"});
@@ -368,6 +483,68 @@ RED.nodes.registerType('ui_base',{
             }
         });
 
+        var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
+        $('<label>').html('Menu links').appendTo(divLinks);
+
+        buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divLinks);
+        $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> link</a>')
+            .click(function(evt) {
+                linksContainer.editableList('addItem',{});
+                evt.preventDefault();
+            })
+            .appendTo(buttonGroup);
+
+
+        var linksContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css("height","150px").appendTo(divLinks).editableList({
+            sortable: ".nr-db-sb-list-header",
+            addButton: false,
+            addItem: function(container,i,link) {
+                if (!link.node) {
+                    link.node = {
+                        id: RED.nodes.id(),
+                        _def: RED.nodes.getType("ui_link"),
+                        type: "ui_link",
+                        users: [],
+                        order: i+1,
+                        icon: 'open_in_browser',
+                        target: 'newtab'
+                    }
+                    RED.nodes.add(link.node);
+                    RED.nodes.dirty(true);
+                }
+                var linkNode = link.node;
+                linkNodes[linkNode.id] = container;
+                var titleRow = $('<div>',{class:"nr-db-sb-list-header"}).appendTo(container);
+                $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
+                $('<div class="nr-db-sb-link-name">').html(link.node.name||"untitled").appendTo(title);
+                $('<div class="nr-db-sb-link-url">').html(link.node.link||"http://").appendTo(title);
+                var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                editButton.on('click',function(evt) {
+                    RED.editor.editConfig("", "ui_link", link.node.id);
+                    evt.stopPropagation();
+                    evt.preventDefault();
+                });
+            },
+            sortItems: function(items) {
+                items.each(function(i,el) {
+                    var node = el.data('data');
+                    var changed = false;
+                    if (node.node.order !== i+1) {
+                        node.node.order = i+1;
+                        changed = true;
+                    }
+                    if (changed) {
+                        node.node.dirty = true;
+                        node.node.changed = true;
+                    }
+                })
+                RED.nodes.dirty(true);
+                RED.view.redraw();
+            }
+        });
+
         var listElements = {};
         var dashboard = [];
         var listStates = {};
@@ -410,6 +587,8 @@ RED.nodes.registerType('ui_base',{
             var group;
             var tabId;
             var tab;
+            var links = [];
+
             // Find all the tabs and groups
             RED.nodes.eachConfig(function(node) {
                 if (node.type === 'ui_tab') {
@@ -417,6 +596,8 @@ RED.nodes.registerType('ui_base',{
                     //tabContainer.editableList('addItem',node);
                 } else if (node.type === 'ui_group') {
                     groups[node.id] = node;
+                } else if (node.type === 'ui_link') {
+                    links.push(node);
                 }
             });
 
@@ -436,6 +617,8 @@ RED.nodes.registerType('ui_base',{
                 if (/^ui_/.test(node.type) && groups.hasOwnProperty(node.group)) {
                     groupElements[node.group] = groupElements[node.group]||[];
                     groupElements[node.group].push(node);
+                } else if (node.type === 'ui_link') {
+                    links.push(node);
                 }
             });
 
@@ -507,6 +690,25 @@ RED.nodes.registerType('ui_base',{
                 });
             }
 
+            links.sort(function(A,B) {
+                return A.order - B.order;
+            });
+
+            links.forEach(function(link) {
+                if (linkNodes[link.id]) {
+                    var container = linkNodes[link.id];
+                    container.find(".nr-db-sb-link-name").html(link.name||"untitled");
+                    container.find(".nr-db-sb-link-url").html(link.link||"http://");
+                } else {
+                    linksContainer.editableList('addItem',{node:link});
+                }
+            });
+            ensureDashboardNode();
+            if (globalDashboardNode) {
+                $("#nr-db-field-title").val(globalDashboardNode.name);
+                $("#nr-db-field-theme").val(globalDashboardNode.theme);
+                // $("#nr-db-field-url").val(globalDashboardNode.url);
+            }
         }
         RED.sidebar.addTab({
             id: "dashboard",
@@ -529,6 +731,12 @@ RED.nodes.registerType('ui_base',{
                         if (tabLists[node.tab]) {
                             tabLists[node.tab].editableList('addItem',{node:node,widgets:[]})
                         }
+                    }
+                } else if (node.type === "ui_link") {
+                    if (linkNodes[node.id]) {
+                        var container = linkNodes[node.id];
+                        container.find(".nr-db-sb-link-name").html(node.name||"untitled");
+                        container.find(".nr-db-sb-link-url").html(node.link||"http://");
                     }
                 } else {
                     if (listElements[node.id]) {
@@ -583,6 +791,11 @@ RED.nodes.registerType('ui_base',{
                         tabLists[node.tab].editableList('removeItem',listElements[node.id].data('data'));
                     }
                     delete groupLists[node.id];
+                } else if (node.type === 'ui_link') {
+                    if (linkNodes[node.id]) {
+                        linksContainer.editableList('removeItem',linkNodes[node.id].data('data'));
+                        delete linkNodes[node.id];
+                    }
                 } else {
                     if (groupLists[node.group]) {
                         groupLists[node.group].editableList('removeItem',node)
@@ -761,6 +974,9 @@ RED.nodes.registerType('ui_base',{
 </script>
 
 <script type="text/x-red" data-template-name="ui_base">
+<div class='form-row'>
+    <a href="#" onclick="RED.sidebar.show('dashboard'); $('#node-config-dialog-cancel').click(); return false" class="editor-button">Open dashboard sidebar</a>
+</div>
 </script>
 
 <script type="text/x-red" data-help-name="ui_base">

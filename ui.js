@@ -9,6 +9,7 @@ module.exports = function(RED) {
     return {
         add: add,
         addLink: addLink,
+        addBaseConfig: addBaseConfig,
         emit: emit,
         toNumber: toNumber.bind(null, false),
         toFloat: toNumber.bind(null, true)
@@ -20,6 +21,11 @@ var serveStatic = require('serve-static'),
     path = require('path'),
     fs = require('fs'),
     events = require('events');
+
+var baseConfiguration = {
+    title: "Node-RED Dashboard",
+    theme: "theme-light"
+};
 
 var tabs = [];
 var links = [];
@@ -229,8 +235,11 @@ function updateUi(to) {
     }
 
     process.nextTick(function() {
+        tabs.forEach(function(t) {
+            t.theme = baseConfiguration.theme;
+        })
         to.emit('ui-controls', {
-            title: settings.title,
+            title: baseConfiguration.title,
             tabs: tabs,
             links: links
         });
@@ -266,7 +275,6 @@ function addControl(tab, groupHeader, control) {
             id: tab.id,
             header: tab.config.name,
             order: parseFloat(tab.config.order),
-            theme: tab.config.theme,
             icon: tab.config.icon,
             items: []
         };
@@ -337,4 +345,10 @@ function addLink(name, link, icon, order, target) {
         links.splice(index, 1);
         updateUi();
     }
+}
+
+function addBaseConfig(title,theme) {
+    baseConfiguration.title = title;
+    baseConfiguration.theme = theme;
+    updateUi();
 }

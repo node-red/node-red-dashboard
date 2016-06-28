@@ -8,13 +8,7 @@
             order: {value: 0}
         },
         paletteLabel: 'dashboard tab',
-        label: function() { return this.name || 'Tab'; },
-        oneditprepare: function() {
-            var that = this;
-            $( "#node-config-input-order" ).spinner({
-                min:1
-            });
-        }
+        label: function() { return this.name || 'Tab'; }
     });
 </script>
 
@@ -26,13 +20,6 @@
     <div class="form-row">
         <label for="node-config-input-icon"><i class="fa fa-file-image-o"></i> Icon</label>
         <input type="text" id="node-config-input-icon">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-theme"><i class="fa fa-paint-brush"></i> Theme</label>
-        <select id="node-config-input-theme" style="width:calc(70% + 15px);">
-            <option value="theme-light">Light (default)</option>
-            <option value="theme-dark">Dark</option>
-        </select>
     </div>
 </script>
 
