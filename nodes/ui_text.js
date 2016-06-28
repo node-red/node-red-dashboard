@@ -10,6 +10,14 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(group.config.tab);
         if (!tab) { return; }
 
+        var layout = config.layout||"row-spread";
+        var angLayout = "row";
+        var angLayoutAlign = "space-between center";
+        if (layout === "row-spread") { angLayout = 'row'; angLayoutAlign = 'space-between center'}
+        else if (layout === "row-left") { angLayout = 'row'; angLayoutAlign = 'start center'}
+        else if (layout === "row-center") { angLayout = 'row'; angLayoutAlign = 'center center'}
+        else if (layout === "row-right") { angLayout = 'row'; angLayoutAlign = 'end center'}
+        else if (layout === "col-center") { angLayout = 'column'; angLayoutAlign = 'center center'}
         var done = ui.add({
             emitOnlyNewValues: false,
             node: node,
@@ -21,7 +29,9 @@ module.exports = function(RED) {
                 order: config.order,
                 format: config.format,
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                layout: angLayout,
+                layoutAlign: angLayoutAlign
             },
             beforeEmit: function(msg, value) {
                 var properties = Object.getOwnPropertyNames(msg).filter(function (p) {return p[0] != '_';});

@@ -15,7 +15,8 @@
             height: {value: 0},
             name: {value: ''},
             label: {value: 'text'},
-            format: {value: '{{msg.payload}}'}
+            format: {value: '{{msg.payload}}'},
+            layout: {value:'row-spread'}
         },
         inputs:1,
         outputs:0,
@@ -29,6 +30,18 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+
+            $(".nr-db-text-layout-"+(this.layout||'row-spread')).addClass('selected');
+
+            [ ".nr-db-text-layout-row-left",".nr-db-text-layout-row-center",".nr-db-text-layout-row-right",
+              ".nr-db-text-layout-row-spread",".nr-db-text-layout-col-center"].forEach(function(id) {
+                  $(id).click(function(e) {
+                      $(".nr-db-text-layout").removeClass('selected');
+                      $(this).addClass('selected');
+                      $('#node-input-layout').val(id.substring(".nr-db-text-layout-".length));
+                  })
+              })
+
         }
     });
 </script>
@@ -56,8 +69,100 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
-</script>
+    <div class="form-row">
+        <label style="vertical-align: top"><i class="fa fa-th-large"></i> Layout</label>
+        <div style="display:inline-block">
+        <input type="hidden" id="node-input-layout"><input type="hidden" id="node-input-layoutAlign">
+        <div>
+            <div class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-left">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </div>
+            <div class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-center">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </div>
+            <div class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-right">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </div>
+        </div>
+        <div>
+            <div class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-spread">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </div>
+            <div class="nr-db-text-layout nr-db-text-layout-col nr-db-text-layout-col-center">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </div>
+        </div>
+        </div>
+    </div>
 
+
+</script>
+<style>
+    .nr-db-text-layout {
+        position:relative;
+        display: inline-block;
+        width: 90px;
+        height: 60px;
+        border-radius:3px;
+        border:1px solid #bbb;
+        cursor:pointer;
+        color: #666;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    .nr-db-text-layout.selected, .nr-db-text-layout:hover {
+        border-color: #333;
+        color: #333;
+    }
+    .nr-db-text-layout span {
+        position: absolute;
+    }
+    .nr-db-text-layout-value {
+        font-weight: bold;
+    }
+    .nr-db-text-layout-row span { top: 20px; }
+    .nr-db-text-layout-row-left .nr-db-text-layout-label { left: 2px; }
+    .nr-db-text-layout-row-left .nr-db-text-layout-value { left: 34px; }
+    .nr-db-text-layout-row-spread .nr-db-text-layout-label { left: 2px; }
+    .nr-db-text-layout-row-spread .nr-db-text-layout-value { right: 2px; }
+    .nr-db-text-layout-row-center .nr-db-text-layout-label { left: 11px; }
+    .nr-db-text-layout-row-center .nr-db-text-layout-value { right: 11px; }
+    .nr-db-text-layout-row-right .nr-db-text-layout-label { right: 40px; }
+    .nr-db-text-layout-row-right .nr-db-text-layout-value { right: 2px; }
+
+    .nr-db-text-layout-col span { width: 100px;  text-align: center; left: 0px;}
+    .nr-db-text-layout-col-center .nr-db-text-layout-label { top: 12px; }
+    .nr-db-text-layout-col-center .nr-db-text-layout-value { top: 26px; }
+    .nr-db-text-layout-checkbox {
+        display: none;
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        border: 1px solid #bbb;
+        position: absolute;
+        right: -5px;
+        top: -5px;
+        background: #fff;
+    }
+    .nr-db-text-layout.selected .nr-db-text-layout-checkbox,
+    .nr-db-text-layout:hover .nr-db-text-layout-checkbox {
+        display:inline-block;
+        box-shadow: inset 0px 0px 0px 2px #fff;
+        background: #333;
+        border-color: #333;
+    }
+
+</style>
 <script type="text/x-red" data-help-name="ui_text">
     <p>Will display a non-editable text field on the user interface.</p>
     <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Value</b> format.</p>
