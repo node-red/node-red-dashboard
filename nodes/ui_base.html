@@ -527,15 +527,13 @@ RED.nodes.registerType('ui_base',{
                         id: RED.nodes.id(),
                         _def: RED.nodes.getType("ui_link"),
                         type: "ui_link",
-                        users: [globalDashboardNode],
+                        users: [],
                         order: i+1,
                         icon: 'open_in_browser',
                         target: 'newtab'
                     }
                     RED.nodes.add(link.node);
                     RED.nodes.dirty(true);
-                } else if (link.node.users.length === 0) {
-                    link.node.users = [globalDashboardNode];
                 }
                 var linkNode = link.node;
                 linkNodes[linkNode.id] = container;

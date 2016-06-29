@@ -11,6 +11,7 @@
         },
         inputs:0,
         outputs:0,
+        hasUsers: false,
         align: "right",
         icon: "ui_link.png",
         paletteLabel: 'link',
@@ -21,6 +22,9 @@
         },
         oneditsave : function () {
             this.target = document.getElementById('node-config-input-target-opentab').checked ? 'newtab' : 'iframe';
+        },
+        onadd: function() {
+            console.log("PING");
         }
     });
 </script>
