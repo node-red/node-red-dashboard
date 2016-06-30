@@ -9,7 +9,7 @@ It is a continuation of the work done by Andrei Tatar under the node-red-contrib
 
 ## Pre-requisites
 
-This Dashboard requires Node-RED version 0.14.0 or more recent. If you need to use an older version of Node-RED then
+This Dashboard requires Node-RED version 0.14 or more recent. If you need to use an older version of Node-RED then
 please use node-red-contrib-ui.
 
 ## Install
@@ -20,7 +20,7 @@ Run the following command in your Node-RED user directory (typically `~/.node-re
 npm install node-red-dashboard
 ```
 
-Open your Node-RED instance and you should have UI nodes available at the bottom.
+Open your Node-RED instance and you should have UI nodes available in the palette and a new `dashboard` tab in right side panel.
 The UI interface is available at <http://localhost:1880/ui> (if default Node-RED settings are used).
 
 ## Migration from node-red-contrib-ui
@@ -32,16 +32,15 @@ These nodes will replace the contrib-ui versions. node-red-contrib-ui
  cd ~/.node-red
  npm uninstall node-red-contrib-ui
  ```
- In addition - some functionality is not exactly equivalent...
+ In addition - some functionality is not exactly equivalent. There are breaking changes that will require some re-configuration.
 
 #### New features
 
- The widget layout is now managed by a `Dashboard` tab in the right window of the Node-RED editor. From here you can re-order both the groups
- and widgets. You can then also access the properties of the tabs, groups, and widgets.
+ The widget layout is now managed by a `Dashboard` tab in the right window of the Node-RED editor. From here you can re-order the tabs, groups and widgets, and add and edit their properties.
 
  Ability to specify sizes. The width and height of widgets can now be set, as can the width
  of *groups*. These are all specified in units of approximately 50 pixels.
- The default width of a group is 6 as it was in contrib-ui. Setting a widget to `auto` will set fill the available
+ The default width of a group is 6 as it was in contrib-ui ( &approx; 300 pixels ). Setting a widget to `auto` will fill the available
  width of the group, but this can now be set to anything up to the group width. It is still advisable to use multiple groups if you can, rather than one big group, so that the page can dynamically resize on smaller screens.
 
 Group labels are now optional.
@@ -51,10 +50,15 @@ External `links` to other pages can now be launched in an **iframe** - if allowe
  **Themes** - a dark theme has been added as an alternative.
  This is set on the tab page. ( In the future we hope to allow custom themes to be added - but one step at a time. )
 
-  - **Dropdown** - a dropdown select widget has been added.
-  - **Gauge** - now has 4 modes - *standard* (as-is), *donut* (complete 360&deg;), *compass*, and *wave*.
+ **Widgets**
+
+  - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified.
+  - **Gauge** - now has 4 modes - *standard* (simple gauge), *donut* (complete 360&deg;), *compass*, and *wave*.
   - **Button** - the icon can be set using either Material or Fa-Icons - the colour may also be set. If the widget is sized to 1 wide the icon has precedence.
   - **Switch** - can now also set two icons and/or colours depending on state.
+  - **Text** - the layout of the `label`, and `value` can be configured.
+
+The `title` of the UI page can be set.
 
 #### Removed
 
