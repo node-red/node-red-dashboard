@@ -835,8 +835,8 @@ RED.nodes.registerType('ui_base',{
         _create: function() {
             var that = this;
             var gridWidth = 6;
-            var width = $(this.options.width).val();
-            var height = (this.options.hasOwnProperty('height')?$(this.options.height).val():"1");
+            var width = parseInt($(this.options.width).val()||0);
+            var height = parseInt(this.options.hasOwnProperty('height')?$(this.options.height).val():"1");
             var hasAuto = (!this.options.hasOwnProperty('auto') || this.options.auto);
 
             this.element.css({
@@ -847,8 +847,8 @@ RED.nodes.registerType('ui_base',{
                 evt.stopPropagation();
                 evt.preventDefault();
 
-                var width = $(that.options.width).val();
-                var height = (that.options.hasOwnProperty('height')?$(that.options.height).val():"1");
+                var width = parseInt($(that.options.width).val());
+                var height = parseInt(that.options.hasOwnProperty('height')?$(that.options.height).val():"1");
                 var maxWidth = 0;
                 var maxHeight;
                 var fixedWidth = false;
