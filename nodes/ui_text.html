@@ -39,6 +39,7 @@
                       $(".nr-db-text-layout").removeClass('selected');
                       $(this).addClass('selected');
                       $('#node-input-layout').val(id.substring(".nr-db-text-layout-".length));
+                      e.preventDefault();
                   })
               })
 
@@ -70,33 +71,33 @@
         <div style="display:inline-block">
         <input type="hidden" id="node-input-layout"><input type="hidden" id="node-input-layoutAlign">
         <div>
-            <div class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-left">
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-left">
                 <span class="nr-db-text-layout-label">label</span>
                 <span class="nr-db-text-layout-value">value</span>
                 <div class="nr-db-text-layout-checkbox"></div>
-            </div>
-            <div class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-center">
+            </a>
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-center">
                 <span class="nr-db-text-layout-label">label</span>
                 <span class="nr-db-text-layout-value">value</span>
                 <div class="nr-db-text-layout-checkbox"></div>
-            </div>
-            <div class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-right">
+            </a>
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-right">
                 <span class="nr-db-text-layout-label">label</span>
                 <span class="nr-db-text-layout-value">value</span>
                 <div class="nr-db-text-layout-checkbox"></div>
-            </div>
+            </a>
         </div>
         <div>
-            <div class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-spread">
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-spread">
                 <span class="nr-db-text-layout-label">label</span>
                 <span class="nr-db-text-layout-value">value</span>
                 <div class="nr-db-text-layout-checkbox"></div>
-            </div>
-            <div class="nr-db-text-layout nr-db-text-layout-col nr-db-text-layout-col-center">
+            </a>
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-col nr-db-text-layout-col-center">
                 <span class="nr-db-text-layout-label">label</span>
                 <span class="nr-db-text-layout-value">value</span>
                 <div class="nr-db-text-layout-checkbox"></div>
-            </div>
+            </a>
         </div>
         </div>
     </div>
@@ -154,8 +155,7 @@
         top: -5px;
         background: #fff;
     }
-    .nr-db-text-layout.selected .nr-db-text-layout-checkbox,
-    .nr-db-text-layout:hover .nr-db-text-layout-checkbox {
+    .nr-db-text-layout.selected .nr-db-text-layout-checkbox {
         display:inline-block;
         box-shadow: inset 0px 0px 0px 2px #fff;
         background: #333;
