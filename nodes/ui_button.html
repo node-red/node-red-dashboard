@@ -38,7 +38,7 @@
 <script type="text/x-red" data-template-name="ui_button">
 	<div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
-        <input type="text" id="node-input-group" style="width: 300px">
+        <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
         <label><i class="fa fa-arrows-h"></i> Size</label>
@@ -47,12 +47,16 @@
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-icon"><i class="fa fa-tag"></i> Icon</label>
-        <input type="text" id="node-input-icon" style="width:10%" placeholder="(optional)">
-        <label for="node-input-label" style="width:40px; text-align:right;"> Label</label>
-        <input type="text" id="node-input-label" style="width:10%;" placeholder="(optional)">
-        <label for="node-input-color" style="width:40px; text-align:right;"> Color</label>
-        <input type="text" id="node-input-color" style="width:10%" placeholder="(optional)">
+        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <input type="text" id="node-input-label" placeholder="optional label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-icon"><i class="fa fa-picture-o"></i> Icon</label>
+        <input type="text" id="node-input-icon" placeholder="optional icon ">
+    </div>
+    <div class="form-row">
+        <label for="node-input-color"><i class="fa fa-th-large"></i>  Color</label>
+        <input type="text" id="node-input-color" placeholder="optional text or icon color">
     </div>
     <div class="form-row">
         <label for="node-input-payload"><i class="fa fa-envelope"></i> Payload</label>
@@ -60,7 +64,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
+        <input type="text" id="node-input-topic" placeholder="optional msg.topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
