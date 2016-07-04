@@ -35,32 +35,28 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
-            $('#node-input-style').on('change', function() {
-                function all(action) {
-                    ['color', 'icon'].forEach(function(p2) {
-                        ['off', 'on'].forEach(function(p1) {
-                            var sel = "node-input-"+p1+p2;
-                            $('[for="'+sel+'"]')[action]();
-                            $('#'+sel)[action]();
-                        });
-                    });
-                }
-
-                switch ($(this).val()) {
-                    case '': {
-                        all('hide');
-                        $('#node-input-onvalue').css('width', '70%');
-                        $('#node-input-offvalue').css('width', '70%');
-                        break;
-                    }
-                    case 'icon-small': {
-                        all('show');
-                        $('#node-input-onvalue').css('width', 'calc(70% - 285px)');
-                        $('#node-input-offvalue').css('width', 'calc(70% - 285px)');
-                        break;
-                    }
+            $('#node-input-custom-icons').change(function() {
+                var v = $(this).val();
+                if (v === "default") {
+                    $(".form-row-custom-icons").hide();
+                } else {
+                    $(".form-row-custom-icons").show();
                 }
             });
+
+            if (this.onicon!=""||this.oncolor!=""||this.officon!=""||this.offcolor!="") {
+                $('#node-input-custom-icons').val('custom');
+            } else {
+                $('#node-input-custom-icons').change();
+            }
+        },
+        oneditsave: function() {
+            if ($('#node-input-custom-icons').val() === 'default') {
+                $('#node-input-onicon').val('');
+                $('#node-input-officon').val('');
+                $('#node-input-oncolor').val('');
+                $('#node-input-offcolor').val('');
+            }
         }
     });
 </script>
@@ -71,34 +67,48 @@
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label><i class="fa fa-arrows-h"></i> Size</label>
+        <label><i class="fa fa-object-group"></i> Size</label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-onvalue"><i class="fa fa-toggle-on"></i> On Value</label>
-        <input type="text" id="node-input-onvalue" style="width:calc(70% - 285px);">
+        <label for="node-input-custom-icons"><i class="fa fa-picture-o"></i> Icon</label>
+        <select id="node-input-custom-icons">
+            <option value="default">Default</option>
+            <option value="custom">Custom</option>
+        </select>
+    </div>
+    <div class="form-row form-row-custom-icons">
+        <label for="node-input-onicon" style="text-align: right;"><i class="fa fa-toggle-on"></i> On Icon</label>
+        <input type="text" id="node-input-onicon" style="width:120px">
         <label for="node-input-oncolor" style="width:40px;text-align:right;">Color</label>
-        <input type="text" id="node-input-oncolor" style="width:65px" placeholder="optional">
-        <label for="node-input-onicon" style="width:35px;text-align:right;">Icon</label>
-        <input type="text" id="node-input-onicon" style="width:100px" placeholder="optional">
+        <input type="text" id="node-input-oncolor" style="width:120px">
     </div>
-    <div class="form-row">
-        <label for="node-input-offvalue"><i class="fa fa-toggle-off"></i> Off Value</label>
-        <input type="text" id="node-input-offvalue" style="width:calc(70% - 285px);">
+    <div class="form-row form-row-custom-icons">
+        <label for="node-input-officon" style="text-align: right;"><i class="fa fa-toggle-off"></i> Off Icon</label>
+        <input type="text" id="node-input-officon" style="width:120px">
         <label for="node-input-offcolor" style="width:40px;text-align:right;">Color</label>
-        <input type="text" id="node-input-offcolor" style="width:65px" placeholder="optional">
-        <label for="node-input-officon" style="width:35px;text-align:right;">Icon</label>
-        <input type="text" id="node-input-officon" style="width:100px" placeholder="optional">
+        <input type="text" id="node-input-offcolor" style="width:120px">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="optional msg.topic">
+        <label style="width:auto" for="node-input-onvalue"><i class="fa fa-envelope"></i> When clicked, send:</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-onvalue" style="padding-left: 25px; margin-right: -25px">On Payload</label>
+        <input type="text" id="node-input-onvalue">
+    </div>
+    <div class="form-row">
+        <label for="node-input-offvalue" style="padding-left: 25px; margin-right: -25px">Off Payload</label>
+        <input type="text" id="node-input-offvalue">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
+        <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

@@ -40,13 +40,13 @@
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label><i class="fa fa-arrows-h"></i> Size</label>
+        <label><i class="fa fa-object-group"></i> Size</label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
@@ -60,8 +60,15 @@
         <input type="text" style="width:58px" id="node-input-delay">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="optional msg.topic">
+        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope"></i> When changed, send:</label>
+    </div>
+    <div class="form-row">
+        <label style="padding-left: 25px; margin-right: -25px">Payload</label>
+        <label style="width:auto">Current value</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
+        <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

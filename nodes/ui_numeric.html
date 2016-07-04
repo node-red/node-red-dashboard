@@ -41,28 +41,36 @@
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label><i class="fa fa-arrows-h"></i> Size</label>
+        <label><i class="fa fa-object-group"></i> Size</label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-format"><i class="fa fa-copy"></i> Value</label>
-        <input type="text" id="node-input-format">
+        <label for="node-input-format"><i class="fa fa-i-cursor"></i> Value Format</label>
+        <input type="text" id="node-input-format" placeholder="{{value}}">
     </div>
     <div class="form-row">
-        <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
-        <input type="text" style="width:calc(35% - 60px)" id="node-input-min">
-        <label for="node-input-max" style="text-align:right; width:60px; margin-right:15px; margin-left:37px;"><i class="fa fa-caret-right"></i> Max</label>
-        <input type="text" style="width:calc(35% - 60px)" id="node-input-max">
+        <label for="node-input-min">Range</label>
+        <label for="node-input-min" style="width:auto">min</label>
+        <input type="text" id="node-input-min" style="width:80px">
+        <label for="not-input-max" style="width:auto; margin-left: 20px;">max</label>
+        <input type="text" id="node-input-max" style="width:80px">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="optional msg.topic">
+        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope"></i> When changed, send:</label>
+    </div>
+    <div class="form-row">
+        <label style="padding-left: 25px; margin-right: -25px">Payload</label>
+        <label style="width:auto">Current value</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
+        <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
