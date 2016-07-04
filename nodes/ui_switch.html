@@ -17,10 +17,12 @@
             label: {value: 'switch'},
             topic: {value: ''},
             style: {value: ''},
-            onvalue: {value: 'true', required:true},
+            onvalue: {value: true, required:true},
+            onvalueType: {value: 'bool'},
             onicon: {value: '', validate:function(value) { console.log(this); return true;}},
             oncolor: {value: ''},
-            offvalue: {value: 'false', required:true},
+            offvalue: {value: false, required:true},
+            offvalueType: {value: 'bool'},
             officon: {value: ''},
             offcolor: {value: ''},
         },
@@ -49,6 +51,19 @@
             } else {
                 $('#node-input-custom-icons').change();
             }
+
+            $('#node-input-onvalue').typedInput({
+                default: 'str',
+                typeField: $("#node-input-onvalueType"),
+                types:['flow','global','str','num','bool','json','date']
+            });
+            $('#node-input-offvalue').typedInput({
+                default: 'str',
+                typeField: $("#node-input-offvalueType"),
+                types:['flow','global','str','num','bool','json','date']
+            });
+
+
         },
         oneditsave: function() {
             if ($('#node-input-custom-icons').val() === 'default') {
@@ -100,11 +115,13 @@
     </div>
     <div class="form-row">
         <label for="node-input-onvalue" style="padding-left: 25px; margin-right: -25px">On Payload</label>
-        <input type="text" id="node-input-onvalue">
+        <input type="text" id="node-input-onvalue" style="width:70%">
+        <input type="hidden" id="node-input-onvalueType">
     </div>
     <div class="form-row">
         <label for="node-input-offvalue" style="padding-left: 25px; margin-right: -25px">Off Payload</label>
-        <input type="text" id="node-input-offvalue">
+        <input type="text" id="node-input-offvalue" style="width:70%">
+        <input type="hidden" id="node-input-offvalueType">
     </div>
     <div class="form-row">
         <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
