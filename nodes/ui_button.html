@@ -18,6 +18,7 @@
             color: {value: ''},
             icon: {value: ''},
             payload: {value: ''},
+            payloadType: { value: 'str'},
             topic: {value: ''}
         },
         inputs:0,
@@ -31,6 +32,12 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+
+            $('#node-input-payload').typedInput({
+                default: 'str',
+                typeField: $("#node-input-payloadType"),
+                types:['flow','global','str','num','bool','json','date']
+            })
         }
     });
 </script>
@@ -56,14 +63,15 @@
     </div>
     <div class="form-row">
         <label for="node-input-color"><i class="fa fa-tint"></i>  Color</label>
-        <input type="text" id="node-input-color" placeholder="optional text or icon color">
+        <input type="text" id="node-input-color" placeholder="optional text/icon color">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope"></i> When clicked, send:</label>
     </div>
     <div class="form-row">
         <label for="node-input-payload" style="padding-left: 25px; margin-right: -25px">Payload</label>
-        <input type="text" id="node-input-payload">
+        <input type="text" id="node-input-payload" style="width:70%">
+        <input type="hidden" id="node-input-payloadType">
     </div>
     <div class="form-row">
         <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>

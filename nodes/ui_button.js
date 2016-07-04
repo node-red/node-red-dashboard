@@ -11,6 +11,8 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(group.config.tab);
         if (!tab) { return; }
 
+        var payloadType = config.payloadType;
+
         var done = ui.add({
             node: node,
             tab: tab,
@@ -27,6 +29,14 @@ module.exports = function(RED) {
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;
+            },
+            convertBack: function (value) {
+                if (payloadType === "date") {
+                    value = Date.now();
+                } else {
+                    value = RED.util.evaluateNodeProperty(value,payloadType,node);
+                }
+                return value;
             },
             storeFrontEndInputAsState: false
         });
