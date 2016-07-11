@@ -95,12 +95,12 @@
     <p>Plots the input values on a time based line chart.</p>
     <p>Each input <code>msg.payload</code> value will be converted to a number. If the
     conversion fails, the message is ignored.</p>
-    <p>Data outside the selected <b>time window</b> will be automatically removed from the graph.</p>
+    <p>The <b>X</b> axis defines a time window. Older data will be automatically removed from the graph.</p>
     <p>Minimum and Maximum <b>Y</b> axis values are optional. The graph will auto-scale to any values received.</p>
     <p>Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
     value on each input message.</p>
-    <p>The <b>No data</b> field can be used to display some text before any valid data is received.</p>
+    <p>The <b>Blank label</b> field can be used to display some text before any valid data is received.</p>
     <p>The first output contains an array of the chart state that can be persisted if needed. The second
-    output sends a <code>msg.payload</code> of "restore" that can be used to trigger a restore of
+    output sends a <code>msg.payload</code> of <b>"restore"</b> that can be used to trigger a restore of
     the state of the chart.</p>
 </script>

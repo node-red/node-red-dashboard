@@ -31,7 +31,6 @@
                 group: "#node-input-group"
             });
 
-
             this.resizeRule = function(option,newWidth) {
                 option.find(".node-input-option-label").width(newWidth);
                 option.find(".node-input-option-value").width(newWidth);
@@ -138,6 +137,7 @@
 
 <script type="text/x-red" data-help-name="ui_dropdown">
     <p>Adds a dropdown select box to the user interface.</p>
+    <p>Multiple value / label pairs can be added as required.</p>
     <p>The configured value of the selected item will be returned as <code>msg.payload</code>.</p>
     <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
 </script>

@@ -85,12 +85,12 @@
 
 <script type="text/x-red" data-help-name="ui_button">
     <p>Adds a button to the user interface.</p>
-	<p>The <b>Width</b> <i>(default : 3)</i> and <b>Height</b> <i>(default : 1)</i> of the button can be defined as an
-    integer, where the value defines the size as a number in rows/columns.</p>
-	<p>If the <b>Color</b> is defined, the color of the buttons content changes accordingly. The <b>Icon</b> can be
-    defined, as either a <a href="https://design.google.com/icons/" target="_blank">Material Design icon</a> <i>(e.g. 'check', 'close')</i>
-    or a <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icon</a> <i>(e.g. 'fa-fire')</i>.</p>
     <p>Clicking the button generates a message with <code>msg.payload</code> set to the <b>Payload</b> field.
     If no payload is specified, the node id is used.</p>
+	<p>The <b>Size</b> defaults to  3 by 1.</p>
+	<p>The <b>Icon</b> can be defined, as either a <a href="https://design.google.com/icons/" target="_blank">Material Design icon</a>
+    <i>(e.g. 'check', 'close')</i> or a <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icon</a>
+    <i>(e.g. 'fa-fire')</i>.</p>
+    <p>If the <b>Color</b> is defined, the color of the buttons content changes accordingly.</p>
     <p>The <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
 </script>

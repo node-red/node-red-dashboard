@@ -74,10 +74,10 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_slider">
-    <p>Shows a slider widget on the user interface.</p>
-	<p>The user can change its value between the limits (<b>Min/Max</b>). Each value change
+    <p>Adds a slider widget to the user interface.</p>
+	<p>The user can change its value between the limits (<b>min</b> and <b>max</b>). Each value change
     will generate a message with the value set as <b>payload</b>.</p>
     <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
-    <p>Any input messages will be converted to a number,(<b>Min</b> will be used if conversion fails),
+    <p>Any input messages will be converted to a number. The <b>min</b> value will be used if conversion fails,
     and it will update the user interface. If the value changes, it will also be passed to the output.</p>
 </script>
