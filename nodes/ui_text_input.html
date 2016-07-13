@@ -3,11 +3,16 @@
         category: 'dashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
-            tab: {type: 'ui_tab', required: true},
             group: {type: 'ui_group', required: true},
-            order: {value: 1, validate: RED.validators.number()},
-            width: {value: ''},
-            height: {value: 1},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                var currentGroup = $('#node-input-group').val()||this.group;
+                var groupNode = RED.nodes.node(currentGroup);
+                var valid = !groupNode || +v <=  +groupNode.width;
+                $("#node-input-size").toggleClass("input-error",!valid);
+                return valid;
+            }},
+            height: {value: 0},
             name: {value: ''},
             mode: {value: 'text', required: true},
             delay: {value: 300, validate: RED.validators.number()},
@@ -20,43 +25,33 @@
         paletteLabel: 'text input',
         label: function() { return this.name || this.label || this.mode+' input'; },
         oneditprepare: function() {
-            $( "#node-input-order" ).spinner({
-                min:1
-            }).width(25);
-            $( "#node-input-width" ).val(this.width).spinner({
-                min:0
-            }).width(25);
-            $( "#node-input-height" ).val(this.height).spinner({
-                min:1
-            }).width(25);
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_text_input">
-    <div class="form-row">
-        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
-        <input type="text" id="node-input-tab">
-    </div>
 	<div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order">
-        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
-        <input type="text" id="node-input-width">
-        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
-        <input type="text" id="node-input-height">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
         <label for="node-input-mode"><i class="fa fa-keyboard-o"></i> Mode</label>
-        <select style="width:calc(64% - 132px)" id="node-input-mode">
+        <select style="width:128px" id="node-input-mode">
             <option value="text">text input</option>
             <option value="email">email address</option>
             <option value="color">color picker</option>
@@ -65,8 +60,15 @@
         <input type="text" style="width:58px" id="node-input-delay">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
+        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope"></i> When changed, send:</label>
+    </div>
+    <div class="form-row">
+        <label style="padding-left: 25px; margin-right: -25px">Payload</label>
+        <label style="width:auto">Current value</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
+        <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -75,8 +77,7 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_text_input">
-  <p>Shows a text input field on the user interface. Mode can be regular text, email or color picker.</p>
-  <p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
+  <p>Adds a text input field to the user interface. Mode can be regular text, email or color picker.</p>
   <p>Text written by the user is sent in realtime as the <code>msg.payload</code>. You can also
   preset the text of the input field by sending in a <code>msg.payload</code>.</p>
   <p>The <b>Delay</b> <i>(default : 300ms)</i> sets the amount of time in milliseconds before the output is sent.</p>

@@ -4,4 +4,5 @@
 
 .nr-dashboard-slider p.label {
     margin-right: 15px;
+    white-space: nowrap;
 }

@@ -1,8 +1,7 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" flex layout="row" layout-align="space-between center"
-         class="nr-dashboard-slider">
+<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" flex layout="row" layout-align="space-between center" class="nr-dashboard-slider">
     <p class="label">{{me.item.label}}</p>
     <md-slider flex="100" min="{{me.item.min}}" max="{{me.item.max}}"
             ng-model="me.item.value" aria-label="{{me.item.label}}"
-            ng-change="me.valueChanged(50)"
+            ng-change="me.valueChanged(20)"
             ng-disabled="me.item.disabled"/>
 </md-card>

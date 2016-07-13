@@ -3,14 +3,21 @@
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
-            tab: {type: 'ui_tab', required: true},
-            group: {type: 'ui_group', required: true},
-            order: {value: 1, validate: RED.validators.number()},
-            width: {value: ''},
-            height: {value: ''},
             name: {value: ''},
-            title: {value: 'Title'},
-            label: {value: 'gauge'},
+            group: {type: 'ui_group', required: true},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                    var currentGroup = $('#node-input-group').val()||this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    var valid = !groupNode || +v <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error",!valid);
+                    return valid;
+                }
+            },
+            height: {value: 0},
+            gtype: {value: 'gage'},
+            title: {value: 'Gauge'},
+            label: {value: 'units'},
             format: {value: '{{value}}'},
             min: {value: 0, required: true, validate: RED.validators.number()},
             max: {value: 10, required: true, validate: RED.validators.number()}
@@ -22,54 +29,66 @@
         paletteLabel: 'gauge',
         label: function() { return this.name || this.label || 'gauge'; },
         oneditprepare: function() {
-            $( "#node-input-order" ).spinner({
-                min:1
-            }).width(25);
-            $( "#node-input-width" ).val(this.width).spinner({
-                min:0
-            }).width(25);
-            $( "#node-input-height" ).val(this.height).spinner({
-                min:0
-            }).width(25);
+            if (this.gtype === undefined) {
+                this.gtype = "gage";
+                $("#node-input-gtype").val("gage");
+            }
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
+            $("#node-input-gtype").change(function() {
+                if ($(this).val() === "wave") {
+                    $("#ui-gauge-labels").hide();
+                } else {
+                    $("#ui-gauge-labels").show();
+                }
+            });
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_gauge">
     <div class="form-row">
-        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
-        <input type="text" id="node-input-tab">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order">
-        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
-        <input type="text" id="node-input-width">
-        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
-        <input type="text" id="node-input-height">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gtype"><i class="fa fa-list"></i> Type</label>
+        <select id="node-input-gtype" style="width:200px !important">
+            <option value="gage">Gauge</option>
+            <option value="donut">Donut</option>
+            <option value="compass">Compass</option>
+            <option value="wave">Level</option>
+        </select>
+    </div>
+    <div id="ui-gauge-labels">
+        <div class="form-row">
+            <label for="node-input-title"><i class="fa fa-i-cursor"></i> Title</label>
+            <input type="text" id="node-input-title">
+        </div>
+        <div class="form-row">
+            <label for="node-input-format"><i class="fa fa-i-cursor"></i> Value format</label>
+            <input type="text" id="node-input-format" placeholder="{{value}}">
+        </div>
+        <div class="form-row">
+            <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
+            <input type="text" id="node-input-label" placeholder="optional sub-label">
         </div>
     </div>
     <div class="form-row">
-        <label for="node-input-title"><i class="fa fa-copy"></i> Title</label>
-        <input type="text" id="node-input-title">
-    </div>
-    <div class="form-row">
-        <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
-        <input type="text" id="node-input-format">
-    </div>
-    <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-copy"></i> Label</label>
-        <input type="text" id="node-input-label">
-    </div>
-    <div class="form-row">
-        <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-min">
-        <label for="node-input-max" style="text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-caret-right"></i> Max</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-max">
+        <label for="node-input-min">Range</label>
+        <label for="node-input-min" style="width:auto">min</label>
+        <input type="text" id="node-input-min" style="width:80px">
+        <label for="not-input-max" style="width:auto; margin-left: 20px;">max</label>
+        <input type="text" id="node-input-max" style="width:80px">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -79,8 +98,9 @@
 
 <script type="text/x-red" data-help-name="ui_gauge">
     <p>Adds a gauge type widget to the user interface.</p>
-    <p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
-    <p>The <code>msg.payload</code> is searched for a numeric value and is formatted in accordance with the defined <b>Template</b>, which can then be formatted using
+    <p>The <code>msg.payload</code> is searched for a numeric <i>value</i> and is formatted in accordance with
+    the defined <b>Value Format</b>, which can then be formatted using
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
-    <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and add % sign to the label.</p>
+    <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and append a % sign.</p>
+    <p>The gauge has several modes. Regular gauge, donut, compass and wave.</p>
 </script>

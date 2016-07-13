@@ -1,53 +1,53 @@
 <script type="text/javascript">
     RED.nodes.registerType('ui_link',{
-        category: 'dashboard',
+        category: 'config',
         color: 'rgb( 63, 173, 181)',
         defaults: {
             name: {value: 'Google'},
             link: {value: 'http://www.google.com'},
             icon: {value: 'open_in_browser'},
             target: {value: 'newtab', validate :function() { return true; }},
-            order: {value: 1, validate:RED.validators.number()}
+            order: {value: 0}
         },
         inputs:0,
         outputs:0,
+        hasUsers: false,
         align: "right",
         icon: "ui_link.png",
         paletteLabel: 'link',
         label: function() { return this.name || 'link'; },
         oneditprepare: function() {
-            document.getElementById('node-input-target-opentab').checked = (this.target === 'newtab');
-            document.getElementById('node-input-target-openiframe').checked = (this.target === 'iframe');
+            document.getElementById('node-config-input-target-opentab').checked = (this.target === 'newtab');
+            document.getElementById('node-config-input-target-openiframe').checked = (this.target === 'iframe');
         },
         oneditsave : function () {
-            this.target = document.getElementById('node-input-target-opentab').checked ? 'newtab' : 'iframe';
+            this.target = document.getElementById('node-config-input-target-opentab').checked ? 'newtab' : 'iframe';
+        },
+        onadd: function() {
+            console.log("PING");
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_link">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
     </div>
     <div class="form-row">
-        <label for="node-input-link"><i class="fa fa-link"></i> Link</label>
-        <input type="text" id="node-input-link">
+        <label for="node-config-input-link"><i class="fa fa-link"></i> Link</label>
+        <input type="text" id="node-config-input-link">
     </div>
     <div class="form-row">
-        <label for="node-input-icon"><i class="fa fa-image"></i> Icon</label>
-        <input type="text" id="node-input-icon">
+        <label for="node-config-input-icon"><i class="fa fa-image"></i> Icon</label>
+        <input type="text" id="node-config-input-icon">
     </div>
     <div class="form-row">
         <label><i class="fa fa-link"></i> Open in</label>
-        <input type="radio" id="node-input-target-opentab" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px" checked>
-        <label for="node-input-target-opentab">New Tab</label>
-        <input type="radio" id="node-input-target-openiframe" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px">
-        <label for="node-input-target-openiframe">iframe</label>
-    </div>
-    <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order" style="width:50px">
+        <input type="radio" id="node-config-input-target-opentab" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px" checked>
+        <label for="node-config-input-target-opentab">New Tab</label>
+        <input type="radio" id="node-config-input-target-openiframe" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px">
+        <label for="node-config-input-target-openiframe">iframe</label>
     </div>
 </script>
 

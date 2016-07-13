@@ -3,14 +3,20 @@
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
-            tab: {type: 'ui_tab', required:true},
             group: {type: 'ui_group', required:true},
-            order: {value: 1, validate:RED.validators.number()},
-            width: {value: ''},
-            height: {value: 1},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                var currentGroup = $('#node-input-group').val()||this.group;
+                var groupNode = RED.nodes.node(currentGroup);
+                var valid = !groupNode || +v <=  +groupNode.width;
+                $("#node-input-size").toggleClass("input-error",!valid);
+                return valid;
+            }},
+            height: {value: 0},
             name: {value: ''},
             label: {value: 'text'},
-            format: {value: '{{msg.payload}}'}
+            format: {value: '{{msg.payload}}'},
+            layout: {value:'row-spread'}
         },
         inputs:1,
         outputs:0,
@@ -19,59 +25,148 @@
         paletteLabel: 'text',
         label: function() { return this.name || this.label || 'text'; },
         oneditprepare: function() {
-            //this.width = this.width || 6;
-            //this.height = this.height || 1;
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
 
-            $( "#node-input-order" ).spinner({
-                min:1
-            }).width(25);
-            $( "#node-input-width" ).val(this.width).spinner({
-                min:0
-            }).width(25);
-            $( "#node-input-height" ).val(this.height).spinner({
-                min:1
-            }).width(25);
+            $(".nr-db-text-layout-"+(this.layout||'row-spread')).addClass('selected');
+
+            [ ".nr-db-text-layout-row-left",".nr-db-text-layout-row-center",".nr-db-text-layout-row-right",
+              ".nr-db-text-layout-row-spread",".nr-db-text-layout-col-center"].forEach(function(id) {
+                  $(id).click(function(e) {
+                      $(".nr-db-text-layout").removeClass('selected');
+                      $(this).addClass('selected');
+                      $('#node-input-layout').val(id.substring(".nr-db-text-layout-".length));
+                      e.preventDefault();
+                  })
+              })
+
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_text">
     <div class="form-row">
-        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
-        <input type="text" id="node-input-tab">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order">
-        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
-        <input type="text" id="node-input-width">
-        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
-        <input type="text" id="node-input-height">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
+        <label for="node-input-format"><i class="fa fa-i-cursor"></i> Value format</label>
         <input type="text" id="node-input-format" placeholder="{{msg.payload}}">
+    </div>
+    <div class="form-row">
+        <label style="vertical-align: top"><i class="fa fa-th-large"></i> Layout</label>
+        <div style="display:inline-block">
+        <input type="hidden" id="node-input-layout"><input type="hidden" id="node-input-layoutAlign">
+        <div>
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-left">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </a>
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-center">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </a>
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-right">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </a>
+        </div>
+        <div>
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-row nr-db-text-layout-row-spread">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </a>
+            <a href="#" class="nr-db-text-layout nr-db-text-layout-col nr-db-text-layout-col-center">
+                <span class="nr-db-text-layout-label">label</span>
+                <span class="nr-db-text-layout-value">value</span>
+                <div class="nr-db-text-layout-checkbox"></div>
+            </a>
+        </div>
+        </div>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
-</script>
 
+
+</script>
+<style>
+    .nr-db-text-layout {
+        position:relative;
+        display: inline-block;
+        width: 90px;
+        height: 60px;
+        border-radius:3px;
+        border:1px solid #bbb;
+        cursor:pointer;
+        color: #666;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    .nr-db-text-layout.selected, .nr-db-text-layout:hover {
+        border-color: #333;
+        color: #333;
+    }
+    .nr-db-text-layout span {
+        position: absolute;
+    }
+    .nr-db-text-layout-value {
+        font-weight: bold;
+    }
+    .nr-db-text-layout-row span { top: 20px; }
+    .nr-db-text-layout-row-left .nr-db-text-layout-label { left: 2px; }
+    .nr-db-text-layout-row-left .nr-db-text-layout-value { left: 34px; }
+    .nr-db-text-layout-row-spread .nr-db-text-layout-label { left: 2px; }
+    .nr-db-text-layout-row-spread .nr-db-text-layout-value { right: 2px; }
+    .nr-db-text-layout-row-center .nr-db-text-layout-label { left: 11px; }
+    .nr-db-text-layout-row-center .nr-db-text-layout-value { right: 11px; }
+    .nr-db-text-layout-row-right .nr-db-text-layout-label { right: 40px; }
+    .nr-db-text-layout-row-right .nr-db-text-layout-value { right: 2px; }
+
+    .nr-db-text-layout-col span { width: 90px;  text-align: center; left: 0px;}
+    .nr-db-text-layout-col-center .nr-db-text-layout-label { top: 12px; }
+    .nr-db-text-layout-col-center .nr-db-text-layout-value { top: 26px; }
+    .nr-db-text-layout-checkbox {
+        display: none;
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        border: 1px solid #bbb;
+        position: absolute;
+        right: -5px;
+        top: -5px;
+        background: #fff;
+    }
+    .nr-db-text-layout.selected .nr-db-text-layout-checkbox {
+        display:inline-block;
+        box-shadow: inset 0px 0px 0px 2px #fff;
+        background: #333;
+        border-color: #333;
+    }
+
+</style>
 <script type="text/x-red" data-help-name="ui_text">
     <p>Will display a non-editable text field on the user interface.</p>
-    <p>The <b>Width</b> and <b>Height</b> of the gauge can be defined as an integer, where the value defines the size as
-    a number in rows/columns. A width of 0 (or blank) will set the widget to the full width of the group.</p>
-    <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Template</b>.</p>
-    <p>The <b>Template</b> field can be used to change the displayed format and can contain valid HTML and
+    <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Value Format</b>.</p>
+    <p>The <b>Value Format</b> field can be used to change the displayed format and can contain valid HTML and
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
-    <p>For example: <code>{{msg.payload | uppercase}} &deg;</code> will uppercase the text and add the degree symbol.</p>
+    <p>For example: <code>{{msg.payload | uppercase}} &amp;deg;</code> will uppercase the text and add the degree symbol.</p>
 </script>

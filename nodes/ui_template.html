@@ -3,12 +3,17 @@
         category: 'dashboard',
         color: 'rgb( 63, 173, 181)',
         defaults: {
-            tab: {type: 'ui_tab', required:true},
             group: {type: 'ui_group', required:true},
             name: {value: ''},
-            order: {value: 1, validate:RED.validators.number()},
-            width: {value: ''},
-            height: {value: ''},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                var currentGroup = $('#node-input-group').val()||this.group;
+                var groupNode = RED.nodes.node(currentGroup);
+                var valid = !groupNode || +v <=  +groupNode.width;
+                $("#node-input-size").toggleClass("input-error",!valid);
+                return valid;
+            }},
+            height: {value: 0},
             format: {value: '{{msg.payload}}'},
             storeOutMessages: {value: true},
             fwdInMessages: {value: true}
@@ -20,15 +25,11 @@
         label: function() { return this.name || 'template'; },
         oneditprepare: function() {
             var that = this;
-            $( "#node-input-order" ).spinner({
-                min:1
-            }).width(25);
-            $( "#node-input-width" ).val(this.width).spinner({
-                min:0
-            }).width(25);
-            $( "#node-input-height" ).val(this.height).spinner({
-                min:1
-            }).width(25);
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
 
             if (typeof this.storeOutMessages === 'undefined') {
                 this.storeOutMessages = true;
@@ -96,22 +97,15 @@
 </script>
 
 <script type="text/x-red" data-template-name="ui_template">
-    <div class="form-row">
-        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
-        <input type="text" id="node-input-tab">
-    </div>
 	<div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order">
-        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
-        <input type="text" id="node-input-width">
-        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
-        <input type="text" id="node-input-height">
-        </div>
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -119,13 +113,13 @@
     </div>
     <div class="form-row">
         <label>&nbsp;</label>
-        <input type="checkbox" id="node-input-storeOutMessages" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-storeOutMessages" style="width: 70%;"> Replay output messages</label>
+        <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; width:auto; vertical-align:top;">
+        <label for="node-input-fwdInMessages" style="width:70%;"> Pass through messages from input.</label>
     </div>
     <div class="form-row">
         <label>&nbsp;</label>
-        <input type="checkbox" id="node-input-fwdInMessages" style="display: inline-block; width: auto; vertical-align: top;">
-        <label for="node-input-fwdInMessages" style="width: 70%;"> Forward input messages</label>
+        <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; width:auto; vertical-align:top;">
+        <label for="node-input-storeOutMessages" style="width:70%;"> Add output messages to stored state.</label>
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
@@ -137,11 +131,9 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_template">
-    <p>The Template widget can contain any valid html and Angular/Angular-Material directives.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : '')</i> of the template can be defined as an integer, where the value defines the size as a number in rows/columns. With a <b>Height</b> of '', the container's height will size to the templates content.</p>
+    <p>The template widget can contain any valid html and Angular/Angular-Material directives.</p>
     <p>This node can be used to create a dynamic user interface element that changes its appearence
     based on the input message and can send back messages to Node-RED.</p>
-    <br>
     <b>For example:</b><br>
     <pre>&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
     &lt;p&gt;The number is&lt;/p&gt;

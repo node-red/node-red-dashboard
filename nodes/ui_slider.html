@@ -3,11 +3,16 @@
         category: 'dashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
-            tab: {type: 'ui_tab', required: true},
             group: {type: 'ui_group', required: true},
-            order: {value: 1, validate: RED.validators.number()},
-            width: {value: ''},
-            height: {value: 1},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                var currentGroup = $('#node-input-group').val()||this.group;
+                var groupNode = RED.nodes.node(currentGroup);
+                var valid = !groupNode || +v <=  +groupNode.width;
+                $("#node-input-size").toggleClass("input-error",!valid);
+                return valid;
+            }},
+            height: {value: 0},
             name: {value: ''},
             label: {value: 'slider'},
             topic: {value: ''},
@@ -20,49 +25,47 @@
         paletteLabel: 'slider',
         label: function() { return this.name || this.label || 'slider'; },
         oneditprepare: function() {
-            $( "#node-input-order" ).spinner({
-                min:1
-            }).width(25);
-            $( "#node-input-width" ).val(this.width).spinner({
-                min:0
-            }).width(25);
-            $( "#node-input-height" ).val(this.height).spinner({
-                min:1
-            }).width(25);
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_slider">
-    <div class="form-row">
-        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
-        <input type="text" id="node-input-tab">
-    </div>
 	<div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order">
-        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
-        <input type="text" id="node-input-width">
-        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
-        <input type="text" id="node-input-height">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
+        <label for="node-input-min">Range</label>
+        <label for="node-input-min" style="width:auto">min</label>
+        <input type="text" id="node-input-min" style="width:80px">
+        <label for="not-input-max" style="width:auto; margin-left: 20px;">max</label>
+        <input type="text" id="node-input-max" style="width:80px">
     </div>
     <div class="form-row">
-        <label for="node-input-min"><i class="fa fa-caret-left"></i> Min</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-min">
-        <label for="node-input-max" style="text-align: right; width: 60px; margin-right: 15px; margin-left: 37px;"><i class="fa fa-caret-right"></i> Max</label>
-        <input type="text" style="width: calc(35% - 67px)" id="node-input-max">
+        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope"></i> When changed, send:</label>
+    </div>
+    <div class="form-row">
+        <label style="padding-left: 25px; margin-right: -25px">Payload</label>
+        <label style="width:auto">Current value</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
+        <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -71,11 +74,10 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_slider">
-    <p>Shows a slider widget on the user interface.</p>
-	<p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the gauge can be defined as an integer, where the value defines the size as a number in rows/columns.</p>
-    <p>The user can change its value between the limits (<b>Min/Max</b>). Each value change
+    <p>Adds a slider widget to the user interface.</p>
+	<p>The user can change its value between the limits (<b>min</b> and <b>max</b>). Each value change
     will generate a message with the value set as <b>payload</b>.</p>
     <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
-    <p>Each input message will be converted to a number,(<b>Min</b> will be used if conversion fails),
-    and it will update the user interface. Also if the value changes, it will be passed to the output.</p>
+    <p>Any input messages will be converted to a number. The <b>min</b> value will be used if conversion fails,
+    and it will update the user interface. If the value changes, it will also be passed to the output.</p>
 </script>

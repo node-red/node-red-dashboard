@@ -9,6 +9,7 @@ module.exports = function(RED) {
     return {
         add: add,
         addLink: addLink,
+        addBaseConfig: addBaseConfig,
         emit: emit,
         toNumber: toNumber.bind(null, false),
         toFloat: toNumber.bind(null, true)
@@ -20,6 +21,11 @@ var serveStatic = require('serve-static'),
     path = require('path'),
     fs = require('fs'),
     events = require('events');
+
+var baseConfiguration = {
+    title: "Node-RED Dashboard",
+    theme: "theme-light"
+};
 
 var tabs = [];
 var links = [];
@@ -190,11 +196,8 @@ function init(server, app, log, redSettings) {
                 'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material',
                 'angular-material-icons', 'svg-morpheus', 'font-awesome',
                 'sprintf-js',
-
                 'jquery', 'jquery-ui',
-
                 'raphael', 'justgage',
-
                 'd3', 'nvd3', 'angularjs-nvd3-directives'
             ];
 
@@ -232,8 +235,11 @@ function updateUi(to) {
     }
 
     process.nextTick(function() {
+        tabs.forEach(function(t) {
+            t.theme = baseConfiguration.theme;
+        })
         to.emit('ui-controls', {
-            title: settings.title,
+            title: baseConfiguration.title,
             tabs: tabs,
             links: links
         });
@@ -250,6 +256,11 @@ function find(array, predicate) {
 }
 
 function itemSorter(item1, item2) {
+    if (item1.order === 0 && item2.order !== 0) {
+        return 1;
+    } else if (item1.order !== 0 && item2.order === 0) {
+        return -1;
+    }
     return item1.order - item2.order;
 }
 
@@ -264,7 +275,6 @@ function addControl(tab, groupHeader, control) {
             id: tab.id,
             header: tab.config.name,
             order: parseFloat(tab.config.order),
-            theme: tab.config.theme,
             icon: tab.config.icon,
             items: []
         };
@@ -288,16 +298,20 @@ function addControl(tab, groupHeader, control) {
 
     updateUi();
 
+    // Return the remove function for this control
     return function() {
         var index = foundGroup.items.indexOf(control);
         if (index >= 0) {
+            // Remove the item from the group
             foundGroup.items.splice(index, 1);
 
+            // If the group is now empty, remove it from the tab
             if (foundGroup.items.length === 0) {
                 index = foundTab.items.indexOf(foundGroup);
                 if (index >= 0) {
                     foundTab.items.splice(index, 1);
 
+                    // If the tab is now empty, remove it as well
                     if (foundTab.items.length === 0) {
                         index = tabs.indexOf(foundTab);
                         if (index >= 0) {
@@ -331,4 +345,10 @@ function addLink(name, link, icon, order, target) {
         links.splice(index, 1);
         updateUi();
     }
+}
+
+function addBaseConfig(title,theme) {
+    baseConfiguration.title = title;
+    baseConfiguration.theme = theme;
+    updateUi();
 }

@@ -3,19 +3,24 @@
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
-            tab: {type: 'ui_tab', required: true},
             group: {type: 'ui_group', required: true},
-            order: {value: 1, validate:RED.validators.number()},
-            width: {value: ''},
-            height: {value: ''},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                var currentGroup = $('#node-input-group').val()||this.group;
+                var groupNode = RED.nodes.node(currentGroup);
+                var valid = !groupNode || +v <=  +groupNode.width;
+                $("#node-input-size").toggleClass("input-error",!valid);
+                return valid;
+            }},
+            height: {value: 0},
             label: {value: 'chart'},
             name: {value: ''},
             interpolate: {value: 'linear', required:true},
-            nodata: {value: 'No Data'},
+            nodata: {value: ''},
             ymin: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             ymax: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             removeOlder: {value: 1, validate:RED.validators.number(), required:true},
-            removeOlderUnit: {value:'86400', required:true}
+            removeOlderUnit: {value:'3600', required:true}
         },
         inputs:1,
         outputs:2,
@@ -24,46 +29,52 @@
         paletteLabel: 'chart',
         label: function() { return this.name || 'chart'; },
         oneditprepare: function() {
-            $( "#node-input-order" ).spinner({
-                min:1
-            }).width(25);
-            $( "#node-input-width" ).val(this.width).spinner({
-                min:0
-            }).width(25);
-            $( "#node-input-height" ).val(this.height).spinner({
-                min:0
-            }).width(25);
-            $( "#node-input-ymin" ).spinner().width(80);
-            $( "#node-input-ymax" ).spinner().width(80);
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
         }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_chart">
     <div class="form-row">
-        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
-        <input type="text" id="node-input-tab">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order">
-        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
-        <input type="text" id="node-input-width">
-        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
-        <input type="text" id="node-input-height">
-        </div>
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
-        <input type="text" id="node-input-label" placeholder="(optional chart title)">
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
+        <input type="text" id="node-input-label" placeholder="optional chart title">
     </div>
     <div class="form-row">
-        <label for="node-input-interpolate"><i class="fa fa-line-chart"></i> Interpolate</label>
-        <select id="node-input-interpolate" style="width:70%;">
+        <label for="node-input-removeOlder">X-axis</label>
+        <label for="node-input-removeOlder" style="width: auto">last</label>
+        <input type="text" id="node-input-removeOlder" style="width:80px;">
+        <select id="node-input-removeOlderUnit" style="width:110px;">
+            <option value="1">seconds</option>
+            <option value="60">minutes</option>
+            <option value="3600">hours</option>
+            <option value="86400">days</option>
+            <option value="604800">weeks</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-ymin">Y-axis</label>
+        <label for="node-input-ymin" style="width:auto">min</label>
+        <input type="text" id="node-input-ymin" style="width:80px">
+        <label for="not-input-ymax" style="width:auto; margin-left: 20px;">max</label>
+        <input type="text" id="node-input-ymax" style="width:80px">
+    </div>
+    <div class="form-row">
+        <label for="node-input-interpolate">Interpolate</label>
+        <select id="node-input-interpolate" style="width:120px;">
             <option value="linear">linear</option>
             <option value="step-after">step</option>
             <option value="basis">b-spline</option>
@@ -71,25 +82,8 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-removeOlder"><i class="fa fa-trash"></i> Old after</label>
-        <input type="text" id="node-input-removeOlder" style="width:20%">
-        <select id="node-input-removeOlderUnit">
-            <option value="1">sec(s)</option>
-            <option value="60">min(s)</option>
-            <option value="3600">hour(s)</option>
-            <option value="86400">day(s)</option>
-            <option value="604800">week(s)</option>
-        </select>
-    </div>
-    <div class="form-row">
-        <label for="node-input-ymin"><i class="fa fa-minus"></i> Ymin</label>
-        <input type="text" id="node-input-ymin" style="width:20%">
-        <i class="fa fa-plus" style="margin-left:12%;"></i> Ymax</label>
-        <input type="text" id="node-input-ymax" style="width:20%">
-    </div>
-    <div class="form-row">
-        <label for="node-input-nodata"><i class="fa fa-exclamation"></i> No data</label>
-        <input type="text" id="node-input-nodata">
+        <label for="node-input-nodata">Blank label</label>
+        <input type="text" id="node-input-nodata" placeholder="display this text before valid data arrives">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -99,11 +93,14 @@
 
 <script type="text/x-red" data-help-name="ui_chart">
     <p>Plots the input values on a time based line chart.</p>
-    <p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 3)</i> of the chart can be defined as an integer definining the size as a number of columns/rows.</p>
     <p>Each input <code>msg.payload</code> value will be converted to a number. If the
     conversion fails, the message is ignored.</p>
+    <p>The <b>X</b> axis defines a time window. Older data will be automatically removed from the graph.</p>
+    <p>Minimum and Maximum <b>Y</b> axis values are optional. The graph will auto-scale to any values received.</p>
     <p>Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
     value on each input message.</p>
-    <p>The first output contains the chart state that can be persisted if needed. The second output
-    sends a "restore" message that can be used to restore the state of the chart.</p>
+    <p>The <b>Blank label</b> field can be used to display some text before any valid data is received.</p>
+    <p>The first output contains an array of the chart state that can be persisted if needed. The second
+    output sends a <code>msg.payload</code> of <b>"restore"</b> that can be used to trigger a restore of
+    the state of the chart.</p>
 </script>

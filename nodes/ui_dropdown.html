@@ -5,11 +5,16 @@
         defaults: {
             name: {value: ''},
             label: {value: ''},
-            tab: {type: 'ui_tab', required:true},
             group: {type: 'ui_group', required:true},
-            order: {value: 1, validate:RED.validators.number()},
-            width: {value: ''},
-            height: {value: 1},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                var currentGroup = $('#node-input-group').val()||this.group;
+                var groupNode = RED.nodes.node(currentGroup);
+                var valid = !groupNode || +v <= +groupNode.width;
+                $("#node-input-size").toggleClass("input-error",!valid);
+                return valid;
+            }},
+            height: {value: 0},
             options: {value:[{value: '', label : ''}], validate:function(value) { return value.length > 0; }},
             payload: {value: ''},
             topic: {value: ''}
@@ -20,15 +25,11 @@
         paletteLabel: 'dropdown',
         label: function() { return this.name || this.label || 'dropdown'; },
         oneditprepare: function() {
-            $( "#node-input-order" ).spinner({
-                min:1
-            }).width(25);
-            $( "#node-input-width" ).val(this.width).spinner({
-                min:0
-            }).width(25);
-            $( "#node-input-height" ).val(this.height).spinner({
-                min:1
-            }).width(25);
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
 
             this.resizeRule = function(option,newWidth) {
                 option.find(".node-input-option-label").width(newWidth);
@@ -44,7 +45,7 @@
                 $('<i style="color: #eee; cursor: move; margin-left: 3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
                 var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:'str',types:['str','num','bool']});
-                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Label', value:option.label}).appendTo(row).typedInput({default:'str',types:['str', 'num']});
+                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Label', value:option.label}).appendTo(row);
 
                 var finalspan = $('<span/>',{style:"float: right;margin-right: 10px;"}).appendTo(row);
                 var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"margin-top: 7px; margin-left: 5px;"}).appendTo(finalspan);
@@ -83,7 +84,7 @@
             options.each(function(i) {
                 var option = $(this);
                 var o = {
-                    label: option.find(".node-input-option-label").typedInput('value'),
+                    label: option.find(".node-input-option-label").val(),
                     value: option.find(".node-input-option-value").typedInput('value')
                 };
                 node.options.push(o);
@@ -102,24 +103,18 @@
 
 <script type="text/x-red" data-template-name="ui_dropdown">
     <div class="form-row">
-        <label for="node-input-tab"><i class="fa fa-table"></i> Tab</label>
-        <input type="text" id="node-input-tab">
-    </div>
-    <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label for="node-input-order"><i class="fa fa-sort"></i> Order</label>
-        <input type="text" id="node-input-order">
-        <i class="fa fa-arrows-h" style="margin-left:5%;"></i> Width
-        <input type="text" id="node-input-width">
-        <i class="fa fa-arrows-v" style="margin-left:5%;"></i> Height
-        <input type="text" id="node-input-height">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
-        <input type="text" id="node-input-label" placeholder="(optional label)">
+        <input type="text" id="node-input-label" placeholder="optional label">
     </div>
     <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%">
         <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Options</label>
@@ -132,7 +127,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
+        <input type="text" id="node-input-topic" placeholder="optional msg.topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -142,8 +137,7 @@
 
 <script type="text/x-red" data-help-name="ui_dropdown">
     <p>Adds a dropdown select box to the user interface.</p>
-    <p>The <b>Width</b> <i>(default : 6)</i> and <b>Height</b> <i>(default : 1)</i> of the dropdown can be defined as an
-    integer, where the value defines the size as a number in rows/columns.</p>
-    <p>Upon selecting an item from the list...</p>
-    <p>The <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+    <p>Multiple value / label pairs can be added as required.</p>
+    <p>The configured value of the selected item will be returned as <code>msg.payload</code>.</p>
+    <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
 </script>
