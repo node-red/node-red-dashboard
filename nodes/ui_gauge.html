@@ -7,12 +7,13 @@
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
-                var currentGroup = $('#node-input-group').val()||this.group;
-                var groupNode = RED.nodes.node(currentGroup);
-                var valid = !groupNode || +v <=  +groupNode.width;
-                $("#node-input-size").toggleClass("input-error",!valid);
-                return valid;
-            }},
+                    var currentGroup = $('#node-input-group').val()||this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    var valid = !groupNode || +v <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error",!valid);
+                    return valid;
+                }
+            },
             height: {value: 0},
             gtype: {value: 'gage'},
             title: {value: 'Gauge'},
@@ -28,6 +29,10 @@
         paletteLabel: 'gauge',
         label: function() { return this.name || this.label || 'gauge'; },
         oneditprepare: function() {
+            if (this.gtype === undefined) {
+                this.gtype = "gage";
+                $("#node-input-gtype").val("gage");
+            }
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
