@@ -131,6 +131,7 @@ RED.nodes.registerType('ui_base',{
         name: {value: ''},
         theme: {value: ''}
     },
+    hasUsers: false,
     paletteLabel: 'Dashboard',
     label: function() { return this.name || 'Node-RED Dashboard'; },
     oneditprepare: function() {
@@ -274,18 +275,13 @@ RED.nodes.registerType('ui_base',{
                         users: [],
                         order: i+1,
                         name: "Tab "+(i+1),
-                        icon: "dashboard",
-                        base: globalDashboardNode.id
+                        icon: "dashboard"
                     };
                     listElements[tab.node.id] = container;
                     RED.nodes.add(tab.node);
                     tab.groups = [];
                     RED.nodes.dirty(true);
                     newTab = true;
-                } else if (tab.node.base != globalDashboardNode.id) {
-                    tab.node.base = globalDashboardNode.id;
-                    // Just in case anyone is trying this with <0.14.4
-                    RED.nodes.dirty(true);
                 }
                 if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
                     RED.nodes.updateConfigNodeUsers(tab.node);
