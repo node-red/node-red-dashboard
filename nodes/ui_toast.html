@@ -3,14 +3,14 @@
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
-            name: {value: 'show toast'},
+            name: {value: ''},
         },
         inputs:1,
         outputs:0,
         align: "right",
         icon: "ui_toast.png",
-        paletteLabel: 'show toast',
-        label: function() { return this.name || "show toast"; }
+        paletteLabel: 'notification',
+        label: function() { return this.name || "show notification"; }
     });
 </script>
 
@@ -22,6 +22,6 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_toast">
-    <p>Shows <code>msg.payload</code> as a toast message on the user interface.</p>
-    <p>If a <code>msg.topic</code> is available it will be used as the toast title.</p>
+    <p>Shows <code>msg.payload</code> as a notification message on the user interface.</p>
+    <p>If a <code>msg.topic</code> is available it will be used as the title.</p>
 </script>
