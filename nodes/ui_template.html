@@ -7,9 +7,10 @@
             name: {value: ''},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
+                var width = v||0;
                 var currentGroup = $('#node-input-group').val()||this.group;
                 var groupNode = RED.nodes.node(currentGroup);
-                var valid = !groupNode || +v <=  +groupNode.width;
+                var valid = !groupNode || +width <=  +groupNode.width;
                 $("#node-input-size").toggleClass("input-error",!valid);
                 return valid;
             }},

@@ -179,20 +179,6 @@ RED.nodes.registerType('ui_base',{
             })
             .appendTo(divTitle);
 
-        // var divUrl = $('<div>',{class:"form-row"}).appendTo(form);
-        // $('<label>').html('URL').appendTo(divUrl);
-        // $('<input type="text" id="nr-db-field-url">').css("width","calc(100% - 65px)")
-        //     .val("/url")
-        //     .change(function() {
-        //         ensureDashboardNode(true);
-        //         var currentUrl = globalDashboardNode.url;
-        //         if (currentUrl !== $(this).val()) {
-        //             globalDashboardNode.url = $(this).val();
-        //             RED.nodes.dirty(true);
-        //         }
-        //     })
-        //     .appendTo(divUrl);
-
         $('<a href="#" class="editor-button" style="margin-left: 10px;"><i class="fa fa-external-link"></i></a>')
             .click(function(evt) {
                 window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+"ui");
@@ -215,8 +201,6 @@ RED.nodes.registerType('ui_base',{
                 }
             })
             .appendTo(divTheme);
-
-
 
         var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
         $('<label>').html('Tabs').appendTo(divTabs);
@@ -334,6 +318,10 @@ RED.nodes.registerType('ui_base',{
                             RED.nodes.add(group.node);
                             group.widgets = [];
                             RED.nodes.dirty(true);
+                            if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                                RED.nodes.updateConfigNodeUsers(group.node);
+                            }
+
                         }
                         var groupNode = group.node;
                         elementParents[groupNode] = tabNode.id;
@@ -501,6 +489,75 @@ RED.nodes.registerType('ui_base',{
             }
         });
 
+        var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(form);
+        $('<span><i class="fa fa-info-circle"></i> There <span id="nr-db-missing-group-count"></span> not in a group. Click <a id="nr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
+        orphanedWidgets.find('a').click(function(event) {
+            var unknownGroups = {};
+            RED.nodes.eachNode(function(node) {
+                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast') {
+                    if (!RED.nodes.node(node.group)) {
+                        var g = node.group || "_BLANK_";
+                        unknownGroups[g] = unknownGroups[g] || [];
+                        unknownGroups[g].push(node);
+                    }
+                }
+            });
+            var tab = null;
+            var tabs = tabContainer.editableList('items');
+            tabs.first().each(function(i,el) {
+                var tabData = el.data('data');
+                tab = tabData.node;
+            });
+
+            if (tab === null) {
+                tab = {
+                    id: RED.nodes.id(),
+                    _def: RED.nodes.getType("ui_tab"),
+                    type: "ui_tab",
+                    users: [],
+                    order: 0,
+                    name: "Tab",
+                    icon: "dashboard"
+                };
+                RED.nodes.add(tab);
+            }
+            for (var groupId in unknownGroups) {
+                if (unknownGroups.hasOwnProperty(groupId)) {
+                    var groupNode = {
+                        id: RED.nodes.id(),
+                        _def: RED.nodes.getType("ui_group"),
+                        type: "ui_group",
+                        users: [],
+                        tab: tab.id,
+                        order: i+1,
+                        name: (groupId==="_BLANK_"?"Group":groupId),
+                        width: 6,
+                        disp: true
+                    };
+                    RED.nodes.add(groupNode);
+                    RED.editor.validateNode(groupNode);
+                    if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                        RED.nodes.updateConfigNodeUsers(groupNode);
+                    }
+                    var widgets = unknownGroups[groupId];
+                    for (var i=0;i<widgets.length;i++) {
+                        widgets[i].group = groupNode.id;
+                        widgets[i].changed = true;
+                        widgets[i].dirty = true;
+                        if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                            RED.nodes.updateConfigNodeUsers(widgets[i]);
+                        }
+                        RED.editor.validateNode(widgets[i]);
+                    }
+                }
+            }
+            RED.nodes.dirty(true);
+            refresh();
+            refreshOrphanedWidgets();
+            RED.view.redraw();
+            event.preventDefault();
+        });
+
         var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
         $('<label>').html('Menu links').appendTo(divLinks);
 
@@ -594,6 +651,28 @@ RED.nodes.registerType('ui_base',{
             });
             return currentList;
         }
+        function refreshOrphanedWidgets() {
+            var unknownGroups = {};
+            var count = 0;
+            RED.nodes.eachNode(function(node) {
+                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast') {
+                    if (!RED.nodes.node(node.group)) {
+                        var g = node.group || "_BLANK_";
+                        unknownGroups[g] = unknownGroups[g] || [];
+                        unknownGroups[g].push(node);
+                        count++;
+                    }
+                }
+            });
+
+            if (count > 0) {
+                orphanedWidgets.show();
+                $("#nr-db-missing-group-count").text((count===1?"is ":"are ")+count+" widget"+(count === 1?"":"s"))
+            } else {
+                orphanedWidgets.hide();
+            }
+        }
+
         function refresh() {
             var currentList = getCurrentList();
             dashboard = [];
@@ -607,6 +686,8 @@ RED.nodes.registerType('ui_base',{
             var tabId;
             var tab;
             var links = [];
+
+            var unknownGroups = 0;
 
             // Find all the tabs and groups
             RED.nodes.eachConfig(function(node) {
@@ -627,19 +708,32 @@ RED.nodes.registerType('ui_base',{
                         // This group belongs to a tab
                         tabGroups[group.tab] = tabGroups[group.tab]||[];
                         tabGroups[group.tab].push(group);
+                    } else {
+                        unknownGroups++;
                     }
                 }
             }
 
             // Find all ui widgets - list them by their group id
             RED.nodes.eachNode(function(node) {
-                if (/^ui_/.test(node.type) && groups.hasOwnProperty(node.group)) {
-                    groupElements[node.group] = groupElements[node.group]||[];
-                    groupElements[node.group].push(node);
-                } else if (node.type === 'ui_link') {
-                    links.push(node);
+                if (/^ui_/.test(node.type)) {
+                    if (groups.hasOwnProperty(node.group)) {
+                        groupElements[node.group] = groupElements[node.group]||[];
+                        groupElements[node.group].push(node);
+                    } else if (node.type === 'ui_link') {
+                        links.push(node);
+                    } else if (node.type !== 'ui_toast') {
+                        unknownGroups++;
+                    }
                 }
             });
+
+            if (unknownGroups > 0) {
+                $("#nr-db-missing-group-count").text((unknownGroups===1?"is ":"are ")+unknownGroups+" widget"+(unknownGroups === 1?"":"s"))
+                orphanedWidgets.show();
+            } else {
+                orphanedWidgets.hide();
+            }
 
             // Sort each group's array of widgets
             for (groupId in groupElements) {
@@ -758,6 +852,7 @@ RED.nodes.registerType('ui_base',{
                         container.find(".nr-db-sb-link-url").html(node.link||"http://");
                     }
                 } else {
+                    refreshOrphanedWidgets();
                     if (listElements[node.id]) {
                         if (node.group != elementParents[node.id]) {
                             // Moved to a different group
@@ -796,6 +891,8 @@ RED.nodes.registerType('ui_base',{
                 } else {
                     if (groupLists[node.group]) {
                         groupLists[node.group].editableList('addItem',node)
+                    } else {
+                        refreshOrphanedWidgets();
                     }
                 }
             }
@@ -820,6 +917,7 @@ RED.nodes.registerType('ui_base',{
                         groupLists[node.group].editableList('removeItem',node)
                     }
                 }
+                refreshOrphanedWidgets();
                 delete listElements[node.id];
             }
         })

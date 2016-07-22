@@ -14,7 +14,7 @@
             if (tabNode) {
                 return (this.name||"Group")+ " ["+(tabNode.name||"Tab")+"]"
             }
-            return this.name || 'Group';
+            return (this.name || 'Group')+" [unassigned]";
         },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
