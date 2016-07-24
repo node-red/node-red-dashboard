@@ -1,16 +1,14 @@
-**Note: this is still under heavy development. It has not been published to npm and is not ready for general use.**
-
 # node-red-dashboard
 
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard.
 
-It is a continuation of the work done by Andrei Tatar under the node-red-contrib-ui module.
+It is a continuation of the [node-red-contrib-ui](https://www.npmjs.com/package/node-red-contrib-ui)
+module created by Andrei Tatar.
 
 ## Pre-requisites
 
-This Dashboard requires Node-RED version 0.14 or more recent. If you need to use an older version of Node-RED then
-please use node-red-contrib-ui.
+This Dashboard requires Node-RED version 0.14 or more recent.
 
 ## Install
 
@@ -36,21 +34,24 @@ These nodes will replace the contrib-ui versions. node-red-contrib-ui
 
 #### New features
 
- The widget layout is now managed by a `Dashboard` tab in the right window of the Node-RED editor. From here you can re-order the tabs, groups and widgets, and add and edit their properties.
+##### Dashboard sidebar
 
- Ability to specify sizes. The width and height of widgets can now be set, as can the width
- of *groups*. These are all specified in units of approximately 50 pixels.
- The default width of a group is 6 as it was in contrib-ui ( &approx; 300 pixels ). Setting a widget to `auto` will fill the available
- width of the group, but this can now be set to anything up to the group width. It is still advisable to use multiple groups if you can, rather than one big group, so that the page can dynamically resize on smaller screens.
+The widget layout is now managed by a `Dashboard` tab in the sidebar of the Node-RED editor. From here you can re-order the tabs, groups and widgets, and add and edit their properties.
+
+**Links** are no longer added as nodes in the workspace - they are managed in the
+dashboard sidebar. They can now be opened in an iframe - if allowed by the target page.
+
+**Themes** - the theme of the UI is now set in the Dashboard sidebar. You
+cannot have different themes for each tab.
+
+##### Widgets
+
+The width and height of widgets can now be set, as can the width of *groups*. These are all specified in units of approximately 50 pixels.
+
+The default width of a group is 6 as it was in contrib-ui ( &approx;300 pixels ). Setting a widget to `auto` will fill the available
+width of the group. It is still advisable to use multiple groups if you can, rather than one big group, so that the page can dynamically resize on smaller screens.
 
 Group labels are now optional.
-
-External `links` to other pages can now be launched in an **iframe** - if allowed by the target page.
-
- **Themes** - a dark theme has been added as an alternative.
- This is set on the tab page. ( In the future we hope to allow custom themes to be added - but one step at a time. )
-
- **Widgets**
 
   - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified.
   - **Gauge** - now has 4 modes - *standard* (simple gauge), *donut* (complete 360&deg;), *compass*, and *wave*.
@@ -60,14 +61,13 @@ External `links` to other pages can now be launched in an **iframe** - if allowe
 
 The `title` of the UI page can be set.
 
-#### Removed
+##### Removed
 
 Radio buttons have been removed. Buttons and switches can now be sized 1x1, and switches can be made to interact (via Node-RED).
 
 ## Discussions and suggestions
 
-Use the default Node-RED google group: <https://groups.google.com/forum/#!forum/node-red>
-
+Use the Node-RED google group: <https://groups.google.com/forum/#!forum/node-red>
 or the Dashboard-ui channel in <a href="http://nodered.org/slack/">Slack</a>
 
 ## Contributing
