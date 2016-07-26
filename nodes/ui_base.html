@@ -140,6 +140,12 @@ RED.nodes.registerType('ui_base',{
         var globalDashboardNode = null;
 
         function ensureDashboardNode(createMissing) {
+            if (globalDashboardNode !== null) {
+                var n = RED.nodes.node(globalDashboardNode.id);
+                if (n===null) {
+                    globalDashboardNode = null;
+                }
+            }
             if (globalDashboardNode === null) {
                 RED.nodes.eachConfig(function(n) {
                     if (globalDashboardNode === null && n.type === 'ui_base') {
