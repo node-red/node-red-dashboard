@@ -756,20 +756,18 @@ RED.nodes.registerType('ui_base',{
             for (tabId in tabGroups) {
                 if (tabGroups.hasOwnProperty(tabId)) {
                     tab = tabGroups[tabId];
-                    tab = tab.map(function(v,i) { return {n:v,i:i} }).sort(function(A,B) {
+                    tabGroups[tabId] = tab.map(function(v,i) { return {n:v,i:i} }).sort(function(A,B) {
                         if (A.n.order < B.n.order) { return -1;}
                         if (A.n.order > B.n.order) { return 1;}
                         return A.i - B.i;
                     }).map(function(v) { return v.n})
                 }
             }
-
-            var tabIds = Object.keys(tabs).map(function(v,i) { return {id:v,i:i} }).sort(function(A,B) {
-                if (A.id.order < B.id.order) { return -1;}
-                if (A.id.order > B.id.order) { return 1;}
+            var tabIds = Object.keys(tabs).map(function(v,i) { return {n:tabs[v],i:i} }).sort(function(A,B) {
+                if (A.n.order < B.n.order) { return -1;}
+                if (A.n.order > B.n.order) { return 1;}
                 return A.i - B.i;
-            }).map(function(v) { return v.id});
-
+            }).map(function(v) { return v.n.id});
             tabIds.forEach(function(tabId) {
                 var tab = {node:tabs[tabId],groups:[]};
                 if (tabGroups[tabId]) {

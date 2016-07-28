@@ -8,6 +8,20 @@
             disp: {value: true},
             width: {value: 6}
         },
+        sort: function(A,B) {
+            if (A.tab !== B.tab) {
+                var tabA = RED.nodes.node(A.tab);
+                var tabB = RED.nodes.node(B.tab);
+                if (!tabA && tabB) {
+                    return -1;
+                } else if (tabA && !tabB) {
+                    return 1;
+                } else {
+                    return tabA.order - tabB.order;
+                }
+            }
+            return A.order - B.order;
+        },
         paletteLabel: 'dashboard group',
         label: function() {
             var tabNode = RED.nodes.node(this.tab);

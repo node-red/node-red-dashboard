@@ -7,7 +7,10 @@
             order: {value: 0}
         },
         paletteLabel: 'dashboard tab',
-        label: function() { return this.name || 'Tab'; }
+        label: function() { return this.name || 'Tab'; },
+        sort: function(A,B) {
+            return A.order - B.order;
+        }
     });
 </script>
 
