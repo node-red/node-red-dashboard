@@ -3,7 +3,9 @@
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
-            name: {value: ''},
+            position: {value: 'top right'},
+            displayTime: {value: '3'},
+            name: {value: ''}
         },
         inputs:1,
         outputs:0,
@@ -16,6 +18,19 @@
 
 <script type="text/x-red" data-template-name="ui_toast">
     <div class="form-row">
+        <label for="node-input-position"><i class="fa fa-th-large"></i> Layout</label>
+        <select type="text" id="node-input-position" style="display: inline-block; width: 250px; vertical-align: top;">
+            <option value="top right">Top Right</option>
+            <option value="bottom right">Bottom Right</option>
+            <option value="top left">Top Left</option>
+            <option value="bottom left">Bottom Left</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-displayTime"><i class="fa fa-clock-o"></i> Timeout (S)</label>
+        <input type="text" id="node-input-displayTime" placeholder="e.g. 3 seconds">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
@@ -24,4 +39,5 @@
 <script type="text/x-red" data-help-name="ui_toast">
     <p>Shows <code>msg.payload</code> as a notification message on the user interface.</p>
     <p>If a <code>msg.topic</code> is available it will be used as the title.</p>
+    <p>You may also configure the position and duration of the notification.</p>
 </script>
