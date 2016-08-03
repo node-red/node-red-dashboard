@@ -118,7 +118,7 @@ function add(opt) {
         var oldValue = currentValues[opt.node.id];
         var newValue = opt.convert(msg.payload, oldValue, msg);
 
-        if (typeof newValue !== 'undefined' && (!opt.emitOnlyNewValues || oldValue != newValue)) {
+        if (!opt.emitOnlyNewValues || oldValue != newValue) {
             currentValues[opt.node.id] = newValue;
 
             var toEmit = opt.beforeEmit(msg, newValue);
