@@ -39,6 +39,11 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             value: scope.$eval('me.item.value'),
                             min: scope.$eval('me.item.min'),
                             max: scope.$eval('me.item.max'),
+                            hideMinMax: scope.$eval('me.item.hideMinMax'),
+                            levelColors: scope.$eval('me.item.colors'),
+                            valueMinFontSize: 12,
+                            minLabelMinFontSize: 8,
+                            labelMinFontSize: 8,
                             title: scope.$eval('me.item.title'),
                             label: scope.$eval('me.item.label'),
                             pointer: true,
@@ -56,7 +61,6 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             gaugeOptions.gaugeWidthScale = scope.$eval('me.item.gageoptions.lineWidth')[scope.main.selectedTab.theme];
                             gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.backgroundColor')[scope.main.selectedTab.theme];
                             gaugeOptions.pointerOptions = scope.$eval('me.item.gageoptions.pointerOptions')[scope.main.selectedTab.theme];
-                            gaugeOptions.levelColors = scope.$eval('me.item.gageoptions.levelColors')[scope.main.selectedTab.theme];
                         }
 
                         if (scope.$eval('me.item.gtype') === 'compass') {

@@ -3,6 +3,7 @@ module.exports = function (RED) {
 
     function GaugeNode(config) {
         RED.nodes.createNode(this, config);
+        this.colors = config.colors || ["#00B500","#E6E600","#CA3838"];
         var node = this;
 
         var group = RED.nodes.getNode(config.group);
@@ -12,6 +13,7 @@ module.exports = function (RED) {
 
         if (config.width === "0") { delete config.width; }
         if (config.height === "0") { delete config.height; }
+        if (config.height === "1") { config.hideMinMax = true; }
         node.autoheight = parseInt(group.config.width*0.5+1.5) || 4;
         if (config.gtype && config.gtype !== "gage") { node.autoheight = parseInt(group.config.width*0.75+0.5); }
 
@@ -19,7 +21,6 @@ module.exports = function (RED) {
         gageoptions.lineWidth = {'theme-dark':0.75};
         gageoptions.pointerOptions = {'theme-dark':{color:'#8e8e93'}};
         gageoptions.backgroundColor = {'theme-dark':'#515151' };
-        gageoptions.levelColors = {'theme-dark':['#00B500', '#E6E600', '#CA3838']};
         gageoptions.compassColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be'};
 
         var waveoptions = {};
@@ -43,8 +44,10 @@ module.exports = function (RED) {
                 gtype: config.gtype || 'gage',
                 min: config.min,
                 max: config.max,
+                hideMinMax: config.hideMinMax,
                 width: config.width || group.config.width || 6,
                 height: config.height || node.autoheight,
+                colors: node.colors,
                 gageoptions: gageoptions,
                 waveoptions: waveoptions
             },

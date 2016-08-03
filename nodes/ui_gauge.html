@@ -21,7 +21,8 @@
             label: {value: 'units'},
             format: {value: '{{value}}'},
             min: {value: 0, required: true, validate: RED.validators.number()},
-            max: {value: 10, required: true, validate: RED.validators.number()}
+            max: {value: 10, required: true, validate: RED.validators.number()},
+            colors: {value: ["#00B500","#E6E600","#CA3838"]},
         },
         inputs:1,
         outputs:0,
@@ -30,6 +31,16 @@
         paletteLabel: 'gauge',
         label: function() { return this.name || this.label || 'gauge'; },
         oneditprepare: function() {
+            if (this.colors) {
+                $("#node-input-color1").val(this.colors[0] || "#00B500");
+                $("#node-input-color2").val(this.colors[1] || "#E6E600");
+                $("#node-input-color3").val(this.colors[2] || "#CA3838");
+            }
+            else {
+                $("#node-input-color1").val("#00B500");
+                $("#node-input-color2").val("#E6E600");
+                $("#node-input-color3").val("#CA3838");
+            }
             if (this.gtype === undefined) {
                 this.gtype = "gage";
                 $("#node-input-gtype").val("gage");
@@ -41,11 +52,19 @@
             });
             $("#node-input-gtype").change(function() {
                 if ($(this).val() === "wave") {
-                    $("#ui-gauge-labels").hide();
+                    $("#ui-gauge-colours").hide();
                 } else {
-                    $("#ui-gauge-labels").show();
+                    $("#ui-gauge-colours").show();
+                }
+                if (($(this).val() === "compass") || ($(this).val() === "wave")) {
+                    $("#ui-gauge-colours").hide();
+                } else {
+                    $("#ui-gauge-colours").show();
                 }
             });
+        },
+        oneditsave: function() {
+            this.colors = [$("#node-input-color1").val(),$("#node-input-color2").val(),$("#node-input-color3").val()];
         }
     });
 </script>
@@ -88,8 +107,14 @@
         <label for="node-input-min">Range</label>
         <label for="node-input-min" style="width:auto">min</label>
         <input type="text" id="node-input-min" style="width:80px">
-        <label for="not-input-max" style="width:auto; margin-left: 20px;">max</label>
+        <label for="node-input-max" style="width:auto; margin-left: 20px;">max</label>
         <input type="text" id="node-input-max" style="width:80px">
+    </div>
+    <div class="form-row" id="ui-gauge-colours">
+        <label for="node-input-color1">Colour gradient</label>
+        <input type="color" id="node-input-color1" style="width:100px"/>
+        <input type="color" id="node-input-color2" style="width:100px"/>
+        <input type="color" id="node-input-color3" style="width:100px"/>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -103,5 +128,7 @@
     the defined <b>Value Format</b>, which can then be formatted using
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_new">Angular filters</a>.</p>
     <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and append a % sign.</p>
+    <p>The colours of each of 3 sectors can be specified and the gauge will blend between them.
+    The colours should be specified in hex (#rrggbb) format.</p>
     <p>The gauge has several modes. Regular gauge, donut, compass and wave.</p>
 </script>
