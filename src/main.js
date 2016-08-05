@@ -85,17 +85,20 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     found[key] = msg[key];
                 }
             }
+            // assuming found is always there - could check found for undefined above...
+            if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
+                found.me.processInput(msg);
+            }
         });
 
         events.on('show-toast', function (msg) {
             var toastScope = $rootScope.$new();
             toastScope.toast = msg;
-            var opts = {
+            $mdToast.show({
                 scope: toastScope,
                 templateUrl: 'partials/toast.html',
-                hideDelay: msg.displayTime,
-                position: msg.position
-            };
-            $mdToast.show(opts);
+                hideDelay: 3000,
+                position: 'top right'
+            });
         });
     }]);
