@@ -29,6 +29,15 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     me.itemChanged = function () {
                         me.valueChanged(0);
                     };
+
+                    // any control may add this function and dispatch to 
+                    // it's individual implementation
+                    // processInput will be called from main.js
+                    // need to pass 'me' so that main may call 'me'
+                    me.item.me = me;
+                    me.processInput = function (msg) {
+                        processDropDownInput(msg);
+                    }
                     break;
                 }
 
@@ -97,6 +106,14 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
             }, typeof throttleTime === "number" ? throttleTime : 10);
         };
 
+        // PL code: 
+        // will emit me.item.value when enter is pressed
+        me.keyPressed = function (event) {
+             if (event.charCode === 13) {
+                events.emit({ id: me.item.id, value: me.item.value });
+            }
+        }
+
         var timer;
         var throttle = function (data, timeout) {
             if (timeout === 0) {
@@ -112,4 +129,52 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 events.emit(data);
             }, timeout);
         };
+
+        // may add additional input processing for other controls
+        var processDropDownInput = function (msg) {
+            // assuming to get:
+            // msg.value, which is:
+            // - any array of values: in this case all options are replaced
+            // - a value: the value is added to options
+            // I am using the value property as it could get inputs direcly from a text input control
+
+            if (!msg || !msg.value) return;
+            if (!me.item.options) retrun; // should never happen
+            if (!Array.isArray(me.item.options)) me.item.options = []; // when empty and not initialised
+
+            var selection;
+            if (Array.isArray(msg.value)) {
+                var newOptions = [];
+                for (var i = 0; i < msg.value.length; i++) pushOption(newOptions, msg.value[i]);
+                // me.item.options = new Array(newOptions);
+                me.item.options = newOptions;
+            } else pushOption(me.item.options, msg.value);
+            // this dropdown now has the value which has been passed in via payload, which may be an object or array
+            // in cas of object/array nothing is selected... a receiving node would have to check for valid values
+            // the below line will set the dropdown to a valid value
+            // set the dropdown value >> this behaviuor should be documented!
+            if (selection && (selection != me.item.value) ) me.item.value = selection; 
+
+            function pushOption (options, opt) {
+                // assuming simple value, or label value object
+                if (opt instanceof Object) {
+                    if (opt.label && opt.value) {
+                        pushPair(opt.label, opt.value);
+                    }
+                } else  pushPair(opt, opt);
+
+                function pushPair(label, value) {
+                    // make sure we are not pushing an existing value
+                    // that would always happen when 'me' changes it's selection and emits that message
+                    var i;
+                    if (!selection) selection = value;  // take first option we get
+                    for (i = 0; i < options.length; i++) {
+                        if (options[i].value === value) break;
+                    }
+                    if (i === options.length) options.push({ label: label, value: value });
+                }
+            }
+ 
+        };
+       
     }]);
