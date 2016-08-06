@@ -98,6 +98,13 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
             }, typeof throttleTime === "number" ? throttleTime : 10);
         };
 
+        // will emit me.item.value when enter is pressed
+        me.keyPressed = function (event) {
+             if (event.charCode === 13) {
+                events.emit({ id: me.item.id, value: me.item.value });
+            }
+        }
+
         var timer;
         var throttle = function (data, timeout) {
             if (timeout === 0) {

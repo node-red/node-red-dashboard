@@ -15,7 +15,7 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             control: {
-                type: 'text-input',
+                type: config.delay < 0 ? 'text-input-CR' : 'text-input',
                 label: config.label,
                 mode: config.mode,
                 delay: config.delay,

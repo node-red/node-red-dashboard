@@ -81,7 +81,8 @@
   <p>Adds a text input field to the user interface. Mode can be regular text, email or color picker.</p>
   <p>Text written by the user is sent in realtime as the <code>msg.payload</code>. You can also
   preset the text of the input field by sending in a <code>msg.payload</code>.</p>
-  <p>The <b>Delay</b> <i>(default : 300ms)</i> sets the amount of time in milliseconds before the output is sent.</p>
+  <p>The <b>Delay</b> <i>(default : 300ms)</i> sets the amount of time in milliseconds before the output is sent.
+  Setting to <code>0</code> waits for "Enter" key to send.</p>
   <p>The email mode will color in red if it is not a valid address and will return undefined.</p>
   <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
 </script>
