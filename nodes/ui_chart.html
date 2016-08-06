@@ -6,15 +6,17 @@
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
-                var width = v||0;
-                var currentGroup = $('#node-input-group').val()||this.group;
-                var groupNode = RED.nodes.node(currentGroup);
-                var valid = !groupNode || +width <=  +groupNode.width;
-                $("#node-input-size").toggleClass("input-error",!valid);
-                return valid;
-            }},
+                    var width = v||0;
+                    var currentGroup = $('#node-input-group').val()||this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    var valid = !groupNode || +width <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error",!valid);
+                    return valid;
+                }},
             height: {value: 0},
             label: {value: 'chart'},
+            chartType: {value: 'line'},
+            legend: {value: 'false'},
             name: {value: ''},
             interpolate: {value: 'linear', required:true},
             nodata: {value: ''},
@@ -35,6 +37,18 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+            $("#node-input-chartType").change(function() {
+                if ($(this).val() === "bar") {
+                    $("#x-axis-show").hide();
+                    $("#interpolate-show").hide();
+                } else {
+                    $("#x-axis-show").show();
+                    $("#interpolate-show").show();
+                }
+            });
+            if (!$("#node-input-chartType").val()) {
+                $("#node-input-chartType").val("line");
+            }
         }
     });
 </script>
@@ -55,6 +69,13 @@
         <input type="text" id="node-input-label" placeholder="optional chart title">
     </div>
     <div class="form-row">
+        <label for="node-input-removeOlder"><i class="fa fa-line-chart"></i> Type</label>
+        <select id="node-input-chartType" style="width:120px;">
+            <option value="line">Line chart</option>
+            <option value="bar">Bar chart</option>
+        </select>
+    </div>
+    <div class="form-row" id="x-axis-show">
         <label for="node-input-removeOlder">X-axis</label>
         <label for="node-input-removeOlder" style="width: auto">last</label>
         <input type="text" id="node-input-removeOlder" style="width:80px;">
@@ -73,13 +94,17 @@
         <label for="not-input-ymax" style="width:auto; margin-left: 20px;">max</label>
         <input type="text" id="node-input-ymax" style="width:80px">
     </div>
-    <div class="form-row">
+    <div class="form-row" id="interpolate-show">
         <label for="node-input-interpolate">Interpolate</label>
         <select id="node-input-interpolate" style="width:120px;">
             <option value="linear">linear</option>
             <option value="step-after">step</option>
             <option value="basis">b-spline</option>
             <option value="cardinal">cardinal</option>
+        </select>
+        &nbsp;&nbsp;&nbsp;&nbsp;Legend <select id="node-input-legend" style="width:100px;">
+            <option value="false">None</option>
+            <option value="true">Show</option>
         </select>
     </div>
     <div class="form-row">
@@ -93,13 +118,13 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_chart">
-    <p>Plots the input values on a time based line chart.</p>
+    <p>Plots the input values on a chart. This can either be a time based line chart or a bar chart.</p>
     <p>Each input <code>msg.payload</code> value will be converted to a number. If the
     conversion fails, the message is ignored.</p>
-    <p>The <b>X</b> axis defines a time window. Older data will be automatically removed from the graph.</p>
     <p>Minimum and Maximum <b>Y</b> axis values are optional. The graph will auto-scale to any values received.</p>
     <p>Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
     value on each input message.</p>
+    <p>The <b>X</b> axis defines a time window. Older data will be automatically removed from the graph.</p>
     <p>The <b>Blank label</b> field can be used to display some text before any valid data is received.</p>
     <p>The first output contains an array of the chart state that can be persisted if needed. The second
     output sends a <code>msg.payload</code> of <b>"restore"</b> that can be used to trigger a restore of

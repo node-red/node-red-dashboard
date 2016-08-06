@@ -1,8 +1,10 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
+    var ChartIdList = {};
 
     function ChartNode(config) {
         RED.nodes.createNode(this, config);
+        this.chartType = config.chartType || "line";
         var node = this;
 
         var group = RED.nodes.getNode(config.group);
@@ -21,60 +23,83 @@ module.exports = function(RED) {
             group: group,
             control: {
                 type: 'chart',
+                look: node.chartType,
                 order: config.order,
                 label: config.label,
+                legend: config.legend || false,
                 interpolate: config.interpolate,
                 nodata: config.nodata,
                 width: config.width || group.config.width || 6,
-                height: config.height || parseInt(group.config.width/2+0.5) || 3,
+                height: config.height || parseInt(group.config.width/2+1) || 4,
                 ymin: config.ymin,
                 ymax: config.ymax
             },
             convert: function(value, oldValue, msg) {
+                if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {
+                    value = "changed";
+                    oldValue = [];
+                }
+                ChartIdList[node.id] = node.chartType;
                 if (Array.isArray(value)) {
                     oldValue = value;
                 } else {
                     value = parseFloat(value);
-                    if (isNaN(value)) { return; }
+                    if (isNaN(value)) { return oldValue; }
                     var topic = msg.topic || 'Data';
-                    if (!oldValue) { oldValue = []; }
-
                     var found;
-                    for (var i=0; i<oldValue.length; i++) {
-                        if (oldValue[i].key === topic) {
-                            found = oldValue[i];
-                            break;
+                    if (!oldValue) { oldValue = []; }
+                    if (node.chartType === "bar") {  // handle bar type data
+                        if (oldValue.length === 0) { oldValue = [{ key:node.id, values:[] }] }
+                        for (var j = 0; j < oldValue[0].values.length; j++) {
+                            if (oldValue[0].values[j][0] === topic) {
+                                oldValue[0].values[j][1] = value;
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            oldValue[0].values.push([topic,value]);
                         }
                     }
-                    if (!found) {
-                        found = { key: topic, values: [] };
-                        oldValue.push(found);
+                    else { // handle line and area data
+                        for (var i = 0; i < oldValue.length; i++) {
+                            if (oldValue[i].key === topic) {
+                                found = oldValue[i];
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            found = { key:topic, values:[] };
+                            oldValue.push(found);
+                        }
+                        var time = new Date().getTime();
+                        var point = [time, value];
+                        found.values.push(point);
+
+                        var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
+                        var limitTime = new Date().getTime() - limitOffsetSec * 1000;
+
+                        var remove = [];
+                        oldValue.forEach(function (series, index) {
+                            var i=0;
+                            while (i<series.values.length && series.values[i][0]<limitTime) { i++; }
+                            if (i) { series.values.splice(0, i); }
+                            if (series.values.length === 0) { remove.push(index); }
+                        });
+
+                        remove.forEach(function (index) {
+                            oldValue.splice(index, 1);
+                        });
                     }
-
-                    var time = new Date().getTime();
-                    var point = [time, value];
-                    found.values.push(point);
-
-                    var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
-                    var limitTime = new Date().getTime() - limitOffsetSec * 1000;
-
-                    var remove = [];
-                    oldValue.forEach(function (series, index) {
-                        var i=0;
-                        while (i<series.values.length && series.values[i][0]<limitTime) { i++; }
-                        if (i) { series.values.splice(0, i); }
-                        if (series.values.length === 0) { remove.push(index); }
-                    });
-
-                    remove.forEach(function (index) {
-                        oldValue.splice(index, 1);
-                    });
                 }
                 return oldValue;
             }
         };
         var done = ui.add(options);
-        setTimeout(function() {node.send([null, {payload:"restore", for:node.id}]);}, 100);
+        setTimeout(function() {
+            node.send([null, {payload:"restore", for:node.id}]);
+            node.emit("input",{payload:"start"}); // trigger a redraw at start to flush out old data.
+        }, 100);
         node.on("close", done);
     }
     RED.nodes.registerType("ui_chart", ChartNode);
