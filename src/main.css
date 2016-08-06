@@ -28,3 +28,7 @@ md-content {
 	width: 100%;
 	height: 100%;
 }
+
+.nvd3 text {
+    font: 400 10px Arial;
+}
