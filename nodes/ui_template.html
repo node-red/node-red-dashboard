@@ -15,7 +15,7 @@
                 return valid;
             }},
             height: {value: 0},
-            format: {value: '{{msg.payload}}'},
+            format: {value: '<div ng-bind-html="msg.payload"></div>'},
             storeOutMessages: {value: true},
             fwdInMessages: {value: true}
         },
