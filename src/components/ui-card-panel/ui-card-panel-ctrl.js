@@ -36,7 +36,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                 var result = size.split('x');
                 var width = Math.max(1, Math.min(sizes.columns($scope.group), result ? parseInt(result[0]) || defaultWidth : defaultWidth));
                 var height = Math.max(1, result ? parseInt(result[1]) || defaultHeight : defaultHeight);
-                if (child.attr('ui-template') !== undefined) { /*is template node*/
+                if (!parseInt(result[1]) && (child.attr('ui-template') !== undefined)) { /*is template node*/
                     // template node will size the height based upon it's content
                     // - child.height() defaults to calculating based on width of group
                     var ch = child.height() * parseInt($scope.group.header.config.width)/width;
