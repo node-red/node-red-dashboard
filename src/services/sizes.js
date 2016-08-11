@@ -1,10 +1,10 @@
 var sizes = {
     sx: 50, // width of <1> grid square
     sy: 50, // height of <1> grid square
-    cx: 6, // gap between components
-    cy: 6, // gap between components
     gx: 7, // gap between groups
     gy: 7, // gap between groups
+    cx: 6, // gap between components
+    cy: 6, // gap between components
     px: 6, // padding of group's cards
     py: 6  // padding of group's cards
 };

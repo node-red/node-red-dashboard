@@ -24,7 +24,7 @@ module.exports = function(RED) {
                 icon: config.icon,
                 order: config.order,
                 value: config.payload || node.id,
-                width: config.width  || group.config.width || 3,
+                width: config.width || group.config.width || 3,
                 height: config.height || 1
             },
             beforeSend: function (msg) {

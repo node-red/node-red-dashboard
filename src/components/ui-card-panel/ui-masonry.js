@@ -45,6 +45,7 @@ function MasonryController(sizes, $timeout) {
             c++;
         }
         sum -= sizes.gx;
+
         var firstRow = Math.max(1, Math.min(children.length, (sum > availableWidth) ? (c - 1) : c));
 
         var groupsWidth = 0;
@@ -70,7 +71,7 @@ function MasonryController(sizes, $timeout) {
                 var openX = getPxXOffset(children, c, maxx, j); // for the given y, <j>, what's the next available x-coordinate?
                 if (openX >= 0 && (openX + getPxWidth(child)) <= maxx) {
                     y += j;
-                    x = openX
+                    x = openX;
                     break;
                 }
             }
@@ -98,7 +99,10 @@ function MasonryController(sizes, $timeout) {
             var c = $(children[i]);
             // if the child exists at the same <y>
             if (c.height() + parseInt(c.css('top')) > y) {
-                x += c.width() + sizes.gx;
+                // and space is not available
+                if ((x + c.width() + sizes.gx) > parseInt(c.css('left'))) {
+                    x += c.width() + sizes.gx;
+                }
             }
         }
         return x;
