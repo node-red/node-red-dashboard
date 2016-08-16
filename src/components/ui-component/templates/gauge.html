@@ -1,3 +1,3 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout-align="center center">
+<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout-align="center center" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
     <ui-gauge style="text-align:center;" class="nr-dashboard-gauge"></ui-gauge>
 </md-card>

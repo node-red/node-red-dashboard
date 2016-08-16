@@ -2,6 +2,11 @@
 	ALL COMPONENTS/CONTENT
 */
 
+.nr-dashboard-disabled {
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+}
+
 body.nr-dashboard-theme-light {
 	background: #f0f0f0;
 }
