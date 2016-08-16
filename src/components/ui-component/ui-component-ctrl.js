@@ -29,6 +29,15 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     me.itemChanged = function () {
                         me.valueChanged(0);
                     };
+
+                    // PL dropdown
+                    // add 'me' to item and register processInput
+                    // this is called from main.js
+                    me.item.me = me;
+                    me.processInput = function (msg) {
+                        processDropDownInput(msg);
+                    }
+
                     break;
                 }
 
@@ -120,4 +129,16 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 events.emit(data);
             }, timeout);
         };
+
+        // may add additional input processing for other controls
+        var processDropDownInput = function (msg) {
+           // options should have the correct format see beforeEmit in ui-dropdown.js
+            if (msg && msg.isOptionsValid) {
+                me.item.options = msg.newOptions;
+                // delete items passed to me (may as well just keep them)
+                delete me.item.isOptionsValid;
+                delete me.item.newOptions;
+            }
+        };
+       
     }]);

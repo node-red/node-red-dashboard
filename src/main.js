@@ -85,6 +85,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     found[key] = msg[key];
                 }
             }
+            
+            // PL
+            if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
+                found.me.processInput(msg);
+            }
         });
 
         events.on('show-toast', function (msg) {
