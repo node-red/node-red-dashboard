@@ -55,11 +55,11 @@ Group labels are now optional.
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
-  - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified. The choices can also be set via `msg.payload` containing an array of objects. If just text then the value will be the same as the label, otherwise you can specify both by using an object of "label":"value" pairs :
+  - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified. The choices can also be set via `msg.options` containing an array of objects. If just text then the value will be the same as the label, otherwise you can specify both by using an object of "label":"value" pairs :
 
         [ "Choice 1", "Choice 2", {"Choice 3","3"} ]
 
-  Setting 'msg.selectValue' will pre-select the value in the dropdown.
+  Setting 'msg.payload' will pre-select the value in the dropdown.
   - **Gauge** - now has 4 modes - *standard* (simple gauge), *donut* (complete 360&deg;), *compass*, and *wave*. You can also specify the colour range of the standard and donut gauges.
   - **Button** - the icon can be set using either Material or Fa-Icons - the colour may also be set. If the widget is sized to 1 wide the icon has precedence.
   - **Switch** - can now also set two icons and/or colours depending on state.

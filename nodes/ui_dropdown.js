@@ -40,19 +40,19 @@ module.exports = function(RED) {
                 // 'beforeEmit' is called before 'beforeSend', so we may pass in that info
                 // otherwise that convenience info would not be sent (would not cause any problems)...
 
-                emitOptions = {isOptionsValid: false, value: undefined, newOptions : undefined};
+                emitOptions = {isOptionsValid:false, value:undefined, newOptions:undefined};
 
                 do {
-                    if (!Array.isArray(msg.payload)) { break; }
+                    if (!msg.options || !Array.isArray(msg.options)) { break; }
                     emitOptions.newOptions = [];
-                    if (msg.payload.length === 0) {
+                    if (msg.options.length === 0) {
                         emitOptions.isOptionsValid = true;
                         break;
                     }
 
                     // could check whether or not all members have same type
-                    for (var i = 0; i < msg.payload.length; i++) {
-                        var opt = msg.payload[i];
+                    for (var i = 0; i < msg.options.length; i++) {
+                        var opt = msg.options[i];
                         if (opt === undefined || opt == null) { continue; }
 
                         switch (typeof opt) {
@@ -70,8 +70,6 @@ module.exports = function(RED) {
                                 for (var m in opt) {
                                     if (opt.hasOwnProperty(m)) {
                                         emitOptions.newOptions.push({label:m, value:opt[m]});
-                                        // break after last entry
-                                        // might as well support {label1:value1,...,labeln:valuen}
                                     }
                                 }
                                 break;
@@ -83,24 +81,28 @@ module.exports = function(RED) {
                     // send null object on change of menu list
                     if (emitOptions.newOptions.length > 0) { emitOptions.value = null; }
                     // or send the preselected value
-                    if (msg.selectValue) { emitOptions.value = msg.selectValue; }
+                    if (msg.payload) { emitOptions.value = msg.payload; }
                     emitOptions.isOptionsValid = true;
                 } while (false);
 
                 // finally adjust msg to reflect the input
-                msg.isOptionsMsg = true;
+                msg.fromInput = true;
                 if (emitOptions.isOptionsValid) {
                     control.options = emitOptions.newOptions;
                     control.value = emitOptions.value;
-
                 } else {
-                    // send error message
-                    node.error("ERR: Invalid Options", msg);
+                    if (msg.options) {
+                        node.error("ERR: Invalid Options", msg);
+                    }
                 }
 
+                if (msg.payload) {
+                    emitOptions.value = msg.payload;
+                    control.value = emitOptions.value;
+                    emitOptions.fromInput = true;
+                }
                 // we do not overide payload here due to 'opt.emitOnlyNewValues' in ui.js
                 // when undefined is returned, msg will not be forwarded
-
                 return emitOptions.isOptionsValid ? emitOptions : undefined; // always pass entire object (newValue == oldValue)
             },
 
@@ -109,8 +111,8 @@ module.exports = function(RED) {
             },
 
             beforeSend: function (msg) {
-                if (msg.isOptionsMsg) { msg.payload = emitOptions.value; }
-                msg.topic = config.topic;
+                if (msg.fromInput) { delete msg.options; msg.payload = emitOptions.value; }
+                msg.topic = config.topic || msg.topic; //pass through topic if not set
             }
         });
         node.on("close", done);
