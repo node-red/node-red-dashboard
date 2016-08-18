@@ -31,8 +31,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     };
 
                     // PL dropdown
-                    // add 'me' to item and register processInput
-                    // this is called from main.js
+                    // processInput will be called from main.js
+                    // need to pass 'me' so that main may call 'me'
                     me.item.me = me;
                     me.processInput = function (msg) {
                         processDropDownInput(msg);
@@ -80,22 +80,21 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'chart': {
-                    if (!me.item.value || me.item.value === "changed") {
+                    if (!me.item.value) {
                         me.item.value = [];
                     }
-                    if (me.item.look === "line") {
-                        var lineColors = {
-                            'theme-dark': ['#0FBBC3', '#ffA500', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47']
-                        };
-                        me.item.value.forEach(function (line, index) {
-                            if (lineColors[$scope.main.selectedTab.theme]) {
-                                line.color = lineColors[$scope.main.selectedTab.theme][index];
-                            }
-                        })
-                        me.formatTime = function (d) {
-                            return d3.time.format('%H:%M:%S')(new Date(d));
-                        };
-                    }
+
+                    var lineColors = {
+                        'theme-dark': ['#0FBBC3', 'orange', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47']
+                    };
+                    me.item.value.forEach(function (line, index) {
+                        if (lineColors[$scope.main.selectedTab.theme]) {
+                            line.color = lineColors[$scope.main.selectedTab.theme][index];
+                        }
+                    })
+                    me.formatTime = function (d) {
+                        return d3.time.format('%H:%M:%S')(new Date(d));
+                    };
                 }
             }
         }
@@ -109,8 +108,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
         // will emit me.item.value when enter is pressed
         me.keyPressed = function (event) {
-            if (event.charCode === 13) {
-                events.emit({ id:me.item.id, value:me.item.value });
+             if (event.charCode === 13) {
+                events.emit({ id: me.item.id, value: me.item.value });
             }
         }
 
@@ -132,7 +131,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
         // may add additional input processing for other controls
         var processDropDownInput = function (msg) {
-           // options should have the correct format see beforeEmit in ui-dropdown.js
+            // options should have the correct format see beforeEmit in ui-dropdown.js
+            
             if (msg && msg.isOptionsValid) {
                 me.item.options = msg.newOptions;
                 // delete items passed to me (may as well just keep them)
