@@ -8,13 +8,14 @@
             group: {type: 'ui_group', required:true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
-                var width = v||0;
-                var currentGroup = $('#node-input-group').val()||this.group;
-                var groupNode = RED.nodes.node(currentGroup);
-                var valid = !groupNode || +width <= +groupNode.width;
-                $("#node-input-size").toggleClass("input-error",!valid);
-                return valid;
-            }},
+                    var width = v||0;
+                    var currentGroup = $('#node-input-group').val()||this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    var valid = !groupNode || +width <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error",!valid);
+                    return valid;
+                }
+            },
             height: {value: 0},
             options: {value:[{value: '', label : ''}], validate:function(value) { return value.length > 0; }},
             payload: {value: ''},
@@ -141,4 +142,10 @@
     <p>Multiple value / label pairs can be added as required.</p>
     <p>The configured value of the selected item will be returned as <code>msg.payload</code>.</p>
     <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+    <p>The Options may be configured by inputting <code>msg.payload</code> containing an array.
+    If just text then the value will be the same as the label, otherwise you can specify both by
+    using an object of <code>"label":"value"</code> pairs :
+
+    <code>[ "Choice 1", "Choice 2", {"Choice 3","3"} ]</code>
+    </p>
 </script>

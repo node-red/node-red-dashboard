@@ -37,7 +37,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     me.processInput = function (msg) {
                         processDropDownInput(msg);
                     }
-
                     break;
                 }
 
@@ -80,21 +79,22 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'chart': {
-                    if (!me.item.value) {
+                    if (!me.item.value || me.item.value === "changed") {
                         me.item.value = [];
                     }
-
-                    var lineColors = {
-                        'theme-dark': ['#0FBBC3', 'orange', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47']
-                    };
-                    me.item.value.forEach(function (line, index) {
-                        if (lineColors[$scope.main.selectedTab.theme]) {
-                            line.color = lineColors[$scope.main.selectedTab.theme][index];
-                        }
-                    })
-                    me.formatTime = function (d) {
-                        return d3.time.format('%H:%M:%S')(new Date(d));
-                    };
+                    if (me.item.look === "line") {
+                        var lineColors = {
+                            'theme-dark': ['#0FBBC3', '#ffA500', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47']
+                        };
+                        me.item.value.forEach(function (line, index) {
+                            if (lineColors[$scope.main.selectedTab.theme]) {
+                                line.color = lineColors[$scope.main.selectedTab.theme][index];
+                            }
+                        })
+                        me.formatTime = function (d) {
+                            return d3.time.format('%H:%M:%S')(new Date(d));
+                        };
+                    }
                 }
             }
         }
@@ -108,8 +108,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
         // will emit me.item.value when enter is pressed
         me.keyPressed = function (event) {
-             if (event.charCode === 13) {
-                events.emit({ id: me.item.id, value: me.item.value });
+            if (event.charCode === 13) {
+                events.emit({ id:me.item.id, value:me.item.value });
             }
         }
 
@@ -132,7 +132,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         // may add additional input processing for other controls
         var processDropDownInput = function (msg) {
             // options should have the correct format see beforeEmit in ui-dropdown.js
-            
             if (msg && msg.isOptionsValid) {
                 me.item.options = msg.newOptions;
                 // delete items passed to me (may as well just keep them)
@@ -140,5 +139,5 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 delete me.item.newOptions;
             }
         };
-       
+
     }]);
