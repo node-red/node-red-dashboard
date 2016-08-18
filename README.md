@@ -59,6 +59,7 @@ Any widget can be disabled by passing in a `msg.enabled` property set to `false;
 
         [ "Choice 1", "Choice 2", {"Choice 3","3"} ]
 
+  Setting 'msg.selectValue' will pre-select the value in the dropdown.
   - **Gauge** - now has 4 modes - *standard* (simple gauge), *donut* (complete 360&deg;), *compass*, and *wave*. You can also specify the colour range of the standard and donut gauges.
   - **Button** - the icon can be set using either Material or Fa-Icons - the colour may also be set. If the widget is sized to 1 wide the icon has precedence.
   - **Switch** - can now also set two icons and/or colours depending on state.

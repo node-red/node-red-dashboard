@@ -80,8 +80,10 @@ module.exports = function(RED) {
                                 // do nothing, just continue with next option
                         }
                     }
-                    if (emitOptions.newOptions.length > 0) { emitOptions.value = emitOptions.newOptions[0].value; }
-                    if (msg.selectItem) { emitOptions.value = msg.selectItem; }
+                    // send null object on change of menu list
+                    if (emitOptions.newOptions.length > 0) { emitOptions.value = null; }
+                    // or send the preselected value
+                    if (msg.selectValue) { emitOptions.value = msg.selectValue; }
                     emitOptions.isOptionsValid = true;
                 } while (false);
 
