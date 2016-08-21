@@ -14,6 +14,9 @@ module.exports = function(RED) {
 
         if (config.width === "0") { delete config.width; }
         if (config.height === "0") { delete config.height; }
+        // number of pixels wide the chart will be... 43 = sizes.sx - sizes.px
+        var pixelsWide = ((config.width || group.config.width || 6) - 1) * 43 - 15;
+        console.log("pixelsWide",pixelsWide);
 
         if (!tab || !group) { return; }
         var options = {
@@ -90,6 +93,12 @@ module.exports = function(RED) {
                         remove.forEach(function (index) {
                             oldValue.splice(index, 1);
                         });
+
+                        // if more datapoints than number of pixels wide...
+                        // TODO - warning is not the answer but hey... it's a hint.
+                        if (found.values.length % pixelsWide === 0) {
+                            node.warn("More than "+found.values.length+" datapoints");
+                        }
                     }
                 }
                 return oldValue;

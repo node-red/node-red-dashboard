@@ -23,7 +23,7 @@
             ymin: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             ymax: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             removeOlder: {value: 1, validate:RED.validators.number(), required:true},
-            removeOlderUnit: {value:'3600', required:true}
+            removeOlderUnit: {value: '3600', required:true}
         },
         inputs:1,
         outputs:2,
@@ -101,6 +101,7 @@
             <option value="step-after">step</option>
             <option value="basis">b-spline</option>
             <option value="cardinal">cardinal</option>
+            <option value="monotone">cubic</option>
         </select>
         &nbsp;&nbsp;&nbsp;&nbsp;Legend <select id="node-input-legend" style="width:100px;">
             <option value="false">None</option>
