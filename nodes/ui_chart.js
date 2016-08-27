@@ -16,7 +16,7 @@ module.exports = function(RED) {
         if (config.height === "0") { delete config.height; }
         // number of pixels wide the chart will be... 43 = sizes.sx - sizes.px
         var pixelsWide = ((config.width || group.config.width || 6) - 1) * 43 - 15;
-        console.log("pixelsWide",pixelsWide);
+        //console.log("pixelsWide",pixelsWide);
 
         if (!tab || !group) { return; }
         var options = {

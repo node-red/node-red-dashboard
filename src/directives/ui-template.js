@@ -22,10 +22,7 @@ angular.module('ui').directive('uiTemplate', ['$compile', '$rootScope', 'UiEvent
             });
 
             scope.$watch('me.item.msg', function (value) {
-                if (innerScope) {
-                    innerScope.msg = value;
-                    // TODO refit the size here if auto sizing
-                }
+                if (innerScope) { innerScope.msg = value; }
             });
 
             scope.$on('$destroy', function() {
