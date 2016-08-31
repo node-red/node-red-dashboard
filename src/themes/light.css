@@ -50,8 +50,8 @@ body.nr-dashboard-theme-light md-sidenav {}
 /* Button */
 
 .nr-dashboard-theme-light .nr-dashboard-button .md-button {
-	background-color: #9EE3F9;
-	color: #eee;
+	background-color: #87dbf7;
+	color: #fff;
 }
 
 .nr-dashboard-theme-light .nr-dashboard-button .md-button:hover {

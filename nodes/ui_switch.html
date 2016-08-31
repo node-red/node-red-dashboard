@@ -57,12 +57,12 @@
             $('#node-input-onvalue').typedInput({
                 default: 'str',
                 typeField: $("#node-input-onvalueType"),
-                types:['flow','global','str','num','bool','json','date']
+                types: ['flow','global','str','num','bool','json','date']
             });
             $('#node-input-offvalue').typedInput({
                 default: 'str',
                 typeField: $("#node-input-offvalueType"),
-                types:['flow','global','str','num','bool','json','date']
+                types: ['flow','global','str','num','bool','json','date']
             });
 
 
@@ -101,32 +101,32 @@
         </select>
     </div>
     <div class="form-row form-row-custom-icons">
-        <label for="node-input-onicon" style="text-align: right;"><i class="fa fa-toggle-on"></i> On Icon</label>
+        <label for="node-input-onicon" style="text-align:right;"><i class="fa fa-toggle-on"></i> On Icon</label>
         <input type="text" id="node-input-onicon" style="width:120px">
-        <label for="node-input-oncolor" style="width:40px;text-align:right;">Color</label>
+        <label for="node-input-oncolor" style="width:50px; text-align:right;">Colour</label>
         <input type="text" id="node-input-oncolor" style="width:120px">
     </div>
     <div class="form-row form-row-custom-icons">
-        <label for="node-input-officon" style="text-align: right;"><i class="fa fa-toggle-off"></i> Off Icon</label>
+        <label for="node-input-officon" style="text-align:right;"><i class="fa fa-toggle-off"></i> Off Icon</label>
         <input type="text" id="node-input-officon" style="width:120px">
-        <label for="node-input-offcolor" style="width:40px;text-align:right;">Color</label>
+        <label for="node-input-offcolor" style="width:50px; text-align:right;">Colour</label>
         <input type="text" id="node-input-offcolor" style="width:120px">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-onvalue"><i class="fa fa-envelope"></i> When clicked, send:</label>
     </div>
     <div class="form-row">
-        <label for="node-input-onvalue" style="padding-left: 25px; margin-right: -25px">On Payload</label>
+        <label for="node-input-onvalue" style="padding-left:25px; margin-right:-25px">On Payload</label>
         <input type="text" id="node-input-onvalue" style="width:70%">
         <input type="hidden" id="node-input-onvalueType">
     </div>
     <div class="form-row">
-        <label for="node-input-offvalue" style="padding-left: 25px; margin-right: -25px">Off Payload</label>
+        <label for="node-input-offvalue" style="padding-left:25px; margin-right:-25px">Off Payload</label>
         <input type="text" id="node-input-offvalue" style="width:70%">
         <input type="hidden" id="node-input-offvalueType">
     </div>
     <div class="form-row">
-        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
+        <label for="node-input-topic" style="padding-left:25px; margin-right:-25px">Topic</label>
         <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
@@ -145,5 +145,5 @@
     <i>(e.g. 'check', 'close')</i> or <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
     <p>The widget can be updated by an incoming <code>msg.payload</code> with the specified values.</p>
     <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
-    <p>Setting `msg.enabled` to `false` will disable the input.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
 </script>

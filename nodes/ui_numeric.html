@@ -6,13 +6,14 @@
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
-                var width = v||0;
-                var currentGroup = $('#node-input-group').val()||this.group;
-                var groupNode = RED.nodes.node(currentGroup);
-                var valid = !groupNode || +width <=  +groupNode.width;
-                $("#node-input-size").toggleClass("input-error",!valid);
-                return valid;
-            }},
+                    var width = v||0;
+                    var currentGroup = $('#node-input-group').val()||this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    var valid = !groupNode || +width <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error",!valid);
+                    return valid;
+                }
+            },
             height: {value: 0},
             name: {value: ''},
             label: {value: 'numeric'},
@@ -59,18 +60,18 @@
         <label for="node-input-min">Range</label>
         <label for="node-input-min" style="width:auto">min</label>
         <input type="text" id="node-input-min" style="width:80px">
-        <label for="not-input-max" style="width:auto; margin-left: 20px;">max</label>
+        <label for="not-input-max" style="width:auto; margin-left:20px;">max</label>
         <input type="text" id="node-input-max" style="width:80px">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope"></i> When changed, send:</label>
     </div>
     <div class="form-row">
-        <label style="padding-left: 25px; margin-right: -25px">Payload</label>
+        <label style="padding-left:25px; margin-right:-25px">Payload</label>
         <label style="width:auto">Current value</label>
     </div>
     <div class="form-row">
-        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
+        <label for="node-input-topic" style="padding-left:25px; margin-right:-25px">Topic</label>
         <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
@@ -90,5 +91,5 @@
     of <code>{{value}} %</code>
     with a value of <b>23</b> will show <b>23 %</b> on the user interface. The <b>Value Format</b> field can contain
     HTML or Angular filters to format the output (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
-    <p>Setting `msg.enabled` to `false` will disable the input.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
 </script>

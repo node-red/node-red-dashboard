@@ -12,7 +12,8 @@ module.exports = function(RED) {
         addBaseConfig: addBaseConfig,
         emit: emit,
         toNumber: toNumber.bind(null, false),
-        toFloat: toNumber.bind(null, true)
+        toFloat: toNumber.bind(null, true),
+        updateUi: updateUi
     };
 };
 
@@ -333,7 +334,7 @@ function addLink(name, link, icon, order, target) {
 }
 
 function addBaseConfig(title,theme) {
-    baseConfiguration.title = title;
-    baseConfiguration.theme = theme;
+    if (title) { baseConfiguration.title = title; }
+    if (theme) { baseConfiguration.theme = theme; }
     updateUi();
 }
