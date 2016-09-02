@@ -237,16 +237,18 @@ RED.nodes.registerType('ui_base',{
         var groupLists = {};
         var linkNodes = {};
 
-        function titleToggle(content,chevron) {
+        function titleToggle(id,content,chevron) {
             return function(evt) {
                 if (content.is(":visible")) {
                     content.slideUp();
                     chevron.css({"transform":"rotate(-90deg)"});
                     content.addClass('nr-db-sb-collapsed');
+                    listStates[id] = false;
                 } else {
                     content.slideDown();
                     chevron.css({"transform":""});
                     content.removeClass('nr-db-sb-collapsed');
+                    listStates[id] = true;
                 }
             };
         }
@@ -290,14 +292,13 @@ RED.nodes.registerType('ui_base',{
 
                 var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
 
-                if (!newTab) {
-                    chevron.css("transform","rotate(-90deg)");
-                    content.addClass('nr-db-sb-collapsed').css('display','none');
-                }
                 if (listStates.hasOwnProperty(tabNode.id) && !listStates[tabNode.id]) {
                     content.hide();
                     chevron.css({"transform":"rotate(-90deg)"});
                     content.addClass('nr-db-sb-collapsed');
+                    listStates[tabNode.id] = false;
+                } else {
+                    listStates[tabNode.id] = true;
                 }
                 setTimeout(function() {
                     chevron.css({"transition": "transform 0.2s ease-in-out"});
@@ -342,10 +343,13 @@ RED.nodes.registerType('ui_base',{
                         var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
 
                         var content = $('<div>',{class:"nr-db-sb-widget-list-container"}).appendTo(container);
-                        if (listStates.hasOwnProperty(groupNode.id) && !listStates[groupNode.id]) {
+                        if (!listStates.hasOwnProperty(groupNode.id) || !listStates[groupNode.id]) {
                             content.hide();
                             chevron.css({"transform":"rotate(-90deg)"});
                             content.addClass('nr-db-sb-collapsed');
+                            listStates[groupNode.id] = false;
+                        } else {
+                            listStates[groupNode.id] = true;
                         }
                         setTimeout(function() {
                             chevron.css({"transition": "transform 0.2s ease-in-out"});
@@ -419,7 +423,7 @@ RED.nodes.registerType('ui_base',{
                         if (groupNode.id) {
                             groupLists[groupNode.id] = ol;
                         }
-                        titleRow.click(titleToggle(content,chevron));
+                        titleRow.click(titleToggle(groupNode.id,content,chevron));
                         editButton.on('click',function(evt) {
                             RED.editor.editConfig("", groupNode.type, groupNode.id);
                             evt.stopPropagation();
@@ -461,7 +465,7 @@ RED.nodes.registerType('ui_base',{
                 if (tabNode.id) {
                     tabLists[tabNode.id] = ol;
                 }
-                titleRow.click(titleToggle(content,chevron));
+                titleRow.click(titleToggle(tabNode.id,content,chevron));
                 editButton.on('click',function(evt) {
                     RED.editor.editConfig("", tabNode.type, tabNode.id);
                     evt.stopPropagation();
@@ -634,18 +638,15 @@ RED.nodes.registerType('ui_base',{
 
         function getCurrentList() {
             var currentList = [];
-            listStates = {};
             var tabs = tabContainer.editableList('items');
             var open = false;
             tabs.each(function(i,el) {
                 var tabData = el.data('data');
                 var tab = [];
-                listStates[tabData.node.id] = el.find('.nr-db-sb-group-list-container.nr-db-sb-collapsed').length === 0;
                 var groups = el.find('.nr-db-sb-group-list').editableList('items');
                 groups.each(function(j,el) {
                     var group = [];
                     var groupData = el.data('data');
-                    listStates[groupData.node.id] = el.find('.nr-db-sb-widget-list-container.nr-db-sb-collapsed').length === 0;
                     var widgets = el.find('.nr-db-sb-widget-list').editableList('items');
                     widgets.each(function(k,el) {
                         var widgetData = el.data('data');
@@ -841,10 +842,16 @@ RED.nodes.registerType('ui_base',{
             if (/^ui_/.test(node.type)) {
                 if (node.type === "ui_tab" || node.type === "ui_group") {
                     if (listElements[node.id]) {
+                        // Existing element
                         listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id);
+                        if (node.type === "ui_group") {
+                            refresh();
+                        }
                     } else if (node.type === "ui_tab") {
+                        // Adding a tab
                         tabContainer.editableList('addItem',{node:node,groups:[]})
                     } else {
+                        // Adding a group
                         if (tabLists[node.tab]) {
                             tabLists[node.tab].editableList('addItem',{node:node,widgets:[]})
                         }
