@@ -462,6 +462,7 @@ RED.nodes.registerType('ui_base',{
                     }
                 });
                 ol.css("min-height","10px");
+
                 if (tabNode.id) {
                     tabLists[tabNode.id] = ol;
                 }
@@ -635,6 +636,8 @@ RED.nodes.registerType('ui_base',{
         var dashboard = [];
         var listStates = {};
         var elementParents = {};
+        var awaitingGroups = {};
+        var awaitingTabs = {};
 
         function getCurrentList() {
             var currentList = [];
@@ -827,6 +830,8 @@ RED.nodes.registerType('ui_base',{
                 $("#nr-db-field-theme").val(globalDashboardNode.theme);
                 // $("#nr-db-field-url").val(globalDashboardNode.url);
             }
+            awaitingGroups = {};
+            awaitingTabs = {};
         }
         RED.sidebar.addTab({
             id: "dashboard",
@@ -891,30 +896,79 @@ RED.nodes.registerType('ui_base',{
                 }
             }
         });
-        RED.events.on("nodes:add", function(node) {
-            if (/^ui_/.test(node.type) && !listElements[node.id]) {
+
+        var pendingAdd = [];
+        var pendingAddTimer = null;
+
+        function handlePendingAdds() {
+            var hasTabs = false;
+            var hasGroups = false;
+            pendingAdd.sort(function(A,B) {
+                hasTabs = hasTabs || A.type === "ui_tab" || B.type === "ui_tab";
+                hasGroups = hasGroups || A.type === "ui_group" || B.type === "ui_group";
+                if (A.type === B.type) {
+                    return 0;
+                }
+                if (A.type === "ui_tab") {
+                    return -1;
+                } else if (B.type === "ui_tab") {
+                    return 1;
+                } else if (A.type === "ui_group") {
+                    return -1;
+                } else if (B.type === "ui_group") {
+                    return 1;
+                }
+                return 0
+            });
+            for (var i=0;i<pendingAdd.length;i++) {
+                var node = pendingAdd[i];
                 if (node.type === "ui_tab") {
                     tabContainer.editableList('addItem',{node:node,groups:[]});
-                } else if (node.type === "ui_group") {
-                    if (tabLists[node.tab]) {
-                        tabLists[node.tab].editableList('addItem',{node:node,widgets:[]});
-                    }
                 } else {
-                    if (groupLists[node.group]) {
-                        groupLists[node.group].editableList('addItem',node)
+                    if (hasTabs) {
+                        // We've added some tabs, need to give jquery time to add the lists
+                        pendingAdd = pendingAdd.slice(i);
+                        pendingAddTimer = setTimeout(handlePendingAdds,50);
+                        return;
+                    }
+                    if (node.type === "ui_group") {
+                        if (tabLists[node.tab]) {
+                            tabLists[node.tab].editableList('addItem',{node:node,widgets:[]});
+                        }
                     } else {
-                        refreshOrphanedWidgets();
+                        if (hasGroups) {
+                            // We've added some tabs, need to give jquery time to add the lists
+                            pendingAdd = pendingAdd.slice(i);
+                            pendingAddTimer = setTimeout(handlePendingAdds,50);
+                            return;
+                        }
+                        if (groupLists[node.group]) {
+                            groupLists[node.group].editableList('addItem',node)
+                        } else {
+                            refreshOrphanedWidgets();
+                        }
                     }
                 }
+            }
+            pendingAdd = [];
+        }
+
+        RED.events.on("nodes:add", function(node) {
+            if (/^ui_/.test(node.type) && !listElements[node.id]) {
+                pendingAdd.push(node);
+                clearTimeout(pendingAddTimer);
+                pendingAddTimer = setTimeout(handlePendingAdds,100);
             }
         });
         RED.events.on("nodes:remove", function(node) {
             if (/^ui_/.test(node.type)) {
                 if (node.type === "ui_tab") {
-                    tabContainer.editableList('removeItem',listElements[node.id].data('data'));
-                    delete tabLists[node.id];
+                    if (listElements[node.id]) {
+                        tabContainer.editableList('removeItem',listElements[node.id].data('data'));
+                        delete tabLists[node.id];
+                    }
                 } else if (node.type === "ui_group") {
-                    if (tabLists[node.tab]) {
+                    if (tabLists[node.tab] && listElements[node.id]) {
                         tabLists[node.tab].editableList('removeItem',listElements[node.id].data('data'));
                     }
                     delete groupLists[node.id];
