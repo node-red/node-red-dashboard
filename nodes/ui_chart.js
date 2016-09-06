@@ -35,7 +35,8 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || parseInt(group.config.width/2+1) || 4,
                 ymin: config.ymin,
-                ymax: config.ymax
+                ymax: config.ymax,
+                xformat : config.xformat || "%H:%M:%S"
             },
             convert: function(value, oldValue, msg) {
                 if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {

@@ -3,6 +3,7 @@
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
+            name: {value: ''},
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -17,7 +18,7 @@
             label: {value: 'chart'},
             chartType: {value: 'line'},
             legend: {value: 'false'},
-            name: {value: ''},
+            xformat: {value: '%H:%M:%S'},
             interpolate: {value: 'linear', required:true},
             nodata: {value: ''},
             ymin: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
@@ -49,6 +50,33 @@
             if (!$("#node-input-chartType").val()) {
                 $("#node-input-chartType").val("line");
             }
+
+            var oval = $("#node-input-xformat").val();
+            if (!oval) { $("#node-input-xformat").val("%H:%M:%S"); }
+            var odef = 'str';
+            if (oval === "%H:%M:%S") { odef = oval; }
+            if (oval === "%H:%M") { odef = oval; }
+            if (oval === "%Y-%m-%d") { odef = oval; }
+            if (oval === "%d/%m") { odef = oval; }
+            if (oval === "%a %H:%M") { odef = oval; }
+
+            var ohms = {value:"%H:%M:%S", label:"H:M:S", hasValue:false};
+            var ohm = {value:"%H:%M", label:"H:M", hasValue:false};
+            var oymd = {value:"%Y-%m-%d", label:"Year-Month-Date", hasValue:false};
+            var odm = {value:"%d/%m", label:"Date/Month", hasValue:false};
+            var oahm = {value:"%a %H:%M", label:"Day H:M", hasValue:false};
+            var ocus = {label:"custom"}
+
+            $("#node-input-xformat").typedInput({
+                default: odef,
+                types:[ ohms, ohm, oahm, odm, oymd, 'str' ]
+            });
+
+        },
+        oneditsave: function() {
+            if ($("#node-input-xformat").typedInput('type') !== 'str') {
+                $("#node-input-xformat").val($("#node-input-xformat").typedInput('type'));
+            }
         }
     });
 </script>
@@ -78,14 +106,15 @@
     <div class="form-row" id="x-axis-show">
         <label for="node-input-removeOlder">X-axis</label>
         <label for="node-input-removeOlder" style="width: auto">last</label>
-        <input type="text" id="node-input-removeOlder" style="width:80px;">
-        <select id="node-input-removeOlderUnit" style="width:110px;">
+        <input type="text" id="node-input-removeOlder" style="width:50px;">
+        <select id="node-input-removeOlderUnit" style="width:90px;">
             <option value="1">seconds</option>
             <option value="60">minutes</option>
             <option value="3600">hours</option>
             <option value="86400">days</option>
             <option value="604800">weeks</option>
         </select>
+        <input type="text" id="node-input-xformat" style="width:150px;">
     </div>
     <div class="form-row">
         <label for="node-input-ymin">Y-axis</label>
@@ -125,7 +154,9 @@
     <p>Minimum and Maximum <b>Y</b> axis values are optional. The graph will auto-scale to any values received.</p>
     <p>Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
     value on each input message.</p>
-    <p>The <b>X</b> axis defines a time window. Older data will be automatically removed from the graph.</p>
+    <p>The <b>X</b> axis defines a time window. Older data will be automatically removed from the graph.
+    The axis labels can be formatted using a <a href="https://github.com/d3/d3-3.x-api-reference/blob/master/Time-Formatting.md" target="_new">
+    d3 time formatted</a> string.</p>
     <p>The <b>Blank label</b> field can be used to display some text before any valid data is received.</p>
     <p>The first output contains an array of the chart state that can be persisted if needed. The second
     output sends a <code>msg.payload</code> of <b>"restore"</b> that can be used to trigger a restore of
