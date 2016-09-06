@@ -96,6 +96,14 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         };
                     }
                 }
+                case 'form': {
+                    me.submit = function () {
+                      me.item.value = JSON.parse(JSON.stringify(me.item.formValue));
+                      me.item.formValue ={};
+                      me.valueChanged(0);
+                    };
+                    break;
+                }
             }
         }
 
