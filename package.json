@@ -34,6 +34,7 @@
             "ui_gauge": "nodes/ui_gauge.js",
             "ui_chart": "nodes/ui_chart.js",
             "ui_toast": "nodes/ui_toast.js",
+            "ui_ui_control": "nodes/ui_ui_control.js",
             "ui_template": "nodes/ui_template.js",
             "ui_link": "nodes/ui_link.js",
             "ui_tab": "nodes/ui_tab.js",
