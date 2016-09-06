@@ -53,7 +53,7 @@
 
             var oval = $("#node-input-xformat").val();
             if (!oval) { $("#node-input-xformat").val("%H:%M:%S"); }
-            var odef = 'str';
+            var odef = 'custom';
             if (oval === "%H:%M:%S") { odef = oval; }
             if (oval === "%H:%M") { odef = oval; }
             if (oval === "%Y-%m-%d") { odef = oval; }
@@ -65,16 +65,16 @@
             var oymd = {value:"%Y-%m-%d", label:"Year-Month-Date", hasValue:false};
             var odm = {value:"%d/%m", label:"Date/Month", hasValue:false};
             var oahm = {value:"%a %H:%M", label:"Day H:M", hasValue:false};
-            var ocus = {label:"custom"}
+            var ocus = {value:"custom", label:"custom", icon:"red/images/typedInput/az.png"};
 
             $("#node-input-xformat").typedInput({
                 default: odef,
-                types:[ ohms, ohm, oahm, odm, oymd, 'str' ]
+                types:[ ohms, ohm, oahm, odm, oymd, ocus ]
             });
 
         },
         oneditsave: function() {
-            if ($("#node-input-xformat").typedInput('type') !== 'str') {
+            if ($("#node-input-xformat").typedInput('type') !== 'custom') {
                 $("#node-input-xformat").val($("#node-input-xformat").typedInput('type'));
             }
         }
