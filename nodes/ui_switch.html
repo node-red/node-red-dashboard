@@ -3,7 +3,9 @@
         category: 'dashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
-            group: {type: 'ui_group', required:true},
+            name: {value: ''},
+            label: {value: 'switch'},
+            group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
                     var width = v||0;
@@ -15,8 +17,7 @@
                 }
             },
             height: {value: 0},
-            name: {value: ''},
-            label: {value: 'switch'},
+            passthru: {value: true},
             topic: {value: ''},
             style: {value: ''},
             onvalue: {value: true, required:true},
@@ -111,6 +112,10 @@
         <input type="text" id="node-input-officon" style="width:120px">
         <label for="node-input-offcolor" style="width:50px; text-align:right;">Colour</label>
         <input type="text" id="node-input-offcolor" style="width:120px">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-play"></i> When msg arrives, pass through to output: </label>
+        <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-onvalue"><i class="fa fa-envelope"></i> When clicked, send:</label>

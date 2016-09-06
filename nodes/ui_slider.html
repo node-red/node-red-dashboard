@@ -3,6 +3,8 @@
         category: 'dashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
+            name: {value: ''},
+            label: {value: 'slider'},
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -15,8 +17,7 @@
                 }
             },
             height: {value: 0},
-            name: {value: ''},
-            label: {value: 'slider'},
+            passthru: {value: true},
             topic: {value: ''},
             min: {value: 0, required: true, validate: RED.validators.number()},
             max: {value: 10, required: true, validate: RED.validators.number()},
@@ -57,6 +58,10 @@
         <input type="text" id="node-input-min" style="width:80px">
         <label for="not-input-max" style="width:auto; margin-left:20px;">max</label>
         <input type="text" id="node-input-max" style="width:80px">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-play"></i> When msg arrives, pass through to output: </label>
+        <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope"></i> When changed, send:</label>

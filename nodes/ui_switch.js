@@ -17,6 +17,7 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
+            forwardInputMessages: config.passthru,
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),
                 label: config.label,
