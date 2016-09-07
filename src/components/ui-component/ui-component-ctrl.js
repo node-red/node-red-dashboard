@@ -95,6 +95,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             return d3.time.format(me.item.xformat)(new Date(d));
                         };
                     }
+                    break;
                 }
                 case 'form': {
                     me.submit = function () {
@@ -102,7 +103,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                       me.item.formValue ={};
                       me.valueChanged(0);
                     };
-                    break;
                 }
             }
         }
