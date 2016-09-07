@@ -187,3 +187,21 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 /* Text */
 
 .nr-dashboard-theme-light .nr-dashboard-text {}
+
+/* Form */
+.nr-dashboard-theme-light .nr-dashboard-form-button {
+  background-color:  #0094ce !important;
+	color: rgba(255, 255, 255, 0.87) !important;
+}
+.nr-dashboard-theme-light .nr-dashboard-form form md-input-container md-switch.md-checked .md-bar{
+	background-color: rgba(0,148,206,0.87);
+}
+.nr-dashboard-theme-light .nr-dashboard-form form md-input-container md-switch.md-checked .md-thumb  {
+	background-color: rgba(0,148,206, 0.87);
+}
+.nr-dashboard-theme-light .nr-dashboard-form form md-input-container md-checkbox.md-checked .md-icon {
+	background-color: rgba(0,148,206, 0.87);
+}
+.nr-dashboard-theme-light .nr-dashboard-form form .md-datepicker-open .md-datepicker-calendar-icon {
+	fill : rgba(0,148,206, 0.87) ;
+}

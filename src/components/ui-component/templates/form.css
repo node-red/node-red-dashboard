@@ -1,10 +1,10 @@
 .nr-dashboard-form {
 	display: inline-block;
 	width: 100%;
-	overflow: auto;
+	overflow-y: auto;
+
 }
 .nr-dashboard-form form{
- overflow: auto;
  padding: 15px;
 }
 .nr-dashboard-form md-input-container {
@@ -28,75 +28,5 @@
 .nr-dashboard-form-button {
 	width:50%;
 	float:left;
-  background-color:  #0094ce !important;
-	color: rgba(255, 255, 255, 0.87) !important;
-}
-.nr-dashboard-theme-dark  .nr-dashboard-form-button {
-  background-color:  #0fbbc3 !important;
-	  color: rgba(255, 255, 255, 0.87);
-}
-.nr-dashboard-theme-dark  .nr-dashboard-form {
-	color: #0fbbc3;
-}
-.nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container input {
-	border-color: #676767;
-	color: #FFF;
-}
-.nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container label{
-	color: #0fbbc3;
-}
-.nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container.md-input-has-value:not(.md-input-invalid) label{
-		color: #FFF;
-}
-.nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused input{
-	border-color: #0fbbc3 ;
-}
-.nr-dashboard-theme-dark .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused label{
-	color: #0fbbc3 ;
-}
-.nr-dashboard-theme-dark .nr-dashboard-form form .md-input-invalid input{
-	border-color: #F00 !important;
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form .md-input-invalid label{
-	color: #F00 !important;
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-checkbox.md-checked .md-icon {
- background-color: rgba(15,187,195, 0.87);
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-checkbox .md-icon{
- border-color: #676767;
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-bar{
-	background-color: rgba(15,187,195, 0.87);
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-thumb  {
-	background-color: rgba(15,187,195, 0.87);
-}
-.nr-dashboard-form form md-input-container md-switch.md-checked .md-bar{
-	background-color: rgba(0,148,206,0.87);
-}
-.nr-dashboard-form form md-input-container md-switch.md-checked .md-thumb  {
-	background-color: rgba(0,148,206, 0.87);
-}
-.nr-dashboard-form form md-input-container md-checkbox.md-checked .md-icon {
-	background-color: rgba(0,148,206, 0.87);
-}
-.nr-dashboard-form form .md-datepicker-open .md-datepicker-calendar-icon {
-	fill : rgba(0,148,206, 0.87) ;
-}
 
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form md-datepicker  {
-	background-color: inherit;
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form  .md-datepicker-calendar-icon   {
-	fill : #0fbbc3 ;
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form .md-datepicker-open .md-datepicker-calendar-icon   {
-	fill : rgba(0,148,206, 0.87) ;
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form .md-datepicker-input {
-	color: #FFF;
-}
-.nr-dashboard-theme-dark md-content .nr-dashboard-form form .md-datepicker-input-container {
-	border-color: #676767;
 }
