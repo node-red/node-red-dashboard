@@ -13,7 +13,8 @@ var
     path = require('path'),
     spawn = require('child_process').spawn,
     streamqueue = require('streamqueue'),
-    jshint = require('gulp-jshint');
+    jshint = require('gulp-jshint'),
+    jscs = require('gulp-jscs');
 
 gulp.task('default', ['manifest']);
 
@@ -40,6 +41,12 @@ gulp.task('lint', function() {
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('jscs', function() {
+    return gulp.src(['*.js','nodes/*.js','src/*.js','src/*/*.js','src/*/*/*.js'])
+        .pipe(jscs())
+        .pipe(jscs.reporter());
 });
 
 gulp.task('index', function() {
