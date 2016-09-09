@@ -2,6 +2,8 @@
 
 Enhancements
 
+ - Add password entry option to text input
+ - Add basic colour names to themes
  - Let slider and switch optionally not pass through messages
  - Add time formatter to chart x-Axis
  - Add ui_control widget to allow dynamic tab switch
@@ -17,6 +19,7 @@ Enhancements
 
 Fixes
 
+ - Relax auto-creation of ui_base
  - Handle imported flows properly when updating sidebar tree
  - Maintain expand/collapse states of sidebar tree on refresh
  - Make sure gauge colours default even if theme broken
