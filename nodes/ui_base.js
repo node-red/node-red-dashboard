@@ -8,8 +8,7 @@ module.exports = function(RED) {
             theme: config.theme || 'theme-light'
         };
         ui.addBaseConfig(config.name, config.theme);
-
     }
-
+    
     RED.nodes.registerType("ui_base", BaseNode);
 };

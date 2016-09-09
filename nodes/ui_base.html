@@ -503,7 +503,8 @@ RED.nodes.registerType('ui_base',{
         orphanedWidgets.find('a').click(function(event) {
             var unknownGroups = {};
             RED.nodes.eachNode(function(node) {
-                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast') {
+                console.log("TYPE",node.type);
+                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
                     if (!RED.nodes.node(node.group)) {
                         var g = node.group || "_BLANK_";
                         unknownGroups[g] = unknownGroups[g] || [];
@@ -662,7 +663,7 @@ RED.nodes.registerType('ui_base',{
             var unknownGroups = {};
             var count = 0;
             RED.nodes.eachNode(function(node) {
-                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast') {
+                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
                     if (!RED.nodes.node(node.group)) {
                         var g = node.group || "_BLANK_";
                         unknownGroups[g] = unknownGroups[g] || [];
@@ -729,7 +730,7 @@ RED.nodes.registerType('ui_base',{
                         groupElements[node.group].push(node);
                     } else if (node.type === 'ui_link') {
                         links.push(node);
-                    } else if (node.type !== 'ui_toast') {
+                    } else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
                         unknownGroups++;
                     }
                 }

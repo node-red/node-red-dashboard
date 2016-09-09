@@ -5,8 +5,7 @@ app.config(['$mdThemingProvider', '$compileProvider',
         /*$mdThemingProvider.theme('default')
             .primaryPalette('light-green')
             .accentPalette('red');*/
-
-        //white-list all protocolos
+        //white-list all protocols
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
     }]);
 
