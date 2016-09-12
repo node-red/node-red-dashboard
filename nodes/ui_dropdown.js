@@ -100,6 +100,7 @@ module.exports = function(RED) {
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
                     emitOptions.fromInput = true;
+                    return emitOptions;
                 }
                 // we do not overide payload here due to 'opt.emitOnlyNewValues' in ui.js
                 // when undefined is returned, msg will not be forwarded
