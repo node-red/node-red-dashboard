@@ -185,7 +185,7 @@ function MasonryController(sizes, $timeout) {
                 top: b.y
             }).addClass('visible');
         });
-        root.css('min-height', maxy + sizes.gy);
+        root.css('min-height', maxy + sizes.gy + 3);
     }
 
     function getPxWidth(group) {
