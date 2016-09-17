@@ -14,6 +14,7 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
+            forwardInputMessages: config.passthru,
             control: {
                 type: (config.delay <= 0 ? 'text-input-CR' : 'text-input'),
                 label: config.label,
