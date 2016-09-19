@@ -106,7 +106,7 @@
 
 
                 var finalspan = $('<div/>',{style:"display: inline-block; width: 16%;"}).appendTo(row);
-                var deleteButton = $('<button/>',{href:"#",class:"editor-button editor-button-small", style:"left: 45%;position: relative;"}).appendTo(finalspan);
+                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"left: 45%;position: relative;"}).appendTo(finalspan);
                 $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
 
                 deleteButton.click(function() {
@@ -130,7 +130,7 @@
                 generateOption(i+1,option);
             }
 
-            $( "#" ).sortable({
+            $( "#node-input-option-container" ).sortable({
                 axis: "y",
                 handle:".node-input-option-handle",
                 cursor: "move"
