@@ -98,6 +98,12 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     break;
                 }
                 case 'form': {
+                    me.stop=function(event){
+                      if (13 == event.which) {
+                          event.preventDefault();
+                          event.stopPropagation();
+                      }
+                    }
                     me.submit = function () {
                       me.item.value = JSON.parse(JSON.stringify(me.item.formValue));
                       me.item.formValue ={};
