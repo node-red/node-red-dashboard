@@ -251,13 +251,13 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 	color: #676767;
 }
 .nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container.md-input-has-value:not(.md-input-invalid) label{
-		color: #eee;
+		color: #676767;
 }
-.nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container:not(.md-input-invalid) .md-input-focused input{
+.nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused input{
 	border-color: #0fbbc3 ;
 }
-.nr-dashboard-theme-dark .nr-dashboard-form form md-input-container:not(.md-input-invalid) .md-input-focused label{
-	color: #0fbbc3;
+.nr-dashboard-theme-dark .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused label{
+	color: #0fbbc3 ;
 }
 .nr-dashboard-theme-dark .nr-dashboard-form form .md-input-invalid input{
 	border-color: #F00 !important;
