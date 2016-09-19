@@ -237,27 +237,27 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 /*Form*/
 .nr-dashboard-theme-dark  .nr-dashboard-form-button {
-  background-color:  #0fbbc3 !important;
+  background-color:  #097479 !important;
 	  color: rgba(255, 255, 255, 0.87);
 }
 .nr-dashboard-theme-dark  .nr-dashboard-form {
-	color: #0fbbc3;
+	color: #eee;
 }
 .nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container input {
 	border-color: #676767;
 	color: #FFF;
 }
 .nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container label{
-	color: #0fbbc3;
+	color: #676767;
 }
 .nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container.md-input-has-value:not(.md-input-invalid) label{
-		color: #FFF;
+		color: #eee;
 }
 .nr-dashboard-theme-dark  .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused input{
 	border-color: #0fbbc3 ;
 }
 .nr-dashboard-theme-dark .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused label{
-	color: #0fbbc3 ;
+	color: #676767 ;
 }
 .nr-dashboard-theme-dark .nr-dashboard-form form .md-input-invalid input{
 	border-color: #F00 !important;
@@ -271,8 +271,14 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-checkbox .md-icon{
  border-color: #676767;
 }
+.nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-switch .md-bar{
+	background-color: rgba(111, 111, 111, 0.5);
+}
+.nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-switch .md-thumb  {
+	background-color: rgb(148, 148, 148);
+}
 .nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-bar{
-	background-color: rgba(15,187,195, 0.87);
+	background-color: rgba(15,187,195, 0.5);
 }
 .nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-thumb  {
 	background-color: rgba(15,187,195, 0.87);
@@ -291,4 +297,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 }
 .nr-dashboard-theme-dark md-content .nr-dashboard-form form .md-datepicker-input-container {
 	border-color: #676767;
+}
+.nr-dashboard-theme-dark  md-content .nr-dashboard-form form .md-datepicker-expand-triangle{
+  border-top-color:rgba(0,148,206, 0.87) ;
 }
