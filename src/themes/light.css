@@ -11,7 +11,10 @@ body.nr-dashboard-theme-light {
 	background: #f0f0f0;
 }
 
-body.nr-dashboard-theme-light md-content {}
+body.nr-dashboard-theme-light md-content {
+    background: transparent;
+    height: 100%;
+}
 
 body.nr-dashboard-theme-light md-content md-card {}
 

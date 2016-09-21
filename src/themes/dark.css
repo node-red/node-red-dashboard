@@ -13,6 +13,8 @@ body.nr-dashboard-theme-dark {
 
 body.nr-dashboard-theme-dark md-content {
 	color: #0FBBC3;
+    background: transparent;
+    height: 100%;
 }
 
 body.nr-dashboard-theme-dark md-content md-card {
