@@ -175,7 +175,7 @@ RED.nodes.registerType('ui_base',{
 
         var divTitle = $('<div>',{class:"form-row"}).appendTo(form);
         $('<label>').html('Title').appendTo(divTitle);
-        $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 65px)")
+        var inputTitle = $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 65px)")
             .change(function() {
                 if (!globalDashboardNode || globalDashboardNode.name !== $(this).val()) {
                     ensureDashboardNode(true);
@@ -183,7 +183,8 @@ RED.nodes.registerType('ui_base',{
                     RED.nodes.dirty(true);
                 }
             })
-            .appendTo(divTitle);
+            .appendTo(divTitle);        
+        RED.text.bidi.prepareInput(inputTitle);
 
         $('<a href="#" class="editor-button" style="margin-left: 10px;"><i class="fa fa-external-link"></i></a>')
             .click(function(evt) {
@@ -282,7 +283,8 @@ RED.nodes.registerType('ui_base',{
                 $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
                 var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width: 10px;"}).appendTo(titleRow);
                 $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
-                var title = $('<span class="nr-db-sb-title">').html(tabNode.name||"").appendTo(titleRow);
+                var title = $('<span class="nr-db-sb-title bidiAware">').html(tabNode.name||"").appendTo(titleRow);
+                title.attr('dir', RED.text.bidi.resolveBaseTextDir(tabNode.name||""));
                 listElements[tabNode.id] = container;
                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
                 var addGroupButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> group</a>').appendTo(buttonGroup);
@@ -335,7 +337,8 @@ RED.nodes.registerType('ui_base',{
                         $('<i class="nr-db-sb-list-handle nr-db-sb-group-list-handle fa fa-bars"></i>').appendTo(titleRow);
                         var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width: 10px;"}).appendTo(titleRow);
                         $('<i class="nr-db-sb-icon nr-db-sb-group-icon fa fa-table"></i>').appendTo(titleRow);
-                        var title = $('<span class="nr-db-sb-title">').html(groupNode.name||groupNode.id||"").appendTo(titleRow);
+                        var title = $('<span class="nr-db-sb-title bidiAware">').html(groupNode.name||groupNode.id||"").appendTo(titleRow);
+                        title.attr('dir', RED.text.bidi.resolveBaseTextDir(groupNode.name||groupNode.id||""));
                         listElements[groupNode.id] = container;
                         var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
                         var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
@@ -369,7 +372,8 @@ RED.nodes.registerType('ui_base',{
                                     console.log("Definition error: "+d.type+".label",err);
                                     l = d.type;
                                 }
-                                var title = $('<span class="nr-db-sb-title">').html(l).appendTo(titleRow);
+                                var title = $('<span class="nr-db-sb-title bidiAware">').html(l).appendTo(titleRow);
+								title.attr('dir', RED.text.bidi.resolveBaseTextDir(l));
                                 listElements[widgetNode.id] = container;
                                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
                                 var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
@@ -846,7 +850,7 @@ RED.nodes.registerType('ui_base',{
                 if (node.type === "ui_tab" || node.type === "ui_group") {
                     if (listElements[node.id]) {
                         // Existing element
-                        listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id);
+                        listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id).attr('dir', RED.text.bidi.resolveBaseTextDir(node.name||node.id));
                         if (node.type === "ui_group") {
                             refresh();
                         }
@@ -884,7 +888,7 @@ RED.nodes.registerType('ui_base',{
                                 console.log("Definition error: "+d.type+".label",err);
                                 l = d.type;
                             }
-                            listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(l);
+                            listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(l).attr('dir', RED.text.bidi.resolveBaseTextDir(l));
                         }
                     } else {
                         if (groupLists[node.group]) {
