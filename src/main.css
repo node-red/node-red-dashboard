@@ -16,9 +16,8 @@ md-card {
 
 md-content {
 	background: transparent;
+    height: 100%;
 }
-
-body { height: initial; }
 
 .node-red-ui--inline-link {
 	width: 100%;
