@@ -9,6 +9,7 @@ app.config(['$mdThemingProvider', '$compileProvider',
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
     }]);
 
+
 app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$rootScope', '$sce', '$timeout',
     function ($mdSidenav, $window, events, $location, $document, $mdToast, $rootScope, $sce, $timeout) {
         var main = this;
@@ -17,6 +18,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.links = [];
         this.selectedTab = null;
         this.loaded = false;
+
+        var chartData = [];
 
         this.toggleSidenav = function () {
             $mdSidenav('left').toggle();
@@ -80,9 +83,46 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             for (var key in msg) {
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
-                    found[key] = msg[key];
+
+                    //(dan): I think this is where the data gets set - yes it is. We need to handle chart data here
+                    //through a switch statement - messy but trying for now.
+                  
+                    //Initial data comes in with the key "Data"
+
+                    //If we are dealing with the values of line charts
+                    if (key === 'value' && found.hasOwnProperty('type') && found['type'] === 'chart' 
+                        && found.hasOwnProperty('look') && found['look'] === 'line') {
+
+                        console.log("line chart");
+                        console.log(msg);
+
+                        //add to data storage client side and update the data by updating the found object
+
+                        //find chart by id
+                        var foundChart = false;
+                        var incomingValues = msg.value[0].values;
+                        chartData.forEach(function(chart, chartIndex) {
+                            var id = chart.id;
+                            if (id === msg.id) {
+                                foundChart = true;
+                                incomingValues.forEach(function(incomingValue, valueIndex) {
+                                    chartData[chartIndex].value[0].values.push(incomingValues[valueIndex]);
+                                });
+                            }
+                        });
+
+                        if (!foundChart) {
+                            //add
+                            chartData.push(msg);
+                        }
+                        found[key] = chartData[key];
+
+                    }
+
+                    //found[key] = msg[key];
                 }
             }
+            //found.value = [{key: "Data", values:[[1474463231177,60], [1474463231578,20]]}];
             if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
                 found.me.processInput(msg);
             }

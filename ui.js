@@ -112,19 +112,35 @@ function add(opt) {
             return;
         }
 
+        //(dan): convert the new point
         var oldValue = currentValues[opt.node.id];
-        var newValue = opt.convert(msg.payload, oldValue, msg);
+        //var newValue = opt.convert(msg.payload, oldValue, msg);
+        var conversion = opt.convert(msg.payload, oldValue, msg);
+        var newPoint;
+        if (conversion.newPoint) {
+            newPoint = [{key: 'Data', values: [conversion.newPoint]}];
+        }
+       
+        var updatedValues = conversion.updatedValues;
 
-        if (!opt.emitOnlyNewValues || oldValue != newValue) {
-            currentValues[opt.node.id] = newValue;
-            var toEmit = opt.beforeEmit(msg, newValue);
+        if (!opt.emitOnlyNewValues || oldValue != updatedValues) {
+            currentValues[opt.node.id] = updatedValues;
+            //(dan): emit the newPoint instead of the whole array
+            var toEmit;
+            if (conversion.newPoint) {
+                toEmit = opt.beforeEmit(msg, newPoint);
+            } else {
+                toEmit = opt.beforeEmit(msg, updatedValues);
+            }
+             
+            //var toEmit = opt.beforeEmit(msg, newValue);
             toEmit.id = opt.node.id;
             io.emit(updateValueEventName, toEmit);
             replayMessages[opt.node.id] = toEmit;
 
             if (opt.forwardInputMessages && opt.node._wireCount) {
                 //forward to output
-                msg.payload = opt.convertBack(newValue);
+                msg.payload = opt.convertBack(updatedValues);
                 msg = opt.beforeSend(msg) || msg;
                 opt.beforeSend(msg);
                 opt.node.send(msg);
