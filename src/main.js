@@ -36,7 +36,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             // open in iframe // TODO : check iframe options (see Google)
             else {
-                main.links[index].link = main.links[index].link || $sce.trustAsResourceUrl(main.links[index].link);
+                main.links[index].link = $sce.trustAsResourceUrl(main.links[index].link);
                 main.selectedTab = main.links[index];
                 // $timeout(function() {
                 //     console.log(angular.element('.iframe'));
