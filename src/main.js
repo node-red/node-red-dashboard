@@ -127,7 +127,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         
 
                     } else {
-                       found[key] = msg[key]; 
+                       found[key] = msg[key];
                     }
 
                     //found[key] = msg[key];

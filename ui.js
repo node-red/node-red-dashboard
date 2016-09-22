@@ -133,12 +133,21 @@ function add(opt) {
             } else {
                 toEmit = opt.beforeEmit(msg, updatedValues);
             }
-             
+            var toStore = opt.beforeEmit(msg,updatedValues);
             //var toEmit = opt.beforeEmit(msg, newValue);
             toEmit.id = opt.node.id;
+            toStore.id = opt.node.id;
+
             console.log("emitting--------------------");
             io.emit(updateValueEventName, toEmit);
-            replayMessages[opt.node.id] = toEmit;
+            // replayMessages[opt.node.id] = toEmit;
+            console.log('toEmit')
+            console.log(toEmit);
+            console.log("*******");
+            console.log(toStore);
+
+            //(dan): store the full dataset so it can be replayed if client connects
+            replayMessages[opt.node.id] = toStore;
 
             if (opt.forwardInputMessages && opt.node._wireCount) {
                 //forward to output
