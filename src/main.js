@@ -86,7 +86,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
                     //(dan): I think this is where the data gets set - yes it is. We need to handle chart data here
                     //through a switch statement - messy but trying for now.
-                  
                     //Initial data comes in with the key "Data"
 
                     //If we are dealing with the values of line charts
@@ -115,8 +114,20 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                             //add
                             chartData.push(msg);
                         }
-                        found[key] = chartData[key];
+                        //find chartIndex for this chartId
+                        var thisChartIndex;
+                        chartData.forEach(function(chart, index) {
+                            if (chart['id'] === found['id']) {
+                                thisChartIndex = index;
+                            }
+                        });
+                        if (!isNaN(thisChartIndex) && thisChartIndex >= 0) {
+                            found[key] = chartData[thisChartIndex][key];
+                        }
+                        
 
+                    } else {
+                       found[key] = msg[key]; 
                     }
 
                     //found[key] = msg[key];

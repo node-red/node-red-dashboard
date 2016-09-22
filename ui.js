@@ -127,6 +127,7 @@ function add(opt) {
             currentValues[opt.node.id] = updatedValues;
             //(dan): emit the newPoint instead of the whole array
             var toEmit;
+
             if (conversion.newPoint) {
                 toEmit = opt.beforeEmit(msg, newPoint);
             } else {
@@ -135,6 +136,7 @@ function add(opt) {
              
             //var toEmit = opt.beforeEmit(msg, newValue);
             toEmit.id = opt.node.id;
+            console.log("emitting--------------------");
             io.emit(updateValueEventName, toEmit);
             replayMessages[opt.node.id] = toEmit;
 
@@ -221,6 +223,11 @@ function init(server, app, log, redSettings) {
     io.on('connection', function(socket) {
         updateUi(socket);
         socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
+
+        //send all data
+        // var objToEmit = {id: }
+        // io.emit(updateValueEventName, currentValues);
+
         socket.on('ui-replay-state', function() {
             var ids = Object.getOwnPropertyNames(replayMessages);
             ids.forEach(function (id) {
