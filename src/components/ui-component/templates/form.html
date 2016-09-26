@@ -1,6 +1,6 @@
 <md-card ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length) +(me.item.label? 4 : 3)) }}" layout="row" layout-align="space-between center"
      class="nr-dashboard-form">
-     <form ng-submit="me.submit()" >
+     <form ng-submit="me.submit()" name ="form">
        <p class="label" ng-if="me.item.label">{{ me.item.label }}  </p>
 
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index"  >
@@ -14,7 +14,7 @@
        </div>
        <div layout-gt-sm="row" style="padding:10px">
          <md-button type="submit"  class="md-raised nr-dashboard-form-button">submit</md-button>
-         <md-button class="md-raised nr-dashboard-form-button" ng-click="me.item.formValue={}">cancel</md-button>
+         <md-button class="md-raised nr-dashboard-form-button" ng-click="me.reset()">cancel</md-button>
        </div>
    </form>
 </md-card>
