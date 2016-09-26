@@ -9,8 +9,8 @@ app.config(['$mdThemingProvider', '$compileProvider',
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
     }]);
 
-app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$rootScope', '$sce', '$timeout',
-    function ($mdSidenav, $window, events, $location, $document, $mdToast, $rootScope, $sce, $timeout) {
+app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$rootScope', '$sce', '$timeout', '$scope',
+    function ($mdSidenav, $window, events, $location, $document, $mdToast, $rootScope, $sce, $timeout, $scope) {
         var main = this;
 
         this.tabs = [];
@@ -99,6 +99,18 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             };
             $mdToast.show(opts);
         });
+
+        $scope.onSwipeLeft = function(ev) { moveTab(-1); }
+        $scope.onSwipeRight = function(ev) { moveTab(1); }
+
+        function moveTab(d) {
+            var len = main.tabs.length;
+            if (len > 1) {
+                var i = (main.selectedTab.order - 1 + d) % len;
+                if (i < 0) { i += len; }
+                main.select(i);
+            }
+        }
 
         events.on('ui-control', function(msg) {
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
