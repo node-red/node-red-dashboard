@@ -1,3 +1,23 @@
+#### 2.0.3: Maintenance Release
+
+Enhancements
+
+ - Complete re-write of group layout code to stop overlapping issues
+ - Add ui_form widget to submit complete form in one go
+ - Add swipe left/right between tabs
+ - Add allow formatting of chart x-axis date formatting
+ - Let ui_numeric and ui_textinput also control passthru of incoming values
+
+Fixes
+
+ - Fill dark background more completely
+ - Fix CSS sizing for Safari 10
+ - Let ui_dropdown pass through payload values
+ - Let dashboard open iframes again (if allowed by remote site)
+ - Stop double scrollbars appearing on internal frames
+ - Stop ui_control causing missing group prompt
+ - Fix missing sidenav "left" item on initial page load
+
 #### 2.0.2: Maintenance Release
 
 Enhancements
