@@ -1,0 +1,283 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_form',{
+        category: 'dashboard',
+        color: 'rgb(176, 223, 227)',
+        defaults: {
+            name: {value: ''},
+            label: {value: ''},
+            group: {type: 'ui_group', required:true},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                var width = v||0;
+                var currentGroup = $('#node-input-group').val()||this.group;
+                var groupNode = RED.nodes.node(currentGroup);
+                var valid = !groupNode || +width <= +groupNode.width;
+                $("#node-input-size").toggleClass("input-error",!valid);
+                return valid;
+            }},
+            height: {value: 0},
+            options: {value:[{value: '', label : '',type:'',required:true}], validate:function(value) {
+              if(value.length ){
+                for (var i = 0; i < value.length; i++) {
+                  if(!value[i].value)
+                      return false;
+                }
+              }
+              else{
+                return false;
+              }
+              return true;
+             }, required:true},
+            formValue:{value:{}},
+            payload: {value: ''},
+            topic: {value: ''}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "ui_form.png",
+        paletteLabel: 'form',
+        label: function() { return this.name || this.label|| 'form'; },
+        oneditprepare: function() {
+          $("#node-input-size").elementSizer({
+              width: "#node-input-width",
+              height: "#node-input-height",
+              group: "#node-input-group"
+          });
+
+            this.resizeRule = function(option,newWidth) {
+              //option.find(".node-input-option-type").width(newWidth);
+              //  option.find(".node-input-option-label").width(newWidth);
+              //  option.find(".node-input-option-value").width(newWidth);
+            }
+
+            function generateOption(i, option) {
+                var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
+                var row = $('<div/>').appendTo(container);
+                var row2 = $('<div/>',{style:"padding-top: 5px; padding-left: 175px;"}).appendTo(container);
+                var row3 = $('<div/>',{style:"padding-top: 5px; padding-left: 120px;"}).appendTo(container);
+
+                $('<i style="color: #eee; cursor: move; margin-left: 3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
+
+                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left: 7px; width: 19%;", placeholder: 'e.g. Name', value:option.label}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
+                var valueClass ="node-input-option-value"
+                if(!option.value)
+                valueClass ="node-input-option-value input-error"
+                var valueField = $('<input/>',{class:valueClass,type:"text",style:"margin-left: 7px; width: 19%;", placeholder: 'e.g. name',value:option.value}).appendTo(row);//.typedInput({default:'str',types:['str','num','bool']});
+                valueField.keyup(function(){
+                  if($(this).val() && $(this).hasClass('input-error'))
+                      $(this).removeClass('input-error')
+                    else
+                    if(!$(this).val())
+                      $(this).addClass('input-error')
+
+                });
+              //  var typeField = $('<input/>',{class:"node-input-option-type",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Type', value:option.type}).appendTo(row).typedInput({default:'str',types:['str', 'num']});
+                var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left: 7px; width: 19%"}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
+
+
+
+                var arr = [
+                  {val : "text", text: 'Text'},
+                  {val : "number", text: 'Number'},
+                  {val : "email", text: 'E-mail'},
+                  {val : "password", text: 'Password'},
+                  {val : "checkbox", text: 'Checkbox'},//,
+                  {val : "switch", text: 'Switch'}//,
+                  //{val : "radio", text: 'Radio'}//,
+              //    {val : "date", text: 'Date'}
+                ];
+
+                //var sel = $('<select>').appendTo('body');
+                $(arr).each(function() {
+                  var isSelected= false;
+                  if(option.type == this.val)
+                    isSelected = true;
+                 typeField.append($("<option>").attr('value',this.val).text(this.text).prop('selected',isSelected));
+
+                });
+
+              //  var labelForRequried = $('<span/>',{style:"margin: 10px;"}).text('Required').appendTo(row);
+              var requiredContainer= $('<div/>',{style:"display: inline-block;height: 34px;margin-left: 7px;width: 18%;"}).appendTo(row);
+                var requiredInnerContainer= $('<div/>',{style:"left: 35%;position:relative;width:30px"}).appendTo(requiredContainer);
+                var reqRow=$("<label />",{class:"switch",style:"top: 10px;width: 30px;"}).appendTo(requiredInnerContainer);
+                //var required = $('<input/>',{class:"node-input-option-required",style:"margin: 5px;width:19%",type:"checkbox", checked:option.required}).appendTo(row);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
+                var required = $('<input/>',{class:"node-input-option-required",type:"checkbox", checked:option.required}).appendTo(reqRow);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
+                var reqDiv=$("<div  />",{class:"slider round"}).appendTo(reqRow);
+
+
+                var finalspan = $('<div/>',{style:"display: inline-block; width: 16%;"}).appendTo(row);
+                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"left: 45%;position: relative;"}).appendTo(finalspan);
+                $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
+
+                deleteButton.click(function() {
+                    container.find(".node-input-option-value").removeAttr('required')
+                    container.css({"background":"#fee"});
+                    container.fadeOut(300, function() {
+                        $(this).remove();
+                    });
+                });
+
+                $("#node-input-option-container").append(container);
+            }
+
+            $("#node-input-add-option").click(function() {
+                generateOption($("#node-input-option-container").children().length+1, {});
+                $("#node-input-option-container-div").scrollTop($("#node-input-option-container-div").get(0).scrollHeight);
+            });
+
+            for (var i=0;i<this.options.length;i++) {
+                var option = this.options[i];
+                generateOption(i+1,option);
+            }
+
+            $( "#node-input-option-container" ).sortable({
+                axis: "y",
+                handle:".node-input-option-handle",
+                cursor: "move"
+            });
+        },
+        oneditsave: function() {
+            var options = $("#node-input-option-container").children();
+            var node = this;
+            node.options = [];
+            node.formValue ={};
+            options.each(function(i) {
+                var option = $(this);
+                var o = {
+                    label: option.find(".node-input-option-label").val(),//typedInput('value'),
+                    value: option.find(".node-input-option-value").val(),//typedInput('value'),
+                    type: option.find(".node-input-option-type").val(),//typedInput('value')
+                    required:option.find(".node-input-option-required").is(':checked')
+                };
+              //  o.value= o.value||o.label||(o.type+"_"+i);
+                node.formValue[o.value]= "";
+                node.options.push(o);
+            });
+        },
+        oneditresize: function() {
+            var options = $("#node-input-option-container").children();
+            var newWidth = ($("#node-input-option-container").width() - 175)/2;
+            var node = this;
+            options.each(function(i) {
+                node.resizeRule($(this),newWidth);
+            });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_form">
+<style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 18px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #ad1625;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(11px);
+  -ms-transform: translateX(11px);
+  transform: translateX(11px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
+    </div>
+    <div class="form-row">
+        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
+        <input type="text" id="node-input-label" placeholder="optional label">
+    </div>
+    <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%;min-width:520px">
+        <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Form elements</label>
+        <div style="display: inline-block; width: calc(80% + 15px);border: 1px solid #ccc;border-radius: 5px;box-sizing: border-box;">
+          <div style="width:100%;display: inline-block; background-color:#f3f3f3;padding-top:10px;padding-buttom:10px;	border-top:0px solid ; border-radius: 5px  5px 0  0; border-bottom: 1px solid #ccc;">
+              <div style="width:94%;display: inline-block;margin-left:32px">
+                <div style="width:19%;text-align:center;float:left; ">Label</div>
+                <div style="width:19%;text-align:center;float:left;">Name</div>
+                <div style="margin-left:7px;width:19%;text-align:center;float:left;">Type</div>
+                <div style="width:20%;text-align:center;float:left;">Required</div>
+                <div style="width:19%;text-align:center;float:left;">Remove</div>
+              </div>
+          </div>
+          <div id="node-input-option-container-div" style=" height: 257px; padding: 5px; overflow-y:scroll;">
+            <ol id="node-input-option-container" style=" list-style-type:none; margin: 0;"></ol>
+          </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top: 4px; margin-left: 103px;"><i class="fa fa-plus"></i> <span>element</span></a>
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="optional msg.topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_form">
+  <p>Adds a form to user interface.</p>
+  <p>Helps to collect multiple value from the user on submit button click as an object in <code> msg.payload</code> </p>
+  <p>Multiple input elements can be added using add elements button</p>
+  <p>Each element contains following components:</p>
+  <ul>
+    <li> <b>Label</b>  : Value that will be the label of the element in the user interface</li>
+    <li> <b>Name</b>  : Represents the key (variable name) in the  <code> msg.payload</code> in which the value of the corresponding element present</li>
+    <li> <b>Type</b>  : Drop drown option to select the type of input element </li>
+    <li> <b>Required</b>  : On switching on the user has to supply the value before submitting </li>
+    <li> <b>Delete</b>  :To remove the current element form the form </li>
+  </ul>
+  <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+</script>
