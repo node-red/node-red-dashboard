@@ -24,7 +24,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         this.select = function (index) {
             main.selectedTab = main.tabs[index];
-            $mdSidenav('left').close();
+            if (main.tabs.length > 0) { $mdSidenav('left').close(); }
             $location.path(index);
         };
 
@@ -38,11 +38,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             else {
                 main.links[index].link = $sce.trustAsResourceUrl(main.links[index].link);
                 main.selectedTab = main.links[index];
-                // $timeout(function() {
-                //     console.log(angular.element('.iframe'));
-                //     console.log(angular.element('.iframe').find('body'));
-                //     console.log(angular.element('.iframe').find('body').children());
-                // }, 2000);
             }
             $mdSidenav('left').close();
         };
@@ -57,7 +52,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 main.selectedTab = main.tabs[prevTabIndex];
             }
             else {
-                main.select(0);
+                $timeout( function() { main.select(0); }, 50 );
             }
             done();
         }, function () {
