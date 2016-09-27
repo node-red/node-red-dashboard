@@ -1,0 +1,32 @@
+.nr-dashboard-form {
+	display: inline-block;
+	width: 100%;
+	overflow-y: auto;
+
+}
+.nr-dashboard-form form{
+ padding: 15px;
+}
+.nr-dashboard-form md-input-container {
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+  margin: 0px;
+	display: inline-block;
+}
+.nr-dashboard-form md-datepicker {
+	padding-bottom: 10px;
+}
+.nr-dashboard-form md-switch {
+	margin-top: 0px;
+}
+
+.nr-dashboard-form input[type="checkbox"]{
+	height :auto !important;
+}
+
+.nr-dashboard-form-button {
+	width:50%;
+	float:left;
+
+}
