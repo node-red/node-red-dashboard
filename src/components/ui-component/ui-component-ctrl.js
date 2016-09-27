@@ -98,23 +98,23 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     break;
                 }
                 case 'form': {
-                    me.stop=function(event){
-                      if (13 == event.which) {
-                          event.preventDefault();
-                          event.stopPropagation();
-                      }
+                    me.stop=function(event) {
+                        if (13 == event.which) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
                     }
                     me.submit = function () {
-                      me.item.value = JSON.parse(JSON.stringify(me.item.formValue));
-                      me.item.formValue ={};
-                      me.valueChanged(0);
-                      $scope.$$childTail.form.$setUntouched();
-                      $scope.$$childTail.form.$setPristine();
+                        me.item.value = JSON.parse(JSON.stringify(me.item.formValue));
+                        me.item.formValue ={};
+                        me.valueChanged(0);
+                        $scope.$$childTail.form.$setUntouched();
+                        $scope.$$childTail.form.$setPristine();
                     };
                     me.reset = function () {
-                      me.item.formValue ={};
-                      $scope.$$childTail.form.$setUntouched();
-                      $scope.$$childTail.form.$setPristine();
+                        me.item.formValue ={};
+                        $scope.$$childTail.form.$setUntouched();
+                        $scope.$$childTail.form.$setPristine();
                     };
                 }
             }
