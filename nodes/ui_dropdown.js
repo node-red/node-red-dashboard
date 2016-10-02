@@ -26,6 +26,7 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
+            forwardInputMessages: config.passthru,
             control: control,
 
             convert: function (payload, oldValue, msg) {
