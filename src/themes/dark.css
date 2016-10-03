@@ -13,12 +13,22 @@ body.nr-dashboard-theme-dark {
 
 body.nr-dashboard-theme-dark md-content {
 	color: #0FBBC3;
+    background: transparent;
+    height: 100%;
 }
 
 body.nr-dashboard-theme-dark md-content md-card {
 	background-color: #333;
 	color: #eee;
 }
+
+/* Some colour classes */
+body.nr-dashboard-theme-dark .nr-dashboard-color { color: #0FBBC3; }
+body.nr-dashboard-theme-dark .nr-dashboard-error { color: #ff2929; }
+body.nr-dashboard-theme-dark .nr-dashboard-warning { color: #eaf42f; }
+body.nr-dashboard-theme-dark .nr-dashboard-ok { color: #49db3c; }
+body.nr-dashboard-theme-dark .nr-dashboard-dim { opacity: 0.5 !important; }
+
 
 /*
 	DASHBOARD HEADER

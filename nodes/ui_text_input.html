@@ -3,6 +3,8 @@
         category: 'dashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
+            name: {value: ''},
+            label: {value: ''},
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -15,10 +17,9 @@
                 }
             },
             height: {value: 0},
-            name: {value: ''},
+            passthru: {value: true},
             mode: {value: 'text', required: true},
             delay: {value: 300, validate: RED.validators.number()},
-            label: {value: ''},
             topic: {value: ''}
         },
         inputs:1,
@@ -56,10 +57,15 @@
         <select style="width:128px" id="node-input-mode">
             <option value="text">text input</option>
             <option value="email">email address</option>
+            <option value="password">password</option>
             <option value="color">color picker</option>
         </select>
         <label for="node-input-delay" style="text-align:right; width:100px"><i class="fa fa-clock-o"></i> Delay (ms)</label>
         <input type="text" style="width:58px" id="node-input-delay">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-play"></i> If <code>msg</code> arrives on input, pass through to output: </label>
+        <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope"></i> When changed, send:</label>

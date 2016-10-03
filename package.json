@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.0.1",
+    "version": "2.0.3",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -34,7 +34,9 @@
             "ui_text": "nodes/ui_text.js",
             "ui_gauge": "nodes/ui_gauge.js",
             "ui_chart": "nodes/ui_chart.js",
+            "ui_form": "nodes/ui_form.js",
             "ui_toast": "nodes/ui_toast.js",
+            "ui_ui_control": "nodes/ui_ui_control.js",
             "ui_template": "nodes/ui_template.js",
             "ui_link": "nodes/ui_link.js",
             "ui_tab": "nodes/ui_tab.js",
@@ -64,8 +66,9 @@
         "gulp-html-replace": "^1.6.0",
         "gulp-html-src": "^1.0.0",
         "gulp-if": "^2.0.0",
+        "gulp-jscs": "^4.0.0",
         "gulp-jshint": "^2.0.1",
-        "gulp-clean-css": "^2.0.10",
+        "gulp-clean-css": "^2.0.13",
         "gulp-htmlmin": "^2.0.0",
         "gulp-manifest": "^0.1.1",
         "gulp-uglify": "^1.5.1",

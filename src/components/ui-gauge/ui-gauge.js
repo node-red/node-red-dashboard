@@ -10,6 +10,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                 $timeout(function() {
                     var gauge;
                     var bgnd = $('#toolbar').css("background-color");
+                    //Detect panel background colour and make foreground text b/w depending.
+                    var colors = $('ui-card-panel').css("background-color").match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+                    var level = ((colors[1]*299) + (colors[2]*587) + (colors[3]*114))/1000;
+                    var fgnd = (level >= 128) ? '#111' : '#eee';
 
                     // Wave type gauge
                     if (scope.$eval('me.item.gtype') === 'wave') {
@@ -29,8 +33,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         gaugeConfig.waveTextColor = scope.$eval('me.item.waveoptions.waveTextColor')[scope.main.selectedTab.theme];
                         if (gaugeConfig.circleColor === undefined) { gaugeConfig.circleColor = bgnd; }
                         if (gaugeConfig.waveColor === undefined) { gaugeConfig.waveColor = bgnd; }
-                        if (gaugeConfig.textColor === undefined) { gaugeConfig.textColor = "#111"; }
-                        if (gaugeConfig.waveTextColor === undefined) { gaugeConfig.undefined = "#111"; }
+                        if (gaugeConfig.textColor === undefined) { gaugeConfig.textColor = fgnd; }
+                        if (gaugeConfig.waveTextColor === undefined) { gaugeConfig.waveTextColor = fgnd; }
 
                         gauge = loadLiquidFillGauge("gauge"+scope.$eval('$id'), scope.$eval('me.item.value'), gaugeConfig);
 
@@ -69,8 +73,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             gaugeOptions.pointerOptions = scope.$eval('me.item.gageoptions.pointerOptions')[scope.main.selectedTab.theme];
                         }
                         if (gaugeOptions.gaugeWidthScale === undefined) { delete gaugeOptions.gaugeWidthScale; }
-                        if (gaugeOptions.gaugeColor === undefined) { delete gaugeOptions.gaugeColor; }
-                        if (gaugeOptions.pointerOptions === undefined) { delete gaugeOptions.pointerOptions; }
+                        if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = "rgba(127,127,127,0.5)"; }
+                        if (gaugeOptions.pointerOptions === undefined) { gaugeOptions.pointerOptions = {color:fgnd}; }
 
                         if (scope.$eval('me.item.gtype') === 'compass') {
                             gaugeOptions.donut = true;
@@ -81,6 +85,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor')[scope.main.selectedTab.theme];
                             gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor')[scope.main.selectedTab.theme]];
                             if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = bgnd; }
+                            if (gaugeOptions.pointerOptions.color === undefined) { gaugeOptions.pointerOptions.color = bgnd; }
                         }
 
                         gauge = new JustGage(gaugeOptions);

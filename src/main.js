@@ -5,13 +5,12 @@ app.config(['$mdThemingProvider', '$compileProvider',
         /*$mdThemingProvider.theme('default')
             .primaryPalette('light-green')
             .accentPalette('red');*/
-
-        //white-list all protocolos
+        //white-list all protocols
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
     }]);
 
-app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$rootScope', '$sce', '$timeout',
-    function ($mdSidenav, $window, events, $location, $document, $mdToast, $rootScope, $sce, $timeout) {
+app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$rootScope', '$sce', '$timeout', '$scope',
+    function ($mdSidenav, $window, events, $location, $document, $mdToast, $rootScope, $sce, $timeout, $scope) {
         var main = this;
 
         this.tabs = [];
@@ -25,25 +24,20 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         this.select = function (index) {
             main.selectedTab = main.tabs[index];
-            $mdSidenav('left').close();
+            if (main.tabs.length > 0) { $mdSidenav('left').close(); }
             $location.path(index);
         };
 
         this.open = function (link, index) {
-            //console.log(link);
+            // console.log("LINK",link,index);
             // open in new tab
             if (link.target === 'newtab') {
                 $window.open(link.link, link.name);
             }
             // open in iframe // TODO : check iframe options (see Google)
             else {
-                main.links[index].link = main.links[index].link || $sce.trustAsResourceUrl(main.links[index].link);
+                main.links[index].link = $sce.trustAsResourceUrl(main.links[index].link);
                 main.selectedTab = main.links[index];
-                // $timeout(function() {
-                //     console.log(angular.element('.iframe'));
-                //     console.log(angular.element('.iframe').find('body'));
-                //     console.log(angular.element('.iframe').find('body').children());
-                // }, 2000);
             }
             $mdSidenav('left').close();
         };
@@ -58,9 +52,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 main.selectedTab = main.tabs[prevTabIndex];
             }
             else {
-                main.select(0);
+                $timeout( function() { main.select(0); }, 50 );
             }
-
             done();
         }, function () {
             main.loaded = true;
@@ -85,8 +78,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     found[key] = msg[key];
                 }
             }
-            
-            // PL
             if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
                 found.me.processInput(msg);
             }
@@ -102,5 +93,46 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 position: msg.position
             };
             $mdToast.show(opts);
+        });
+
+        $scope.onSwipeLeft = function(ev) { moveTab(-1); }
+        $scope.onSwipeRight = function(ev) { moveTab(1); }
+
+        function moveTab(d) {
+            var len = main.tabs.length;
+            if (len > 1) {
+                var i = (main.selectedTab.order - 1 + d) % len;
+                if (i < 0) { i += len; }
+                main.select(i);
+            }
+        }
+
+        events.on('ui-control', function(msg) {
+            if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
+                if (typeof msg.tab === 'string') {
+                    // is it the name of a tab ?
+                    for (var i in main.tabs) {
+                        if (msg.tab == main.tabs[i].header) {
+                            main.select(i);
+                            return;
+                        }
+                    }
+                    // or the name of a link ?
+                    for (var j in main.links) {
+                        if (msg.tab == main.links[j].name) {
+                            main.open(main.links[j], j);
+                            return;
+                        }
+                    }
+                }
+                // or is it a valid index number ?
+                var index = parseInt(msg.tab);
+                if (Number.isNaN(index) || index < 0) { return; }
+                if (index < main.tabs.length) { main.select(index); }
+                else if ((index - main.tabs.length) < main.links.length) {
+                    index -= main.tabs.length;
+                    main.open(main.links[index], index);
+                }
+            }
         });
     }]);

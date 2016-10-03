@@ -141,6 +141,7 @@ RED.nodes.registerType('ui_base',{
 
         function ensureDashboardNode(createMissing) {
             if (globalDashboardNode !== null) {
+                // Check if it has been deleted beneath us
                 var n = RED.nodes.node(globalDashboardNode.id);
                 if (n===null) {
                     globalDashboardNode = null;
@@ -176,9 +177,8 @@ RED.nodes.registerType('ui_base',{
         $('<label>').html('Title').appendTo(divTitle);
         $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 65px)")
             .change(function() {
-                ensureDashboardNode(true);
-                var currentTitle = globalDashboardNode.name;
-                if (currentTitle !== $(this).val()) {
+                if (!globalDashboardNode || globalDashboardNode.name !== $(this).val()) {
+                    ensureDashboardNode(true);
                     globalDashboardNode.name = $(this).val();
                     RED.nodes.dirty(true);
                 }
@@ -199,9 +199,8 @@ RED.nodes.registerType('ui_base',{
             '<option value="theme-dark">Dark</option>'+
             '</select>')
             .change(function() {
-                ensureDashboardNode(true);
-                var currentTheme = globalDashboardNode.theme;
-                if (currentTheme !== $(this).val()) {
+                if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
+                    ensureDashboardNode(true);
                     globalDashboardNode.theme = $(this).val();
                     RED.nodes.dirty(true);
                 }
@@ -258,7 +257,6 @@ RED.nodes.registerType('ui_base',{
             addButton: false,
             addItem: function(container,i,tab) {
                 var newTab = false;
-                ensureDashboardNode(true);
                 if (!tab.node) {
                     tab.node = {
                         id: RED.nodes.id(),
@@ -505,7 +503,8 @@ RED.nodes.registerType('ui_base',{
         orphanedWidgets.find('a').click(function(event) {
             var unknownGroups = {};
             RED.nodes.eachNode(function(node) {
-                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast') {
+                console.log("TYPE",node.type);
+                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
                     if (!RED.nodes.node(node.group)) {
                         var g = node.group || "_BLANK_";
                         unknownGroups[g] = unknownGroups[g] || [];
@@ -585,7 +584,6 @@ RED.nodes.registerType('ui_base',{
             sortable: ".nr-db-sb-list-header",
             addButton: false,
             addItem: function(container,i,link) {
-                ensureDashboardNode(true);
                 if (!link.node) {
                     link.node = {
                         id: RED.nodes.id(),
@@ -665,7 +663,7 @@ RED.nodes.registerType('ui_base',{
             var unknownGroups = {};
             var count = 0;
             RED.nodes.eachNode(function(node) {
-                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast') {
+                if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
                     if (!RED.nodes.node(node.group)) {
                         var g = node.group || "_BLANK_";
                         unknownGroups[g] = unknownGroups[g] || [];
@@ -732,7 +730,7 @@ RED.nodes.registerType('ui_base',{
                         groupElements[node.group].push(node);
                     } else if (node.type === 'ui_link') {
                         links.push(node);
-                    } else if (node.type !== 'ui_toast') {
+                    } else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
                         unknownGroups++;
                     }
                 }

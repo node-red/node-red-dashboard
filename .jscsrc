@@ -12,5 +12,6 @@
     //"validateParameterSeparator": ", ",
     //"validateQuoteMarks": false,
     "requireSpaceAfterKeywords": ["do","for","if","else","switch","case","try","while"],
-    "maximumLineLength": 255
+    "maximumLineLength": 255,
+    "disallowTabs": true
 }

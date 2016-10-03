@@ -14,10 +14,6 @@ md-card {
     box-shadow: none;
 }
 
-md-content {
-	background: transparent;
-}
-
 .node-red-ui--inline-link {
 	width: 100%;
 	height: 100%;

@@ -3,7 +3,7 @@
 */
 
 .nr-dashboard-disabled {
-    opacity: 0.4 !important;
+    opacity: 0.5 !important;
     pointer-events: none !important;
 }
 
@@ -11,9 +11,19 @@ body.nr-dashboard-theme-light {
 	background: #f0f0f0;
 }
 
-body.nr-dashboard-theme-light md-content {}
+body.nr-dashboard-theme-light md-content {
+    background: transparent;
+    height: 100%;
+}
 
 body.nr-dashboard-theme-light md-content md-card {}
+
+/* Some colour classes */
+body.nr-dashboard-theme-light .nr-dashboard-color { color: #0094CE; }
+body.nr-dashboard-theme-light .nr-dashboard-error { color: #ff3f00; }
+body.nr-dashboard-theme-light .nr-dashboard-warning { color: #ffd939; }
+body.nr-dashboard-theme-light .nr-dashboard-ok { color: #8ccf3f; }
+body.nr-dashboard-theme-light .nr-dashboard-dim { opacity: 0.4 !important; }
 
 
 /*

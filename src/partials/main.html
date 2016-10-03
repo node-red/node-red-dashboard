@@ -1,5 +1,4 @@
-<md-sidenav layout="column" class="md-sidenav-left"
-            md-component-id="left">
+<md-sidenav layout="column" class="md-sidenav-left" md-component-id="left">
     <md-list>
         <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
             <ui-icon icon="{{tab.icon}}" style="margin: 5px"></ui-icon>
@@ -20,7 +19,7 @@
     </div>
 </md-toolbar>
 <md-content flex>
-    <div ui-masonry ng-show="main.selectedTab.header">
+    <div ui-masonry ng-show="main.selectedTab.header" md-swipe-right="onSwipeRight();" md-swipe-left="onSwipeLeft();">
         <ui-card-panel ng-repeat="group in main.selectedTab.items">
             <ui-component ng-repeat="control in group.items" item="control"></ui-component>
         </ui-card-panel>

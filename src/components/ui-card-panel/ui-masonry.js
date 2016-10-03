@@ -15,6 +15,17 @@ angular.module('ui').directive('uiMasonry', ['$window',
 
 MasonryController.$inject = ['uiSizes', '$timeout'];
 
+function blockSort(b1,b2) {
+    if (b1.y < b2.y) {
+        return -1;
+    }
+    if (b1.y > b2.y) {
+        return 1;
+    }
+    return (b1.x - b2.x)
+}
+
+
 function MasonryController(sizes, $timeout) {
     var ctrl = this;
     var root;
@@ -36,54 +47,145 @@ function MasonryController(sizes, $timeout) {
 
     function refreshSizes() {
         var children = root.children();
-        var availableWidth = root.width();
-        var sum = 0;
-        var c = 0;
-        while (sum < availableWidth && c < (children.length)) {
-            // how many groups can fit into one row/screen width?
-            sum += getPxWidth(children[c]);
-            sum += sizes.gx;
-            c++;
-        }
-        sum -= sizes.gx;
-
-        firstRow = Math.max(1, Math.min(children.length, (sum > availableWidth) ? (c - 1) : c));
-
-        var groupsWidth = 0;
-        for (var i = 0; i < firstRow; i++) {
-            groupsWidth += getPxWidth(children[i]);
-        }
-        groupsWidth += (sizes.gx * (firstRow - 1)); // add gap between groups
-        var leftPadding = Math.max(0, (availableWidth - groupsWidth) / 2);
-        leftPadding = (getMaxWidth(children) + leftPadding > availableWidth) ? sizes.px : leftPadding;
-
+        var availableWidth = root.width() - (sizes.gx*2);
         var maxy = 0;
-        children.each(function (c) {
+        var maxx = 0;
+
+        // blocks is an array of potential locations for groups to be placed
+        var blocks = [{x:0,y:sizes.gy,w:availableWidth,h:Infinity,used:false}];
+        var assignedBlocks = [];
+        var blockCache = {};
+        blockCache["0:"+(sizes.gy)] = blocks[0];
+        var blockCacheKey;
+        children.each(function(c) {
             var child = $(this);
-            var x = 0, y = sizes.gy;
-            for (var j = 0; j < maxy; j++) {
-                if (j === maxy - 1) {
-                    // place the group on a new row
-                    x = 0;
-                    y = j;
-                    break;
-                }
-                var maxx = availableWidth - 2 * leftPadding;
-                var openX = getPxXOffset(children, c, maxx, j); // for the given y, <j>, what's the next available x-coordinate?
-                if (openX >= 0 && (openX + getPxWidth(child)) <= maxx) {
-                    y += j;
-                    x = openX;
+            var cw = child.width();
+            var ch = child.height();
+            var j;
+            var added = false;
+            // For this group, find the best fit block to place it in
+            for (var i=0;i<blocks.length;i++) {
+                var b = blocks[i];
+                // Ignore blocks that have already been assigned, or that are too small
+                if (!b.used && cw <= b.w && ch <= b.h) {
+                    var clear = true;
+                    // If this group is placed in this block (b), check it won't overlap any
+                    // existing occupied blocks
+                    for (j=0;j<assignedBlocks.length;j++) {
+                        var b2 = assignedBlocks[j];
+                        if ((b2.y < b.y && b2.y+b2.h > b.y && b.x<=b2.x && b.x+cw >= b2.x) ||
+                                (b.x > b2.x && b.x < b2.x+b2.w && b.y >= b2.y && b.y <= b2.y+b2.h)) {
+                            blockCacheKey = b.x+":"+(b2.y+b2.h+sizes.gy);
+                            if (!blockCache[blockCacheKey]) {
+                                blocks.push({
+                                    x:b.x,
+                                    y:b2.y+b2.h+sizes.gy,
+                                    w: b.w,
+                                    h: b.h,
+                                    used:false
+                                });
+                                blockCache[blockCacheKey] = blocks[blocks.length-1];
+                                blocks.sort(blockSort);
+                            }
+                            clear = false;
+                            break;
+                        }
+                    }
+                    if (!clear) {
+                        continue;
+                    }
+                    // This block is suitable for use, so place the group in it
+                    b.used = true;
+                    b.group = child;
+                    b.assigned = true;
+                    assignedBlocks.push(b);
+                    added = true;
+                    // Add new candidate blocks to the right and below the group
+                    clear = true;
+                    var rightBlock = {
+                        x:b.x+cw+sizes.gx,
+                        y:b.y,
+                        w: b.w - sizes.gx - cw,
+                        h: b.h,
+                        used:false
+                    };
+                    blockCacheKey = (b.x+cw+sizes.gx)+":"+b.y;
+                    if (!blockCache[blockCacheKey]) {
+                        // Check the candidate block on the right doesn't overlap anything
+                        for (j=0;j<assignedBlocks.length;j++) {
+                            var b3 = assignedBlocks[j];
+                            if (b3 !== b && b3.x <= rightBlock.x && b3.x+b3.w >= rightBlock.x && b3.y <= rightBlock.y && b3.y+b3.h >= rightBlock.y) {
+                                clear = false;
+                                break;
+                            }
+                        }
+                        if (clear) {
+                            blockCache[blockCacheKey] = rightBlock;
+                            blocks.push(rightBlock);
+
+                        }
+                    }
+
+                    // block below definitely clear
+                    blockCacheKey = b.x+":"+(b.y+ch+sizes.gy);
+                    if (!blockCache[blockCacheKey]) {
+                        blocks.push({
+                            x:b.x,
+                            y:b.y+ch+sizes.gy,
+                            w:b.w,
+                            h:b.h,
+                            used:false
+                        });
+                        blockCache[blockCacheKey] = blocks[blocks.length-1];
+                    }
+                    b.w = cw;
+                    b.h = ch;
                     break;
                 }
             }
-            child.css({
-                left: leftPadding + x,
-                top: y
-            });
-            child.addClass('visible');
-            maxy = Math.max(maxy, y + child.height() + sizes.gy);
+            if (!added) {
+                // Find the bottom
+                assignedBlocks.forEach(function(b) {
+                    maxy = Math.max(maxy,b.y+b.h);
+                });
+                var bottomBlock;
+                bottomBlock = blockCache["0:"+(maxy+sizes.gy)];
+                if (!bottomBlock) {
+                    bottomBlock = {x:0, y: maxy+sizes.gy}
+                    blockCache["0:"+(maxy+sizes.gy)] = bottomBlock;
+                }
+                bottomBlock.used = true;
+                bottomBlock.group = child;
+                bottomBlock.assigned = true;
+                bottomBlock.w = cw;
+                bottomBlock.h = ch;
+                blocks.push(bottomBlock);
+                assignedBlocks.push(bottomBlock);
+
+                blockCacheKey = "0:"+(bottomBlock.y+ch+sizes.gy);
+                if (!blockCache[blockCacheKey]) {
+                    blocks.push({
+                        x:0,y:bottomBlock.y+ch+sizes.gy,w:availableWidth,h:Infinity
+                    });
+                    blockCache[blockCacheKey] = blocks[blocks.length-1];
+                }
+            }
+            // Resort the blocks to ensure they are ordered top to bottom
+            blocks.sort(blockSort);
+            // console.table(blocks);
         });
-        root.css('min-height', maxy + sizes.gy);
+        assignedBlocks.forEach(function(b) {
+            maxx = Math.max(maxx,b.x+b.w);
+            maxy = Math.max(maxy,b.y+b.h);
+        });
+        var leftPadding = Math.max(0,sizes.gx+(availableWidth - maxx)/2);
+        assignedBlocks.forEach(function(b) {
+            b.group.css({
+                left: leftPadding + b.x,
+                top: b.y
+            }).addClass('visible');
+        });
+        root.css('min-height', maxy + sizes.gy + 3);
     }
 
     function getPxWidth(group) {
@@ -99,7 +201,8 @@ function MasonryController(sizes, $timeout) {
         for (var i = 0; i < maxindex; i++) {
             var c = $(children[i]);
             // if the child exists at the same <y>
-            if (c.height() + parseInt(c.css('top')) > y) {
+            var top = parseInt(c.css('top'));
+            if (c.height() + top >= y) {
                 // and space is not available
                 if ((x + c.width() + sizes.gx) > parseInt(c.css('left'))) {
                     x += c.width() + sizes.gx;

@@ -14,6 +14,7 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
+            forwardInputMessages: config.passthru,
             control: {
                 type: 'numeric',
                 label: config.label,
