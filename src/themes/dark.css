@@ -55,7 +55,7 @@ body.nr-dashboard-theme-dark md-sidenav {
 
 .nr-dashboard-theme-dark ui-card-panel {
 	background-color: #333;
-	outline: 1px solid #555;
+	border: 1px solid #555;
 }
 
 /*
