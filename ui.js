@@ -1,3 +1,4 @@
+
 var inited = false;
 
 module.exports = function(RED) {

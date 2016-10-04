@@ -1,3 +1,4 @@
+
 var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'nvd3ChartDirectives', 'sprintf']);
 
 app.config(['$mdThemingProvider', '$compileProvider',

@@ -1,12 +1,17 @@
 #### 2.0.3: Maintenance Release
 
+License change
+
+ - Change of license from MIT to Apache-2.0 to be in line with other Node-RED projects
+    (approved by all contributors)
+
 Enhancements
 
  - Complete re-write of group layout code to stop overlapping issues
  - Add ui_form widget to submit complete form in one go
  - Add swipe left/right between tabs
  - Add allow formatting of chart x-axis date formatting
- - Let ui_numeric and ui_textinput also control passthru of incoming values
+ - Let ui_numeric, ui_textinput and ui_dropdown also control passthru of incoming values
 
 Fixes
 
@@ -17,6 +22,8 @@ Fixes
  - Stop double scrollbars appearing on internal frames
  - Stop ui_control causing missing group prompt
  - Fix missing sidenav "left" item on initial page load
+ - Fix enter key to work for ui_textinput on FF
+ - Fix groups sizes to display border correctly on FF
 
 #### 2.0.2: Maintenance Release
 

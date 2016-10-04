@@ -15,7 +15,7 @@
         {"name": "Nick O'Leary"},
         {"name": "Dave Conway-Jones"}
     ],
-    "license": "MIT",
+    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/node-red/node-red-dashboard.git"
@@ -63,6 +63,7 @@
         "gulp": "^3.9.0",
         "gulp-angular-templatecache": "^1.8.0",
         "gulp-concat": "^2.6.0",
+        "gulp-header": "^1.8.8",
         "gulp-html-replace": "^1.6.0",
         "gulp-html-src": "^1.0.0",
         "gulp-if": "^2.0.0",
