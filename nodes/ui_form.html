@@ -153,7 +153,7 @@
                     required:option.find(".node-input-option-required").is(':checked')
                 };
                 // o.value= o.value||o.label||(o.type+"_"+i);
-                node.formValue[o.value]= "";
+                node.formValue[o.value]= o.type == "checkbox" || o.type == "switch" ? false :"";
                 node.options.push(o);
             });
         },

@@ -106,13 +106,21 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     }
                     me.submit = function () {
                         me.item.value = JSON.parse(JSON.stringify(me.item.formValue));
-                        me.item.formValue ={};
+                        //me.item.formValue ={};
                         me.valueChanged(0);
-                        $scope.$$childTail.form.$setUntouched();
-                        $scope.$$childTail.form.$setPristine();
+                        // $scope.$$childTail.form.$setUntouched();
+                        // $scope.$$childTail.form.$setPristine();
+                        me.reset();
                     };
                     me.reset = function () {
-                        me.item.formValue ={};
+                        //me.item.formValue ={};
+                          for(var x in me.item.formValue){
+                            if(typeof (me.item.formValue[x])  === "boolean")
+                              me.item.formValue[x] = false;
+                            else {
+                              me.item.formValue[x] = "";
+                            }
+                          }
                         $scope.$$childTail.form.$setUntouched();
                         $scope.$$childTail.form.$setPristine();
                     };
