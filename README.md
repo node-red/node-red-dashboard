@@ -3,6 +3,8 @@
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard.
 
+<img src="http://nodered.org/images/dashboardd.png"/>
+
 It is a continuation of the [node-red-contrib-ui](https://www.npmjs.com/package/node-red-contrib-ui)
 module created by Andrei Tatar.
 
@@ -100,3 +102,5 @@ npm install
 ```
 The plugin uses the ```dist``` folder if it exists and contains an ```index.html``` file. Make sure to delete it if you want to use the non-minified version.
 After changing the front-end code in the src folder, ```gulp``` will update the minified files and update the *appcache* manifest.
+
+<img src="http://nodered.org/images/dashboardl.png"/>
