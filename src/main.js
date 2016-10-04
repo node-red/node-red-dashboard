@@ -36,7 +36,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             // open in iframe // TODO : check iframe options (see Google)
             else {
-                main.links[index].link = $sce.trustAsResourceUrl(main.links[index].link);
+                if (typeof main.links[index].link === "string") {
+                    main.links[index].link = $sce.trustAsResourceUrl(main.links[index].link);
+                }
                 main.selectedTab = main.links[index];
             }
             $mdSidenav('left').close();
