@@ -19,8 +19,9 @@
             height: {value: 0},
             passthru: {value: true},
             topic: {value: ''},
-            min: {value: 0, required: true, validate: RED.validators.number()},
-            max: {value: 10, required: true, validate: RED.validators.number()},
+            min: {value: 0, required:true, validate:RED.validators.number()},
+            max: {value: 10, required:true, validate:RED.validators.number()},
+            step: {value: 1}
         },
         inputs:1,
         outputs:1,
@@ -55,9 +56,11 @@
     <div class="form-row">
         <label for="node-input-min">Range</label>
         <label for="node-input-min" style="width:auto">min</label>
-        <input type="text" id="node-input-min" style="width:80px">
-        <label for="not-input-max" style="width:auto; margin-left:20px;">max</label>
-        <input type="text" id="node-input-max" style="width:80px">
+        <input type="text" id="node-input-min" style="width:60px">
+        <label for="not-input-max" style="width:auto; margin-left:22px;">max</label>
+        <input type="text" id="node-input-max" style="width:60px">
+        <label for="not-input-step" style="width:auto; margin-left:22px;">step</label>
+        <input type="text" id="node-input-step" style="width:60px">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-play"></i> If <code>msg</code> arrives on input, pass through to output: </label>
