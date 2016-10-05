@@ -57,6 +57,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             else {
                 $timeout( function() { main.select(0); }, 50 );
             }
+            $mdToast.hide();
             done();
         }, function () {
             main.loaded = true;
@@ -84,6 +85,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
                 found.me.processInput(msg);
             }
+        });
+
+        events.on('disconnect', function(m) {
+            $mdToast.show({
+                template: '<md-toast><div class="md-toast-error">Connection lost</div></md-toast>',
+                position: 'top right',
+                hideDelay: 6000000
+            });
         });
 
         events.on('show-toast', function (msg) {

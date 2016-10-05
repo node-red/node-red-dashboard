@@ -1,10 +1,10 @@
 angular.module('ui').service('UiEvents', ['$timeout',
     function ($timeout) {
         var updateValueEventName = 'update-value';
-        
+
         this.connect = function(onuiloaded, replaydone) {
             var socket = io({path: location.pathname + 'socket.io'});
-            
+
             this.emit = function (event, msg) {
                 if (typeof msg === 'undefined') {
                     msg = event;
@@ -12,13 +12,13 @@ angular.module('ui').service('UiEvents', ['$timeout',
                 }
                 socket.emit(event, msg);
             };
-            
+
             this.on = function(event, handler) {
                 if (typeof handler === 'undefined') {
                     handler = event;
                     event = updateValueEventName;
                 }
-                
+
                 var socketHandler = function(data) {
                     $timeout(function() {
                         handler(data);
@@ -29,13 +29,13 @@ angular.module('ui').service('UiEvents', ['$timeout',
                     socket.removeListener(event, socketHandler);
                 };
             };
-            
+
             socket.on('ui-controls', function (data) {
                 $timeout(onuiloaded(data, function() {
                     socket.emit('ui-replay-state');
                 }), 0);
             });
-            
+
             socket.on('ui-replay-done', function() {
                 $timeout(replaydone, 0);
             });
