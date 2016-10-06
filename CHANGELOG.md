@@ -10,8 +10,10 @@ Enhancements
  - Complete re-write of group layout code to stop overlapping issues
  - Add ui_form widget to submit complete form in one go
  - Add swipe left/right between tabs
+ - Add "comms lost" toast when connection lost to server
  - Add allow formatting of chart x-axis date formatting
  - Let ui_numeric, ui_textinput and ui_dropdown also control passthru of incoming values
+ - Add step size option to ui_slider widget to allow floating point numbers more easily
 
 Fixes
 
