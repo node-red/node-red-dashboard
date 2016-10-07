@@ -38,16 +38,20 @@ These nodes will replace the contrib-ui versions. node-red-contrib-ui
 
 #### Dashboard sidebar
 
-The widget layout is now managed by a `Dashboard` tab in the sidebar of the Node-RED editor. From here you can
-re-order the tabs, groups and widgets, and add and edit their properties.
+The widget layout is now managed by a `dashboard` tab in the sidebar of the Node-RED editor.
 
-**Links** are no longer added as nodes in the workspace - they are managed in the
-dashboard sidebar. They can now be opened in an iframe - if allowed by the target page.
+**Title** - the `title` of the UI page can be set.
 
-**Themes** - the theme of the UI is now set in the Dashboard sidebar. You
+**Theme** - the theme of the UI is set in the dashboard sidebar. You
 cannot have different themes for each tab.
 
-##### Widgets
+**Tabs** - From here you can re-order the tabs, groups and widgets, and add and edit their properties.
+
+**Links** - are no longer added as nodes in the workspace - they are managed in the
+dashboard sidebar. They can also be opened in an iframe - if allowed by the target page.
+
+
+#### Widgets
 
 The width and height of widgets can be set, as can the width of *groups*. These are all specified in units of approximately 50 pixels.
 
@@ -74,9 +78,7 @@ Any widget can be disabled by passing in a `msg.enabled` property set to `false;
 **Tip:** The *Text* widget will accept html - so you can use it together with the *fa-icons* we
 already use to create indicator type widgets.
 
-The `title` of the UI page can be set.
-
-##### Removed
+#### Removed
 
 Radio buttons have been removed. Buttons and switches can now be sized 1x1, and switches can be made to interact (via Node-RED).
 
@@ -91,8 +93,8 @@ Before raising a pull-request, please read our
 [contributing guide](https://github.com/node-red/node-red-dashboard/blob/master/CONTRIBUTING.md).
 
 This project adheres to the [Contributor Covenant 1.4](http://contributor-covenant.org/version/1/4/).
- By participating, you are expected to uphold this code. Please report unacceptable
- behaviour to any of the [project's core team](https://github.com/orgs/node-red/teams/core).
+By participating, you are expected to uphold this code. Please report unacceptable
+behavior to any of the [project's core team](https://github.com/orgs/node-red/teams/core).
 
 ## Developers
 
@@ -107,11 +109,13 @@ After changing the front-end code in the src folder, use ```gulp``` to update th
 
     gulp
 
-We also have have suggested lint and js styles that can be checked with:
+We also have have suggested *lint* and *js* styles that can be checked with:
 
     gulp lint
     gulp jscs
 
-If submitting a Pull Request (PR) please do NOT include the minified `/dist` files. Thank you.
+If submitting a Pull Request (PR) please do NOT include the minified `/dist` files.
+
+Thank you.
 
 <img src="http://nodered.org/images/dashboardl.png"/>
