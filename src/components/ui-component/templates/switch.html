@@ -1,6 +1,7 @@
 <md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout="row" layout-align="space-between center"
         class="nr-dashboard-switch" ng-click="me.item.value = !me.item.value; me.valueChanged(0)" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
-    <p ng-if="me.item.label && (me.item.width > 1)" class="label">{{me.item.label}}</p>
+        <p ng-if="me.item.label && (me.item.width > 1)" class="label" ng-bind-html="me.item.getLabel()"></p>
+        <!-- <p ng-if="me.item.label && (me.item.width > 1)" class="label">{{me.item.label}}</p> -->
     <md-switch ng-model="me.item.value" ng-change="me.item.value = !me.item.value"
         aria-label="{{me.item.label}}"
         ng-class="{'center' : !me.item.label}"

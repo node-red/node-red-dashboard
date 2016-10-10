@@ -65,6 +65,9 @@ module.exports = function(RED) {
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic || msg.topic;
+            },
+            beforeEmit: function(msg, value) {
+                return { msg:msg, value:value };
             }
         });
         node.on("close", done);
