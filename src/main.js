@@ -89,7 +89,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on('disconnect', function(m) {
             $mdToast.show({
-                template: '<md-toast><div class="md-toast-error">Connection lost</div></md-toast>',
+                template: '<md-toast><div class="md-toast-error"><i class="fa fa-plug"></i>&nbsp; Connection lost</div></md-toast>',
                 position: 'top right',
                 hideDelay: 6000000
             });

@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.0.3",
+    "version": "2.1.0",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -11,9 +11,9 @@
     },
     "contributors": [
         {"name": "Andrei Tatar"},
+        {"name": "Dave Conway-Jones"},
         {"name": "Joe Pavitt"},
-        {"name": "Nick O'Leary"},
-        {"name": "Dave Conway-Jones"}
+        {"name": "Nick O'Leary"}
     ],
     "license": "Apache-2.0",
     "repository": {
