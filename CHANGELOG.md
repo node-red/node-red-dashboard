@@ -14,6 +14,7 @@ Enhancements
  - Add allow formatting of chart x-axis date formatting
  - Let ui_numeric, ui_textinput and ui_dropdown also control passthru of incoming values
  - Add step size option to ui_slider widget to allow floating point numbers more easily
+ - Allow switch label to be dynamically set by msg input 
 
 Fixes
 
@@ -26,6 +27,7 @@ Fixes
  - Fix missing sidenav "left" item on initial page load
  - Fix enter key to work for ui_textinput on FF
  - Fix groups sizes to display border correctly on FF
+ - Fix dropdown select types
 
 #### 2.0.2: Maintenance Release
 
