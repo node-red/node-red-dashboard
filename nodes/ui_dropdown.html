@@ -47,7 +47,7 @@
 
                 $('<i style="color: #eee; cursor: move; margin-left: 3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
-                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:'str',types:['str','num','bool']});
+                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:option.type||'str',types:['str','num','bool']});
                 var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Label', value:option.label}).appendTo(row);
 
                 var finalspan = $('<span/>',{style:"float: right;margin-right: 10px;"}).appendTo(row);
@@ -69,7 +69,7 @@
                 $("#node-input-option-container-div").scrollTop($("#node-input-option-container-div").get(0).scrollHeight);
             });
 
-            for (var i=0;i<this.options.length;i++) {
+            for (var i=0; i<this.options.length; i++) {
                 var option = this.options[i];
                 generateOption(i+1,option);
             }
@@ -88,8 +88,15 @@
                 var option = $(this);
                 var o = {
                     label: option.find(".node-input-option-label").val(),
-                    value: option.find(".node-input-option-value").typedInput('value')
+                    value: option.find(".node-input-option-value").typedInput('value'),
+                    type: option.find(".node-input-option-value").typedInput('type')
                 };
+                if (option.find(".node-input-option-value").typedInput('type') === "num") {
+                    o.value = Number(o.value);
+                }
+                if (option.find(".node-input-option-value").typedInput('type') === "bool") {
+                    o.value = (o.value == "true");
+                }
                 node.options.push(o);
             });
         },
