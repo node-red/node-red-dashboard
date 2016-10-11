@@ -30,37 +30,24 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
-            convert: function (payload) {
+            convert: function (payload,oldval) {
                 var onvalue;
-                if (onvalueType === "date") {
-                    onvalue = Date.now();
-                } else {
-                    onvalue = RED.util.evaluateNodeProperty(config.onvalue,onvalueType,node);
-                }
+                if (onvalueType === "date") { onvalue = Date.now(); } 
+                else { onvalue = RED.util.evaluateNodeProperty(config.onvalue,onvalueType,node); }
 
                 var offvalue;
-                if (offvalueType === "date") {
-                    offvalue = Date.now();
-                } else {
-                    offvalue = RED.util.evaluateNodeProperty(config.offvalue,offvalueType,node);
-                }
+                if (offvalueType === "date") { offvalue = Date.now(); }
+                else { offvalue = RED.util.evaluateNodeProperty(config.offvalue,offvalueType,node); }
 
-                if (RED.util.compareObjects(onvalue,payload)) {
-                    return true;
-                } else if (RED.util.compareObjects(offvalue,payload)) {
-                    return false;
-                } else {
-                    return payload?true:false;
-                }
+                if (RED.util.compareObjects(onvalue,payload)) { return true; }
+                else if (RED.util.compareObjects(offvalue,payload)) { return false; }
+                else { return oldval; }
             },
             convertBack: function (value) {
                 var payload = value ? config.onvalue : config.offvalue;
                 var payloadType = value ? onvalueType : offvalueType;
-                if (payloadType === "date") {
-                    value = Date.now();
-                } else {
-                    value = RED.util.evaluateNodeProperty(payload,payloadType,node);
-                }
+                if (payloadType === "date") { value = Date.now(); }
+                else { value = RED.util.evaluateNodeProperty(payload,payloadType,node); }
                 return value;
             },
             beforeSend: function (msg) {
