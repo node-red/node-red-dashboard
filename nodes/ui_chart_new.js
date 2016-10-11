@@ -48,9 +48,7 @@ module.exports = function(RED) {
                     oldValue = value;
                 } else {
                     value = parseFloat(value);
-                    var point;
-                    if (isNaN(value)) { return {newPoint: point, updatedValues: oldValue}; }
-                    //if (isNaN(value)) { return oldValue};
+                    if (isNaN(value)) { return oldValue; }
                     var topic = msg.topic || 'Data';
                     var found;
                     if (!oldValue) { oldValue = []; }
@@ -59,14 +57,12 @@ module.exports = function(RED) {
                         for (var j = 0; j < oldValue[0].values.length; j++) {
                             if (oldValue[0].values[j][0] === topic) {
                                 oldValue[0].values[j][1] = value;
-                                point = [topic, value];
                                 found = true;
                                 break;
                             }
                         }
                         if (!found) {
-                            point = [topic, value];
-                            oldValue[0].values.push(point);
+                            oldValue[0].values.push([topic,value]);
                         }
                     }
                     else { // handle line and area data
@@ -81,7 +77,7 @@ module.exports = function(RED) {
                             oldValue.push(found);
                         }
                         var time = new Date().getTime();
-                        point = [time, value];
+                        var point = [time, value];
                         found.values.push(point);
 
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
@@ -106,9 +102,7 @@ module.exports = function(RED) {
                         }
                     }
                 }
-                console.log(JSON.stringify(oldValue));
-                return {newPoint: point, updatedValues: oldValue};
-                //return oldValue;
+                return oldValue;
             }
         };
         var done = ui.add(options);
@@ -118,5 +112,5 @@ module.exports = function(RED) {
         }, 100);
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_chart", ChartNode);
+    RED.nodes.registerType("ui_chart_new", ChartNode);
 };

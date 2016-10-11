@@ -10,6 +10,8 @@ angular.module('ui').service('UiEvents', ['$timeout',
                     msg = event;
                     event = updateValueEventName;
                 }
+                console.log("emitting on client side");
+                console.log(event);
                 socket.emit(event, msg);
             };
 

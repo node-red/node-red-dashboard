@@ -113,19 +113,46 @@ function add(opt) {
             return;
         }
 
+        //(dan): convert the new point
         var oldValue = currentValues[opt.node.id];
-        var newValue = opt.convert(msg.payload, oldValue, msg);
+        //var newValue = opt.convert(msg.payload, oldValue, msg);
+        var conversion = opt.convert(msg.payload, oldValue, msg);
+        var newPoint;
+        if (conversion.newPoint) {
+            newPoint = [{key: 'Data', values: [conversion.newPoint]}];
+        }
+       
+        var updatedValues = conversion.updatedValues;
 
-        if (!opt.emitOnlyNewValues || oldValue != newValue) {
-            currentValues[opt.node.id] = newValue;
-            var toEmit = opt.beforeEmit(msg, newValue);
+        if (!opt.emitOnlyNewValues || oldValue != updatedValues) {
+            currentValues[opt.node.id] = updatedValues;
+            //(dan): emit the newPoint instead of the whole array
+            var toEmit;
+
+            if (conversion.newPoint) {
+                toEmit = opt.beforeEmit(msg, newPoint);
+            } else {
+                toEmit = opt.beforeEmit(msg, updatedValues);
+            }
+            var toStore = opt.beforeEmit(msg,updatedValues);
+            //var toEmit = opt.beforeEmit(msg, newValue);
             toEmit.id = opt.node.id;
+            toStore.id = opt.node.id;
+
+            console.log("emitting--------------------");
             io.emit(updateValueEventName, toEmit);
-            replayMessages[opt.node.id] = toEmit;
+            // replayMessages[opt.node.id] = toEmit;
+            console.log('toEmit')
+            console.log(toEmit);
+            console.log("*******");
+            console.log(toStore);
+
+            //(dan): store the full dataset so it can be replayed if client connects
+            replayMessages[opt.node.id] = toStore;
 
             if (opt.forwardInputMessages && opt.node._wireCount) {
                 //forward to output
-                msg.payload = opt.convertBack(newValue);
+                msg.payload = opt.convertBack(updatedValues);
                 msg = opt.beforeSend(msg) || msg;
                 opt.beforeSend(msg);
                 opt.node.send(msg);
@@ -206,6 +233,11 @@ function init(server, app, log, redSettings) {
     io.on('connection', function(socket) {
         updateUi(socket);
         socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
+
+        //send all data
+        // var objToEmit = {id: }
+        // io.emit(updateValueEventName, currentValues);
+
         socket.on('ui-replay-state', function() {
             var ids = Object.getOwnPropertyNames(replayMessages);
             ids.forEach(function (id) {

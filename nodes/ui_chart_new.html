@@ -1,0 +1,164 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_chart',{
+        category: 'dashboard',
+        color: 'rgb(119, 198, 204)',
+        defaults: {
+            name: {value: ''},
+            group: {type: 'ui_group', required: true},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                    var width = v||0;
+                    var currentGroup = $('#node-input-group').val()||this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    var valid = !groupNode || +width <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error",!valid);
+                    return valid;
+                }},
+            height: {value: 0},
+            label: {value: 'chart'},
+            chartType: {value: 'line'},
+            legend: {value: 'false'},
+            xformat: {value: '%H:%M:%S'},
+            interpolate: {value: 'linear', required:true},
+            nodata: {value: ''},
+            ymin: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
+            ymax: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
+            removeOlder: {value: 1, validate:RED.validators.number(), required:true},
+            removeOlderUnit: {value: '3600', required:true}
+        },
+        inputs:1,
+        outputs:2,
+        align: "right",
+        icon: "ui_chart.png",
+        paletteLabel: 'chart',
+        label: function() { return this.name || 'chart'; },
+        oneditprepare: function() {
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
+            $("#node-input-chartType").change(function() {
+                if ($(this).val() === "bar") {
+                    $("#x-axis-show").hide();
+                    $("#interpolate-show").hide();
+                } else {
+                    $("#x-axis-show").show();
+                    $("#interpolate-show").show();
+                }
+            });
+            if (!$("#node-input-chartType").val()) {
+                $("#node-input-chartType").val("line");
+            }
+
+            var oval = $("#node-input-xformat").val();
+            if (!oval) { $("#node-input-xformat").val("%H:%M:%S"); }
+            var odef = 'custom';
+            if (oval === "%H:%M:%S") { odef = oval; }
+            if (oval === "%H:%M") { odef = oval; }
+            if (oval === "%Y-%m-%d") { odef = oval; }
+            if (oval === "%d/%m") { odef = oval; }
+            if (oval === "%a %H:%M") { odef = oval; }
+
+            var ohms = {value:"%H:%M:%S", label:"H:M:S", hasValue:false};
+            var ohm = {value:"%H:%M", label:"H:M", hasValue:false};
+            var oymd = {value:"%Y-%m-%d", label:"Year-Month-Date", hasValue:false};
+            var odm = {value:"%d/%m", label:"Date/Month", hasValue:false};
+            var oahm = {value:"%a %H:%M", label:"Day H:M", hasValue:false};
+            var ocus = {value:"custom", label:"custom", icon:"red/images/typedInput/az.png"};
+
+            $("#node-input-xformat").typedInput({
+                default: odef,
+                types:[ ohms, ohm, oahm, odm, oymd, ocus ]
+            });
+
+        },
+        oneditsave: function() {
+            if ($("#node-input-xformat").typedInput('type') !== 'custom') {
+                $("#node-input-xformat").val($("#node-input-xformat").typedInput('type'));
+            }
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_chart">
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
+    </div>
+    <div class="form-row">
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
+        <input type="text" id="node-input-label" placeholder="optional chart title">
+    </div>
+    <div class="form-row">
+        <label for="node-input-removeOlder"><i class="fa fa-line-chart"></i> Type</label>
+        <select id="node-input-chartType" style="width:120px;">
+            <option value="line">Line chart</option>
+            <option value="bar">Bar chart</option>
+        </select>
+    </div>
+    <div class="form-row" id="x-axis-show">
+        <label for="node-input-removeOlder">X-axis</label>
+        <label for="node-input-removeOlder" style="width: auto">last</label>
+        <input type="text" id="node-input-removeOlder" style="width:50px;">
+        <select id="node-input-removeOlderUnit" style="width:90px;">
+            <option value="1">seconds</option>
+            <option value="60">minutes</option>
+            <option value="3600">hours</option>
+            <option value="86400">days</option>
+            <option value="604800">weeks</option>
+        </select>
+        <input type="text" id="node-input-xformat" style="width:150px;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ymin">Y-axis</label>
+        <label for="node-input-ymin" style="width:auto">min</label>
+        <input type="text" id="node-input-ymin" style="width:80px">
+        <label for="not-input-ymax" style="width:auto; margin-left: 20px;">max</label>
+        <input type="text" id="node-input-ymax" style="width:80px">
+    </div>
+    <div class="form-row" id="interpolate-show">
+        <label for="node-input-interpolate">Interpolate</label>
+        <select id="node-input-interpolate" style="width:120px;">
+            <option value="linear">linear</option>
+            <option value="step-after">step</option>
+            <option value="basis">b-spline</option>
+            <option value="cardinal">cardinal</option>
+            <option value="monotone">cubic</option>
+        </select>
+        &nbsp;&nbsp;&nbsp;&nbsp;Legend <select id="node-input-legend" style="width:100px;">
+            <option value="false">None</option>
+            <option value="true">Show</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-nodata">Blank label</label>
+        <input type="text" id="node-input-nodata" placeholder="display this text before valid data arrives">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_chart">
+    <p>Plots the input values on a chart. This can either be a time based line chart or a bar chart.</p>
+    <p>Each input <code>msg.payload</code> value will be converted to a number. If the
+    conversion fails, the message is ignored.</p>
+    <p>Minimum and Maximum <b>Y</b> axis values are optional. The graph will auto-scale to any values received.</p>
+    <p>Multiple lines can be shown on the same chart by using a different <code>msg.topic</code>
+    value on each input message.</p>
+    <p>The <b>X</b> axis defines a time window. Older data will be automatically removed from the graph.
+    The axis labels can be formatted using a <a href="https://github.com/d3/d3-3.x-api-reference/blob/master/Time-Formatting.md" target="_new">
+    d3 time formatted</a> string.</p>
+    <p>The <b>Blank label</b> field can be used to display some text before any valid data is received.</p>
+    <p>The first output contains an array of the chart state that can be persisted if needed. The second
+    output sends a <code>msg.payload</code> of <b>"restore"</b> that can be used to trigger a restore of
+    the state of the chart.</p>
+</script>

@@ -79,6 +79,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'chart': {
+                    console.log("init case chart");
+                    //console.log(me.item.value);
+                    //me.item.value = [{key: "Data", values: me.item.value}];
                     if (!me.item.value || me.item.value === "changed") {
                         me.item.value = [];
                     }
@@ -126,6 +129,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         }
 
         me.valueChanged = function (throttleTime) {
+            //log in here ***dan, store and handle chart data
+            console.log("hello");
             throttle({
                 id: me.item.id,
                 value: me.item.value

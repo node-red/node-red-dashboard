@@ -19,6 +19,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.selectedTab = null;
         this.loaded = false;
 
+        // var chartData = [];
+
         this.toggleSidenav = function () {
             $mdSidenav('left').toggle();
         };
@@ -79,7 +81,29 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             for (var key in msg) {
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
-                    found[key] = msg[key];
+
+                    //If we are dealing with values of line charts
+                    if (key === 'value' && found.hasOwnProperty('type') && found['type'] === 'chart' 
+                        && found.hasOwnProperty('look') && found['look'] === 'line') {
+
+                        console.log("line chart----");
+                        console.log(msg);
+                        
+                        //update the value array on the found object to include the new points
+
+                        //If the value object does not exist add the data
+                        if (!found.hasOwnProperty(key) || found.value.length === 0) {
+                            found[key] = msg[key];
+                            
+                        } else {
+                            //otherwise concat the arrays
+                            found[key][0].values = found[key][0].values.concat(msg[key][0].values);
+                        }  
+
+                    } else {
+                        found[key] = msg[key];
+                    }
+                    
                 }
             }
             if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
