@@ -1,4 +1,4 @@
-#### 2.0.3: Maintenance Release
+#### 2.1.0: Maintenance Release
 
 License change
 
@@ -14,7 +14,8 @@ Enhancements
  - Add allow formatting of chart x-axis date formatting
  - Let ui_numeric, ui_textinput and ui_dropdown also control passthru of incoming values
  - Add step size option to ui_slider widget to allow floating point numbers more easily
- - Allow switch label to be dynamically set by msg input 
+ - Allow switch label to be dynamically set by msg input
+ - Add Dashboard version number to console.log on start
 
 Fixes
 
@@ -28,6 +29,7 @@ Fixes
  - Fix enter key to work for ui_textinput on FF
  - Fix groups sizes to display border correctly on FF
  - Fix dropdown select types
+ - Fix switch to only switch if input value matches on and off values
 
 #### 2.0.2: Maintenance Release
 
