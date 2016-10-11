@@ -90,20 +90,18 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         console.log(msg);
                         
                         //update the value array on the found object to include the new points
-
                         //If the value object does not exist add the data
-                        if (!found.hasOwnProperty(key) || found.value.length === 0) {
+                        if (!found.hasOwnProperty(key) || found.value.length === 0 || !msg.value[0].update) {
                             found[key] = msg[key];
                             
                         } else {
+                            console.log("exists");
                             //otherwise concat the arrays
                             found[key][0].values = found[key][0].values.concat(msg[key][0].values);
                         }  
-
                     } else {
                         found[key] = msg[key];
-                    }
-                    
+                    }   
                 }
             }
             if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {

@@ -119,7 +119,7 @@ function add(opt) {
         var conversion = opt.convert(msg.payload, oldValue, msg);
         var newPoint;
         if (conversion.newPoint) {
-            newPoint = [{key: 'Data', values: [conversion.newPoint]}];
+            newPoint = [{key: 'Data', update: true, values: [conversion.newPoint]}];
         }
        
         var updatedValues = conversion.updatedValues;
