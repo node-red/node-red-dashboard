@@ -100,6 +100,11 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     }
                     break;
                 }
+
+                case 'chart_new': {
+                    console.log('chart new');
+                    break;
+                }
                 case 'form': {
                     me.stop=function(event) {
                         if (13 == event.which) {
@@ -129,8 +134,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         }
 
         me.valueChanged = function (throttleTime) {
-            //log in here ***dan, store and handle chart data
-            console.log("hello");
             throttle({
                 id: me.item.id,
                 value: me.item.value

@@ -78,6 +78,7 @@ module.exports = function(RED) {
                         }
                         if (!found) {
                             found = { key:topic, values:[] };
+                            console.log(oldValue);
                             oldValue.push(found);
                         }
                         var time = new Date().getTime();

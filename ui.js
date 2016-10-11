@@ -121,8 +121,9 @@ function add(opt) {
         if (conversion.newPoint) {
             newPoint = [{key: 'Data', update: true, values: [conversion.newPoint]}];
         }
-       
-        var updatedValues = conversion.updatedValues;
+
+        (typeof(conversion) === 'object') ? updatedValues = conversion.updatedValues : updatedValues = conversion;
+        
 
         if (!opt.emitOnlyNewValues || oldValue != updatedValues) {
             currentValues[opt.node.id] = updatedValues;
@@ -139,13 +140,8 @@ function add(opt) {
             toEmit.id = opt.node.id;
             toStore.id = opt.node.id;
 
-            console.log("emitting--------------------");
             io.emit(updateValueEventName, toEmit);
             // replayMessages[opt.node.id] = toEmit;
-            console.log('toEmit')
-            console.log(toEmit);
-            console.log("*******");
-            console.log(toStore);
 
             //(dan): store the full dataset so it can be replayed if client connects
             replayMessages[opt.node.id] = toStore;

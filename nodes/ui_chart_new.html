@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_chart',{
+    RED.nodes.registerType('ui_chart_new',{
         category: 'dashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
@@ -15,8 +15,8 @@
                     return valid;
                 }},
             height: {value: 0},
-            label: {value: 'chart'},
-            chartType: {value: 'line'},
+            label: {value: 'chart_new'},
+            chartType: {value: 'line-new'},
             legend: {value: 'false'},
             xformat: {value: '%H:%M:%S'},
             interpolate: {value: 'linear', required:true},
@@ -48,7 +48,7 @@
                 }
             });
             if (!$("#node-input-chartType").val()) {
-                $("#node-input-chartType").val("line");
+                $("#node-input-chartType").val("line-new");
             }
 
             var oval = $("#node-input-xformat").val();
@@ -81,7 +81,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_chart">
+<script type="text/x-red" data-template-name="ui_chart_new">
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -99,7 +99,7 @@
     <div class="form-row">
         <label for="node-input-removeOlder"><i class="fa fa-line-chart"></i> Type</label>
         <select id="node-input-chartType" style="width:120px;">
-            <option value="line">Line chart</option>
+            <option value="line-new">Line chart</option>
             <option value="bar">Bar chart</option>
         </select>
     </div>
@@ -147,7 +147,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_chart">
+<script type="text/x-red" data-help-name="ui_chart_new">
     <p>Plots the input values on a chart. This can either be a time based line chart or a bar chart.</p>
     <p>Each input <code>msg.payload</code> value will be converted to a number. If the
     conversion fails, the message is ignored.</p>

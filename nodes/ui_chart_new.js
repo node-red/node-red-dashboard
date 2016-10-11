@@ -2,9 +2,9 @@ module.exports = function(RED) {
     var ui = require('../ui')(RED);
     var ChartIdList = {};
 
-    function ChartNode(config) {
+    function NewChartNode(config) {
         RED.nodes.createNode(this, config);
-        this.chartType = config.chartType || "line";
+        this.chartType = config.chartType || "line-new";
         var node = this;
 
         var group = RED.nodes.getNode(config.group);
@@ -25,7 +25,7 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             control: {
-                type: 'chart',
+                type: 'chart_new',
                 look: node.chartType,
                 order: config.order,
                 label: config.label,
@@ -48,7 +48,9 @@ module.exports = function(RED) {
                     oldValue = value;
                 } else {
                     value = parseFloat(value);
-                    if (isNaN(value)) { return oldValue; }
+                    var point;
+                    if (isNaN(value)) { return {newPoint: point, updatedValues: oldValue}; }
+                    //if (isNaN(value)) { return oldValue};
                     var topic = msg.topic || 'Data';
                     var found;
                     if (!oldValue) { oldValue = []; }
@@ -57,12 +59,14 @@ module.exports = function(RED) {
                         for (var j = 0; j < oldValue[0].values.length; j++) {
                             if (oldValue[0].values[j][0] === topic) {
                                 oldValue[0].values[j][1] = value;
+                                point = [topic, value];
                                 found = true;
                                 break;
                             }
                         }
                         if (!found) {
-                            oldValue[0].values.push([topic,value]);
+                            point = [topic, value];
+                            oldValue[0].values.push(point);
                         }
                     }
                     else { // handle line and area data
@@ -74,10 +78,11 @@ module.exports = function(RED) {
                         }
                         if (!found) {
                             found = { key:topic, values:[] };
+                            console.log(oldValue);
                             oldValue.push(found);
                         }
                         var time = new Date().getTime();
-                        var point = [time, value];
+                        point = [time, value];
                         found.values.push(point);
 
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
@@ -102,7 +107,9 @@ module.exports = function(RED) {
                         }
                     }
                 }
-                return oldValue;
+                console.log(JSON.stringify(oldValue));
+                return {newPoint: point, updatedValues: oldValue};
+                //return oldValue;
             }
         };
         var done = ui.add(options);
@@ -112,5 +119,5 @@ module.exports = function(RED) {
         }, 100);
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_chart_new", ChartNode);
+    RED.nodes.registerType("ui_chart_new", NewChartNode);
 };
