@@ -1,4 +1,16 @@
-#### 2.1.0: Maintenance Release
+
+#### 2.1.1: Maintenance Release
+
+Enhancements
+
+    - Add step option to ui_numeric input widget
+
+Fixes
+
+    - change link `_new` refs to `_blank` to be standards compliant  
+
+
+### 2.1.0: Milestone Release
 
 License change
 
@@ -68,6 +80,6 @@ Fixes
  - Sorting groups/tabs in sidebar not sticking
  - Tidy up auto-generation of ui_base node
 
-#### 2.0.0: Milestone Release
+### 2.0.0: Milestone Release
 
  - First release published to npm!

@@ -23,6 +23,7 @@ module.exports = function(RED) {
                 value: config.min,
                 min: config.min,
                 max: config.max,
+                step: Number(config.step || 1),
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
