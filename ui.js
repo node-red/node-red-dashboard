@@ -225,9 +225,17 @@ function init(server, app, log, redSettings) {
 
     io = socketio(server, {path: socketIoPath});
 
+    var dashboardMiddleware = function(req, res, next) { next(); }
+
+    if (redSettings.dashboardMiddleware) {
+      if (typeof redSettings.dashboardMiddleware === "function") {
+        dashboardMiddleware = redSettings.dashboardMiddleware;
+      }
+    }
+
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
         if (!err) {
-            app.use( join(settings.path), serveStatic(path.join(__dirname, "dist")) );
+            app.use(join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "dist")));
         }
         else {
             log.info("Dashboard using development folder");
