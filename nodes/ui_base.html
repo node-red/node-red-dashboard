@@ -14,7 +14,7 @@
 }
 .nr-db-sb .form-row input,
 .nr-db-sb .form-row select {
-    width: calc(100% - 20px);
+    width: calc(100% - 2px);
     margin-bottom:0;
 }
 .nr-db-sb .red-ui-editableList-container {
@@ -125,6 +125,8 @@
 }
 </style>
 <script type="text/javascript">
+var uip = RED.settings.uiPath || 'ui';
+RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
 RED.nodes.registerType('ui_base',{
     category: 'config',
     defaults: {
@@ -160,7 +162,7 @@ RED.nodes.registerType('ui_base',{
                         type: "ui_base",
                         name: "Node-RED Dashboard",
                         theme: "theme-light",
-                        url: '/ui',
+                        url: 'ui',
                         users:[]
                     }
                     RED.nodes.add(globalDashboardNode);
@@ -175,7 +177,7 @@ RED.nodes.registerType('ui_base',{
 
         var divTitle = $('<div>',{class:"form-row"}).appendTo(form);
         $('<label>').html('Title').appendTo(divTitle);
-        $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 65px)")
+        $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 48px)")
             .change(function() {
                 if (!globalDashboardNode || globalDashboardNode.name !== $(this).val()) {
                     ensureDashboardNode(true);
@@ -187,7 +189,7 @@ RED.nodes.registerType('ui_base',{
 
         $('<a href="#" class="editor-button" style="margin-left: 10px;"><i class="fa fa-external-link"></i></a>')
             .click(function(evt) {
-                window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+"ui");
+                window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
                 evt.preventDefault();
             })
             .appendTo(divTitle);

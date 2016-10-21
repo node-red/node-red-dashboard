@@ -9,6 +9,5 @@ module.exports = function(RED) {
         };
         ui.addBaseConfig(config.name, config.theme);
     }
-    
     RED.nodes.registerType("ui_base", BaseNode);
 };
