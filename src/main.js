@@ -10,14 +10,26 @@ app.config(['$mdThemingProvider', '$compileProvider',
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
     }]);
 
-app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$rootScope', '$sce', '$timeout', '$scope',
-    function ($mdSidenav, $window, events, $location, $document, $mdToast, $rootScope, $sce, $timeout, $scope) {
+app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope',
+    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope) {
         var main = this;
 
         this.tabs = [];
         this.links = [];
         this.selectedTab = null;
         this.loaded = false;
+
+        function moveTab(d) {
+            var len = main.tabs.length;
+            if (len > 1) {
+                var i = (main.selectedTab.order - 1 + d) % len;
+                if (i < 0) { i += len; }
+                main.select(i);
+            }
+        }
+
+        $scope.onSwipeLeft = function(ev) { moveTab(-1); }
+        $scope.onSwipeRight = function(ev) { moveTab(1); }
 
         this.toggleSidenav = function () {
             $mdSidenav('left').toggle();
@@ -35,7 +47,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (link.target === 'newtab') {
                 $window.open(link.link, link.name);
             }
-            // open in iframe // TODO : check iframe options (see Google)
+            // open in iframe  (if allowed by remote site)
             else {
                 if (typeof main.links[index].link === "string") {
                     main.links[index].link = $sce.trustAsResourceUrl(main.links[index].link);
@@ -76,6 +88,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on(function (msg) {
             var found = findControl(msg.id, main.tabs);
+            if (found === undefined) { return; }
             for (var key in msg) {
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
@@ -96,28 +109,41 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('show-toast', function (msg) {
-            var toastScope = $rootScope.$new();
-            toastScope.toast = msg;
-            var opts = {
-                scope: toastScope,
-                templateUrl: 'partials/toast.html',
-                hideDelay: msg.displayTime,
-                position: msg.position
-            };
-            $mdToast.show(opts);
-        });
-
-        $scope.onSwipeLeft = function(ev) { moveTab(-1); }
-        $scope.onSwipeRight = function(ev) { moveTab(1); }
-
-        function moveTab(d) {
-            var len = main.tabs.length;
-            if (len > 1) {
-                var i = (main.selectedTab.order - 1 + d) % len;
-                if (i < 0) { i += len; }
-                main.select(i);
+            if (msg.dialog === true) {
+                var confirm;
+                if (msg.cancel) {
+                    confirm = $mdDialog.confirm()
+                        .title(msg.title)
+                        .textContent(msg.message)
+                        .ariaLabel(msg.ok + " or " + msg.cancel)
+                        .ok(msg.ok)
+                        .cancel(msg.cancel);
+                }
+                else {
+                    confirm = $mdDialog.alert()
+                        .title(msg.title)
+                        .textContent(msg.message)
+                        .ariaLabel(msg.ok)
+                        .ok(msg.ok)
+                        .clickOutsideToClose(false)
+                }
+                $mdDialog.show(confirm).then(
+                    function() { events.emit({ id:msg.id, value:msg.ok }); },
+                    function() { events.emit({ id:msg.id, value:msg.cancel }); }
+                );
             }
-        }
+            else {
+                var toastScope = $rootScope.$new();
+                toastScope.toast = msg;
+                var opts = {
+                    scope: toastScope,
+                    templateUrl: 'partials/toast.html',
+                    hideDelay: msg.displayTime,
+                    position: msg.position
+                };
+                $mdToast.show(opts);
+            }
+        });
 
         events.on('ui-control', function(msg) {
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
@@ -145,6 +171,32 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     index -= main.tabs.length;
                     main.open(main.links[index], index);
                 }
+            }
+        });
+
+        events.on('ui-audio', function(msg) {
+            if (msg.hasOwnProperty("tts")) {
+                if ('speechSynthesis' in window) {
+                    var voices = window.speechSynthesis.getVoices();
+                    var words = new SpeechSynthesisUtterance(msg.tts);
+                    words.voice = voices[msg.voice];
+                    window.speechSynthesis.speak(words);
+                }
+                else { console.log("Your Browser does not support Text-to-Speech"); }
+            }
+            if (msg.hasOwnProperty("audio")) {
+                window.AudioContext = window.AudioContext||window.webkitAudioContext||window.mozAudioContext;
+                try {
+                    var context = new AudioContext();
+                    var source = context.createBufferSource();
+                    var buffer = new Uint8Array(msg.audio);
+                    context.decodeAudioData(buffer.buffer, function(buffer) {
+                        source.buffer = buffer;
+                        source.connect(context.destination);
+                        source.start(0);
+                    })
+                }
+                catch(e) { alert("Error playing audio: "+e); }
             }
         });
     }]);

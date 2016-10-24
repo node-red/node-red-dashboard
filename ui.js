@@ -255,7 +255,7 @@ function itemSorter(item1, item2) {
 }
 
 function addControl(tab, groupHeader, control) {
-    if (typeof control.type !== 'string') { return; }
+    if (typeof control.type !== 'string') { return function() {}; }
     groupHeader = groupHeader || settings.defaultGroupHeader;
     control.order = parseFloat(control.order);
 

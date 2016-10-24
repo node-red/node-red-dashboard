@@ -245,7 +245,25 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 .nr-dashboard-theme-dark .nr-dashboard-text {}
 
-/*Form*/
+
+/* Dialog */
+
+.nr-dashboard-theme-dark md-dialog {
+    color: #eee;
+    background-color: #333;
+    border: 1px solid #555;
+}
+
+.nr-dashboard-theme-dark .md-dialog-content {
+    padding: 24px;
+}
+
+.nr-dashboard-theme-dark .md-button.md-primary {
+	color: #0FBBC3 !important;
+}
+
+
+/* Form */
 .nr-dashboard-theme-dark  .nr-dashboard-form-button {
   background-color:  #097479 !important;
 	  color: rgba(255, 255, 255, 0.87);

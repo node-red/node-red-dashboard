@@ -5,6 +5,10 @@
         defaults: {
             position: {value: 'top right'},
             displayTime: {value: '3'},
+            outputs: {value: 0},
+            ok: {value: 'OK', required: true},
+            cancel: {value: ''},
+            topic: {value: ''},
             name: {value: ''}
         },
         inputs:1,
@@ -12,23 +16,55 @@
         align: "right",
         icon: "ui_toast.png",
         paletteLabel: 'notification',
-        label: function() { return this.name || "show notification"; }
+        label: function() { return this.name || (this.position==="dialog" ? "show dialog" : "show notification"); },
+        oneditprepare: function() {
+            $("#node-input-position").change(function() {
+                if ($("#node-input-position option:selected").val() === 'dialog') {
+                    $("#node-toast-displaytime").hide();
+                    $("#node-dialog-displayok").show();
+                    $("#node-dialog-displaycancel").show();
+                    $("#node-dialog-topic").show();
+                } else {
+                    $("#node-toast-displaytime").show();
+                    $("#node-dialog-displayok").hide();
+                    $("#node-dialog-displaycancel").hide();
+                    $("#node-dialog-topic").hide();
+                }
+            });
+        },
+        oneditsave: function() {
+            if ($("#node-input-position option:selected").val() === 'dialog') { this.outputs = 1; }
+            else { this.outputs = 0; }
+        }
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_toast">
     <div class="form-row">
         <label for="node-input-position"><i class="fa fa-th-large"></i> Layout</label>
-        <select type="text" id="node-input-position" style="display: inline-block; width: 250px; vertical-align: top;">
+        <select type="text" id="node-input-position" style="display:inline-block; width:70%; vertical-align:top;">
             <option value="top right">Top Right</option>
             <option value="bottom right">Bottom Right</option>
             <option value="top left">Top Left</option>
             <option value="bottom left">Bottom Left</option>
+            <option value="dialog">OK / Cancel Dialog</option>
         </select>
     </div>
-    <div class="form-row">
+    <div class="form-row" id="node-toast-displaytime">
         <label for="node-input-displayTime"><i class="fa fa-clock-o"></i> Timeout (S)</label>
         <input type="text" id="node-input-displayTime" placeholder="e.g. 3 seconds">
+    </div>
+    <div class="form-row" id="node-dialog-displayok">
+        <label for="node-input-ok"><i class="fa fa-check"></i> Default action label</label>
+        <input type="text" id="node-input-ok" placeholder="label for OK button">
+    </div>
+    <div class="form-row" id="node-dialog-displaycancel">
+        <label for="node-input-cancel"><i class="fa fa-times"></i> Secondary action label</label>
+        <input type="text" id="node-input-cancel" placeholder="(optional label for Cancel button)">
+    </div>
+    <div class="form-row" id="node-dialog-topic">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -37,7 +73,11 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_toast">
-    <p>Shows <code>msg.payload</code> as a notification message on the user interface.</p>
+    <p>Shows <code>msg.payload</code> as a popup notification or OK / Cancel dialog
+    message on the user interface.</p>
     <p>If a <code>msg.topic</code> is available it will be used as the title.</p>
     <p>You may also configure the position and duration of the notification.</p>
+    <p>The dialog returns a <code>msg.payload</code> string of whatever you configure
+    the button label(s) to be. The second (cancel) button is optional, as is the return
+    value of <code>msg.topic</code>.</p>
 </script>
