@@ -53,21 +53,23 @@ module.exports = function(RED) {
                     //if (isNaN(value)) { return oldValue};
                     var topic = msg.topic || 'Data';
                     var found;
-                    if (!oldValue) { oldValue = []; }
+                    if (!oldValue) { oldValue = [];}
                     if (node.chartType === "bar") {  // handle bar type data
-                        if (oldValue.length === 0) { oldValue = [{ key:node.id, values:[] }] }
-                        for (var j = 0; j < oldValue[0].values.length; j++) {
-                            if (oldValue[0].values[j][0] === topic) {
-                                oldValue[0].values[j][1] = value;
-                                point = [topic, value];
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) {
-                            point = [topic, value];
-                            oldValue[0].values.push(point);
-                        }
+                        // if (oldValue.length === 0) { oldValue = [{ key:node.id, values:[] }] }
+                        // for (var j = 0; j < oldValue[0].values.length; j++) {
+                        //     if (oldValue[0].values[j][0] === topic) {
+                        //         oldValue[0].values[j][1] = value;
+                        //         point = [topic, value];
+                        //         found = true;
+                        //         break;
+                        //     }
+                        // }
+                        // if (!found) {
+                        //     point = [topic, value];
+                        //     oldValue[0].values.push(point);
+                        // }
+
+                        // todo - dan reimplment for barcharts
                     }
                     else { // handle line and area data
                         for (var i = 0; i < oldValue.length; i++) {
@@ -77,23 +79,28 @@ module.exports = function(RED) {
                             }
                         }
                         if (!found) {
-                            found = { key:topic, values:[] };
-                            console.log(oldValue);
+                            found = { key:topic, values:{labels: [], data: []} };
                             oldValue.push(found);
                         }
                         var time = new Date().getTime();
-                        point = [time, value];
-                        found.values.push(point);
+                        found.values.data.push(value);
+                        found.values.labels.push(time);
 
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
                         var limitTime = new Date().getTime() - limitOffsetSec * 1000;
 
                         var remove = [];
+
+                        console.log(oldValue);
+
                         oldValue.forEach(function (series, index) {
                             var i=0;
-                            while (i<series.values.length && series.values[i][0]<limitTime) { i++; }
-                            if (i) { series.values.splice(0, i); }
-                            if (series.values.length === 0) { remove.push(index); }
+                            while (i<series.values.data.length && series.values.data[i][0]<limitTime) { i++; }
+                            if (i) { 
+                                series.values.data.splice(0, i);
+                                series.values.labels.splice(0, i);
+                            }
+                            if (series.values.data.length === 0) { remove.push(index); }
                         });
 
                         remove.forEach(function (index) {
@@ -102,13 +109,13 @@ module.exports = function(RED) {
 
                         // if more datapoints than number of pixels wide...
                         // TODO - warning is not the answer but hey... it's a hint.
-                        if (found.values.length % pixelsWide === 0) {
+                        if (found.values.data.length % pixelsWide === 0) {
                             node.warn("More than "+found.values.length+" datapoints");
                         }
                     }
                 }
                 console.log(JSON.stringify(oldValue));
-                return {newPoint: point, updatedValues: oldValue};
+                return {newLabel: time, newData: value, updatedValues: oldValue};
                 //return oldValue;
             }
         };

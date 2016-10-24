@@ -117,9 +117,11 @@ function add(opt) {
         var oldValue = currentValues[opt.node.id];
         //var newValue = opt.convert(msg.payload, oldValue, msg);
         var conversion = opt.convert(msg.payload, oldValue, msg);
+   
         var newPoint;
-        if (conversion.newPoint) {
-            newPoint = [{key: 'Data', update: true, values: [conversion.newPoint]}];
+        if (conversion.newLabel && conversion.newData) {
+            console.log('updating!! ----');
+            newPoint = [{key: 'Data', update: true, values: [{label: conversion.newLabel, data: conversion.newData}]}];
         }
 
         (typeof(conversion) === 'object') ? updatedValues = conversion.updatedValues : updatedValues = conversion;
@@ -130,7 +132,8 @@ function add(opt) {
             //(dan): emit the newPoint instead of the whole array
             var toEmit;
 
-            if (conversion.newPoint) {
+            if (conversion.newLabel && conversion.newData) {
+                console.log('before emit updating----');
                 toEmit = opt.beforeEmit(msg, newPoint);
             } else {
                 toEmit = opt.beforeEmit(msg, updatedValues);
@@ -216,7 +219,8 @@ function init(server, app, log, redSettings) {
                 'sprintf-js',
                 'jquery', 'jquery-ui',
                 'raphael', 'justgage',
-                'd3', 'nvd3', 'angularjs-nvd3-directives'
+                'd3', 'nvd3', 'angularjs-nvd3-directives',
+                'angular-chart.js', 'chart.js'
             ];
             vendor_packages.forEach(function (packageName) {
                 app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));
