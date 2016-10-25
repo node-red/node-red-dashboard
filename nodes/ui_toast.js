@@ -19,8 +19,10 @@ module.exports = function(RED) {
             control:{},
             storeFrontEndInputAsState:false,
             forwardInputMessages:false,
-            beforeSend: function (msg) {
-                msg.topic = config.topic || msg.topic;
+            beforeSend: function (toSend,msg) {
+                var m = msg.value.msg;
+                m.topic = config.topic || m.topic;
+                return m;
             }
         });
 
@@ -33,7 +35,8 @@ module.exports = function(RED) {
                 id: node.id,
                 dialog: (node.position === "dialog") || false,
                 ok: node.ok,
-                cancel: node.cancel
+                cancel: node.cancel,
+                msg: msg
             });
         });
 

@@ -128,8 +128,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .clickOutsideToClose(false)
                 }
                 $mdDialog.show(confirm).then(
-                    function() { events.emit({ id:msg.id, value:msg.ok }); },
-                    function() { events.emit({ id:msg.id, value:msg.cancel }); }
+                    function() {
+                        msg.msg.payload = msg.ok;
+                        events.emit({ id:msg.id, value:msg });
+                    },
+                    function() {
+                        msg.msg.payload = msg.cancel;
+                        events.emit({ id:msg.id, value:msg });
+                    }
                 );
             }
             else {
