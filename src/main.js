@@ -85,9 +85,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     //If we are dealing with values of line charts
                     if (key === 'value' && found.hasOwnProperty('type') && found['type'] === 'chart' 
                         && found.hasOwnProperty('look') && found['look'] === 'line') {
-
-                        console.log("line chart----");
-                        console.log(msg);
                         
                         //update the value array on the found object to include the new points
                         //If the value object does not exist add the data
@@ -95,26 +92,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                             found[key] = msg[key];
                             
                         } else {
-                            console.log("exists");
                             //otherwise concat the arrays
                             found[key][0].values = found[key][0].values.concat(msg[key][0].values);
                         }
                     } else {
                         found[key] = msg[key];
                     }
-
-                    //new line chart
-                    if (key === 'value' && found.hasOwnProperty('type') && found['type'] === 'chart_new' 
-                        && found.hasOwnProperty('look') && found['look'] === 'line-new') {
-
-
-                        console.log('new line chartttt');
-                        console.log(msg);
-                        console.log(found);
-                        $scope.data = [1,2,3];
-                        $scope.labels = [1,2,3];
-
-                    }  
                 }
             }
             if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {

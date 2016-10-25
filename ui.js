@@ -120,7 +120,6 @@ function add(opt) {
    
         var newPoint;
         if (conversion.newLabel && conversion.newData) {
-            console.log('updating!! ----');
             newPoint = [{key: 'Data', update: true, values: [{label: conversion.newLabel, data: conversion.newData}]}];
         }
 
@@ -133,7 +132,6 @@ function add(opt) {
             var toEmit;
 
             if (conversion.newLabel && conversion.newData) {
-                console.log('before emit updating----');
                 toEmit = opt.beforeEmit(msg, newPoint);
             } else {
                 toEmit = opt.beforeEmit(msg, updatedValues);
@@ -220,7 +218,7 @@ function init(server, app, log, redSettings) {
                 'jquery', 'jquery-ui',
                 'raphael', 'justgage',
                 'd3', 'nvd3', 'angularjs-nvd3-directives',
-                'angular-chart.js', 'chart.js'
+                'angular-chart.js', 'chart.js', 'moment'
             ];
             vendor_packages.forEach(function (packageName) {
                 app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));

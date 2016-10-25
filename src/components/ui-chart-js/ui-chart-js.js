@@ -7,7 +7,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
             replace: true,
             templateUrl: 'components/ui-chart-js/ui-chart-js.html',
             link: function(scope, element, attrs) {
+            
                 $timeout(function() {
+
+                    var formatTime = function(d) {
+                        return d3.time.format(scope.$eval('me.item.xformat'))(new Date(d));
+                    }
 
                     var config = {
                         colours: [{
@@ -16,12 +21,35 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             hoverBackgroundColor: '#A2DED0',
                             hoverBorderColor: '#A2DED0'
                         }],
-                        data: [[100]],
-                        labels: [100],
+                        data: [[]],
+                        labels: [],
                         options: {
                             animation: false,
                             fill: false,
-                            backgroundColor: "#A2DED0"
+                            backgroundColor: "#A2DED0",
+                            scales: {
+                                xAxes: [{
+                                    type: 'time',
+                                    time: {
+                                        displayFormats: {
+                                            'millisecond': 'HH:mm:SS',
+                                            'second': 'HH:mm:SS',
+                                            'minute': 'HH:mm:SS',
+                                            'hour': 'HH:mm:SS',
+                                            'day': 'HH:mm:SS',
+                                            'week': 'HH:mm:SS',
+                                            'month': 'HH:mm:SS',
+                                            'quarter': 'HH:mm:SS',
+                                            'year': 'HH:mm:SS',
+                                          }
+                                    }
+                                    // ticks: {
+                                    //     callback: function(label, index, labels) {
+                                    //         return formatTime(label);
+                                    //     }
+                                    // }
+                                }]
+                            }
                         }
                     }
                     scope.config = config;
@@ -29,12 +57,8 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     scope.$watch('me.item.value', function (newValue) {
 
                         if (newValue) {
-                            console.log(newValue);
-                            console.log('^new value in ui-chart-js');
 
                             newValue = newValue[0];
-                            
-                            console.log(config);
 
                             //if there are multiple values then this means the data is coming across for the first time so swap out the arrays
                             if (newValue.hasOwnProperty('update') && newValue.update) {

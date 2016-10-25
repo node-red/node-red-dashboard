@@ -79,7 +79,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'chart': {
-                    console.log("init case chart");
                     //console.log(me.item.value);
                     //me.item.value = [{key: "Data", values: me.item.value}];
                     if (!me.item.value || me.item.value === "changed") {
@@ -102,7 +101,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'chart_new': {
-                    console.log('chart new');
                     break;
                 }
                 case 'form': {
