@@ -78,30 +78,32 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on(function (msg) {
             var found = findControl(msg.id, main.tabs);
-            for (var key in msg) {
-                if (msg.hasOwnProperty(key)) {
-                    if (key === 'id') { continue; }
+            if (found) {
+                for (var key in msg) {
+                    if (msg.hasOwnProperty(key)) {
+                        if (key === 'id') { continue; }
 
-                    //If we are dealing with values of line charts
-                    if (key === 'value' && found.hasOwnProperty('type') && found['type'] === 'chart' 
-                        && found.hasOwnProperty('look') && found['look'] === 'line') {
-                        
-                        //update the value array on the found object to include the new points
-                        //If the value object does not exist add the data
-                        if (!found.hasOwnProperty(key) || found.value.length === 0 || !msg.value[0].update) {
-                            found[key] = msg[key];
+                        //If we are dealing with values of line charts
+                        if (key === 'value' && found.hasOwnProperty('type') && found['type'] === 'chart' 
+                            && found.hasOwnProperty('look') && found['look'] === 'line') {
                             
+                            //update the value array on the found object to include the new points
+                            //If the value object does not exist add the data
+                            if (!found.hasOwnProperty(key) || found.value.length === 0 || !msg.value[0].update) {
+                                found[key] = msg[key];
+                                
+                            } else {
+                                //otherwise concat the arrays
+                                found[key][0].values = found[key][0].values.concat(msg[key][0].values);
+                            }
                         } else {
-                            //otherwise concat the arrays
-                            found[key][0].values = found[key][0].values.concat(msg[key][0].values);
+                            found[key] = msg[key];
                         }
-                    } else {
-                        found[key] = msg[key];
                     }
                 }
-            }
-            if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
-                found.me.processInput(msg);
+                if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
+                    found.me.processInput(msg);
+                }
             }
         });
 
