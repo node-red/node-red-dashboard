@@ -48,8 +48,7 @@
       "ui_template": "nodes/ui_template.js",
       "ui_link": "nodes/ui_link.js",
       "ui_tab": "nodes/ui_tab.js",
-      "ui_group": "nodes/ui_group.js",
-      "ui_chart_new": "nodes/ui_chart_new.js"
+      "ui_group": "nodes/ui_group.js"
     }
   },
   "dependencies": {

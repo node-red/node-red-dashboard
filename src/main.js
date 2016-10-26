@@ -94,20 +94,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
 
-                    //If we are dealing with values of line charts
-                    if (key === 'value' && found.hasOwnProperty('type') && found['type'] === 'chart' 
-                        && found.hasOwnProperty('look') && found['look'] === 'line') {
-                        
-                        //update the value array on the found object to include the new points
-                        //If the value object does not exist add the data
-                        if (!found.hasOwnProperty(key) || found.value.length === 0 || !msg.value[0].update) {
-                            found[key] = msg[key];
-                            
-                        } else {
-                            //otherwise concat the arrays
-                            found[key][0].values = found[key][0].values.concat(msg[key][0].values);
-                        }
+                    // If the update flag is set, concat the arrays
+                    if ((typeof(msg.value) === 'array') && (msg.value.length === 1) && (msg.value[0].update)) {
+                        found[key][0].values = found[key][0].values.concat(msg[key][0].values);
                     } else {
+                        // Replace
                         found[key] = msg[key];
                     }
                 }

@@ -49,67 +49,90 @@ module.exports = function(RED) {
                 } else {
                     value = parseFloat(value);
                     var point;
-                    if (isNaN(value)) { return {newPoint: point, updatedValues: oldValue}; }
-                    //if (isNaN(value)) { return oldValue};
+                    if (isNaN(value)) { return oldValue; }
                     var topic = msg.topic || 'Data';
                     var found;
-                    if (!oldValue) { oldValue = []; }
+                    if (!oldValue) { oldValue = [];}
                     if (node.chartType === "bar") {  // handle bar type data
-                        if (oldValue.length === 0) { oldValue = [{ key:node.id, values:[] }] }
-                        for (var j = 0; j < oldValue[0].values.length; j++) {
-                            if (oldValue[0].values[j][0] === topic) {
-                                oldValue[0].values[j][1] = value;
-                                point = [topic, value];
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) {
-                            point = [topic, value];
-                            oldValue[0].values.push(point);
-                        }
+                        // if (oldValue.length === 0) { oldValue = [{ key:node.id, values:[] }] }
+                        // for (var j = 0; j < oldValue[0].values.length; j++) {
+                        //     if (oldValue[0].values[j][0] === topic) {
+                        //         oldValue[0].values[j][1] = value;
+                        //         point = [topic, value];
+                        //         found = true;
+                        //         break;
+                        //     }
+                        // }
+                        // if (!found) {
+                        //     point = [topic, value];
+                        //     oldValue[0].values.push(point);
+                        // }
+
+                        // todo - dan reimplment for barcharts
                     }
                     else { // handle line and area data
+
+                        // Search for the 'Data' key on the oldValue passed in
                         for (var i = 0; i < oldValue.length; i++) {
                             if (oldValue[i].key === topic) {
                                 found = oldValue[i];
                                 break;
                             }
                         }
+
+                        // Setup the data structure if this is the first time
                         if (!found) {
-                            found = { key:topic, values:[] };
-                            console.log(oldValue);
+                            found = { key:topic, values:{labels: [], data: []} };
                             oldValue.push(found);
                         }
-                        var time = new Date().getTime();
-                        point = [time, value];
-                        found.values.push(point);
 
+                        // Create the new point and add to the dataset
+                        var time = new Date().getTime();
+                        found.values.labels.push(time);
+                        found.values.data.push(value);
+                        
+
+                        // Remove datapoints older than a certain time
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
                         var limitTime = new Date().getTime() - limitOffsetSec * 1000;
 
                         var remove = [];
+
                         oldValue.forEach(function (series, index) {
                             var i=0;
-                            while (i<series.values.length && series.values[i][0]<limitTime) { i++; }
-                            if (i) { series.values.splice(0, i); }
-                            if (series.values.length === 0) { remove.push(index); }
+                            while (i<series.values.data.length && series.values.data[i][0]<limitTime) { i++; }
+                            if (i) { 
+                                series.values.data.splice(0, i);
+                                series.values.labels.splice(0, i);
+                            }
+                            if (series.values.data.length === 0) { remove.push(index); }
                         });
 
                         remove.forEach(function (index) {
                             oldValue.splice(index, 1);
                         });
 
-                        // if more datapoints than number of pixels wide...
+                        // If more datapoints than number of pixels wide...
                         // TODO - warning is not the answer but hey... it's a hint.
-                        if (found.values.length % pixelsWide === 0) {
+                        if (found.values.data.length % pixelsWide === 0) {
                             node.warn("More than "+found.values.length+" datapoints");
                         }
                     }
                 }
-                console.log(JSON.stringify(oldValue));
-                return {newPoint: point, updatedValues: oldValue};
-                //return oldValue;
+                // Return an object including the new point and all the values
+                var obj = {
+                    update: true,
+                    newPoint: [{
+                        key: 'Data', 
+                        update: true, 
+                        values: [{
+                            label: time, 
+                            data: value
+                        }]
+                    }],
+                    updatedValues: oldValue
+                }
+                return obj;
             }
         };
         var done = ui.add(options);

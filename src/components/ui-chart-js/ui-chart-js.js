@@ -7,13 +7,10 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
             replace: true,
             templateUrl: 'components/ui-chart-js/ui-chart-js.html',
             link: function(scope, element, attrs) {
-            
                 $timeout(function() {
-
                     var formatTime = function(d) {
                         return d3.time.format(scope.$eval('me.item.xformat'))(new Date(d));
                     }
-
                     var config = {
                         colours: [{
                             backgroundColor: 'rgba(0,0,0,0)',
@@ -48,13 +45,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         }
                     }
                     scope.config = config;
-                    // watch the scope change and update the chart with the new value
+                    // when new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
-                        if (newValue) {
+                        if (newValue != undefined) {
                             newValue = newValue[0];
                             //If we are updating, add the data points
                             if (newValue.hasOwnProperty('update') && newValue.update) {
-                                //push
                                 config.labels.push(newValue.values[0].label);
                                 config.data[0].push(newValue.values[0].data);
                             } else {
@@ -63,9 +59,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 config.data[0] = newValue.values.data;
                             }
                         }
-                        
                     }); 
                 }, 0);
             }
         }
-    }]);
+    }
+]);
