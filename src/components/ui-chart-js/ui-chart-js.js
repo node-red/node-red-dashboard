@@ -43,11 +43,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                             'year': 'HH:mm:SS',
                                           }
                                     }
-                                    // ticks: {
-                                    //     callback: function(label, index, labels) {
-                                    //         return formatTime(label);
-                                    //     }
-                                    // }
                                 }]
                             }
                         }
@@ -55,18 +50,15 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     scope.config = config;
                     // watch the scope change and update the chart with the new value
                     scope.$watch('me.item.value', function (newValue) {
-
                         if (newValue) {
-
                             newValue = newValue[0];
-
-                            //if there are multiple values then this means the data is coming across for the first time so swap out the arrays
+                            //If we are updating, add the data points
                             if (newValue.hasOwnProperty('update') && newValue.update) {
                                 //push
                                 config.labels.push(newValue.values[0].label);
                                 config.data[0].push(newValue.values[0].data);
                             } else {
-                                //assign all the labels and data to the array
+                                //assign all the labels and data to the corresponding arrays
                                 config.labels = newValue.values.labels;
                                 config.data[0] = newValue.values.data;
                             }

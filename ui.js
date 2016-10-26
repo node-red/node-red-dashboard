@@ -114,43 +114,50 @@ function add(opt) {
             return;
         }
 
-        //(dan): convert the new point
+        // Retrieve the dataset for this node
         var oldValue = currentValues[opt.node.id];
-        //var newValue = opt.convert(msg.payload, oldValue, msg);
-        var conversion = opt.convert(msg.payload, oldValue, msg);
-   
-        var newPoint;
-        if (conversion.newLabel && conversion.newData) {
-            newPoint = [{key: 'Data', update: true, values: [{label: conversion.newLabel, data: conversion.newData}]}];
-        }
-
-        (typeof(conversion) === 'object') ? updatedValues = conversion.updatedValues : updatedValues = conversion;
         
+        // Call the convert function in the node to get the new value
+        // as well as the full dataset.
+        var conversion = opt.convert(msg.payload, oldValue, msg);
 
-        if (!opt.emitOnlyNewValues || oldValue != updatedValues) {
-            currentValues[opt.node.id] = updatedValues;
-            //(dan): emit the newPoint instead of the whole array
+        // If the update flag is set, emit the newPoint, and store the full dataset
+        var fullDataset;
+        var newPoint;
+        if ((typeof(conversion) === 'object') && (conversion.update != undefined)) {
+            newPoint = conversion.newPoint;
+            fullDataset = conversion.updatedValues;
+        } else {
+
+            // If no update flag is set, this means the conversion contains 
+            // the full dataset or the new value (e.g. gauges)
+            fullDataset = conversion;
+        }
+     
+        // If we have something new to emit
+        if (newPoint != undefined || !opt.emitOnlyNewValues || oldValue != fullDataset) {
+            currentValues[opt.node.id] = fullDataset;
+            
+            // Determine what to emit over the websocket
+            // (the new point or the full dataset).
             var toEmit;
-
-            if (conversion.newLabel && conversion.newData) {
+            if (newPoint != undefined) {
                 toEmit = opt.beforeEmit(msg, newPoint);
             } else {
-                toEmit = opt.beforeEmit(msg, updatedValues);
+                toEmit = opt.beforeEmit(msg, fullDataset);
             }
-            var toStore = opt.beforeEmit(msg,updatedValues);
-            //var toEmit = opt.beforeEmit(msg, newValue);
-            toEmit.id = opt.node.id;
-            toStore.id = opt.node.id;
 
+            // Always store the full dataset.
+            var toStore = opt.beforeEmit(msg, fullDataset);
+            toEmit.id = toStore.id = opt.node.id;
+
+            // Emit and Store the data
             io.emit(updateValueEventName, toEmit);
-            // replayMessages[opt.node.id] = toEmit;
-
-            //(dan): store the full dataset so it can be replayed if client connects
             replayMessages[opt.node.id] = toStore;
 
+            // Handle the node output
             if (opt.forwardInputMessages && opt.node._wireCount) {
-                //forward to output
-                msg.payload = opt.convertBack(updatedValues);
+                msg.payload = opt.convertBack(fullDataset);
                 msg = opt.beforeSend(msg) || msg;
                 opt.beforeSend(msg);
                 opt.node.send(msg);
@@ -232,10 +239,6 @@ function init(server, app, log, redSettings) {
     io.on('connection', function(socket) {
         updateUi(socket);
         socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
-
-        //send all data
-        // var objToEmit = {id: }
-        // io.emit(updateValueEventName, currentValues);
 
         socket.on('ui-replay-state', function() {
             var ids = Object.getOwnPropertyNames(replayMessages);

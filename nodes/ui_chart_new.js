@@ -49,8 +49,7 @@ module.exports = function(RED) {
                 } else {
                     value = parseFloat(value);
                     var point;
-                    if (isNaN(value)) { return {newPoint: point, updatedValues: oldValue}; }
-                    //if (isNaN(value)) { return oldValue};
+                    if (isNaN(value)) { return oldValue; }
                     var topic = msg.topic || 'Data';
                     var found;
                     if (!oldValue) { oldValue = [];}
@@ -72,26 +71,32 @@ module.exports = function(RED) {
                         // todo - dan reimplment for barcharts
                     }
                     else { // handle line and area data
+
+                        // Search for the 'Data' key on the oldValue passed in
                         for (var i = 0; i < oldValue.length; i++) {
                             if (oldValue[i].key === topic) {
                                 found = oldValue[i];
                                 break;
                             }
                         }
+
+                        // Setup the data structure if this is the first time
                         if (!found) {
                             found = { key:topic, values:{labels: [], data: []} };
                             oldValue.push(found);
                         }
-                        var time = new Date().getTime();
-                        found.values.data.push(value);
-                        found.values.labels.push(time);
 
+                        // Create the new point and add to the dataset
+                        var time = new Date().getTime();
+                        found.values.labels.push(time);
+                        found.values.data.push(value);
+                        
+
+                        // Remove datapoints older than a certain time
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
                         var limitTime = new Date().getTime() - limitOffsetSec * 1000;
 
                         var remove = [];
-
-                        console.log(oldValue);
 
                         oldValue.forEach(function (series, index) {
                             var i=0;
@@ -107,16 +112,27 @@ module.exports = function(RED) {
                             oldValue.splice(index, 1);
                         });
 
-                        // if more datapoints than number of pixels wide...
+                        // If more datapoints than number of pixels wide...
                         // TODO - warning is not the answer but hey... it's a hint.
                         if (found.values.data.length % pixelsWide === 0) {
                             node.warn("More than "+found.values.length+" datapoints");
                         }
                     }
                 }
-                console.log(JSON.stringify(oldValue));
-                return {newLabel: time, newData: value, updatedValues: oldValue};
-                //return oldValue;
+                // Return an object to ui.js including the new point and all the values
+                var obj = {
+                    update: true,
+                    newPoint: [{
+                        key: 'Data', 
+                        update: true, 
+                        values: [{
+                            label: time, 
+                            data: value
+                        }]
+                    }],
+                    updatedValues: oldValue
+                }
+                return obj;
             }
         };
         var done = ui.add(options);

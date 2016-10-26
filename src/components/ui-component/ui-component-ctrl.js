@@ -99,10 +99,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     }
                     break;
                 }
-
-                case 'chart_new': {
-                    break;
-                }
                 case 'form': {
                     me.stop=function(event) {
                         if (13 == event.which) {
