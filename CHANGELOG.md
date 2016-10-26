@@ -1,4 +1,21 @@
-#### 2.0.3: Maintenance Release
+
+#### 2.1.1: Maintenance Release
+
+Enhancements
+
+    - Add step option to ui_numeric input widget
+    - Add OK/Cancel Dialog mode to ui_notification widget
+    - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
+
+
+Fixes
+
+    - change link `_new` refs to `_blank` to be standards compliant
+    - fix fa icons default size so fixed width matches material icons width (24px)
+    - bump sockets.io version  
+
+
+### 2.1.0: Milestone Release
 
 License change
 
@@ -14,7 +31,8 @@ Enhancements
  - Add allow formatting of chart x-axis date formatting
  - Let ui_numeric, ui_textinput and ui_dropdown also control passthru of incoming values
  - Add step size option to ui_slider widget to allow floating point numbers more easily
- - Allow switch label to be dynamically set by msg input 
+ - Allow switch label to be dynamically set by msg input
+ - Add Dashboard version number to console.log on start
 
 Fixes
 
@@ -28,6 +46,7 @@ Fixes
  - Fix enter key to work for ui_textinput on FF
  - Fix groups sizes to display border correctly on FF
  - Fix dropdown select types
+ - Fix switch to only switch if input value matches on and off values
 
 #### 2.0.2: Maintenance Release
 
@@ -66,6 +85,6 @@ Fixes
  - Sorting groups/tabs in sidebar not sticking
  - Tidy up auto-generation of ui_base node
 
-#### 2.0.0: Milestone Release
+### 2.0.0: Milestone Release
 
  - First release published to npm!

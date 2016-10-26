@@ -22,7 +22,8 @@ var serveStatic = require('serve-static'),
     socketio = require('socket.io'),
     path = require('path'),
     fs = require('fs'),
-    events = require('events');
+    events = require('events'),
+    dashboardVersion = require('./package.json').version;
 
 var baseConfiguration = {
     title: "Node-RED Dashboard",
@@ -226,7 +227,7 @@ function init(server, app, log, redSettings) {
         }
     });
 
-    log.info("Dashboard started at " + fullPath);
+    log.info("Dashboard version " + dashboardVersion + " started at " + fullPath);
 
     io.on('connection', function(socket) {
         updateUi(socket);
@@ -284,7 +285,7 @@ function itemSorter(item1, item2) {
 }
 
 function addControl(tab, groupHeader, control) {
-    if (typeof control.type !== 'string') { return; }
+    if (typeof control.type !== 'string') { return function() {}; }
     groupHeader = groupHeader || settings.defaultGroupHeader;
     control.order = parseFloat(control.order);
 

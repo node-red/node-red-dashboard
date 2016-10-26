@@ -42,6 +42,7 @@
       "ui_text": "nodes/ui_text.js",
       "ui_gauge": "nodes/ui_gauge.js",
       "ui_chart": "nodes/ui_chart.js",
+      "ui_audio": "nodes/ui_audio.js",
       "ui_toast": "nodes/ui_toast.js",
       "ui_ui_control": "nodes/ui_ui_control.js",
       "ui_template": "nodes/ui_template.js",
@@ -53,15 +54,15 @@
   },
   "dependencies": {
     "serve-static": "^1.10.0",
-    "socket.io": "^1.3.7"
+    "socket.io": "^1.5.0"
   },
   "devDependencies": {
     "angular": "^1.5.6",
     "angular-animate": "^1.5.6",
     "angular-aria": "^1.5.6",
     "angular-chart.js": "^1.0.3",
-    "angular-material": "^1.0.9",
-    "angular-material-icons": "^0.7.0",
+    "angular-material": "^1.1.1",
+    "angular-material-icons": "^0.7.1",
     "angular-messages": "^1.5.6",
     "angular-mocks": "^1.5.6",
     "angular-route": "^1.5.6",

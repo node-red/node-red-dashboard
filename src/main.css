@@ -5,6 +5,12 @@ md-sidenav.md-closed.md-locked-open-add-active {
 	width: 200px !important;
 	max-width: 200px !important;
 }
+md-sidenav ng-md-icon {
+    padding-right: 4px;
+}
+md-sidenav i {
+    padding-right: 4px;
+}
 
 md-toast .md-toast-content {
 	height: auto;

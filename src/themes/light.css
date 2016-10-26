@@ -198,6 +198,23 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 .nr-dashboard-theme-light .nr-dashboard-text {}
 
+
+/* Dialog */
+
+.nr-dashboard-theme-dark md-dialog {
+    color: #0f5c7b;
+    background-color: #fff;
+}
+
+.nr-dashboard-theme-light .md-dialog-content {
+    padding: 24px;
+}
+
+.nr-dashboard-theme-light .md-button.md-primary {
+	color: #0094ce !important;
+}
+
+
 /* Form */
 .nr-dashboard-theme-light .nr-dashboard-form-button {
   background-color:  #0094ce !important;

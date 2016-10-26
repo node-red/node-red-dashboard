@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<script type="text/javascript">
+(function() {
+    var myvoice = 0;
+    var voices;
+    RED.nodes.registerType('ui_audio',{
+        category: 'dashboard',
+        paletteLabel: 'audio out',
+        color: 'rgb(119, 198, 204)',
+        defaults: {
+            name: {value:""},
+            voice: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        icon: "feed.png",
+        align: "right",
+        label: function() {
+            return this.name||"audio out";
+        },
+        onpaletteadd: function() {
+            if ('speechSynthesis' in window) { voices = window.speechSynthesis.getVoices(); }
+        },
+        oneditprepare: function() {
+            if ('speechSynthesis' in window) {
+                voices = window.speechSynthesis.getVoices();
+                for (i = 0; i < voices.length ; i++) {
+                    //console.log(i,voices[i].name,voices[i].lang,voices[i].voiceURI,voices[i].default);
+                    var option = document.createElement('option');
+                    option.textContent = i + " : " + voices[i].name + ' (' + voices[i].lang + ')';
+                    if (voices[i].default) { option.textContent += ' -- DEFAULT'; }
+                    option.setAttribute('value', i);
+                    document.getElementById("node-input-voice").appendChild(option);
+                }
+                $('#node-input-voice').val(this.voice || 0);
+            }
+            else {
+                $('#voice-input-row').hide();
+            }
+
+            $("#node-input-voice").change(function() {
+                myvoice = this.voice = $("#node-input-voice").val();
+            });
+        }
+    });
+})();
+</script>
+
+<script type="text/x-red" data-template-name="ui_audio">
+<div class="form-row" id="voice-input-row">
+    <label for="node-input-voice"><i class="fa fa-language"></i> TTS Voice</label>
+    <select id="node-input-voice" style="width:70%"></select>
+</div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_audio">
+    <p>Plays audio or text to speech (TTS) in the dashboard.</p>
+    <p>To work the dashboard web page must be open.</p>
+    <p>Expects <code>msg.payload</code> to contain a buffer of a <b>wav</b> or <b>mp3</b> file.</p>
+    <p>If your browser has native support for Text-to-Speech then a <code>msg.payload</code>
+    can also be a <b>string</b> to be read aloud.
+</script>
