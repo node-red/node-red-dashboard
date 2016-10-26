@@ -224,7 +224,7 @@ function init(server, app, log, redSettings) {
                 'angular-material-icons', 'svg-morpheus', 'font-awesome',
                 'sprintf-js',
                 'jquery', 'jquery-ui',
-                'raphael', 'justgage',
+                'raphael', 'justgage', 'd3', 'nvd3',
                 'angular-chart.js', 'chart.js', 'moment'
             ];
             vendor_packages.forEach(function (packageName) {

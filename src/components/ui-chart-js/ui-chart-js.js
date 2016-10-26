@@ -5,12 +5,13 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'components/ui-chart-js/ui-chart-js.html',
+            template: '<div ng-include="getChartTemplateUrl()"></div>',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    var formatTime = function(d) {
-                        return d3.time.format(scope.$eval('me.item.xformat'))(new Date(d));
-                    }
+                    scope.getChartTemplateUrl = function() {
+                        var type = scope.$eval('me.item.look');
+                        return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
+                   }
                     var config = {
                         colours: [{
                             backgroundColor: 'rgba(0,0,0,0)',
