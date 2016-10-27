@@ -51,25 +51,36 @@ module.exports = function(RED) {
                     var point;
                     if (isNaN(value)) { return oldValue; }
                     var series = msg.topic || 'Series 1';
-                    var storageKey = 'chart-data';
+                    var storageKey = node.id;
                     var found;
                     if (!oldValue) { oldValue = [];}
+                    var objectToReturn;
                     if (node.chartType === "bar") {  // handle bar type data
-                        // if (oldValue.length === 0) { oldValue = [{ key:node.id, values:[] }] }
-                        // for (var j = 0; j < oldValue[0].values.length; j++) {
-                        //     if (oldValue[0].values[j][0] === topic) {
-                        //         oldValue[0].values[j][1] = value;
-                        //         point = [topic, value];
-                        //         found = true;
-                        //         break;
-                        //     }
-                        // }
-                        // if (!found) {
-                        //     point = [topic, value];
-                        //     oldValue[0].values.push(point);
-                        // }
+                        if (oldValue.length == 0) {
+                            oldValue = [{
+                                key: storageKey,
+                                values: {
+                                    data: [],
+                                    series: []
+                                }
+                            }]
+                        }
 
-                        // todo - dan reimplment for barcharts
+                        for (var i=0; i<oldValue[0].values.series.length; i++) {
+                            if (oldValue[0].values.series[i] === series) {
+                                oldValue[0].values.data[i] = value;
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            oldValue[0].values.series.push(series);
+                            oldValue[0].values.data.push(value);
+                        }
+                        objectToReturn = {
+                            update: false,
+                            updatedValues: oldValue
+                        }
                     }
                     else { // handle line and area data
 
@@ -134,21 +145,22 @@ module.exports = function(RED) {
                         if (found.values.data[seriesIndex].length % pixelsWide === 0) {
                             node.warn("More than "+found.values.length+" datapoints");
                         }
+                        
+                        // Return an object including the new point and all the values
+                        objectToReturn = {
+                            update: true,
+                            newPoint: [{
+                                key: series, 
+                                update: true, 
+                                values: {
+                                    data: point
+                                }
+                            }],
+                            updatedValues: oldValue
+                        }
                     }
                 }
-                // Return an object including the new point and all the values
-                var obj = {
-                    update: true,
-                    newPoint: [{
-                        key: series, 
-                        update: true, 
-                        values: {
-                            data: point
-                        }
-                    }],
-                    updatedValues: oldValue
-                }
-                return obj;
+                return objectToReturn;
             }
         };
         var done = ui.add(options);
