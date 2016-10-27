@@ -95,7 +95,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
 
-
                     // If the update flag is set, concat the arrays
                     // multiple series will be handled correctly here as
                     // when updating, only single points are passed

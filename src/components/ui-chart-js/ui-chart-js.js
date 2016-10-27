@@ -30,7 +30,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 if (seriesIndex === -1) {
                                     scope.config.series.push(seriesLabel);
                                     seriesIndex = scope.config.series.indexOf(seriesLabel);
+                                    scope.config.data.push([]);
                                 } 
+
+                                if (seriesIndex < scope.config.data.length) {
+                                    scope.config.data.push([]);
+                                }
 
                                 scope.config.data[seriesIndex].push(newValue.values.data);
 
