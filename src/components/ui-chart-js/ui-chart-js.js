@@ -8,11 +8,14 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
             template: '<div ng-include="getChartTemplateUrl()"></div>',
             link: function(scope, element, attrs) {
                 $timeout(function() {
+                    var type = scope.$eval('me.item.look');
                     scope.getChartTemplateUrl = function() {
-                        var type = scope.$eval('me.item.look');
                         return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
                    }
-                    
+                    var config = loadConfiguration();
+                    if (type === 'bar') {
+                        config.options.fill = true;
+                    }
                     scope.config = loadConfiguration();
                     // when new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
