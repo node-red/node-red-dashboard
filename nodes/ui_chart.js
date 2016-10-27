@@ -97,9 +97,9 @@ module.exports = function(RED) {
 
                         // if more datapoints than number of pixels wide...
                         // TODO - warning is not the answer but hey... it's a hint.
-                        if (found.values.length % pixelsWide === 0) {
-                            node.warn("More than "+found.values.length+" datapoints");
-                        }
+                        // if (found.values.length % pixelsWide === 0) {
+                        //     node.warn("More than "+found.values.length+" datapoints");
+                        // }
                     }
                 }
                 return oldValue;
