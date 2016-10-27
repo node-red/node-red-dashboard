@@ -50,7 +50,8 @@ module.exports = function(RED) {
                     value = parseFloat(value);
                     var point;
                     if (isNaN(value)) { return oldValue; }
-                    var topic = msg.topic || 'Data';
+                    var series = msg.topic || 'Series 1';
+                    var storageKey = 'chart-data';
                     var found;
                     if (!oldValue) { oldValue = [];}
                     if (node.chartType === "bar") {  // handle bar type data
@@ -72,9 +73,9 @@ module.exports = function(RED) {
                     }
                     else { // handle line and area data
 
-                        // Search for the 'Data' key on the oldValue passed in
+                        // Find the chart data
                         for (var i = 0; i < oldValue.length; i++) {
-                            if (oldValue[i].key === topic) {
+                            if (oldValue[i].key === storageKey) {
                                 found = oldValue[i];
                                 break;
                             }
@@ -82,14 +83,31 @@ module.exports = function(RED) {
 
                         // Setup the data structure if this is the first time
                         if (!found) {
-                            found = { key:topic, values:{labels: [], data: []} };
+                            found = { 
+                                key: storageKey, 
+                                values: {
+                                    series: [],
+                                    data: []
+                                }
+                            }
                             oldValue.push(found);
                         }
 
                         // Create the new point and add to the dataset
+                        // Create series if it doesn't exist
+                        var seriesIndex = found.values.series.indexOf(series);
+                        if (seriesIndex === -1) {
+                            found.values.series.push(series);
+                            found.values.data.push([]);
+                            seriesIndex = found.values.series.indexOf(series);
+                        }
+
+                        // Add a new point
                         var time = new Date().getTime();
-                        found.values.labels.push(time);
-                        found.values.data.push(value);
+
+                        // Add the data to the correct series
+                        var point = {"x": time, "y": value};
+                        found.values.data[seriesIndex].push(point);
                         
 
                         // Remove datapoints older than a certain time
@@ -100,12 +118,11 @@ module.exports = function(RED) {
 
                         oldValue.forEach(function (series, index) {
                             var i=0;
-                            while (i<series.values.data.length && series.values.data[i][0]<limitTime) { i++; }
+                            while (i<series.values.data[seriesIndex].length && series.values.data[seriesIndex][i]['x']<limitTime) { i++; }
                             if (i) { 
-                                series.values.data.splice(0, i);
-                                series.values.labels.splice(0, i);
+                                series.values.data[seriesIndex].splice(0, i);
                             }
-                            if (series.values.data.length === 0) { remove.push(index); }
+                            if (series.values.data[seriesIndex].length === 0) { remove.push(index); }
                         });
 
                         remove.forEach(function (index) {
@@ -114,7 +131,7 @@ module.exports = function(RED) {
 
                         // If more datapoints than number of pixels wide...
                         // TODO - warning is not the answer but hey... it's a hint.
-                        if (found.values.data.length % pixelsWide === 0) {
+                        if (found.values.data[seriesIndex].length % pixelsWide === 0) {
                             node.warn("More than "+found.values.length+" datapoints");
                         }
                     }
@@ -123,12 +140,11 @@ module.exports = function(RED) {
                 var obj = {
                     update: true,
                     newPoint: [{
-                        key: 'Data', 
+                        key: series, 
                         update: true, 
-                        values: [{
-                            label: time, 
-                            data: value
-                        }]
+                        values: {
+                            data: point
+                        }
                     }],
                     updatedValues: oldValue
                 }

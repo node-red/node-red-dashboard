@@ -12,23 +12,32 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     scope.getChartTemplateUrl = function() {
                         return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
                    }
-                    var config = loadConfiguration();
-                    if (type === 'bar') {
-                        config.options.fill = true;
-                    }
-                    scope.config = loadConfiguration();
+                                        
+                    scope.config = loadConfiguration(type);
                     // when new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
                         if (newValue != undefined) {
                             newValue = newValue[0];
-                            //If we are updating, add the data points
-                            if (newValue.hasOwnProperty('update') && newValue.update) {
-                                scope.config.labels.push(newValue.values[0].label);
-                                scope.config.data[0].push(newValue.values[0].data);
+                            
+                            // If we are updating, push to arrays
+                            if (newValue.update) {
+
+                                //Find the series index
+                                var seriesLabel = newValue.key;
+                                var seriesIndex = scope.config.series.indexOf(seriesLabel);
+
+                                //If it's a new series, add it
+                                if (seriesIndex === -1) {
+                                    scope.config.series.push(seriesLabel);
+                                    seriesIndex = scope.config.series.indexOf(seriesLabel);
+                                } 
+
+                                scope.config.data[seriesIndex].push(newValue.values.data);
+
                             } else {
-                                //assign all the labels and data to the corresponding arrays
-                                scope.config.labels = newValue.values.labels;
-                                scope.config.data[0] = newValue.values.data;
+                                //Display all data
+                                scope.config.data = newValue.values.data;
+                                scope.config.series = newValue.values.series;
                             }
                         }
                     }); 
@@ -38,20 +47,29 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
     }
 ]);
 
-function loadConfiguration() {
+function loadConfiguration(type) {
+
+    // Set colours
+    var colours = [{
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: '#A2DED0',
+        hoverBackgroundColor: '#A2DED0',
+        hoverBorderColor: '#A2DED0'
+    }, {
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: '#803690',
+        hoverBackgroundColor: '#803690',
+        hoverBorderColor: '#803690'
+    }];
+
     return {
-        colours: [{
-            backgroundColor: 'rgba(0,0,0,0)',
-            borderColor: '#A2DED0',
-            hoverBackgroundColor: '#A2DED0',
-            hoverBorderColor: '#A2DED0'
-        }],
-        data: [[]],
-        labels: [],
+        colours: colours,
+        data: [],
+        series: [],
         options: {
             animation: false,
-            fill: false,
             backgroundColor: "#A2DED0",
+            spanGaps: true,
             scales: {
                 xAxes: [{
                     type: 'time',

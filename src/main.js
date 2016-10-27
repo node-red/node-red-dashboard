@@ -88,13 +88,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on(function (msg) {
             var found = findControl(msg.id, main.tabs);
-
+            
             if (found === undefined) { return; }
             for (var key in msg) {
+                
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
 
+
                     // If the update flag is set, concat the arrays
+                    // multiple series will be handled correctly here as
+                    // when updating, only single points are passed
                     if ((typeof(msg.value) === 'array') && (msg.value.length === 1) && (msg.value[0].update)) {
                         found[key][0].values = found[key][0].values.concat(msg[key][0].values);
                     } else {
