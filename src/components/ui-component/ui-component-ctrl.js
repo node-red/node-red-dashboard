@@ -77,6 +77,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     };
                     break;
                 }
+                case 'chart': {
+                    me.item.theme = $scope.main.selectedTab.theme;
+                }
                 case 'form': {
                     me.stop=function(event) {
                         if (13 == event.which) {

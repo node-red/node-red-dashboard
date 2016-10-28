@@ -14,12 +14,13 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     scope.getChartTemplateUrl = function() {
                         return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
                     }                    
-                    scope.config = loadConfiguration(type);
-
+                    scope.config = loadConfiguration(type, scope);
+                   
                     // when new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
 
                         if (newValue != undefined && newValue.length > 0) {
+                            scope.config.nodata = false;
                             newValue = newValue[0];
 
                             // Updating line charts push to the data arrays
@@ -36,7 +37,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     } 
 
                                     // Ensure the data array is of the correct length
-                                    if (seriesIndex < scope.config.data.length) { scope.config.data.push([]); };
+                                    if (seriesIndex > scope.config.data.length) { scope.config.data.push([]); };
 
                                     // Add the data
                                     scope.config.data[seriesIndex].push(newValue.values.data);
@@ -49,10 +50,10 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 
                             }
                         } else {
-                            // Flow deployed - reset data and labels
-                            scope.config.data = [];
-                            scope.config.labels = [];
-                            scope.config.series = [];
+                            // Flow deployed - reset config
+                            scope.config = loadConfiguration(type,scope)
+                            scope.config.nodata = true;
+                            
                         }
                     }); 
                 }, 0);
@@ -61,41 +62,81 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
     }
 ]);
 
-function loadConfiguration(type) {
+function loadConfiguration(type,scope) {
+
+    var yMin = parseFloat(scope.$eval('me.item.ymin'));
+    var yMax = parseFloat(scope.$eval('me.item.ymax'));
+    var legend = scope.$eval('me.item.legend');
+    var interpolate = scope.$eval('me.item.interpolate');
+
+    var darkTheme = ['#0FBBC3', '#ffA500', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47'];
+    var lightTheme = [];
+    
+    var colours;
+    if (scope.$eval('me.item.theme') === 'theme-light') {
+        colours = lightTheme;
+    } else {
+        colours = darkTheme;
+    }
+    colours = darkTheme;
+
+    var config = {};
+    config.data = [];
+    config.series = [];
+    config.labels = [];
+    config.colours = colours;
+    config.options = {
+        animation: false,
+        spanGaps: true,
+        scales: {},
+        legend: false
+    };
+    
     if (type === 'line') {
-        return {
-            data: [],
-            series: [],
-            options: {
-                animation: false,
-                elements: {
-                    line: {
-                        fill: false
-                    }
-                },
-                spanGaps: true,
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        time: {
-                            displayFormats: {
-                                'millisecond': 'HH:mm:SS',
-                                'second': 'HH:mm:SS',
-                                'minute': 'HH:mm:SS',
-                                'hour': 'HH:mm:SS',
-                                'day': 'HH:mm:SS',
-                                'week': 'HH:mm:SS',
-                                'month': 'HH:mm:SS',
-                                'quarter': 'HH:mm:SS',
-                                'year': 'HH:mm:SS',
-                            }
-                        }
-                    }]  
+        config.options.scales.xAxes = [{
+            type: 'time',
+            time: {
+                displayFormats: {
+                    'millisecond': 'HH:mm:SS',
+                    'second': 'HH:mm:SS',
+                    'minute': 'HH:mm:SS',
+                    'hour': 'HH:mm:SS',
+                    'day': 'HH:mm:SS',
+                    'week': 'HH:mm:SS',
+                    'month': 'HH:mm:SS',
+                    'quarter': 'HH:mm:SS',
+                    'year': 'HH:mm:SS',
                 }
             }
+        }];
+        config.options.elements = {
+            line: {
+                fill: false
+            }
         }
-    } else {
-        //bar chart returns no configuration
-        return {};
+        switch(interpolate) {
+            case 'linear':
+                config.options.elements.line.tension = 0;
+                break;
+            case 'bezier':
+                config.options.elements.line.tension = 0.4;
+                break;
+            case 'step':
+                config.options.elements.line.stepped = true;
+                break;
+        } 
     }
+
+    if (!isNaN(yMin) && !isNaN(yMax)) {
+        config.options.scales.yAxes = [{
+            ticks: {
+                min: yMin,
+                max: yMax
+            }
+        }]
+    }
+    if (JSON.parse(legend) && type === 'line') {
+        config.options.legend = {display: true};
+    }
+    return config;
 }

@@ -17,7 +17,6 @@ module.exports = function(RED) {
         // number of pixels wide the chart will be... 43 = sizes.sx - sizes.px
         var pixelsWide = ((config.width || group.config.width || 6) - 1) * 43 - 15;
         //console.log("pixelsWide",pixelsWide);
-
         if (!tab || !group) { return; }
         var options = {
             emitOnlyNewValues: false,
@@ -34,7 +33,7 @@ module.exports = function(RED) {
                 nodata: config.nodata,
                 width: config.width || group.config.width || 6,
                 height: config.height || parseInt(group.config.width/2+1) || 4,
-                ymin: config.ymin,
+                ymin: config.ymin || 0,
                 ymax: config.ymax,
                 xformat : config.xformat || "%H:%M:%S"
             },
@@ -163,6 +162,7 @@ module.exports = function(RED) {
                 return objectToReturn;
             }
         };
+
         var done = ui.add(options);
         setTimeout(function() {
             node.send([null, {payload:"restore", for:node.id}]);
