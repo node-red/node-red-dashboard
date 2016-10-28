@@ -16,7 +16,8 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     scope.config = loadConfiguration(type);
                     // when new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
-                        if (newValue != undefined) {
+
+                        if (newValue != undefined && newValue.length > 0) {
                             newValue = newValue[0];
 
                             if (type === 'line') {
@@ -35,10 +36,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     } 
 
                                     // Ensure the data array is of the correct length
-                                    if (seriesIndex < scope.config.data.length) {
-                                        scope.config.data.push([]);
-                                    }
+                                    if (seriesIndex < scope.config.data.length) { scope.config.data.push([]); }
 
+                                    // Add the data
                                     scope.config.data[seriesIndex].push(newValue.values.data);
 
                                 } else {
@@ -48,15 +48,17 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 }
                             } else {
                                 //bar chart
-                                console.log('barr');
-                                console.log(newValue);
-
                                 //Display the new data
                                 if (newValue != undefined) {
                                     scope.config.data = newValue.values.data;
                                     scope.config.labels = newValue.values.series;
                                 }
                             }
+                        } else {
+                            //reset data and labels
+                            scope.config.data = [];
+                            scope.config.labels = [];
+                            scope.config.series = [];
                         }
                     }); 
                 }, 0);
@@ -65,6 +67,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
     }
 ]);
 
+// helper function to load the chart configuration
 function loadConfiguration(type) {
 
     // Set colours
