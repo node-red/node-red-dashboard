@@ -66,6 +66,8 @@ function loadConfiguration(type,scope) {
     var yMax = parseFloat(scope.$eval('me.item.ymax'));
     var legend = scope.$eval('me.item.legend');
     var interpolate = scope.$eval('me.item.interpolate');
+    var xFormat = scope.$eval('me.item.xformat');
+    console.log(scope.$eval('me'));
     
     var colours = ['#1F77B4', '#AEC7E8', '#FF7F0E']
       
@@ -85,16 +87,17 @@ function loadConfiguration(type,scope) {
         config.options.scales.xAxes = [{
             type: 'time',
             time: {
+                //override xAxes formats
                 displayFormats: {
-                    'millisecond': 'HH:mm:SS',
-                    'second': 'HH:mm:SS',
-                    'minute': 'HH:mm:SS',
-                    'hour': 'HH:mm:SS',
-                    'day': 'HH:mm:SS',
-                    'week': 'HH:mm:SS',
-                    'month': 'HH:mm:SS',
-                    'quarter': 'HH:mm:SS',
-                    'year': 'HH:mm:SS',
+                    'millisecond': xFormat,
+                    'second': xFormat,
+                    'minute': xFormat,
+                    'hour': xFormat,
+                    'day': xFormat,
+                    'week': xFormat,
+                    'month': xFormat,
+                    'quarter': xFormat,
+                    'year': xFormat,
                 }
             }
         }];
