@@ -66,18 +66,9 @@ function loadConfiguration(type,scope) {
     var yMax = parseFloat(scope.$eval('me.item.ymax'));
     var legend = scope.$eval('me.item.legend');
     var interpolate = scope.$eval('me.item.interpolate');
-
-    var darkTheme = ['#0FBBC3', '#ffA500', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47'];
-    var lightTheme = [];
     
-    var colours;
-    if (scope.$eval('me.item.theme') === 'theme-light') {
-        colours = lightTheme;
-    } else {
-        colours = darkTheme;
-    }
-    colours = darkTheme;    
-
+    var colours = ['#1F77B4', '#AEC7E8', '#FF7F0E']
+      
     var config = {};
     config.data = [];
     config.series = [];
