@@ -18,7 +18,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                    
                     // when new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
-
                         if (newValue != undefined && newValue.length > 0) {
                             scope.config.nodata = false;
                             newValue = newValue[0];
@@ -51,7 +50,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             }
                         } else {
                             // Flow deployed - reset config
-                            scope.config = loadConfiguration(type,scope)
                             scope.config.nodata = true;
                             
                         }
@@ -78,7 +76,7 @@ function loadConfiguration(type,scope) {
     } else {
         colours = darkTheme;
     }
-    colours = darkTheme;
+    colours = darkTheme;    
 
     var config = {};
     config.data = [];
