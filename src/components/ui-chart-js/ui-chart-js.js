@@ -80,8 +80,10 @@ function loadConfiguration(type,scope) {
         animation: false,
         spanGaps: true,
         scales: {},
-        legend: false
+        legend: false,
+        responsive: true
     };
+
     
     if (type === 'line') {
         config.options.scales.xAxes = [{
@@ -119,15 +121,19 @@ function loadConfiguration(type,scope) {
         } 
     }
 
+    config.options.scales.yAxes = [{}];
     if (!isNaN(yMin) && !isNaN(yMax)) {
-        config.options.scales.yAxes = [{
-            ticks: {
-                min: yMin,
-                max: yMax
-            }
-        }]
+        config.options.scales.yAxes[0].ticks = {
+            min: yMin,
+            max: yMax
+        }
+        
     }
-    if (JSON.parse(legend) && type === 'line') {
+    if (type === 'bar') {
+        config.options.scales.yAxes[0].beginAtZero = true;
+    }
+
+    if (type === 'line' && JSON.parse(legend)) {
         config.options.legend = {display: true};
     }
     return config;
