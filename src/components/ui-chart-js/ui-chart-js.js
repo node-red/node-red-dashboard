@@ -60,14 +60,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
 ]);
 
 function loadConfiguration(type,scope) {
-
     var yMin = parseFloat(scope.$eval('me.item.ymin'));
     var yMax = parseFloat(scope.$eval('me.item.ymax'));
     var legend = scope.$eval('me.item.legend');
     var interpolate = scope.$eval('me.item.interpolate');
     var xFormat = scope.$eval('me.item.xformat');
     var colours = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
-      
     var config = {};
     config.data = [];
     config.series = [];
@@ -123,12 +121,10 @@ function loadConfiguration(type,scope) {
             min: yMin,
             max: yMax
         }
-        
     }
     if (type === 'bar') {
         config.options.scales.yAxes[0].beginAtZero = true;
     }
-
     if (type === 'line' && JSON.parse(legend)) {
         config.options.legend = {display: true};
     }
