@@ -6,17 +6,15 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         this.chartType = config.chartType || "line";
         var node = this;
-
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
         var tab = RED.nodes.getNode(group.config.tab);
         if (!tab) { return; }
-
         if (config.width === "0") { delete config.width; }
         if (config.height === "0") { delete config.height; }
         // number of pixels wide the chart will be... 43 = sizes.sx - sizes.px
         var pixelsWide = ((config.width || group.config.width || 6) - 1) * 43 - 15;
-        //console.log("pixelsWide",pixelsWide);
+
         if (!tab || !group) { return; }
         var options = {
             emitOnlyNewValues: false,
@@ -64,7 +62,6 @@ module.exports = function(RED) {
                                 }
                             }]
                         }
-
                         for (var i=0; i<oldValue[0].values.series.length; i++) {
                             if (oldValue[0].values.series[i] === series) {
                                 oldValue[0].values.data[i] = value;
@@ -81,7 +78,7 @@ module.exports = function(RED) {
                             updatedValues: oldValue
                         }
                     }
-                    else { // handle line and area data
+                    else { // Line chart
 
                         // Find the chart data
                         for (var i = 0; i < oldValue.length; i++) {
@@ -125,7 +122,6 @@ module.exports = function(RED) {
                         var limitTime = new Date().getTime() - limitOffsetSec * 1000;
 
                         var remove = [];
-
                         oldValue.forEach(function (series, index) {
                             var i=0;
                             while (i<series.values.data[seriesIndex].length && series.values.data[seriesIndex][i]['x']<limitTime) { i++; }

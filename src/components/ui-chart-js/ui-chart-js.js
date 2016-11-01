@@ -16,7 +16,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     }                    
                     scope.config = loadConfiguration(type, scope);
                    
-                    // when new values arrive, update the chart
+                    // When new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
                         if (newValue != undefined && newValue.length > 0) {
                             scope.config.nodata = false;
@@ -50,8 +50,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             }
                         } else {
                             // Flow deployed - reset config
-                            scope.config.nodata = true;
-                            
+                            scope.config.nodata = true; 
                         }
                     }); 
                 }, 0);
@@ -67,9 +66,7 @@ function loadConfiguration(type,scope) {
     var legend = scope.$eval('me.item.legend');
     var interpolate = scope.$eval('me.item.interpolate');
     var xFormat = scope.$eval('me.item.xformat');
-    console.log(scope.$eval('me'));
-    
-    var colours = ['#1F77B4', '#AEC7E8', '#FF7F0E']
+    var colours = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
       
     var config = {};
     config.data = [];
@@ -83,7 +80,6 @@ function loadConfiguration(type,scope) {
         legend: false,
         responsive: true
     };
-
     
     if (type === 'line') {
         config.options.scales.xAxes = [{
