@@ -136,10 +136,9 @@ module.exports = function(RED) {
                         });
 
                         // If more datapoints than number of pixels wide...
-                        // TODO - warning is not the answer but hey... it's a hint.
-                        if (found.values.data[seriesIndex].length % pixelsWide === 0) {
-                            node.warn("More than "+found.values.length+" datapoints");
-                        }
+                        // if (found.values.data[seriesIndex].length % pixelsWide === 0) {
+                        //     node.warn("More than "+found.values.length+" datapoints");
+                        // }
                         
                         // Return an object including the new point and all the values
                         objectToReturn = {
