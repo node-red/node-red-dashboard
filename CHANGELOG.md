@@ -1,12 +1,15 @@
 
 #### 2.1.1: Maintenance Release
 
+License change
+
+ - Change of license copyright to Javascript Foundation
+
 Enhancements
 
     - Add step option to ui_numeric input widget
     - Add OK/Cancel Dialog mode to ui_notification widget
     - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
-
 
 Fixes
 

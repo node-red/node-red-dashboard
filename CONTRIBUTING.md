@@ -44,24 +44,20 @@ the [mailing list](https://groups.google.com/forum/#!forum/node-red) first.
 In order for us to accept pull-requests, the contributor must first complete
 a Contributor License Agreement (CLA). This clarifies the intellectual
 property license granted with any contribution. It is for your protection as a
-Contributor as well as the protection of IBM and its customers; it does not
+Contributor as well as the protection of the Javascript Foundation; it does not
 change your rights to use your own Contributions for any other purpose.
 
-You can download the CLAs here:
+You can access and accept the CLA here:
 
- - [individual](http://nodered.org/cla/node-red-cla-individual.pdf)
- - [corporate](http://nodered.org/cla/node-red-cla-corporate.pdf)
+ - [Javascript Foundation CLA](https://cla.js.foundation/node-red/node-red-dashboard)
 
-If you are an IBMer, please contact us directly as the contribution process is
-slightly different.
 
 ### Coding standards
 
 Please ensure you follow the coding standards used through-out the existing
 code base. Some basic rules include:
 
- - all files must have the Apache license in the header.
  - indent with 4-spaces, no tabs. No arguments.
  - opening brace on same line as `if`/`for`/`function` and so on, closing brace
  on its own line.
- - There are .jshintrc and .jscsrc files included in the project which may help
+ - There are **.jshintrc** and **.jscsrc** files included in the project which may help
