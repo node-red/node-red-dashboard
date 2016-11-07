@@ -141,10 +141,11 @@ function add(opt) {
             currentValues[msg.id] = converted;
             replayMessages[msg.id] = msg;
         }
-
-        var toSend = {payload: converted};
-        toSend = opt.beforeSend(toSend, msg) || toSend;
-        opt.node.send(toSend);
+        if (opt.forwardInputMessages) {
+            var toSend = {payload: converted};
+            toSend = opt.beforeSend(toSend, msg) || toSend;
+            opt.node.send(toSend);
+        }
 
         if (opt.storeFrontEndInputAsState) {
             //fwd to all UI clients
