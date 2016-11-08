@@ -51,7 +51,7 @@ module.exports = function(RED) {
                     var storageKey = node.id;
                     var found;
                     if (!oldValue) { oldValue = [];}
-                    var objectToReturn;
+                    var converted = {};
                     if (node.chartType === "bar") {  // handle bar type data
                         if (oldValue.length == 0) {
                             oldValue = [{
@@ -73,10 +73,8 @@ module.exports = function(RED) {
                             oldValue[0].values.series.push(series);
                             oldValue[0].values.data.push(value);
                         }
-                        objectToReturn = {
-                            update: false,
-                            updatedValues: oldValue
-                        }
+                        converted.update = false;
+                        converted.updatedValues = oldValue;
                     }
                     else { // Line chart
 
@@ -120,19 +118,32 @@ module.exports = function(RED) {
                         // Remove datapoints older than a certain time
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
                         var limitTime = new Date().getTime() - limitOffsetSec * 1000;
+                        var pointsLimit = config.removeOlderPoints;
+                        var removed = [];
+                        var removeSeries = [];
 
-                        var remove = [];
-                        oldValue.forEach(function (series, index) {
-                            var i=0;
-                            while (i<series.values.data[seriesIndex].length && series.values.data[seriesIndex][i]['x']<limitTime) { i++; }
-                            if (i) { 
-                                series.values.data[seriesIndex].splice(0, i);
+                        oldValue[0].values.data.forEach(function(series, seriesIndex) {
+                            var i = 0;
+                            while (i < series.length && series[i]['x'] < limitTime) { i++; }
+                            if (i > 0) { 
+                                series.splice(0, i);
+                                removed.push({seriesIndex: seriesIndex, noPoints: i});
                             }
-                            if (series.values.data[seriesIndex].length === 0) { remove.push(index); }
+
+                            // Remove oldest datapoints if length is greater than points limit
+                            if (pointsLimit > 0 && series.length > pointsLimit) {
+                                var noToRemove = series.length - pointsLimit;
+                                series.splice(0, noToRemove);
+                                removed.push({seriesIndex: seriesIndex, noPoints: noToRemove});
+                            }
+
+                            if (series.length === 0) { removeSeries.push(seriesIndex); }
                         });
 
-                        remove.forEach(function (index) {
-                            oldValue.splice(index, 1);
+                        // Ensure series match up
+                        removeSeries.forEach(function(index) {
+                            oldValue[0].values.series.splice(index, 1);
+                            oldValue[0].values.data.splice(index, 1);
                         });
 
                         // If more datapoints than number of pixels wide...
@@ -141,26 +152,25 @@ module.exports = function(RED) {
                         // }
                         
                         // Return an object including the new point and all the values
-                        objectToReturn = {
+                        converted.update = true;
+                        converted.newPoint = [{
+                            key: series, 
                             update: true,
-                            newPoint: [{
-                                key: series, 
-                                update: true, 
-                                values: {
-                                    data: point
-                                }
-                            }],
-                            updatedValues: oldValue
-                        }
+                            removedData: removed,
+                            removedSeries: removeSeries,
+                            values: {
+                                data: point
+                            }
+                        }];
+                        converted.updatedValues = oldValue;
                     }
                 }
-                return objectToReturn;
+                return converted;
             }
         };
 
         var done = ui.add(options);
         setTimeout(function() {
-            node.send([null, {payload:"restore", for:node.id}]);
             node.emit("input",{payload:"start"}); // trigger a redraw at start to flush out old data.
         }, 100);
         node.on("close", done);
