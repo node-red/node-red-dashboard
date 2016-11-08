@@ -77,25 +77,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     };
                     break;
                 }
-
                 case 'chart': {
-                    if (!me.item.value || me.item.value === "changed") {
-                        me.item.value = [];
-                    }
-                    if (me.item.look === "line") {
-                        var lineColors = {
-                            'theme-dark': ['#0FBBC3', '#ffA500', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47']
-                        };
-                        me.item.value.forEach(function (line, index) {
-                            if (lineColors[$scope.main.selectedTab.theme]) {
-                                line.color = lineColors[$scope.main.selectedTab.theme][index];
-                            }
-                        })
-                        me.formatTime = function (d) {
-                            return d3.time.format(me.item.xformat)(new Date(d));
-                        };
-                    }
-                    break;
+                    me.item.theme = $scope.main.selectedTab.theme;
                 }
                 case 'form': {
                     me.stop=function(event) {
