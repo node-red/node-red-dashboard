@@ -130,7 +130,7 @@ module.exports = function(RED) {
                                 removed.push({seriesIndex: seriesIndex, noPoints: i});
                             }
 
-                            // Remove oldest datapoints if length is greater than points limit
+                            // Remove old datapoints if total is greater than points limit
                             if (pointsLimit > 0 && series.length > pointsLimit) {
                                 var noToRemove = series.length - pointsLimit;
                                 series.splice(0, noToRemove);

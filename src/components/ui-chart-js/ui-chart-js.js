@@ -42,7 +42,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     // Add the data
                                     scope.config.data[seriesIndex].push(newValue.values.data);
 
-                                    // Check for removal cases - data
+                                    // Check for removal cases
                                     if (newValue.removedData.length > 0) {
                                         newValue.removedData.forEach(function(series, index) {
                                             scope.config.data[series.seriesIndex].splice(0, series.noPoints);
@@ -99,7 +99,7 @@ function loadConfiguration(type,scope) {
         config.options.scales.xAxes = [{
             type: 'time',
             time: {
-                //override xAxes formats
+                // Override xAxes formats
                 displayFormats: {
                     'millisecond': xFormat,
                     'second': xFormat,
@@ -121,11 +121,12 @@ function loadConfiguration(type,scope) {
         config.options.tooltips = {
             callbacks: {
                 title: function(tooltip, data) {
-                    // Display and format the largest tooltip as the title
+                    // Display and format the most recent time value as the title.
                     // This ensures the title reflects the xAxis time.
-                    // TODO - remove unnecessary series from tooltip
+                    // TODO - Remove the unnecessary series from tooltip
                     // Currently, all series will be displayed
-                    // even if there is no data point at that time (x value).
+                    // in the tooltip even if there is no data point at 
+                    // that time (x value).
                     var largest = tooltip[0].xLabel;
                     for (var i=1; i<tooltip.length; i++) {
                         if (tooltip[i].xLabel > largest) {
