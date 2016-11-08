@@ -51,7 +51,7 @@ module.exports = function(RED) {
                     var storageKey = node.id;
                     var found;
                     if (!oldValue) { oldValue = [];}
-                    var objectToReturn;
+                    var converted = {};
                     if (node.chartType === "bar") {  // handle bar type data
                         if (oldValue.length == 0) {
                             oldValue = [{
@@ -73,10 +73,8 @@ module.exports = function(RED) {
                             oldValue[0].values.series.push(series);
                             oldValue[0].values.data.push(value);
                         }
-                        objectToReturn = {
-                            update: false,
-                            updatedValues: oldValue
-                        }
+                        converted.update = false;
+                        converted.updatedValues = oldValue;
                     }
                     else { // Line chart
 
@@ -141,26 +139,23 @@ module.exports = function(RED) {
                         // }
                         
                         // Return an object including the new point and all the values
-                        objectToReturn = {
-                            update: true,
-                            newPoint: [{
-                                key: series, 
-                                update: true, 
-                                values: {
-                                    data: point
-                                }
-                            }],
-                            updatedValues: oldValue
-                        }
+                        converted.update = true;
+                        converted.newPoint = [{
+                            key: series, 
+                            update: true, 
+                            values: {
+                                data: point
+                            }
+                        }];
+                        converted.updatedValues = oldValue;
                     }
                 }
-                return objectToReturn;
+                return converted;
             }
         };
 
         var done = ui.add(options);
         setTimeout(function() {
-            node.send([null, {payload:"restore", for:node.id}]);
             node.emit("input",{payload:"start"}); // trigger a redraw at start to flush out old data.
         }, 100);
         node.on("close", done);

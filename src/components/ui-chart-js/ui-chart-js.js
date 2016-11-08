@@ -102,6 +102,24 @@ function loadConfiguration(type,scope) {
                 fill: false
             }
         }
+        config.options.tooltips = {
+            callbacks: {
+                title: function(tooltip, data) {
+                    // Display and format the largest tooltip as the title
+                    // This ensures the title reflects the xAxis time.
+                    // TODO - remove unnecessary series from tooltip
+                    // Currently, all series will be displayed
+                    // even if there is no data point at that time (x value).
+                    var largest = tooltip[0].xLabel;
+                    for (var i=1; i<tooltip.length; i++) {
+                        if (tooltip[i].xLabel > largest) {
+                            largest = tooltip[i].xLabel;
+                        }
+                    }
+                    return moment(largest).format(xFormat);
+                }
+            }
+        }
         switch(interpolate) {
             case 'linear':
                 config.options.elements.line.tension = 0;
