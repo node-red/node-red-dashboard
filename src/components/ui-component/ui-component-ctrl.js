@@ -22,10 +22,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'dropdown': {
-                    if (me.item.value !== me.item.id) {
-                        // push through any already selected value
-                        me.valueChanged(0);
-                    }
                     me.itemChanged = function () {
                         me.valueChanged(0);
                     };
