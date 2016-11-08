@@ -18,6 +18,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                    
                     // When new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
+
                         if (newValue != undefined && newValue.length > 0) {
                             scope.config.nodata = false;
                             newValue = newValue[0];
@@ -40,6 +41,21 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
 
                                     // Add the data
                                     scope.config.data[seriesIndex].push(newValue.values.data);
+
+                                    // Check for removal cases - data
+                                    if (newValue.removedData.length > 0) {
+                                        newValue.removedData.forEach(function(series, index) {
+                                            scope.config.data[series.seriesIndex].splice(0, series.noPoints);
+                                        })
+                                    }
+
+                                    // Removal of series
+                                    if (newValue.removedSeries.length > 0) {
+                                        newValue.removedSeries.forEach(function(index) {
+                                            scope.config.data.splice(index, 1);
+                                            scope.config.series.splice(index, 1);
+                                        })
+                                    }
 
                             } else {
                                 // Bar charts and non update line charts replace the data

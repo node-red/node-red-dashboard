@@ -118,19 +118,32 @@ module.exports = function(RED) {
                         // Remove datapoints older than a certain time
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
                         var limitTime = new Date().getTime() - limitOffsetSec * 1000;
+                        var pointsLimit = config.removeOlderPoints;
+                        var removed = [];
+                        var removeSeries = [];
 
-                        var remove = [];
-                        oldValue.forEach(function (series, index) {
-                            var i=0;
-                            while (i<series.values.data[seriesIndex].length && series.values.data[seriesIndex][i]['x']<limitTime) { i++; }
-                            if (i) { 
-                                series.values.data[seriesIndex].splice(0, i);
+                        oldValue[0].values.data.forEach(function(series, seriesIndex) {
+                            var i = 0;
+                            while (i < series.length && series[i]['x'] < limitTime) { i++; }
+                            if (i > 0) { 
+                                series.splice(0, i);
+                                removed.push({seriesIndex: seriesIndex, noPoints: i});
                             }
-                            if (series.values.data[seriesIndex].length === 0) { remove.push(index); }
+
+                            // Remove oldest datapoints if length is greater than points limit
+                            if (pointsLimit > 0 && series.length > pointsLimit) {
+                                var noToRemove = series.length - pointsLimit;
+                                series.splice(0, noToRemove);
+                                removed.push({seriesIndex: seriesIndex, noPoints: noToRemove});
+                            }
+
+                            if (series.length === 0) { removeSeries.push(seriesIndex); }
                         });
 
-                        remove.forEach(function (index) {
-                            oldValue.splice(index, 1);
+                        // Ensure series match up
+                        removeSeries.forEach(function(index) {
+                            oldValue[0].values.series.splice(index, 1);
+                            oldValue[0].values.data.splice(index, 1);
                         });
 
                         // If more datapoints than number of pixels wide...
@@ -142,7 +155,9 @@ module.exports = function(RED) {
                         converted.update = true;
                         converted.newPoint = [{
                             key: series, 
-                            update: true, 
+                            update: true,
+                            removedData: removed,
+                            removedSeries: removeSeries,
                             values: {
                                 data: point
                             }
