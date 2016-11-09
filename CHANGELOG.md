@@ -1,5 +1,5 @@
 
-#### 2.1.1: Maintenance Release
+#### 2.1.1-beta: Maintenance Release (not yet released to npm)
 
 License change
 
@@ -10,12 +10,15 @@ Enhancements
     - Add step option to ui_numeric input widget
     - Add OK/Cancel Dialog mode to ui_notification widget
     - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
+    - bumped fa-icons version to 4.7.0
+    - ui_control emits "connect" and "lost" messages for client id and ip.
 
 Fixes
 
     - change link `_new` refs to `_blank` to be standards compliant
     - fix fa icons default size so fixed width matches material icons width (24px)
-    - bump sockets.io version  
+    - bump sockets.io version
+    - fixed dropdown generating messages when opening tab
 
 
 ### 2.1.0: Milestone Release
