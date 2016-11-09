@@ -22,7 +22,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         function moveTab(d) {
             var len = main.tabs.length;
             if (len > 1) {
-                var i = (main.selectedTab.order - 1 + d) % len;
+                var i = (main.selectedTab.order + d) % len;
                 if (i < 0) { i += len; }
                 main.select(i);
             }
