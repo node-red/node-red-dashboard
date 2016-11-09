@@ -152,6 +152,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('ui-control', function(msg) {
+            if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
                 if (typeof msg.tab === 'string') {
                     // is it the name of a tab ?
@@ -181,6 +182,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('ui-audio', function(msg) {
+            var totab;
+            for (var i in main.tabs) {
+                if (msg.tabname === main.tabs[i].header) { totab = i; }
+            }
+            // only play sound/tts to tab if in focus
+            if (totab != parseInt($location.path().substr(1))) { return; }
+
             if (msg.hasOwnProperty("tts")) {
                 if ('speechSynthesis' in window) {
                     var voices = window.speechSynthesis.getVoices();
