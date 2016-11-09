@@ -6,7 +6,6 @@ module.exports = function(RED) {
         inited = true;
         init(RED.server, RED.httpNode || RED.httpAdmin, RED.log, RED.settings);
     }
-
     return {
         add: add,
         addLink: addLink,
@@ -14,7 +13,8 @@ module.exports = function(RED) {
         emit: emit,
         toNumber: toNumber.bind(null, false),
         toFloat: toNumber.bind(null, true),
-        updateUi: updateUi
+        updateUi: updateUi,
+        ev: ev
     };
 };
 
@@ -128,7 +128,9 @@ function add(opt) {
                 //forward to output
                 msg.payload = opt.convertBack(newValue);
                 msg = opt.beforeSend(msg) || msg;
+                //console.log("MSG1",msg);
                 opt.beforeSend(msg);
+                //console.log("MSG2",msg);
                 opt.node.send(msg);
             }
         }
@@ -143,8 +145,9 @@ function add(opt) {
         }
         var toSend = {payload: converted};
         toSend = opt.beforeSend(toSend, msg) || toSend;
+        toSend.socketid = toSend.socketid || msg.socketid;
         opt.node.send(toSend);
-        
+
         if (opt.storeFrontEndInputAsState) {
             //fwd to all UI clients
             io.emit(updateValueEventName, msg);
@@ -204,6 +207,7 @@ function init(server, app, log, redSettings) {
     log.info("Dashboard version " + dashboardVersion + " started at " + fullPath);
 
     io.on('connection', function(socket) {
+        ev.emit("newsocket", socket.client.id, socket.request.connection.remoteAddress);
         updateUi(socket);
         socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
         socket.on('ui-replay-state', function() {
@@ -212,6 +216,9 @@ function init(server, app, log, redSettings) {
                 socket.emit(updateValueEventName, replayMessages[id]);
             });
             socket.emit('ui-replay-done');
+        });
+        socket.on('disconnect', function() {
+            ev.emit("endsocket", socket.client.id, socket.request.connection.remoteAddress);
         });
     });
 }
