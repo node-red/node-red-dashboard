@@ -119,14 +119,11 @@ function loadConfiguration(type,scope) {
             }
         }
         config.options.tooltips = {
+            mode: 'x-axis',
             callbacks: {
                 title: function(tooltip, data) {
                     // Display and format the most recent time value as the title.
                     // This ensures the title reflects the xAxis time.
-                    // TODO - Remove the unnecessary series from tooltip
-                    // Currently, all series will be displayed
-                    // in the tooltip even if there is no data point at 
-                    // that time (x value).
                     var largest = tooltip[0].xLabel;
                     for (var i=1; i<tooltip.length; i++) {
                         if (tooltip[i].xLabel > largest) {
@@ -136,6 +133,9 @@ function loadConfiguration(type,scope) {
                     return moment(largest).format(xFormat);
                 }
             }
+        }
+        config.options.hover = {
+            mode: 'x-axis'
         }
         switch(interpolate) {
             case 'linear':
