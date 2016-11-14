@@ -122,6 +122,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         }
 
         me.valueChanged = function (throttleTime) {
+            if (me.item.type === 'text-input' && me.item.mode === 'color') {
+                less.modifyVars({'@base': me.item.value});
+            }
             throttle({
                 id: me.item.id,
                 value: me.item.value

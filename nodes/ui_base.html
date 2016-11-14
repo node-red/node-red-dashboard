@@ -14,7 +14,7 @@
 }
 .nr-db-sb .form-row input,
 .nr-db-sb .form-row select {
-    width: calc(100% - 2px);
+    width: calc(100% - 100px);
     margin-bottom:0;
 }
 .nr-db-sb .red-ui-editableList-container {
@@ -123,6 +123,15 @@
     font-size: 0.8em;
     color: #999;
 }
+.nr-db-color-pick {
+    display: inline-block;
+    max-width: 50px;
+    border-radius: 3px;
+    margin-left: 15px;
+}
+#color-input {
+    width: 50px;
+}
 </style>
 <script type="text/javascript">
 var uip = RED.settings.uiPath || 'ui';
@@ -199,7 +208,8 @@ RED.nodes.registerType('ui_base',{
         $('<select id="nr-db-field-theme">'+
             '<option value="theme-light">Light (default)</option>'+
             '<option value="theme-dark">Dark</option>'+
-            '</select>')
+            '</select></div>'+
+            '<div class="nr-db-color-pick"><input id="color-input" type="color" value="#0094CE"/></div>')
             .change(function() {
                 if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
                     ensureDashboardNode(true);

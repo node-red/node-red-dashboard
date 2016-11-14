@@ -196,7 +196,7 @@ function init(server, app, log, redSettings) {
                 'sprintf-js',
                 'jquery', 'jquery-ui',
                 'raphael', 'justgage',
-                'd3', 'nvd3', 'angularjs-nvd3-directives'
+                'd3', 'nvd3', 'angularjs-nvd3-directives', 'less'
             ];
             vendor_packages.forEach(function (packageName) {
                 app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));
