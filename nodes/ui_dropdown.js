@@ -42,7 +42,6 @@ module.exports = function(RED) {
                 // otherwise that convenience info would not be sent (would not cause any problems)...
 
                 emitOptions = {isOptionsValid:false, value:undefined, newOptions:undefined};
-
                 do {
                     if (!msg.options || !Array.isArray(msg.options)) { break; }
                     emitOptions.newOptions = [];
@@ -50,11 +49,10 @@ module.exports = function(RED) {
                         emitOptions.isOptionsValid = true;
                         break;
                     }
-
                     // could check whether or not all members have same type
                     for (var i = 0; i < msg.options.length; i++) {
                         var opt = msg.options[i];
-                        if (opt === undefined || opt == null) { continue; }
+                        if (opt === undefined || opt === null) { continue; }
 
                         switch (typeof opt) {
                             case 'number': {
@@ -85,7 +83,6 @@ module.exports = function(RED) {
                     if (msg.payload) { emitOptions.value = msg.payload; }
                     emitOptions.isOptionsValid = true;
                 } while (false);
-
                 // finally adjust msg to reflect the input
                 msg.fromInput = true;
                 if (emitOptions.isOptionsValid) {
@@ -97,7 +94,7 @@ module.exports = function(RED) {
                     }
                 }
 
-                if (msg.payload) {
+                if (msg.hasOwnProperty("payload")) {
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
                     emitOptions.fromInput = true;
@@ -113,7 +110,10 @@ module.exports = function(RED) {
             },
 
             beforeSend: function (msg) {
-                if (msg.fromInput) { delete msg.options; msg.payload = emitOptions.value; }
+                if (msg.fromInput) {
+                    delete msg.options;
+                    msg.payload = emitOptions.value;
+                }
                 msg.topic = config.topic || msg.topic; //pass through topic if not set
             }
         });
