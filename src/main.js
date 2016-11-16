@@ -79,7 +79,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             (ui.theme.name === 'theme-light') ? color = ui.theme.lightThemeColor : 
                 color = ui.theme.darkThemeColor;
             less.modifyVars({'@baseColour': color});
-
+            
             $mdToast.hide();
             done();
         }, function () {
