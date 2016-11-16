@@ -123,13 +123,12 @@
     font-size: 0.8em;
     color: #999;
 }
-.nr-db-color-pick {
-    display: inline-block;
+span.nr-db-color-pick-container {
     max-width: 50px;
     border-radius: 3px;
     margin-left: 15px;
 }
-#color-input {
+#nr-db-field-themeColor {
     width: 50px;
 }
 </style>
@@ -140,7 +139,9 @@ RED.nodes.registerType('ui_base',{
     category: 'config',
     defaults: {
         name: {value: ''},
-        theme: {value: ''}
+        theme: {value: ''},
+        lightThemeColor: {value: ''},
+        darkThemeColor: {value: ''}
     },
     hasUsers: false,
     paletteLabel: 'Dashboard',
@@ -149,6 +150,8 @@ RED.nodes.registerType('ui_base',{
     },
     onpaletteadd: function() {
         var globalDashboardNode = null;
+        var defaultLightColor = "#0094CE", 
+            defaultDarkColor = "#097479";
 
         function ensureDashboardNode(createMissing) {
             if (globalDashboardNode !== null) {
@@ -162,6 +165,8 @@ RED.nodes.registerType('ui_base',{
                 RED.nodes.eachConfig(function(n) {
                     if (globalDashboardNode === null && n.type === 'ui_base') {
                         globalDashboardNode = n;
+                        console.log('got config node');
+                        console.log(globalDashboardNode);
                     }
                 });
                 if (globalDashboardNode === null && createMissing) {
@@ -171,6 +176,8 @@ RED.nodes.registerType('ui_base',{
                         type: "ui_base",
                         name: "Node-RED Dashboard",
                         theme: "theme-light",
+                        lightThemeColor: "#0094CE",
+                        darkThemeColor: "#097479",
                         url: 'ui',
                         users:[]
                     }
@@ -208,16 +215,32 @@ RED.nodes.registerType('ui_base',{
         $('<select id="nr-db-field-theme">'+
             '<option value="theme-light">Light (default)</option>'+
             '<option value="theme-dark">Dark</option>'+
-            '</select></div>'+
-            '<div class="nr-db-color-pick"><input id="color-input" type="color" value="#0094CE"/></div>')
+            '</select>')
             .change(function() {
                 if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
                     ensureDashboardNode(true);
                     globalDashboardNode.theme = $(this).val();
+                    (globalDashboardNode.theme === 'theme-light') ? $("#nr-db-field-themeColor").val(globalDashboardNode.lightThemeColor) : $("#nr-db-field-themeColor").val(globalDashboardNode.darkThemeColor);
+
                     RED.nodes.dirty(true);
                 }
+                
             })
             .appendTo(divTheme);
+         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(divTheme);
+        $('<input id="nr-db-field-themeColor" type="color" value="'+defaultLightColor+'"/>')
+        .change(function() {
+            ensureDashboardNode(true);
+            var lightThemeMatch = globalDashboardNode.lightThemeColor === $(this).val();
+            var darkThemeMatch = globalDashboardNode.darkThemeColor === $(this).val();
+            if (!globalDashboardNode || !lightThemeMatch || !darkThemeMatch) {
+                //update the relevant colour storage
+                (globalDashboardNode.theme === 'theme-light') ? globalDashboardNode.lightThemeColor = $(this).val() : globalDashboardNode.darkThemeColor = $(this).val();
+                RED.nodes.dirty(true);
+            }
+
+        })
+        .appendTo(spanColorContainer);
 
         var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
         $('<label>').html('Tabs').appendTo(divTabs);
@@ -838,6 +861,9 @@ RED.nodes.registerType('ui_base',{
             if (globalDashboardNode) {
                 $("#nr-db-field-title").val(globalDashboardNode.name);
                 $("#nr-db-field-theme").val(globalDashboardNode.theme);
+                var colorValue;
+                (globalDashboardNode.theme === 'theme-light') ? colorValue = globalDashboardNode.lightThemeColor : colorValue = globalDashboardNode.darkThemeColor;
+                $("#nr-db-field-themeColor").val(colorValue);
                 // $("#nr-db-field-url").val(globalDashboardNode.url);
             }
             awaitingGroups = {};

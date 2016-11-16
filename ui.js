@@ -27,7 +27,9 @@ var serveStatic = require('serve-static'),
 
 var baseConfiguration = {
     title: "Node-RED Dashboard",
-    theme: "theme-light"
+    theme: "theme-light",
+    lightThemeColor: "#0094CE",
+    darkThemeColor: "#097479"
 };
 
 var tabs = [];
@@ -233,11 +235,18 @@ function updateUi(to) {
     process.nextTick(function() {
         tabs.forEach(function(t) {
             t.theme = baseConfiguration.theme;
+            t.lightThemeColor = baseConfiguration.lightThemeColor;
+            t.darkThemeColor = baseConfiguration.darkThemeColor;
         })
         to.emit('ui-controls', {
             title: baseConfiguration.title,
             tabs: tabs,
-            links: links
+            links: links,
+            theme: {
+                name: baseConfiguration.theme,
+                lightThemeColor: baseConfiguration.lightThemeColor,
+                darkThemeColor: baseConfiguration.darkThemeColor
+            }
         });
         updateUiPending = false;
     });
@@ -341,8 +350,10 @@ function addLink(name, link, icon, order, target) {
     }
 }
 
-function addBaseConfig(title,theme) {
+function addBaseConfig(title,theme,lightcolor,darkcolor) {
     if (title) { baseConfiguration.title = title; }
     if (theme) { baseConfiguration.theme = theme; }
+    if (lightcolor) { baseConfiguration.lightThemeColor = lightcolor; }
+    if (darkcolor) { baseConfiguration.darkThemeColor = darkcolor; }
     updateUi();
 }
