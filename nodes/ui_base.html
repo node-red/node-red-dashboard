@@ -131,6 +131,7 @@ span.nr-db-color-pick-container {
 #nr-db-field-themeColor {
     width: 50px;
 }
+
 </style>
 <script type="text/javascript">
 var uip = RED.settings.uiPath || 'ui';
@@ -210,11 +211,44 @@ RED.nodes.registerType('ui_base',{
             })
             .appendTo(divTitle);
 
-        var divTheme = $('<div>',{class:"form-row"}).appendTo(form);
-        $('<label>').html('Theme').appendTo(divTheme);
-        $('<select id="nr-db-field-theme">'+
+              
+        var divTabsTheme = $('<div>',{class:"form-row"}).appendTo(form);
+        $('<label>').html('Tabs/Theme').appendTo(divTabsTheme);
+
+        var ulTabs = $('<ul id="dashboard-tabs-list" class="red-ui-tabs"></ul>').appendTo(divTabsTheme);
+        var liTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Tabs"><span>Tabs</span></a></li>').appendTo(ulTabs);
+        var themeTabli = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Themes" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulTabs);
+
+
+        ulTabs.children().first().addClass("active");
+
+        var onTabClick = function() {
+            //Toggle tabs
+            ulTabs.children().removeClass("active");
+            ulTabs.children().css({"transition": "width 100ms"});
+            $(this).parent().addClass("active");
+
+            var selectedTab = $(this)[0].title;
+            if (selectedTab === 'Tabs') {
+                $('#dashboard-theme').hide();
+                $('#dashboard-tabs').show();
+
+            } else {
+                $('#dashboard-theme').show();
+                $('#dashboard-tabs').hide();
+            }
+        }
+
+
+        ulTabs.find("li.red-ui-tab a").on("click",onTabClick)
+
+        var divThemes = $('<div id="dashboard-theme" style="display: none;">').appendTo(form);
+        
+
+        var themeSelection = $('<select id="nr-db-field-theme">'+
             '<option value="theme-light">Light (default)</option>'+
             '<option value="theme-dark">Dark</option>'+
+            '<option value="theme-custom">Custom</option>'+
             '</select>')
             .change(function() {
                 if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
@@ -226,8 +260,13 @@ RED.nodes.registerType('ui_base',{
                 }
                 
             })
-            .appendTo(divTheme);
-         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(divTheme);
+            .appendTo(divThemes);
+        $('<label>').html('Theme').appendTo(themeSelection);
+
+        var cssList = $('<ul class="red-ui-dashboard-theme"></ul>').appendTo(divThemes);
+        var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Base Colour</span></li>').appendTo(cssList);
+
+        var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
         $('<input id="nr-db-field-themeColor" type="color" value="'+defaultLightColor+'"/>')
         .change(function() {
             ensureDashboardNode(true);
@@ -242,8 +281,12 @@ RED.nodes.registerType('ui_base',{
         })
         .appendTo(spanColorContainer);
 
-        var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
-        $('<label>').html('Tabs').appendTo(divTabs);
+        var titleText = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Text</span></li>').appendTo(cssList);
+        var titleFont = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Font</span></li>').appendTo(cssList);
+
+
+        var divTabs = $('<div id="dashboard-tabs">',{class:"form-row",style:"position:relative"}).appendTo(form);
+        //$('<label>').html('Tabs').appendTo(divTabs);
 
         var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
         $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-up"></i></a>')
