@@ -129,7 +129,7 @@ function add(opt) {
                 msg.payload = opt.convertBack(newValue);
                 msg = opt.beforeSend(msg) || msg;
                 //console.log("MSG1",msg);
-                opt.beforeSend(msg);
+                //opt.beforeSend(msg);
                 //console.log("MSG2",msg);
                 opt.node.send(msg);
             }

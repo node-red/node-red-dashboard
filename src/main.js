@@ -29,8 +29,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        $scope.onSwipeLeft = function(ev) { moveTab(-1); }
-        $scope.onSwipeRight = function(ev) { moveTab(1); }
+        //TODO Disabled until we make it an option - too sensitive for some 
+        //$scope.onSwipeLeft = function(ev) { moveTab(-1); }
+        //$scope.onSwipeRight = function(ev) { moveTab(1); }
 
         this.toggleSidenav = function () {
             $mdSidenav('left').toggle();
