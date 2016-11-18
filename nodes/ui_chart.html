@@ -40,7 +40,7 @@
                 group: "#node-input-group"
             });
             $("#node-input-chartType").change(function() {
-                if ($(this).val() === "bar") {
+                if ($(this).val() !== "line") {
                     $("#x-axis-show").hide();
                     $("#interpolate-show").hide();
                 } else {
@@ -98,6 +98,7 @@
         <select id="node-input-chartType" style="width:120px;">
             <option value="line">Line chart</option>
             <option value="bar">Bar chart</option>
+            <option value="pie">Pie chart</option>
         </select>
     </div>
     <div class="form-row" id="x-axis-show">

@@ -29,8 +29,8 @@ module.exports = function(RED) {
                 legend: config.legend || false,
                 interpolate: config.interpolate,
                 nodata: config.nodata,
-                width: config.width || group.config.width || 6,
-                height: config.height || parseInt(group.config.width/2+1) || 4,
+                width: parseInt(config.width || group.config.width || 6),
+                height: parseInt(config.height || group.config.width/2+1 || 4),
                 ymin: config.ymin || 0,
                 ymax: config.ymax,
                 xformat : config.xformat || "HH:mm:SS"
@@ -52,7 +52,7 @@ module.exports = function(RED) {
                     var found;
                     if (!oldValue) { oldValue = [];}
                     var converted = {};
-                    if (node.chartType === "bar") {  // handle bar type data
+                    if (node.chartType !== "line") {  // handle bar and pie type data
                         if (oldValue.length == 0) {
                             oldValue = [{
                                 key: storageKey,
@@ -88,8 +88,8 @@ module.exports = function(RED) {
 
                         // Setup the data structure if this is the first time
                         if (!found) {
-                            found = { 
-                                key: storageKey, 
+                            found = {
+                                key: storageKey,
                                 values: {
                                     series: [],
                                     data: []
@@ -113,7 +113,7 @@ module.exports = function(RED) {
                         // Add the data to the correct series
                         var point = {"x": time, "y": value};
                         found.values.data[seriesIndex].push(point);
-                        
+
 
                         // Remove datapoints older than a certain time
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
@@ -125,7 +125,7 @@ module.exports = function(RED) {
                         oldValue[0].values.data.forEach(function(series, seriesIndex) {
                             var i = 0;
                             while (i < series.length && series[i]['x'] < limitTime) { i++; }
-                            if (i > 0) { 
+                            if (i > 0) {
                                 series.splice(0, i);
                                 removed.push({seriesIndex: seriesIndex, noPoints: i});
                             }
@@ -150,11 +150,11 @@ module.exports = function(RED) {
                         // if (found.values.data[seriesIndex].length % pixelsWide === 0) {
                         //     node.warn("More than "+found.values.length+" datapoints");
                         // }
-                        
+
                         // Return an object including the new point and all the values
                         converted.update = true;
                         converted.newPoint = [{
-                            key: series, 
+                            key: series,
                             update: true,
                             removedData: removed,
                             removedSeries: removeSeries,

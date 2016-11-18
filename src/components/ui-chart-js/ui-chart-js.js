@@ -11,6 +11,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var type = scope.$eval('me.item.look');
                     var LINE_TYPE = 'line';
                     var BAR_TYPE = 'bar';
+                    var PIE_TYPE = 'pie';
                     scope.getChartTemplateUrl = function() {
                         return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
                     }
@@ -62,6 +63,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 scope.config.data = newValue.values.data;
                                 if (type === LINE_TYPE) { scope.config.series = newValue.values.series; }
                                 if (type === BAR_TYPE) { scope.config.labels = newValue.values.series; }
+                                if (type === PIE_TYPE) { scope.config.labels = newValue.values.series; }
 
                             }
                         } else {
@@ -76,6 +78,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
 ]);
 
 function loadConfiguration(type,scope) {
+    console.log(scope.$eval('me.item.height'),scope.$eval('me.item.width'));
     var yMin = parseFloat(scope.$eval('me.item.ymin'));
     var yMax = parseFloat(scope.$eval('me.item.ymax'));
     var legend = scope.$eval('me.item.legend');
@@ -166,7 +169,7 @@ function loadConfiguration(type,scope) {
         config.options.scales.yAxes[0].ticks.max = yMax;
     }
 
-    if (type === 'line' && JSON.parse(legend)) {
+    if (type !== 'bar' && JSON.parse(legend)) {
         config.options.legend = {display:true};
     }
     return config;
