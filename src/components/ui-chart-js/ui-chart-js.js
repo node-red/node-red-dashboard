@@ -114,7 +114,11 @@ function loadConfiguration(type,scope) {
                     'quarter': xFormat,
                     'year': xFormat,
                 }
-            }
+            },
+            scaleLabel: {
+                fontColor: "#fff",
+                display: true
+            },
         }];
 
         config.options.tooltips = {
@@ -154,12 +158,19 @@ function loadConfiguration(type,scope) {
                 config.options.elements.line.stepped = true;
                 break;
         }
+        if (scope.$eval('me.item.theme') === 'theme-dark') {
+            config.options.elements.point = {borderWidth:1, borderColor: 'rgba(0,0,0,0.1)', backgroundColor: 'rgba(0,0,0,0.1)'};
+        } else {
+            config.options.elements.point = {borderColor: "rgba(255,255,255,0.1)"};
+        }
+        
     }
 
     config.options.scales.yAxes = [{}];
     config.options.scales.yAxes[0].ticks = {};
 
     if (type === 'bar') {
+        config.options.scales.xAxes = [{}];
         config.options.scales.yAxes[0].beginAtZero = true;
     }
     if (!isNaN(yMin)) {
@@ -170,7 +181,28 @@ function loadConfiguration(type,scope) {
     }
 
     if (type !== 'bar' && JSON.parse(legend)) {
+
         config.options.legend = {display:true};
+        (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = {fontColor: "#fff"} :
+            config.options.legend.labels = {fontColor: "#666"};
+        
     }
+
+    if (scope.$eval('me.item.theme') === 'theme-dark') {
+        config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = {fontColor: "#fff"};
+        config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
+            color:"rgba(255,255,255,0.1)",
+            zeroLineColor:"rgba(255,255,255,0.1)"
+        }
+    } else {
+        config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = {fontColor: "#666"};
+        config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
+            color:"rgba(0,0,0,0.1)",
+            zeroLineColor:"rgba(0,0,0,0.1)"
+        } 
+    }
+    config.options.scales.xAxes[0].ticks.maxRotation = 0;
+    config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
+    config.options.scales.xAxes[0].ticks.autoSkip = true;
     return config;
 }
