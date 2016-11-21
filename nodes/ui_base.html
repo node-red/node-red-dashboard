@@ -621,7 +621,7 @@ RED.nodes.registerType('ui_base',{
             }
         });
 
-        var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(form);
+        var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(layoutTab);
         $('<span><i class="fa fa-info-circle"></i> There <span id="nr-db-missing-group-count"></span> not in a group. Click <a id="nr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
         orphanedWidgets.find('a').click(function(event) {
             var unknownGroups = {};
