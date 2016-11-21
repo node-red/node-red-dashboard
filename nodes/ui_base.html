@@ -94,6 +94,7 @@
     position: absolute;
     right: 3px;
     top: 0px;
+    z-index: 2;
 }
 .nr-db-sb-list-header-button-group {
     position: absolute;
@@ -130,6 +131,10 @@ span.nr-db-color-pick-container {
 }
 #nr-db-field-themeColor {
     width: 50px;
+}
+
+#dashboard-tabs-list {
+    margin-bottom: 15px;
 }
 
 </style>
@@ -192,7 +197,48 @@ RED.nodes.registerType('ui_base',{
 
         var form = $('<form class="dialog-form">').appendTo(mainContent);
 
-        var divTitle = $('<div>',{class:"form-row"}).appendTo(form);
+        // Dashboard Tabs markup
+        var ulDashboardTabs = $('<ul id="dashboard-tabs-list" class="red-ui-tabs"></ul>').appendTo(form);
+        var liLayoutTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
+        var liThemeTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
+        var liSiteTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Site" style="width: 80px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
+
+        // Dashboard Tab containers
+        var layoutTab = $('<div id="dashboard-layout">').appendTo(form);
+        var themeTab = $('<div id="dashboard-theme" style="display: none;">').appendTo(form);
+        var siteTab = $('<div id="dashboard-site" style="display: none;">').appendTo(form);
+
+        ulDashboardTabs.children().first().addClass("active");
+
+        // Tab logic
+        var onTabClick = function() {
+            //Toggle tabs
+            ulDashboardTabs.children().removeClass("active");
+            ulDashboardTabs.children().css({"transition": "width 100ms"});
+            $(this).parent().addClass("active");
+
+            var selectedTab = $(this)[0].title;
+            if (selectedTab === 'Layout') {
+                themeTab.hide();
+                siteTab.hide();
+                layoutTab.show();
+
+            } else if (selectedTab === 'Theme') {
+                layoutTab.hide();
+                siteTab.hide();
+                themeTab.show();
+            } else {
+                layoutTab.hide();
+                themeTab.hide();
+                siteTab.show();
+            }
+        }
+
+        ulDashboardTabs.find("li.red-ui-tab a").on("click",onTabClick)
+
+
+
+        var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
         $('<label>').html('Title').appendTo(divTitle);
         $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 48px)")
             .change(function() {
@@ -209,41 +255,7 @@ RED.nodes.registerType('ui_base',{
                 window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
                 evt.preventDefault();
             })
-            .appendTo(divTitle);
-
-              
-        var divTabsTheme = $('<div>',{class:"form-row"}).appendTo(form);
-        $('<label>').html('Tabs/Theme').appendTo(divTabsTheme);
-
-        var ulTabs = $('<ul id="dashboard-tabs-list" class="red-ui-tabs"></ul>').appendTo(divTabsTheme);
-        var liTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Tabs"><span>Tabs</span></a></li>').appendTo(ulTabs);
-        var themeTabli = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Themes" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulTabs);
-
-
-        ulTabs.children().first().addClass("active");
-
-        var onTabClick = function() {
-            //Toggle tabs
-            ulTabs.children().removeClass("active");
-            ulTabs.children().css({"transition": "width 100ms"});
-            $(this).parent().addClass("active");
-
-            var selectedTab = $(this)[0].title;
-            if (selectedTab === 'Tabs') {
-                $('#dashboard-theme').hide();
-                $('#dashboard-tabs').show();
-
-            } else {
-                $('#dashboard-theme').show();
-                $('#dashboard-tabs').hide();
-            }
-        }
-
-
-        ulTabs.find("li.red-ui-tab a").on("click",onTabClick)
-
-        var divThemes = $('<div id="dashboard-theme" style="display: none;">').appendTo(form);
-        
+            .appendTo(divTitle);        
 
         var themeSelection = $('<select id="nr-db-field-theme">'+
             '<option value="theme-light">Light (default)</option>'+
@@ -260,10 +272,10 @@ RED.nodes.registerType('ui_base',{
                 }
                 
             })
-            .appendTo(divThemes);
+            .appendTo(themeTab);
         $('<label>').html('Theme').appendTo(themeSelection);
 
-        var cssList = $('<ul class="red-ui-dashboard-theme"></ul>').appendTo(divThemes);
+        var cssList = $('<ul class="red-ui-dashboard-theme"></ul>').appendTo(themeTab);
         var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Base Colour</span></li>').appendTo(cssList);
 
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
@@ -285,7 +297,9 @@ RED.nodes.registerType('ui_base',{
         var titleFont = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Font</span></li>').appendTo(cssList);
 
 
-        var divTabs = $('<div id="dashboard-tabs">',{class:"form-row",style:"position:relative"}).appendTo(form);
+
+        //Layout Tab
+        var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
         //$('<label>').html('Tabs').appendTo(divTabs);
 
         var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
@@ -646,7 +660,7 @@ RED.nodes.registerType('ui_base',{
             event.preventDefault();
         });
 
-        var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
+        var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
         $('<label>').html('Menu links').appendTo(divLinks);
 
         buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divLinks);
