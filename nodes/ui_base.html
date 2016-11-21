@@ -304,8 +304,23 @@ RED.nodes.registerType('ui_base',{
             .appendTo(divThemeStyle);
         $('<label>').html('Theme').appendTo(themeSelection);
 
-        var themeStylesUl = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeTab);
+        var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
+        $('<label>').html('Fonts').appendTo(divThemeStyle);
+
+        var themeFontsUl = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeTab);  
+        var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>Base Font</span></li>').appendTo(themeFontsUl);
+
+        var fontOptions = ['Title Bar', 'Tab Name', 'Group Name', 'Button', 'Widget'];
+        fontOptions.forEach(function(option, index) {
+            $('<li class="red-ui-dashboard-theme-item"><span>'+option+'</span></li>').appendTo(themeFontsUl);
+        });
+
+        var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
+        $('<label>').html('Colours').appendTo(divThemeStyle);
+
+        var themeStylesUl = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeTab);  
         var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Base Colour</span></li>').appendTo(themeStylesUl);
+
 
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
         $('<input id="nr-db-field-themeColor" type="color" value="'+defaultLightColor+'"/>')
@@ -322,10 +337,18 @@ RED.nodes.registerType('ui_base',{
         })
         .appendTo(spanColorContainer);
 
+        var colourOptions = ['Title Bar Text', 'Tab Name', 'Group Name', 'Slider Background', 'Dropdown Background'];
+        colourOptions.forEach(function(option, index) {
+            var colourItem = $('<li class="red-ui-dashboard-theme-item"><span>'+option+'</span></li>').appendTo(themeStylesUl);
+            var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(colourItem);
+            $('<input id="nr-db-field-themeColor" type="color" value="'+defaultLightColor+'"/>')
+            .change(function() {
+                //todo
 
+            })
+            .appendTo(spanColorContainer);
+        });
 
-        var titleText = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Text</span></li>').appendTo(themeStylesUl);
-        var titleFont = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Font</span></li>').appendTo(themeStylesUl);
          var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
             .appendTo(themeStylesUl.children());
 
