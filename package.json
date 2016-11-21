@@ -66,7 +66,6 @@
     "angular-mocks": "^1.5.6",
     "angular-route": "^1.5.6",
     "angular-sanitize": "^1.4.8",
-    "angularjs-nvd3-directives": "^0.0.8",
     "chart.js": "2.x",
     "d3": "^3.5.17",
     "font-awesome": "^4.6.3",
@@ -88,7 +87,6 @@
     "jshint": "^2.9.2",
     "justgage": "^1.1.0",
     "moment": "^2.16.0",
-    "nvd3": "1.8.1",
     "sprintf-js": "^1.0.3",
     "streamqueue": "^1.1.1",
     "svg-morpheus": "^0.3.0"

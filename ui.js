@@ -116,7 +116,7 @@ function add(opt) {
 
         // Retrieve the dataset for this node
         var oldValue = currentValues[opt.node.id];
-        
+
         // Call the convert function in the node to get the new value
         // as well as the full dataset.
         var conversion = opt.convert(msg.payload, oldValue, msg);
@@ -129,15 +129,15 @@ function add(opt) {
             fullDataset = conversion.updatedValues;
         } else {
 
-            // If no update flag is set, this means the conversion contains 
+            // If no update flag is set, this means the conversion contains
             // the full dataset or the new value (e.g. gauges)
             fullDataset = conversion;
         }
-     
+
         // If we have something new to emit
         if (newPoint != undefined || !opt.emitOnlyNewValues || oldValue != fullDataset) {
             currentValues[opt.node.id] = fullDataset;
-            
+
             // Determine what to emit over the websocket
             // (the new point or the full dataset).
             var toEmit;
@@ -224,7 +224,7 @@ function init(server, app, log, redSettings) {
                 'angular-material-icons', 'svg-morpheus', 'font-awesome',
                 'sprintf-js',
                 'jquery', 'jquery-ui',
-                'raphael', 'justgage', 'd3', 'nvd3',
+                'd3', 'raphael', 'justgage',
                 'angular-chart.js', 'chart.js', 'moment'
             ];
             vendor_packages.forEach(function (packageName) {

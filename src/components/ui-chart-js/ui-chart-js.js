@@ -1,4 +1,3 @@
-/* global JustGage */
 /* global angular */
 angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
     function ($timeout, $interpolate) {
@@ -64,13 +63,11 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 if (type === LINE_TYPE) { scope.config.series = newValue.values.series; }
                                 if (type === BAR_TYPE) { scope.config.labels = newValue.values.series; }
                                 if (type === PIE_TYPE) { scope.config.labels = newValue.values.series; }
-
                             }
                         } else {
                             // Flow deployed - reset config
                             scope.config = loadConfiguration(type, scope);
                             scope.config.nodata = true;
-                            
                         }
                     });
                 }, 0);
@@ -108,7 +105,7 @@ function loadConfiguration(type,scope) {
             // hoverBorderColor:colour
         });
     });
-    
+
     // Configure axis
     if (type === 'line') {
         config.colours = colours;
@@ -178,7 +175,7 @@ function loadConfiguration(type,scope) {
 
         config.options.scales.yAxes = [{}];
         config.options.scales.yAxes[0].ticks = {};
-
+console.log("TYPE",type);
         if (type === 'bar') { config.options.scales.yAxes[0].beginAtZero = true; }
         if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
         if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
@@ -195,7 +192,7 @@ function loadConfiguration(type,scope) {
             config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
                 color:"rgba(0,0,0,0.1)",
                 zeroLineColor:"rgba(0,0,0,0.1)"
-            } 
+            }
         }
         // Ensure scale labels do not rotate
         config.options.scales.xAxes[0].ticks.maxRotation = 0;
@@ -212,7 +209,7 @@ function loadConfiguration(type,scope) {
         config.options.legend = { display: true };
         if (type === 'pie') {config.options.legend.position = 'left'; };
         (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor: "#fff" } :
-            config.options.legend.labels = {fontColor: "#666"};   
+            config.options.legend.labels = {fontColor: "#666"};
     }
 
     return config;
