@@ -137,6 +137,32 @@ span.nr-db-color-pick-container {
     margin-bottom: 15px;
 }
 
+#dashboard-tabs-list li a:hover {
+    cursor: pointer;
+}
+
+#dash-link-button {
+    position: absolute;
+    top: 0px;
+    left: 45px;
+    padding: 0px 2px 0px 2px;
+    width: 20px;
+    border: none;
+    background-color: transparent;
+}
+#dash-link-button:hover {
+    background-color: #eee;
+}
+ul.red-ui-dashboard-theme-styles {
+    list-style: none;
+}
+#resetIcon {
+    margin-left: 10px;
+}
+#resetIcon:hover {
+    cursor: pointer;
+}
+
 </style>
 <script type="text/javascript">
 var uip = RED.settings.uiPath || 'ui';
@@ -203,6 +229,13 @@ RED.nodes.registerType('ui_base',{
         var liThemeTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
         var liSiteTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Site" style="width: 80px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
 
+        $('<button id="dash-link-button" class="editor-button"><i class="fa fa-external-link"></i></button>')
+            .click(function(evt) {
+                window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
+                evt.preventDefault();
+            })
+            .appendTo(liSiteTab);
+
         // Dashboard Tab containers
         var layoutTab = $('<div id="dashboard-layout">').appendTo(form);
         var themeTab = $('<div id="dashboard-theme" style="display: none;">').appendTo(form);
@@ -237,7 +270,7 @@ RED.nodes.registerType('ui_base',{
         ulDashboardTabs.find("li.red-ui-tab a").on("click",onTabClick)
 
 
-
+        // Site Tab
         var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
         $('<label>').html('Title').appendTo(divTitle);
         $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 48px)")
@@ -250,13 +283,9 @@ RED.nodes.registerType('ui_base',{
             })
             .appendTo(divTitle);
 
-        $('<a href="#" class="editor-button" style="margin-left: 10px;"><i class="fa fa-external-link"></i></a>')
-            .click(function(evt) {
-                window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
-                evt.preventDefault();
-            })
-            .appendTo(divTitle);        
-
+        // Theme Tab
+        var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
+        $('<label>').html('Style').appendTo(divThemeStyle);        
         var themeSelection = $('<select id="nr-db-field-theme">'+
             '<option value="theme-light">Light (default)</option>'+
             '<option value="theme-dark">Dark</option>'+
@@ -272,11 +301,11 @@ RED.nodes.registerType('ui_base',{
                 }
                 
             })
-            .appendTo(themeTab);
+            .appendTo(divThemeStyle);
         $('<label>').html('Theme').appendTo(themeSelection);
 
-        var cssList = $('<ul class="red-ui-dashboard-theme"></ul>').appendTo(themeTab);
-        var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Base Colour</span></li>').appendTo(cssList);
+        var themeStylesUl = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeTab);
+        var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Base Colour</span></li>').appendTo(themeStylesUl);
 
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
         $('<input id="nr-db-field-themeColor" type="color" value="'+defaultLightColor+'"/>')
@@ -293,14 +322,16 @@ RED.nodes.registerType('ui_base',{
         })
         .appendTo(spanColorContainer);
 
-        var titleText = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Text</span></li>').appendTo(cssList);
-        var titleFont = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Font</span></li>').appendTo(cssList);
 
 
+        var titleText = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Text</span></li>').appendTo(themeStylesUl);
+        var titleFont = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Font</span></li>').appendTo(themeStylesUl);
+         var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
+            .appendTo(themeStylesUl.children());
 
         //Layout Tab
         var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
-        //$('<label>').html('Tabs').appendTo(divTabs);
+        $('<label>').html('Tabs').appendTo(divTabs);
 
         var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
         $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-up"></i></a>')
