@@ -68,9 +68,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             }
                         } else {
                             // Flow deployed - reset config
-                            scope.config.nodata = true;
-                            console.log('hi');
                             scope.config = loadConfiguration(type, scope);
+                            scope.config.nodata = true;
+                            
                         }
                     });
                 }, 0);
@@ -107,12 +107,11 @@ function loadConfiguration(type,scope) {
             // hoverBackgroundColor:colour,
             // hoverBorderColor:colour
         });
-    });    
-    config.colours = colours;
-
-
-
+    });
+    
+    // Configure axis
     if (type === 'line') {
+        config.colours = colours;
         config.options.scales.xAxes = [{
             type: 'time',
             time: {
@@ -150,19 +149,12 @@ function loadConfiguration(type,scope) {
                 }
             }
         }
-
         config.options.hover = {
             mode: 'x-axis'
         }
-
         config.options.elements = {
             line: {
                 fill: false
-            },
-            point: {
-                borderColor: "rgba(0,0,0,1)",
-                radius: 10,
-                borderWidth: 10
             }
         }
         switch (interpolate) {
@@ -176,52 +168,52 @@ function loadConfiguration(type,scope) {
                 config.options.elements.line.stepped = true;
                 break;
         }
-        if (scope.$eval('me.item.theme') === 'theme-dark') {
-            config.options.elements.point = {borderWidth:1, borderColor: 'rgba(0,0,0,0.1)', backgroundColor: 'rgba(0,0,0,0.1)'};
-        } else {
-            config.options.elements.point = {borderColor: "rgba(255,255,255,0.1)"};
-        }
-        
-    } else if (type === 'bar' || type === 'pie') {
+    } else if (type === 'bar') {
+        config.colours = baseColours;
         config.options.scales.xAxes = [{}];
     }
 
-    config.options.scales.yAxes = [{}];
-    config.options.scales.yAxes[0].ticks = {};
+    // Configure scales
+    if (type !== 'pie') {
 
-    if (type === 'bar') {
-        config.options.scales.yAxes[0].beginAtZero = true;
-    }
-    if (!isNaN(yMin)) {
-        config.options.scales.yAxes[0].ticks.min = yMin;
-    }
-    if (!isNaN(yMax)) {
-        config.options.scales.yAxes[0].ticks.max = yMax;
-    }
+        config.options.scales.yAxes = [{}];
+        config.options.scales.yAxes[0].ticks = {};
 
-    if (type !== 'bar' && JSON.parse(legend)) {
+        if (type === 'bar') { config.options.scales.yAxes[0].beginAtZero = true; }
+        if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
+        if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
 
-        config.options.legend = {display:true};
-        (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = {fontColor: "#fff"} :
-            config.options.legend.labels = {fontColor: "#666"};
-        
-    }
-
-    if (scope.$eval('me.item.theme') === 'theme-dark') {
-        config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = {fontColor: "#fff"};
-        config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
-            color:"rgba(255,255,255,0.1)",
-            zeroLineColor:"rgba(255,255,255,0.1)"
+        // Theme settings
+        if (scope.$eval('me.item.theme') === 'theme-dark') {
+            config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = { fontColor: "#fff" };
+            config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
+                color:"rgba(255,255,255,0.1)",
+                zeroLineColor:"rgba(255,255,255,0.1)"
+            }
+        } else {
+            config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = { fontColor: "#666" };
+            config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
+                color:"rgba(0,0,0,0.1)",
+                zeroLineColor:"rgba(0,0,0,0.1)"
+            } 
         }
+        // Ensure scale labels do not rotate
+        config.options.scales.xAxes[0].ticks.maxRotation = 0;
+        config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
+        config.options.scales.xAxes[0].ticks.autoSkip = true;
+
     } else {
-        config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = {fontColor: "#666"};
-        config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
-            color:"rgba(0,0,0,0.1)",
-            zeroLineColor:"rgba(0,0,0,0.1)"
-        } 
+        //Pie chart
+        config.colours = baseColours;
     }
-    config.options.scales.xAxes[0].ticks.maxRotation = 0;
-    config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
-    config.options.scales.xAxes[0].ticks.autoSkip = true;
+
+    // Configure legend
+    if (type !== 'bar' && JSON.parse(legend)) {
+        config.options.legend = { display: true };
+        if (type === 'pie') {config.options.legend.position = 'left'; };
+        (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor: "#fff" } :
+            config.options.legend.labels = {fontColor: "#666"};   
+    }
+
     return config;
 }
