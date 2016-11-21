@@ -69,6 +69,8 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         } else {
                             // Flow deployed - reset config
                             scope.config.nodata = true;
+                            console.log('hi');
+                            scope.config = loadConfiguration(type, scope);
                         }
                     });
                 }, 0);
@@ -78,18 +80,16 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
 ]);
 
 function loadConfiguration(type,scope) {
-    console.log(scope.$eval('me.item.height'),scope.$eval('me.item.width'));
     var yMin = parseFloat(scope.$eval('me.item.ymin'));
     var yMax = parseFloat(scope.$eval('me.item.ymax'));
     var legend = scope.$eval('me.item.legend');
     var interpolate = scope.$eval('me.item.interpolate');
     var xFormat = scope.$eval('me.item.xformat');
-    var colours = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
+    var baseColours = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
     var config = {};
     config.data = [];
     config.series = [];
     config.labels = [];
-    config.colours = colours;
     config.options = {
         animation: false,
         spanGaps: true,
@@ -97,6 +97,20 @@ function loadConfiguration(type,scope) {
         legend: false,
         responsive: true
     };
+
+    //Build colours array
+    var colours = [];
+    baseColours.forEach(function(colour, index) {
+        colours.push({
+            backgroundColor: colour,
+            borderColor:colour
+            // hoverBackgroundColor:colour,
+            // hoverBorderColor:colour
+        });
+    });    
+    config.colours = colours;
+
+
 
     if (type === 'line') {
         config.options.scales.xAxes = [{
@@ -120,9 +134,8 @@ function loadConfiguration(type,scope) {
                 display: true
             },
         }];
-
         config.options.tooltips = {
-            mode: 'nearest',
+            mode: 'x-axis',
             callbacks: {
                 title: function(tooltip, data) {
                     // Display and format the most recent time value as the title.
@@ -145,6 +158,11 @@ function loadConfiguration(type,scope) {
         config.options.elements = {
             line: {
                 fill: false
+            },
+            point: {
+                borderColor: "rgba(0,0,0,1)",
+                radius: 10,
+                borderWidth: 10
             }
         }
         switch (interpolate) {
@@ -164,13 +182,14 @@ function loadConfiguration(type,scope) {
             config.options.elements.point = {borderColor: "rgba(255,255,255,0.1)"};
         }
         
+    } else if (type === 'bar' || type === 'pie') {
+        config.options.scales.xAxes = [{}];
     }
 
     config.options.scales.yAxes = [{}];
     config.options.scales.yAxes[0].ticks = {};
 
     if (type === 'bar') {
-        config.options.scales.xAxes = [{}];
         config.options.scales.yAxes[0].beginAtZero = true;
     }
     if (!isNaN(yMin)) {
