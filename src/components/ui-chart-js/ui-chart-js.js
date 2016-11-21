@@ -68,7 +68,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             }
                         } else {
                             // Flow deployed - reset config
+                            scope.config = loadConfiguration(type, scope);
                             scope.config.nodata = true;
+                            
                         }
                     });
                 }, 0);
@@ -78,18 +80,16 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
 ]);
 
 function loadConfiguration(type,scope) {
-    console.log(scope.$eval('me.item.height'),scope.$eval('me.item.width'));
     var yMin = parseFloat(scope.$eval('me.item.ymin'));
     var yMax = parseFloat(scope.$eval('me.item.ymax'));
     var legend = scope.$eval('me.item.legend');
     var interpolate = scope.$eval('me.item.interpolate');
     var xFormat = scope.$eval('me.item.xformat');
-    var colours = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
+    var baseColours = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
     var config = {};
     config.data = [];
     config.series = [];
     config.labels = [];
-    config.colours = colours;
     config.options = {
         animation: false,
         spanGaps: true,
@@ -98,7 +98,20 @@ function loadConfiguration(type,scope) {
         responsive: true
     };
 
+    //Build colours array
+    var colours = [];
+    baseColours.forEach(function(colour, index) {
+        colours.push({
+            backgroundColor: colour,
+            borderColor:colour
+            // hoverBackgroundColor:colour,
+            // hoverBorderColor:colour
+        });
+    });
+    
+    // Configure axis
     if (type === 'line') {
+        config.colours = colours;
         config.options.scales.xAxes = [{
             type: 'time',
             time: {
@@ -114,11 +127,14 @@ function loadConfiguration(type,scope) {
                     'quarter': xFormat,
                     'year': xFormat,
                 }
-            }
+            },
+            scaleLabel: {
+                fontColor: "#fff",
+                display: true
+            },
         }];
-
         config.options.tooltips = {
-            mode: 'nearest',
+            mode: 'x-axis',
             callbacks: {
                 title: function(tooltip, data) {
                     // Display and format the most recent time value as the title.
@@ -133,11 +149,9 @@ function loadConfiguration(type,scope) {
                 }
             }
         }
-
         config.options.hover = {
             mode: 'x-axis'
         }
-
         config.options.elements = {
             line: {
                 fill: false
@@ -154,23 +168,52 @@ function loadConfiguration(type,scope) {
                 config.options.elements.line.stepped = true;
                 break;
         }
+    } else if (type === 'bar') {
+        config.colours = baseColours;
+        config.options.scales.xAxes = [{}];
     }
 
-    config.options.scales.yAxes = [{}];
-    config.options.scales.yAxes[0].ticks = {};
+    // Configure scales
+    if (type !== 'pie') {
 
-    if (type === 'bar') {
-        config.options.scales.yAxes[0].beginAtZero = true;
-    }
-    if (!isNaN(yMin)) {
-        config.options.scales.yAxes[0].ticks.min = yMin;
-    }
-    if (!isNaN(yMax)) {
-        config.options.scales.yAxes[0].ticks.max = yMax;
+        config.options.scales.yAxes = [{}];
+        config.options.scales.yAxes[0].ticks = {};
+
+        if (type === 'bar') { config.options.scales.yAxes[0].beginAtZero = true; }
+        if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
+        if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
+
+        // Theme settings
+        if (scope.$eval('me.item.theme') === 'theme-dark') {
+            config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = { fontColor: "#fff" };
+            config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
+                color:"rgba(255,255,255,0.1)",
+                zeroLineColor:"rgba(255,255,255,0.1)"
+            }
+        } else {
+            config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = { fontColor: "#666" };
+            config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
+                color:"rgba(0,0,0,0.1)",
+                zeroLineColor:"rgba(0,0,0,0.1)"
+            } 
+        }
+        // Ensure scale labels do not rotate
+        config.options.scales.xAxes[0].ticks.maxRotation = 0;
+        config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
+        config.options.scales.xAxes[0].ticks.autoSkip = true;
+
+    } else {
+        //Pie chart
+        config.colours = baseColours;
     }
 
+    // Configure legend
     if (type !== 'bar' && JSON.parse(legend)) {
-        config.options.legend = {display:true};
+        config.options.legend = { display: true };
+        if (type === 'pie') {config.options.legend.position = 'left'; };
+        (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor: "#fff" } :
+            config.options.legend.labels = {fontColor: "#666"};   
     }
+
     return config;
 }

@@ -40,12 +40,23 @@
                 group: "#node-input-group"
             });
             $("#node-input-chartType").change(function() {
-                if ($(this).val() !== "line") {
-                    $("#x-axis-show").hide();
-                    $("#interpolate-show").hide();
-                } else {
+                if ($(this).val() === "line") {
                     $("#x-axis-show").show();
+                    $("#x-axis-label-show").show();
                     $("#interpolate-show").show();
+                    $("#legend-show").show();
+                    $("#y-axis-show").hide();
+                } else {
+                    $("#x-axis-show").hide();
+                    $("#x-axis-label-show").hide();
+                    $("#interpolate-show").hide();
+                    if ($(this).val() === "bar") {
+                        $("#y-axis-show").show();
+                        $("#legend-show").hide();
+                    } else {
+                        $("#y-axis-show").hide();
+                        $("#legend-show").show();
+                    }
                 }
             });
             if (!$("#node-input-chartType").val()) {
@@ -117,28 +128,30 @@
         <span style="margin-left: 5px;">points</span>
 
     </div>
-    <div class="form-row">
-    <label for="node-input-xformat">X-axis Label</label>
+    <div class="form-row" id="x-axis-label-show">
+        <label for="node-input-xformat">X-axis Label</label>
         <input type="text" id="node-input-xformat" style="width:150px;">
     </div>
-    <div class="form-row">
+    <div class="form-row" id="y-axis-show">
         <label for="node-input-ymin">Y-axis</label>
         <label for="node-input-ymin" style="width:auto">min</label>
         <input type="text" id="node-input-ymin" style="width:80px">
         <label for="not-input-ymax" style="width:auto; margin-left: 20px;">max</label>
         <input type="text" id="node-input-ymax" style="width:80px">
     </div>
-    <div class="form-row" id="interpolate-show">
-        <label for="node-input-interpolate">Interpolate</label>
-        <select id="node-input-interpolate" style="width:120px;">
-            <option value="linear">linear</option>
-            <option value="step">step</option>
-            <option value="bezier">bezier</option>
-        </select>
-        &nbsp;&nbsp;&nbsp;&nbsp;Legend <select id="node-input-legend" style="width:100px;">
+    <div class="form-row" id="legend-show">
+        <label for="node-input-legend">Legend</label>
+        <select id="node-input-legend" style="width:100px;">
             <option value="false">None</option>
             <option value="true">Show</option>
         </select>
+        <span id="interpolate-show">&nbsp;&nbsp;&nbsp;&nbsp;Interpolate
+            <select id="node-input-interpolate" style="width:120px;">
+                <option value="linear">linear</option>
+                <option value="step">step</option>
+                <option value="bezier">bezier</option>
+            </select>
+        </span>
     </div>
     <div class="form-row">
         <label for="node-input-nodata">Blank label</label>
