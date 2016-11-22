@@ -114,19 +114,50 @@ function add(opt) {
             return;
         }
 
+        // Retrieve the dataset for this node
         var oldValue = currentValues[opt.node.id];
-        var newValue = opt.convert(msg.payload, oldValue, msg);
 
-        if (!opt.emitOnlyNewValues || oldValue != newValue) {
-            currentValues[opt.node.id] = newValue;
-            var toEmit = opt.beforeEmit(msg, newValue);
-            toEmit.id = opt.node.id;
+        // Call the convert function in the node to get the new value
+        // as well as the full dataset.
+        var conversion = opt.convert(msg.payload, oldValue, msg);
+
+        // If the update flag is set, emit the newPoint, and store the full dataset
+        var fullDataset;
+        var newPoint;
+        if ((typeof(conversion) === 'object') && (conversion.update != undefined)) {
+            newPoint = conversion.newPoint;
+            fullDataset = conversion.updatedValues;
+        } else {
+
+            // If no update flag is set, this means the conversion contains
+            // the full dataset or the new value (e.g. gauges)
+            fullDataset = conversion;
+        }
+
+        // If we have something new to emit
+        if (newPoint != undefined || !opt.emitOnlyNewValues || oldValue != fullDataset) {
+            currentValues[opt.node.id] = fullDataset;
+
+            // Determine what to emit over the websocket
+            // (the new point or the full dataset).
+            var toEmit;
+            if (newPoint != undefined) {
+                toEmit = opt.beforeEmit(msg, newPoint);
+            } else {
+                toEmit = opt.beforeEmit(msg, fullDataset);
+            }
+
+            // Always store the full dataset.
+            var toStore = opt.beforeEmit(msg, fullDataset);
+            toEmit.id = toStore.id = opt.node.id;
+
+            // Emit and Store the data
             io.emit(updateValueEventName, toEmit);
-            replayMessages[opt.node.id] = toEmit;
+            replayMessages[opt.node.id] = toStore;
 
+            // Handle the node output
             if (opt.forwardInputMessages && opt.node._wireCount) {
-                //forward to output
-                msg.payload = opt.convertBack(newValue);
+                msg.payload = opt.convertBack(fullDataset);
                 msg = opt.beforeSend(msg) || msg;
                 //console.log("MSG1",msg);
                 //opt.beforeSend(msg);
@@ -195,8 +226,8 @@ function init(server, app, log, redSettings) {
                 'angular-material-icons', 'svg-morpheus', 'font-awesome',
                 'sprintf-js',
                 'jquery', 'jquery-ui',
-                'raphael', 'justgage',
-                'd3', 'nvd3', 'angularjs-nvd3-directives'
+                'd3', 'raphael', 'justgage',
+                'angular-chart.js', 'chart.js', 'moment'
             ];
             vendor_packages.forEach(function (packageName) {
                 app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));
@@ -210,6 +241,7 @@ function init(server, app, log, redSettings) {
         ev.emit("newsocket", socket.client.id, socket.request.connection.remoteAddress);
         updateUi(socket);
         socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
+
         socket.on('ui-replay-state', function() {
             var ids = Object.getOwnPropertyNames(replayMessages);
             ids.forEach(function (id) {
