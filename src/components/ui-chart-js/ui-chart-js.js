@@ -177,21 +177,22 @@ function loadConfiguration(type,scope) {
     if (type !== 'pie') {
 
         config.options.scales.yAxes = [{}];
+        config.options.scales.xAxes[0].ticks = {};
         config.options.scales.yAxes[0].ticks = {};
 
-        if (type === 'bar') { config.options.scales.yAxes[0].beginAtZero = true; }
+        if (type === 'bar') { config.options.scales.yAxes[0].ticks.beginAtZero = true; }
         if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
         if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
 
         // Theme settings
         if (scope.$eval('me.item.theme') === 'theme-dark') {
-            config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = { fontColor: "#fff" };
+            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = "#fff";
             config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
                 color:"rgba(255,255,255,0.1)",
                 zeroLineColor:"rgba(255,255,255,0.1)"
             }
         } else {
-            config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = { fontColor: "#666" };
+            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = "#666";
             config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
                 color:"rgba(0,0,0,0.1)",
                 zeroLineColor:"rgba(0,0,0,0.1)"
