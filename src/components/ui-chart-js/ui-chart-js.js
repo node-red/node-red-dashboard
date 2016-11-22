@@ -4,27 +4,25 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
         return {
             restrict: 'E',
             replace: true,
-            template: '<div ng-include="getChartTemplateUrl()"></div>',
+            templateUrl: 'components/ui-chart-js/ui-chart-js.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
-                    var LINE_TYPE = 'line';
-                    var BAR_TYPE = 'bar';
-                    var PIE_TYPE = 'pie';
-                    scope.getChartTemplateUrl = function() {
-                        return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
-                    }
+                    // scope.getChartTemplateUrl = function() {
+                    //     return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
+                    // }
                     scope.config = loadConfiguration(type, scope);
 
                     // When new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
+                        console.log(scope.$eval('me'));
 
                         if (newValue !== undefined && newValue.length > 0) {
                             scope.config.nodata = false;
                             newValue = newValue[0];
 
                             // Updating line charts push to the data arrays
-                            if (type === LINE_TYPE && newValue.update) {
+                            if (type === 'line' && newValue.update) {
                                 // Find the series index
                                 var seriesLabel = newValue.key;
                                 var seriesIndex = scope.config.series.indexOf(seriesLabel);
@@ -60,9 +58,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             else {
                                 // Bar charts and non update line charts replace the data
                                 scope.config.data = newValue.values.data;
-                                if (type === LINE_TYPE) { scope.config.series = newValue.values.series; }
-                                if (type === BAR_TYPE) { scope.config.labels = newValue.values.series; }
-                                if (type === PIE_TYPE) { scope.config.labels = newValue.values.series; }
+                                (type === 'line') ? scope.config.series = newValue.values.series : scope.config.labels = newValue.values.series; 
                             }
                         }
                         else {
