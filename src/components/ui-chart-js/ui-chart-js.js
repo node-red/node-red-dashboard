@@ -8,6 +8,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
+                    var LINE_TYPE = 'line';
+                    var BAR_TYPE = 'bar';
+                    var PIE_TYPE = 'pie';
                     scope.getChartTemplateUrl = function() {
                         return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
                     }
@@ -21,7 +24,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             newValue = newValue[0];
 
                             // Updating line charts push to the data arrays
-                            if (type === "line" && newValue.update) {
+                            if (type === LINE_TYPE && newValue.update) {
                                 // Find the series index
                                 var seriesLabel = newValue.key;
                                 var seriesIndex = scope.config.series.indexOf(seriesLabel);
@@ -53,12 +56,13 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                         scope.config.series.splice(index, 1);
                                     })
                                 }
-
                             }
                             else {
                                 // Bar charts and non update line charts replace the data
                                 scope.config.data = newValue.values.data;
-                                if (type === "line") { scope.config.series = newValue.values.series; }
+                                if (type === LINE_TYPE) { scope.config.series = newValue.values.series; }
+                                if (type === BAR_TYPE) { scope.config.labels = newValue.values.series; }
+                                if (type === PIE_TYPE) { scope.config.labels = newValue.values.series; }
                             }
                         }
                         else {
@@ -210,7 +214,7 @@ function loadConfiguration(type,scope) {
     // Configure legend
     if (type !== 'bar' && JSON.parse(legend)) {
         config.options.legend = { display: true };
-        if (type === 'pie') {config.options.legend.position = 'left'; }
+        if (type === 'pie') { config.options.legend.position = 'left'; }
         (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor:"#fff" } : config.options.legend.labels = {fontColor:"#666"};
     }
 
