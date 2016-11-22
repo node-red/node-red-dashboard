@@ -83,8 +83,8 @@ body.nr-dashboard-theme-dark md-sidenav {
 	fill: #eee;
 }
 
-.nr-dashboard-theme-dark .nr-dashboard-linechart .nvd3 .nv-axis path,
-.nr-dashboard-theme-dark .nr-dashboard-linechart .nvd3 .nv-axis line {
+.nr-dashboard-theme-dark .nr-dashboard-linechart .nv-axis path,
+.nr-dashboard-theme-dark .nr-dashboard-linechart .nv-axis line {
 	stroke: #484848;
 }
 

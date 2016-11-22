@@ -75,8 +75,8 @@ body.nr-dashboard-theme-light md-sidenav {}
 
 .nr-dashboard-theme-light .nr-dashboard-linechart text {}
 
-.nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis path,
-.nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis line {}
+.nr-dashboard-theme-light .nr-dashboard-linechart .nv-axis path,
+.nr-dashboard-theme-light .nr-dashboard-linechart .nv-axis line {}
 
 /* Dropdown */
 

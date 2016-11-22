@@ -1,4 +1,3 @@
-/* global JustGage */
 /* global angular */
 angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
     function ($timeout, $interpolate) {
@@ -9,9 +8,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
-                    var LINE_TYPE = 'line';
-                    var BAR_TYPE = 'bar';
-                    var PIE_TYPE = 'pie';
                     scope.getChartTemplateUrl = function() {
                         return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
                     }
@@ -25,7 +21,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             newValue = newValue[0];
 
                             // Updating line charts push to the data arrays
-                            if (type === LINE_TYPE && newValue.update) {
+                            if (type === "line" && newValue.update) {
                                 // Find the series index
                                 var seriesLabel = newValue.key;
                                 var seriesIndex = scope.config.series.indexOf(seriesLabel);
@@ -58,19 +54,17 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     })
                                 }
 
-                            } else {
+                            }
+                            else {
                                 // Bar charts and non update line charts replace the data
                                 scope.config.data = newValue.values.data;
-                                if (type === LINE_TYPE) { scope.config.series = newValue.values.series; }
-                                if (type === BAR_TYPE) { scope.config.labels = newValue.values.series; }
-                                if (type === PIE_TYPE) { scope.config.labels = newValue.values.series; }
-
+                                if (type === "line") { scope.config.series = newValue.values.series; }
                             }
-                        } else {
+                        }
+                        else {
                             // Flow deployed - reset config
                             scope.config = loadConfiguration(type, scope);
                             scope.config.nodata = true;
-                            
                         }
                     });
                 }, 0);
@@ -108,7 +102,7 @@ function loadConfiguration(type,scope) {
             // hoverBorderColor:colour
         });
     });
-    
+
     // Configure axis
     if (type === 'line') {
         config.colours = colours;
@@ -158,17 +152,21 @@ function loadConfiguration(type,scope) {
             }
         }
         switch (interpolate) {
-            case 'linear':
+            case 'linear': {
                 config.options.elements.line.tension = 0;
                 break;
-            case 'bezier':
+            }
+            case 'bezier': {
                 config.options.elements.line.tension = 0.4;
                 break;
-            case 'step':
+            }
+            case 'step': {
                 config.options.elements.line.stepped = true;
                 break;
+            }
         }
-    } else if (type === 'bar') {
+    }
+    else if (type === 'bar') {
         config.colours = baseColours;
         config.options.scales.xAxes = [{}];
     }
@@ -196,14 +194,15 @@ function loadConfiguration(type,scope) {
             config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
                 color:"rgba(0,0,0,0.1)",
                 zeroLineColor:"rgba(0,0,0,0.1)"
-            } 
+            }
         }
         // Ensure scale labels do not rotate
         config.options.scales.xAxes[0].ticks.maxRotation = 0;
         config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
         config.options.scales.xAxes[0].ticks.autoSkip = true;
 
-    } else {
+    }
+    else {
         //Pie chart
         config.colours = baseColours;
     }
@@ -211,9 +210,8 @@ function loadConfiguration(type,scope) {
     // Configure legend
     if (type !== 'bar' && JSON.parse(legend)) {
         config.options.legend = { display: true };
-        if (type === 'pie') {config.options.legend.position = 'left'; };
-        (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor: "#fff" } :
-            config.options.legend.labels = {fontColor: "#666"};   
+        if (type === 'pie') {config.options.legend.position = 'left'; }
+        (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor:"#fff" } : config.options.legend.labels = {fontColor:"#666"};
     }
 
     return config;

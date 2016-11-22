@@ -30,7 +30,7 @@ module.exports = function(RED) {
                 interpolate: config.interpolate,
                 nodata: config.nodata,
                 width: parseInt(config.width || group.config.width || 6),
-                height: parseInt(config.height || group.config.width/2+1 || 4),
+                height: parseInt(config.height || group.config.width/2+2 || 5),
                 ymin: config.ymin || 0,
                 ymax: config.ymax,
                 xformat : config.xformat || "HH:mm:SS"
