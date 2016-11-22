@@ -1,86 +1,87 @@
 {
-    "name": "node-red-dashboard",
-    "version": "2.1.1-beta",
-    "description": "A set of dashboard nodes for Node-RED",
-    "keywords": [
-        "node-red"
-    ],
-    "main": "none",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "contributors": [
-        {"name": "Andrei Tatar"},
-        {"name": "Dave Conway-Jones"},
-        {"name": "Joe Pavitt"},
-        {"name": "Nick O'Leary"}
-    ],
-    "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/node-red/node-red-dashboard.git"
-    },
-    "node-red": {
-        "version": ">=0.14.0",
-        "nodes": {
-            "ui_base": "nodes/ui_base.js",
-            "ui_button": "nodes/ui_button.js",
-            "ui_dropdown": "nodes/ui_dropdown.js",
-			"ui_switch": "nodes/ui_switch.js",
-            "ui_slider": "nodes/ui_slider.js",
-            "ui_numeric": "nodes/ui_numeric.js",
-            "ui_text_input": "nodes/ui_text_input.js",
-			"ui_form": "nodes/ui_form.js",
-            "ui_text": "nodes/ui_text.js",
-            "ui_gauge": "nodes/ui_gauge.js",
-            "ui_chart": "nodes/ui_chart.js",
-            "ui_form": "nodes/ui_form.js",
-            "ui_audio": "nodes/ui_audio.js",
-            "ui_toast": "nodes/ui_toast.js",
-            "ui_ui_control": "nodes/ui_ui_control.js",
-            "ui_template": "nodes/ui_template.js",
-            "ui_link": "nodes/ui_link.js",
-            "ui_tab": "nodes/ui_tab.js",
-            "ui_group": "nodes/ui_group.js"
-        }
-    },
-    "dependencies": {
-        "serve-static": "^1.10.0",
-        "socket.io": "^1.5.1"
-    },
-    "devDependencies": {
-        "angular": "^1.5.6",
-        "angular-animate": "^1.5.6",
-        "angular-aria": "^1.5.6",
-        "angular-material": "^1.1.1",
-        "angular-material-icons": "^0.7.1",
-        "angular-messages": "^1.5.6",
-        "angular-mocks": "^1.5.6",
-        "angular-route": "^1.5.6",
-        "angular-sanitize": "^1.4.8",
-        "angularjs-nvd3-directives": "^0.0.8",
-        "d3": "^3.5.17",
-        "font-awesome": "^4.7.0",
-        "gulp": "^3.9.0",
-        "gulp-angular-templatecache": "^2.0.0",
-        "gulp-concat": "^2.6.0",
-        "gulp-header": "^1.8.8",
-        "gulp-html-replace": "^1.6.0",
-        "gulp-html-src": "^1.0.0",
-        "gulp-if": "^2.0.2",
-        "gulp-jscs": "^4.0.0",
-        "gulp-jshint": "^2.0.2",
-        "gulp-clean-css": "^2.0.13",
-        "gulp-htmlmin": "^3.0.0",
-        "gulp-manifest": "^0.1.1",
-        "gulp-uglify": "^2.0.0",
-        "gulp-util": "^3.0.7",
-        "jquery": "^2.1.4",
-        "jshint": "^2.9.4",
-        "justgage": "^1.1.0",
-        "nvd3": "1.8.1",
-        "sprintf-js": "^1.0.3",
-        "streamqueue": "^1.1.1",
-        "svg-morpheus": "^0.3.0"
+	"name": "node-red-dashboard",
+	"version": "2.1.1-beta",
+	"description": "A set of dashboard nodes for Node-RED",
+	"keywords": [
+		"node-red"
+	],
+	"main": "none",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"contributors": [
+		{"name": "Andrei Tatar"},
+		{"name": "Dave Conway-Jones"},
+		{"name": "Joe Pavitt"},
+		{"name": "Nick O'Leary"},
+		{"name": "Dan Cunnington"}
+	],
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/node-red/node-red-dashboard.git"
+	},
+	"node-red": {
+    "version": ">=0.14.0",
+    "nodes": {
+      "ui_base": "nodes/ui_base.js",
+      "ui_button": "nodes/ui_button.js",
+      "ui_dropdown": "nodes/ui_dropdown.js",
+      "ui_switch": "nodes/ui_switch.js",
+      "ui_slider": "nodes/ui_slider.js",
+      "ui_numeric": "nodes/ui_numeric.js",
+      "ui_text_input": "nodes/ui_text_input.js",
+      "ui_form": "nodes/ui_form.js",
+      "ui_text": "nodes/ui_text.js",
+      "ui_gauge": "nodes/ui_gauge.js",
+      "ui_chart": "nodes/ui_chart.js",
+      "ui_audio": "nodes/ui_audio.js",
+      "ui_toast": "nodes/ui_toast.js",
+      "ui_ui_control": "nodes/ui_ui_control.js",
+      "ui_template": "nodes/ui_template.js",
+      "ui_link": "nodes/ui_link.js",
+      "ui_tab": "nodes/ui_tab.js",
+      "ui_group": "nodes/ui_group.js"
     }
+  },
+  "dependencies": {
+    "serve-static": "^1.10.0",
+    "socket.io": "^1.5.0"
+  },
+  "devDependencies": {
+    "angular": "^1.5.6",
+    "angular-animate": "^1.5.6",
+    "angular-aria": "^1.5.6",
+    "angular-chart.js": "^1.0.3",
+    "angular-material": "^1.1.1",
+    "angular-material-icons": "^0.7.1",
+    "angular-messages": "^1.5.6",
+    "angular-mocks": "^1.5.6",
+    "angular-route": "^1.5.6",
+    "angular-sanitize": "^1.4.8",
+    "chart.js": "2.x",
+    "d3": "^3.5.17",
+    "font-awesome": "^4.6.3",
+    "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-concat": "^2.6.0",
+    "gulp-header": "^1.8.8",
+    "gulp-html-replace": "^1.6.0",
+    "gulp-html-src": "^1.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-if": "^2.0.0",
+    "gulp-jscs": "^4.0.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-manifest": "^0.1.1",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "jquery": "^2.1.4",
+    "jshint": "^2.9.2",
+    "justgage": "^1.1.0",
+    "moment": "^2.16.0",
+    "sprintf-js": "^1.0.3",
+    "streamqueue": "^1.1.1",
+    "svg-morpheus": "^0.3.0"
+  }
 }

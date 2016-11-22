@@ -1,5 +1,5 @@
 
-#### 2.1.1-beta: Maintenance Release (not yet released to npm)
+#### 2.2.0-beta: Maintenance Release (not yet released to npm)
 
 License change
 
@@ -7,6 +7,8 @@ License change
 
 Enhancements
 
+	- Replace nvd3 charts with charts.js charts - to fix various issues
+	- Add pie chart option to new charts.js based widget
     - Add step option to ui_numeric input widget
     - Add OK/Cancel Dialog mode to ui_notification widget
     - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
@@ -15,6 +17,7 @@ Enhancements
 
 Fixes
 
+	- Replace nvd3 charts with charts.js charts - to fix various issues
     - change link `_new` refs to `_blank` to be standards compliant
     - fix fa icons default size so fixed width matches material icons width (24px)
     - bump sockets.io version
