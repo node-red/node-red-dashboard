@@ -71,12 +71,9 @@ body.nr-dashboard-theme-light md-sidenav {}
 
 /* Chart */
 
-.nr-dashboard-theme-light .nr-dashboard-linechart {}
-
-.nr-dashboard-theme-light .nr-dashboard-linechart text {}
-
-.nr-dashboard-theme-light .nr-dashboard-linechart .nv-axis path,
-.nr-dashboard-theme-light .nr-dashboard-linechart .nv-axis line {}
+.nr-dashboard-theme-light .nr-dashboard-chart-title  {
+	font-size: larger;
+}
 
 /* Dropdown */
 

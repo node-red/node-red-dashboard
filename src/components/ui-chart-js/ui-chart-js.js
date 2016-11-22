@@ -54,7 +54,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             else {
                                 // Bar charts and non update line charts replace the data
                                 scope.config.data = newValue.values.data;
-                                (type === 'line') ? scope.config.series = newValue.values.series : scope.config.labels = newValue.values.series; 
+                                (type === 'line') ? scope.config.series = newValue.values.series : scope.config.labels = newValue.values.series;
                             }
                         }
                         else {

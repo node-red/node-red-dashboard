@@ -1,6 +1,6 @@
 {
 	"name": "node-red-dashboard",
-	"version": "2.1.1-beta",
+	"version": "2.2.0-beta",
 	"description": "A set of dashboard nodes for Node-RED",
 	"keywords": [
 		"node-red"
@@ -76,10 +76,10 @@
     "gulp-manifest": "^0.1.1",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "jquery": "^2.1.4",
+    "jquery": "^2.2.4",
     "jshint": "^2.9.2",
     "justgage": "^1.1.0",
-    "moment": "^2.16.0",
+    "moment": "^2.17.0",
     "sprintf-js": "^1.0.3",
     "streamqueue": "^1.1.1",
     "svg-morpheus": "^0.3.0"

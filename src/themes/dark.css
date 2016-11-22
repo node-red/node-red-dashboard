@@ -77,15 +77,8 @@ body.nr-dashboard-theme-dark md-sidenav {
 
 /* Chart */
 
-.nr-dashboard-theme-dark .nr-dashboard-linechart {}
-
-.nr-dashboard-theme-dark .nr-dashboard-linechart text {
-	fill: #eee;
-}
-
-.nr-dashboard-theme-dark .nr-dashboard-linechart .nv-axis path,
-.nr-dashboard-theme-dark .nr-dashboard-linechart .nv-axis line {
-	stroke: #484848;
+.nr-dashboard-theme-dark .nr-dashboard-chart-title  {
+	font-size: larger;
 }
 
 
