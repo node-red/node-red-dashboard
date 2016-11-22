@@ -1,34 +1,27 @@
 {
-  "name": "node-red-dashboard",
-  "version": "2.1.1-beta",
-  "description": "A set of dashboard nodes for Node-RED",
-  "keywords": [
-    "node-red"
-  ],
-  "main": "none",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "contributors": [
-    {
-      "name": "Andrei Tatar"
-    },
-    {
-      "name": "Dave Conway-Jones"
-    },
-    {
-      "name": "Joe Pavitt"
-    },
-    {
-      "name": "Nick O'Leary"
-    }
-  ],
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/node-red/node-red-dashboard.git"
-  },
-  "node-red": {
+	"name": "node-red-dashboard",
+	"version": "2.1.1-beta",
+	"description": "A set of dashboard nodes for Node-RED",
+	"keywords": [
+		"node-red"
+	],
+	"main": "none",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"contributors": [
+		{"name": "Andrei Tatar"},
+		{"name": "Dave Conway-Jones"},
+		{"name": "Joe Pavitt"},
+		{"name": "Nick O'Leary"},
+		{"name": "Dan Cunnington"}
+	],
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/node-red/node-red-dashboard.git"
+	},
+	"node-red": {
     "version": ">=0.14.0",
     "nodes": {
       "ui_base": "nodes/ui_base.js",
