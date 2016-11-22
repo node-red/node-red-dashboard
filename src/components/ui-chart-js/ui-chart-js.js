@@ -4,13 +4,10 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
         return {
             restrict: 'E',
             replace: true,
-            template: '<div ng-include="getChartTemplateUrl()"></div>',
+            templateUrl: 'components/ui-chart-js/ui-chart-js.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
-                    scope.getChartTemplateUrl = function() {
-                        return 'components/ui-chart-js/ui-chart-js-'+type+'.html';
-                    }
                     scope.config = loadConfiguration(type, scope);
 
                     // When new values arrive, update the chart
@@ -21,7 +18,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             newValue = newValue[0];
 
                             // Updating line charts push to the data arrays
-                            if (type === "line" && newValue.update) {
+                            if (type === 'line' && newValue.update) {
                                 // Find the series index
                                 var seriesLabel = newValue.key;
                                 var seriesIndex = scope.config.series.indexOf(seriesLabel);
@@ -53,12 +50,11 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                         scope.config.series.splice(index, 1);
                                     })
                                 }
-
                             }
                             else {
                                 // Bar charts and non update line charts replace the data
                                 scope.config.data = newValue.values.data;
-                                if (type === "line") { scope.config.series = newValue.values.series; }
+                                (type === 'line') ? scope.config.series = newValue.values.series : scope.config.labels = newValue.values.series; 
                             }
                         }
                         else {
@@ -175,22 +171,22 @@ function loadConfiguration(type,scope) {
     if (type !== 'pie') {
 
         config.options.scales.yAxes = [{}];
+        config.options.scales.xAxes[0].ticks = {};
         config.options.scales.yAxes[0].ticks = {};
 
-        if (type === 'bar') { config.options.scales.yAxes[0].beginAtZero = true; }
+        if (type === 'bar') { config.options.scales.yAxes[0].ticks.beginAtZero = true; }
         if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
         if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
 
         // Theme settings
         if (scope.$eval('me.item.theme') === 'theme-dark') {
-            config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = { fontColor: "#fff" };
+            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = "#fff";
             config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
                 color:"rgba(255,255,255,0.1)",
                 zeroLineColor:"rgba(255,255,255,0.1)"
             }
-        }
-        else {
-            config.options.scales.xAxes[0].ticks = config.options.scales.yAxes[0].ticks = { fontColor: "#666" };
+        } else {
+            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = "#666";
             config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
                 color:"rgba(0,0,0,0.1)",
                 zeroLineColor:"rgba(0,0,0,0.1)"
@@ -210,7 +206,7 @@ function loadConfiguration(type,scope) {
     // Configure legend
     if (type !== 'bar' && JSON.parse(legend)) {
         config.options.legend = { display: true };
-        if (type === 'pie') {config.options.legend.position = 'left'; }
+        if (type === 'pie') { config.options.legend.position = 'left'; }
         (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor:"#fff" } : config.options.legend.labels = {fontColor:"#666"};
     }
 
