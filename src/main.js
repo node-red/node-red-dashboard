@@ -40,7 +40,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.select = function (index) {
             main.selectedTab = main.tabs[index];
             if (main.tabs.length > 0) { $mdSidenav('left').close(); }
-            events.socket.emit('ui-replay-state');
+            events.emit('ui-replay-state', {});
             $location.path(index);
 
         };

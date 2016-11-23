@@ -5,7 +5,6 @@ angular.module('ui').service('UiEvents', ['$timeout',
 
         this.connect = function(onuiloaded, replaydone) {
             var socket = io({path:location.pathname + 'socket.io'});
-            this.socket = socket;
 
             this.emit = function (event, msg) {
                 if (typeof msg === 'undefined') {
