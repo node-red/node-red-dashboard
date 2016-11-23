@@ -138,7 +138,6 @@ function add(opt) {
             newPoint = conversion.newPoint;
             fullDataset = conversion.updatedValues;
         } else {
-
             // If no update flag is set, this means the conversion contains
             // the full dataset or the new value (e.g. gauges)
             fullDataset = conversion;
