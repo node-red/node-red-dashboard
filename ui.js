@@ -11,6 +11,7 @@ module.exports = function(RED) {
         addLink: addLink,
         addBaseConfig: addBaseConfig,
         emit: emit,
+        emitSocket: emitSocket,
         toNumber: toNumber.bind(null, false),
         toFloat: toNumber.bind(null, true),
         updateUi: updateUi,
@@ -52,6 +53,15 @@ function toNumber(keepDecimals, config, input) {
 
 function emit(event, data) {
     io.emit(event, data);
+}
+
+function emitSocket(event, data) {
+    if (data.hasOwnProperty("socketid") && (data.socketid !== undefined)) {
+        io.to(data.socketid).emit(event,data);
+    }
+    else {
+        io.emit(event, data);
+    }
 }
 
 function noConvert(value) {
@@ -124,7 +134,7 @@ function add(opt) {
         // If the update flag is set, emit the newPoint, and store the full dataset
         var fullDataset;
         var newPoint;
-        if ((typeof(conversion) === 'object') && (conversion.update != undefined)) {
+        if ((typeof(conversion) === 'object') && (conversion.update !== undefined)) {
             newPoint = conversion.newPoint;
             fullDataset = conversion.updatedValues;
         } else {
@@ -135,13 +145,13 @@ function add(opt) {
         }
 
         // If we have something new to emit
-        if (newPoint != undefined || !opt.emitOnlyNewValues || oldValue != fullDataset) {
+        if (newPoint !== undefined || !opt.emitOnlyNewValues || oldValue != fullDataset) {
             currentValues[opt.node.id] = fullDataset;
 
             // Determine what to emit over the websocket
             // (the new point or the full dataset).
             var toEmit;
-            if (newPoint != undefined) {
+            if (newPoint !== undefined) {
                 toEmit = opt.beforeEmit(msg, newPoint);
             } else {
                 toEmit = opt.beforeEmit(msg, fullDataset);

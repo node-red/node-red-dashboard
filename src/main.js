@@ -29,7 +29,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        //TODO Disabled until we make it an option - too sensitive for some 
+        //TODO Disabled until we make it an option - too sensitive for some
         //$scope.onSwipeLeft = function(ev) { moveTab(-1); }
         //$scope.onSwipeRight = function(ev) { moveTab(1); }
 
@@ -90,10 +90,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on(function (msg) {
             var found = findControl(msg.id, main.tabs);
-            
+
             if (found === undefined) { return; }
             for (var key in msg) {
-                
+
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
 
