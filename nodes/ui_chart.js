@@ -33,7 +33,8 @@ module.exports = function(RED) {
                 height: parseInt(config.height || group.config.width/2+1 || 4),
                 ymin: config.ymin || 0,
                 ymax: config.ymax,
-                xformat : config.xformat || "HH:mm:SS"
+                xformat : config.xformat || "HH:mm:SS",
+                cutout: parseInt(config.cutout || 0)
             },
             convert: function(value, oldValue, msg) {
                 if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {
@@ -41,19 +42,18 @@ module.exports = function(RED) {
                     oldValue = [];
                 }
                 ChartIdList[node.id] = node.chartType;
+                var converted = {};
                 if (Array.isArray(value)) {
                     oldValue = value;
                 } else {
                     value = parseFloat(value);
-                    var point;
                     if (isNaN(value)) { return oldValue; }
                     var series = msg.topic || 'Series 1';
                     var storageKey = node.id;
                     var found;
                     if (!oldValue) { oldValue = [];}
-                    var converted = {};
                     if (node.chartType !== "line") {  // handle bar and pie type data
-                        if (oldValue.length == 0) {
+                        if (oldValue.length === 0) {
                             oldValue = [{
                                 key: storageKey,
                                 values: {
@@ -79,9 +79,9 @@ module.exports = function(RED) {
                     else { // Line chart
 
                         // Find the chart data
-                        for (var i = 0; i < oldValue.length; i++) {
-                            if (oldValue[i].key === storageKey) {
-                                found = oldValue[i];
+                        for (var j = 0; j < oldValue.length; j++) {
+                            if (oldValue[j].key === storageKey) {
+                                found = oldValue[j];
                                 break;
                             }
                         }

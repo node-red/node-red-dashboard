@@ -25,7 +25,8 @@
             ymax: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             removeOlder: {value: 1, validate:RED.validators.number(), required:true},
             removeOlderPoints: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
-            removeOlderUnit: {value: '3600', required:true}
+            removeOlderUnit: {value: '3600', required:true},
+            cutout: {value: 0}
         },
         inputs:1,
         outputs:1,
@@ -46,6 +47,7 @@
                     $("#interpolate-show").show();
                     $("#legend-show").show();
                     $("#y-axis-show").show();
+                    $("#hole-size-show").hide();
                 } else {
                     $("#x-axis-show").hide();
                     $("#x-axis-label-show").hide();
@@ -53,9 +55,11 @@
                     if ($(this).val() === "bar") {
                         $("#y-axis-show").show();
                         $("#legend-show").hide();
+                        $("#hole-size-show").hide();
                     } else {
                         $("#y-axis-show").hide();
                         $("#legend-show").show();
+                        $("#hole-size-show").show();
                     }
                 }
             });
@@ -141,7 +145,7 @@
     </div>
     <div class="form-row" id="legend-show">
         <label for="node-input-legend">Legend</label>
-        <select id="node-input-legend" style="width:100px;">
+        <select id="node-input-legend" style="width:120px;">
             <option value="false">None</option>
             <option value="true">Show</option>
         </select>
@@ -151,6 +155,9 @@
                 <option value="step">step</option>
                 <option value="bezier">bezier</option>
             </select>
+        </span>
+        <span id="hole-size-show">&nbsp;&nbsp;&nbsp;&nbsp;Cutout
+        <input type="text" id="node-input-cutout" style="width:35px"> %
         </span>
     </div>
     <div class="form-row">

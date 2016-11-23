@@ -87,6 +87,9 @@ function loadConfiguration(type,scope) {
         legend: false,
         responsive: true
     };
+    if (type === 'pie') {
+        config.options.cutoutPercentage = scope.$eval('me.item.cutout') || 0;
+    }
 
     //Build colours array
     var colours = [];
