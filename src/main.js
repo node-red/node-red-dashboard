@@ -40,7 +40,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.select = function (index) {
             main.selectedTab = main.tabs[index];
             if (main.tabs.length > 0) { $mdSidenav('left').close(); }
+            events.socket.emit('ui-replay-state');
             $location.path(index);
+
         };
 
         this.open = function (link, index) {
@@ -96,16 +98,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
-
-                    // If the update flag is set, concat the arrays
-                    // multiple series will be handled correctly here as
-                    // when updating, only single points are passed
-                    if ((typeof(msg.value) === 'array') && (msg.value.length === 1) && (msg.value[0].update)) {
-                        found[key][0].values = found[key][0].values.concat(msg[key][0].values);
-                    } else {
-                        // Replace
-                        found[key] = msg[key];
-                    }
+                    found[key] = msg[key];
                 }
             }
             if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
