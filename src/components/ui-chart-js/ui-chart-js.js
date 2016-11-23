@@ -147,7 +147,11 @@ function loadConfiguration(type,scope) {
         config.options.elements = {
             line: {
                 fill: false
-            }
+            },
+            point: {
+                radius: 1,
+                hitRadius: 4,
+                hoverRadius: 4 }
         }
         switch (interpolate) {
             case 'linear': {
@@ -171,7 +175,6 @@ function loadConfiguration(type,scope) {
 
     // Configure scales
     if (type !== 'pie') {
-
         config.options.scales.yAxes = [{}];
         config.options.scales.xAxes[0].ticks = {};
         config.options.scales.yAxes[0].ticks = {};
@@ -187,7 +190,8 @@ function loadConfiguration(type,scope) {
                 color:"rgba(255,255,255,0.1)",
                 zeroLineColor:"rgba(255,255,255,0.1)"
             }
-        } else {
+        }
+        else {
             config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = "#666";
             config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
                 color:"rgba(0,0,0,0.1)",
