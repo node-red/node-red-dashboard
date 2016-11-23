@@ -44,7 +44,8 @@ module.exports = function(RED) {
                 ChartIdList[node.id] = node.chartType;
                 var converted = {};
                 if (Array.isArray(value)) {
-                    oldValue = value;
+                    converted.update = false;
+                    converted.updatedValues = value;
                 } else {
                     value = parseFloat(value);
                     if (isNaN(value)) { return oldValue; }
