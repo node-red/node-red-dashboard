@@ -16,6 +16,10 @@ body.nr-dashboard-theme-light md-content {
     height: 100%;
 }
 
+body.nr-dashboard-theme-light md-select-menu md-content {
+    height: initial;
+}
+
 body.nr-dashboard-theme-light md-content md-card {}
 
 /* Some colour classes */

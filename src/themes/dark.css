@@ -17,6 +17,10 @@ body.nr-dashboard-theme-dark md-content {
     height: 100%;
 }
 
+body.nr-dashboard-theme-dark md-select-menu md-content {
+    height: initial;
+}
+
 body.nr-dashboard-theme-dark md-content md-card {
 	background-color: #333;
 	color: #eee;
