@@ -41,6 +41,14 @@
                 group: "#node-input-group"
             });
             $("#node-input-chartType").change(function() {
+                if ($(this).val() === "horizontalBar") {
+                    $("#y-label-show").hide();
+                    $("#x-label-show").show();
+                }
+                else {
+                    $("#y-label-show").show();
+                    $("#x-label-show").hide();
+                }
                 if ($(this).val() === "line") {
                     $("#x-axis-show").show();
                     $("#x-axis-label-show").show();
@@ -52,14 +60,14 @@
                     $("#x-axis-show").hide();
                     $("#x-axis-label-show").hide();
                     $("#interpolate-show").hide();
-                    if ($(this).val() === "bar") {
-                        $("#y-axis-show").show();
-                        $("#legend-show").hide();
-                        $("#hole-size-show").hide();
-                    } else {
+                    if ($(this).val() === "pie") {
                         $("#y-axis-show").hide();
                         $("#legend-show").show();
                         $("#hole-size-show").show();
+                    } else {
+                        $("#y-axis-show").show();
+                        $("#legend-show").hide();
+                        $("#hole-size-show").hide();
                     }
                 }
             });
@@ -113,6 +121,7 @@
         <select id="node-input-chartType" style="width:120px;">
             <option value="line">Line chart</option>
             <option value="bar">Bar chart</option>
+            <option value="horizontalBar">Bar chart (H)</option>
             <option value="pie">Pie chart</option>
         </select>
     </div>
@@ -137,7 +146,8 @@
         <input type="text" id="node-input-xformat" style="width:150px;">
     </div>
     <div class="form-row" id="y-axis-show">
-        <label for="node-input-ymin">Y-axis</label>
+        <label id="y-label-show" for="node-input-ymin">Y-axis</label>
+        <label id="x-label-show" for="node-input-ymin">X-axis</label>
         <label for="node-input-ymin" style="width:auto">min</label>
         <input type="text" id="node-input-ymin" style="width:80px">
         <label for="not-input-ymax" style="width:auto; margin-left: 20px;">max</label>

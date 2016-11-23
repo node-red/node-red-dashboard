@@ -88,6 +88,7 @@ function loadConfiguration(type,scope) {
     };
     if (type === 'pie') {
         config.options.cutoutPercentage = scope.$eval('me.item.cutout') || 0;
+        config.options.elements = { arc: { borderWidth:0 }};
     }
 
     //Build colours array
@@ -168,7 +169,7 @@ function loadConfiguration(type,scope) {
             }
         }
     }
-    else if (type === 'bar') {
+    else if ((type === 'bar') || (type === 'horizontalBar')) {
         config.colours = baseColours;
         config.options.scales.xAxes = [{}];
     }
@@ -179,9 +180,16 @@ function loadConfiguration(type,scope) {
         config.options.scales.xAxes[0].ticks = {};
         config.options.scales.yAxes[0].ticks = {};
 
-        if (type === 'bar') { config.options.scales.yAxes[0].ticks.beginAtZero = true; }
-        if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
-        if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
+        if ((type === 'line') || (type === 'bar')) {
+            config.options.scales.yAxes[0].ticks.beginAtZero = true;
+            if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
+            if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
+        }
+        if (type === 'horizontalBar') {
+            config.options.scales.xAxes[0].ticks.beginAtZero = true;
+            if (!isNaN(yMin)) { config.options.scales.xAxes[0].ticks.min = yMin; }
+            if (!isNaN(yMax)) { config.options.scales.xAxes[0].ticks.max = yMax; }
+        }
 
         // Theme settings
         if (scope.$eval('me.item.theme') === 'theme-dark') {
@@ -210,9 +218,11 @@ function loadConfiguration(type,scope) {
     }
 
     // Configure legend
-    if (type !== 'bar' && JSON.parse(legend)) {
+    if (type !== 'bar' && type !== "horizontalBar "&& JSON.parse(legend)) {
         config.options.legend = { display: true };
-        if (type === 'pie') { config.options.legend.position = 'left'; }
+        if (type === 'pie') {
+            config.options.legend.position = 'left';
+        }
         (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor:"#fff" } : config.options.legend.labels = {fontColor:"#666"};
     }
 
