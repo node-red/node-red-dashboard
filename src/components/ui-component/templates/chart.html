@@ -1,5 +1,7 @@
 <md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout-align="center center" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
-	<p class="label nr-dashboard-chart-title">{{ me.item.label }}</p>
-    <ui-chart-js class="nr-dashboard-chart" style="width: 100%; height: 100%;"></ui-chart-js>
-    <p class="blank-label" ng-if="config.nodata">{{ me.item.nodata }}</p>
+	<div class="nr-dashboard-chart-container">
+		<p class="label nr-dashboard-chart-title">{{ me.item.label }}</p>
+	    <ui-chart-js class="nr-dashboard-chart"></ui-chart-js>
+	    <p class="blank-label" ng-if="config.nodata">{{ me.item.nodata }}</p>
+	</div>
 </md-card>

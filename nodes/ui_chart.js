@@ -48,7 +48,7 @@ module.exports = function(RED) {
                     converted.updatedValues = value;
                 } else {
                     value = parseFloat(value);
-                    if (isNaN(value)) { return []; }
+                    if (isNaN(value)) { return oldValue || []; }
                     var series = msg.topic || 'Series 1';
                     var storageKey = node.id;
                     var found;
