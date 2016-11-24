@@ -219,7 +219,7 @@ function loadConfiguration(type,scope) {
     }
 
     // Configure legend
-    if (type !== 'bar' && type !== "horizontalBar "&& JSON.parse(legend)) {
+    if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
         config.options.legend = { display: true };
         if (type === 'pie') {
             config.options.legend.position = 'left';
