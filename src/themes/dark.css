@@ -208,6 +208,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     }
 }
 
+
 /* Text-Input */
 
 .nr-dashboard-theme-dark .nr-dashboard-textinput {}
@@ -285,10 +286,10 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 	color: #0fbbc3 ;
 }
 .nr-dashboard-theme-dark .nr-dashboard-form form .md-input-invalid input{
-	border-color: #F00 !important;
+	border-color: #d00 !important;
 }
 .nr-dashboard-theme-dark md-content .nr-dashboard-form form .md-input-invalid label{
-	color: #F00 !important;
+	color: #d00 !important;
 }
 .nr-dashboard-theme-dark md-content .nr-dashboard-form form md-input-container md-checkbox.md-checked .md-icon {
  background-color: rgba(15,187,195, 0.87);

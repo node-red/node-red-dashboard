@@ -7,13 +7,15 @@ License change
 
 Enhancements
 
-	- Replace nvd3 charts with charts.js charts - to fix various issues
-	- Add pie chart option to new charts.js based widget
+	- Replace nvd3 charts with **charts.js** charts - to fix various issues
+	- Add pie chart and horizontal bar chart options to new charts.js based widget
+    - Remove second output from chart node - use the ui_control node instead
     - Add step option to ui_numeric input widget
-    - Add OK/Cancel Dialog mode to ui_notification widget
     - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
     - bumped fa-icons version to 4.7.0
     - ui_control emits "connect" and "lost" messages for client id and ip.
+    - All ui elements now also emit `msg.socketid`
+    - Add OK/Cancel Dialog mode to ui_notification widget, if msg.socketid is present the notification will only go to that client.
 
 Fixes
 

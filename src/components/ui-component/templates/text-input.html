@@ -1,9 +1,10 @@
 <md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout="row" layout-align="space-between center" class="nr-dashboard-textinput" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
     <md-input-container class="md-block" flex md-is-error="false" ng-class="{'has-label':me.item.label}">
-      <label>{{me.item.label}}</label>
-      <input ng-model="me.item.value"
-             ng-change="me.valueChanged({{me.item.delay}})"
-             aria-label="{{me.item.label}}"
-             type="{{me.item.mode}}"/>
+        <label>{{me.item.label}}</label>
+        <input
+            ng-model="me.item.value"
+            ng-change="me.valueChanged({{me.item.delay}})"
+            aria-label="{{me.item.label}}"
+            type="{{me.item.mode}}"/>
     </md-input-container>
 </md-card>

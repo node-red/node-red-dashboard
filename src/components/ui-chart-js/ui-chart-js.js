@@ -57,7 +57,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             }
                         }
                         else {
-                            // Flow deployed - reset config
+                            // Reset config and clear data
                             scope.config = loadConfiguration(type, scope);
                             scope.config.nodata = true;
                         }
@@ -84,7 +84,8 @@ function loadConfiguration(type,scope) {
         spanGaps: true,
         scales: {},
         legend: false,
-        responsive: true
+        responsive: true,
+        maintainAspectRatio: false
     };
     if (type === 'pie') {
         config.options.cutoutPercentage = scope.$eval('me.item.cutout') || 0;
@@ -150,7 +151,7 @@ function loadConfiguration(type,scope) {
                 fill: false
             },
             point: {
-                radius: 1,
+                radius: 0,
                 hitRadius: 4,
                 hoverRadius: 4 }
         }
@@ -218,7 +219,7 @@ function loadConfiguration(type,scope) {
     }
 
     // Configure legend
-    if (type !== 'bar' && type !== "horizontalBar "&& JSON.parse(legend)) {
+    if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
         config.options.legend = { display: true };
         if (type === 'pie') {
             config.options.legend.position = 'left';
