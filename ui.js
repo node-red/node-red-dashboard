@@ -121,7 +121,6 @@ function add(opt) {
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.disabled = !msg.enabled;
             io.emit(updateValueEventName, state);
-            return;
         }
 
         // Retrieve the dataset for this node
