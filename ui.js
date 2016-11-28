@@ -116,7 +116,7 @@ function add(opt) {
     var remove = addControl(opt.tab, opt.group, opt.control);
 
     opt.node.on("input", function(msg) {
-        if (typeof msg.enabled === 'boolean') {
+        if (typeof msg.enabled === 'boolean' && !msg.enabled) {
             var state = replayMessages[opt.node.id];
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.disabled = !msg.enabled;
