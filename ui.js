@@ -116,12 +116,11 @@ function add(opt) {
     var remove = addControl(opt.tab, opt.group, opt.control);
 
     opt.node.on("input", function(msg) {
-        if (typeof msg.enabled === 'boolean' && !msg.enabled) {
+        if (typeof msg.enabled === 'boolean') {
             var state = replayMessages[opt.node.id];
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.disabled = !msg.enabled;
             io.emit(updateValueEventName, state);
-            return;
         }
 
         // Retrieve the dataset for this node
