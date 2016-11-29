@@ -161,6 +161,10 @@ ul.red-ui-dashboard-theme-styles {
     cursor: pointer;
 }
 
+#nr-db-field-font {
+    margin-left: 2em;
+}
+
 </style>
 <script type="text/javascript">
 var uip = RED.settings.uiPath || 'ui';
@@ -309,7 +313,13 @@ RED.nodes.registerType('ui_base',{
         var baseSettings = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
         $('<label>').html('Base Settings').appendTo(baseSettings);
         var baseSettingsUl = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
+
         var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>Font</span></li>').appendTo(baseSettingsUl);
+        var fontSelector = $('<select id="nr-db-field-font">'+
+            '<option value="arial">Arial (default)</option>'+
+            '<option value="helvetica">Helvetica</option>'+
+            '</select>').appendTo(baseFontItem);
+
         var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Colour</span></li>').appendTo(baseSettingsUl);
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
 
@@ -326,6 +336,7 @@ RED.nodes.registerType('ui_base',{
 
         })
         .appendTo(spanColorContainer);
+
 
         var fonts = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
         $('<label>').html('Fonts').appendTo(fonts);
