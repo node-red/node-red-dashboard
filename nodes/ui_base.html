@@ -131,6 +131,12 @@ span.nr-db-color-pick-container {
 }
 #nr-db-field-themeColor {
     width: 50px;
+    padding: 0;
+    height: 20px;
+    border: none;
+    box-shadow: none;
+    position: absolute;
+    right: 50px;
 }
 
 #dashboard-tabs-list {
@@ -154,8 +160,13 @@ span.nr-db-color-pick-container {
 ul.red-ui-dashboard-theme-styles {
     list-style: none;
 }
+ul.red-ui-dashboard-theme-styles li {
+    margin-bottom: 10px;
+}
+
 #resetIcon {
-    margin-left: 10px;
+    margin: 0px 10px 0px 10px;
+    float: right;
 }
 #resetIcon:hover {
     cursor: pointer;
@@ -163,6 +174,7 @@ ul.red-ui-dashboard-theme-styles {
 
 #nr-db-field-font {
     margin-left: 2em;
+    width: 150px;
 }
 
 </style>
@@ -231,7 +243,7 @@ RED.nodes.registerType('ui_base',{
         var liThemeTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
         var liSiteTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Site" style="width: 80px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
 
-        $('<button id="dash-link-button" class="editor-button"><i class="fa fa-external-link"></i></button>')
+        $('<span id="dash-link-button" class="editor-button"><i class="fa fa-external-link"></i></span>')
             .click(function(evt) {
                 window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
                 evt.preventDefault();
@@ -323,6 +335,9 @@ RED.nodes.registerType('ui_base',{
         var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Colour</span></li>').appendTo(baseSettingsUl);
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
 
+        var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
+            .appendTo(baseSettingsUl.children());
+
         $('<input id="nr-db-field-themeColor" type="color" value="'+defaultLightColor+'"/>')
         .change(function() {
             ensureDashboardNode(true);
@@ -347,6 +362,12 @@ RED.nodes.registerType('ui_base',{
         fontOptions.forEach(function(option, index) {
             $('<li class="red-ui-dashboard-theme-item"><span>'+option+'</span></li>').appendTo(themeFontsUl);
         });
+        var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
+            .appendTo(themeFontsUl.children());
+        var fontSelector = $('<select id="nr-db-field-font">'+
+            '<option value="arial">Arial (default)</option>'+
+            '<option value="helvetica">Helvetica</option>'+
+            '</select>').appendTo(themeFontsUl.children());
 
         var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
         $('<label>').html('Colours').appendTo(divThemeStyle);
