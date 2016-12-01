@@ -173,9 +173,7 @@ function loadConfiguration(type,scope) {
     else if ((type === 'bar') || (type === 'horizontalBar')) {
         config.colours = baseColours;
         config.options.scales.xAxes = [{}];
-        if (isNaN(yMin)) {
-            yMin = 0;
-        }
+        if (isNaN(yMin)) { yMin = 0; }
     }
 
     // Configure scales
@@ -185,9 +183,11 @@ function loadConfiguration(type,scope) {
         config.options.scales.yAxes[0].ticks = {};
 
         if ((type === 'line') || (type === 'bar')) {
-            config.options.scales.yAxes[0].ticks.beginAtZero = true;
             if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
             if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
+            if (type === 'bar') {
+                config.options.scales.yAxes[0].ticks.beginAtZero = true;
+            }
         }
         if (type === 'horizontalBar') {
             config.options.scales.xAxes[0].ticks.beginAtZero = true;
@@ -214,7 +214,6 @@ function loadConfiguration(type,scope) {
         config.options.scales.xAxes[0].ticks.maxRotation = 0;
         config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
         config.options.scales.xAxes[0].ticks.autoSkip = true;
-
     }
     else {
         //Pie chart
@@ -229,6 +228,5 @@ function loadConfiguration(type,scope) {
         }
         (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor:"#fff" } : config.options.legend.labels = {fontColor:"#666"};
     }
-
     return config;
 }
