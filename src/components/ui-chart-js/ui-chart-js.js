@@ -173,6 +173,9 @@ function loadConfiguration(type,scope) {
     else if ((type === 'bar') || (type === 'horizontalBar')) {
         config.colours = baseColours;
         config.options.scales.xAxes = [{}];
+        if (isNaN(yMin)) {
+            yMin = 0;
+        }
     }
 
     // Configure scales

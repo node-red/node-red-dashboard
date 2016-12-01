@@ -31,7 +31,7 @@ module.exports = function(RED) {
                 nodata: config.nodata,
                 width: parseInt(config.width || group.config.width || 6),
                 height: parseInt(config.height || group.config.width/2+1 || 4),
-                ymin: config.ymin || 0,
+                ymin: config.ymin,
                 ymax: config.ymax,
                 xformat : config.xformat || "HH:mm:SS",
                 cutout: parseInt(config.cutout || 0)
