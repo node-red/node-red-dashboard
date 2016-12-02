@@ -36,6 +36,19 @@ module.exports = function(RED) {
                 xformat : config.xformat || "HH:mm:SS",
                 cutout: parseInt(config.cutout || 0)
             },
+            convertBack: function(data) {
+                if (data[0]) {
+                    if (data[0] && data[0].hasOwnProperty("values") && data[0].values.hasOwnProperty("series") ) {
+                        var o = [];
+                        for (var i=0; i<data[0].values.series.length; i++) {
+                            var d = data[0].values.data[i].map(function(i) { return [i.x, i.y]; });
+                            o.push({ key:data[0].values.series[i], values:d });
+                        }
+                        data = o;
+                    }
+                }
+                return data;
+            },
             convert: function(value, oldValue, msg) {
                 if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {
                     value = "changed";
@@ -44,6 +57,18 @@ module.exports = function(RED) {
                 ChartIdList[node.id] = node.chartType;
                 var converted = {};
                 if (Array.isArray(value)) {
+                    if (value[0].hasOwnProperty("values")) {
+                        if (Array.isArray(value[0].values)) { // Handle "old" style data array
+                            var na = {series:[], data:[]};
+                            for (var n=0; n<value.length; n++) {
+                                na.series.push(value[n].key);
+                                na.data.push(value[n].values.map(function(i) {
+                                    return {x:i[0], y:i[1]};
+                                }));
+                            }
+                            value = [{ key:node.id, values:na}];
+                        }
+                    }
                     converted.update = false;
                     converted.updatedValues = value;
                 } else {
@@ -78,7 +103,6 @@ module.exports = function(RED) {
                         converted.updatedValues = oldValue;
                     }
                     else { // Line chart
-
                         // Find the chart data
                         for (var j = 0; j < oldValue.length; j++) {
                             if (oldValue[j].key === storageKey) {
@@ -114,7 +138,6 @@ module.exports = function(RED) {
                         // Add the data to the correct series
                         var point = {"x": time, "y": value};
                         found.values.data[seriesIndex].push(point);
-
 
                         // Remove datapoints older than a certain time
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
@@ -173,6 +196,9 @@ module.exports = function(RED) {
         var done = ui.add(options);
         setTimeout(function() {
             node.emit("input",{payload:"start"}); // trigger a redraw at start to flush out old data.
+            if (node.wires.length === 2) { // if it's an old version of the node honour it
+                node.send([null, {payload:"restore", for:node.id}]);
+            }
         }, 100);
         node.on("close", done);
     }
