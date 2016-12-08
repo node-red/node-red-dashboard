@@ -57,7 +57,7 @@ module.exports = function(RED) {
                 ChartIdList[node.id] = node.chartType;
                 var converted = {};
                 if (Array.isArray(value)) {
-                    if (value[0].hasOwnProperty("values")) {
+                    if (value[0] && value[0].hasOwnProperty("values")) {
                         if (Array.isArray(value[0].values)) { // Handle "old" style data array
                             var na = {series:[], data:[]};
                             for (var n=0; n<value.length; n++) {
