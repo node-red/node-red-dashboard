@@ -64,11 +64,11 @@
         </select>
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-inline"><i class="fa fa-arrow-right"></i> Always show swatch: </label>
+        <label style="width:auto" for="node-input-inline"><i class="fa fa-arrow-right"></i> Show inline picker: </label>
         <input type="checkbox" checked id="node-input-inline" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-textValue"><i class="fa fa-arrow-right"></i> Show value as text for width > 2: </label>
+        <label style="width:auto" for="node-input-textValue"><i class="fa fa-arrow-right"></i> Show text input if width > 2: </label>
         <input type="checkbox" checked id="node-input-textValue" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
@@ -90,16 +90,12 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
-    <div class="form-tips">Setting <b>Delay</b> to 0 waits for Enter key to send input.</span></div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_colour-picker">
-  <p>Adds a text input field to the user interface. Mode can be regular text, email or color picker.</p>
-  <p>Text written by the user is sent in realtime as the <code>msg.payload</code>. You can also
-  preset the text of the input field by sending in a <code>msg.payload</code>.</p>
-  <p>The <b>Delay</b> <i>(default : 300ms)</i> sets the amount of time in milliseconds before the output is sent.
-  Setting to <code>0</code> waits for "Enter" key to send.</p>
-  <p>The email mode will color in red if it is not a valid address and will return undefined.</p>
+<script type="text/x-red" data-help-name="ui_colour_picker">
+  <p>Adds a colour picker to the user interface.</p>
+  <p><b>Format</b> can be rgb, hex, hex8, hsv, or hsl. Transparency is supported for all except hex.</p>
   <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
   <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
+  <p>This node will take an input of any colour format available as <b>Format</b>, and convert it accordingly.</p>
 </script>

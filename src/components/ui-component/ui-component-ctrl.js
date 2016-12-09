@@ -111,10 +111,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         me.item.width = 6;
                         me.item.height = 4;
                     }
-                    me.processInput = function (msg) {
-                        processColourPickerInput(msg.value);
-                    };
-                    processColourPickerInput(me.item.value);
                     break;
                 }
 
@@ -185,11 +181,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 delete me.item.isOptionsValid;
                 delete me.item.newOptions;
             }
-        };
-
-        var processColourPickerInput = function (cval) {
-            var colour = tinycolor(cval);
-            me.item.value = colour.toString(me.item.format);
         };
 
     }]);
