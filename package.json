@@ -26,6 +26,7 @@
     "nodes": {
       "ui_base": "nodes/ui_base.js",
       "ui_button": "nodes/ui_button.js",
+      "ui_colour_picker": "nodes/ui_colour_picker.js",
       "ui_dropdown": "nodes/ui_dropdown.js",
       "ui_switch": "nodes/ui_switch.js",
       "ui_slider": "nodes/ui_slider.js",
@@ -53,6 +54,7 @@
     "angular-animate": "^1.5.6",
     "angular-aria": "^1.5.6",
     "angular-chart.js": "^1.0.3",
+    "angularjs-color-picker": "^2.7.1",
     "angular-material": "^1.1.1",
     "angular-material-icons": "^0.7.1",
     "angular-messages": "^1.5.6",

@@ -79,6 +79,28 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     break;
                 }
 
+                case 'colour-picker': {
+                    me.item.me = me;
+                    me.item.options = {
+                        format: me.item.format,
+                        inline: me.item.inline,
+                        swatchOnly: (me.item.width < 2 & !me.item.inline || !me.item.textValue),
+                        swatchPos: "right",
+                        swatchBootstrap: (!me.item.inline),
+                        case: "lower"
+                    };
+                    me.item.eventapi = {
+                        onChange: function() {
+                            me.valueChanged(0);
+                        }
+                    };
+                    if (me.item.inline) {
+                        me.item.width = 6;
+                        me.item.height = 4;
+                    }
+                    break;
+                }
+
                 case 'form': {
                     me.stop=function(event) {
                         if (13 == event.which) {
