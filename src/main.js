@@ -1,5 +1,5 @@
 
-var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'sprintf', 'chart.js']);
+var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'sprintf', 'chart.js', 'color.picker']);
 
 app.config(['$mdThemingProvider', '$compileProvider',
     function ($mdThemingProvider, $compileProvider) {

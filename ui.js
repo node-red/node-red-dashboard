@@ -235,7 +235,8 @@ function init(server, app, log, redSettings) {
                 'sprintf-js',
                 'jquery', 'jquery-ui',
                 'd3', 'raphael', 'justgage',
-                'angular-chart.js', 'chart.js', 'moment'
+                'angular-chart.js', 'chart.js', 'moment',
+                'angularjs-color-picker', 'tinycolor2'
             ];
             vendor_packages.forEach(function (packageName) {
                 app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));

@@ -4,6 +4,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
     function ($scope, events, $interpolate, $interval) {
         var me = this;
 
+/* this doesn't work for me
         if (typeof me.item.format === "string") {
             me.item.getText = $interpolate(me.item.format).bind(null, me.item);
         }
@@ -11,8 +12,20 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         if (typeof me.item.label === "string") {
             me.item.getLabel = $interpolate(me.item.label).bind(null, me.item);
         }
+*/
 
         me.init = function () {
+
+/* this does */
+            if (typeof me.item.format === "string") {
+                me.item.getText = $interpolate(me.item.format).bind(null, me.item);
+            }
+
+            if (typeof me.item.label === "string") {
+                me.item.getLabel = $interpolate(me.item.label).bind(null, me.item);
+            }
+/**/
+
             switch (me.item.type) {
                 case 'button': {
                     me.buttonClick = function () {
@@ -76,6 +89,32 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                 case 'chart': {
                     me.item.theme = $scope.main.selectedTab.theme;
+                    break;
+                }
+
+                case 'colour-picker': {
+                    me.item.me = me;
+                    me.item.options = {
+                        format: me.item.format,
+                        inline: me.item.inline,
+                        swatchOnly: (me.item.width < 2 & !me.item.inline || !me.item.textValue),
+                        swatchPos: "right",
+                        swatchBootstrap: (!me.item.inline),
+                        case: "lower"
+                    };
+                    me.item.eventapi = {
+                        onChange: function() {
+                            me.valueChanged(0);
+                        }
+                    };
+                    if (me.item.inline) {
+                        me.item.width = 6;
+                        me.item.height = 4;
+                    }
+                    me.processInput = function (msg) {
+                        processColourPickerInput(msg.value);
+                    };
+                    processColourPickerInput(me.item.value);
                     break;
                 }
 
@@ -146,6 +185,11 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 delete me.item.isOptionsValid;
                 delete me.item.newOptions;
             }
+        };
+
+        var processColourPickerInput = function (cval) {
+            var colour = tinycolor(cval);
+            me.item.value = colour.toString(me.item.format);
         };
 
     }]);
