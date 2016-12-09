@@ -4,7 +4,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
     function ($scope, events, $interpolate, $interval) {
         var me = this;
 
-/* this doesn't work for me
         if (typeof me.item.format === "string") {
             me.item.getText = $interpolate(me.item.format).bind(null, me.item);
         }
@@ -12,20 +11,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         if (typeof me.item.label === "string") {
             me.item.getLabel = $interpolate(me.item.label).bind(null, me.item);
         }
-*/
 
         me.init = function () {
-
-/* this does */
-            if (typeof me.item.format === "string") {
-                me.item.getText = $interpolate(me.item.format).bind(null, me.item);
-            }
-
-            if (typeof me.item.label === "string") {
-                me.item.getLabel = $interpolate(me.item.label).bind(null, me.item);
-            }
-/**/
-
             switch (me.item.type) {
                 case 'button': {
                     me.buttonClick = function () {
