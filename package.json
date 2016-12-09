@@ -1,37 +1,27 @@
 {
-  "name": "node-red-dashboard",
-  "version": "2.2.0-beta",
-  "description": "A set of dashboard nodes for Node-RED",
-  "keywords": [
-    "node-red"
-  ],
-  "main": "none",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "contributors": [
-    {
-      "name": "Andrei Tatar"
-    },
-    {
-      "name": "Dave Conway-Jones"
-    },
-    {
-      "name": "Joe Pavitt"
-    },
-    {
-      "name": "Nick O'Leary"
-    },
-    {
-      "name": "Dan Cunnington"
-    }
-  ],
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/node-red/node-red-dashboard.git"
-  },
-  "node-red": {
+	"name": "node-red-dashboard",
+	"version": "2.2.0-beta",
+	"description": "A set of dashboard nodes for Node-RED",
+	"keywords": [
+		"node-red"
+	],
+	"main": "none",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"contributors": [
+		{"name": "Andrei Tatar"},
+		{"name": "Dave Conway-Jones"},
+		{"name": "Joe Pavitt"},
+		{"name": "Nick O'Leary"},
+		{"name": "Dan Cunnington"}
+	],
+	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/node-red/node-red-dashboard.git"
+	},
+	"node-red": {
     "version": ">=0.14.0",
     "nodes": {
       "ui_base": "nodes/ui_base.js",
@@ -64,13 +54,13 @@
     "angular-animate": "^1.5.6",
     "angular-aria": "^1.5.6",
     "angular-chart.js": "^1.0.3",
+    "angularjs-color-picker": "^2.7.1",
     "angular-material": "^1.1.1",
     "angular-material-icons": "^0.7.1",
     "angular-messages": "^1.5.6",
     "angular-mocks": "^1.5.6",
     "angular-route": "^1.5.6",
     "angular-sanitize": "^1.4.8",
-    "angularjs-color-picker": "^2.7.1",
     "chart.js": "2.x",
     "d3": "^3.5.17",
     "font-awesome": "^4.6.3",
