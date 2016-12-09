@@ -7,14 +7,6 @@ reason: https://github.com/angular/material/issues/6214
     padding: 0 0 0 10px;
 }
 
-.nr-dashboard-colour-picker .value {
-    font-weight: bold;
-}
-
-.nr-dashboard-colour-picker .md-button {
-    margin: 0;
-}
-
 .color-picker-wrapper .input-group .input-group-addon {
     padding: 12px 12px;
 }
