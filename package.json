@@ -26,12 +26,12 @@
     "nodes": {
       "ui_base": "nodes/ui_base.js",
       "ui_button": "nodes/ui_button.js",
-      "ui_colour_picker": "nodes/ui_colour_picker.js",
       "ui_dropdown": "nodes/ui_dropdown.js",
       "ui_switch": "nodes/ui_switch.js",
       "ui_slider": "nodes/ui_slider.js",
       "ui_numeric": "nodes/ui_numeric.js",
       "ui_text_input": "nodes/ui_text_input.js",
+      "ui_colour_picker": "nodes/ui_colour_picker.js",
       "ui_form": "nodes/ui_form.js",
       "ui_text": "nodes/ui_text.js",
       "ui_gauge": "nodes/ui_gauge.js",
@@ -50,18 +50,18 @@
     "socket.io": "^1.5.0"
   },
   "devDependencies": {
-    "angular": "^1.5.6",
-    "angular-animate": "^1.5.6",
-    "angular-aria": "^1.5.6",
+    "angular": "~1.5.6",
+    "angular-animate": "~1.5.6",
+    "angular-aria": "~1.5.6",
     "angular-chart.js": "^1.0.3",
     "angularjs-color-picker": "^2.7.1",
     "angular-material": "^1.1.1",
     "angular-material-icons": "^0.7.1",
-    "angular-messages": "^1.5.6",
-    "angular-mocks": "^1.5.6",
-    "angular-route": "^1.5.6",
+    "angular-messages": "~1.5.6",
+    "angular-mocks": "~1.5.6",
+    "angular-route": "~1.5.6",
     "angular-sanitize": "^1.4.8",
-    "chart.js": "2.x",
+    "chart.js": "~2.3.0",
     "d3": "^3.5.17",
     "font-awesome": "^4.6.3",
     "gulp": "^3.9.0",
@@ -84,6 +84,7 @@
     "moment": "^2.17.0",
     "sprintf-js": "^1.0.3",
     "streamqueue": "^1.1.1",
-    "svg-morpheus": "^0.3.0"
+    "svg-morpheus": "^0.3.0",
+    "tinycolor2": "^1.3.0"
   }
 }

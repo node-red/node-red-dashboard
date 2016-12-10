@@ -3,8 +3,13 @@ overwrite the default md-errors-spacer min-height
 reason: https://github.com/angular/material/issues/6214
 */
 
-.nr-dashboard-colour-picker {
+.nr-dashboard-colour-picker p {
     padding: 0 0 0 10px;
+}
+
+.color-picker-wrapper {
+    padding-right: 8px;
+    margin-left: 16px;
 }
 
 .color-picker-wrapper .input-group .input-group-addon {
@@ -15,16 +20,23 @@ reason: https://github.com/angular/material/issues/6214
     width: 0px;
 }
 
+.color-picker-wrapper .input-group .color-picker-input {
+    position: relative;
+    width: 160px;
+    height: 20px;
+    font-size: smaller;
+}
+
 .color-picker-wrapper .color-picker-swatch:not(.input-group-addon).color-picker-swatch-right {
-    right: -1px;
+    /* right: -1px; */
 }
 
 .color-picker-input-wrapper {
-    width: 98%;
+    width: 100%;
 }
 
 .color-picker-input-wrapper > input {
-    width: 100%;
+    /* width: 100%; */
 }
 
 .color-picker-show-inline {

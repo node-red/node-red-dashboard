@@ -1,6 +1,6 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
-    var tc = require('tinycolor2');
+    //var tc = require('tinycolor2');
 
     function ColourPickerNode(config) {
         RED.nodes.createNode(this, config);
@@ -31,7 +31,7 @@ module.exports = function(RED) {
                 msg.topic = config.topic || msg.topic;
             },
             convert: function(payload) {
-                colour = tc(payload);
+                colour = tinycolor(payload);
                 return colour.toString(config.format);
             }
         });

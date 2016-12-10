@@ -6,9 +6,9 @@
             name: {value: ''},
             label: {value: ''},
             group: {type: 'ui_group', required: true},
-	    format: {value: 'hex'},
-	    inline: {value: 'false'},
-	    textValue: {value: 'false'},
+            format: {value: 'hex'},
+            inline: {value: false},
+            textValue: {value: false},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
                     var width = v||0;
@@ -27,7 +27,7 @@
         outputs:1,
         icon: "ui_text.png",
         paletteLabel: 'colour picker',
-        label: function() { return this.name || this.label || this.mode+' input'; },
+        label: function() { return this.name || this.label || 'colour picker'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -60,23 +60,23 @@
             <option value="hsl">hsl</option>
             <option value="hsv">hsv</option>
             <option value="hex">hex</option>
-	    <option value="hex8">hex8</option>
+            <option value="hex8">hex8</option>
         </select>
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-inline"><i class="fa fa-arrow-right"></i> Show inline picker: </label>
-        <input type="checkbox" checked id="node-input-inline" style="display:inline-block; width:auto; vertical-align:top;">
-    </div>
-    <div class="form-row">
-        <label style="width:auto" for="node-input-textValue"><i class="fa fa-arrow-right"></i> Show text input if width > 2: </label>
-        <input type="checkbox" checked id="node-input-textValue" style="display:inline-block; width:auto; vertical-align:top;">
+        If width is greater than 4:<br/>
+        <label>&nbsp;</label>
+        Picker always open : <input type="checkbox" checked id="node-input-inline" style="display:inline-block; width:auto; vertical-align:top;">
+        <br/>
+        <label>&nbsp;</label>
+        Show colour value field : <input type="checkbox" checked id="node-input-textValue" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When changed, send:</label>
+        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When changed, send: </label>
     </div>
     <div class="form-row">
         <label style="padding-left: 25px; margin-right: -25px">Payload</label>
@@ -93,9 +93,9 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_colour_picker">
-  <p>Adds a colour picker to the user interface.</p>
-  <p><b>Format</b> can be rgb, hex, hex8, hsv, or hsl. Transparency is supported for all except hex.</p>
-  <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
-  <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
-  <p>This node will take an input of any colour format available as <b>Format</b>, and convert it accordingly.</p>
+    <p>Adds a colour picker to the user interface.</p>
+    <p><b>Format</b> can be rgb, hex, hex8, hsv, or hsl. Transparency is supported for all except hex.</p>
+    <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
+    <p>This node will take an input of any colour format available as <b>Format</b>, and convert it accordingly.</p>
 </script>
