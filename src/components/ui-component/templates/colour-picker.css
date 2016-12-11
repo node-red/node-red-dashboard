@@ -8,8 +8,7 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-wrapper {
-    padding-right: 8px;
-    margin-left: 16px;
+    padding-right: 6px;
 }
 
 .color-picker-wrapper .input-group .input-group-addon {
@@ -36,7 +35,7 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-input-wrapper > input {
-    /* width: 100%; */
+    padding-left: 3px;
 }
 
 .color-picker-show-inline {
