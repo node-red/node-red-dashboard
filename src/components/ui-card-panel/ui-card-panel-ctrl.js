@@ -40,7 +40,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                     // template node will size the height based upon it's content
                     // - child.height() defaults to calculating based on width of group
                     var ch = child.height() * parseInt($scope.group.header.config.width)/width;
-                    height = Math.ceil((ch + sizes.cy)/(sizes.cy + sizes.sy)+0.1);
+                    height = Math.ceil(ch / (sizes.cy + sizes.sy));
                 }
                 var position = getNextPosition(width, height);
                 child.css({
