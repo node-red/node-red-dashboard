@@ -83,7 +83,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     me.item.me = me;
                     if (me.item.inline) {
                         if (me.item.width < 4) { me.item.inline = false; }
-                        else { me.item.height = 4; }
+                        else {
+                            if (me.item.height < 4) { me.item.height = 4; }
+                        }
                     }
                     me.item.options = {
                         format: me.item.format,
