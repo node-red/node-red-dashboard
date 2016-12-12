@@ -94,6 +94,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         swatchPos: "right",
                         pos: "bottom right",
                         case: "lower",
+                        lightness: true,
                         round: true
                     };
                     me.item.eventapi = {
