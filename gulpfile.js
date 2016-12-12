@@ -79,7 +79,7 @@ gulp.task('js', function () {
     .pipe(templateCache('templates.js', {root:'', module:'ui'}));
 
     var tiny = gulp.src('node_modules/tinycolor2/tinycolor.js')
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist/js'));
 
     return streamqueue({ objectMode:true }, scripts, templates)
     .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
