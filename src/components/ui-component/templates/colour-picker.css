@@ -21,7 +21,7 @@ reason: https://github.com/angular/material/issues/6214
 
 .color-picker-wrapper .input-group .color-picker-input {
     position: relative;
-    width: 160px;
+    width: 141px;
     height: 20px;
     font-size: smaller;
 }

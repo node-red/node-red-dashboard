@@ -92,7 +92,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         inline: me.item.inline,
                         swatchOnly: (me.item.width < 2 & !me.item.inline || !(me.item.textValue & (me.item.width > 3))),
                         swatchPos: "right",
-                        case: "lower"
+                        pos: "bottom right",
+                        case: "lower",
+                        round: true
                     };
                     me.item.eventapi = {
                         onChange: function() {
