@@ -103,17 +103,24 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         round: true,
                         pickerOnly: me.item.showPicker && !(me.item.showSwatch || me.item.showValue)
                     };
+                    me.item.key = function (event) {
+                        if ((event.charCode === 13) || (event.which === 13)) {
+                            events.emit({ id:me.item.id, value:me.item.value });
+                            //me.item.api.close();
+                        }
+                    }
                     me.item.eventapi = {
-                        onChange: function() {
+                        onChange: function(api,color,$event) {
+                            if ($event === undefined) { return; }
                             me.valueChanged(0);
                         }
-                    };
+                    }
                     break;
                 }
 
                 case 'form': {
-                    me.stop=function(event) {
-                        if (13 == event.which) {
+                    me.stop = function(event) {
+                        if ((event.charCode === 13) || (event.which === 13)) {
                             event.preventDefault();
                             event.stopPropagation();
                         }
@@ -140,15 +147,14 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         }
 
         me.valueChanged = function (throttleTime) {
-            throttle({
-                id: me.item.id,
-                value: me.item.value
-            }, typeof throttleTime === "number" ? throttleTime : 10);
+            throttle({ id: me.item.id, value: me.item.value },
+                typeof throttleTime === "number" ? throttleTime : 10);
         };
 
         // will emit me.item.value when enter is pressed
         me.keyPressed = function (event) {
-            if ((event.charCode === 13) || (event.which === 13) && me.item.type !== 'colour-picker') {
+            console.log("EV",event);
+            if ((event.charCode === 13) || (event.which === 13)) {
                 events.emit({ id:me.item.id, value:me.item.value });
             }
         }
