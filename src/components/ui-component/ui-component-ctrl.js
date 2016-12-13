@@ -81,22 +81,24 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                 case 'colour-picker': {
                     me.item.me = me;
-                    if (me.item.inline) {
-                        if (me.item.width < 4) { me.item.inline = false; }
+                    if (me.item.showPicker) {
+                        if (me.item.width < 4) { me.item.showPicker = false; }
                         else {
-                            if (me.item.height < 4) { me.item.height = 4; }
+                            if (me.item.height < 4) { 
+                                me.item.height = (me.item.pickerOnly ? 3 : 4);
+                            }
                         }
                     }
                     me.item.options = {
                         format: me.item.format,
-                        inline: me.item.inline,
-                        swatchOnly: (me.item.width < 2 & !me.item.inline || !(me.item.textValue & (me.item.width > 3))),
+                        inline: me.item.showPicker,
+                        pickerOnly: me.item.pickerOnly,
+                        swatchOnly: (me.item.width < 2 || !(me.item.showValue)),
                         swatchPos: "right",
                         pos: "bottom right",
                         case: "lower",
                         lightness: true,
-                        round: true,
-                        pickerOnly: me.item.pickerOnly & me.item.inline
+                        round: true
                     };
                     me.item.eventapi = {
                         onChange: function() {
@@ -143,7 +145,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
         // will emit me.item.value when enter is pressed
         me.keyPressed = function (event) {
-            if ((event.charCode === 13) || (event.which === 13)) {
+            if ((event.charCode === 13) || (event.which === 13) & me.item.type != 'colour-picker') {
                 events.emit({ id:me.item.id, value:me.item.value });
             }
         }
