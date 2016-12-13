@@ -79,6 +79,14 @@ body.nr-dashboard-theme-light md-sidenav {}
 	font-size: larger;
 }
 
+/* Colour Picker */
+
+.nr-dashboard-theme-light .color-picker-panel {
+	background-color: #fff;
+    /* border-color: #fff; */
+    box-shadow: 0 0 1px rgba(0,0,0,.5);
+}
+
 /* Dropdown */
 
 .nr-dashboard-theme-light md-select-menu md-option {

@@ -81,23 +81,27 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                 case 'colour-picker': {
                     me.item.me = me;
+                    if (me.item.inline) {
+                        if (me.item.width < 4) { me.item.inline = false; }
+                        else {
+                            if (me.item.height < 4) { me.item.height = 4; }
+                        }
+                    }
                     me.item.options = {
                         format: me.item.format,
                         inline: me.item.inline,
-                        swatchOnly: (me.item.width < 2 & !me.item.inline || !me.item.textValue),
+                        swatchOnly: (me.item.width < 2 & !me.item.inline || !(me.item.textValue & (me.item.width > 3))),
                         swatchPos: "right",
-                        swatchBootstrap: (!me.item.inline),
-                        case: "lower"
+                        pos: "bottom right",
+                        case: "lower",
+                        lightness: true,
+                        round: true
                     };
                     me.item.eventapi = {
                         onChange: function() {
                             me.valueChanged(0);
                         }
                     };
-                    if (me.item.inline) {
-                        me.item.width = 6;
-                        me.item.height = 4;
-                    }
                     break;
                 }
 

@@ -3,8 +3,23 @@ overwrite the default md-errors-spacer min-height
 reason: https://github.com/angular/material/issues/6214
 */
 
-.nr-dashboard-colour-picker {
+.nr-dashboard-colour-picker p {
     padding: 0 0 0 10px;
+}
+
+.color-picker-wrapper {
+    padding-right: 6px;
+}
+
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open {
+    width: 32px;
+}
+
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline {
+    right: 142px;
+}
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-alpha {
+    right: 162px;
 }
 
 .color-picker-wrapper .input-group .input-group-addon {
@@ -15,16 +30,23 @@ reason: https://github.com/angular/material/issues/6214
     width: 0px;
 }
 
+.color-picker-wrapper .input-group .color-picker-input {
+    position: relative;
+    width: 160px;
+    height: 20px;
+    font-size: smaller;
+}
+
 .color-picker-wrapper .color-picker-swatch:not(.input-group-addon).color-picker-swatch-right {
-    right: -1px;
+    /* right: -1px; */
 }
 
 .color-picker-input-wrapper {
-    width: 98%;
+    width: 100%;
 }
 
 .color-picker-input-wrapper > input {
-    width: 100%;
+    padding-left: 3px;
 }
 
 .color-picker-show-inline {

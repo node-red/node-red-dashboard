@@ -29,7 +29,7 @@
             cutout: {value: 0}
         },
         inputs:1,
-        outputs:1,
+        outputs:2,
         align: "right",
         icon: "ui_chart.png",
         paletteLabel: 'chart',
@@ -180,7 +180,8 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_chart">
-    <p>Plots the input values on a chart. This can either be a time based line chart or a bar chart.</p>
+    <p>Plots the input values on a chart. This can either be a time based line chart, a bar chart (vertical or horizontal),
+    or a pie chart.</p>
     <p>Each input <code>msg.payload</code> value will be converted to a number. If the
     conversion fails, the message is ignored.</p>
     <p>Minimum and Maximum <b>Y</b> axis values are optional. The graph will auto-scale to any values received.</p>
@@ -190,5 +191,8 @@
     The axis labels can be formatted using a <a href="http://momentjs.com/docs/#/displaying/format/" target="_blank">
     Moment.js time formatted</a> string.</p>
     <p>The <b>Blank label</b> field can be used to display some text before any valid data is received.</p>
-    <p>The node output contains an array of the chart state that can be persisted if needed. This can be passed into the chart node to display the persisted data.</p>
+    <p>The node output contains an array of the chart state that can be persisted if needed. This can be passed
+    into the chart node to display the persisted data.
+    The node second output should no longer be used and will be removed in a future release. Use the
+    <code>ui_control</code> node to trigger a restore if needed.</p>
 </script>
