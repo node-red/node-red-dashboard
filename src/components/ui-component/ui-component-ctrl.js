@@ -84,6 +84,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     if (me.item.width < 4) {
                         me.item.showPicker = false;
                         me.item.showValue = false;
+                        me.item.showSwatch = true;
                     }
                     if (me.item.showPicker) {
                         if (me.item.height < 4) {
