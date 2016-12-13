@@ -95,7 +95,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         pos: "bottom right",
                         case: "lower",
                         lightness: true,
-                        round: true
+                        round: true,
+                        pickerOnly: me.item.pickerOnly & me.item.inline
                     };
                     me.item.eventapi = {
                         onChange: function() {
