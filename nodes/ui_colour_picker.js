@@ -22,6 +22,7 @@ module.exports = function(RED) {
                 format: config.format,
                 inline: config.inline,
                 textValue: config.textValue,
+                pickerOnly: config.pickerOnly,
                 order: config.order,
                 value: '',
                 width: config.width || group.config.width || 6,
