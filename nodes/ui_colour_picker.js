@@ -21,7 +21,7 @@ module.exports = function(RED) {
                 label: config.label,
                 format: config.format,
                 showPicker: config.showPicker,
-                pickerOnly: config.pickerOnly,
+                showSwatch: config.showSwatch,
                 showValue: config.showValue,
                 order: config.order,
                 value: '',
