@@ -18,6 +18,7 @@
             height: {value: 0},
             label: {value: 'button'},
             color: {value: ''},
+            bgcolor: {value: ''},
             icon: {value: ''},
             payload: {value: ''},
             payloadType: { value: 'str'},
@@ -34,7 +35,6 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
-
             $('#node-input-payload').typedInput({
                 default: 'str',
                 typeField: $("#node-input-payloadType"),
@@ -66,6 +66,10 @@
     <div class="form-row">
         <label for="node-input-color"><i class="fa fa-tint"></i>  Colour</label>
         <input type="text" id="node-input-color" placeholder="optional text/icon color">
+    </div>
+    <div class="form-row">
+        <label for="node-input-bgcolor"><i class="fa fa-tint"></i>  Background</label>
+        <input type="text" id="node-input-bgcolor" placeholder="optional background color">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When clicked, send:</label>
