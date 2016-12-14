@@ -3,19 +3,23 @@
 
 License change
 
- - Change of license copyright to Javascript Foundation
+    - Change of license copyright to Javascript Foundation
+
+Deprecated
+
+    - Second output from chart node - use the ui_control node instead. This will emit both *connect* and *lost* messages for each client that connects or loses connection. The 2nd output from the chart node will eventually be removed in a future release.
 
 Enhancements
 
 	- Replace nvd3 charts with **charts.js** charts - to fix various issues
 	- Add pie chart and horizontal bar chart options to new charts.js based widget
-    - Remove second output from chart node - use the ui_control node instead
-    - Add step option to ui_numeric input widget
+    - Add ui_colour_picker widget to palette
     - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
-    - bumped fa-icons version to 4.7.0
+    - Add step option to ui_numeric input widget
     - ui_control emits "connect" and "lost" messages for client id and ip.
-    - All ui elements now also emit `msg.socketid`
     - Add OK/Cancel Dialog mode to ui_notification widget, if msg.socketid is present the notification will only go to that client.
+    - All ui elements now also emit `msg.socketid`
+    - bumped fa-icons version to 4.7.0
 
 Fixes
 

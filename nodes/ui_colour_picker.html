@@ -35,6 +35,12 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+        },
+        oneditsave: function() {
+            if (!$("#node-input-showPicker").is(':checked') && !$("#node-input-showValue").is(':checked')) {
+                $("#node-input-showSwatch").prop('checked', true);
+                this.showSwatch = true;
+            }
         }
     });
 </script>

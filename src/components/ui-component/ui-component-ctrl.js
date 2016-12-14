@@ -81,7 +81,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                 case 'colour-picker': {
                     me.item.me = me;
-                    if (me.item.width < 4) {
+                    if ((me.item.width < 4) || (!me.item.showValue && !me.item.showPicker)) {
                         me.item.showPicker = false;
                         me.item.showValue = false;
                         me.item.showSwatch = true;
