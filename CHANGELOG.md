@@ -7,7 +7,7 @@ License change
 
 Deprecated
 
-    - Second output from chart node - use the ui_control node instead. This will emit both *connect* and *lost* messages for each client that connects or loses connection. The 2nd output from the chart node will eventually be removed in a future release.
+    - Second output from chart node - use the `ui_control node` instead. This will emit both *connect* and *lost* messages for each client that connects or loses connection. The 2nd output from the chart node will eventually be removed in a future release.
 
 Enhancements
 
@@ -16,6 +16,7 @@ Enhancements
     - Add ui_colour_picker widget to palette
     - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
     - Add step option to ui_numeric input widget
+    - Add background colour setting to ui_button widget
     - ui_control emits "connect" and "lost" messages for client id and ip.
     - Add OK/Cancel Dialog mode to ui_notification widget, if msg.socketid is present the notification will only go to that client.
     - All ui elements now also emit `msg.socketid`
