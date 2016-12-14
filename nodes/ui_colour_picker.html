@@ -11,7 +11,7 @@
             showSwatch: {value: true},
             showPicker: {value: false},
             showValue: {value: false},
-            showAlpha: {value: true},
+            showAlpha: {value: false},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
                     var width = v||0;
@@ -73,13 +73,13 @@
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-keyboard-o"></i> Format</label>
         <select id="node-input-format" style="width:100px;">
-            <option value="rgb">rgb</option>
+            <option value="hex">hex</option>
+            <option value="hex8">hex8</option>    
             <option value="hsl">hsl</option>
             <option value="hsv">hsv</option>
-            <option value="hex">hex</option>
-            <option value="hex8">hex8</option>
+            <option value="rgb">rgb</option>
         </select>
-        <span id="node-alpha-control" style="margin-left:40px">Show transparency: <input type="checkbox" checked id="node-input-showAlpha" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
+        <span id="node-alpha-control" style="margin-left:40px">Show transparency: <input type="checkbox" id="node-input-showAlpha" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
     </div>
     <div class="form-row">
         If width is 4 or greater:<br/>
