@@ -78,6 +78,9 @@ gulp.task('js', function () {
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(templateCache('templates.js', {root:'', module:'ui'}));
 
+    var tiny = gulp.src('node_modules/tinycolor2/tinycolor.js')
+    .pipe(gulp.dest('./dist/js'));
+
     return streamqueue({ objectMode:true }, scripts, templates)
     .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
     .pipe(concat('app.min.js'))

@@ -14,7 +14,8 @@
 		{"name": "Dave Conway-Jones"},
 		{"name": "Joe Pavitt"},
 		{"name": "Nick O'Leary"},
-		{"name": "Dan Cunnington"}
+		{"name": "Dan Cunnington"},
+        {"name": "Laurence Stant"}
 	],
 	"license": "Apache-2.0",
 	"repository": {
@@ -31,6 +32,7 @@
       "ui_slider": "nodes/ui_slider.js",
       "ui_numeric": "nodes/ui_numeric.js",
       "ui_text_input": "nodes/ui_text_input.js",
+      "ui_colour_picker": "nodes/ui_colour_picker.js",
       "ui_form": "nodes/ui_form.js",
       "ui_text": "nodes/ui_text.js",
       "ui_gauge": "nodes/ui_gauge.js",
@@ -46,25 +48,26 @@
   },
   "dependencies": {
     "serve-static": "^1.10.0",
-    "socket.io": "^1.5.0"
+    "socket.io": "^1.7.0"
   },
   "devDependencies": {
-    "angular": "^1.5.6",
-    "angular-animate": "^1.5.6",
-    "angular-aria": "^1.5.6",
+    "angular": "~1.5.6",
+    "angular-animate": "~1.5.6",
+    "angular-aria": "~1.5.6",
     "angular-chart.js": "^1.0.3",
+    "angularjs-color-picker": "^2.7.1",
     "angular-material": "^1.1.1",
     "angular-material-icons": "^0.7.1",
-    "angular-messages": "^1.5.6",
-    "angular-mocks": "^1.5.6",
-    "angular-route": "^1.5.6",
+    "angular-messages": "~1.5.6",
+    "angular-mocks": "~1.5.6",
+    "angular-route": "~1.5.6",
     "angular-sanitize": "^1.4.8",
-    "chart.js": "2.x",
+    "chart.js": "~2.4.0",
     "d3": "^3.5.17",
     "font-awesome": "^4.6.3",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^2.0.0",
-    "gulp-clean-css": "^2.0.13",
+    "gulp-clean-css": "^2.2.2",
     "gulp-concat": "^2.6.0",
     "gulp-header": "^1.8.8",
     "gulp-html-replace": "^1.6.0",
@@ -82,6 +85,7 @@
     "moment": "^2.17.0",
     "sprintf-js": "^1.0.3",
     "streamqueue": "^1.1.1",
-    "svg-morpheus": "^0.3.0"
+    "svg-morpheus": "^0.3.0",
+    "tinycolor2": "^1.3.0"
   }
 }

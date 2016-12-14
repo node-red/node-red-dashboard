@@ -85,6 +85,13 @@ body.nr-dashboard-theme-dark md-sidenav {
 	font-size: larger;
 }
 
+/* Colour Picker */
+
+.nr-dashboard-theme-dark .color-picker-panel {
+	background-color: #333;
+    border-color: #555;
+    box-shadow: none;
+}
 
 /* Dropdown */
 

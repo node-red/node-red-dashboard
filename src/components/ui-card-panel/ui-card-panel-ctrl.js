@@ -51,6 +51,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                     }
                     height = Math.ceil(ch / (sizes.cy + sizes.sy));
                 }
+
                 var position = getNextPosition(width, height);
                 child.css({
                     left: position.left,
