@@ -4,6 +4,8 @@ module.exports = function(RED) {
 
     function ColourPickerNode(config) {
         RED.nodes.createNode(this, config);
+        this.format = config.format;
+        this.outformat = config.outformat;
         var node = this;
 
         var group = RED.nodes.getNode(config.group);
@@ -29,6 +31,14 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             beforeSend: function (msg) {
+                if (node.outformat === 'object') {
+                    var pay = tc(msg.payload);
+                    if (node.format === 'rgb') { msg.payload = pay.toRgb(); }
+                    if (node.format === 'hsl') { msg.payload = pay.toHsl(); }
+                    if (node.format === 'hsv') { msg.payload = pay.toHsv(); }
+                    if (node.format === 'hex') { msg.payload = pay.toHex(); }
+                    if (node.format === 'hex8') { msg.payload = pay.toHex8(); }
+                }
                 msg.topic = config.topic || msg.topic;
             },
             convert: function(payload) {

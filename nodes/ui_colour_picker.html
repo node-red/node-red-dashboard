@@ -7,6 +7,7 @@
             label: {value: ''},
             group: {type: 'ui_group', required: true},
             format: {value: 'hex'},
+            outformat: {value: 'string'},
             showSwatch: {value: true},
             showPicker: {value: false},
             showValue: {value: false},
@@ -89,8 +90,11 @@
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When changed, send: </label>
     </div>
     <div class="form-row">
-        <label style="padding-left: 25px; margin-right: -25px">Payload</label>
-        <label style="width:auto">Current value</label>
+        <label style="padding-left:25px; margin-right:-25px">Payload</label>
+        <select id="node-input-outformat">
+            <option value="string">current value as a string</option>
+            <option value="object">current value as an object</option>
+        </select>
     </div>
     <div class="form-row">
         <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
