@@ -94,6 +94,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     me.item.options = {
                         format: me.item.format,
                         inline: me.item.showPicker,
+                        alpha: me.item.showAlpha,
                         swatch: me.item.showSwatch,
                         swatchOnly: (me.item.width < 2 || !(me.item.showValue)),
                         swatchPos: "right",

@@ -25,6 +25,7 @@ module.exports = function(RED) {
                 showPicker: config.showPicker,
                 showSwatch: config.showSwatch,
                 showValue: config.showValue,
+                showAlpha: config.showAlpha,
                 order: config.order,
                 value: '',
                 width: config.width || group.config.width || 6,
