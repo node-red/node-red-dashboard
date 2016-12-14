@@ -106,13 +106,16 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     me.item.key = function (event) {
                         if ((event.charCode === 13) || (event.which === 13)) {
                             events.emit({ id:me.item.id, value:me.item.value });
-                            //me.item.api.close();
+                            if (me.api) { me.api.close(); }
                         }
                     }
                     me.item.eventapi = {
                         onChange: function(api,color,$event) {
                             if ($event === undefined) { return; }
                             me.valueChanged(0);
+                        },
+                        onOpen: function(api,color) {
+                            me.api = api;
                         }
                     }
                     break;
