@@ -1,5 +1,12 @@
 
-#### 2.2.0: Milestone Release
+### 2.2.1-beta: Maintenance Release (not yet on NPM)
+
+**Fixes change**
+
+ - gauges now scale properly on IE9/10/11 and Edge
+ 
+
+### 2.2.0: Milestone Release
 
 **License change**
 

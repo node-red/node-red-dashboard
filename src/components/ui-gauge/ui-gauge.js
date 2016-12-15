@@ -57,6 +57,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             title: scope.$eval('me.item.title'),
                             label: scope.$eval('me.item.label'),
                             pointer: true,
+                            relativeGaugeSize: true,
                             textRenderer: function(v) {
                                 return scope.$eval('me.item.getText()');
                             }
