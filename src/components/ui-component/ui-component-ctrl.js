@@ -81,37 +81,49 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                 case 'colour-picker': {
                     me.item.me = me;
+                    if ((me.item.width < 4) || (!me.item.showValue && !me.item.showPicker)) {
+                        me.item.showPicker = false;
+                        me.item.showValue = false;
+                        me.item.showSwatch = true;
+                    }
                     if (me.item.showPicker) {
-                        if (me.item.width < 4) { me.item.showPicker = false; }
-                        else {
-                            if (me.item.height < 4) { 
-                                me.item.height = (me.item.pickerOnly ? 3 : 4);
-                            }
+                        if (me.item.height < 4) {
+                            me.item.height = ((me.item.showSwatch || me.item.showValue) ? 4 : 3);
                         }
                     }
                     me.item.options = {
                         format: me.item.format,
                         inline: me.item.showPicker,
-                        pickerOnly: me.item.pickerOnly,
+                        swatch: me.item.showSwatch,
                         swatchOnly: (me.item.width < 2 || !(me.item.showValue)),
                         swatchPos: "right",
                         pos: "bottom right",
                         case: "lower",
                         lightness: true,
                         round: true,
-                        pickerOnly: me.item.pickerOnly & me.item.inline
+                        pickerOnly: me.item.showPicker && !(me.item.showSwatch || me.item.showValue)
                     };
-                    me.item.eventapi = {
-                        onChange: function() {
-                            me.valueChanged(0);
+                    me.item.key = function (event) {
+                        if ((event.charCode === 13) || (event.which === 13)) {
+                            events.emit({ id:me.item.id, value:me.item.value });
+                            if (me.api) { me.api.close(); }
                         }
-                    };
+                    }
+                    me.item.eventapi = {
+                        onChange: function(api,color,$event) {
+                            if ($event === undefined) { return; }
+                            me.valueChanged(0);
+                        },
+                        onOpen: function(api,color) {
+                            me.api = api;
+                        }
+                    }
                     break;
                 }
 
                 case 'form': {
-                    me.stop=function(event) {
-                        if (13 == event.which) {
+                    me.stop = function(event) {
+                        if ((event.charCode === 13) || (event.which === 13)) {
                             event.preventDefault();
                             event.stopPropagation();
                         }
@@ -138,15 +150,14 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         }
 
         me.valueChanged = function (throttleTime) {
-            throttle({
-                id: me.item.id,
-                value: me.item.value
-            }, typeof throttleTime === "number" ? throttleTime : 10);
+            throttle({ id: me.item.id, value: me.item.value },
+                typeof throttleTime === "number" ? throttleTime : 10);
         };
 
         // will emit me.item.value when enter is pressed
         me.keyPressed = function (event) {
-            if ((event.charCode === 13) || (event.which === 13) & me.item.type != 'colour-picker') {
+            console.log("EV",event);
+            if ((event.charCode === 13) || (event.which === 13)) {
                 events.emit({ id:me.item.id, value:me.item.value });
             }
         }

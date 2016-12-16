@@ -47,6 +47,9 @@ reason: https://github.com/angular/material/issues/6214
 
 .color-picker-input-wrapper > input {
     padding-left: 3px;
+    width: 164px;
+    height: 20px;
+    font-size: smaller;
 }
 
 .color-picker-show-inline {

@@ -7,8 +7,8 @@
             label: {value: ''},
             group: {type: 'ui_group', required: true},
             format: {value: 'hex'},
+            showSwatch: {value: true},
             showPicker: {value: false},
-            pickerOnly: {value: false},
             showValue: {value: false},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -35,6 +35,12 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+        },
+        oneditsave: function() {
+            if (!$("#node-input-showPicker").is(':checked') && !$("#node-input-showValue").is(':checked')) {
+                $("#node-input-showSwatch").prop('checked', true);
+                this.showSwatch = true;
+            }
         }
     });
 </script>
@@ -65,12 +71,12 @@
         </select>
     </div>
     <div class="form-row">
-        If width is greater than 4:<br/>
+        If width is 4 or greater:<br/>
         <label>&nbsp;</label>
-        Show picker : <input type="checkbox" checked id="node-input-showPicker" style="display:inline-block; width:auto; vertical-align:top;">
+        Show swatch : <input type="checkbox" checked id="node-input-showSwatch" style="display:inline-block; width:auto; vertical-align:top;">
         <br/>
         <label>&nbsp;</label>
-        Show picker alone : <input type="checkbox" checked id="node-input-pickerOnly" style="display:inline-block; width:auto; vertical-align:top;">
+        Show picker : <input type="checkbox" checked id="node-input-showPicker" style="display:inline-block; width:auto; vertical-align:top;">
         <br/>
         <label>&nbsp;</label>
         Show value field : <input type="checkbox" checked id="node-input-showValue" style="display:inline-block; width:auto; vertical-align:top;">
@@ -97,7 +103,8 @@
 </script>
 
 <script type="text/x-red" data-help-name="ui_colour_picker">
-    <p>Adds a colour picker to the user interface.</p>
+    <p>Adds a colour picker to the dashboard.</p>
+    <p>If the group width is 4 or greater then the picker can be set to be visible at all times.</p>
     <p><b>Format</b> can be rgb, hex, hex8, hsv, or hsl. Transparency is supported for all except hex.</p>
     <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
     <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
