@@ -1,10 +1,10 @@
 
 ### 2.2.1-beta: Maintenance Release (not yet on NPM)
 
-**Fixes change**
+**Fixes**
 
- - gauges now scale properly on IE9/10/11 and Edge
- 
+ - Gauges now scale properly on IE9/10/11 and Edge
+
 
 ### 2.2.0: Milestone Release
 
@@ -40,12 +40,12 @@
 
 ### 2.1.0: Milestone Release
 
-License change
+**License change**
 
  - Change of license from MIT to Apache-2.0 to be in line with other Node-RED projects
     (approved by all contributors)
 
-Enhancements
+**Enhancements**
 
  - Complete re-write of group layout code to stop overlapping issues
  - Add ui_form widget to submit complete form in one go
@@ -57,7 +57,7 @@ Enhancements
  - Allow switch label to be dynamically set by msg input
  - Add Dashboard version number to console.log on start
 
-Fixes
+**Fixes**
 
  - Fill dark background more completely
  - Fix CSS sizing for Safari 10
@@ -71,9 +71,10 @@ Fixes
  - Fix dropdown select types
  - Fix switch to only switch if input value matches on and off values
 
-#### 2.0.2: Maintenance Release
 
-Enhancements
+### 2.0.2: Maintenance Release
+
+**Enhancements**
 
  - Add password entry option to text input
  - Add basic colour names to themes
@@ -90,7 +91,7 @@ Enhancements
  - Allow Gauge 3 colour ranges to be set
  - Allow Toast notification position to be set
 
-Fixes
+**Fixes**
 
  - Relax auto-creation of ui_base
  - Handle imported flows properly when updating sidebar tree
@@ -101,13 +102,15 @@ Fixes
  - Better layout alignment for groups on wide and narrow screens
  - Allow msg with no payload to be handled
 
-#### 2.0.1: Maintenance Release
 
-Fixes
+### 2.0.1: Maintenance Release
+
+**Fixes**
 
  - Sorting groups/tabs in sidebar not sticking
  - Tidy up auto-generation of ui_base node
 
+
 ### 2.0.0: Milestone Release
 
- - First release published to npm!
+ - First release published to npm

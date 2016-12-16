@@ -56,4 +56,5 @@ code base. Some basic rules include:
  - indent with 4-spaces, no tabs. No arguments.
  - opening brace on same line as `if`/`for`/`function` and so on, closing brace
  on its own line.
- - There are **.jshintrc** and **.jscsrc** files included in the project which may help
+ - There are **.jshintrc** and **.jscsrc** files included in the project which
+ should be used to help formatting.

@@ -63,6 +63,7 @@ gulp.task('index', function() {
 });
 
 gulp.task('icon', function() {
+    gulp.src('src/icon.jpg').pipe(gulp.dest('dist/'));
     return gulp.src('src/icon.png').pipe(gulp.dest('dist/'));
 });
 
