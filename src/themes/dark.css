@@ -90,7 +90,12 @@ body.nr-dashboard-theme-dark md-sidenav {
 .nr-dashboard-theme-dark .color-picker-panel {
 	background-color: #333;
     border-color: #555;
-    box-shadow: none;
+    box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.nr-dashboard-theme-dark .color-picker-input-wrapper > input {
+    color:#fff;
+    background-color: #444;
 }
 
 /* Dropdown */
