@@ -93,7 +93,7 @@ body.nr-dashboard-theme-light md-sidenav {}
 
 /* Dropdown */
 
-.nr-dashboard-theme-light md-select-menu md-option {
+.nr-dashboard-theme-light md-select-menu, .nr-dashboard-theme-light md-select-menu md-option {
 	background-color: #fff;
 	color: #000;
 }

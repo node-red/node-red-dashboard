@@ -115,7 +115,7 @@ body.nr-dashboard-theme-dark md-sidenav {
 	padding: 0px;
 }
 
-.nr-dashboard-theme-dark md-select-menu md-option {
+.nr-dashboard-theme-dark md-select-menu, .nr-dashboard-theme-dark md-select-menu md-option {
 	background-color: #333333;
 	color: #EEEEEE;
 }
