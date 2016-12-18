@@ -22,9 +22,17 @@ p.blank-label {
     width: 100%;
     height: 100%;
 }
+
+
+canvas.chart.chart-line {
+    /* full height - label_padding - label_height - nr-dashboard-chart_padding */
+    height: calc(100% + 22px) !important;
+    width: calc(100%) !important;
+}
+
 .nr-dashboard-chart {
     /* full height - label_padding - label_height - nr-dashboard-chart_padding */
-    height: calc(100% - 14px - 38px - 20px);
+    height: calc(100% - 12px - 38px - 20px);
     width: calc(100% - 20px);
     padding: 10px;
 }
