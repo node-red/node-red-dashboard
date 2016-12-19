@@ -190,7 +190,10 @@ RED.nodes.registerType('ui_base',{
     category: 'config',
     defaults: {
         name: {value: ''},
-        theme: {value: ''}
+        theme: {value: ''},
+        lightTheme: {value: {}},
+        darkTheme: {value: {}},
+        customTheme: {value: {}}
     },
     hasUsers: false,
     paletteLabel: 'Dashboard',
@@ -199,6 +202,8 @@ RED.nodes.registerType('ui_base',{
     },
     onpaletteadd: function() {
         var globalDashboardNode = null;
+        var editor;
+        
 
         function ensureDashboardNode(createMissing) {
             if (globalDashboardNode !== null) {
@@ -214,6 +219,7 @@ RED.nodes.registerType('ui_base',{
                         globalDashboardNode = n;
                     }
                 });
+                console.log(globalDashboardNode);
                 if (globalDashboardNode === null && createMissing) {
                     globalDashboardNode = {
                         id: RED.nodes.id(),
@@ -230,12 +236,14 @@ RED.nodes.registerType('ui_base',{
                             baseFont: "Helvetica Neue"
                         },
                         customTheme: {
+                            name: 'Untitled Theme 1',
                             baseColor: "#0094CE",
                             baseFont: "Helvetica Neue"
                         },
                         url: 'ui',
                         users:[]
                     }
+                    console.log('adding');
                     RED.nodes.add(globalDashboardNode);
                     RED.nodes.dirty(true);
                 }
@@ -364,9 +372,6 @@ RED.nodes.registerType('ui_base',{
 
                             //generate colours for all colour settings from base colour
                             generateColours(base);
-                            
-
-
                             break;
                     }
 
@@ -374,11 +379,31 @@ RED.nodes.registerType('ui_base',{
 
                     RED.nodes.dirty(true);
                 }
-
-              ($(this).val() === 'theme-custom') ? $("#custom-theme-settings").show() : $("#custom-theme-settings").hide();
+                if ($(this).val() === 'theme-custom') {
+                    $("#custom-theme-library-container").show();
+                    $("#custom-theme-settings").show();
+                } else {
+                    $("#custom-theme-library-container").hide();
+                    $("#custom-theme-settings").hide();
+                }
                 
             })
             .appendTo(divThemeStyle);
+
+        var customThemeLibraryContainer = $('<div id="custom-theme-library-container">',{class:"form-row"}).appendTo(themeTab);
+        $('<label class="theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
+        $('<input type="text" id="node-input-name">').val("Untitled Theme 1...").css("width","calc(100% - 48px)")
+            .change(function() {
+                if (!globalDashboardNode || globalDashboardNode.customTheme.name !== $(this).val()) {
+                    ensureDashboardNode(true);
+                    globalDashboardNode.customTheme.name = $(this).val();
+                    RED.nodes.dirty(true);
+                }
+            })
+            .appendTo(customThemeLibraryContainer);
+        $('<input type="hidden" id="node-input-format">').appendTo(customThemeLibraryContainer);
+        $('<div style="display: none;" class="node-text-editor" id="node-input-format-editor" ></div>').appendTo(customThemeLibraryContainer);
+
 
         var baseThemeSettingsContainer = $('<div id="base-theme-settings">').appendTo(themeTab);
 
@@ -398,7 +423,7 @@ RED.nodes.registerType('ui_base',{
         var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
             .appendTo(baseSettingsUl.children());
 
-        $('<input class="nr-db-field-themeColor" type="color" value="#0094CE"/>')
+        $('<input id="theme-base-color" class="nr-db-field-themeColor" type="color" value="#0094CE"/>')
         .change(function() {
             ensureDashboardNode(true);
             var lightThemeMatch = globalDashboardNode.lightTheme.baseColor === $(this).val();
@@ -407,15 +432,16 @@ RED.nodes.registerType('ui_base',{
                 //update the relevant colour storage
                 switch(globalDashboardNode.theme) {
                     case 'theme-light':
-                        globalDashboardNode.lightTheme.baseColor = $(this).val()
+                        globalDashboardNode.lightTheme.baseColor = $(this).val();
                         break;
                     case 'theme-dark':
-                        globalDashboardNode.darkTheme.baseColor = $(this).val()
+                        globalDashboardNode.darkTheme.baseColor = $(this).val();
                         break;
                     case 'theme-custom':
                         globalDashboardNode.customTheme.baseColor = $(this).val();
 
                         generateColours($(this).val());
+                        editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
                         break;
                 }
                 RED.nodes.dirty(true);
@@ -1120,10 +1146,39 @@ RED.nodes.registerType('ui_base',{
             if (globalDashboardNode) {
                 $("#nr-db-field-title").val(globalDashboardNode.name);
                 $("#nr-db-field-theme").val(globalDashboardNode.theme);
+                $("#node-input-name").val(globalDashboardNode.customTheme.name);
+                if (globalDashboardNode.theme === 'theme-custom') {
+                    $("#custom-theme-library-container").show();
+                    $("#custom-theme-settings").show();
+                } else {
+                    $("#custom-theme-library-container").hide();
+                    $("#custom-theme-settings").hide();
+                }
                 var colorValue;
                 (globalDashboardNode.theme === 'theme-light') ? colorValue = globalDashboardNode.lightTheme.baseColor : colorValue = globalDashboardNode.darkTheme.baseColor;
                 $("#nr-db-field-themeColor").val(colorValue);
                 // $("#nr-db-field-url").val(globalDashboardNode.url);
+
+                editor = RED.editor.createEditor({
+                    id: 'node-input-format-editor',
+                    mode: 'ace/mode/javascript',
+                    value: JSON.stringify(globalDashboardNode.customTheme)
+                });
+
+                RED.library.create({
+                    url:"themes", // where to get the data from
+                    type:"theme", // the type of object the library is for
+                    editor: editor, // the field name the main text body goes to
+                    mode:"ace/mode/javascript",
+                    fields:['name']
+                });
+
+                editor.on('input', function() {
+                    globalDashboardNode.customTheme = JSON.parse(editor.getValue());
+                    $("#theme-base-color").val(globalDashboardNode.customTheme.baseColor);
+                    generateColours(globalDashboardNode.customTheme.baseColor);
+                });
+
             }
             awaitingGroups = {};
             awaitingTabs = {};
@@ -1137,6 +1192,8 @@ RED.nodes.registerType('ui_base',{
             disableOnEdit: true,
             onchange: function() { refresh(); }
         });
+
+
 
         RED.events.on("editor:save",function(node) {
             if (/^ui_/.test(node.type)) {

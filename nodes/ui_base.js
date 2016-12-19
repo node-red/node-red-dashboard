@@ -11,14 +11,20 @@ module.exports = function(RED) {
             baseColor: '#097479',
             baseFont: 'Helvetica Neue'
         }
+        var defaultCustomTheme = {
+            name: 'Untitled Theme 1',
+            baseColor: defaultLightTheme.baseColor,
+            baseFont: defaultLightTheme.baseFont
+        }
         this.config = {
             name: config.name || 'Node-RED Dashboard',
             theme: config.theme || 'theme-light',
             lightTheme: config.lightTheme || defaultLightTheme,
             darkTheme: config.darkTheme || defaultDarkTheme,
-            customTheme: config.customTheme || defaultLightTheme
+            customTheme: config.customTheme || defaultCustomTheme
         };
         ui.addBaseConfig(this.config.name, this.config.theme, this.config.lightTheme, this.config.darkTheme, this.config.customTheme);
     }
     RED.nodes.registerType("ui_base", BaseNode);
+    RED.library.register("themes");
 };
