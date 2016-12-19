@@ -164,11 +164,14 @@ ul.red-ui-dashboard-theme-styles li {
     margin-bottom: 10px;
 }
 
-#resetIcon {
+.resetIcon {
     margin: 0px 10px 0px 10px;
     float: right;
+    color: grey;
+    opacity: 0.6;
+    display: block;
 }
-#resetIcon:hover {
+.resetIcon:hover {
     cursor: pointer;
 }
 
@@ -316,6 +319,28 @@ RED.nodes.registerType('ui_base',{
             .appendTo(divTitle);
 
         // Theme Tab
+
+        //Store a list of all style edited state
+        //true means the user has edited.
+        var styleEditedState = {
+            base: {
+                colour: false,
+                font: false
+            },
+            page: {
+                background: false,
+                sidebarBackground: false,
+                titlebarBackground: false
+            },
+            group: {
+                background: false,
+                border: false
+            },
+            widget: {
+                background: false
+            }
+
+        }
         var generateColours = function(base) {
             //page background
             // use the least readable option
@@ -331,20 +356,27 @@ RED.nodes.registerType('ui_base',{
                 }
                 return leastColor;
             }
-            var pageBackground = leastReadable(base, ["#fafafa", "#111111"]);
-            var sideBarBackground = leastReadable(base, ["#000000", "#ffffff"]);
-            $("#page-background-color").val(pageBackground);
-            $("#page-side-bar-background-color").val(sideBarBackground);
-            $("#page-title-bar-background-color").val(tinycolor(base).darken(15).toHexString());
-
-            var groupBackground = leastReadable(base, ["#ffffff", "#333333"]);
-            var groupBorder = leastReadable(base, ["#ffffff", "#555555"]);
-            $("#group-background-color").val(groupBackground);
-            $("#group-border-color").val(groupBorder);
-
-            $("#widget-primary-color").val(base);
-            
-
+            if (!styleEditedState.page.background) {
+                var pageBackground = leastReadable(base, ["#fafafa", "#111111"]);
+                $("#page-background-color").val(pageBackground);
+            }
+            if (!styleEditedState.page.sidebarBackground) {
+                var sidebarBackground = leastReadable(base, ["#000000", "#ffffff"]);
+                $("#page-side-bar-background-color").val(sidebarBackground);
+            }
+            if (!styleEditedState.page.titlebarBackground) {
+                var titlebarBackground = tinycolor(base).darken(15).toHexString();
+                $("#page-title-bar-background-color").val(titlebarBackground);
+            }
+            if (!styleEditedState.group.background) {
+                var groupBackground = leastReadable(base, ["#ffffff", "#333333"]);
+                $("#group-background-color").val(groupBackground);
+            }
+            if (!styleEditedState.group.border) {
+               var groupBorder = leastReadable(base, ["#ffffff", "#555555"]);
+               $("#group-border-color").val(groupBorder); 
+            }
+            if (!styleEditedState.widget.background) { $("#widget-primary-color").val(base); }
         }
 
         var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
@@ -374,9 +406,6 @@ RED.nodes.registerType('ui_base',{
                             generateColours(base);
                             break;
                     }
-
-                    
-
                     RED.nodes.dirty(true);
                 }
                 if ($(this).val() === 'theme-custom') {
@@ -386,7 +415,6 @@ RED.nodes.registerType('ui_base',{
                     $("#custom-theme-library-container").hide();
                     $("#custom-theme-settings").hide();
                 }
-                
             })
             .appendTo(divThemeStyle);
 
@@ -420,15 +448,17 @@ RED.nodes.registerType('ui_base',{
         //     '<option value="helvetica">Helvetica</option>'+
         //     '</select>').appendTo(baseFontItem);
 
-        var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
-            .appendTo(baseSettingsUl.children());
+        var resetToDefault = $('<i id="base-color-reset" class="fa fa-refresh resetIcon"></i>')
+        .click(resetClick(this))
+        .appendTo(baseSettingsUl.children());
 
         $('<input id="theme-base-color" class="nr-db-field-themeColor" type="color" value="#0094CE"/>')
         .change(function() {
             ensureDashboardNode(true);
             var lightThemeMatch = globalDashboardNode.lightTheme.baseColor === $(this).val();
             var darkThemeMatch = globalDashboardNode.darkTheme.baseColor === $(this).val();
-            if (!globalDashboardNode || !lightThemeMatch || !darkThemeMatch) {
+            var customThemeMatch = globalDashboardNode.customTheme.baseColor === $(this).val();
+            if (!globalDashboardNode || !lightThemeMatch || !darkThemeMatch || !customThemeMatch) {
                 //update the relevant colour storage
                 switch(globalDashboardNode.theme) {
                     case 'theme-light':
@@ -439,11 +469,14 @@ RED.nodes.registerType('ui_base',{
                         break;
                     case 'theme-custom':
                         globalDashboardNode.customTheme.baseColor = $(this).val();
-
                         generateColours($(this).val());
                         editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
                         break;
                 }
+
+                //make reset come active
+                $("#base-color-reset").css({opacity: 1});
+
                 RED.nodes.dirty(true);
             }
 
@@ -462,27 +495,43 @@ RED.nodes.registerType('ui_base',{
         $('<input id="page-background-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
         .change(function() {
             //todo
+            //make reset come active
+            $("#page-background-color-reset").css({opacity: 1});
 
         })
         .appendTo(spanColorContainer);
+        var resetToDefault = $('<i id="page-background-color-reset" class="fa fa-refresh resetIcon"></i>')
+            .click(resetClick(this))
+            .appendTo(pageBackground);
+
         var titleBarBackground = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Background</span></li>').appendTo(pageStyles);
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(titleBarBackground);
         $('<input id="page-title-bar-background-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
         .change(function() {
             //todo
+            //make reset come active
+            $("#page-title-bar-background-color-reset").css({opacity: 1});
 
         })
         .appendTo(spanColorContainer);
+        var resetToDefault = $('<i id="page-title-bar-background-color-reset" class="fa fa-refresh resetIcon"></i>')
+            .click(resetClick(this))
+            .appendTo(titleBarBackground);
+
         var sideBarBackground = $('<li class="red-ui-dashboard-theme-item"><span>Side Bar Background</span></li>').appendTo(pageStyles);
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(sideBarBackground);
         $('<input id="page-side-bar-background-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
         .change(function() {
             //todo
+            //make reset come active
+            $("#page-side-bar-background-color-reset").css({opacity: 1});
 
         })
         .appendTo(spanColorContainer);
-        var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
-            .appendTo(pageStyles.children());
+        var resetToDefault = $('<i id="page-side-bar-background-color-reset" class="fa fa-refresh resetIcon"></i>')
+            .click(resetClick(this))
+            .appendTo(sideBarBackground);
+
 
         var divGroupStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
         $('<label class="theme-label">').html('Group Settings').appendTo(divGroupStyle);
@@ -492,40 +541,51 @@ RED.nodes.registerType('ui_base',{
         $('<input id="group-background-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
         .change(function() {
             //todo
+            //make reset come active
+            $("#group-background-color-reset").css({opacity: 1});
 
         })
         .appendTo(spanColorContainer);
+        var resetToDefault = $('<i id="group-background-color-reset" class="fa fa-refresh resetIcon"></i>')
+            .click(resetClick(this))
+            .appendTo(groupBackground);
 
         var groupBorder= $('<li class="red-ui-dashboard-theme-item"><span>Group Border</span></li>').appendTo(groupStyles);
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(groupBorder);
         $('<input id="group-border-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
         .change(function() {
             //todo
+            //make reset come active
+            $("#group-border-color-reset").css({opacity: 1});
 
         })
         .appendTo(spanColorContainer);
-        var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
-            .appendTo(groupStyles.children());
-
+        var resetToDefault = $('<i id="group-border-color-reset" class="fa fa-refresh resetIcon"></i>')
+            .click(resetClick(this))
+            .appendTo(groupBorder);
 
         var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
         $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
         var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-        var widgetPrimaryColour = $('<li class="red-ui-dashboard-theme-item"><span>Group Background</span></li>').appendTo(widgetStyles);
+        var widgetPrimaryColour = $('<li class="red-ui-dashboard-theme-item"><span>Widget Background</span></li>').appendTo(widgetStyles);
         var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(widgetPrimaryColour);
         $('<input id="widget-primary-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
         .change(function() {
             //todo
+            //make reset come active
+            $("#widget-primary-color-reset").css({opacity: 1});
 
         })
         .appendTo(spanColorContainer);
+        var resetToDefault = $('<i id="widget-primary-color-reset" class="fa fa-refresh resetIcon"></i>')
+            .click(resetClick(this))
+            .appendTo(widgetPrimaryColour);
+
+        function resetClick(el) {
+            console.log(el);
+        }
 
         
-        var resetToDefault = $('<i id="resetIcon" class="fa fa-refresh"></i>')
-            .appendTo(widgetStyles.children());
-       
-
-
         //Layout Tab
         var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
         $('<label>').html('Tabs').appendTo(divTabs);
