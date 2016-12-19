@@ -4,6 +4,10 @@
 **Fixes**
 
  - Gauges now scale properly on IE9/10/11 and Edge
+ - Increase chart size to better fill available space
+ - Fix colour-picker touch support (upstream fix)
+ - Fix slight transparency issue on select dropdown
+ - Small changes to colour-picker styling
 
 
 ### 2.2.0: Milestone Release
