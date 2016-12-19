@@ -27,9 +27,7 @@ var serveStatic = require('serve-static'),
 
 var baseConfiguration = {
     title: "Node-RED Dashboard",
-    theme: "theme-light",
-    lightThemeColor: "#0094CE",
-    darkThemeColor: "#097479"
+    theme: "theme-light"
 };
 
 var tabs = [];
@@ -198,7 +196,7 @@ function init(server, app, log, redSettings) {
                 'sprintf-js',
                 'jquery', 'jquery-ui',
                 'raphael', 'justgage',
-                'd3', 'nvd3', 'angularjs-nvd3-directives', 'less'
+                'd3', 'nvd3', 'angularjs-nvd3-directives', 'tinycolor2'
             ];
             vendor_packages.forEach(function (packageName) {
                 app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));
@@ -235,17 +233,13 @@ function updateUi(to) {
     process.nextTick(function() {
         tabs.forEach(function(t) {
             t.theme = baseConfiguration.theme;
-            t.lightThemeColor = baseConfiguration.lightThemeColor;
-            t.darkThemeColor = baseConfiguration.darkThemeColor;
         })
         to.emit('ui-controls', {
             title: baseConfiguration.title,
             tabs: tabs,
             links: links,
             theme: {
-                name: baseConfiguration.theme,
-                lightThemeColor: baseConfiguration.lightThemeColor,
-                darkThemeColor: baseConfiguration.darkThemeColor
+                name: baseConfiguration.theme
             }
         });
         updateUiPending = false;
@@ -350,10 +344,11 @@ function addLink(name, link, icon, order, target) {
     }
 }
 
-function addBaseConfig(title,theme,lightcolor,darkcolor) {
+function addBaseConfig(title, theme, lightTheme, darkTheme, customTheme) {
     if (title) { baseConfiguration.title = title; }
     if (theme) { baseConfiguration.theme = theme; }
-    if (lightcolor) { baseConfiguration.lightThemeColor = lightcolor; }
-    if (darkcolor) { baseConfiguration.darkThemeColor = darkcolor; }
+    if (lightTheme) { baseConfiguration.lightTheme = lightTheme; }
+    if (darkTheme) { baseConfiguration.darkTheme = darkTheme; }
+    if (customTheme) { baseConfiguration.customTheme = customTheme; }
     updateUi();
 }

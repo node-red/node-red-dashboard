@@ -1,7 +1,3 @@
-/*
-	Initialise Less variables (these will get overwritten on page load)
-*/
-@baseColour: #0094CE;
 
 /*
 	ALL COMPONENTS/CONTENT
@@ -23,7 +19,7 @@ body.nr-dashboard-theme-light md-content {
 body.nr-dashboard-theme-light md-content md-card {}
 
 /* Some colour classes */
-body.nr-dashboard-theme-light .nr-dashboard-color { color: @baseColour; }
+body.nr-dashboard-theme-light .nr-dashboard-color { color: #0094CE; }
 body.nr-dashboard-theme-light .nr-dashboard-error { color: #ff3f00; }
 body.nr-dashboard-theme-light .nr-dashboard-warning { color: #ffd939; }
 body.nr-dashboard-theme-light .nr-dashboard-ok { color: #8ccf3f; }
@@ -35,12 +31,12 @@ body.nr-dashboard-theme-light .nr-dashboard-dim { opacity: 0.4 !important; }
 */
 
 body.nr-dashboard-theme-light md-toolbar {
-	background-color: @baseColour;
-	color: contrast(@baseColour,#424242, #F7F7F7)
+	background-color:#0094CE;
+	// color: contrast(#0094CE,#424242, #F7F7F7)
 }
 // DAN todo - make one stylesheet instead of specifying theme-light and theme-dark classes
 body.nr-dashboard-theme-dark md-toolbar {
-	background-color: @baseColour;
+	background-color:#0094CE
 }
 
 

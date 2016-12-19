@@ -71,14 +71,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $timeout( function() { main.select(0); }, 50 );
             }
 
+            //This was using less - commenting for now
+
             // Change css of tab according to theme
             // Note. currently this is not tab specific
             // but functionality will probably change to
             // have tab specific themes
-            var color;
-            (ui.theme.name === 'theme-light') ? color = ui.theme.lightThemeColor : 
-                color = ui.theme.darkThemeColor;
-            less.modifyVars({'@baseColour': color});
+            // var color;
+            // (ui.theme.name === 'theme-light') ? color = ui.theme.lightThemeColor : 
+            //     color = ui.theme.darkThemeColor;
+            // less.modifyVars({'@baseColour': color});
+
             
             $mdToast.hide();
             done();

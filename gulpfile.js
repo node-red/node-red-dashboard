@@ -8,7 +8,6 @@ var
     gulpif = require('gulp-if'),
     header = require("gulp-header"),
     htmlreplace = require('gulp-html-replace'),
-    less = require('gulp-less'),
     manifest = require('gulp-manifest'),
     minifyCss = require('gulp-clean-css'),
     minifyHTML = require('gulp-htmlmin'),
@@ -90,7 +89,7 @@ gulp.task('css', function () {
     return gulp.src('src/index.html')
     .pipe(ghtmlSrc({getFileName: getFileName.bind(this, 'href'), presets: 'css'}))
     .pipe(minifyCss({compatibility: 'ie8'}))
-    .pipe(concat('app.min.less'))
+    .pipe(concat('app.min.css'))
     .pipe(header(fs.readFileSync('license.js')))
     .pipe(gulp.dest('dist/css/'));
 });
