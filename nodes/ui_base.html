@@ -200,7 +200,8 @@ label.theme-label {
             theme: {value: ''},
             lightTheme: {value: {}},
             darkTheme: {value: {}},
-            customTheme: {value: {}}
+            customTheme: {value: {}},
+            themeState: {values: {}}
         },
         hasUsers: false,
         paletteLabel: 'Dashboard',
@@ -250,6 +251,50 @@ label.theme-label {
                                 name: 'Untitled Theme 1',
                                 baseColor: "#0094CE",
                                 baseFont: "Helvetica Neue"
+                            },
+                            themeState: {
+                                base: {
+                                    color: {
+                                        default: null,
+                                        value: null,
+                                        edited: false
+                                    },
+                                    font: {
+                                        default: null,
+                                        value: null,
+                                        edited: false
+                                    }
+                                },
+                                page: {
+                                    background: {
+                                        edited: false,
+                                        value: null
+                                    },
+                                    sidebarBackground: {
+                                        edited: false,
+                                        value: null
+                                    },
+                                    titlebarBackground: {
+                                        edited: false,
+                                        value: null
+                                    }
+                                },
+                                group: {
+                                    background: {
+                                        value: null,
+                                        edited: false
+                                    },
+                                    border: {
+                                        value: null,
+                                        edited: false
+                                    }
+                                },
+                                widget: {
+                                    background: {
+                                        value: null,
+                                        edited: false
+                                    }
+                                }
                             },
                             url: 'ui',
                             users:[]
@@ -331,26 +376,8 @@ label.theme-label {
             //true means the user has edited.
 
             //default colour and font settings are set on load below
-            var styleEditedState = {
-                base: {
-                    color: false,
-                    defaultColor: null,
-                    font: false,
-                    defaultFont: null
-                },
-                page: {
-                    background: false,
-                    sidebarBackground: false,
-                    titlebarBackground: false
-                },
-                group: {
-                    background: false,
-                    border: false
-                },
-                widget: {
-                    background: false
-                }
-            }
+            
+            // tiny colour implementation
             var colours = {
                 leastReadable: function(base, colours) {
                     var least = tinycolor.readability(base, colours[0]);
@@ -382,33 +409,43 @@ label.theme-label {
                 calculatePrimaryWidgetColor: function(base) {
                     return base;
                 }
-
-
             }
+
             var generateColours = function(base) {
-                if (!styleEditedState.page.background) {
+                if (!globalDashboardNode.themeState.page.background.edited) {
                     var pageBackground = colours.calculatePageBackground(base);
                     $("#page-background-color").val(pageBackground);
+                    globalDashboardNode.themeState.page.background.value = pageBackground;
                 }
-                if (!styleEditedState.page.sidebarBackground) {
+                if (!globalDashboardNode.themeState.page.sidebarBackground.edited) {
                     var sidebarBackground = colours.calculateSidebarBackground(base);
                     $("#page-side-bar-background-color").val(sidebarBackground);
+                    globalDashboardNode.themeState.page.sidebarBackground.value = sidebarBackground;
+
                 }
-                if (!styleEditedState.page.titlebarBackground) {
+                if (!globalDashboardNode.themeState.page.titlebarBackground.edited) {
                     var titlebarBackground = colours.calculateTitlebarBackground(base);
                     $("#page-title-bar-background-color").val(titlebarBackground);
+                    globalDashboardNode.themeState.page.titlebarBackground.value = titlebarBackground;
+
                 }
-                if (!styleEditedState.group.background) {
+                if (!globalDashboardNode.themeState.group.background.edited) {
                     var groupBackground = colours.calculateGroupBackground(base);
                     $("#group-background-color").val(groupBackground);
+                    globalDashboardNode.themeState.group.background.value = groupBackground;
+
                 }
-                if (!styleEditedState.group.border) {
+                if (!globalDashboardNode.themeState.group.border.edited) {
                    var groupBorder = colours.calculateGroupBorder(base);
                    $("#group-border-color").val(groupBorder); 
+                   globalDashboardNode.themeState.group.border.value = groupBorder;
+
                 }
-                if (!styleEditedState.widget.background) { 
+                if (!globalDashboardNode.themeState.widget.background.edited) { 
                     var widgetColor = colours.calculatePrimaryWidgetColor(base);
-                    $("#widget-primary-color").val(widgetColor); 
+                    $("#widget-primary-color").val(widgetColor);
+                    globalDashboardNode.themeState.widget.background.value = widgetColor;
+
                 }
             }
 
@@ -429,13 +466,16 @@ label.theme-label {
                         switch(globalDashboardNode.theme) {
                             case 'theme-light':
                                 $("#theme-base-color").val(globalDashboardNode.lightTheme.baseColor);
+                                globalDashboardNode.themeState.base.color.value = globalDashboardNode.lightTheme.baseColor;
                                 break;
                             case 'theme-dark':
                                 $("#theme-base-color").val(globalDashboardNode.darkTheme.baseColor);
+                                globalDashboardNode.themeState.base.color.value = globalDashboardNode.darkTheme.baseColor;
                                 break;
                             case 'theme-custom':
                                 var base = globalDashboardNode.customTheme.baseColor;
                                 $("#theme-base-color").val(base);
+                                globalDashboardNode.themeState.base.color.value = base;
 
                                 //generate colours for all colour settings from base colour
                                 generateColours(base);
@@ -507,14 +547,14 @@ label.theme-label {
                         case 'theme-custom':
                             globalDashboardNode.customTheme.baseColor = $(this).val();
                             generateColours($(this).val());
-                            styleEditedState.base.defaultColor = $(this).val();
+                            globalDashboardNode.themeState.base.color.value = $(this).val();
                             editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
                             break;
                     }
 
                     //make reset come active
                     $("#base-color-reset").css({opacity: 1});
-                    styleEditedState.base.color = true;
+                    globalDashboardNode.themeState.base.color.edited = true;
 
                     RED.nodes.dirty(true);
                 }
@@ -536,7 +576,9 @@ label.theme-label {
                 //todo
                 //make reset come active
                 $("#page-background-color-reset").css({opacity: 1});
-                styleEditedState.page.background = true;
+                globalDashboardNode.themeState.page.background.edited = true;
+                globalDashboardNode.themeState.page.background.value = $(this).val();
+                RED.nodes.dirty(true);
 
             })
             .appendTo(spanColorContainer);
@@ -553,7 +595,9 @@ label.theme-label {
                 //todo
                 //make reset come active
                 $("#page-title-bar-background-color-reset").css({opacity: 1});
-                styleEditedState.page.titlebarBackground = true;
+                globalDashboardNode.themeState.page.titlebarBackground.edited = true;
+                globalDashboardNode.themeState.page.titlebarBackground.value = $(this).val();
+                RED.nodes.dirty(true);
 
             })
             .appendTo(spanColorContainer);
@@ -570,7 +614,9 @@ label.theme-label {
                 //todo
                 //make reset come active
                 $("#page-side-bar-background-color-reset").css({opacity: 1});
-                styleEditedState.page.sidebarBackground = true;
+                globalDashboardNode.themeState.page.sidebarBackground.edited = true;
+                globalDashboardNode.themeState.page.sidebarBackground.value = $(this).val();
+                RED.nodes.dirty(true);
 
             })
             .appendTo(spanColorContainer);
@@ -591,7 +637,9 @@ label.theme-label {
                 //todo
                 //make reset come active
                 $("#group-background-color-reset").css({opacity: 1});
-                styleEditedState.group.background = true;
+                globalDashboardNode.themeState.group.background.edited = true;
+                globalDashboardNode.themeState.group.background.value = $(this).val();
+                RED.nodes.dirty(true);
 
             })
             .appendTo(spanColorContainer);
@@ -608,7 +656,9 @@ label.theme-label {
                 //todo
                 //make reset come active
                 $("#group-border-color-reset").css({opacity: 1});
-                styleEditedState.group.border = true;
+                globalDashboardNode.themeState.group.border.edited = true;
+                globalDashboardNode.themeState.group.border.value = $(this).val();
+                RED.nodes.dirty(true);
 
             })
             .appendTo(spanColorContainer);
@@ -628,7 +678,9 @@ label.theme-label {
                 //todo
                 //make reset come active
                 $("#widget-primary-color-reset").css({opacity: 1});
-                styleEditedState.widget.background = true;
+                globalDashboardNode.themeState.widget.background.edited = true;
+                globalDashboardNode.themeState.widget.background.value = $(this).val();
+                RED.nodes.dirty(true);
 
             })
             .appendTo(spanColorContainer);
@@ -643,70 +695,79 @@ label.theme-label {
                 console.log(elementID);
                 switch (elementID) {
                     case 'base-color-reset':
-                        if (styleEditedState.base.color) {
-                            var defaultColor = styleEditedState.base.defaultColor;
+                       
+                        if (globalDashboardNode.themeState.base.color.edited) {
+                            var defaultColor = globalDashboardNode.themeState.base.color.defaultColor;
                             $('#theme-base-color').val(defaultColor);
                             generateColours(defaultColor);
                             $("#base-color-reset").css({opacity: 0.6});
-                            styleEditedState.base.color = false;
+                            globalDashboardNode.themeState.base.color.edited = false;
+                            globalDashboardNode.themeState.base.color.value = defaultColor;
                         }
                         break;
 
                     case 'page-background-color-reset':
-                        if (styleEditedState.page.background) {
-                            var pageBackground = colours.calculatePageBackground(styleEditedState.base.defaultColor);
+                        if (globalDashboardNode.themeState.page.background.edited) {
+                            var pageBackground = colours.calculatePageBackground(globalDashboardNode.themeState.base.color.defaultColor);
                             $("#page-background-color").val(pageBackground);
                             $("#page-background-color-reset").css({opacity: 0.6});
-                            styleEditedState.page.background = false;
+                            globalDashboardNode.themeState.page.background.edited = false;
+                            globalDashboardNode.themeState.page.background.value = pageBackground
                         }
                         break;
 
                     case 'page-side-bar-background-color-reset':
-                        if (styleEditedState.page.sidebarBackground) {
-                            var sidebarBackground = colours.calculateSidebarBackground(styleEditedState.base.defaultColor);
+                        if (globalDashboardNode.themeState.page.sidebarBackground.edited) {
+                            var sidebarBackground = colours.calculateSidebarBackground(globalDashboardNode.themeState.base.color.defaultColor);
                             $("#page-side-bar-background-color").val(sidebarBackground);
                             $("#page-side-bar-background-color-reset").css({opacity: 0.6});
-                            styleEditedState.page.sidebarBackground = false;
+                            globalDashboardNode.themeState.page.sidebarBackground.edited = false;
+                            globalDashboardNode.themeState.page.sidebarBackground.value = sidebarBackground
+
                         }
                         break;
 
                     case 'page-title-bar-background-color-reset':
-                        if (styleEditedState.page.titlebarBackground) {
-                            var titlebarBackground = colours.calculateTitlebarBackground(styleEditedState.base.defaultColor);
-                            console.log(titlebarBackground);
+                        if (globalDashboardNode.themeState.page.titlebarBackground.edited) {
+                            var titlebarBackground = colours.calculateTitlebarBackground(globalDashboardNode.themeState.base.defaultColor);
                             $("#page-title-bar-background-color").val(titlebarBackground);
                             $("#page-title-bar-background-color-reset").css({opacity: 0.6});
-                            styleEditedState.page.titlebarBackground = false;
+                            globalDashboardNode.themeState.page.titlebarBackground.edited = false;
+                            globalDashboardNode.themeState.page.titlebarBackground.value = titlebarBackground;
                         }
                         break;
 
                     case 'group-background-color-reset':
-                        if (styleEditedState.group.background) {
-                            var groupBackground = colours.calculateGroupBackground(styleEditedState.base.defaultColor);
+                        if (globalDashboardNode.themeState.group.background.edited) {
+                            var groupBackground = colours.calculateGroupBackground(globalDashboardNode.themeState.base.defaultColor);
                             $("#group-background-color").val(groupBackground);
                             $("#group-background-color-reset").css({opacity: 0.6});
-                            styleEditedState.group.bacground = false;
+                            globalDashboardNode.themeState.group.background.edited = false;
+                            globalDashboardNode.themeState.group.background.value = groupBackground;
                         }
                         break;
 
                     case 'group-border-color-reset':
-                        if (styleEditedState.group.border) {
-                            var groupBorder = colours.calculateGroupBorder(styleEditedState.base.defaultColor);
+                        if (globalDashboardNode.themeState.group.border.edited) {
+                            var groupBorder = colours.calculateGroupBorder(globalDashboardNode.themeState.base.defaultColor);
                             $("#group-border-color").val(groupBorder);
                             $("#group-border-color-reset").css({opacity: 0.6});
-                            styleEditedState.group.border = false;
+                            globalDashboardNode.themeState.group.border.edited = false;
+                            globalDashboardNode.themeState.group.border.value = groupBackground;
                         }
                         break;
 
                     case 'widget-primary-color-reset':
-                        if (styleEditedState.widget.background) {
-                            var widgetColor = colours.calculatePrimaryWidgetColor(styleEditedState.base.defaultColor);
+                        if (globalDashboardNode.themeState.widget.background.edited) {
+                            var widgetColor = colours.calculatePrimaryWidgetColor(globalDashboardNode.themeState.base.defaultColor);
                             $("#widget-primary-color").val(widgetColor);
                             $("#widget-primary-color-reset").css({opacity: 0.6});
-                            styleEditedState.widget.background = false;
+                            globalDashboardNode.themeState.widget.background.edited = false;
+                            globalDashboardNode.themeState.widget.background.value = widgetColor
                         }
                         break;
                 }
+                RED.nodes.dirty(true);
 
             }
 
@@ -1325,8 +1386,8 @@ label.theme-label {
                         $("#custom-theme-settings").hide();
                     }
                     
-                    styleEditedState.base.defaultColor = globalDashboardNode.customTheme.baseColor;
-                    styleEditedState.base.defaultFont = globalDashboardNode.customTheme.baseFont;
+                    globalDashboardNode.themeState.base.defaultColor = globalDashboardNode.customTheme.baseColor;
+                    globalDashboardNode.themeState.base.defaultFont = globalDashboardNode.customTheme.baseFont;
 
                     editor = RED.editor.createEditor({
                         id: 'node-input-format-editor',
@@ -1345,7 +1406,7 @@ label.theme-label {
                     editor.on('input', function() {
                         globalDashboardNode.customTheme = JSON.parse(editor.getValue());
                         $("#theme-base-color").val(globalDashboardNode.customTheme.baseColor);
-                        styleEditedState.base.defaultColor = globalDashboardNode.customTheme.baseColor;
+                        globalDashboardNode.themeState.base.defaultColor = globalDashboardNode.customTheme.baseColor;
                         generateColours(globalDashboardNode.customTheme.baseColor);
                     });
 

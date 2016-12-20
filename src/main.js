@@ -63,52 +63,29 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         };
 
         //Use tiny colour to apply inline styles to elements
-        function applyStyle(base) {
-            var colours = {
-                leastReadable: function(base, colours) {
-                    var least = tinycolor.readability(base, colours[0]);
-                    var leastColor = colours[0];
-                    for (var i=1; i<colours.length; i++) {
-                        var readability = tinycolor.readability(base, colours[i]);
-                        if (readability < least) {
-                            least = readability;
-                            leastColor = colours[i];
-                        }
-                    }
-                    return leastColor;
-                },
-                calculatePageBackground: function(base) {
-                    return this.leastReadable(base, ["#fafafa", "#111111"]);
-                },
-                calculateSidebarBackground: function(base) {
-                    return this.leastReadable(base, ["#000000", "#ffffff"]);
-                },
-                calculateTitlebarBackground: function(base) {
-                    return tinycolor(base).darken(15).toHexString();
-                },
-                calculateGroupBackground: function(base) {
-                    return this.leastReadable(base, ["#ffffff", "#333333"]);
-                },
-                calculateGroupBorder: function(base) {
-                    return this.leastReadable(base, ["#ffffff", "#555555"]);
-                },
-                calculatePrimaryWidgetColor: function(base) {
-                    return base;
-                }
-            }
+        function applyStyle(theme) {
 
-            //page background
-            //dan todo
-            // need to have styles inline in angular, for each component. then just update the scope here and it should change. {{ }}
-            // $('body').css({background: colours.calculatePageBackground(base)});
-            main.backgroundColor = colours.calculatePageBackground(base);
-            $('body md-sidenav').css({background: colours.calculateSidebarBackground(base)});
-            $('body md-toolbar').css({background: colours.calculateTitlebarBackground(base)});
+            //need an object coming from node red as follows
+            // {name: 'theme-light', styles: {page: background: }}
 
+            var background = theme.themeState.page.background.value;
+            var titleBarBackground = theme.themeState.page.titlebarBackground.value;
+            var sideBarBackground = theme.themeState.page.sidebarBackground.value;
+            var groupBackground = theme.themeState.group.background.value;
+            var groupBorder = theme.themeState.group.border.value;
+            var widgetBackground = theme.themeState.widget.background.value;
+            
 
-            //need to remove light and dark classes and generalise
-            $('.nr-dashboard-theme-light ui-card-panel').css({background: colours.calculateGroupBackground(base), border: 'solid 1px '+colours.calculateGroupBorder(base)});
-            $('.nr-dashboard-theme-dark ui-card-panel').css({background: colours.calculateGroupBackground(base), border: 'solid 1px '+colours.calculateGroupBorder(base)});
+            //use less to apply the colours to the stylesheet
+            console.log(main);
+            less.modifyVars({
+                '@titleBarBackground': titleBarBackground,
+                '@background': background,
+                '@sideBarBackground': sideBarBackground,
+                '@groupBackground': groupBackground,
+                '@groupBorder': groupBorder,
+                '@widgetBackground': widgetBackground
+            });
 
         }
 
@@ -126,20 +103,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
 
             // Handle theme changes
-            console.log(ui);
-            var baseColor;
-            switch(ui.theme.name) {
-                case 'theme-light':
-                    baseColor = ui.theme.lightTheme.baseColor;
-                    break;
-                case 'theme-dark':
-                    baseColor = ui.theme.darkTheme.baseColor;
-                    break;
-                case 'theme-custom':
-                    baseColor = ui.theme.customTheme.baseColor;
-                    break;
-            }
-            applyStyle(baseColor, main);
+            applyStyle(main.selectedTab.theme);
 
 
             
