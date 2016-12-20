@@ -62,6 +62,56 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             $mdSidenav('left').close();
         };
 
+        //Use tiny colour to apply inline styles to elements
+        function applyStyle(base) {
+            var colours = {
+                leastReadable: function(base, colours) {
+                    var least = tinycolor.readability(base, colours[0]);
+                    var leastColor = colours[0];
+                    for (var i=1; i<colours.length; i++) {
+                        var readability = tinycolor.readability(base, colours[i]);
+                        if (readability < least) {
+                            least = readability;
+                            leastColor = colours[i];
+                        }
+                    }
+                    return leastColor;
+                },
+                calculatePageBackground: function(base) {
+                    return this.leastReadable(base, ["#fafafa", "#111111"]);
+                },
+                calculateSidebarBackground: function(base) {
+                    return this.leastReadable(base, ["#000000", "#ffffff"]);
+                },
+                calculateTitlebarBackground: function(base) {
+                    return tinycolor(base).darken(15).toHexString();
+                },
+                calculateGroupBackground: function(base) {
+                    return this.leastReadable(base, ["#ffffff", "#333333"]);
+                },
+                calculateGroupBorder: function(base) {
+                    return this.leastReadable(base, ["#ffffff", "#555555"]);
+                },
+                calculatePrimaryWidgetColor: function(base) {
+                    return base;
+                }
+            }
+
+            //page background
+            //dan todo
+            // need to have styles inline in angular, for each component. then just update the scope here and it should change. {{ }}
+            // $('body').css({background: colours.calculatePageBackground(base)});
+            main.backgroundColor = colours.calculatePageBackground(base);
+            $('body md-sidenav').css({background: colours.calculateSidebarBackground(base)});
+            $('body md-toolbar').css({background: colours.calculateTitlebarBackground(base)});
+
+
+            //need to remove light and dark classes and generalise
+            $('.nr-dashboard-theme-light ui-card-panel').css({background: colours.calculateGroupBackground(base), border: 'solid 1px '+colours.calculateGroupBorder(base)});
+            $('.nr-dashboard-theme-dark ui-card-panel').css({background: colours.calculateGroupBackground(base), border: 'solid 1px '+colours.calculateGroupBorder(base)});
+
+        }
+
         events.connect(function (ui, done) {
             main.tabs = ui.tabs;
             main.links = ui.links;
@@ -75,17 +125,22 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $timeout( function() { main.select(0); }, 50 );
             }
 
-            //This was using less - commenting for now
-
-            // Change css of tab according to theme
-            // Note. currently this is not tab specific
-            // but functionality will probably change to
-            // have tab specific themes
-            // var color;
-            // (ui.theme.name === 'theme-light') ? color = ui.theme.lightThemeColor : 
-            //     color = ui.theme.darkThemeColor;
-            // less.modifyVars({'@baseColour': color});
+            // Handle theme changes
             console.log(ui);
+            var baseColor;
+            switch(ui.theme.name) {
+                case 'theme-light':
+                    baseColor = ui.theme.lightTheme.baseColor;
+                    break;
+                case 'theme-dark':
+                    baseColor = ui.theme.darkTheme.baseColor;
+                    break;
+                case 'theme-custom':
+                    baseColor = ui.theme.customTheme.baseColor;
+                    break;
+            }
+            applyStyle(baseColor, main);
+
 
             
             $mdToast.hide();

@@ -47,13 +47,13 @@
     <link rel="stylesheet" href="components/ui-card-panel/ui-card-panel.css">
 
     <link rel="stylesheet" href="main.css">
-      <link rel="stylesheet" href="themes/light.css">
-      <link rel="stylesheet" href="themes/dark.css">
+    <link rel="stylesheet" href="theme.css">
+      
     <!-- endbuild -->
 
     <title>Node-RED Dashboard</title>
 </head>
-<body ng-app="ui" ng-controller="MainController as main" ng-cloak layout="column" class="{{ 'nr-dashboard-' + (main.selectedTab.theme || 'theme-light') }}">
+<body ng-app="ui" ng-controller="MainController as main" ng-cloak layout="column"  style="background: {{main.backgroundColor}}" class="nr-dashboard-theme">
 
 <md-content ng-if="main.loaded" ng-include="'partials/main.html'" layout="column" flex></md-content>
 
