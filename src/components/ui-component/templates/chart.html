@@ -1,40 +1,7 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" class="nr-dashboard-chart"  ng-class="{'nr-dashboard-disabled':me.item.disabled}">
-    <p class="label">{{ me.item.label }}</p>
-    <nvd3-line-chart
-        ng-if="me.item.look==='line'"
-        class="nr-dashboard-linechart"
-        data="me.item.value"
-        width="{{ me.item.width * 50 - (me.item.width - 1)*7}}"
-        height="{{ me.item.height * 50 - (me.item.height - 1)*7 - 20}}"
-        margin="{left:35,top:8,bottom:32,right:30}"
-        showXAxis="true"
-        showYAxis="true"
-        showLegend="{{ me.item.legend }}"
-        objectequality="true"
-        xAxisTickFormat="me.formatTime"
-        yaxisdomain='$parent.me.item.value | chartGetRange : [$parent.me.item.ymin, $parent.me.item.ymax]'
-        tooltips="true"
-        interactive="true"
-        interpolate="{{me.item.interpolate}}"
-        noData="{{me.item.nodata}}"
-        isArea="false"
-        useInteractiveGuideLine="true">
-        <svg></svg>
-    </nvd3-line-chart>
-    <nvd3-discrete-bar-chart
-        ng-if="me.item.look==='bar'"
-        class="nr-dashboard-linechart"
-        data="me.item.value"
-        width="{{ me.item.width * 50 - (me.item.width - 1)*7}}"
-        height="{{ me.item.height * 50 - (me.item.height - 1)*7 - 20}}"
-        margin="{left:40,top:8,bottom:32,right:10}"
-        showXAxis="true"
-        showYAxis="true"
-        showLegend="{{ me.item.legend }}"
-        yaxisdomain='$parent.me.item.value | chartGetRange : [$parent.me.item.ymin, $parent.me.item.ymax]'
-        tooltips="true"
-        interactive="true"
-        noData="{{me.item.nodata}}">
-        <svg></svg>
-    </nvd3-discrete-bar-chart>
+<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout-align="center center" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+    <div class="nr-dashboard-chart-container">
+        <p class="label nr-dashboard-chart-title">{{ me.item.label }}</p>
+        <ui-chart-js class="nr-dashboard-chart"></ui-chart-js>
+        <p class="blank-label" ng-if="config.nodata">{{ me.item.nodata }}</p>
+    </div>
 </md-card>

@@ -3,7 +3,7 @@
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard.
 
-<img src="http://nodered.org/images/dashboardd.png"/>
+<img src="http://nodered.org/images/dashboarde.png"/>
 
 It is a continuation of the [node-red-contrib-ui](https://www.npmjs.com/package/node-red-contrib-ui)
 module created by Andrei Tatar.
@@ -17,7 +17,7 @@ Node-RED-Dashboard requires Node-RED version 0.14 or more recent.
 Run the following command in your Node-RED user directory (typically `~/.node-red`):
 
 ```
-npm install node-red-dashboard
+npm i node-red-dashboard
 ```
 
 Open your Node-RED instance and you should have UI nodes available in the palette and a new `dashboard` tab in
@@ -62,25 +62,27 @@ Group labels are optional.
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
-  - **UI-Control** - a new widget to allow some dynamic control of the dashboard. Initial function is to allow switching tabs. More capability will follow.
-  - **Chart** - now has both line and bar chart modes. Also the X-Axis labels can be customised using a date formatter string.
+  - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.- **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
+  - **Chart** - has both line, bar and pie chart modes. Also the X-Axis labels can be customised using a date formatter string. Uses the **Chart.js** library.
+  - **Colour Picker** - a colour picker widget.
   - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified. The choices can also be set via `msg.options` containing an array of objects. If just text then the value will be the same as the label, otherwise you can specify both by using an object of "label":"value" pairs :
 
         [ "Choice 1", "Choice 2", {"Choice 3","3"} ]
 
   Setting `msg.payload` will pre-select the value in the dropdown.
-  - **Gauge** - has 4 modes - *standard* (simple gauge), *donut* (complete 360&deg;), *compass*, and *wave*. You can also specify the colour range of the standard and donut gauges.
-  - **Button** - the icon can be set using either Material or fa-icons - the colour may also be set. If the widget is sized to 1 wide the icon has precedence.
-  - **Switch** - can also set two icons and/or colours depending on state.
-  - **Text** - the layout of the `label`, and `value` can be configured.
   - **Form** - a widget that can be composed of several sub-widgets. When submitted all values are submitted as a single message.
+  - **Gauge** - has 4 modes - *standard* (simple gauge), *donut* (complete 360&deg;), *compass*, and *wave*. You can also specify the colour range of the standard and donut gauges.
+  - **Notification** - creates alerts to the user - can either be a toast popup, or a dismissable alert box. The alert may be targeted to a single user.
+  - **Numeric** - a Numeric input widget with up/down buttons.
+  - **Slider** - a simple horizontal slider, with variable step size.
+  - **Switch** - can also set two icons and/or colours depending on state.
+  - **Template** - the template node allows the user to specify and create their own widgets within the framework using HTML, Javascript. This is an Angular.js widget. You may also use this to override the built in CSS styles.
+  - **Text** - A read only widget, the layout of the `label`, and `value` can be configured.
+  - **Text input** - text input box, with optional label, can also support password, email and colour modes.
+  - **UI-Control** - a new to allow some dynamic control of the dashboard. Initial function is to allow switching tabs. Outputs a message for every browser connection and loss, that can be used to trigger other actions.
 
 **Tip:** The *Text* widget will accept html - so you can use it together with the *fa-icons* we
 already use to create indicator type widgets.
-
-#### Removed
-
-Radio buttons have been removed. Buttons and switches can now be sized 1x1, and switches can be made to interact (via Node-RED).
 
 ## Discussions and suggestions
 

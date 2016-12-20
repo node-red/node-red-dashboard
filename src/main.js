@@ -1,5 +1,5 @@
 
-var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'nvd3ChartDirectives', 'sprintf']);
+var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'sprintf', 'chart.js', 'color.picker']);
 
 app.config(['$mdThemingProvider', '$compileProvider',
     function ($mdThemingProvider, $compileProvider) {
@@ -16,6 +16,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         this.tabs = [];
         this.links = [];
+        this.len = 0;
         this.selectedTab = null;
         this.loaded = false;
 
@@ -29,8 +30,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        $scope.onSwipeLeft = function(ev) { moveTab(-1); }
-        $scope.onSwipeRight = function(ev) { moveTab(1); }
+        //TODO Disabled until we make it an option - too sensitive for some
+        //$scope.onSwipeLeft = function(ev) { moveTab(-1); }
+        //$scope.onSwipeRight = function(ev) { moveTab(1); }
 
         this.toggleSidenav = function () {
             $mdSidenav('left').toggle();
@@ -39,7 +41,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.select = function (index) {
             main.selectedTab = main.tabs[index];
             if (main.tabs.length > 0) { $mdSidenav('left').close(); }
+            events.emit('ui-replay-state', {});
             $location.path(index);
+
         };
 
         this.open = function (link, index) {
@@ -87,6 +91,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             done();
         }, function () {
             main.loaded = true;
+            main.len = main.tabs.length + main.links.length;
         });
 
         function findControl(id, items) {
@@ -102,8 +107,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on(function (msg) {
             var found = findControl(msg.id, main.tabs);
+
             if (found === undefined) { return; }
             for (var key in msg) {
+
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
                     found[key] = msg[key];

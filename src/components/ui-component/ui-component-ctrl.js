@@ -75,27 +75,56 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'chart': {
-                    if (!me.item.value || me.item.value === "changed") {
-                        me.item.value = [];
+                    me.item.theme = $scope.main.selectedTab.theme;
+                    break;
+                }
+
+                case 'colour-picker': {
+                    me.item.me = me;
+                    if ((me.item.width < 4) || (!me.item.showValue && !me.item.showPicker)) {
+                        me.item.showPicker = false;
+                        me.item.showValue = false;
+                        me.item.showSwatch = true;
                     }
-                    if (me.item.look === "line") {
-                        var lineColors = {
-                            'theme-dark': ['#0FBBC3', '#ffA500', '#00AF25', '#FF738C', '#E1E41D', '#C273FF', '#738BFF', '#FF7373', '#4D7B47', '#887D47']
-                        };
-                        me.item.value.forEach(function (line, index) {
-                            if (lineColors[$scope.main.selectedTab.theme]) {
-                                line.color = lineColors[$scope.main.selectedTab.theme][index];
-                            }
-                        })
-                        me.formatTime = function (d) {
-                            return d3.time.format(me.item.xformat)(new Date(d));
-                        };
+                    if (me.item.showPicker) {
+                        if (me.item.height < 4) {
+                            me.item.height = ((me.item.showSwatch || me.item.showValue) ? 4 : 3);
+                        }
+                    }
+                    me.item.options = {
+                        format: me.item.format,
+                        inline: me.item.showPicker,
+                        alpha: me.item.showAlpha,
+                        swatch: me.item.showSwatch,
+                        swatchOnly: (me.item.width < 2 || !(me.item.showValue)),
+                        swatchPos: "right",
+                        pos: "bottom right",
+                        case: "lower",
+                        lightness: true,
+                        round: true,
+                        pickerOnly: me.item.showPicker && !(me.item.showSwatch || me.item.showValue)
+                    };
+                    me.item.key = function (event) {
+                        if ((event.charCode === 13) || (event.which === 13)) {
+                            events.emit({ id:me.item.id, value:me.item.value });
+                            if (me.api) { me.api.close(); }
+                        }
+                    }
+                    me.item.eventapi = {
+                        onChange: function(api,color,$event) {
+                            if ($event === undefined) { return; }
+                            me.valueChanged(0);
+                        },
+                        onOpen: function(api,color) {
+                            me.api = api;
+                        }
                     }
                     break;
                 }
+
                 case 'form': {
-                    me.stop=function(event) {
-                        if (13 == event.which) {
+                    me.stop = function(event) {
+                        if ((event.charCode === 13) || (event.which === 13)) {
                             event.preventDefault();
                             event.stopPropagation();
                         }
@@ -122,17 +151,13 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         }
 
         me.valueChanged = function (throttleTime) {
-            if (me.item.type === 'text-input' && me.item.mode === 'color') {
-                less.modifyVars({'@base': me.item.value});
-            }
-            throttle({
-                id: me.item.id,
-                value: me.item.value
-            }, typeof throttleTime === "number" ? throttleTime : 10);
+            throttle({ id: me.item.id, value: me.item.value },
+                typeof throttleTime === "number" ? throttleTime : 10);
         };
 
         // will emit me.item.value when enter is pressed
         me.keyPressed = function (event) {
+            console.log("EV",event);
             if ((event.charCode === 13) || (event.which === 13)) {
                 events.emit({ id:me.item.id, value:me.item.value });
             }

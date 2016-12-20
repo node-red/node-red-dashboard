@@ -15,10 +15,10 @@ module.exports = function(RED) {
         var node = this;
 
         var done = ui.add({
-            node:node,
-            control:{},
-            storeFrontEndInputAsState:false,
-            forwardInputMessages:false,
+            node: node,
+            control: {},
+            storeFrontEndInputAsState: false,
+            forwardInputMessages: false,
             beforeSend: function (toSend,msg) {
                 var m = msg.value.msg;
                 m.topic = config.topic || m.topic;
@@ -27,7 +27,8 @@ module.exports = function(RED) {
         });
 
         node.on('input', function(msg) {
-            ui.emit('show-toast', {
+            if (node.position !== "dialog") { delete msg.socketid; }
+            ui.emitSocket('show-toast', {
                 title: msg.topic,
                 message: msg.payload,
                 displayTime: node.displayTime,
@@ -36,6 +37,7 @@ module.exports = function(RED) {
                 dialog: (node.position === "dialog") || false,
                 ok: node.ok,
                 cancel: node.cancel,
+                socketid: msg.socketid,
                 msg: msg
             });
         });

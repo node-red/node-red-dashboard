@@ -37,6 +37,12 @@ md-card {
 	height: 100%;
 }
 
-.nvd3 text {
-    font: 400 10px Arial;
+.ie9 img[src$=".svg"] {
+  width: 100%;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  img[src$=".svg"] {
+    width: 100%;
+  }
 }

@@ -1,7 +1,37 @@
-.nr-dashboard-chart p.label {
-    padding: 10px 0px 4px 10px;
+p.nr-dashboard-chart-title {
+    padding: 10px 10px 4px 10px;
     margin: 0px 0px 0px 0px;
     font-weight: 500;
     font-size: 1.1em;
     text-align: center;
+    z-index: 1;
+}
+
+p.blank-label {
+    color: #c3c3c3;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: 2;
+}
+
+.nr-dashboard-chart-container {
+    width: 100%;
+    height: 100%;
+}
+
+canvas.chart.chart-line {
+    /* full height - label_padding - label_height - nr-dashboard-chart_padding */
+    height: calc(100% + 22px) !important;
+    width: calc(100%) !important;
+}
+
+.nr-dashboard-chart {
+    /* full height - label_padding - label_height - nr-dashboard-chart_padding */
+    height: calc(100% - 55px);
+    width: calc(100% - 10px);
+    padding: 5px;
 }

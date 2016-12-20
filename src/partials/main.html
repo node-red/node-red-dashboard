@@ -1,20 +1,21 @@
 <md-sidenav layout="column" class="md-sidenav-left" md-component-id="left">
     <md-list>
         <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
-            <ui-icon icon="{{tab.icon}}" style="margin: 5px"></ui-icon>
+            <ui-icon icon="{{tab.icon}}" style="margin:5px"></ui-icon>
             <p>{{tab.header}}</p>
         </md-list-item>
         <md-list-item ng-click="main.open(link, $index)" ng-repeat="link in main.links">
-            <ui-icon icon="{{link.icon}}" style="margin: 5px"></ui-icon>
+            <ui-icon icon="{{link.icon}}" style="margin:5px"></ui-icon>
             <p>{{link.name}}</p>
         </md-list-item>
     </md-list>
 </md-sidenav>
 <md-toolbar id="toolbar">
     <div class="md-toolbar-tools">
-        <md-button ng-click="main.toggleSidenav()" class="md-icon-button" aria-label="menu button">
+        <md-button ng-show="main.len > 1" ng-click="main.toggleSidenav()" class="md-icon-button" aria-label="menu button">
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
+        <h1 ng-show="main.len <= 1" style="width:30px"> </h1>
         <h1 ng-show="main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
     </div>
 </md-toolbar>
@@ -25,7 +26,7 @@
         </ui-card-panel>
     </div>
 	<div class="node-red-ui--inline-link" ng-show="!main.selectedTab.header">
-		<iframe class="iframe" src="{{ main.selectedTab.link }}" allowfullscreen></iframe>
+		<iframe class="iframe" ng-src="{{ main.selectedTab.link }}" allowfullscreen></iframe>
 		<!-- <div>The url {{ }} cannot be loaded into an iframe.</div> -->
 	</div>
 </md-content>

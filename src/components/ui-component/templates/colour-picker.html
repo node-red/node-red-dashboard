@@ -1,0 +1,4 @@
+<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" flex layout="row" layout-align="space-between center" class="nr-dashboard-colour-picker" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+    <p><span ng-hide="(me.item.width < 2) || (me.item.width < 5 && (me.item.inline || me.item.textValue))" class="label">{{me.item.label}}</span></p>
+    <color-picker ng-model="me.item.value" aria-label="{{me.item.label}}" ng-attr-options="me.item.options" ng-attr-event-api="me.item.eventapi" ng-keypress="me.item.key($event)"></color-picker>
+</md-card>

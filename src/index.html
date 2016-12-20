@@ -29,11 +29,12 @@
     <!-- build:css -->
     <link rel="stylesheet" href="vendor/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="vendor/angular-material-icons/angular-material-icons.css">
-    <link rel="stylesheet" href="vendor/nvd3/build/nv.d3.min.css">
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/angularjs-color-picker/dist/angularjs-color-picker.min.css">
 
     <link rel="stylesheet" href="components/ui-component/templates/button.css">
     <link rel="stylesheet" href="components/ui-component/templates/chart.css">
+    <link rel="stylesheet" href="components/ui-component/templates/colour-picker.css">
     <link rel="stylesheet" href="components/ui-component/templates/dropdown.css">
     <link rel="stylesheet" href="components/ui-component/templates/gauge.css">
     <link rel="stylesheet" href="components/ui-component/templates/numeric.css">
@@ -69,24 +70,31 @@
 <script src="vendor/sprintf-js/dist/angular-sprintf.min.js"></script>
 <script src="vendor/svg-morpheus/compile/unminified/svg-morpheus.js"></script>
 
-<!--for charts-->
-<script src="vendor/d3/d3.min.js"></script>
-<script src="vendor/nvd3/build/nv.d3.min.js"></script>
-<script src="vendor/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.min.js"></script>
+<!-- for new charts -->
+<script src="vendor/moment/min/moment.min.js"></script>
+<script src="vendor/chart.js/dist/Chart.min.js"></script>
+<script src="vendor/angular-chart.js/dist/angular-chart.min.js"></script>
 
 <!--gauge-->
+<script src="vendor/d3/d3.min.js"></script>
 <script src="vendor/justgage/raphael-2.1.4.min.js"></script>
 <script src="vendor/justgage/justgage.js"></script>
 <script src="components/ui-gauge/liquidFillGauge.js"></script>
+
+<!--colour picker-->
+<script src="vendor/tinycolor2/dist/tinycolor-min.js"></script>
+<script src="vendor/angularjs-color-picker/dist/angularjs-color-picker.min.js"></script>
 
 <script src="main.js"></script>
 <script src="services/events.js"></script>
 <script src="services/sizes.js"></script>
 <script src="directives/ui-template.js"></script>
 <script src="directives/ui-highlight.js"></script>
+<script src="directives/ui-colour-picker.js"></script>
 <script src="components/ui-component/ui-component.js"></script>
 <script src="components/ui-component/ui-component-ctrl.js"></script>
 <script src="components/ui-gauge/ui-gauge.js"></script>
+<script src="components/ui-chart-js/ui-chart-js.js"></script>
 <script src="components/ui-card-panel/ui-card-panel.js"></script>
 <script src="components/ui-card-panel/ui-card-panel-ctrl.js"></script>
 <script src="components/ui-card-panel/ui-card-size.js"></script>

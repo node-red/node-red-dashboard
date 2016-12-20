@@ -1,34 +1,55 @@
 
-#### 2.1.1-beta: Maintenance Release (not yet released to npm)
+### 2.2.1-beta: Maintenance Release (not yet on NPM)
 
-License change
+**Fixes**
+
+ - Gauges now scale properly on IE9/10/11 and Edge
+ - Increase chart size to better fill available space
+ - Fix colour-picker touch support (upstream fix)
+ - Fix slight transparency issue on select dropdown
+ - Small changes to colour-picker styling
+
+
+### 2.2.0: Milestone Release
+
+**License change**
 
  - Change of license copyright to Javascript Foundation
 
-Enhancements
+**Deprecated**
 
-    - Add step option to ui_numeric input widget
-    - Add OK/Cancel Dialog mode to ui_notification widget
-    - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
-    - bumped fa-icons version to 4.7.0
-    - ui_control emits "connect" and "lost" messages for client id and ip.
+ - Second output from chart node - use the `ui_control node` instead. This will emit both *connect* and *lost* messages for each client that connects or loses connection. The 2nd output from the chart node will eventually be removed in a future release.
 
-Fixes
+**Enhancements**
 
-    - change link `_new` refs to `_blank` to be standards compliant
-    - fix fa icons default size so fixed width matches material icons width (24px)
-    - bump sockets.io version
-    - fixed dropdown generating messages when opening tab
+ - Replace nvd3 charts with **charts.js** charts - to fix various issues
+ - Add pie chart and horizontal bar chart options to new charts.js based widget
+ - Add ui_colour_picker widget to palette
+ - Add ui_audio out widget for wav, mp3 and TTS to Dashboard
+ - Add step option to ui_numeric input widget
+ - Add background colour setting to ui_button widget
+ - ui_control emits "connect" and "lost" messages for client id and ip.
+ - Add OK/Cancel Dialog mode to ui_notification widget, if msg.socketid is present the notification will only go to that client.
+ - All ui elements now also emit `msg.socketid`
+ - bumped fa-icons version to 4.7.0
+
+**Fixes**
+
+ - Replace nvd3 charts with charts.js charts - to fix various issues
+ - change link `_new` refs to `_blank` to be standards compliant
+ - fix fa icons default size so fixed width matches material icons width (24px)
+ - bump sockets.io version
+ - fixed dropdown generating messages when opening tab
 
 
 ### 2.1.0: Milestone Release
 
-License change
+**License change**
 
  - Change of license from MIT to Apache-2.0 to be in line with other Node-RED projects
     (approved by all contributors)
 
-Enhancements
+**Enhancements**
 
  - Complete re-write of group layout code to stop overlapping issues
  - Add ui_form widget to submit complete form in one go
@@ -40,7 +61,7 @@ Enhancements
  - Allow switch label to be dynamically set by msg input
  - Add Dashboard version number to console.log on start
 
-Fixes
+**Fixes**
 
  - Fill dark background more completely
  - Fix CSS sizing for Safari 10
@@ -54,9 +75,10 @@ Fixes
  - Fix dropdown select types
  - Fix switch to only switch if input value matches on and off values
 
-#### 2.0.2: Maintenance Release
 
-Enhancements
+### 2.0.2: Maintenance Release
+
+**Enhancements**
 
  - Add password entry option to text input
  - Add basic colour names to themes
@@ -73,7 +95,7 @@ Enhancements
  - Allow Gauge 3 colour ranges to be set
  - Allow Toast notification position to be set
 
-Fixes
+**Fixes**
 
  - Relax auto-creation of ui_base
  - Handle imported flows properly when updating sidebar tree
@@ -84,13 +106,15 @@ Fixes
  - Better layout alignment for groups on wide and narrow screens
  - Allow msg with no payload to be handled
 
-#### 2.0.1: Maintenance Release
 
-Fixes
+### 2.0.1: Maintenance Release
+
+**Fixes**
 
  - Sorting groups/tabs in sidebar not sticking
  - Tidy up auto-generation of ui_base node
 
+
 ### 2.0.0: Milestone Release
 
- - First release published to npm!
+ - First release published to npm

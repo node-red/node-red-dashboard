@@ -1,0 +1,38 @@
+<div>
+<canvas
+	ng-if="me.item.look==='line'"
+	class="chart chart-line"
+	chart-data="config.data"
+	chart-series="config.series"
+	chart-labels="config.labels"
+	chart-options="config.options"
+	chart-colors="config.colours">
+</canvas>
+<canvas
+	ng-if="me.item.look==='bar'"
+	class="chart chart-bar"
+	chart-data="config.data"
+	chart-series="config.series"
+	chart-labels="config.labels"
+	chart-options="config.options"
+	chart-colors="config.colours">
+</canvas>
+<canvas
+	ng-if="me.item.look==='horizontalBar'"
+	class="chart chart-horizontalBar"
+	chart-data="config.data"
+	chart-series="config.series"
+	chart-labels="config.labels"
+	chart-options="config.options"
+	chart-colors="config.colours">
+</canvas>
+<canvas
+	ng-if="me.item.look==='pie'"
+	class="chart chart-pie"
+	chart-data="config.data"
+	chart-series="config.series"
+	chart-labels="config.labels"
+	chart-options="config.options"
+	chart-colors="config.colours">
+</canvas>
+</div>

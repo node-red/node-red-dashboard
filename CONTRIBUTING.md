@@ -41,16 +41,12 @@ the [mailing list](https://groups.google.com/forum/#!forum/node-red) first.
 
 ### Contributor License Agreement
 
-In order for us to accept pull-requests, the contributor must first complete
-a Contributor License Agreement (CLA). This clarifies the intellectual
-property license granted with any contribution. It is for your protection as a
-Contributor as well as the protection of the Javascript Foundation; it does not
-change your rights to use your own Contributions for any other purpose.
+All contributors need to sign the JS Foundation's Contributor License Agreement.
+It is an online process and quick to do. You can read the details of the agreement
+here: https://cla.js.foundation/node-red/node-red.
 
-You can access and accept the CLA here:
-
- - [Javascript Foundation CLA](https://cla.js.foundation/node-red/node-red-dashboard)
-
+If you raise a pull-request without having signed the CLA, you will be prompted
+to do so automatically.
 
 ### Coding standards
 
@@ -60,4 +56,5 @@ code base. Some basic rules include:
  - indent with 4-spaces, no tabs. No arguments.
  - opening brace on same line as `if`/`for`/`function` and so on, closing brace
  on its own line.
- - There are **.jshintrc** and **.jscsrc** files included in the project which may help
+ - There are **.jshintrc** and **.jscsrc** files included in the project which
+ should be used to help formatting.

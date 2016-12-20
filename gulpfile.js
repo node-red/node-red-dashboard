@@ -63,6 +63,7 @@ gulp.task('index', function() {
 });
 
 gulp.task('icon', function() {
+    gulp.src('src/icon.jpg').pipe(gulp.dest('dist/'));
     return gulp.src('src/icon.png').pipe(gulp.dest('dist/'));
 });
 
@@ -77,6 +78,9 @@ gulp.task('js', function () {
     var templates = gulp.src(['src/**/*.html', '!src/index.html'])
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(templateCache('templates.js', {root:'', module:'ui'}));
+
+    var tiny = gulp.src('node_modules/tinycolor2/tinycolor.js')
+    .pipe(gulp.dest('./dist/js'));
 
     return streamqueue({ objectMode:true }, scripts, templates)
     .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
