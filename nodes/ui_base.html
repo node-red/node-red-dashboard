@@ -322,10 +322,14 @@ RED.nodes.registerType('ui_base',{
 
         //Store a list of all style edited state
         //true means the user has edited.
+
+        //default colour and font settings are set on load below
         var styleEditedState = {
             base: {
-                colour: false,
-                font: false
+                color: false,
+                defaultColor: null,
+                font: false,
+                defaultFont: null
             },
             page: {
                 background: false,
@@ -339,12 +343,9 @@ RED.nodes.registerType('ui_base',{
             widget: {
                 background: false
             }
-
         }
-        var generateColours = function(base) {
-            //page background
-            // use the least readable option
-            var leastReadable = function(base, colours) {
+        var colours = {
+            leastReadable: function(base, colours) {
                 var least = tinycolor.readability(base, colours[0]);
                 var leastColor = colours[0];
                 for (var i=1; i<colours.length; i++) {
@@ -355,29 +356,56 @@ RED.nodes.registerType('ui_base',{
                     }
                 }
                 return leastColor;
+            },
+            calculatePageBackground: function(base) {
+                return this.leastReadable(base, ["#fafafa", "#111111"]);
+            },
+            calculateSidebarBackground: function(base) {
+                return this.leastReadable(base, ["#000000", "#ffffff"]);
+            },
+            calculateTitlebarBackground: function(base) {
+                return tinycolor(base).darken(15).toHexString();
+            },
+            calculateGroupBackground: function(base) {
+                return this.leastReadable(base, ["#ffffff", "#333333"]);
+            },
+            calculateGroupBorder: function(base) {
+                return this.leastReadable(base, ["#ffffff", "#555555"]);
+            },
+            calculatePrimaryWidgetColor: function(base) {
+                return base;
             }
+
+
+        }
+        var generateColours = function(base) {
             if (!styleEditedState.page.background) {
-                var pageBackground = leastReadable(base, ["#fafafa", "#111111"]);
+                var pageBackground = colours.calculatePageBackground(base);
                 $("#page-background-color").val(pageBackground);
             }
             if (!styleEditedState.page.sidebarBackground) {
-                var sidebarBackground = leastReadable(base, ["#000000", "#ffffff"]);
+                var sidebarBackground = colours.calculateSidebarBackground(base);
                 $("#page-side-bar-background-color").val(sidebarBackground);
             }
             if (!styleEditedState.page.titlebarBackground) {
-                var titlebarBackground = tinycolor(base).darken(15).toHexString();
+                var titlebarBackground = colours.calculateTitlebarBackground(base);
                 $("#page-title-bar-background-color").val(titlebarBackground);
             }
             if (!styleEditedState.group.background) {
-                var groupBackground = leastReadable(base, ["#ffffff", "#333333"]);
+                var groupBackground = colours.calculateGroupBackground(base);
                 $("#group-background-color").val(groupBackground);
             }
             if (!styleEditedState.group.border) {
-               var groupBorder = leastReadable(base, ["#ffffff", "#555555"]);
+               var groupBorder = colours.calculateGroupBorder(base);
                $("#group-border-color").val(groupBorder); 
             }
-            if (!styleEditedState.widget.background) { $("#widget-primary-color").val(base); }
+            if (!styleEditedState.widget.background) { 
+                var widgetColor = colours.calculatePrimaryWidgetColor(base);
+                $("#widget-primary-color").val(widgetColor); 
+            }
         }
+
+
 
         var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
         $('<label class="theme-label">').html('Style').appendTo(divThemeStyle);        
@@ -393,14 +421,14 @@ RED.nodes.registerType('ui_base',{
                     globalDashboardNode.theme = $(this).val();
                     switch(globalDashboardNode.theme) {
                         case 'theme-light':
-                            $("#nr-db-field-themeColor").val(globalDashboardNode.lightTheme.baseColor);
+                            $("#theme-base-color").val(globalDashboardNode.lightTheme.baseColor);
                             break;
                         case 'theme-dark':
-                            $("#nr-db-field-themeColor").val(globalDashboardNode.darkTheme.baseColor);
+                            $("#theme-base-color").val(globalDashboardNode.darkTheme.baseColor);
                             break;
                         case 'theme-custom':
                             var base = globalDashboardNode.customTheme.baseColor;
-                            $("#nr-db-field-themeColor").val(base);
+                            $("#theme-base-color").val(base);
 
                             //generate colours for all colour settings from base colour
                             generateColours(base);
@@ -448,8 +476,10 @@ RED.nodes.registerType('ui_base',{
         //     '<option value="helvetica">Helvetica</option>'+
         //     '</select>').appendTo(baseFontItem);
 
-        var resetToDefault = $('<i id="base-color-reset" class="fa fa-refresh resetIcon"></i>')
-        .click(resetClick(this))
+        var resetToDefault = $('<span><i id="base-color-reset" class="fa fa-refresh resetIcon"></i></span>')
+        .click(function(e) {
+            resetClick(e);
+        })
         .appendTo(baseSettingsUl.children());
 
         $('<input id="theme-base-color" class="nr-db-field-themeColor" type="color" value="#0094CE"/>')
@@ -476,6 +506,7 @@ RED.nodes.registerType('ui_base',{
 
                 //make reset come active
                 $("#base-color-reset").css({opacity: 1});
+                styleEditedState.base.color = true;
 
                 RED.nodes.dirty(true);
             }
@@ -497,11 +528,14 @@ RED.nodes.registerType('ui_base',{
             //todo
             //make reset come active
             $("#page-background-color-reset").css({opacity: 1});
+            styleEditedState.page.background = true;
 
         })
         .appendTo(spanColorContainer);
         var resetToDefault = $('<i id="page-background-color-reset" class="fa fa-refresh resetIcon"></i>')
-            .click(resetClick(this))
+            .click(function(e) {
+                resetClick(e);
+            })
             .appendTo(pageBackground);
 
         var titleBarBackground = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Background</span></li>').appendTo(pageStyles);
@@ -511,11 +545,14 @@ RED.nodes.registerType('ui_base',{
             //todo
             //make reset come active
             $("#page-title-bar-background-color-reset").css({opacity: 1});
+            styleEditedState.page.titlebarBackground = true;
 
         })
         .appendTo(spanColorContainer);
         var resetToDefault = $('<i id="page-title-bar-background-color-reset" class="fa fa-refresh resetIcon"></i>')
-            .click(resetClick(this))
+            .click(function(e) {
+                resetClick(e);
+            })
             .appendTo(titleBarBackground);
 
         var sideBarBackground = $('<li class="red-ui-dashboard-theme-item"><span>Side Bar Background</span></li>').appendTo(pageStyles);
@@ -525,11 +562,14 @@ RED.nodes.registerType('ui_base',{
             //todo
             //make reset come active
             $("#page-side-bar-background-color-reset").css({opacity: 1});
+            styleEditedState.page.sidebarBackground = true;
 
         })
         .appendTo(spanColorContainer);
         var resetToDefault = $('<i id="page-side-bar-background-color-reset" class="fa fa-refresh resetIcon"></i>')
-            .click(resetClick(this))
+            .click(function(e) {
+                resetClick(e);
+            })
             .appendTo(sideBarBackground);
 
 
@@ -543,11 +583,14 @@ RED.nodes.registerType('ui_base',{
             //todo
             //make reset come active
             $("#group-background-color-reset").css({opacity: 1});
+            styleEditedState.group.background = true;
 
         })
         .appendTo(spanColorContainer);
         var resetToDefault = $('<i id="group-background-color-reset" class="fa fa-refresh resetIcon"></i>')
-            .click(resetClick(this))
+            .click(function(e) {
+                resetClick(e);
+            })
             .appendTo(groupBackground);
 
         var groupBorder= $('<li class="red-ui-dashboard-theme-item"><span>Group Border</span></li>').appendTo(groupStyles);
@@ -557,11 +600,14 @@ RED.nodes.registerType('ui_base',{
             //todo
             //make reset come active
             $("#group-border-color-reset").css({opacity: 1});
+            styleEditedState.group.border = true;
 
         })
         .appendTo(spanColorContainer);
         var resetToDefault = $('<i id="group-border-color-reset" class="fa fa-refresh resetIcon"></i>')
-            .click(resetClick(this))
+           .click(function(e) {
+               resetClick(e);
+           })
             .appendTo(groupBorder);
 
         var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
@@ -574,15 +620,86 @@ RED.nodes.registerType('ui_base',{
             //todo
             //make reset come active
             $("#widget-primary-color-reset").css({opacity: 1});
+            styleEditedState.widget.background = true;
 
         })
         .appendTo(spanColorContainer);
         var resetToDefault = $('<i id="widget-primary-color-reset" class="fa fa-refresh resetIcon"></i>')
-            .click(resetClick(this))
+            .click(function(e) {
+                resetClick(e);
+            })
             .appendTo(widgetPrimaryColour);
 
-        function resetClick(el) {
-            console.log(el);
+        function resetClick(e) {
+            var elementID = e.target.id;
+            console.log(elementID);
+            switch (elementID) {
+                case 'base-color-reset':
+                    if (styleEditedState.base.color) {
+                        var defaultColor = styleEditedState.base.defaultColor;
+                        $('#theme-base-color').val(defaultColor);
+                        generateColours(defaultColor);
+                        $("#base-color-reset").css({opacity: 0.6});
+                        styleEditedState.base.color = false;
+                    }
+                    break;
+
+                case 'page-background-color-reset':
+                    if (styleEditedState.page.background) {
+                        var pageBackground = colours.calculatePageBackground(styleEditedState.base.defaultColor);
+                        $("#page-background-color").val(pageBackground);
+                        $("#page-background-color-reset").css({opacity: 0.6});
+                        styleEditedState.page.background = false;
+                    }
+                    break;
+
+                case 'page-side-bar-background-color-reset':
+                    if (styleEditedState.page.sidebarBackground) {
+                        var sidebarBackground = colours.calculateSidebarBackground(styleEditedState.base.defaultColor);
+                        $("#page-side-bar-background-color").val(sidebarBackground);
+                        $("#page-side-bar-background-color-reset").css({opacity: 0.6});
+                        styleEditedState.page.sidebarBackground = false;
+                    }
+                    break;
+
+                case 'page-title-bar-background-color-reset':
+                    if (styleEditedState.page.titlebarBackground) {
+                        var titlebarBackground = colours.calculateTitlebarBackground(styleEditedState.base.defaultColor);
+                        console.log(titlebarBackground);
+                        $("#page-title-bar-background-color").val(titlebarBackground);
+                        $("#page-title-bar-background-color-reset").css({opacity: 0.6});
+                        styleEditedState.page.titlebarBackground = false;
+                    }
+                    break;
+
+                case 'group-background-color-reset':
+                    if (styleEditedState.group.background) {
+                        var groupBackground = colours.calculateGroupBackground(styleEditedState.base.defaultColor);
+                        $("#group-background-color").val(groupBackground);
+                        $("#group-background-color-reset").css({opacity: 0.6});
+                        styleEditedState.group.bacground = false;
+                    }
+                    break;
+
+                case 'group-border-color-reset':
+                    if (styleEditedState.group.border) {
+                        var groupBorder = colours.calculateGroupBorder(styleEditedState.base.defaultColor);
+                        $("#group-border-color").val(groupBorder);
+                        $("#group-border-color-reset").css({opacity: 0.6});
+                        styleEditedState.group.border = false;
+                    }
+                    break;
+
+                case 'widget-primary-color-reset':
+                    if (styleEditedState.widget.background) {
+                        var widgetColor = colours.calculatePrimaryWidgetColor(styleEditedState.base.defaultColor);
+                        $("#widget-primary-color").val(widgetColor);
+                        $("#widget-primary-color-reset").css({opacity: 0.6});
+                        styleEditedState.widget.background = false;
+                    }
+                    break;
+            }
+
         }
 
         
@@ -1202,7 +1319,7 @@ RED.nodes.registerType('ui_base',{
                     linksContainer.editableList('addItem',{node:link});
                 }
             });
-            ensureDashboardNode();
+            ensureDashboardNode(true);
             if (globalDashboardNode) {
                 $("#nr-db-field-title").val(globalDashboardNode.name);
                 $("#nr-db-field-theme").val(globalDashboardNode.theme);
@@ -1214,10 +1331,9 @@ RED.nodes.registerType('ui_base',{
                     $("#custom-theme-library-container").hide();
                     $("#custom-theme-settings").hide();
                 }
-                var colorValue;
-                (globalDashboardNode.theme === 'theme-light') ? colorValue = globalDashboardNode.lightTheme.baseColor : colorValue = globalDashboardNode.darkTheme.baseColor;
-                $("#nr-db-field-themeColor").val(colorValue);
-                // $("#nr-db-field-url").val(globalDashboardNode.url);
+                
+                styleEditedState.base.defaultColor = globalDashboardNode.customTheme.baseColor;
+                styleEditedState.base.defaultFont = globalDashboardNode.customTheme.baseFont;
 
                 editor = RED.editor.createEditor({
                     id: 'node-input-format-editor',
