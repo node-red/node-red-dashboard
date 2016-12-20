@@ -273,12 +273,13 @@ function updateUi(to) {
     }
     process.nextTick(function() {
         tabs.forEach(function(t) {
-            t.theme = baseConfiguration.theme;
+            t.theme = baseConfiguration.theme.name;
         })
         to.emit('ui-controls', {
             title: baseConfiguration.title,
             tabs: tabs,
-            links: links
+            links: links,
+            theme: baseConfiguration.theme
         });
         updateUiPending = false;
     });
@@ -382,8 +383,15 @@ function addLink(name, link, icon, order, target) {
     }
 }
 
-function addBaseConfig(title,theme) {
+function addBaseConfig(title, theme, lightTheme, darkTheme, customTheme) {
     if (title) { baseConfiguration.title = title; }
-    if (theme) { baseConfiguration.theme = theme; }
+    if (theme) { 
+        baseConfiguration.theme = {
+            name: theme,
+            lightTheme: lightTheme,
+            darkTheme: darkTheme,
+            customTheme: customTheme
+        }; 
+    }
     updateUi();
 }

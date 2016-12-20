@@ -1,4 +1,5 @@
 {
+
 	"name": "node-red-dashboard",
 	"version": "2.2.1-beta",
 	"description": "A set of dashboard nodes for Node-RED",

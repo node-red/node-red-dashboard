@@ -1,7 +1,7 @@
+
 /*
 	ALL COMPONENTS/CONTENT
 */
-
 .nr-dashboard-disabled {
     opacity: 0.5 !important;
     pointer-events: none !important;
@@ -14,10 +14,6 @@ body.nr-dashboard-theme-light {
 body.nr-dashboard-theme-light md-content {
     background: transparent;
     height: 100%;
-}
-
-body.nr-dashboard-theme-light md-select-menu md-content {
-    height: initial;
 }
 
 body.nr-dashboard-theme-light md-content md-card {}
@@ -35,7 +31,12 @@ body.nr-dashboard-theme-light .nr-dashboard-dim { opacity: 0.4 !important; }
 */
 
 body.nr-dashboard-theme-light md-toolbar {
-	background-color: #0094CE;
+	background-color:#0094CE;
+	// color: contrast(#0094CE,#424242, #F7F7F7)
+}
+// DAN todo - make one stylesheet instead of specifying theme-light and theme-dark classes
+body.nr-dashboard-theme-dark md-toolbar {
+	background-color:#0094CE
 }
 
 
@@ -75,25 +76,16 @@ body.nr-dashboard-theme-light md-sidenav {}
 
 /* Chart */
 
-.nr-dashboard-theme-light .nr-dashboard-chart-title  {
-	font-size: larger;
-}
+.nr-dashboard-theme-light .nr-dashboard-linechart {}
 
-/* Colour Picker */
+.nr-dashboard-theme-light .nr-dashboard-linechart text {}
 
-.nr-dashboard-theme-light .color-picker-panel {
-	background-color: #fff;
-    /* border-color: #fff; */
-    box-shadow: 0 0 1px rgba(0,0,0,.5);
-}
-
-.nr-dashboard-theme-light .color-picker-input-wrapper > input {
-    background-color: #f5f5f5;
-}
+.nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis path,
+.nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis line {}
 
 /* Dropdown */
 
-.nr-dashboard-theme-light md-select-menu, .nr-dashboard-theme-light md-select-menu md-option {
+.nr-dashboard-theme-light md-select-menu md-option {
 	background-color: #fff;
 	color: #000;
 }
