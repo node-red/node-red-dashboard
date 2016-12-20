@@ -507,6 +507,7 @@ label.theme-label {
                         case 'theme-custom':
                             globalDashboardNode.customTheme.baseColor = $(this).val();
                             generateColours($(this).val());
+                            styleEditedState.base.defaultColor = $(this).val();
                             editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
                             break;
                     }
@@ -1344,6 +1345,7 @@ label.theme-label {
                     editor.on('input', function() {
                         globalDashboardNode.customTheme = JSON.parse(editor.getValue());
                         $("#theme-base-color").val(globalDashboardNode.customTheme.baseColor);
+                        styleEditedState.base.defaultColor = globalDashboardNode.customTheme.baseColor;
                         generateColours(globalDashboardNode.customTheme.baseColor);
                     });
 
