@@ -217,6 +217,9 @@ label.theme-label {
         onpaletteadd: function() {
             var globalDashboardNode = null;
             var editor;
+            var baseStyles = ['base-color', 'base-font'];
+            var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
+                                      'group-backgroundColor', 'group-borderColor', 'widget-backgroundColor'];
 
             function ensureDashboardNode(createMissing) {
                 if (globalDashboardNode !== null) {
@@ -232,6 +235,16 @@ label.theme-label {
                             globalDashboardNode = n;
                         }
                     });
+
+                    // set up theme state
+                    var themeState = {};
+                    for (var i=0; i<baseStyles.length; i++) {
+                        themeState[baseStyles[i]] = { default: null, value: null, edited: false };
+                    }
+                    for (var i=0; i<configurableStyles.length; i++) {
+                        themeState[configurableStyles[i]] = {value: null, edited: false};
+                    }
+
                     if (globalDashboardNode === null && createMissing) {
                         globalDashboardNode = {
                             id: RED.nodes.id(),
@@ -252,50 +265,7 @@ label.theme-label {
                                 baseColor: "#0094CE",
                                 baseFont: "Helvetica Neue"
                             },
-                            themeState: {
-                                base: {
-                                    color: {
-                                        default: null,
-                                        value: null,
-                                        edited: false
-                                    },
-                                    font: {
-                                        default: null,
-                                        value: null,
-                                        edited: false
-                                    }
-                                },
-                                page: {
-                                    background: {
-                                        edited: false,
-                                        value: null
-                                    },
-                                    sidebarBackground: {
-                                        edited: false,
-                                        value: null
-                                    },
-                                    titlebarBackground: {
-                                        edited: false,
-                                        value: null
-                                    }
-                                },
-                                group: {
-                                    background: {
-                                        value: null,
-                                        edited: false
-                                    },
-                                    border: {
-                                        value: null,
-                                        edited: false
-                                    }
-                                },
-                                widget: {
-                                    background: {
-                                        value: null,
-                                        edited: false
-                                    }
-                                }
-                            },
+                            themeState: themeState,
                             url: 'ui',
                             users:[]
                         }
@@ -372,8 +342,7 @@ label.theme-label {
 
             // Theme Tab
 
-            //Store a list of all style edited state
-            //true means the user has edited.
+            
 
             //default colour and font settings are set on load below
             
@@ -412,41 +381,52 @@ label.theme-label {
             }
 
             var generateColours = function(base) {
-                if (!globalDashboardNode.themeState.page.background.edited) {
-                    var pageBackground = colours.calculatePageBackground(base);
-                    $("#page-background-color").val(pageBackground);
-                    globalDashboardNode.themeState.page.background.value = pageBackground;
-                }
-                if (!globalDashboardNode.themeState.page.sidebarBackground.edited) {
-                    var sidebarBackground = colours.calculateSidebarBackground(base);
-                    $("#page-side-bar-background-color").val(sidebarBackground);
-                    globalDashboardNode.themeState.page.sidebarBackground.value = sidebarBackground;
 
-                }
-                if (!globalDashboardNode.themeState.page.titlebarBackground.edited) {
-                    var titlebarBackground = colours.calculateTitlebarBackground(base);
-                    $("#page-title-bar-background-color").val(titlebarBackground);
-                    globalDashboardNode.themeState.page.titlebarBackground.value = titlebarBackground;
+                //dan todo: test this works - html elements will need renaming to have -pick on the end
+                for (var i=0; i<configurableStyles.length; i++) {
+                    var styleID = configurableStyles[i];
 
+                    if (!globalDashboardNode.themeState[styleID].edited) {
+                        var colour = colours['calculate-'+styleID](base);
+                        $("#"+styleID+"-pick").val(colour);
+                        globalDashboardNode.themeState[styleID].value = colour;
+                    }
                 }
-                if (!globalDashboardNode.themeState.group.background.edited) {
-                    var groupBackground = colours.calculateGroupBackground(base);
-                    $("#group-background-color").val(groupBackground);
-                    globalDashboardNode.themeState.group.background.value = groupBackground;
+                // if (!globalDashboardNode.themeState.page.backgroundColor.edited) {
+                //     var pageBackground = colours.calculatePageBackground(base);
+                //     $("#page-background-color").val(pageBackground);
+                //     globalDashboardNode.themeState.page.backgroundColor.value = pageBackground;
+                // }
+                // if (!globalDashboardNode.themeState.page.sidebarBackground.edited) {
+                //     var sidebarBackground = colours.calculateSidebarBackground(base);
+                //     $("#page-side-bar-background-color").val(sidebarBackground);
+                //     globalDashboardNode.themeState.page.sidebarBackground.value = sidebarBackground;
 
-                }
-                if (!globalDashboardNode.themeState.group.border.edited) {
-                   var groupBorder = colours.calculateGroupBorder(base);
-                   $("#group-border-color").val(groupBorder); 
-                   globalDashboardNode.themeState.group.border.value = groupBorder;
+                // }
+                // if (!globalDashboardNode.themeState.page.titlebarBackground.edited) {
+                //     var titlebarBackground = colours.calculateTitlebarBackground(base);
+                //     $("#page-title-bar-background-color").val(titlebarBackground);
+                //     globalDashboardNode.themeState.page.titlebarBackground.value = titlebarBackground;
 
-                }
-                if (!globalDashboardNode.themeState.widget.background.edited) { 
-                    var widgetColor = colours.calculatePrimaryWidgetColor(base);
-                    $("#widget-primary-color").val(widgetColor);
-                    globalDashboardNode.themeState.widget.background.value = widgetColor;
+                // }
+                // if (!globalDashboardNode.themeState.group.background.edited) {
+                //     var groupBackground = colours.calculateGroupBackground(base);
+                //     $("#group-background-color").val(groupBackground);
+                //     globalDashboardNode.themeState.group.background.value = groupBackground;
 
-                }
+                // }
+                // if (!globalDashboardNode.themeState.group.border.edited) {
+                //    var groupBorder = colours.calculateGroupBorder(base);
+                //    $("#group-border-color").val(groupBorder); 
+                //    globalDashboardNode.themeState.group.border.value = groupBorder;
+
+                // }
+                // if (!globalDashboardNode.themeState.widget.background.edited) { 
+                //     var widgetColor = colours.calculatePrimaryWidgetColor(base);
+                //     $("#widget-primary-color").val(widgetColor);
+                //     globalDashboardNode.themeState.widget.background.value = widgetColor;
+
+                // }
             }
 
 
@@ -529,7 +509,7 @@ label.theme-label {
             })
             .appendTo(baseSettingsUl.children());
 
-            $('<input id="theme-base-color" class="nr-db-field-themeColor" type="color" value="#0094CE"/>')
+            $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#0094CE"/>')
             .change(function() {
                 ensureDashboardNode(true);
                 var lightThemeMatch = globalDashboardNode.lightTheme.baseColor === $(this).val();
@@ -551,12 +531,7 @@ label.theme-label {
                             editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
                             break;
                     }
-
-                    //make reset come active
-                    $("#base-color-reset").css({opacity: 1});
-                    globalDashboardNode.themeState.base.color.edited = true;
-
-                    RED.nodes.dirty(true);
+                    colourPickerChangeHandler($(this).attr('id'));
                 }
 
             })
@@ -571,14 +546,9 @@ label.theme-label {
             var pageStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
             var pageBackground = $('<li class="red-ui-dashboard-theme-item"><span>Page Background</span></li>').appendTo(pageStyles);
             var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(pageBackground);
-            $('<input id="page-background-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
+            $('<input id="page-backgroundColor" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
             .change(function() {
-                //todo
-                //make reset come active
-                $("#page-background-color-reset").css({opacity: 1});
-                globalDashboardNode.themeState.page.background.edited = true;
-                globalDashboardNode.themeState.page.background.value = $(this).val();
-                RED.nodes.dirty(true);
+                colourPickerChangeHandler($(this).attr('id'));
 
             })
             .appendTo(spanColorContainer);
@@ -590,14 +560,9 @@ label.theme-label {
 
             var titleBarBackground = $('<li class="red-ui-dashboard-theme-item"><span>Title Bar Background</span></li>').appendTo(pageStyles);
             var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(titleBarBackground);
-            $('<input id="page-title-bar-background-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
+            $('<input id="page-titlebar-backgroundColor" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
             .change(function() {
-                //todo
-                //make reset come active
-                $("#page-title-bar-background-color-reset").css({opacity: 1});
-                globalDashboardNode.themeState.page.titlebarBackground.edited = true;
-                globalDashboardNode.themeState.page.titlebarBackground.value = $(this).val();
-                RED.nodes.dirty(true);
+                colourPickerChangeHandler($(this).attr('id'));
 
             })
             .appendTo(spanColorContainer);
@@ -609,15 +574,9 @@ label.theme-label {
 
             var sideBarBackground = $('<li class="red-ui-dashboard-theme-item"><span>Side Bar Background</span></li>').appendTo(pageStyles);
             var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(sideBarBackground);
-            $('<input id="page-side-bar-background-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
+            $('<input id="page-sidebar-backgroundColor" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
             .change(function() {
-                //todo
-                //make reset come active
-                $("#page-side-bar-background-color-reset").css({opacity: 1});
-                globalDashboardNode.themeState.page.sidebarBackground.edited = true;
-                globalDashboardNode.themeState.page.sidebarBackground.value = $(this).val();
-                RED.nodes.dirty(true);
-
+                colourPickerChangeHandler($(this).attr('id'));
             })
             .appendTo(spanColorContainer);
             var resetToDefault = $('<i id="page-side-bar-background-color-reset" class="fa fa-refresh resetIcon"></i>')
@@ -632,14 +591,9 @@ label.theme-label {
             var groupStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
             var groupBackground = $('<li class="red-ui-dashboard-theme-item"><span>Group Background</span></li>').appendTo(groupStyles);
             var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(groupBackground);
-            $('<input id="group-background-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
+            $('<input id="group-backgroundColor" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
             .change(function() {
-                //todo
-                //make reset come active
-                $("#group-background-color-reset").css({opacity: 1});
-                globalDashboardNode.themeState.group.background.edited = true;
-                globalDashboardNode.themeState.group.background.value = $(this).val();
-                RED.nodes.dirty(true);
+               colourPickerChangeHandler($(this).attr('id'));
 
             })
             .appendTo(spanColorContainer);
@@ -651,14 +605,9 @@ label.theme-label {
 
             var groupBorder= $('<li class="red-ui-dashboard-theme-item"><span>Group Border</span></li>').appendTo(groupStyles);
             var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(groupBorder);
-            $('<input id="group-border-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
+            $('<input id="group-borderColor" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
             .change(function() {
-                //todo
-                //make reset come active
-                $("#group-border-color-reset").css({opacity: 1});
-                globalDashboardNode.themeState.group.border.edited = true;
-                globalDashboardNode.themeState.group.border.value = $(this).val();
-                RED.nodes.dirty(true);
+                colourPickerChangeHandler($(this).attr('id'));
 
             })
             .appendTo(spanColorContainer);
@@ -667,6 +616,14 @@ label.theme-label {
                    resetClick(e);
                })
                 .appendTo(groupBorder);
+
+            function colourPickerChangeHandler(id) {
+                $("#"+id+"-reset").css({opacity: 1});
+                
+                globalDashboardNode.themeState[id].edited = true;
+                globalDashboardNode.themeState[id].value = $(this).val();
+                RED.nodes.dirty(true);
+            }
 
             var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
             $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
@@ -1386,8 +1343,8 @@ label.theme-label {
                         $("#custom-theme-settings").hide();
                     }
                     
-                    globalDashboardNode.themeState.base.defaultColor = globalDashboardNode.customTheme.baseColor;
-                    globalDashboardNode.themeState.base.defaultFont = globalDashboardNode.customTheme.baseFont;
+                    globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
+                    globalDashboardNode.themeState['base-font'].default = globalDashboardNode.customTheme.baseFont;
 
                     editor = RED.editor.createEditor({
                         id: 'node-input-format-editor',
@@ -1406,7 +1363,7 @@ label.theme-label {
                     editor.on('input', function() {
                         globalDashboardNode.customTheme = JSON.parse(editor.getValue());
                         $("#theme-base-color").val(globalDashboardNode.customTheme.baseColor);
-                        globalDashboardNode.themeState.base.defaultColor = globalDashboardNode.customTheme.baseColor;
+                        globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
                         generateColours(globalDashboardNode.customTheme.baseColor);
                     });
 
