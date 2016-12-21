@@ -1,0 +1,239 @@
+
+/*
+	ALL COMPONENTS/CONTENT
+*/
+.nr-dashboard-disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+}
+
+body.nr-dashboard-theme-light {
+	background: #f0f0f0;
+}
+
+body.nr-dashboard-theme-light md-content {
+    background: transparent;
+    height: 100%;
+}
+
+body.nr-dashboard-theme-light md-content md-card {}
+
+/* Some colour classes */
+body.nr-dashboard-theme-light .nr-dashboard-color { color: #0094CE; }
+body.nr-dashboard-theme-light .nr-dashboard-error { color: #ff3f00; }
+body.nr-dashboard-theme-light .nr-dashboard-warning { color: #ffd939; }
+body.nr-dashboard-theme-light .nr-dashboard-ok { color: #8ccf3f; }
+body.nr-dashboard-theme-light .nr-dashboard-dim { opacity: 0.4 !important; }
+
+
+/*
+	DASHBOARD HEADER
+*/
+
+body.nr-dashboard-theme-light md-toolbar {
+	background-color:#0094CE;
+	// color: contrast(#0094CE,#424242, #F7F7F7)
+}
+// DAN todo - make one stylesheet instead of specifying theme-light and theme-dark classes
+body.nr-dashboard-theme-dark md-toolbar {
+	background-color:#0094CE
+}
+
+
+/*
+	DASHBOARD SIDEBAR
+*/
+
+body.nr-dashboard-theme-light md-sidenav {}
+
+
+/*
+	GROUP SPECIFIC
+*/
+
+.nr-dashboard-theme-light ui-card-panel {
+	background: white;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+}
+
+
+/*
+	COMPONENT-SPECIFIC
+*/
+
+
+/* Button */
+
+.nr-dashboard-theme-light .nr-dashboard-button .md-button {
+	background-color: #87dbf7;
+	color: #fff;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-button .md-button:hover {
+	background-color: #4FBAE4;
+}
+
+
+/* Chart */
+
+.nr-dashboard-theme-light .nr-dashboard-linechart {}
+
+.nr-dashboard-theme-light .nr-dashboard-linechart text {}
+
+.nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis path,
+.nr-dashboard-theme-light .nr-dashboard-linechart .nvd3 .nv-axis line {}
+
+/* Dropdown */
+
+.nr-dashboard-theme-light md-select-menu md-option {
+	background-color: #fff;
+	color: #000;
+}
+
+.nr-dashboard-theme-light md-select-menu.md-default-theme md-option:focus:not([disabled]):not([selected]),
+md-select-menu md-option:focus:not([disabled]):not([selected]) {
+	background-color: #fff;
+}
+
+.nr-dashboard-theme-light md-select-menu md-option:hover {
+	background-color: #eee;
+}
+
+/* Gauge */
+
+.nr-dashboard-theme-light .nr-dashboard-gauge {}
+
+.nr-dashboard-theme-light .nr-dashboard-gauge text {}
+
+
+/* Numeric */
+
+.nr-dashboard-theme-light .nr-dashboard-numeric {}
+
+
+/* Slider */
+
+.nr-dashboard-theme-light .nr-dashboard-slider {}
+
+.nr-dashboard-theme-light .nr-dashboard-slider .md-track {
+	background-color: #E1E1E1;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-slider .md-track-fill {
+	background-color: #4FBAE4;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-slider .md-thumb:after {
+	background-color: #4FBAE4;
+	border-color: #4FBAE4;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-slider .md-focus-ring {
+	background-color: #4FBAE4;
+}
+
+
+/* Switch */
+
+.nr-dashboard-theme-light .nr-dashboard-switch {}
+
+.nr-dashboard-theme-light .nr-dashboard-switch md-switch .md-bar {}
+
+.nr-dashboard-theme-light .nr-dashboard-switch md-switch.md-checked .md-bar {
+	background-color: rgba(79, 186, 228, 0.5);
+}
+
+.nr-dashboard-theme-light .nr-dashboard-switch md-switch .md-thumb {}
+
+.nr-dashboard-theme-light .nr-dashboard-switch md-switch.md-checked .md-thumb {
+	background-color: #4FBAE4;
+}
+
+
+/* Template */
+
+.nr-dashboard-theme-light .nr-dashboard-template .md-button {
+	background: #9EE3F9;
+	color: white;
+    margin: 0px 6px;
+    padding: 0px 12px;
+    min-height: 26px;
+    min-width: unset;
+    line-height: unset;
+}
+.nr-dashboard-theme-light .nr-dashboard-template .md-button:hover {
+    background-color: #4FBAE4;
+}
+.nr-dashboard-theme-light .nr-dashboard-template {
+    ::-webkit-scrollbar {
+        height: 12px;
+        width: 12px;
+        background: #fafafa;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: ##0094CE;
+        -webkit-border-radius: 1ex;
+        -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+    }
+}
+
+
+/* Text-Input */
+
+.nr-dashboard-theme-light .nr-dashboard-textinput {}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput label {}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput md-input-container.md-input-has-value label {}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput md-input-container.md-input-focused label {
+	color: #0094CE;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput md-input-container.md-input-focused input {
+	border-color: #0094CE;
+}
+
+.nr-dashboard-theme-light .nr-dashboard-textinput md-input-container .md-input:invalid {
+	color: #FF2D2D;
+}
+
+
+/* Text */
+
+.nr-dashboard-theme-light .nr-dashboard-text {}
+
+
+/* Dialog */
+
+.nr-dashboard-theme-dark md-dialog {
+    color: #0f5c7b;
+    background-color: #fff;
+}
+
+.nr-dashboard-theme-light .md-dialog-content {
+    padding: 24px;
+}
+
+.nr-dashboard-theme-light .md-button.md-primary {
+	color: #0094ce !important;
+}
+
+
+/* Form */
+.nr-dashboard-theme-light .nr-dashboard-form-button {
+  background-color:  #0094ce !important;
+	color: rgba(255, 255, 255, 0.87) !important;
+}
+.nr-dashboard-theme-light .nr-dashboard-form form md-input-container md-switch.md-checked .md-bar{
+	background-color: rgba(0,148,206,0.87);
+}
+.nr-dashboard-theme-light .nr-dashboard-form form md-input-container md-switch.md-checked .md-thumb  {
+	background-color: rgba(0,148,206, 0.87);
+}
+.nr-dashboard-theme-light .nr-dashboard-form form md-input-container md-checkbox.md-checked .md-icon {
+	background-color: rgba(0,148,206, 0.87);
+}
+.nr-dashboard-theme-light .nr-dashboard-form form .md-datepicker-open .md-datepicker-calendar-icon {
+	fill : rgba(0,148,206, 0.87) ;
+}
