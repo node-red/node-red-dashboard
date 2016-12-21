@@ -9,6 +9,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
                     scope.config = loadConfiguration(type, scope);
+                    console.log(scope.$eval('me.item'));
 
                     // When new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
@@ -197,20 +198,19 @@ function loadConfiguration(type,scope) {
         }
 
         // Theme settings
-        if (scope.$eval('me.item.theme') === 'theme-dark') {
-            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = "#fff";
-            config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
-                color:"rgba(255,255,255,0.1)",
-                zeroLineColor:"rgba(255,255,255,0.1)"
-            }
+        var themeState = scope.$eval('me.item.theme.themeState');
+        config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = themeState['widget-textColor'].value;
+        
+        //generate white or black depending on group background colour
+        var groupBackgroundColor = tinycolor(themeState.groupBackgroundColor).toRgb();
+        console.log(groupBackgroundColor);
+        var gridlineColour = "rgba("+groupBackgroundColor.r+","+groupBackgroundColor.g+","+groupBackgroundColor.b+",0.1)";
+
+        config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
+            color: gridlineColour,
+            zeroLineColor: gridlineColour
         }
-        else {
-            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = "#666";
-            config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
-                color:"rgba(0,0,0,0.1)",
-                zeroLineColor:"rgba(0,0,0,0.1)"
-            }
-        }
+
         // Ensure scale labels do not rotate
         config.options.scales.xAxes[0].ticks.maxRotation = 0;
         config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
@@ -227,12 +227,10 @@ function loadConfiguration(type,scope) {
         if (type === 'pie') {
             config.options.legend.position = 'left';
         }
-        if (scope.$eval('me.item.theme') === 'theme-dark') {
-            config.options.legend.labels = { fontColor:"#fff" };
-        }
-        else {
-            config.options.legend.labels = {fontColor:"#666"};
-        }
+
+        //set colours based on widget text colour
+        var themeState = scope.$eval('me.item.theme.themeState');
+        config.options.legend.labels = { fontColor:themeState['widget-textColor'].value };
     }
     return config;
 }
