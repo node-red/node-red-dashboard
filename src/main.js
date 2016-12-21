@@ -90,20 +90,24 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             $document[0].title = ui.title;
 
             var prevTabIndex = parseInt($location.path().substr(1));
+
+            var finishLoading = function() {
+                applyStyle(main.selectedTab.theme);
+                $mdToast.hide();
+                done();
+            }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {
                 main.selectedTab = main.tabs[prevTabIndex];
+                finishLoading();
             }
             else {
-                $timeout( function() { main.select(0); }, 50 );
-            }
-
-            // Handle theme changes
-            if (main.selectedTab) {
-               applyStyle(main.selectedTab.theme); 
+                $timeout( function() { 
+                    main.select(0);
+                    finishLoading();
+                }, 50 );
             }
             
-            $mdToast.hide();
-            done();
+            
         }, function () {
             main.loaded = true;
             main.len = main.tabs.length + main.links.length;
