@@ -62,6 +62,31 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             $mdSidenav('left').close();
         };
 
+        //Use tiny colour to apply inline styles to elements
+        function applyStyle(theme) {
+
+            //need an object coming from node red as follows
+            // {name: 'theme-light', styles: {page: background: }}
+            var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
+                                      'group-backgroundColor', 'group-borderColor', 'widget-backgroundColor'];
+
+            var lessObj = {};                      
+            for (var i=0; i<configurableStyles.length; i++) {
+
+                //remove dash and camel case
+                var arr = configurableStyles[i].split('-');
+                for (var j=1; j<arr.length; j++) {
+                    arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
+                }
+                var lessVariable = arr.join("");
+                console.log(lessVariable);
+                var colour = theme.themeState[configurableStyles[i]].value;
+                lessObj["@"+lessVariable] = colour;
+            }
+            console.log(lessObj);
+            less.modifyVars(lessObj);
+        }
+
         events.connect(function (ui, done) {
             main.tabs = ui.tabs;
             main.links = ui.links;
@@ -75,17 +100,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $timeout( function() { main.select(0); }, 50 );
             }
 
-            //This was using less - commenting for now
+            // Handle theme changes
+            console.log(main);
+            if (main.selectedTab) {
+               applyStyle(main.selectedTab.theme); 
+            }
+            
 
-            // Change css of tab according to theme
-            // Note. currently this is not tab specific
-            // but functionality will probably change to
-            // have tab specific themes
-            // var color;
-            // (ui.theme.name === 'theme-light') ? color = ui.theme.lightThemeColor : 
-            //     color = ui.theme.darkThemeColor;
-            // less.modifyVars({'@baseColour': color});
-            console.log(ui);
 
             
             $mdToast.hide();

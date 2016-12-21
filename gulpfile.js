@@ -93,7 +93,7 @@ gulp.task('css', function () {
     return gulp.src('src/index.html')
     .pipe(ghtmlSrc({getFileName: getFileName.bind(this, 'href'), presets: 'css'}))
     .pipe(minifyCss({compatibility: 'ie8'}))
-    .pipe(concat('app.min.css'))
+    .pipe(concat('app.min.less'))
     .pipe(header(fs.readFileSync('license.js')))
     .pipe(gulp.dest('dist/css/'));
 });
