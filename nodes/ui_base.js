@@ -3,7 +3,6 @@ module.exports = function(RED) {
 
     function BaseNode(config) {
         RED.nodes.createNode(this, config);
-        console.log(config);
         var defaultLightTheme = {
             baseColor: '#0094CE',
             baseFont: 'Helvetica Neue'
@@ -27,7 +26,7 @@ module.exports = function(RED) {
             lightTheme: config.lightTheme || defaultLightTheme,
             darkTheme: config.darkTheme || defaultDarkTheme,
             customTheme: config.customTheme || defaultCustomTheme,
-            defaultThemeState: config.defaultThemeState || defaultThemeState
+            defaultThemeState: config.themeState || defaultThemeState
         };
         ui.addBaseConfig(this.config.name, this.config.theme, this.config.lightTheme, this.config.darkTheme, this.config.customTheme, this.config.defaultThemeState);
     }

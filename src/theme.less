@@ -1,12 +1,12 @@
 /*
 	ALL COMPONENTS/CONTENT
 */
-@background: #ffffff;
-@titleBarBackground: #ffffff;
-@sideBarBackground: #ffffff;
-@groupBackground: #ffffff;
-@groupBorder: #ffffff;
-@widgetBackground: #ffffff;
+@pageBackgroundColor: #f0f0f0;
+@pageTitlebarBackgroundColor: #0094CE;
+@pageSidebarBackgroundColor: #ffffff;
+@groupBackgroundColor: #ffffff;
+@groupBorderColor: #ffffff;
+@widgetBackgroundColor: #ffffff;
 
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
@@ -15,7 +15,7 @@
 
 body.nr-dashboard-theme {
 	// background: #111;
-	background-color: @background;
+	background-color: @pageBackgroundColor;
 }
 
 body.nr-dashboard-theme md-content {
@@ -30,7 +30,7 @@ body.nr-dashboard-theme md-select-menu md-content {
 
 body.nr-dashboard-theme md-content md-card {
 	// background-color: #333;
-	background-color: @groupBackground;
+	background-color: @groupBackgroundColor;
 	color: #eee;
 }
 
@@ -48,8 +48,7 @@ body.nr-dashboard-theme .nr-dashboard-dim { opacity: 0.5 !important; }
 
 body.nr-dashboard-theme md-toolbar {
 	// background-color: #097479;
-	background-color: @titleBarBackground;
-	border-bottom: 1px solid #6B6B6B;
+	background-color: @pageTitlebarBackgroundColor;
 }
 
 
@@ -59,7 +58,7 @@ body.nr-dashboard-theme md-toolbar {
 
 body.nr-dashboard-theme md-sidenav {
 	background: black;
-	background-color: @sideBarBackground;
+	background-color: @pageSidebarBackgroundColor;
 }
 
 
@@ -69,8 +68,8 @@ body.nr-dashboard-theme md-sidenav {
 
 .nr-dashboard-theme ui-card-panel {
 	// background-color: #333;
-	background-color: @groupBackground;
-	border: 1px solid #555;
+	background-color: @groupBackgroundColor;
+	border: 1px solid @groupBorderColor;
 }
 
 /*

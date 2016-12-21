@@ -67,26 +67,24 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
             //need an object coming from node red as follows
             // {name: 'theme-light', styles: {page: background: }}
+            var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
+                                      'group-backgroundColor', 'group-borderColor', 'widget-backgroundColor'];
 
-            var background = theme.themeState.page.background.value;
-            var titleBarBackground = theme.themeState.page.titlebarBackground.value;
-            var sideBarBackground = theme.themeState.page.sidebarBackground.value;
-            var groupBackground = theme.themeState.group.background.value;
-            var groupBorder = theme.themeState.group.border.value;
-            var widgetBackground = theme.themeState.widget.background.value;
-            
+            var lessObj = {};                      
+            for (var i=0; i<configurableStyles.length; i++) {
 
-            //use less to apply the colours to the stylesheet
-            console.log(main);
-            less.modifyVars({
-                '@titleBarBackground': titleBarBackground,
-                '@background': background,
-                '@sideBarBackground': sideBarBackground,
-                '@groupBackground': groupBackground,
-                '@groupBorder': groupBorder,
-                '@widgetBackground': widgetBackground
-            });
-
+                //remove dash and camel case
+                var arr = configurableStyles[i].split('-');
+                for (var j=1; j<arr.length; j++) {
+                    arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
+                }
+                var lessVariable = arr.join("");
+                console.log(lessVariable);
+                var colour = theme.themeState[configurableStyles[i]].value;
+                lessObj["@"+lessVariable] = colour;
+            }
+            console.log(lessObj);
+            less.modifyVars(lessObj);
         }
 
         events.connect(function (ui, done) {
@@ -103,7 +101,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
 
             // Handle theme changes
-            applyStyle(main.selectedTab.theme);
+            console.log(main);
+            if (main.selectedTab) {
+               applyStyle(main.selectedTab.theme); 
+            }
+            
 
 
             

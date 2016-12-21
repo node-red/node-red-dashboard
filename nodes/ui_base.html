@@ -217,9 +217,42 @@ label.theme-label {
         onpaletteadd: function() {
             var globalDashboardNode = null;
             var editor;
-            var baseStyles = ['base-color', 'base-font'];
+            var baseStyles = ['base-color'];
             var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
                                       'group-backgroundColor', 'group-borderColor', 'widget-backgroundColor'];
+            // tiny colour implementation
+            var colours = {
+                leastReadable: function(base, colours) {
+                    var least = tinycolor.readability(base, colours[0]);
+                    var leastColor = colours[0];
+                    for (var i=1; i<colours.length; i++) {
+                        var readability = tinycolor.readability(base, colours[i]);
+                        if (readability < least) {
+                            least = readability;
+                            leastColor = colours[i];
+                        }
+                    }
+                    return leastColor;
+                },
+                calculate_page_backgroundColor: function(base) {
+                    return this.leastReadable(base, ["#fafafa", "#111111"]);
+                },
+                calculate_page_sidebar_backgroundColor: function(base) {
+                    return this.leastReadable(base, ["#000000", "#ffffff"]);
+                },
+                calculate_page_titlebar_backgroundColor: function(base) {
+                    return tinycolor(base).darken(15).toHexString();
+                },
+                calculate_group_backgroundColor: function(base) {
+                    return this.leastReadable(base, ["#ffffff", "#333333"]);
+                },
+                calculate_group_borderColor: function(base) {
+                    return this.leastReadable(base, ["#ffffff", "#555555"]);
+                },
+                calculate_widget_backgroundColor: function(base) {
+                    return base;
+                }
+            }
 
             function ensureDashboardNode(createMissing) {
                 if (globalDashboardNode !== null) {
@@ -238,11 +271,14 @@ label.theme-label {
 
                     // set up theme state
                     var themeState = {};
+                    var base = "#0094CE"
                     for (var i=0; i<baseStyles.length; i++) {
-                        themeState[baseStyles[i]] = { default: null, value: null, edited: false };
+                        themeState[baseStyles[i]] = { default: base, value: base, edited: false };
                     }
                     for (var i=0; i<configurableStyles.length; i++) {
-                        themeState[configurableStyles[i]] = {value: null, edited: false};
+                        var underscore = configurableStyles[i].split("-").join("_");
+                        var colour = colours['calculate_'+underscore](base);
+                        themeState[configurableStyles[i]] = {value: colour, edited: false};
                     }
 
                     if (globalDashboardNode === null && createMissing) {
@@ -326,7 +362,6 @@ label.theme-label {
 
             ulDashboardTabs.find("li.red-ui-tab a").on("click",onTabClick)
 
-
             // Site Tab
             var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
             $('<label>').html('Title').appendTo(divTitle);
@@ -341,40 +376,6 @@ label.theme-label {
                 .appendTo(divTitle);
 
             // Theme Tab       
-            // tiny colour implementation
-            var colours = {
-                leastReadable: function(base, colours) {
-                    var least = tinycolor.readability(base, colours[0]);
-                    var leastColor = colours[0];
-                    for (var i=1; i<colours.length; i++) {
-                        var readability = tinycolor.readability(base, colours[i]);
-                        if (readability < least) {
-                            least = readability;
-                            leastColor = colours[i];
-                        }
-                    }
-                    return leastColor;
-                },
-                calculate_page_backgroundColor: function(base) {
-                    return this.leastReadable(base, ["#fafafa", "#111111"]);
-                },
-                calculate_page_sidebar_backgroundColor: function(base) {
-                    return this.leastReadable(base, ["#000000", "#ffffff"]);
-                },
-                calculate_page_titlebar_backgroundColor: function(base) {
-                    return tinycolor(base).darken(15).toHexString();
-                },
-                calculate_group_backgroundColor: function(base) {
-                    return this.leastReadable(base, ["#ffffff", "#333333"]);
-                },
-                calculate_group_borderColor: function(base) {
-                    return this.leastReadable(base, ["#ffffff", "#555555"]);
-                },
-                calculate_widget_backgroundColor: function(base) {
-                    return base;
-                }
-            }
-
             // For all customisable styles, generate and apply the css
             var generateColours = function(base) {
                 for (var i=0; i<configurableStyles.length; i++) {
@@ -398,28 +399,18 @@ label.theme-label {
                 '<option value="theme-custom">Custom</option>'+
                 '</select>')
                 .change(function() {
-                    console.log(globalDashboardNode);
                     if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme = $(this).val();
-                        switch(globalDashboardNode.theme) {
-                            case 'theme-light':
-                                $("#base-color").val(globalDashboardNode.lightTheme.baseColor);
-                                globalDashboardNode.themeState['base-color'].value = globalDashboardNode.lightTheme.baseColor;
-                                break;
-                            case 'theme-dark':
-                                $("#base-color").val(globalDashboardNode.darkTheme.baseColor);
-                                globalDashboardNode.themeState['base-color'].value = globalDashboardNode.darkTheme.baseColor;
-                                break;
-                            case 'theme-custom':
-                                var base = globalDashboardNode.customTheme.baseColor;
-                                $("#base-color").val(base);
-                                globalDashboardNode.themeState['base-color'].value = base;
 
-                                //generate colours for all colour settings from base colour
-                                generateColours(base);
-                                break;
-                        }
+                        var theme = globalDashboardNode.theme.split('-')[1];
+                        var baseColour = globalDashboardNode[theme+'Theme'].baseColor;
+                        $("#base-color").val(baseColour);
+                        globalDashboardNode.themeState['base-color'].value = baseColour;
+                        globalDashboardNode.themeState['base-color'].default = baseColour;
+                        //generate colours for all colour settings from base colour
+                        generateColours(baseColour);
+
                         RED.nodes.dirty(true);
                     }
                     if ($(this).val() === 'theme-custom') {
@@ -464,29 +455,25 @@ label.theme-label {
 
             addResetButton('base-color', baseSettingsUl.children());
 
-            $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#0094CE"/>')
+            $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
             .change(function() {
                 ensureDashboardNode(true);
-                var lightThemeMatch = globalDashboardNode.lightTheme.baseColor === $(this).val();
-                var darkThemeMatch = globalDashboardNode.darkTheme.baseColor === $(this).val();
-                var customThemeMatch = globalDashboardNode.customTheme.baseColor === $(this).val();
+                var value = $(this).val();
+                var lightThemeMatch = globalDashboardNode.lightTheme.baseColor === value;
+                var darkThemeMatch = globalDashboardNode.darkTheme.baseColor === value;
+                var customThemeMatch = globalDashboardNode.customTheme.baseColor === value;
                 if (!globalDashboardNode || !lightThemeMatch || !darkThemeMatch || !customThemeMatch) {
-                    //update the relevant colour storage
-                    switch(globalDashboardNode.theme) {
-                        case 'theme-light':
-                            globalDashboardNode.lightTheme.baseColor = $(this).val();
-                            break;
-                        case 'theme-dark':
-                            globalDashboardNode.darkTheme.baseColor = $(this).val();
-                            break;
-                        case 'theme-custom':
-                            globalDashboardNode.customTheme.baseColor = $(this).val();
-                            generateColours($(this).val());
-                            globalDashboardNode.themeState['base-color'].value = $(this).val();
-                            editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
-                            break;
+                    if (globalDashboardNode.theme === 'theme-light' || globalDashboardNode.theme === 'theme-dark') {
+                        var theme = globalDashboardNode.theme.split('-')[1];
+                        globalDashboardNode[theme+'Theme'].baseColor = value;
+                    } else {
+
+                        //custom
+                        globalDashboardNode.customTheme.baseColor = value;
+                        editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
                     }
-                    colourPickerChangeHandler($(this).attr('id'), $(this).val());
+                    generateColours(value);
+                    colourPickerChangeHandler($(this).attr('id'), value);
                 }
 
             })
@@ -495,6 +482,7 @@ label.theme-label {
 
             var themeSettingsContainer = $('<div id="custom-theme-settings">').appendTo(themeTab);
 
+            // Markup
             // Page styles
             var divPageStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
             $('<label class="theme-label">').html('Page Settings').appendTo(divPageStyle);
@@ -548,103 +536,26 @@ label.theme-label {
             function resetClick(e) {
                 //take off -reset
                 var elementID = e.target.id.split('-reset')[0];
-                console.log(elementID);
-
-                var defaultColor = globalDashboardNode.themeState['base-color'].default;
-                var colour;
-
-                if (elementID === 'base-color') {
-                    colour = defaultColor;
-                    generateColours(colour);
-
-                } else {
-                    var underscore = elementID.split('-').join('_');
-                    colour = colours['calculate_'+underscore](defaultColor);  
-                }
-
                 if (globalDashboardNode.themeState[elementID].edited) {
+
+                    var defaultColor = globalDashboardNode.themeState['base-color'].default;
+                    var colour;
+
+                    //set colour
+                    if (elementID === 'base-color') {
+                        colour = defaultColor;
+                        generateColours(colour);
+                    } else {
+                        var underscore = elementID.split('-').join('_');
+                        colour = colours['calculate_'+underscore](defaultColor);  
+                    }                
                     $("#"+elementID).val(colour);
                     $("#"+elementID+"-reset").css({opacity: 0.6});
                     globalDashboardNode.themeState[elementID].edited = false;
                     globalDashboardNode.themeState[elementID].value = colour;
+
+                    RED.nodes.dirty(true);
                 }
-                
-                // switch (elementID) {
-                //     case 'base-color-reset':
-                       
-                //         if (globalDashboardNode.themeState.base.color.edited) {
-                //             var defaultColor = globalDashboardNode.themeState.base.color.defaultColor;
-                //             $('#base-color').val(defaultColor);
-                //             generateColours(defaultColor);
-                //             $("#base-color-reset").css({opacity: 0.6});
-                //             globalDashboardNode.themeState.base.color.edited = false;
-                //             globalDashboardNode.themeState.base.color.value = defaultColor;
-                //         }
-                //         break;
-
-                //     case 'page-background-color-reset':
-                //         if (globalDashboardNode.themeState.page.background.edited) {
-                //             var pageBackground = colours.calculatePageBackground(globalDashboardNode.themeState.base.color.defaultColor);
-                //             $("#page-background-color").val(pageBackground);
-                //             $("#page-background-color-reset").css({opacity: 0.6});
-                //             globalDashboardNode.themeState.page.background.edited = false;
-                //             globalDashboardNode.themeState.page.background.value = pageBackground
-                //         }
-                //         break;
-
-                //     case 'page-side-bar-background-color-reset':
-                //         if (globalDashboardNode.themeState.page.sidebarBackground.edited) {
-                //             var sidebarBackground = colours.calculateSidebarBackground(globalDashboardNode.themeState.base.color.defaultColor);
-                //             $("#page-side-bar-background-color").val(sidebarBackground);
-                //             $("#page-side-bar-background-color-reset").css({opacity: 0.6});
-                //             globalDashboardNode.themeState.page.sidebarBackground.edited = false;
-                //             globalDashboardNode.themeState.page.sidebarBackground.value = sidebarBackground
-
-                //         }
-                //         break;
-
-                //     case 'page-title-bar-background-color-reset':
-                //         if (globalDashboardNode.themeState.page.titlebarBackground.edited) {
-                //             var titlebarBackground = colours.calculateTitlebarBackground(globalDashboardNode.themeState.base.defaultColor);
-                //             $("#page-title-bar-background-color").val(titlebarBackground);
-                //             $("#page-title-bar-background-color-reset").css({opacity: 0.6});
-                //             globalDashboardNode.themeState.page.titlebarBackground.edited = false;
-                //             globalDashboardNode.themeState.page.titlebarBackground.value = titlebarBackground;
-                //         }
-                //         break;
-
-                //     case 'group-background-color-reset':
-                //         if (globalDashboardNode.themeState.group.background.edited) {
-                //             var groupBackground = colours.calculateGroupBackground(globalDashboardNode.themeState.base.defaultColor);
-                //             $("#group-background-color").val(groupBackground);
-                //             $("#group-background-color-reset").css({opacity: 0.6});
-                //             globalDashboardNode.themeState.group.background.edited = false;
-                //             globalDashboardNode.themeState.group.background.value = groupBackground;
-                //         }
-                //         break;
-
-                //     case 'group-border-color-reset':
-                //         if (globalDashboardNode.themeState.group.border.edited) {
-                //             var groupBorder = colours.calculateGroupBorder(globalDashboardNode.themeState.base.defaultColor);
-                //             $("#group-border-color").val(groupBorder);
-                //             $("#group-border-color-reset").css({opacity: 0.6});
-                //             globalDashboardNode.themeState.group.border.edited = false;
-                //             globalDashboardNode.themeState.group.border.value = groupBackground;
-                //         }
-                //         break;
-
-                //     case 'widget-primary-color-reset':
-                //         if (globalDashboardNode.themeState.widget.background.edited) {
-                //             var widgetColor = colours.calculatePrimaryWidgetColor(globalDashboardNode.themeState.base.defaultColor);
-                //             $("#widget-primary-color").val(widgetColor);
-                //             $("#widget-primary-color-reset").css({opacity: 0.6});
-                //             globalDashboardNode.themeState.widget.background.edited = false;
-                //             globalDashboardNode.themeState.widget.background.value = widgetColor
-                //         }
-                //         break;
-                // }
-                RED.nodes.dirty(true);
-
             }
 
             
@@ -1261,10 +1172,12 @@ label.theme-label {
                         $("#custom-theme-library-container").hide();
                         $("#custom-theme-settings").hide();
                     }
-                    
-                    globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
-                    globalDashboardNode.themeState['base-font'].default = globalDashboardNode.customTheme.baseFont;
 
+                    //set colour start
+                    var currentTheme = globalDashboardNode.theme.split("-")[1];
+                    var startingValue = globalDashboardNode[currentTheme+"Theme"].baseColor;
+                    $("#base-color").val(startingValue);
+                    
                     editor = RED.editor.createEditor({
                         id: 'node-input-format-editor',
                         mode: 'ace/mode/javascript',
@@ -1281,9 +1194,11 @@ label.theme-label {
 
                     editor.on('input', function() {
                         globalDashboardNode.customTheme = JSON.parse(editor.getValue());
-                        $("#base-color").val(globalDashboardNode.customTheme.baseColor);
-                        globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
-                        generateColours(globalDashboardNode.customTheme.baseColor);
+                        if (globalDashboardNode.theme === 'theme-custom') {
+                            $("#base-color").val(globalDashboardNode.customTheme.baseColor);
+                            globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
+                            generateColours(globalDashboardNode.customTheme.baseColor);
+                        }  
                     });
 
                 }
