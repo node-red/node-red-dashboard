@@ -65,10 +65,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         //Use tiny colour to apply inline styles to elements
         function applyStyle(theme) {
 
-            //need an object coming from node red as follows
-            // {name: 'theme-light', styles: {page: background: }}
-            var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
-                                      'group-backgroundColor', 'group-borderColor', 'widget-backgroundColor'];
+            //less css needs a corresponding css variable for each style
+            // in camel case. e.g. 'page-backgroundColor' -> '@pageBackgroundColor'
+            var configurableStyles = Object.keys(theme.themeState);
 
             var lessObj = {};                      
             for (var i=0; i<configurableStyles.length; i++) {
@@ -79,11 +78,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
                 }
                 var lessVariable = arr.join("");
-                console.log(lessVariable);
                 var colour = theme.themeState[configurableStyles[i]].value;
                 lessObj["@"+lessVariable] = colour;
             }
-            console.log(lessObj);
             less.modifyVars(lessObj);
         }
 
@@ -101,13 +98,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
 
             // Handle theme changes
-            console.log(main);
             if (main.selectedTab) {
                applyStyle(main.selectedTab.theme); 
             }
-            
-
-
             
             $mdToast.hide();
             done();
