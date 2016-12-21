@@ -219,7 +219,8 @@ label.theme-label {
             var editor;
             var baseStyles = ['base-color'];
             var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
-                                      'group-backgroundColor', 'group-borderColor', 'widget-backgroundColor'];
+                                      'group-backgroundColor', 'group-textColor', 'group-borderColor', 'widget-textColor',
+                                      'widget-backgroundColor'];
             // tiny colour implementation
             var colours = {
                 leastReadable: function(base, colours) {
@@ -237,20 +238,29 @@ label.theme-label {
                 calculate_page_backgroundColor: function(base) {
                     return this.leastReadable(base, ["#fafafa", "#111111"]);
                 },
+                calculate_group_textColor: function(base) {
+                    return tinycolor(base).lighten(25).toHexString();
+                },
                 calculate_page_sidebar_backgroundColor: function(base) {
                     return this.leastReadable(base, ["#000000", "#ffffff"]);
                 },
                 calculate_page_titlebar_backgroundColor: function(base) {
-                    return tinycolor(base).darken(15).toHexString();
+                    return tinycolor(base).darken(10).toHexString();
                 },
                 calculate_group_backgroundColor: function(base) {
                     return this.leastReadable(base, ["#ffffff", "#333333"]);
                 },
                 calculate_group_borderColor: function(base) {
-                    return this.leastReadable(base, ["#ffffff", "#555555"]);
+                    var groupBackground = this.calculate_group_backgroundColor(base);
+                    return this.leastReadable(groupBackground, ["#ffffff", "#555555"]);
+                },
+                calculate_widget_textColor: function(base) {
+                    //most readable against group background
+                    var groupBackground = this.calculate_group_backgroundColor(base);
+                    return tinycolor.mostReadable(groupBackground, ["#000000", "#eeeeee"]).toHexString();
                 },
                 calculate_widget_backgroundColor: function(base) {
-                    return base;
+                    return tinycolor(base).darken(5).toHexString()
                 }
             }
 
@@ -289,16 +299,21 @@ label.theme-label {
                             name: "Node-RED Dashboard",
                             theme: "theme-light",
                             lightTheme: {
+                                default: "#0094CE",
                                 baseColor: "#0094CE",
-                                baseFont: "Helvetica Neue"
+                                baseFont: "Helvetica Neue",
+                                edited: false
                             },
                             darkTheme: {
+                                default: "#097479",
                                 baseColor: "#097479",
-                                baseFont: "Helvetica Neue"
+                                baseFont: "Helvetica Neue",
+                                edited: false
                             },
                             customTheme: {
                                 name: 'Untitled Theme 1',
                                 baseColor: "#0094CE",
+                                default: "#0094CE",
                                 baseFont: "Helvetica Neue"
                             },
                             themeState: themeState,
@@ -312,7 +327,6 @@ label.theme-label {
             }
             var content = $("<div>").css({"position":"relative","height":"100%"});
             var mainContent = $("<div>",{class:"nr-db-sb"}).appendTo(content);
-
             var form = $('<form class="dialog-form">').appendTo(mainContent);
 
             // Dashboard Tabs markup
@@ -390,7 +404,6 @@ label.theme-label {
                 }
             }
 
-
             var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
             $('<label class="theme-label">').html('Style').appendTo(divThemeStyle);        
             var themeSelection = $('<select id="nr-db-field-theme">'+
@@ -413,12 +426,15 @@ label.theme-label {
 
                         RED.nodes.dirty(true);
                     }
+                    $('#base-color-reset').remove();
                     if ($(this).val() === 'theme-custom') {
                         $("#custom-theme-library-container").show();
                         $("#custom-theme-settings").show();
+                        //addResetButton('base-color', baseSettingsUl.children());
                     } else {
                         $("#custom-theme-library-container").hide();
                         $("#custom-theme-settings").hide();
+                        addLightAndDarkResetButton('base-color', baseSettingsUl.children());
                     }
                 })
                 .appendTo(divThemeStyle);
@@ -437,12 +453,11 @@ label.theme-label {
             $('<input type="hidden" id="node-input-format">').appendTo(customThemeLibraryContainer);
             $('<div style="display: none;" class="node-text-editor" id="node-input-format-editor" ></div>').appendTo(customThemeLibraryContainer);
 
-
             var baseThemeSettingsContainer = $('<div id="base-theme-settings">').appendTo(themeTab);
 
             var baseSettings = $('<div>',{class:"form-row"}).appendTo(baseThemeSettingsContainer);
             $('<label class="theme-label">').html('Base Settings').appendTo(baseSettings);
-            var baseSettingsUl = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
+            var baseSettingsUl = $('<ul id="base-settings-ul" class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
 
             var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Colour</span></li>').appendTo(baseSettingsUl);
             var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
@@ -452,8 +467,6 @@ label.theme-label {
             //     '<option value="arial">Arial (default)</option>'+
             //     '<option value="helvetica">Helvetica</option>'+
             //     '</select>').appendTo(baseFontItem);
-
-            addResetButton('base-color', baseSettingsUl.children());
 
             $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
             .change(function() {
@@ -466,19 +479,21 @@ label.theme-label {
                     if (globalDashboardNode.theme === 'theme-light' || globalDashboardNode.theme === 'theme-dark') {
                         var theme = globalDashboardNode.theme.split('-')[1];
                         globalDashboardNode[theme+'Theme'].baseColor = value;
-                    } else {
 
+                        //for light and dark themes, set the edited status to true
+                        globalDashboardNode[theme+'Theme'].edited = true;
+                        
+                    } else {
                         //custom
                         globalDashboardNode.customTheme.baseColor = value;
                         editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
                     }
                     generateColours(value);
                     colourPickerChangeHandler($(this).attr('id'), value);
+                    
                 }
-
             })
             .appendTo(spanColorContainer);
-
 
             var themeSettingsContainer = $('<div id="custom-theme-settings">').appendTo(themeTab);
 
@@ -495,15 +510,17 @@ label.theme-label {
             var divGroupStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
             $('<label class="theme-label">').html('Group Settings').appendTo(divGroupStyle);
             var groupStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
+            addCustomisableStyle('group-backgroundColor', 'Group Background', groupStyles)
+            addCustomisableStyle('group-textColor', 'Group Text', groupStyles);
             addCustomisableStyle('group-borderColor', 'Group Border', groupStyles);
-            addCustomisableStyle('group-backgroundColor', 'Group Background', groupStyles);
-
             
+
             // Widget styles
             var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
             $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
             var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-            addCustomisableStyle('widget-backgroundColor', 'Widget Background', widgetStyles);
+            addCustomisableStyle('widget-textColor', 'Widget Text', widgetStyles);
+            addCustomisableStyle('widget-backkgroundColor', 'Widget Background', widgetStyles);
 
             function addCustomisableStyle(id, name, parentUl) {
                 var styleLi = $('<li class="red-ui-dashboard-theme-item"><span>'+name+'</span></li>').appendTo(parentUl);
@@ -517,13 +534,13 @@ label.theme-label {
                 addResetButton(id, styleLi);
             }
             
-
             function colourPickerChangeHandler(id, value) {
                 $("#"+id+"-reset").css({opacity: 1});   
                 globalDashboardNode.themeState[id].edited = true;
                 globalDashboardNode.themeState[id].value = value;
                 RED.nodes.dirty(true);
             }
+
 
             function addResetButton(id, parent) {
                 var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
@@ -533,7 +550,38 @@ label.theme-label {
                     .appendTo(parent);
             }
 
+            function addLightAndDarkResetButton(id, parent) {
+                var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
+                   .click(function(e) {
+                       lightAndDarkResetClick(e);
+                   })
+                    .appendTo(parent);
+            }
+
+            function lightAndDarkResetClick(e) {
+                var elementID = e.target.id.split('-reset')[0];
+                var currentTheme = globalDashboardNode.theme.split('-')[1];
+                var key = currentTheme+'Theme';
+                //sanity check - light and dark only allow base-color-reset
+                if (elementID === 'base-color' && globalDashboardNode[key].edited) {
+                    
+                    if (globalDashboardNode[key].edited) {
+                        var defaultColor = globalDashboardNode[key].default;
+                        generateColours(defaultColor);
+                        $("#"+elementID).val(defaultColor);
+                        $("#"+elementID+"-reset").css({opacity: 0.6});
+                        globalDashboardNode.themeState[elementID].value = defaultColor;
+                        globalDashboardNode[key].baseColor = defaultColor;
+                        globalDashboardNode[key].edited = false;
+                        RED.nodes.dirty(true);
+                        
+                    }
+                }
+                
+            }
+
             function resetClick(e) {
+                console.log(globalDashboardNode);
                 //take off -reset
                 var elementID = e.target.id.split('-reset')[0];
                 if (globalDashboardNode.themeState[elementID].edited) {
@@ -1177,6 +1225,12 @@ label.theme-label {
                     var currentTheme = globalDashboardNode.theme.split("-")[1];
                     var startingValue = globalDashboardNode[currentTheme+"Theme"].baseColor;
                     $("#base-color").val(startingValue);
+
+                    if (globalDashboardNode.theme === 'theme-light' || globalDashboardNode.theme === 'theme-dark') {
+                        addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
+                    // } else {
+                    //     addResetButton('base-color', $('#base-settings-ul').children());
+                    }
                     
                     editor = RED.editor.createEditor({
                         id: 'node-input-format-editor',

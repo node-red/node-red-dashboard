@@ -27,10 +27,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         gaugeConfig.displayPercent = false;
 
                         // TODO - Opinionated colours - should be moved to themes
-                        gaugeConfig.circleColor = scope.$eval('me.item.waveoptions.circleColor')[scope.main.selectedTab.theme];
-                        gaugeConfig.waveColor = scope.$eval('me.item.waveoptions.waveColor')[scope.main.selectedTab.theme];
-                        gaugeConfig.textColor = scope.$eval('me.item.waveoptions.textColor')[scope.main.selectedTab.theme];
-                        gaugeConfig.waveTextColor = scope.$eval('me.item.waveoptions.waveTextColor')[scope.main.selectedTab.theme];
+                        gaugeConfig.circleColor = scope.$eval('me.item.waveoptions.circleColor');
+                        gaugeConfig.waveColor = scope.$eval('me.item.waveoptions.waveColor');
+                        gaugeConfig.textColor = scope.$eval('me.item.waveoptions.textColor');
+                        gaugeConfig.waveTextColor = scope.$eval('me.item.waveoptions.waveTextColor');
                         if (gaugeConfig.circleColor === undefined) { gaugeConfig.circleColor = bgnd; }
                         if (gaugeConfig.waveColor === undefined) { gaugeConfig.waveColor = bgnd; }
                         if (gaugeConfig.textColor === undefined) { gaugeConfig.textColor = fgnd; }
@@ -67,12 +67,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             //gaugeOptions.donutStartAngle = 270;
                             gaugeOptions.pointer = false;
                         }
-
-                        if (scope.main.selectedTab.theme !== 'theme-light') {
-                            gaugeOptions.gaugeWidthScale = scope.$eval('me.item.gageoptions.lineWidth')[scope.main.selectedTab.theme];
-                            gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.backgroundColor')[scope.main.selectedTab.theme];
-                            gaugeOptions.pointerOptions = scope.$eval('me.item.gageoptions.pointerOptions')[scope.main.selectedTab.theme];
-                        }
+                        gaugeOptions.gaugeWidthScale = scope.$eval('me.item.gageoptions.lineWidth');
+                        gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.backgroundColor');
+                        gaugeOptions.pointerOptions = scope.$eval('me.item.gageoptions.pointerOptions');
+                        
                         if (gaugeOptions.gaugeWidthScale === undefined) { delete gaugeOptions.gaugeWidthScale; }
                         if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = "rgba(127,127,127,0.5)"; }
                         if (gaugeOptions.pointerOptions === undefined) { gaugeOptions.pointerOptions = {color:fgnd}; }
@@ -82,9 +80,9 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             gaugeOptions.gaugeWidthScale = 0.2;
                             gaugeOptions.pointer = true;
                             gaugeOptions.refreshAnimationTime = 5;
-                            gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:scope.$eval('me.item.gageoptions.compassColor')[scope.main.selectedTab.theme]};
-                            gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor')[scope.main.selectedTab.theme];
-                            gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor')[scope.main.selectedTab.theme]];
+                            gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:scope.$eval('me.item.gageoptions.compassColor')};
+                            gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor');
+                            gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor')];
                             if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = bgnd; }
                             if (gaugeOptions.pointerOptions.color === undefined) { gaugeOptions.pointerOptions.color = bgnd; }
                         }

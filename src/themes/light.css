@@ -95,7 +95,7 @@ body.nr-dashboard-theme-light md-sidenav {}
 
 .nr-dashboard-theme-light md-select-menu, .nr-dashboard-theme-light md-select-menu md-option {
 	background-color: #fff;
-	color: #000;
+	color: @widgetTextColour;
 }
 
 .nr-dashboard-theme-light md-select-menu.md-default-theme md-option:focus:not([disabled]):not([selected]),
