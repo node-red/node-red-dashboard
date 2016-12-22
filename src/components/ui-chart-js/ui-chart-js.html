@@ -1,7 +1,6 @@
 <div>
 <canvas
 	ng-if="me.item.look==='line'"
-	style="width:{{me.item.width*55}}px; height:{{me.item.height*100}}px;"
 	class="chart chart-line"
 	chart-data="config.data"
 	chart-series="config.series"
@@ -11,7 +10,6 @@
 </canvas>
 <canvas
 	ng-if="me.item.look==='bar'"
-	style="width:{{me.item.width*55}}px; height:{{me.item.height*100}}px;"
 	class="chart chart-bar"
 	chart-data="config.data"
 	chart-series="config.series"
@@ -21,7 +19,6 @@
 </canvas>
 <canvas
 	ng-if="me.item.look==='horizontalBar'"
-	style="width:{{me.item.width*55}}px; height:{{me.item.height*100}}px;"
 	class="chart chart-horizontalBar"
 	chart-data="config.data"
 	chart-series="config.series"
@@ -31,7 +28,6 @@
 </canvas>
 <canvas
 	ng-if="me.item.look==='pie'"
-	style="width:{{me.item.width*55}}px; height:{{me.item.height*100}}px;"
 	class="chart chart-pie"
 	chart-data="config.data"
 	chart-series="config.series"

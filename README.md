@@ -3,7 +3,7 @@
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard.
 
-<img src="http://nodered.org/images/dashboardd.png"/>
+<img src="http://nodered.org/images/dashboarde.png"/>
 
 It is a continuation of the [node-red-contrib-ui](https://www.npmjs.com/package/node-red-contrib-ui)
 module created by Andrei Tatar.

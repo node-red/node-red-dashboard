@@ -53,7 +53,8 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             else {
                                 // Bar charts and non update line charts replace the data
                                 scope.config.data = newValue.values.data;
-                                (type === 'line') ? scope.config.series = newValue.values.series : scope.config.labels = newValue.values.series;
+                                if (type === 'line') { scope.config.series = newValue.values.series }
+                                else { scope.config.labels = newValue.values.series; }
                             }
                         }
                         else {
@@ -226,7 +227,12 @@ function loadConfiguration(type,scope) {
         if (type === 'pie') {
             config.options.legend.position = 'left';
         }
-        (scope.$eval('me.item.theme') === 'theme-dark') ? config.options.legend.labels = { fontColor:"#fff" } : config.options.legend.labels = {fontColor:"#666"};
+        if (scope.$eval('me.item.theme') === 'theme-dark') {
+            config.options.legend.labels = { fontColor:"#fff" };
+        }
+        else {
+            config.options.legend.labels = {fontColor:"#666"};
+        }
     }
     return config;
 }

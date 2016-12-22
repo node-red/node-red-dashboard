@@ -4,7 +4,11 @@
 **Fixes**
 
  - Gauges now scale properly on IE9/10/11 and Edge
-
+ - Increase chart size to better fill available space
+ - Fix colour-picker touch support (upstream fix)
+ - Fix slight transparency issue on select dropdown
+ - Small changes to colour-picker styling
+ - Allow use of wi and icofont icon families (only if loaded externally vi ui_template)
 
 ### 2.2.0: Milestone Release
 
