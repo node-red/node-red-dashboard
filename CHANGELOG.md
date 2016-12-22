@@ -1,14 +1,15 @@
 
-### 2.2.1-beta: Maintenance Release (not yet on NPM)
+### 2.2.1: Maintenance Release
 
 **Fixes**
 
  - Gauges now scale properly on IE9/10/11 and Edge
  - Increase chart size to better fill available space
- - Fix colour-picker touch support (upstream fix)
+ - Fix colour-picker touch support (temporary patch while awaiting upstream fix)
  - Fix slight transparency issue on select dropdown
  - Small changes to colour-picker styling
- - Allow use of wi and icofont icon families (only if loaded externally vi ui_template)
+ - Allow use of wi and icofont icon families (only if loaded externally via ui_template)
+ - Fix for overlapping last X-axis label (temporary while fixed upstream)
 
 ### 2.2.0: Milestone Release
 
