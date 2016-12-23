@@ -62,8 +62,8 @@ gulp.task('index', function() {
         'js': 'js/app.min.js',
     }))
     .pipe(insertLines({
-      'before': /<\/head>$/,
-      'lineBefore': '<link rel="stylesheet/less" href="css/app.min.less" />'
+        'before': /<\/head>$/,
+        'lineBefore': '<link rel="stylesheet/less" href="css/app.min.less" />'
     }))
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(gulp.dest('dist/'));

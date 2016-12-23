@@ -10,24 +10,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "contributors": [
-    {
-      "name": "Andrei Tatar"
-    },
-    {
-      "name": "Dave Conway-Jones"
-    },
-    {
-      "name": "Joe Pavitt"
-    },
-    {
-      "name": "Nick O'Leary"
-    },
-    {
-      "name": "Dan Cunnington"
-    },
-    {
-      "name": "Laurence Stant"
-    }
+    { "name": "Andrei Tatar" },
+    { "name": "Dave Conway-Jones" },
+    { "name": "Joe Pavitt" },
+    { "name": "Nick O'Leary" },
+    { "name": "Dan Cunnington" },
+    { "name": "Laurence Stant" }
   ],
   "license": "Apache-2.0",
   "repository": {
@@ -63,15 +51,15 @@
     "socket.io": "^1.7.0"
   },
   "devDependencies": {
-    "angular": "~1.5.6",
-    "angular-animate": "~1.5.6",
-    "angular-aria": "~1.5.6",
+    "angular": "~1.5.10",
+    "angular-animate": "~1.5.10",
+    "angular-aria": "~1.5.10",
     "angular-chart.js": "^1.0.3",
     "angular-material": "^1.1.1",
     "angular-material-icons": "^0.7.1",
-    "angular-messages": "~1.5.6",
-    "angular-mocks": "~1.5.6",
-    "angular-route": "~1.5.6",
+    "angular-messages": "~1.5.10",
+    "angular-mocks": "~1.5.10",
+    "angular-route": "~1.5.10",
     "angular-sanitize": "^1.4.8",
     "angularjs-color-picker": "^2.7.2",
     "chart.js": "~2.3.0",

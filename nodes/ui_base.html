@@ -197,39 +197,39 @@
 
 </style>
 <script type="text/javascript">
-    (function($) {
-        var editSaveEventHandler;
-        var nodesAddEventHandler;
-        var nodesRemoveEventHandler;
-        var uip = RED.settings.uiPath || 'ui';
-        RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
+(function($) {
+    var editSaveEventHandler;
+    var nodesAddEventHandler;
+    var nodesRemoveEventHandler;
+    var uip = RED.settings.uiPath || 'ui';
+    RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
 
-        var attemptedVendorLoad = false;
-        var loadTinyColor = function(path) {
-            $.ajax({ cache: false,
-              url: path,
-              success: function (data) {
+    var attemptedVendorLoad = false;
+    var loadTinyColor = function(path) {
+        $.ajax({ cache: false,
+            url: path,
+            success: function (data) {
                 var jsScript = document.createElement("script");
                 jsScript.type = "application/javascript";
                 jsScript.src = path;
                 document.body.appendChild(jsScript);
                 console.log('Tiny Color Loaded');
             },
-            error:function (xhr, ajaxOptions, thrownError){
-                if(xhr.status === 404 && !attemptedVendorLoad) {
+            error:function (xhr, ajaxOptions, thrownError) {
+                if (xhr.status === 404 && !attemptedVendorLoad) {
                     loadTinyColor(uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
                     attemptedVendorLoad = true;
                 }
             }
         });
-        }
-        
-        // Try to load dist version first
-        // then if fails, load non dist version
-        loadTinyColor(uip+'/js/tinycolor.js');
+    }
+
+    // Try to load dist version first
+    // then if fails, load non dist version
+    loadTinyColor(uip+'/js/tinycolor.js');
 
 
-        RED.nodes.registerType('ui_base',{
+    RED.nodes.registerType('ui_base',{
             category: 'config',
             defaults: {
                 name: {value: ''},
@@ -276,12 +276,14 @@
                     },
                     calculate_page_backgroundColor: function(base) {
                         var whiteOrBlack = this.whiteBlackLeastReadable(base);
-                        var pageBackground;
-                        (whiteOrBlack === "#000000") ? pageBackground = "#111111" : pageBackground = "#fafafa";
+                        var pageBackground = "#fafafa";
+                        if (whiteOrBlack === "#000000") { pageBackground = "#111111"; }
                         return pageBackground;
                     },
                     calculate_group_textColor: function(base) {
-                        return tinycolor(base).lighten(25).toHexString();
+                        var groupTextColour = tinycolor(base).lighten(20).toHexString();
+                        if (this.whiteBlackLeastReadable(base) === "#ffffff") { groupTextColour = "#000000"; }
+                        return groupTextColour;
                     },
                     calculate_page_sidebar_backgroundColor: function(base) {
                         return this.whiteBlackLeastReadable(base);
@@ -291,8 +293,8 @@
                     },
                     calculate_group_backgroundColor: function(base) {
                         var whiteOrBlack = this.whiteBlackLeastReadable(base);
-                        var groupBackground;
-                        (whiteOrBlack === "#000000") ? groupBackground = "#333333" : groupBackground = "#ffffff";
+                        var groupBackground = "#ffffff";
+                        if (whiteOrBlack === "#000000") { groupBackground = "#333333"; }
                         return groupBackground;
                     },
                     calculate_group_borderColor: function(base) {
@@ -305,7 +307,8 @@
                         return tinycolor.mostReadable(groupBackground, ["#111111", "#eeeeee"]).toHexString();
                     },
                     calculate_widget_backgroundColor: function(base) {
-                        return tinycolor(base).darken(5).toHexString()
+                        //return tinycolor(base).darken(5).toHexString()
+                        return tinycolor(base).toHexString();
                     }
                 }
 
@@ -408,7 +411,6 @@
                         themeTab.hide();
                         siteTab.hide();
                         layoutTab.show();
-
                     } else if (selectedTab === 'Theme') {
                         layoutTab.hide();
                         siteTab.hide();
@@ -436,7 +438,7 @@
                 })
                 .appendTo(divTitle);
 
-                // Theme Tab       
+                // Theme Tab
                 // For all customisable styles, generate and apply the css
                 var generateColours = function(base) {
                     for (var i=0; i<configurableStyles.length; i++) {
@@ -446,28 +448,28 @@
                         if (!globalDashboardNode.themeState[styleID].edited) {
                             var colour = colours['calculate_'+underscore](base);
                             $("#"+styleID).val(colour);
+                            console.log("COLOR",styleID,colour);
                             globalDashboardNode.themeState[styleID].value = colour;
                         }
                     }
                 }
 
                 var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
-                $('<label class="theme-label">').html('Style').appendTo(divThemeStyle);        
+                $('<label class="theme-label">').html('Style').appendTo(divThemeStyle);
                 var themeSelection = $('<select id="nr-db-field-theme">'+
                     '<option value="theme-light">Light (default)</option>'+
                     '<option value="theme-dark">Dark</option>'+
                     '<option value="theme-custom">Custom</option>'+
-                    '</select>')
-                .change(function() {
-                    if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
-                        ensureDashboardNode(true);
-                        globalDashboardNode.theme = $(this).val();
+                    '</select>').change(function() {
+                        if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
+                            ensureDashboardNode(true);
+                            globalDashboardNode.theme = $(this).val();
 
-                        var theme = globalDashboardNode.theme.split('-')[1];
-                        var baseColour = globalDashboardNode[theme+'Theme'].baseColor;
-                        $("#base-color").val(baseColour);
-                        globalDashboardNode.themeState['base-color'].value = baseColour;
-                        globalDashboardNode.themeState['base-color'].default = baseColour;
+                            var theme = globalDashboardNode.theme.split('-')[1];
+                            var baseColour = globalDashboardNode[theme+'Theme'].baseColor;
+                            $("#base-color").val(baseColour);
+                            globalDashboardNode.themeState['base-color'].value = baseColour;
+                            globalDashboardNode.themeState['base-color'].default = baseColour;
                             //generate colours for all colour settings from base colour
                             generateColours(baseColour);
 
@@ -484,7 +486,7 @@
                             addLightAndDarkResetButton('base-color', baseSettingsUl.children());
                         }
                     })
-                .appendTo(divThemeStyle);
+                    .appendTo(divThemeStyle);
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">',{class:"form-row"}).appendTo(themeTab);
                 $('<label class="theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
@@ -529,7 +531,7 @@
 
                             //for light and dark themes, set the edited status to true
                             globalDashboardNode[theme+'Theme'].edited = true;
-                            
+
                         } else {
                             //custom
                             globalDashboardNode.customTheme.baseColor = value;
@@ -537,7 +539,7 @@
                         }
                         generateColours(value);
                         colourPickerChangeHandler($(this).attr('id'), value);
-                        
+
                     }
                 })
                 .appendTo(spanColorContainer);
@@ -560,14 +562,14 @@
                 addCustomisableStyle('group-backgroundColor', 'Group Background', groupStyles)
                 addCustomisableStyle('group-textColor', 'Group Text', groupStyles);
                 addCustomisableStyle('group-borderColor', 'Group Border', groupStyles);
-                
+
 
                 // Widget styles
                 var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
                 $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
                 var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('widget-textColor', 'Widget Text', widgetStyles);
-                addCustomisableStyle('widget-backgroundColor', 'Widget Background', widgetStyles);
+                addCustomisableStyle('widget-backgroundColor', 'Widget Colour', widgetStyles);
 
                 function addCustomisableStyle(id, name, parentUl) {
                     var styleLi = $('<li class="red-ui-dashboard-theme-item"><span>'+name+'</span></li>').appendTo(parentUl);
@@ -580,9 +582,9 @@
                     .appendTo(spanColorContainer);
                     addResetButton(id, styleLi);
                 }
-                
+
                 function colourPickerChangeHandler(id, value) {
-                    $("#"+id+"-reset").css({opacity: 1});   
+                    $("#"+id+"-reset").css({opacity: 1});
                     globalDashboardNode.themeState[id].edited = true;
                     globalDashboardNode.themeState[id].value = value;
                     RED.nodes.dirty(true);
@@ -592,16 +594,16 @@
                 function addResetButton(id, parent) {
                     var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
                     .click(function(e) {
-                       resetClick(e);
-                   })
+                        resetClick(e);
+                    })
                     .appendTo(parent);
                 }
 
                 function addLightAndDarkResetButton(id, parent) {
                     var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
                     .click(function(e) {
-                       lightAndDarkResetClick(e);
-                   })
+                        lightAndDarkResetClick(e);
+                    })
                     .appendTo(parent);
                 }
 
@@ -621,14 +623,14 @@
                             globalDashboardNode[key].baseColor = defaultColor;
                             globalDashboardNode[key].edited = false;
                             RED.nodes.dirty(true);
-                            
+
                         }
                     }
-                    
+
                 }
 
                 function resetClick(e) {
-                    
+
                     //take off -reset
                     var elementID = e.target.id.split('-reset')[0];
                     if (globalDashboardNode.themeState[elementID].edited) {
@@ -642,8 +644,8 @@
                             generateColours(colour);
                         } else {
                             var underscore = elementID.split('-').join('_');
-                            colour = colours['calculate_'+underscore](defaultColor);  
-                        }                
+                            colour = colours['calculate_'+underscore](defaultColor);
+                        }
                         $("#"+elementID).val(colour);
                         $("#"+elementID+"-reset").css({opacity: 0.6});
                         globalDashboardNode.themeState[elementID].edited = false;
@@ -653,7 +655,7 @@
                     }
                 }
 
-                
+
                 //Layout Tab
                 var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
                 $('<label>').html('Tabs').appendTo(divTabs);
@@ -795,6 +797,7 @@
                                 setTimeout(function() {
                                     chevron.css({"transition": "transform 0.2s ease-in-out"});
                                 },0);
+
                                 var ol = $('<ol>',{class:"nr-db-sb-widget-list"}).appendTo(content).editableList({
                                     sortable:".nr-db-sb-widget-list-header",
                                     addButton: false,
@@ -859,283 +862,281 @@
                                         RED.view.redraw();
                                     }
                                 });
-ol.css("min-height","5px");
-if (groupNode.id) {
-    groupLists[groupNode.id] = ol;
-}
-titleRow.click(titleToggle(groupNode.id,content,chevron));
-editButton.on('click',function(evt) {
-    RED.editor.editConfig("", groupNode.type, groupNode.id);
-    evt.stopPropagation();
-    evt.preventDefault();
-});
-group.widgets.forEach(function(widget) {
-    ol.editableList('addItem',widget);
-})
-},
-sortItems: function(items) {
-    items.each(function(i,el) {
-        var groupData = el.data('data');
-        var node = groupData.node;
-        var changed = false;
-        if (node.order !== i+1) {
-            node.order = i+1;
-            changed = true;
-        }
-        if (changed) {
-            node.dirty = true;
-            node.changed = true;
-        }
-        if (node.tab !== tabNode.id) {
-            var oldTabNode = RED.nodes.node(node.tab);
-            if (oldTabNode) {
-                var index = oldTabNode.users.indexOf(node);
-                oldTabNode.users.splice(index,1);
-            }
-            node.tab = tabNode.id;
-            tabNode.users.push(node);
-            changed = true;
-        }
-    })
-    RED.nodes.dirty(true);
-    RED.view.redraw();
-}
-});
-ol.css("min-height","10px");
-if (tabNode.id) {
-    tabLists[tabNode.id] = ol;
-}
-titleRow.click(titleToggle(tabNode.id,content,chevron));
-editButton.on('click',function(evt) {
-    RED.editor.editConfig("", tabNode.type, tabNode.id);
-    evt.stopPropagation();
-    evt.preventDefault();
-});
-addGroupButton.click(function(evt) {
-    ol.editableList('addItem',{});
-    evt.stopPropagation();
-    evt.preventDefault();
-});
-tab.groups.forEach(function(group) {
-    ol.editableList('addItem',group);
-});
-},
-sortItems: function(items) {
-    items.each(function(i,el) {
-        var tabData = el.data('data');
-        var node = tabData.node;
-        var changed = false;
-        if (node.order !== i+1) {
-            node.order = i+1;
-            changed = true;
-        }
-        if (changed) {
-            node.dirty = true;
-            node.changed = true;
-        }
-    })
-    RED.nodes.dirty(true);
-    RED.view.redraw();
-}
-});
+                                ol.css("min-height","5px");
+                                if (groupNode.id) {
+                                    groupLists[groupNode.id] = ol;
+                                }
+                                titleRow.click(titleToggle(groupNode.id,content,chevron));
+                                editButton.on('click',function(evt) {
+                                    RED.editor.editConfig("", groupNode.type, groupNode.id);
+                                    evt.stopPropagation();
+                                    evt.preventDefault();
+                                });
+                                group.widgets.forEach(function(widget) {
+                                    ol.editableList('addItem',widget);
+                                })
+                            },
+                            sortItems: function(items) {
+                                items.each(function(i,el) {
+                                    var groupData = el.data('data');
+                                    var node = groupData.node;
+                                    var changed = false;
+                                    if (node.order !== i+1) {
+                                        node.order = i+1;
+                                        changed = true;
+                                    }
+                                    if (changed) {
+                                        node.dirty = true;
+                                        node.changed = true;
+                                    }
+                                    if (node.tab !== tabNode.id) {
+                                        var oldTabNode = RED.nodes.node(node.tab);
+                                        if (oldTabNode) {
+                                            var index = oldTabNode.users.indexOf(node);
+                                            oldTabNode.users.splice(index,1);
+                                        }
+                                        node.tab = tabNode.id;
+                                        tabNode.users.push(node);
+                                        changed = true;
+                                    }
+                                })
+                                RED.nodes.dirty(true);
+                                RED.view.redraw();
+                            }
+                        });
+                        ol.css("min-height","10px");
+                        if (tabNode.id) {
+                            tabLists[tabNode.id] = ol;
+                        }
+                        titleRow.click(titleToggle(tabNode.id,content,chevron));
+                        editButton.on('click',function(evt) {
+                            RED.editor.editConfig("", tabNode.type, tabNode.id);
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        });
+                        addGroupButton.click(function(evt) {
+                            ol.editableList('addItem',{});
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        });
+                        tab.groups.forEach(function(group) {
+                            ol.editableList('addItem',group);
+                        });
+                    },
+                    sortItems: function(items) {
+                        items.each(function(i,el) {
+                            var tabData = el.data('data');
+                            var node = tabData.node;
+                            var changed = false;
+                            if (node.order !== i+1) {
+                                node.order = i+1;
+                                changed = true;
+                            }
+                            if (changed) {
+                                node.dirty = true;
+                                node.changed = true;
+                            }
+                        })
+                        RED.nodes.dirty(true);
+                        RED.view.redraw();
+                    }
+                });
 
+                var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(layoutTab);
+                $('<span><i class="fa fa-info-circle"></i> There <span id="nr-db-missing-group-count"></span> not in a group. Click <a id="nr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
+                orphanedWidgets.find('a').click(function(event) {
+                    var unknownGroups = {};
+                    RED.nodes.eachNode(function(node) {
+                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
+                            if (!RED.nodes.node(node.group)) {
+                                var g = node.group || "_BLANK_";
+                                unknownGroups[g] = unknownGroups[g] || [];
+                                unknownGroups[g].push(node);
+                            }
+                        }
+                    });
+                    var tab = null;
+                    var tabs = tabContainer.editableList('items');
+                    tabs.first().each(function(i,el) {
+                        var tabData = el.data('data');
+                        tab = tabData.node;
+                    });
 
-var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(layoutTab);
-$('<span><i class="fa fa-info-circle"></i> There <span id="nr-db-missing-group-count"></span> not in a group. Click <a id="nr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
-orphanedWidgets.find('a').click(function(event) {
-    var unknownGroups = {};
-    RED.nodes.eachNode(function(node) {
-        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
-            if (!RED.nodes.node(node.group)) {
-                var g = node.group || "_BLANK_";
-                unknownGroups[g] = unknownGroups[g] || [];
-                unknownGroups[g].push(node);
-            }
-        }
-    });
-    var tab = null;
-    var tabs = tabContainer.editableList('items');
-    tabs.first().each(function(i,el) {
-        var tabData = el.data('data');
-        tab = tabData.node;
-    });
+                    if (tab === null) {
+                        tab = {
+                            id: RED.nodes.id(),
+                            _def: RED.nodes.getType("ui_tab"),
+                            type: "ui_tab",
+                            users: [],
+                            order: 0,
+                            name: "Tab",
+                            icon: "dashboard"
+                        };
+                        RED.nodes.add(tab);
+                    }
+                    for (var groupId in unknownGroups) {
+                        if (unknownGroups.hasOwnProperty(groupId)) {
+                            var groupNode = {
+                                id: RED.nodes.id(),
+                                _def: RED.nodes.getType("ui_group"),
+                                type: "ui_group",
+                                users: [],
+                                tab: tab.id,
+                                order: i+1,
+                                name: (groupId==="_BLANK_"?"Group":groupId),
+                                width: 6,
+                                disp: true
+                            };
+                            RED.nodes.add(groupNode);
+                            RED.editor.validateNode(groupNode);
+                            if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                                RED.nodes.updateConfigNodeUsers(groupNode);
+                            }
+                            var widgets = unknownGroups[groupId];
+                            for (var i=0;i<widgets.length;i++) {
+                                widgets[i].group = groupNode.id;
+                                widgets[i].changed = true;
+                                widgets[i].dirty = true;
+                                if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                                    RED.nodes.updateConfigNodeUsers(widgets[i]);
+                                }
+                                RED.editor.validateNode(widgets[i]);
+                            }
+                        }
+                    }
+                    RED.nodes.dirty(true);
+                    refresh();
+                    refreshOrphanedWidgets();
+                    RED.view.redraw();
+                    event.preventDefault();
+                });
 
-    if (tab === null) {
-        tab = {
-            id: RED.nodes.id(),
-            _def: RED.nodes.getType("ui_tab"),
-            type: "ui_tab",
-            users: [],
-            order: 0,
-            name: "Tab",
-            icon: "dashboard"
-        };
-        RED.nodes.add(tab);
-    }
-    for (var groupId in unknownGroups) {
-        if (unknownGroups.hasOwnProperty(groupId)) {
-            var groupNode = {
-                id: RED.nodes.id(),
-                _def: RED.nodes.getType("ui_group"),
-                type: "ui_group",
-                users: [],
-                tab: tab.id,
-                order: i+1,
-                name: (groupId==="_BLANK_"?"Group":groupId),
-                width: 6,
-                disp: true
-            };
-            RED.nodes.add(groupNode);
-            RED.editor.validateNode(groupNode);
-            if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
-                RED.nodes.updateConfigNodeUsers(groupNode);
-            }
-            var widgets = unknownGroups[groupId];
-            for (var i=0;i<widgets.length;i++) {
-                widgets[i].group = groupNode.id;
-                widgets[i].changed = true;
-                widgets[i].dirty = true;
-                if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
-                    RED.nodes.updateConfigNodeUsers(widgets[i]);
+                var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
+                $('<label>').html('Menu links').appendTo(divLinks);
+
+                buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divLinks);
+                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> link</a>')
+                .click(function(evt) {
+                    linksContainer.editableList('addItem',{});
+                    evt.preventDefault();
+                })
+                .appendTo(buttonGroup);
+
+                var linksContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css("height","150px").appendTo(divLinks).editableList({
+                    sortable: ".nr-db-sb-list-header",
+                    addButton: false,
+                    addItem: function(container,i,link) {
+                        if (!link.node) {
+                            link.node = {
+                                id: RED.nodes.id(),
+                                _def: RED.nodes.getType("ui_link"),
+                                type: "ui_link",
+                                users: [],
+                                order: i+1,
+                                icon: 'open_in_browser',
+                                target: 'newtab'
+                            }
+                            RED.nodes.add(link.node);
+                            RED.nodes.dirty(true);
+                        }
+                        var linkNode = link.node;
+                        linkNodes[linkNode.id] = container;
+                        var titleRow = $('<div>',{class:"nr-db-sb-list-header"}).appendTo(container);
+                        $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                        var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
+                        $('<div class="nr-db-sb-link-name">').html(link.node.name||"untitled").appendTo(title);
+                        $('<div class="nr-db-sb-link-url">').html(link.node.link||"http://").appendTo(title);
+                        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                        editButton.on('click',function(evt) {
+                            RED.editor.editConfig("", "ui_link", link.node.id);
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        });
+                    },
+                    sortItems: function(items) {
+                        items.each(function(i,el) {
+                            var node = el.data('data');
+                            var changed = false;
+                            if (node.node.order !== i+1) {
+                                node.node.order = i+1;
+                                changed = true;
+                            }
+                            if (changed) {
+                                node.node.dirty = true;
+                                node.node.changed = true;
+                            }
+                        })
+                        RED.nodes.dirty(true);
+                        RED.view.redraw();
+                    }
+                });
+
+                var listElements = {};
+                var dashboard = [];
+                var listStates = {};
+                var elementParents = {};
+                var awaitingGroups = {};
+                var awaitingTabs = {};
+
+                function getCurrentList() {
+                    var currentList = [];
+                    var tabs = tabContainer.editableList('items');
+                    var open = false;
+                    tabs.each(function(i,el) {
+                        var tabData = el.data('data');
+                        var tab = [];
+                        var groups = el.find('.nr-db-sb-group-list').editableList('items');
+                        groups.each(function(j,el) {
+                            var group = [];
+                            var groupData = el.data('data');
+                            var widgets = el.find('.nr-db-sb-widget-list').editableList('items');
+                            widgets.each(function(k,el) {
+                                var widgetData = el.data('data');
+                                group.push(widgetData.id);
+                            })
+                            tab.push({id:groupData.node.id, widgets:group});
+                        });
+                        currentList.push({id:tabData.node.id,groups:tab});
+                    });
+                    return currentList;
                 }
-                RED.editor.validateNode(widgets[i]);
-            }
-        }
-    }
-    RED.nodes.dirty(true);
-    refresh();
-    refreshOrphanedWidgets();
-    RED.view.redraw();
-    event.preventDefault();
-});
+                function refreshOrphanedWidgets() {
+                    var unknownGroups = {};
+                    var count = 0;
+                    RED.nodes.eachNode(function(node) {
+                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
+                            if (!RED.nodes.node(node.group)) {
+                                var g = node.group || "_BLANK_";
+                                unknownGroups[g] = unknownGroups[g] || [];
+                                unknownGroups[g].push(node);
+                                count++;
+                            }
+                        }
+                    });
 
-var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
-$('<label>').html('Menu links').appendTo(divLinks);
+                    if (count > 0) {
+                        orphanedWidgets.show();
+                        $("#nr-db-missing-group-count").text((count===1?"is ":"are ")+count+" widget"+(count === 1?"":"s"))
+                    } else {
+                        orphanedWidgets.hide();
+                    }
+                }
 
-buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divLinks);
-$('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> link</a>')
-.click(function(evt) {
-    linksContainer.editableList('addItem',{});
-    evt.preventDefault();
-})
-.appendTo(buttonGroup);
-
-
-var linksContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css("height","150px").appendTo(divLinks).editableList({
-    sortable: ".nr-db-sb-list-header",
-    addButton: false,
-    addItem: function(container,i,link) {
-        if (!link.node) {
-            link.node = {
-                id: RED.nodes.id(),
-                _def: RED.nodes.getType("ui_link"),
-                type: "ui_link",
-                users: [],
-                order: i+1,
-                icon: 'open_in_browser',
-                target: 'newtab'
-            }
-            RED.nodes.add(link.node);
-            RED.nodes.dirty(true);
-        }
-        var linkNode = link.node;
-        linkNodes[linkNode.id] = container;
-        var titleRow = $('<div>',{class:"nr-db-sb-list-header"}).appendTo(container);
-        $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
-        var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
-        $('<div class="nr-db-sb-link-name">').html(link.node.name||"untitled").appendTo(title);
-        $('<div class="nr-db-sb-link-url">').html(link.node.link||"http://").appendTo(title);
-        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
-        editButton.on('click',function(evt) {
-            RED.editor.editConfig("", "ui_link", link.node.id);
-            evt.stopPropagation();
-            evt.preventDefault();
-        });
-    },
-    sortItems: function(items) {
-        items.each(function(i,el) {
-            var node = el.data('data');
-            var changed = false;
-            if (node.node.order !== i+1) {
-                node.node.order = i+1;
-                changed = true;
-            }
-            if (changed) {
-                node.node.dirty = true;
-                node.node.changed = true;
-            }
-        })
-        RED.nodes.dirty(true);
-        RED.view.redraw();
-    }
-});
-
-var listElements = {};
-var dashboard = [];
-var listStates = {};
-var elementParents = {};
-var awaitingGroups = {};
-var awaitingTabs = {};
-
-function getCurrentList() {
-    var currentList = [];
-    var tabs = tabContainer.editableList('items');
-    var open = false;
-    tabs.each(function(i,el) {
-        var tabData = el.data('data');
-        var tab = [];
-        var groups = el.find('.nr-db-sb-group-list').editableList('items');
-        groups.each(function(j,el) {
-            var group = [];
-            var groupData = el.data('data');
-            var widgets = el.find('.nr-db-sb-widget-list').editableList('items');
-            widgets.each(function(k,el) {
-                var widgetData = el.data('data');
-                group.push(widgetData.id);
-            })
-            tab.push({id:groupData.node.id, widgets:group});
-        });
-        currentList.push({id:tabData.node.id,groups:tab});
-    });
-    return currentList;
-}
-function refreshOrphanedWidgets() {
-    var unknownGroups = {};
-    var count = 0;
-    RED.nodes.eachNode(function(node) {
-        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
-            if (!RED.nodes.node(node.group)) {
-                var g = node.group || "_BLANK_";
-                unknownGroups[g] = unknownGroups[g] || [];
-                unknownGroups[g].push(node);
-                count++;
-            }
-        }
-    });
-
-    if (count > 0) {
-        orphanedWidgets.show();
-        $("#nr-db-missing-group-count").text((count===1?"is ":"are ")+count+" widget"+(count === 1?"":"s"))
-    } else {
-        orphanedWidgets.hide();
-    }
-}
-
-function refresh() {
-    var currentList = getCurrentList();
-    dashboard = [];
-    var tabs = {};
-    var groups = {};
-    var elements = [];
-    var groupElements = {};
-    var tabGroups = {};
-    var groupId;
-    var group;
-    var tabId;
-    var tab;
-    var links = [];
-    var unknownGroups = 0;
+                function refresh() {
+                    var currentList = getCurrentList();
+                    dashboard = [];
+                    var tabs = {};
+                    var groups = {};
+                    var elements = [];
+                    var groupElements = {};
+                    var tabGroups = {};
+                    var groupId;
+                    var group;
+                    var tabId;
+                    var tab;
+                    var links = [];
+                    var unknownGroups = 0;
                     // Find all the tabs and groups
                     RED.nodes.eachConfig(function(node) {
                         if (node.type === 'ui_tab') {
@@ -1292,7 +1293,6 @@ function refresh() {
                             });
 
                         editor.on('input', function() {
-
                             // Check for any changes on the editor object
                             // i.e. has the theme been customised compared
                             // to what is stored
@@ -1310,24 +1310,24 @@ function refresh() {
                                 }
                             }
                             if (keysEqual) {
-                               for (var i=0; i<editorKeys.length; i++) {
-                                   var key = editorKeys[i];
-                                   if (editorObject[key] !== globalDashboardNode.customTheme[key]) {
-                                       objectsEqual = false;
-                                       break;
-                                   }
-                               } 
+                                for (var i=0; i<editorKeys.length; i++) {
+                                    var key = editorKeys[i];
+                                    if (editorObject[key] !== globalDashboardNode.customTheme[key]) {
+                                        objectsEqual = false;
+                                        break;
+                                    }
+                                }
                             }
 
-                            if (!objectsEqual) { globalDashboardNode.customTheme = editorObject };
-                            
+                            if (!objectsEqual) { globalDashboardNode.customTheme = editorObject; }
+
                             //If custom theme is chosen, update the elements and current state
                             if (globalDashboardNode.theme === 'theme-custom') {
                                 $("#base-color").val(globalDashboardNode.customTheme.baseColor);
                                 globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
                                 generateColours(globalDashboardNode.customTheme.baseColor);
-                                if (!objectsEqual) { RED.nodes.dirty(true) };
-                            }  
+                                if (!objectsEqual) { RED.nodes.dirty(true); }
+                            }
                         });
 
                     }
@@ -1494,170 +1494,167 @@ function refresh() {
             }
         });
 
-$.widget( "nodereddashboard.elementSizer", {
-    _create: function() {
-        var that = this;
-        var gridWidth = 6;
-        var width = parseInt($(this.options.width).val()||0);
-        var height = parseInt(this.options.hasOwnProperty('height')?$(this.options.height).val():"1")||0;
-        var hasAuto = (!this.options.hasOwnProperty('auto') || this.options.auto);
+    $.widget( "nodereddashboard.elementSizer", {
+        _create: function() {
+            var that = this;
+            var gridWidth = 6;
+            var width = parseInt($(this.options.width).val()||0);
+            var height = parseInt(this.options.hasOwnProperty('height')?$(this.options.height).val():"1")||0;
+            var hasAuto = (!this.options.hasOwnProperty('auto') || this.options.auto);
 
-        this.element.css({
-            minWidth: this.element.height()+4
-        });
-        var sizeLabel = (width === 0 && height === 0)?"auto":width+(this.options.hasOwnProperty('height')?" x "+height:"");
-        this.element.html(sizeLabel).on('mousedown',function(evt) {
-            evt.stopPropagation();
-            evt.preventDefault();
-
-            var width = parseInt($(that.options.width).val()||0);
-            var height = parseInt(that.options.hasOwnProperty('height')?$(that.options.height).val():"1")||0;
-            var maxWidth = 0;
-            var maxHeight;
-            var fixedWidth = false;
-            var fixedHeight = false;
-            var group = $(that.options.group).val();
-            if (group) {
-                var groupNode = RED.nodes.node(group);
-                if (groupNode) {
-                    gridWidth = Math.max(6,groupNode.width,+width);
-                    maxWidth = groupNode.width || gridWidth;
-                    fixedWidth = true;
-                }
-                maxHeight = Math.max(6,+height+1);
-            } else {
-                gridWidth = Math.max(12,+width);
-                maxWidth = gridWidth;
-                maxHeight = 1;
-                fixedHeight = true;
-            }
-
-            var pos = $(this).offset();
-            var container = $('<div>').css({
-                position: 'absolute',
-                background: 'white',
-                padding: '5px 10px 10px 10px',
-                border: '1px solid grey',
-                zIndex: '20',
-                borderRadius: "4px",
-                display:"none"
-            }).appendTo(document.body);
-            var closeTimer;
-
-            container.on('mouseleave',function(evt) {
-                closeTimer = setTimeout(function() {
-                    container.fadeOut(200, function() { $(this).remove(); });
-                },100)
+            this.element.css({
+                minWidth: this.element.height()+4
             });
-            container.on('mouseenter',function() {
-                clearTimeout(closeTimer);
-            })
+            var sizeLabel = (width === 0 && height === 0)?"auto":width+(this.options.hasOwnProperty('height')?" x "+height:"");
+            this.element.html(sizeLabel).on('mousedown',function(evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
 
-            var label = $("<div>").css({
-                fontSize: '13px',
-                color: '#aaa',
-                float: 'left',
-                paddingTop: '1px'
-            }).appendTo(container).html((width === 0 && height === 0)?"auto":(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
+                var width = parseInt($(that.options.width).val()||0);
+                var height = parseInt(that.options.hasOwnProperty('height')?$(that.options.height).val():"1")||0;
+                var maxWidth = 0;
+                var maxHeight;
+                var fixedWidth = false;
+                var fixedHeight = false;
+                var group = $(that.options.group).val();
+                if (group) {
+                    var groupNode = RED.nodes.node(group);
+                    if (groupNode) {
+                        gridWidth = Math.max(6,groupNode.width,+width);
+                        maxWidth = groupNode.width || gridWidth;
+                        fixedWidth = true;
+                    }
+                    maxHeight = Math.max(6,+height+1);
+                } else {
+                    gridWidth = Math.max(12,+width);
+                    maxWidth = gridWidth;
+                    maxHeight = 1;
+                    fixedHeight = true;
+                }
 
-            var buttonRow = $('<div>',{style:"text-align:right; height: 25px;"}).appendTo(container);
+                var pos = $(this).offset();
+                var container = $('<div>').css({
+                    position: 'absolute',
+                    background: 'white',
+                    padding: '5px 10px 10px 10px',
+                    border: '1px solid grey',
+                    zIndex: '20',
+                    borderRadius: "4px",
+                    display:"none"
+                }).appendTo(document.body);
+                var closeTimer;
 
-            if (hasAuto) {
-                var button = $('<a>',{href:"#",class:"editor-button editor-button-small",style:"margin-bottom: 5px"})
-                .html("auto")
-                .appendTo(buttonRow)
-                .on('mouseup',function(evt) {
-                    that.element.html("auto")
-                    $(that.options.width).val(0).change();
-                    $(that.options.height).val(0).change();
-                    evt.preventDefault();
-                    container.fadeOut(200, function() { $(this).remove(); });
+                container.on('mouseleave',function(evt) {
+                    closeTimer = setTimeout(function() {
+                        container.fadeOut(200, function() { $(this).remove(); });
+                    },100)
                 });
-            }
+                container.on('mouseenter',function() {
+                    clearTimeout(closeTimer);
+                })
 
-            var cellBorder = "1px dashed lightGray";
-            var cellBorderExisting = "1px solid gray";
-            var cellBorderHighlight = "1px dashed black";
-            var rows = [];
-            function addRow(i) {
-                var row = $('<div>').css({padding:0,margin:0,height:"25px","box-sizing":"border-box"}).appendTo(container);
-                rows.push(row);
-                cells.push([])
-                for (var j=0;j<gridWidth;j++) {
-                    addCell(i,j);
-                }
-            }
-            function addCell(i,j) {
-                var row = rows[i];
-                var cell = $('<div>').css({
-                    display:"inline-block",
-                    width: "25px",
-                    height: "25px",
-                    borderRight: (j===(width-1)&&i<height)?cellBorderExisting:cellBorder,
-                    borderBottom: (i===(height-1)&&j<width)?cellBorderExisting:cellBorder,
-                    boxSizing: "border-box",
-                    cursor:"pointer",
-                    background: (j<maxWidth)?"#fff":"#eee"
-                }).appendTo(row);
-                cells[i].push(cell);
-                if (j===0) {
-                    cell.css({borderLeft:((i<=height-1)?cellBorderExisting:cellBorder)});
-                }
-                if (i===0) {
-                    cell.css({borderTop:((j<=width-1)?cellBorderExisting:cellBorder)});
-                }
-                if (j<maxWidth) {
-                    cell.data("w",j);
-                    cell.data("h",i);
-                    cell.on("mouseup",function() {
-                        that.element.html(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
-                        $(that.options.width).val($(this).data("w")+1).change();
-                        $(that.options.height).val($(this).data("h")+1).change();
+                var label = $("<div>").css({
+                    fontSize: '13px',
+                    color: '#aaa',
+                    float: 'left',
+                    paddingTop: '1px'
+                }).appendTo(container).html((width === 0 && height === 0)?"auto":(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
+
+                var buttonRow = $('<div>',{style:"text-align:right; height: 25px;"}).appendTo(container);
+
+                if (hasAuto) {
+                    var button = $('<a>',{href:"#",class:"editor-button editor-button-small",style:"margin-bottom: 5px"})
+                    .html("auto")
+                    .appendTo(buttonRow)
+                    .on('mouseup',function(evt) {
+                        that.element.html("auto")
+                        $(that.options.width).val(0).change();
+                        $(that.options.height).val(0).change();
+                        evt.preventDefault();
                         container.fadeOut(200, function() { $(this).remove(); });
                     });
-                    cell.on("mouseover",function() {
-                        var w = $(this).data("w");
-                        var h = $(this).data("h");
-                        label.html((w+1)+(that.options.hasOwnProperty('height')?" x "+(h+1):""));
-                        for (var y = 0;y<maxHeight;y++) {
-                            for (var x = 0;x<maxWidth;x++) {
-                                cells[y][x].css({
-                                    background: (y<=h && x<=w)?'#ddd':'#fff',
-                                    borderLeft: (x===0&&y<=h)?cellBorderHighlight:(x===0)?((y<=height-1)?cellBorderExisting:cellBorder):'',
-                                    borderTop: (y===0&&x<=w)?cellBorderHighlight:(y===0)?((x<=width-1)?cellBorderExisting:cellBorder):'',
-                                    borderRight: (x===w&&y<=h)?cellBorderHighlight:((x===width-1&&y<=height-1)?cellBorderExisting:cellBorder),
-                                    borderBottom: (y===h&&x<=w)?cellBorderHighlight:((y===height-1&&x<=width-1)?cellBorderExisting:cellBorder)
-                                })
-                            }
-                        }
-                        if (!fixedHeight && h === maxHeight-1) {
-                            addRow(maxHeight++)
-                        }
-                        if (!fixedWidth && w === maxWidth-1) {
-                            maxWidth++;
-                            gridWidth++;
-                            for (var r=0;r<maxHeight;r++) {
-                                addCell(r,maxWidth-1);
-                            }
-                        }
-                    })
                 }
-            }
 
-            var cells = [];
-            for (var i=0;i<maxHeight;i++) {
-                addRow(i);
-            }
-            container.css({
-                top:(pos.top)+"px",
-                left:(pos.left)+"px"
-            });
-            container.fadeIn(200);
-        })
-}
-});
-
-
+                var cellBorder = "1px dashed lightGray";
+                var cellBorderExisting = "1px solid gray";
+                var cellBorderHighlight = "1px dashed black";
+                var rows = [];
+                function addRow(i) {
+                    var row = $('<div>').css({padding:0,margin:0,height:"25px","box-sizing":"border-box"}).appendTo(container);
+                    rows.push(row);
+                    cells.push([])
+                    for (var j=0;j<gridWidth;j++) {
+                        addCell(i,j);
+                    }
+                }
+                function addCell(i,j) {
+                    var row = rows[i];
+                    var cell = $('<div>').css({
+                        display:"inline-block",
+                        width: "25px",
+                        height: "25px",
+                        borderRight: (j===(width-1)&&i<height)?cellBorderExisting:cellBorder,
+                        borderBottom: (i===(height-1)&&j<width)?cellBorderExisting:cellBorder,
+                        boxSizing: "border-box",
+                        cursor:"pointer",
+                        background: (j<maxWidth)?"#fff":"#eee"
+                    }).appendTo(row);
+                    cells[i].push(cell);
+                    if (j===0) {
+                        cell.css({borderLeft:((i<=height-1)?cellBorderExisting:cellBorder)});
+                    }
+                    if (i===0) {
+                        cell.css({borderTop:((j<=width-1)?cellBorderExisting:cellBorder)});
+                    }
+                    if (j<maxWidth) {
+                        cell.data("w",j);
+                        cell.data("h",i);
+                        cell.on("mouseup",function() {
+                            that.element.html(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
+                            $(that.options.width).val($(this).data("w")+1).change();
+                            $(that.options.height).val($(this).data("h")+1).change();
+                            container.fadeOut(200, function() { $(this).remove(); });
+                        });
+                        cell.on("mouseover",function() {
+                            var w = $(this).data("w");
+                            var h = $(this).data("h");
+                            label.html((w+1)+(that.options.hasOwnProperty('height')?" x "+(h+1):""));
+                            for (var y = 0;y<maxHeight;y++) {
+                                for (var x = 0;x<maxWidth;x++) {
+                                    cells[y][x].css({
+                                        background: (y<=h && x<=w)?'#ddd':'#fff',
+                                        borderLeft: (x===0&&y<=h)?cellBorderHighlight:(x===0)?((y<=height-1)?cellBorderExisting:cellBorder):'',
+                                        borderTop: (y===0&&x<=w)?cellBorderHighlight:(y===0)?((x<=width-1)?cellBorderExisting:cellBorder):'',
+                                        borderRight: (x===w&&y<=h)?cellBorderHighlight:((x===width-1&&y<=height-1)?cellBorderExisting:cellBorder),
+                                        borderBottom: (y===h&&x<=w)?cellBorderHighlight:((y===height-1&&x<=width-1)?cellBorderExisting:cellBorder)
+                                    })
+                                }
+                            }
+                            if (!fixedHeight && h === maxHeight-1) {
+                                addRow(maxHeight++)
+                            }
+                            if (!fixedWidth && w === maxWidth-1) {
+                                maxWidth++;
+                                gridWidth++;
+                                for (var r=0;r<maxHeight;r++) {
+                                    addCell(r,maxWidth-1);
+                                }
+                            }
+                        })
+                    }
+                }
+                var cells = [];
+                for (var i=0;i<maxHeight;i++) {
+                    addRow(i);
+                }
+                container.css({
+                    top:(pos.top)+"px",
+                    left:(pos.left)+"px"
+                });
+                container.fadeIn(200);
+            })
+        }
+    });
 })(jQuery);
 </script>
 

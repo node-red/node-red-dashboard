@@ -68,7 +68,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             // in camel case. e.g. 'page-backgroundColor' -> '@pageBackgroundColor'
             var configurableStyles = Object.keys(theme.themeState);
 
-            var lessObj = {};                      
+            var lessObj = {};
             for (var i=0; i<configurableStyles.length; i++) {
 
                 //remove dash and camel case
@@ -92,11 +92,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
-                   applyStyle(main.selectedTab.theme);
-                   $mdToast.hide();
-                   done(); 
-                } else if (typeof(ui.theme) === 'object'){
-                    applyStyle(ui.theme);
+                    applyStyle(main.selectedTab.theme);
+                    $mdToast.hide();
+                    done();
+                }
+                else {
+                    if (typeof(ui.theme) === 'object') {
+                        applyStyle(ui.theme);
+                    }
                 }
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {
@@ -104,13 +107,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 finishLoading();
             }
             else {
-                $timeout( function() { 
+                $timeout( function() {
                     main.select(0);
                     finishLoading();
                 }, 50 );
             }
-            
-            
+
+
         }, function () {
             main.loaded = true;
             main.len = main.tabs.length + main.links.length;

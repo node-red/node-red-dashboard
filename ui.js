@@ -385,14 +385,14 @@ function addLink(name, link, icon, order, target) {
 
 function addBaseConfig(title, theme, lightTheme, darkTheme, customTheme, themeState) {
     if (title) { baseConfiguration.title = title; }
-    if (theme) { 
+    if (theme) {
         baseConfiguration.theme = {
             name: theme,
             lightTheme: lightTheme,
             darkTheme: darkTheme,
             customTheme: customTheme,
             themeState: themeState
-        }; 
+        };
     }
     updateUi();
 }
