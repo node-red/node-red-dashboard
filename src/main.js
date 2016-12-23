@@ -91,7 +91,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var prevTabIndex = parseInt($location.path().substr(1));
 
             var finishLoading = function() {
-                if (main.selectedTab) {
+                if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
                    applyStyle(main.selectedTab.theme);
                    $mdToast.hide();
                    done(); 

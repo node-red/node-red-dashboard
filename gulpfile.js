@@ -14,7 +14,7 @@ var
     minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
     resources = require('gulp-resources'),
-    removeHtml = require('gulp-remove-html');
+    removeHtml = require('gulp-remove-html'),
     spawn = require('child_process').spawn,
     streamqueue = require('streamqueue'),
     templateCache = require('gulp-angular-templatecache'),

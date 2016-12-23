@@ -8,8 +8,8 @@
 @groupBackgroundColor: #ffffff;
 @groupTextColor: #0FBBC3;
 @groupBorderColor: #ffffff;
-@widgetTextColor: #ffffff;
-@widgetBackgroundColor: #ffffff;
+@widgetTextColor: #fff;
+@widgetBackgroundColor: #FFF;
 
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
@@ -86,7 +86,9 @@ body.nr-dashboard-theme md-sidenav {
 }
 
 .nr-dashboard-theme .nr-dashboard-button .md-button:hover {
+	// background-color: lighten(rgb(#ffffff, 5);
 	background-color: lighten(@widgetBackgroundColor, 5);
+	// background-color: lighten(color(@widgetBackgroundColor), 5);
 }
 
 
