@@ -139,7 +139,7 @@
         right: 50px;
     }
 
-    #dashboard-tabs-list {
+    .red-ui-tabs {
         margin-bottom: 15px;
     }
 
@@ -148,15 +148,22 @@
     }
 
     #dash-link-button {
-        position: absolute;
-        height: 30px;
-        top: 13px;
-        padding: 0px 7px 0px 7px;
+        background: none;
         border: none;
+        margin-top: 3px;
+        display: inline-block;
+        margin: 3px 3px 0 3px;
+        height: 32px;
+        line-height: 29px;
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        padding: 0px 7px 0px 7px;
     }
-    #dash-link-button:hover {
+    /*#dash-link-button:hover {
         background-color: #eee;
-    }
+    }*/
     ul.red-ui-dashboard-theme-styles {
         list-style: none;
     }
@@ -185,7 +192,6 @@
     }
 
 </style>
-
 <script type="text/javascript">
     (function($) {
         var editSaveEventHandler;
@@ -194,10 +200,30 @@
         var uip = RED.settings.uiPath || 'ui';
         RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
 
-        var jsScript = document.createElement("script");
-        jsScript.type = "application/javascript";
-        jsScript.src = uip+'/js/tinycolor.js';
-        document.body.appendChild(jsScript);
+        var attemptedVendorLoad = false;
+        var loadTinyColor = function(path) {
+            $.ajax({ cache: false,
+              url: path,
+              success: function (data) {
+                    var jsScript = document.createElement("script");
+                    jsScript.type = "application/javascript";
+                    jsScript.src = path;
+                    document.body.appendChild(jsScript);
+                    console.log('Tiny Color Loaded');
+              },
+              error:function (xhr, ajaxOptions, thrownError){
+                    if(xhr.status === 404 && !attemptedVendorLoad) {
+                        loadTinyColor(uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
+                        attemptedVendorLoad = true;
+                    }
+              }
+            });
+        }
+        
+        // Try to load dist version first
+        // then if fails, load non dist version
+        loadTinyColor(uip+'/js/tinycolor.js');
+
 
         RED.nodes.registerType('ui_base',{
             category: 'config',
@@ -336,7 +362,8 @@
                 var form = $('<form class="dialog-form">').appendTo(mainContent);
 
                 // Dashboard Tabs markup
-                var ulDashboardTabs = $('<ul id="dashboard-tabs-list" class="red-ui-tabs"></ul>').appendTo(form);
+                var divTabs = $('<div class="red-ui-tabs">').appendTo(form);
+                var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTabs);
                 var liLayoutTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
                 var liThemeTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
                 var liSiteTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Site" style="width: 80px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);

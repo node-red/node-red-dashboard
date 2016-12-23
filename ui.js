@@ -278,7 +278,8 @@ function updateUi(to) {
         to.emit('ui-controls', {
             title: baseConfiguration.title,
             tabs: tabs,
-            links: links
+            links: links,
+            theme: baseConfiguration.theme
         });
         updateUiPending = false;
     });
