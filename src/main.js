@@ -95,7 +95,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                    applyStyle(main.selectedTab.theme);
                    $mdToast.hide();
                    done(); 
-                } else {
+                } else if (typeof(ui.theme) === 'object'){
                     applyStyle(ui.theme);
                 }
             }
