@@ -139,73 +139,31 @@
         right: 50px;
     }
 
-    #dashboard-tabs-list {
+    .red-ui-tabs {
         margin-bottom: 15px;
     }
 
     #dashboard-tabs-list li a:hover {
         cursor: pointer;
     }
-    ul.red-ui-tabs {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        display: block;
-        height: 35px;
-        box-sizing: border-box;
-        white-space: nowrap;
-        border-bottom: 1px solid #bbb;
-        background: #fff;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-    ul.red-ui-tabs li.active {
-        background: #fff;
-        font-weight: bold;
-        border-bottom: 1px solid #fff;
-        z-index: 2;
-    }
 
-    ul.red-ui-tabs li {
-        box-sizing: border-box;
+    #dash-link-button {
+        background: none;
+        border: none;
+        margin-top: 3px;
         display: inline-block;
-        border-left: 1px solid #bbb;
-        border-top: 1px solid #bbb;
-        border-right: 1px solid #bbb;
-        border-bottom: 1px solid #bbb;
-        background: #f0f0f0;
         margin: 3px 3px 0 3px;
         height: 32px;
         line-height: 29px;
         max-width: 200px;
-        width: 14%;
         overflow: hidden;
         white-space: nowrap;
         position: relative;
-    }
-
-    ul.red-ui-tabs li a.red-ui-tab-label {
-        display: block;
-        font-size: 14px;
-        padding-left: 12px;
-        width: 100%;
-        height: 100%;
-        color: #666;
-    }
-
-    #dash-link-button {
-        position: absolute;
-        height: 30px;
-        top: 13px;
         padding: 0px 7px 0px 7px;
-        border: none;
     }
-    #dash-link-button:hover {
+    /*#dash-link-button:hover {
         background-color: #eee;
-    }
+    }*/
     ul.red-ui-dashboard-theme-styles {
         list-style: none;
     }
@@ -234,7 +192,7 @@
     }
 
 </style>
-
+<link rel="stylesheet" href="../red/style.min.css">
 <script type="text/javascript">
     (function($) {
         var editSaveEventHandler;
@@ -405,7 +363,8 @@
                 var form = $('<form class="dialog-form">').appendTo(mainContent);
 
                 // Dashboard Tabs markup
-                var ulDashboardTabs = $('<ul id="dashboard-tabs-list" class="red-ui-tabs"></ul>').appendTo(form);
+                var divTabs = $('<div class="red-ui-tabs">').appendTo(form);
+                var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTabs);
                 var liLayoutTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
                 var liThemeTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
                 var liSiteTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Site" style="width: 80px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
