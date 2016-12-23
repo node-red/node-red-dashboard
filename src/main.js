@@ -10,8 +10,8 @@ app.config(['$mdThemingProvider', '$compileProvider',
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
     }]);
 
-app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope',
-    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope) {
+app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$interval', '$scope',
+    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $interval, $scope) {
         var main = this;
 
         this.tabs = [];
@@ -19,6 +19,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.len = 0;
         this.selectedTab = null;
         this.loaded = false;
+
+        //Clock
+        function tick() {
+            main.time = Date.now();
+        }
+        tick();
+        $interval(tick, 1000);
 
         function moveTab(d) {
             var len = main.tabs.length;
@@ -87,6 +94,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.tabs = ui.tabs;
             main.links = ui.links;
             $document[0].title = ui.title;
+            main.clock = ui.clock;
 
             var prevTabIndex = parseInt($location.path().substr(1));
 

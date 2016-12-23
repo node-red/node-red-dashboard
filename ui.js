@@ -28,6 +28,7 @@ var serveStatic = require('serve-static'),
 
 var baseConfiguration = {
     title: "Node-RED Dashboard",
+    clock: "",
     theme: "theme-light"
 };
 
@@ -279,7 +280,8 @@ function updateUi(to) {
             title: baseConfiguration.title,
             tabs: tabs,
             links: links,
-            theme: baseConfiguration.theme
+            theme: baseConfiguration.theme,
+            clock: baseConfiguration.clock
         });
         updateUiPending = false;
     });
@@ -383,8 +385,9 @@ function addLink(name, link, icon, order, target) {
     }
 }
 
-function addBaseConfig(title, theme, lightTheme, darkTheme, customTheme, themeState) {
+function addBaseConfig(title, clock, theme, lightTheme, darkTheme, customTheme, themeState) {
     if (title) { baseConfiguration.title = title; }
+    baseConfiguration.clock = clock; // Can be set to blank.
     if (theme) {
         baseConfiguration.theme = {
             name: theme,
