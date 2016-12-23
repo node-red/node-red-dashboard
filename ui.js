@@ -236,7 +236,7 @@ function init(server, app, log, redSettings) {
                 'jquery', 'jquery-ui',
                 'd3', 'raphael', 'justgage',
                 'angular-chart.js', 'chart.js', 'moment',
-                'angularjs-color-picker', 'tinycolor2'
+                'angularjs-color-picker', 'tinycolor2', 'less'
             ];
             vendor_packages.forEach(function (packageName) {
                 app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));
@@ -278,7 +278,8 @@ function updateUi(to) {
         to.emit('ui-controls', {
             title: baseConfiguration.title,
             tabs: tabs,
-            links: links
+            links: links,
+            theme: baseConfiguration.theme
         });
         updateUiPending = false;
     });
@@ -382,8 +383,16 @@ function addLink(name, link, icon, order, target) {
     }
 }
 
-function addBaseConfig(title,theme) {
+function addBaseConfig(title, theme, lightTheme, darkTheme, customTheme, themeState) {
     if (title) { baseConfiguration.title = title; }
-    if (theme) { baseConfiguration.theme = theme; }
+    if (theme) {
+        baseConfiguration.theme = {
+            name: theme,
+            lightTheme: lightTheme,
+            darkTheme: darkTheme,
+            customTheme: customTheme,
+            themeState: themeState
+        };
+    }
     updateUi();
 }

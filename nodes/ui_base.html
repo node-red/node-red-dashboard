@@ -1,128 +1,200 @@
 <style>
-.nr-db-sb {
-    position: absolute;
-    top: 1px;
-    bottom: 2px;
-    left: 1px;
-    right: 1px;
-    overflow-y: scroll;
-    padding: 10px;
-}
-.nr-db-sb .form-row label {
-    display: block;
-    width: auto;
-}
-.nr-db-sb .form-row input,
-.nr-db-sb .form-row select {
-    width: calc(100% - 2px);
-    margin-bottom:0;
-}
-.nr-db-sb .red-ui-editableList-container {
-    padding:0;
-}
-.nr-db-sb-tab-list li {
-    padding: 0;
-}
-.nr-db-sb-tab-list-item {
-    border-radius: 4px;
-    color: #333;
-}
-.nr-db-sb-list-header {
-    cursor: pointer;
-    position:relative;
-    color: #666;
-    padding:3px;
-    white-space: nowrap;
-}
-.nr-db-sb-list-header:hover {
-    color: #333;
-}
-.nr-db-sb-tab-list-header {
-    background: #f3f3f3;
-    padding:5px;
-}
-.nr-db-sb-group-list-header:hover, .nr-db-sb-widget-list-header:hover {
-    background: #f9f9f9;
-}
-.nr-db-sb-list-chevron {
-    width: 15px;
-    text-align: center;
-    margin: 3px 5px 3px 5px;
-}
-.nr-db-sb-tab-list-item .red-ui-editableList-container {
-    border-radius: 0;
-    border: none;
-}
-.nr-db-sb-list-handle {
-    vertical-align: top;
-    opacity: 0;
-    cursor: move;
-}
-.nr-db-sb-list-header:hover>.nr-db-sb-list-handle,
-.nr-db-sb-list-header:hover>.nr-db-sb-list-header-button-group {
-    opacity: 1;
-}
-.nr-db-sb-list-header-button-group {
-    opacity: 0;
-}
-.nr-db-sb-list-handle  {
-    color: #bbb;
-    padding:5px;
-}
-.nr-db-sb-tab-list-header>.nr-db-sb-list-chevron  {
-    margin-left: 0px;
-}
-.nr-db-sb-group-list-header>.nr-db-sb-list-chevron {
-    margin-left: 20px
-}
-.nr-db-sb-group-list li {
-    border-bottom-color: #eee;
-}
-.nr-db-sb-group-list>li.ui-sortable-helper {
-    border-top: 1px solid #eee;
-}
-.nr-db-sb-group-list>li:last-child {
-    border-bottom: none;
-}
-.nr-db-sb-widget-list>li {
-    border: none !important;
-}
-.nr-db-sb-group-list>li>.red-ui-editableList-item-handle {
-    left: 10px;
-}
-.nr-db-sb-list-button-group {
-    position: absolute;
-    right: 3px;
-    top: 0px;
-}
-.nr-db-sb-list-header-button-group {
-    position: absolute;
-    right: 3px;
-    top: 4px;
-}
-.nr-db-sb-list-header-button {
-    margin-left: 5px;
-}
-.nr-db-sb li.ui-sortable-helper {
-    opacity: 0.9;
-}
-.nr-db-sb-widget-icon {
-    margin-left: 56px;
-}
-.nr-db-sb-icon {
-    margin-right: 10px;
-}
-.nr-db-sb-link {
-    display: inline-block;
-    padding-left: 3px;
-}
-.nr-db-sb-link-title {
+    .nr-db-sb {
+        position: absolute;
+        top: 1px;
+        bottom: 2px;
+        left: 1px;
+        right: 1px;
+        overflow-y: scroll;
+        padding: 10px;
+    }
+    .nr-db-sb .form-row label {
+        display: block;
+        width: auto;
+    }
+    .nr-db-sb .form-row input,
+    .nr-db-sb .form-row select {
+        width: calc(100% - 100px);
+        margin-bottom:0;
+    }
+    .nr-db-sb .red-ui-editableList-container {
+        padding:0;
+    }
+    .nr-db-sb-tab-list li {
+        padding: 0;
+    }
+    .nr-db-sb-tab-list-item {
+        border-radius: 4px;
+        color: #333;
+    }
+    .nr-db-sb-list-header {
+        cursor: pointer;
+        position:relative;
+        color: #666;
+        padding:3px;
+        white-space: nowrap;
+    }
+    .nr-db-sb-list-header:hover {
+        color: #333;
+    }
+    .nr-db-sb-tab-list-header {
+        background: #f3f3f3;
+        padding:5px;
+    }
+    .nr-db-sb-group-list-header:hover, .nr-db-sb-widget-list-header:hover {
+        background: #f9f9f9;
+    }
+    .nr-db-sb-list-chevron {
+        width: 15px;
+        text-align: center;
+        margin: 3px 5px 3px 5px;
+    }
+    .nr-db-sb-tab-list-item .red-ui-editableList-container {
+        border-radius: 0;
+        border: none;
+    }
+    .nr-db-sb-list-handle {
+        vertical-align: top;
+        opacity: 0;
+        cursor: move;
+    }
+    .nr-db-sb-list-header:hover>.nr-db-sb-list-handle,
+    .nr-db-sb-list-header:hover>.nr-db-sb-list-header-button-group {
+        opacity: 1;
+    }
+    .nr-db-sb-list-header-button-group {
+        opacity: 0;
+    }
+    .nr-db-sb-list-handle  {
+        color: #bbb;
+        padding:5px;
+    }
+    .nr-db-sb-tab-list-header>.nr-db-sb-list-chevron  {
+        margin-left: 0px;
+    }
+    .nr-db-sb-group-list-header>.nr-db-sb-list-chevron {
+        margin-left: 20px
+    }
+    .nr-db-sb-group-list li {
+        border-bottom-color: #eee;
+    }
+    .nr-db-sb-group-list>li.ui-sortable-helper {
+        border-top: 1px solid #eee;
+    }
+    .nr-db-sb-group-list>li:last-child {
+        border-bottom: none;
+    }
+    .nr-db-sb-widget-list>li {
+        border: none !important;
+    }
+    .nr-db-sb-group-list>li>.red-ui-editableList-item-handle {
+        left: 10px;
+    }
+    .nr-db-sb-list-button-group {
+        position: absolute;
+        right: 3px;
+        top: 0px;
+        z-index: 2;
+    }
+    .nr-db-sb-list-header-button-group {
+        position: absolute;
+        right: 3px;
+        top: 4px;
+    }
+    .nr-db-sb-list-header-button {
+        margin-left: 5px;
+    }
+    .nr-db-sb li.ui-sortable-helper {
+        opacity: 0.9;
+    }
+    .nr-db-sb-widget-icon {
+        margin-left: 56px;
+    }
+    .nr-db-sb-icon {
+        margin-right: 10px;
+    }
+    .nr-db-sb-link {
+        display: inline-block;
+        padding-left: 3px;
+    }
+    .nr-db-sb-link-title {
 
-}
-.nr-db-sb-link-url {
-    font-size: 0.8em;
-    color: #999;
-}
+    }
+    .nr-db-sb-link-url {
+        font-size: 0.8em;
+        color: #999;
+    }
+    span.nr-db-color-pick-container {
+        max-width: 50px;
+        border-radius: 3px;
+        margin-left: 15px;
+    }
+    input.nr-db-field-themeColor {
+        width: 50px !important;
+        padding: 0;
+        height: 20px;
+        border: none;
+        box-shadow: none;
+        position: absolute;
+        right: 50px;
+    }
+
+    .red-ui-tabs {
+        margin-bottom: 15px;
+    }
+
+    #dashboard-tabs-list li a:hover {
+        cursor: pointer;
+    }
+
+    #dash-link-button {
+        background: none;
+        border: none;
+        margin-top: 3px;
+        display: inline-block;
+        margin: 3px 3px 0 3px;
+        height: 32px;
+        line-height: 29px;
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        padding: 0px 7px 0px 7px;
+    }
+    /*#dash-link-button:hover {
+        background-color: #eee;
+    }*/
+    ul.red-ui-dashboard-theme-styles {
+        list-style: none;
+    }
+    ul.red-ui-dashboard-theme-styles li {
+        margin-bottom: 10px;
+    }
+
+    .resetIcon {
+        margin: 0px 10px 0px 10px;
+        float: right;
+        color: grey;
+        opacity: 0.6;
+        display: block;
+    }
+    .resetIcon:hover {
+        cursor: pointer;
+    }
+
+    #nr-db-field-font {
+        margin-left: 2em;
+        width: 150px;
+    }
+
+    label.theme-label {
+        font-weight: bold;
+    }
+
+    #custom-theme-library-container .btn-group {
+        margin-bottom: 10px;
+    }
+
 </style>
 <script type="text/javascript">
 (function($) {
@@ -131,63 +203,232 @@
     var nodesRemoveEventHandler;
     var uip = RED.settings.uiPath || 'ui';
     RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
-    RED.nodes.registerType('ui_base',{
-        category: 'config',
-        defaults: {
-            name: {value: ''},
-            theme: {value: ''}
-        },
-        hasUsers: false,
-        paletteLabel: 'Dashboard',
-        label: function() { return this.name || 'Node-RED Dashboard'; },
-        oneditprepare: function() {
-        },
-        onpaletteremove: function() {
-            RED.sidebar.removeTab("dashboard");
-            RED.events.off("editor:save",editSaveEventHandler);
-            RED.events.off("nodes:add",nodesAddEventHandler);
-            RED.events.off("nodes:remove",nodesRemoveEventHandler);
-        },
-        onpaletteadd: function() {
-            var globalDashboardNode = null;
 
-            function ensureDashboardNode(createMissing) {
-                if (globalDashboardNode !== null) {
-                    // Check if it has been deleted beneath us
-                    var n = RED.nodes.node(globalDashboardNode.id);
-                    if (n===null) {
-                        globalDashboardNode = null;
-                    }
-                }
-                if (globalDashboardNode === null) {
-                    RED.nodes.eachConfig(function(n) {
-                        if (globalDashboardNode === null && n.type === 'ui_base') {
-                            globalDashboardNode = n;
-                        }
-                    });
-                    if (globalDashboardNode === null && createMissing) {
-                        globalDashboardNode = {
-                            id: RED.nodes.id(),
-                            _def: RED.nodes.getType("ui_base"),
-                            type: "ui_base",
-                            name: "Node-RED Dashboard",
-                            theme: "theme-light",
-                            url: 'ui',
-                            users:[]
-                        }
-                        RED.nodes.add(globalDashboardNode);
-                        RED.nodes.dirty(true);
-                    }
+    var attemptedVendorLoad = false;
+    var loadTinyColor = function(path) {
+        $.ajax({ cache: false,
+            url: path,
+            success: function (data) {
+                var jsScript = document.createElement("script");
+                jsScript.type = "application/javascript";
+                jsScript.src = path;
+                document.body.appendChild(jsScript);
+                console.log('Tiny Color Loaded');
+            },
+            error:function (xhr, ajaxOptions, thrownError) {
+                if (xhr.status === 404 && !attemptedVendorLoad) {
+                    loadTinyColor(uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
+                    attemptedVendorLoad = true;
                 }
             }
-            var content = $("<div>").css({"position":"relative","height":"100%"});
-            var mainContent = $("<div>",{class:"nr-db-sb"}).appendTo(content);
+        });
+    }
 
-            var form = $('<form class="dialog-form">').appendTo(mainContent);
+    // Try to load dist version first
+    // then if fails, load non dist version
+    loadTinyColor(uip+'/js/tinycolor.js');
 
-            var divTitle = $('<div>',{class:"form-row"}).appendTo(form);
-            $('<label>').html('Title').appendTo(divTitle);
-            $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 48px)")
+
+    RED.nodes.registerType('ui_base',{
+            category: 'config',
+            defaults: {
+                name: {value: ''},
+                theme: {value: ''},
+                lightTheme: {value: {}},
+                darkTheme: {value: {}},
+                customTheme: {value: {}},
+                themeState: {values: {}}
+            },
+            hasUsers: false,
+            paletteLabel: 'Dashboard',
+            label: function() { return this.name || 'Node-RED Dashboard'; },
+            oneditprepare: function() {
+            },
+            onpaletteremove: function() {
+                RED.sidebar.removeTab("dashboard");
+                RED.events.off("editor:save",editSaveEventHandler);
+                RED.events.off("nodes:add",nodesAddEventHandler);
+                RED.events.off("nodes:remove",nodesRemoveEventHandler);
+            },
+            onpaletteadd: function() {
+                var globalDashboardNode = null;
+                var editor;
+                var baseStyles = ['base-color'];
+                var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
+                'group-backgroundColor', 'group-textColor', 'group-borderColor', 'widget-textColor',
+                'widget-backgroundColor'];
+                // tiny colour implementation
+                var colours = {
+                    leastReadable: function(base, colours) {
+                        var least = tinycolor.readability(base, colours[0]);
+                        var leastColor = colours[0];
+                        for (var i=1; i<colours.length; i++) {
+                            var readability = tinycolor.readability(base, colours[i]);
+                            if (readability < least) {
+                                least = readability;
+                                leastColor = colours[i];
+                            }
+                        }
+                        return leastColor;
+                    },
+                    whiteBlackLeastReadable: function(base) {
+                        return this.leastReadable(base, ["#000000", "#ffffff"]);
+                    },
+                    calculate_page_backgroundColor: function(base) {
+                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                        var pageBackground = "#fafafa";
+                        if (whiteOrBlack === "#000000") { pageBackground = "#111111"; }
+                        return pageBackground;
+                    },
+                    calculate_group_textColor: function(base) {
+                        var groupTextColour = tinycolor(base).lighten(20).toHexString();
+                        if (this.whiteBlackLeastReadable(base) === "#ffffff") { groupTextColour = "#000000"; }
+                        return groupTextColour;
+                    },
+                    calculate_page_sidebar_backgroundColor: function(base) {
+                        return this.whiteBlackLeastReadable(base);
+                    },
+                    calculate_page_titlebar_backgroundColor: function(base) {
+                        return base;
+                    },
+                    calculate_group_backgroundColor: function(base) {
+                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                        var groupBackground = "#ffffff";
+                        if (whiteOrBlack === "#000000") { groupBackground = "#333333"; }
+                        return groupBackground;
+                    },
+                    calculate_group_borderColor: function(base) {
+                        var groupBackground = this.calculate_group_backgroundColor(base);
+                        return this.leastReadable(groupBackground, ["#ffffff", "#555555"]);
+                    },
+                    calculate_widget_textColor: function(base) {
+                        //most readable against group background
+                        var groupBackground = this.calculate_group_backgroundColor(base);
+                        return tinycolor.mostReadable(groupBackground, ["#111111", "#eeeeee"]).toHexString();
+                    },
+                    calculate_widget_backgroundColor: function(base) {
+                        //return tinycolor(base).darken(5).toHexString()
+                        return tinycolor(base).toHexString();
+                    }
+                }
+
+                function ensureDashboardNode(createMissing) {
+                    if (globalDashboardNode !== null) {
+                        // Check if it has been deleted beneath us
+                        var n = RED.nodes.node(globalDashboardNode.id);
+                        if (n===null) {
+                            globalDashboardNode = null;
+                        }
+                    }
+                    if (globalDashboardNode === null) {
+                        RED.nodes.eachConfig(function(n) {
+                            if (globalDashboardNode === null && n.type === 'ui_base') {
+                                globalDashboardNode = n;
+                            }
+                        });
+
+                        // set up theme state
+                        var themeState = {};
+                        var base = "#0094CE"
+                        for (var i=0; i<baseStyles.length; i++) {
+                            themeState[baseStyles[i]] = { default: base, value: base, edited: false };
+                        }
+                        for (var i=0; i<configurableStyles.length; i++) {
+                            var underscore = configurableStyles[i].split("-").join("_");
+                            var colour = colours['calculate_'+underscore](base);
+                            themeState[configurableStyles[i]] = {value: colour, edited: false};
+                        }
+
+                        var missingFields = (!globalDashboardNode || !globalDashboardNode.lightTheme || !globalDashboardNode.darkTheme || !globalDashboardNode.customTheme || !globalDashboardNode.themeState);
+                        if (missingFields && createMissing) {
+                            globalDashboardNode = {
+                                id: RED.nodes.id(),
+                                _def: RED.nodes.getType("ui_base"),
+                                type: "ui_base",
+                                name: "Node-RED Dashboard",
+                                theme: "theme-light",
+                                lightTheme: {
+                                    default: "#0094CE",
+                                    baseColor: "#0094CE",
+                                    baseFont: "Helvetica Neue",
+                                    edited: false
+                                },
+                                darkTheme: {
+                                    default: "#097479",
+                                    baseColor: "#097479",
+                                    baseFont: "Helvetica Neue",
+                                    edited: false
+                                },
+                                customTheme: {
+                                    name: 'Untitled Theme 1',
+                                    baseColor: "#0094CE",
+                                    default: "#0094CE",
+                                    baseFont: "Helvetica Neue"
+                                },
+                                themeState: themeState,
+                                url: 'ui',
+                                users:[]
+                            }
+                            RED.nodes.add(globalDashboardNode);
+                            RED.nodes.dirty(true);
+                        }
+                    }
+                }
+                var content = $("<div>").css({"position":"relative","height":"100%"});
+                var mainContent = $("<div>",{class:"nr-db-sb"}).appendTo(content);
+                var form = $('<form class="dialog-form">').appendTo(mainContent);
+
+                // Dashboard Tabs markup
+                var divTabs = $('<div class="red-ui-tabs">').appendTo(form);
+                var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTabs);
+                var liLayoutTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
+                var liThemeTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
+                var liSiteTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Site" style="width: 80px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
+
+                $('<span id="dash-link-button" class="editor-button"><i class="fa fa-external-link"></i></span>')
+                .click(function(evt) {
+                    window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
+                    evt.preventDefault();
+                })
+                .appendTo(ulDashboardTabs);
+
+                // Dashboard Tab containers
+                var layoutTab = $('<div id="dashboard-layout">').appendTo(form);
+                var themeTab = $('<div id="dashboard-theme" style="display: none;">').appendTo(form);
+                var siteTab = $('<div id="dashboard-site" style="display: none;">').appendTo(form);
+
+                ulDashboardTabs.children().first().addClass("active");
+
+                // Tab logic
+                var onTabClick = function() {
+                    //Toggle tabs
+                    ulDashboardTabs.children().removeClass("active");
+                    ulDashboardTabs.children().css({"transition": "width 100ms"});
+                    $(this).parent().addClass("active");
+
+                    var selectedTab = $(this)[0].title;
+                    if (selectedTab === 'Layout') {
+                        themeTab.hide();
+                        siteTab.hide();
+                        layoutTab.show();
+                    } else if (selectedTab === 'Theme') {
+                        layoutTab.hide();
+                        siteTab.hide();
+                        themeTab.show();
+                        ($("#nr-db-field-theme option:selected").val() === 'theme-custom') ? themeSettingsContainer.show() : themeSettingsContainer.hide();
+                    } else {
+                        layoutTab.hide();
+                        themeTab.hide();
+                        siteTab.show();
+                    }
+                }
+
+                ulDashboardTabs.find("li.red-ui-tab a").on("click",onTabClick)
+
+                // Site Tab
+                var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                $('<label>').html('Title').appendTo(divTitle);
+                $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 48px)")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.name !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -197,810 +438,1061 @@
                 })
                 .appendTo(divTitle);
 
-            $('<a href="#" class="editor-button" style="margin-left: 10px;"><i class="fa fa-external-link"></i></a>')
-                .click(function(evt) {
-                    window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
-                    evt.preventDefault();
-                })
-                .appendTo(divTitle);
+                // Theme Tab
+                // For all customisable styles, generate and apply the css
+                var generateColours = function(base) {
+                    for (var i=0; i<configurableStyles.length; i++) {
+                        var styleID = configurableStyles[i];
+                        var underscore = styleID.split("-").join("_");
 
-            var divTheme = $('<div>',{class:"form-row"}).appendTo(form);
-            $('<label>').html('Theme').appendTo(divTheme);
-            $('<select id="nr-db-field-theme">'+
-                '<option value="theme-light">Light (default)</option>'+
-                '<option value="theme-dark">Dark</option>'+
-                '</select>')
+                        if (!globalDashboardNode.themeState[styleID].edited) {
+                            var colour = colours['calculate_'+underscore](base);
+                            $("#"+styleID).val(colour);
+                            console.log("COLOR",styleID,colour);
+                            globalDashboardNode.themeState[styleID].value = colour;
+                        }
+                    }
+                }
+
+                var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
+                $('<label class="theme-label">').html('Style').appendTo(divThemeStyle);
+                var themeSelection = $('<select id="nr-db-field-theme">'+
+                    '<option value="theme-light">Light (default)</option>'+
+                    '<option value="theme-dark">Dark</option>'+
+                    '<option value="theme-custom">Custom</option>'+
+                    '</select>').change(function() {
+                        if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
+                            ensureDashboardNode(true);
+                            globalDashboardNode.theme = $(this).val();
+
+                            var theme = globalDashboardNode.theme.split('-')[1];
+                            var baseColour = globalDashboardNode[theme+'Theme'].baseColor;
+                            $("#base-color").val(baseColour);
+                            globalDashboardNode.themeState['base-color'].value = baseColour;
+                            globalDashboardNode.themeState['base-color'].default = baseColour;
+                            //generate colours for all colour settings from base colour
+                            generateColours(baseColour);
+
+                            RED.nodes.dirty(true);
+                        }
+                        $('#base-color-reset').remove();
+                        if ($(this).val() === 'theme-custom') {
+                            $("#custom-theme-library-container").show();
+                            $("#custom-theme-settings").show();
+                            //addResetButton('base-color', baseSettingsUl.children());
+                        } else {
+                            $("#custom-theme-library-container").hide();
+                            $("#custom-theme-settings").hide();
+                            addLightAndDarkResetButton('base-color', baseSettingsUl.children());
+                        }
+                    })
+                    .appendTo(divThemeStyle);
+
+                var customThemeLibraryContainer = $('<div id="custom-theme-library-container">',{class:"form-row"}).appendTo(themeTab);
+                $('<label class="theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
+                $('<input type="text" id="node-input-name">').val("Untitled Theme 1...").css("width","calc(100% - 48px)")
                 .change(function() {
-                    if (!globalDashboardNode || globalDashboardNode.theme !== $(this).val()) {
+                    if (!globalDashboardNode || globalDashboardNode.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
-                        globalDashboardNode.theme = $(this).val();
+                        globalDashboardNode.customTheme.name = $(this).val();
                         RED.nodes.dirty(true);
                     }
                 })
-                .appendTo(divTheme);
+                .appendTo(customThemeLibraryContainer);
+                $('<input type="hidden" id="node-input-format">').appendTo(customThemeLibraryContainer);
+                $('<div style="display: none;" class="node-text-editor" id="node-input-format-editor" ></div>').appendTo(customThemeLibraryContainer);
 
-            var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
-            $('<label>').html('Tabs').appendTo(divTabs);
+                var baseThemeSettingsContainer = $('<div id="base-theme-settings">').appendTo(themeTab);
 
-            var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
-            $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-up"></i></a>')
+                var baseSettings = $('<div>',{class:"form-row"}).appendTo(baseThemeSettingsContainer);
+                $('<label class="theme-label">').html('Base Settings').appendTo(baseSettings);
+                var baseSettingsUl = $('<ul id="base-settings-ul" class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
+
+                var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Colour</span></li>').appendTo(baseSettingsUl);
+                var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
+
+                // var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>Font</span></li>').appendTo(baseSettingsUl);
+                // var fontSelector = $('<select id="nr-db-field-font">'+
+                //     '<option value="arial">Arial (default)</option>'+
+                //     '<option value="helvetica">Helvetica</option>'+
+                //     '</select>').appendTo(baseFontItem);
+
+                $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
+                .change(function() {
+                    ensureDashboardNode(true);
+                    var value = $(this).val();
+                    var lightThemeMatch = globalDashboardNode.lightTheme.baseColor === value;
+                    var darkThemeMatch = globalDashboardNode.darkTheme.baseColor === value;
+                    var customThemeMatch = globalDashboardNode.customTheme.baseColor === value;
+                    if (!globalDashboardNode || !lightThemeMatch || !darkThemeMatch || !customThemeMatch) {
+                        if (globalDashboardNode.theme === 'theme-light' || globalDashboardNode.theme === 'theme-dark') {
+                            var theme = globalDashboardNode.theme.split('-')[1];
+                            globalDashboardNode[theme+'Theme'].baseColor = value;
+
+                            //for light and dark themes, set the edited status to true
+                            globalDashboardNode[theme+'Theme'].edited = true;
+
+                        } else {
+                            //custom
+                            globalDashboardNode.customTheme.baseColor = value;
+                            editor.setValue(JSON.stringify(globalDashboardNode.customTheme),1);
+                        }
+                        generateColours(value);
+                        colourPickerChangeHandler($(this).attr('id'), value);
+
+                    }
+                })
+                .appendTo(spanColorContainer);
+
+                var themeSettingsContainer = $('<div id="custom-theme-settings">').appendTo(themeTab);
+
+                // Markup
+                // Page styles
+                var divPageStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
+                $('<label class="theme-label">').html('Page Settings').appendTo(divPageStyle);
+                var pageStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
+                addCustomisableStyle('page-backgroundColor', 'Page Background', pageStyles);
+                addCustomisableStyle('page-titlebar-backgroundColor', 'Title Bar Background', pageStyles);
+                addCustomisableStyle('page-sidebar-backgroundColor', 'Side Bar Background', pageStyles);
+
+                // Group styles
+                var divGroupStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
+                $('<label class="theme-label">').html('Group Settings').appendTo(divGroupStyle);
+                var groupStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
+                addCustomisableStyle('group-backgroundColor', 'Group Background', groupStyles)
+                addCustomisableStyle('group-textColor', 'Group Text', groupStyles);
+                addCustomisableStyle('group-borderColor', 'Group Border', groupStyles);
+
+
+                // Widget styles
+                var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
+                $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
+                var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
+                addCustomisableStyle('widget-textColor', 'Widget Text', widgetStyles);
+                addCustomisableStyle('widget-backgroundColor', 'Widget Colour', widgetStyles);
+
+                function addCustomisableStyle(id, name, parentUl) {
+                    var styleLi = $('<li class="red-ui-dashboard-theme-item"><span>'+name+'</span></li>').appendTo(parentUl);
+                    var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(styleLi);
+                    $('<input id="'+id+'" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
+                    .change(function() {
+                        colourPickerChangeHandler($(this).attr('id'), $(this).val());
+
+                    })
+                    .appendTo(spanColorContainer);
+                    addResetButton(id, styleLi);
+                }
+
+                function colourPickerChangeHandler(id, value) {
+                    $("#"+id+"-reset").css({opacity: 1});
+                    globalDashboardNode.themeState[id].edited = true;
+                    globalDashboardNode.themeState[id].value = value;
+                    RED.nodes.dirty(true);
+                }
+
+
+                function addResetButton(id, parent) {
+                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
+                    .click(function(e) {
+                        resetClick(e);
+                    })
+                    .appendTo(parent);
+                }
+
+                function addLightAndDarkResetButton(id, parent) {
+                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
+                    .click(function(e) {
+                        lightAndDarkResetClick(e);
+                    })
+                    .appendTo(parent);
+                }
+
+                function lightAndDarkResetClick(e) {
+                    var elementID = e.target.id.split('-reset')[0];
+                    var currentTheme = globalDashboardNode.theme.split('-')[1];
+                    var key = currentTheme+'Theme';
+                    //sanity check - light and dark only allow base-color-reset
+                    if (elementID === 'base-color' && globalDashboardNode[key].edited) {
+
+                        if (globalDashboardNode[key].edited) {
+                            var defaultColor = globalDashboardNode[key].default;
+                            generateColours(defaultColor);
+                            $("#"+elementID).val(defaultColor);
+                            $("#"+elementID+"-reset").css({opacity: 0.6});
+                            globalDashboardNode.themeState[elementID].value = defaultColor;
+                            globalDashboardNode[key].baseColor = defaultColor;
+                            globalDashboardNode[key].edited = false;
+                            RED.nodes.dirty(true);
+
+                        }
+                    }
+
+                }
+
+                function resetClick(e) {
+
+                    //take off -reset
+                    var elementID = e.target.id.split('-reset')[0];
+                    if (globalDashboardNode.themeState[elementID].edited) {
+
+                        var defaultColor = globalDashboardNode.themeState['base-color'].default;
+                        var colour;
+
+                        //set colour
+                        if (elementID === 'base-color') {
+                            colour = defaultColor;
+                            generateColours(colour);
+                        } else {
+                            var underscore = elementID.split('-').join('_');
+                            colour = colours['calculate_'+underscore](defaultColor);
+                        }
+                        $("#"+elementID).val(colour);
+                        $("#"+elementID+"-reset").css({opacity: 0.6});
+                        globalDashboardNode.themeState[elementID].edited = false;
+                        globalDashboardNode.themeState[elementID].value = colour;
+
+                        RED.nodes.dirty(true);
+                    }
+                }
+
+
+                //Layout Tab
+                var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
+                $('<label>').html('Tabs').appendTo(divTabs);
+
+                var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
+                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-up"></i></a>')
                 .click(function(evt) {
                     tabContainer.find(".nr-db-sb-group-list-container").slideUp().addClass('nr-db-sb-collapsed');
                     tabContainer.find(".nr-db-sb-tab-list-header>.nr-db-sb-list-chevron").css({"transform":"rotate(-90deg)"});
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
-            $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-down"></i></a>')
+                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-down"></i></a>')
                 .click(function(evt) {
                     tabContainer.find(".nr-db-sb-group-list-container").slideDown().removeClass('nr-db-sb-collapsed');
                     tabContainer.find(".nr-db-sb-tab-list-header>.nr-db-sb-list-chevron").css({"transform":""});
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
-            $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> tab</a>')
+                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> tab</a>')
                 .click(function(evt) {
                     tabContainer.editableList('addItem',{});
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
 
-            var tabLists = {};
-            var groupLists = {};
-            var linkNodes = {};
+                var tabLists = {};
+                var groupLists = {};
+                var linkNodes = {};
 
-            function titleToggle(id,content,chevron) {
-                return function(evt) {
-                    if (content.is(":visible")) {
-                        content.slideUp();
-                        chevron.css({"transform":"rotate(-90deg)"});
-                        content.addClass('nr-db-sb-collapsed');
-                        listStates[id] = false;
-                    } else {
-                        content.slideDown();
-                        chevron.css({"transform":""});
-                        content.removeClass('nr-db-sb-collapsed');
-                        listStates[id] = true;
+                function titleToggle(id,content,chevron) {
+                    return function(evt) {
+                        if (content.is(":visible")) {
+                            content.slideUp();
+                            chevron.css({"transform":"rotate(-90deg)"});
+                            content.addClass('nr-db-sb-collapsed');
+                            listStates[id] = false;
+                        } else {
+                            content.slideDown();
+                            chevron.css({"transform":""});
+                            content.removeClass('nr-db-sb-collapsed');
+                            listStates[id] = true;
+                        }
+                    };
+                }
+
+                var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css({"min-height":"200px","height":"350px"}).appendTo(divTabs).editableList({
+                    sortable:".nr-db-sb-tab-list-header",
+                    addButton: false,
+                    addItem: function(container,i,tab) {
+                        var newTab = false;
+                        if (!tab.node) {
+                            tab.node = {
+                                id: RED.nodes.id(),
+                                _def: RED.nodes.getType("ui_tab"),
+                                type: "ui_tab",
+                                users: [],
+                                order: i+1,
+                                name: "Tab "+(i+1),
+                                icon: "dashboard"
+                            };
+                            listElements[tab.node.id] = container;
+                            RED.nodes.add(tab.node);
+                            tab.groups = [];
+                            RED.nodes.dirty(true);
+                            newTab = true;
+                        }
+                        if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                            RED.nodes.updateConfigNodeUsers(tab.node);
+                        }
+                        var tabNode = tab.node;
+                        container.addClass("nr-db-sb-tab-list-item");
+                        var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
+                        $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                        var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width: 10px;"}).appendTo(titleRow);
+                        $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
+                        var title = $('<span class="nr-db-sb-title">').html(tabNode.name||"").appendTo(titleRow);
+                        listElements[tabNode.id] = container;
+                        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                        var addGroupButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> group</a>').appendTo(buttonGroup);
+                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                        var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
+                        if (listStates.hasOwnProperty(tabNode.id) && !listStates[tabNode.id]) {
+                            content.hide();
+                            chevron.css({"transform":"rotate(-90deg)"});
+                            content.addClass('nr-db-sb-collapsed');
+                            listStates[tabNode.id] = false;
+                        } else {
+                            listStates[tabNode.id] = true;
+                        }
+                        setTimeout(function() {
+                            chevron.css({"transition": "transform 0.2s ease-in-out"});
+                        },0);
+                        var ol = $('<ol>',{class:"nr-db-sb-group-list"}).appendTo(content).editableList({
+                            sortable:".nr-db-sb-group-list-header",
+                            addButton: false,
+                            height: 'auto',
+                            connectWith: ".nr-db-sb-group-list",
+                            addItem: function(container,i,group) {
+                                if (!group.node) {
+                                    group.node = {
+                                        id: RED.nodes.id(),
+                                        _def: RED.nodes.getType("ui_group"),
+                                        type: "ui_group",
+                                        users: [],
+                                        tab: tabNode.id,
+                                        order: i+1,
+                                        name: "Group "+(i+1),
+                                        width: 6,
+                                        disp: true
+                                    };
+                                    listElements[group.node.id] = container;
+                                    RED.nodes.add(group.node);
+                                    group.widgets = [];
+                                    RED.nodes.dirty(true);
+                                    if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                                        RED.nodes.updateConfigNodeUsers(group.node);
+                                    }
+                                }
+                                var groupNode = group.node;
+                                elementParents[groupNode] = tabNode.id;
+                                var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-group-list-header"}).appendTo(container);
+                                $('<i class="nr-db-sb-list-handle nr-db-sb-group-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                                var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width: 10px;"}).appendTo(titleRow);
+                                $('<i class="nr-db-sb-icon nr-db-sb-group-icon fa fa-table"></i>').appendTo(titleRow);
+                                var title = $('<span class="nr-db-sb-title">').html(groupNode.name||groupNode.id||"").appendTo(titleRow);
+                                listElements[groupNode.id] = container;
+                                var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                                var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                                var content = $('<div>',{class:"nr-db-sb-widget-list-container"}).appendTo(container);
+                                if (!listStates.hasOwnProperty(groupNode.id) || !listStates[groupNode.id]) {
+                                    content.hide();
+                                    chevron.css({"transform":"rotate(-90deg)"});
+                                    content.addClass('nr-db-sb-collapsed');
+                                    listStates[groupNode.id] = false;
+                                } else {
+                                    listStates[groupNode.id] = true;
+                                }
+                                setTimeout(function() {
+                                    chevron.css({"transition": "transform 0.2s ease-in-out"});
+                                },0);
+
+                                var ol = $('<ol>',{class:"nr-db-sb-widget-list"}).appendTo(content).editableList({
+                                    sortable:".nr-db-sb-widget-list-header",
+                                    addButton: false,
+                                    height: 'auto',
+                                    connectWith: ".nr-db-sb-widget-list",
+                                    addItem: function(container,i,widgetNode) {
+                                        elementParents[widgetNode.id] = groupNode.id;
+                                        var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-widget-list-header"}).appendTo(container);
+                                        $('<i class="nr-db-sb-list-handle nr-db-sb-widget-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                                        $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa-picture-o"></i>').appendTo(titleRow);
+                                        var l = widgetNode._def.label;
+                                        try {
+                                            l = (typeof l === "function" ? l.call(widgetNode) : l)||"";
+                                        } catch(err) {
+                                            console.log("Definition error: "+d.type+".label",err);
+                                            l = d.type;
+                                        }
+                                        var title = $('<span class="nr-db-sb-title">').html(l).appendTo(titleRow);
+                                        listElements[widgetNode.id] = container;
+                                        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                                        container.on('mouseover',function() {
+                                            widgetNode.highlighted = true;
+                                            widgetNode.dirty = true;
+                                            RED.view.redraw();
+                                        });
+                                        container.on('mouseout',function() {
+                                            widgetNode.highlighted = false;
+                                            widgetNode.dirty = true;
+                                            RED.view.redraw();
+                                        });
+                                        editButton.on('click',function(evt) {
+                                            RED.editor.edit(widgetNode);
+                                            evt.stopPropagation();
+                                            evt.preventDefault();
+                                        });
+                                    },
+                                    sortItems: function(items) {
+                                        items.each(function(i,el) {
+                                            var node = el.data('data');
+                                            var changed = false;
+                                            if (node.order !== i+1) {
+                                                node.order = i+1;
+                                                changed = true;
+                                            }
+                                            if (node.group !== group.node.id) {
+                                                var oldGroupNode = RED.nodes.node(node.group);
+                                                if (oldGroupNode) {
+                                                    var index = oldGroupNode.users.indexOf(node);
+                                                    oldGroupNode.users.splice(index,1);
+                                                }
+                                                node.group = group.node.id;
+                                                group.node.users.push(node);
+                                                changed = true;
+                                            }
+                                            if (changed) {
+                                                node.dirty = true;
+                                                node.changed = true;
+                                            }
+                                        })
+                                        RED.nodes.dirty(true);
+                                        RED.view.redraw();
+                                    }
+                                });
+                                ol.css("min-height","5px");
+                                if (groupNode.id) {
+                                    groupLists[groupNode.id] = ol;
+                                }
+                                titleRow.click(titleToggle(groupNode.id,content,chevron));
+                                editButton.on('click',function(evt) {
+                                    RED.editor.editConfig("", groupNode.type, groupNode.id);
+                                    evt.stopPropagation();
+                                    evt.preventDefault();
+                                });
+                                group.widgets.forEach(function(widget) {
+                                    ol.editableList('addItem',widget);
+                                })
+                            },
+                            sortItems: function(items) {
+                                items.each(function(i,el) {
+                                    var groupData = el.data('data');
+                                    var node = groupData.node;
+                                    var changed = false;
+                                    if (node.order !== i+1) {
+                                        node.order = i+1;
+                                        changed = true;
+                                    }
+                                    if (changed) {
+                                        node.dirty = true;
+                                        node.changed = true;
+                                    }
+                                    if (node.tab !== tabNode.id) {
+                                        var oldTabNode = RED.nodes.node(node.tab);
+                                        if (oldTabNode) {
+                                            var index = oldTabNode.users.indexOf(node);
+                                            oldTabNode.users.splice(index,1);
+                                        }
+                                        node.tab = tabNode.id;
+                                        tabNode.users.push(node);
+                                        changed = true;
+                                    }
+                                })
+                                RED.nodes.dirty(true);
+                                RED.view.redraw();
+                            }
+                        });
+                        ol.css("min-height","10px");
+                        if (tabNode.id) {
+                            tabLists[tabNode.id] = ol;
+                        }
+                        titleRow.click(titleToggle(tabNode.id,content,chevron));
+                        editButton.on('click',function(evt) {
+                            RED.editor.editConfig("", tabNode.type, tabNode.id);
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        });
+                        addGroupButton.click(function(evt) {
+                            ol.editableList('addItem',{});
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        });
+                        tab.groups.forEach(function(group) {
+                            ol.editableList('addItem',group);
+                        });
+                    },
+                    sortItems: function(items) {
+                        items.each(function(i,el) {
+                            var tabData = el.data('data');
+                            var node = tabData.node;
+                            var changed = false;
+                            if (node.order !== i+1) {
+                                node.order = i+1;
+                                changed = true;
+                            }
+                            if (changed) {
+                                node.dirty = true;
+                                node.changed = true;
+                            }
+                        })
+                        RED.nodes.dirty(true);
+                        RED.view.redraw();
                     }
-                };
-            }
+                });
 
-            var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css({"min-height":"200px","height":"350px"}).appendTo(divTabs).editableList({
-                sortable:".nr-db-sb-tab-list-header",
-                addButton: false,
-                addItem: function(container,i,tab) {
-                    var newTab = false;
-                    if (!tab.node) {
-                        tab.node = {
+                var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(layoutTab);
+                $('<span><i class="fa fa-info-circle"></i> There <span id="nr-db-missing-group-count"></span> not in a group. Click <a id="nr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
+                orphanedWidgets.find('a').click(function(event) {
+                    var unknownGroups = {};
+                    RED.nodes.eachNode(function(node) {
+                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
+                            if (!RED.nodes.node(node.group)) {
+                                var g = node.group || "_BLANK_";
+                                unknownGroups[g] = unknownGroups[g] || [];
+                                unknownGroups[g].push(node);
+                            }
+                        }
+                    });
+                    var tab = null;
+                    var tabs = tabContainer.editableList('items');
+                    tabs.first().each(function(i,el) {
+                        var tabData = el.data('data');
+                        tab = tabData.node;
+                    });
+
+                    if (tab === null) {
+                        tab = {
                             id: RED.nodes.id(),
                             _def: RED.nodes.getType("ui_tab"),
                             type: "ui_tab",
                             users: [],
-                            order: i+1,
-                            name: "Tab "+(i+1),
+                            order: 0,
+                            name: "Tab",
                             icon: "dashboard"
                         };
-                        listElements[tab.node.id] = container;
-                        RED.nodes.add(tab.node);
-                        tab.groups = [];
-                        RED.nodes.dirty(true);
-                        newTab = true;
+                        RED.nodes.add(tab);
                     }
-                    if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
-                        RED.nodes.updateConfigNodeUsers(tab.node);
-                    }
-                    var tabNode = tab.node;
-                    container.addClass("nr-db-sb-tab-list-item");
-                    var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
-                    $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                    var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width: 10px;"}).appendTo(titleRow);
-                    $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
-                    var title = $('<span class="nr-db-sb-title">').html(tabNode.name||"").appendTo(titleRow);
-                    listElements[tabNode.id] = container;
-                    var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                    var addGroupButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> group</a>').appendTo(buttonGroup);
-                    var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
-
-                    var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
-
-                    if (listStates.hasOwnProperty(tabNode.id) && !listStates[tabNode.id]) {
-                        content.hide();
-                        chevron.css({"transform":"rotate(-90deg)"});
-                        content.addClass('nr-db-sb-collapsed');
-                        listStates[tabNode.id] = false;
-                    } else {
-                        listStates[tabNode.id] = true;
-                    }
-                    setTimeout(function() {
-                        chevron.css({"transition": "transform 0.2s ease-in-out"});
-                    },0);
-                    var ol = $('<ol>',{class:"nr-db-sb-group-list"}).appendTo(content).editableList({
-                        sortable:".nr-db-sb-group-list-header",
-                        addButton: false,
-                        height: 'auto',
-                        connectWith: ".nr-db-sb-group-list",
-                        addItem: function(container,i,group) {
-                            if (!group.node) {
-                                group.node = {
-                                    id: RED.nodes.id(),
-                                    _def: RED.nodes.getType("ui_group"),
-                                    type: "ui_group",
-                                    users: [],
-                                    tab: tabNode.id,
-                                    order: i+1,
-                                    name: "Group "+(i+1),
-                                    width: 6,
-                                    disp: true
-                                };
-                                listElements[group.node.id] = container;
-                                RED.nodes.add(group.node);
-                                group.widgets = [];
-                                RED.nodes.dirty(true);
-                                if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
-                                    RED.nodes.updateConfigNodeUsers(group.node);
-                                }
-
-                            }
-                            var groupNode = group.node;
-                            elementParents[groupNode] = tabNode.id;
-
-                            var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-group-list-header"}).appendTo(container);
-                            $('<i class="nr-db-sb-list-handle nr-db-sb-group-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                            var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width: 10px;"}).appendTo(titleRow);
-                            $('<i class="nr-db-sb-icon nr-db-sb-group-icon fa fa-table"></i>').appendTo(titleRow);
-                            var title = $('<span class="nr-db-sb-title">').html(groupNode.name||groupNode.id||"").appendTo(titleRow);
-                            listElements[groupNode.id] = container;
-                            var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                            var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
-
-                            var content = $('<div>',{class:"nr-db-sb-widget-list-container"}).appendTo(container);
-                            if (!listStates.hasOwnProperty(groupNode.id) || !listStates[groupNode.id]) {
-                                content.hide();
-                                chevron.css({"transform":"rotate(-90deg)"});
-                                content.addClass('nr-db-sb-collapsed');
-                                listStates[groupNode.id] = false;
-                            } else {
-                                listStates[groupNode.id] = true;
-                            }
-                            setTimeout(function() {
-                                chevron.css({"transition": "transform 0.2s ease-in-out"});
-                            },0);
-                            var ol = $('<ol>',{class:"nr-db-sb-widget-list"}).appendTo(content).editableList({
-                                sortable:".nr-db-sb-widget-list-header",
-                                addButton: false,
-                                height: 'auto',
-                                connectWith: ".nr-db-sb-widget-list",
-                                addItem: function(container,i,widgetNode) {
-                                    elementParents[widgetNode.id] = groupNode.id;
-                                    var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-widget-list-header"}).appendTo(container);
-                                    $('<i class="nr-db-sb-list-handle nr-db-sb-widget-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                                    $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa-picture-o"></i>').appendTo(titleRow);
-                                    var l = widgetNode._def.label;
-                                    try {
-                                        l = (typeof l === "function" ? l.call(widgetNode) : l)||"";
-                                    } catch(err) {
-                                        console.log("Definition error: "+d.type+".label",err);
-                                        l = d.type;
-                                    }
-                                    var title = $('<span class="nr-db-sb-title">').html(l).appendTo(titleRow);
-                                    listElements[widgetNode.id] = container;
-                                    var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                                    var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
-                                    container.on('mouseover',function() {
-                                        widgetNode.highlighted = true;
-                                        widgetNode.dirty = true;
-                                        RED.view.redraw();
-                                    });
-                                    container.on('mouseout',function() {
-                                        widgetNode.highlighted = false;
-                                        widgetNode.dirty = true;
-                                        RED.view.redraw();
-                                    });
-                                    editButton.on('click',function(evt) {
-                                        RED.editor.edit(widgetNode);
-                                        evt.stopPropagation();
-                                        evt.preventDefault();
-                                    });
-                                },
-                                sortItems: function(items) {
-                                    items.each(function(i,el) {
-                                        var node = el.data('data');
-                                        var changed = false;
-                                        if (node.order !== i+1) {
-                                            node.order = i+1;
-                                            changed = true;
-                                        }
-                                        if (node.group !== group.node.id) {
-
-                                            var oldGroupNode = RED.nodes.node(node.group);
-                                            if (oldGroupNode) {
-                                                var index = oldGroupNode.users.indexOf(node);
-                                                oldGroupNode.users.splice(index,1);
-                                            }
-                                            node.group = group.node.id;
-                                            group.node.users.push(node);
-                                            changed = true;
-                                        }
-                                        if (changed) {
-                                            node.dirty = true;
-                                            node.changed = true;
-                                        }
-                                    })
-                                    RED.nodes.dirty(true);
-                                    RED.view.redraw();
-                                }
-                            });
-                            ol.css("min-height","5px");
-                            if (groupNode.id) {
-                                groupLists[groupNode.id] = ol;
-                            }
-                            titleRow.click(titleToggle(groupNode.id,content,chevron));
-                            editButton.on('click',function(evt) {
-                                RED.editor.editConfig("", groupNode.type, groupNode.id);
-                                evt.stopPropagation();
-                                evt.preventDefault();
-                            });
-                            group.widgets.forEach(function(widget) {
-                                ol.editableList('addItem',widget);
-                            })
-                        },
-                        sortItems: function(items) {
-                            items.each(function(i,el) {
-                                var groupData = el.data('data');
-                                var node = groupData.node;
-                                var changed = false;
-                                if (node.order !== i+1) {
-                                    node.order = i+1;
-                                    changed = true;
-                                }
-                                if (changed) {
-                                    node.dirty = true;
-                                    node.changed = true;
-                                }
-                                if (node.tab !== tabNode.id) {
-                                    var oldTabNode = RED.nodes.node(node.tab);
-                                    if (oldTabNode) {
-                                        var index = oldTabNode.users.indexOf(node);
-                                        oldTabNode.users.splice(index,1);
-                                    }
-                                    node.tab = tabNode.id;
-                                    tabNode.users.push(node);
-                                    changed = true;
-                                }
-                            })
-                            RED.nodes.dirty(true);
-                            RED.view.redraw();
-                        }
-                    });
-                    ol.css("min-height","10px");
-
-                    if (tabNode.id) {
-                        tabLists[tabNode.id] = ol;
-                    }
-                    titleRow.click(titleToggle(tabNode.id,content,chevron));
-                    editButton.on('click',function(evt) {
-                        RED.editor.editConfig("", tabNode.type, tabNode.id);
-                        evt.stopPropagation();
-                        evt.preventDefault();
-                    });
-                    addGroupButton.click(function(evt) {
-                        ol.editableList('addItem',{});
-                        evt.stopPropagation();
-                        evt.preventDefault();
-                    });
-                    tab.groups.forEach(function(group) {
-                        ol.editableList('addItem',group);
-                    });
-                },
-                sortItems: function(items) {
-                    items.each(function(i,el) {
-                        var tabData = el.data('data');
-                        var node = tabData.node;
-                        var changed = false;
-                        if (node.order !== i+1) {
-                            node.order = i+1;
-                            changed = true;
-                        }
-                        if (changed) {
-                            node.dirty = true;
-                            node.changed = true;
-                        }
-                    })
-                    RED.nodes.dirty(true);
-                    RED.view.redraw();
-                }
-            });
-
-            var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(form);
-            $('<span><i class="fa fa-info-circle"></i> There <span id="nr-db-missing-group-count"></span> not in a group. Click <a id="nr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
-            orphanedWidgets.find('a').click(function(event) {
-                var unknownGroups = {};
-                RED.nodes.eachNode(function(node) {
-                    if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
-                        if (!RED.nodes.node(node.group)) {
-                            var g = node.group || "_BLANK_";
-                            unknownGroups[g] = unknownGroups[g] || [];
-                            unknownGroups[g].push(node);
-                        }
-                    }
-                });
-                var tab = null;
-                var tabs = tabContainer.editableList('items');
-                tabs.first().each(function(i,el) {
-                    var tabData = el.data('data');
-                    tab = tabData.node;
-                });
-
-                if (tab === null) {
-                    tab = {
-                        id: RED.nodes.id(),
-                        _def: RED.nodes.getType("ui_tab"),
-                        type: "ui_tab",
-                        users: [],
-                        order: 0,
-                        name: "Tab",
-                        icon: "dashboard"
-                    };
-                    RED.nodes.add(tab);
-                }
-                for (var groupId in unknownGroups) {
-                    if (unknownGroups.hasOwnProperty(groupId)) {
-                        var groupNode = {
-                            id: RED.nodes.id(),
-                            _def: RED.nodes.getType("ui_group"),
-                            type: "ui_group",
-                            users: [],
-                            tab: tab.id,
-                            order: i+1,
-                            name: (groupId==="_BLANK_"?"Group":groupId),
-                            width: 6,
-                            disp: true
-                        };
-                        RED.nodes.add(groupNode);
-                        RED.editor.validateNode(groupNode);
-                        if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
-                            RED.nodes.updateConfigNodeUsers(groupNode);
-                        }
-                        var widgets = unknownGroups[groupId];
-                        for (var i=0;i<widgets.length;i++) {
-                            widgets[i].group = groupNode.id;
-                            widgets[i].changed = true;
-                            widgets[i].dirty = true;
+                    for (var groupId in unknownGroups) {
+                        if (unknownGroups.hasOwnProperty(groupId)) {
+                            var groupNode = {
+                                id: RED.nodes.id(),
+                                _def: RED.nodes.getType("ui_group"),
+                                type: "ui_group",
+                                users: [],
+                                tab: tab.id,
+                                order: i+1,
+                                name: (groupId==="_BLANK_"?"Group":groupId),
+                                width: 6,
+                                disp: true
+                            };
+                            RED.nodes.add(groupNode);
+                            RED.editor.validateNode(groupNode);
                             if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
-                                RED.nodes.updateConfigNodeUsers(widgets[i]);
+                                RED.nodes.updateConfigNodeUsers(groupNode);
                             }
-                            RED.editor.validateNode(widgets[i]);
+                            var widgets = unknownGroups[groupId];
+                            for (var i=0;i<widgets.length;i++) {
+                                widgets[i].group = groupNode.id;
+                                widgets[i].changed = true;
+                                widgets[i].dirty = true;
+                                if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                                    RED.nodes.updateConfigNodeUsers(widgets[i]);
+                                }
+                                RED.editor.validateNode(widgets[i]);
+                            }
                         }
                     }
-                }
-                RED.nodes.dirty(true);
-                refresh();
-                refreshOrphanedWidgets();
-                RED.view.redraw();
-                event.preventDefault();
-            });
+                    RED.nodes.dirty(true);
+                    refresh();
+                    refreshOrphanedWidgets();
+                    RED.view.redraw();
+                    event.preventDefault();
+                });
 
-            var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(form);
-            $('<label>').html('Menu links').appendTo(divLinks);
+                var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
+                $('<label>').html('Menu links').appendTo(divLinks);
 
-            buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divLinks);
-            $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> link</a>')
+                buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divLinks);
+                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> link</a>')
                 .click(function(evt) {
                     linksContainer.editableList('addItem',{});
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
 
-
-            var linksContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css("height","150px").appendTo(divLinks).editableList({
-                sortable: ".nr-db-sb-list-header",
-                addButton: false,
-                addItem: function(container,i,link) {
-                    if (!link.node) {
-                        link.node = {
-                            id: RED.nodes.id(),
-                            _def: RED.nodes.getType("ui_link"),
-                            type: "ui_link",
-                            users: [],
-                            order: i+1,
-                            icon: 'open_in_browser',
-                            target: 'newtab'
+                var linksContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css("height","150px").appendTo(divLinks).editableList({
+                    sortable: ".nr-db-sb-list-header",
+                    addButton: false,
+                    addItem: function(container,i,link) {
+                        if (!link.node) {
+                            link.node = {
+                                id: RED.nodes.id(),
+                                _def: RED.nodes.getType("ui_link"),
+                                type: "ui_link",
+                                users: [],
+                                order: i+1,
+                                icon: 'open_in_browser',
+                                target: 'newtab'
+                            }
+                            RED.nodes.add(link.node);
+                            RED.nodes.dirty(true);
                         }
-                        RED.nodes.add(link.node);
-                        RED.nodes.dirty(true);
-                    }
-                    var linkNode = link.node;
-                    linkNodes[linkNode.id] = container;
-                    var titleRow = $('<div>',{class:"nr-db-sb-list-header"}).appendTo(container);
-                    $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                    var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
-                    $('<div class="nr-db-sb-link-name">').html(link.node.name||"untitled").appendTo(title);
-                    $('<div class="nr-db-sb-link-url">').html(link.node.link||"http://").appendTo(title);
-                    var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                    var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
-                    editButton.on('click',function(evt) {
-                        RED.editor.editConfig("", "ui_link", link.node.id);
-                        evt.stopPropagation();
-                        evt.preventDefault();
-                    });
-                },
-                sortItems: function(items) {
-                    items.each(function(i,el) {
-                        var node = el.data('data');
-                        var changed = false;
-                        if (node.node.order !== i+1) {
-                            node.node.order = i+1;
-                            changed = true;
-                        }
-                        if (changed) {
-                            node.node.dirty = true;
-                            node.node.changed = true;
-                        }
-                    })
-                    RED.nodes.dirty(true);
-                    RED.view.redraw();
-                }
-            });
-
-            var listElements = {};
-            var dashboard = [];
-            var listStates = {};
-            var elementParents = {};
-            var awaitingGroups = {};
-            var awaitingTabs = {};
-
-            function getCurrentList() {
-                var currentList = [];
-                var tabs = tabContainer.editableList('items');
-                var open = false;
-                tabs.each(function(i,el) {
-                    var tabData = el.data('data');
-                    var tab = [];
-                    var groups = el.find('.nr-db-sb-group-list').editableList('items');
-                    groups.each(function(j,el) {
-                        var group = [];
-                        var groupData = el.data('data');
-                        var widgets = el.find('.nr-db-sb-widget-list').editableList('items');
-                        widgets.each(function(k,el) {
-                            var widgetData = el.data('data');
-                            group.push(widgetData.id);
+                        var linkNode = link.node;
+                        linkNodes[linkNode.id] = container;
+                        var titleRow = $('<div>',{class:"nr-db-sb-list-header"}).appendTo(container);
+                        $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                        var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
+                        $('<div class="nr-db-sb-link-name">').html(link.node.name||"untitled").appendTo(title);
+                        $('<div class="nr-db-sb-link-url">').html(link.node.link||"http://").appendTo(title);
+                        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                        editButton.on('click',function(evt) {
+                            RED.editor.editConfig("", "ui_link", link.node.id);
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        });
+                    },
+                    sortItems: function(items) {
+                        items.each(function(i,el) {
+                            var node = el.data('data');
+                            var changed = false;
+                            if (node.node.order !== i+1) {
+                                node.node.order = i+1;
+                                changed = true;
+                            }
+                            if (changed) {
+                                node.node.dirty = true;
+                                node.node.changed = true;
+                            }
                         })
-                        tab.push({id:groupData.node.id, widgets:group});
+                        RED.nodes.dirty(true);
+                        RED.view.redraw();
+                    }
+                });
+
+                var listElements = {};
+                var dashboard = [];
+                var listStates = {};
+                var elementParents = {};
+                var awaitingGroups = {};
+                var awaitingTabs = {};
+
+                function getCurrentList() {
+                    var currentList = [];
+                    var tabs = tabContainer.editableList('items');
+                    var open = false;
+                    tabs.each(function(i,el) {
+                        var tabData = el.data('data');
+                        var tab = [];
+                        var groups = el.find('.nr-db-sb-group-list').editableList('items');
+                        groups.each(function(j,el) {
+                            var group = [];
+                            var groupData = el.data('data');
+                            var widgets = el.find('.nr-db-sb-widget-list').editableList('items');
+                            widgets.each(function(k,el) {
+                                var widgetData = el.data('data');
+                                group.push(widgetData.id);
+                            })
+                            tab.push({id:groupData.node.id, widgets:group});
+                        });
+                        currentList.push({id:tabData.node.id,groups:tab});
                     });
-                    currentList.push({id:tabData.node.id,groups:tab});
-                });
-                return currentList;
-            }
-            function refreshOrphanedWidgets() {
-                var unknownGroups = {};
-                var count = 0;
-                RED.nodes.eachNode(function(node) {
-                    if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
-                        if (!RED.nodes.node(node.group)) {
-                            var g = node.group || "_BLANK_";
-                            unknownGroups[g] = unknownGroups[g] || [];
-                            unknownGroups[g].push(node);
-                            count++;
-                        }
-                    }
-                });
-
-                if (count > 0) {
-                    orphanedWidgets.show();
-                    $("#nr-db-missing-group-count").text((count===1?"is ":"are ")+count+" widget"+(count === 1?"":"s"))
-                } else {
-                    orphanedWidgets.hide();
+                    return currentList;
                 }
-            }
-
-            function refresh() {
-                var currentList = getCurrentList();
-                dashboard = [];
-                var tabs = {};
-                var groups = {};
-                var elements = [];
-                var groupElements = {};
-                var tabGroups = {};
-                var groupId;
-                var group;
-                var tabId;
-                var tab;
-                var links = [];
-
-                var unknownGroups = 0;
-
-                // Find all the tabs and groups
-                RED.nodes.eachConfig(function(node) {
-                    if (node.type === 'ui_tab') {
-                        tabs[node.id] = node;
-                        //tabContainer.editableList('addItem',node);
-                    } else if (node.type === 'ui_group') {
-                        groups[node.id] = node;
-                    } else if (node.type === 'ui_link') {
-                        links.push(node);
-                    }
-                });
-
-                for (groupId in groups) {
-                    if (groups.hasOwnProperty(groupId)) {
-                        group = groups[groupId];
-                        if (tabs.hasOwnProperty(group.tab)) {
-                            // This group belongs to a tab
-                            tabGroups[group.tab] = tabGroups[group.tab]||[];
-                            tabGroups[group.tab].push(group);
-                        } else {
-                            unknownGroups++;
+                function refreshOrphanedWidgets() {
+                    var unknownGroups = {};
+                    var count = 0;
+                    RED.nodes.eachNode(function(node) {
+                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
+                            if (!RED.nodes.node(node.group)) {
+                                var g = node.group || "_BLANK_";
+                                unknownGroups[g] = unknownGroups[g] || [];
+                                unknownGroups[g].push(node);
+                                count++;
+                            }
                         }
+                    });
+
+                    if (count > 0) {
+                        orphanedWidgets.show();
+                        $("#nr-db-missing-group-count").text((count===1?"is ":"are ")+count+" widget"+(count === 1?"":"s"))
+                    } else {
+                        orphanedWidgets.hide();
                     }
                 }
 
-                // Find all ui widgets - list them by their group id
-                RED.nodes.eachNode(function(node) {
-                    if (/^ui_/.test(node.type)) {
-                        if (groups.hasOwnProperty(node.group)) {
-                            groupElements[node.group] = groupElements[node.group]||[];
-                            groupElements[node.group].push(node);
+                function refresh() {
+                    var currentList = getCurrentList();
+                    dashboard = [];
+                    var tabs = {};
+                    var groups = {};
+                    var elements = [];
+                    var groupElements = {};
+                    var tabGroups = {};
+                    var groupId;
+                    var group;
+                    var tabId;
+                    var tab;
+                    var links = [];
+                    var unknownGroups = 0;
+                    // Find all the tabs and groups
+                    RED.nodes.eachConfig(function(node) {
+                        if (node.type === 'ui_tab') {
+                            tabs[node.id] = node;
+                            //tabContainer.editableList('addItem',node);
+                        } else if (node.type === 'ui_group') {
+                            groups[node.id] = node;
                         } else if (node.type === 'ui_link') {
                             links.push(node);
-                        } else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
-                            unknownGroups++;
+                        }
+                    });
+                    for (groupId in groups) {
+                        if (groups.hasOwnProperty(groupId)) {
+                            group = groups[groupId];
+                            if (tabs.hasOwnProperty(group.tab)) {
+                                // This group belongs to a tab
+                                tabGroups[group.tab] = tabGroups[group.tab]||[];
+                                tabGroups[group.tab].push(group);
+                            } else {
+                                unknownGroups++;
+                            }
                         }
                     }
-                });
-
-                if (unknownGroups > 0) {
-                    $("#nr-db-missing-group-count").text((unknownGroups===1?"is ":"are ")+unknownGroups+" widget"+(unknownGroups === 1?"":"s"))
-                    orphanedWidgets.show();
-                } else {
-                    orphanedWidgets.hide();
-                }
-
-                // Sort each group's array of widgets
-                for (groupId in groupElements) {
-                    if (groupElements.hasOwnProperty(groupId)) {
-                        group = groupElements[groupId];
-                        groupElements[groupId] = group.map(function(v,i) { return {n:v,i:i} }).sort(function(A,B) {
-                            if (A.n.order < B.n.order) { return A.n.order!==0?-1:1;}
-                            if (A.n.order > B.n.order) { return B.n.order!==0?1:-1;}
-                            return A.i - B.i;
-                        }).map(function(v) { return v.n})
-                    }
-                }
-                // Sort each tabs's array of groups
-                for (tabId in tabGroups) {
-                    if (tabGroups.hasOwnProperty(tabId)) {
-                        tab = tabGroups[tabId];
-                        tabGroups[tabId] = tab.map(function(v,i) { return {n:v,i:i} }).sort(function(A,B) {
-                            if (A.n.order < B.n.order) { return -1;}
-                            if (A.n.order > B.n.order) { return 1;}
-                            return A.i - B.i;
-                        }).map(function(v) { return v.n})
-                    }
-                }
-                var tabIds = Object.keys(tabs).map(function(v,i) { return {n:tabs[v],i:i} }).sort(function(A,B) {
-                    if (A.n.order < B.n.order) { return -1;}
-                    if (A.n.order > B.n.order) { return 1;}
-                    return A.i - B.i;
-                }).map(function(v) { return v.n.id});
-                tabIds.forEach(function(tabId) {
-                    var tab = {node:tabs[tabId],groups:[]};
-                    if (tabGroups[tabId]) {
-                        tabGroups[tabId].forEach(function(groupNode) {
-                            var group = {node: groupNode,widgets:[]};
-                            if (groupElements[groupNode.id]) {
-                                group.widgets = groupElements[groupNode.id];
+                    // Find all ui widgets - list them by their group id
+                    RED.nodes.eachNode(function(node) {
+                        if (/^ui_/.test(node.type)) {
+                            if (groups.hasOwnProperty(node.group)) {
+                                groupElements[node.group] = groupElements[node.group]||[];
+                                groupElements[node.group].push(node);
+                            } else if (node.type === 'ui_link') {
+                                links.push(node);
+                            } else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
+                                unknownGroups++;
                             }
-                            tab.groups.push(group);
+                        }
+                    });
+                    if (unknownGroups > 0) {
+                        $("#nr-db-missing-group-count").text((unknownGroups===1?"is ":"are ")+unknownGroups+" widget"+(unknownGroups === 1?"":"s"))
+                        orphanedWidgets.show();
+                    } else {
+                        orphanedWidgets.hide();
+                    }
+                    // Sort each group's array of widgets
+                    for (groupId in groupElements) {
+                        if (groupElements.hasOwnProperty(groupId)) {
+                            group = groupElements[groupId];
+                            groupElements[groupId] = group.map(function(v,i) { return {n:v,i:i} }).sort(function(A,B) {
+                                if (A.n.order < B.n.order) { return A.n.order!==0?-1:1;}
+                                if (A.n.order > B.n.order) { return B.n.order!==0?1:-1;}
+                                return A.i - B.i;
+                            }).map(function(v) { return v.n})
+                        }
+                    }
+                    // Sort each tabs's array of groups
+                    for (tabId in tabGroups) {
+                        if (tabGroups.hasOwnProperty(tabId)) {
+                            tab = tabGroups[tabId];
+                            tabGroups[tabId] = tab.map(function(v,i) { return {n:v,i:i} }).sort(function(A,B) {
+                                if (A.n.order < B.n.order) { return -1;}
+                                if (A.n.order > B.n.order) { return 1;}
+                                return A.i - B.i;
+                            }).map(function(v) { return v.n})
+                        }
+                    }
+                    var tabIds = Object.keys(tabs).map(function(v,i) { return {n:tabs[v],i:i} }).sort(function(A,B) {
+                        if (A.n.order < B.n.order) { return -1;}
+                        if (A.n.order > B.n.order) { return 1;}
+                        return A.i - B.i;
+                    }).map(function(v) { return v.n.id});
+                    tabIds.forEach(function(tabId) {
+                        var tab = {node:tabs[tabId],groups:[]};
+                        if (tabGroups[tabId]) {
+                            tabGroups[tabId].forEach(function(groupNode) {
+                                var group = {node: groupNode,widgets:[]};
+                                if (groupElements[groupNode.id]) {
+                                    group.widgets = groupElements[groupNode.id];
+                                }
+                                tab.groups.push(group);
+                            });
+                        }
+                        dashboard.push(tab);
+                    });
+                    var newList = dashboard.map(function(t) {
+                        return {
+                            id: t.node.id,
+                            groups: t.groups.map(function(g) {
+                                return {
+                                    id: g.node.id,
+                                    widgets: g.widgets.map(function(w) {
+                                        return w.id;
+                                    })
+                                }
+                            })
+                        }
+                    });
+                    if (JSON.stringify(newList)!=JSON.stringify(currentList)) {
+                        listElements = {};
+                        groupLists = {};
+                        tabLists = {};
+                        tabs = {};
+                        groups = {};
+                        elementParents = {};
+                        tabContainer.empty();
+                        dashboard.forEach(function(tab) {
+                            tabContainer.editableList('addItem',tab);
                         });
                     }
-                    dashboard.push(tab);
-                });
-                var newList = dashboard.map(function(t) {
-                    return {
-                        id: t.node.id,
-                        groups: t.groups.map(function(g) {
-                            return {
-                                id: g.node.id,
-                                widgets: g.widgets.map(function(w) {
-                                    return w.id;
-                                })
-                            }
-                        })
-                    }
-                });
-                if (JSON.stringify(newList)!=JSON.stringify(currentList)) {
-                    listElements = {};
-                    groupLists = {};
-                    tabLists = {};
-                    tabs = {};
-                    groups = {};
-                    elementParents = {};
-                    tabContainer.empty();
-                    dashboard.forEach(function(tab) {
-                        tabContainer.editableList('addItem',tab);
+                    links.sort(function(A,B) {
+                        return A.order - B.order;
                     });
-                }
-
-                links.sort(function(A,B) {
-                    return A.order - B.order;
-                });
-
-                links.forEach(function(link) {
-                    if (linkNodes[link.id]) {
-                        var container = linkNodes[link.id];
-                        container.find(".nr-db-sb-link-name").html(link.name||"untitled");
-                        container.find(".nr-db-sb-link-url").html(link.link||"http://");
-                    } else {
-                        linksContainer.editableList('addItem',{node:link});
-                    }
-                });
-                ensureDashboardNode();
-                if (globalDashboardNode) {
-                    $("#nr-db-field-title").val(globalDashboardNode.name);
-                    $("#nr-db-field-theme").val(globalDashboardNode.theme);
-                    // $("#nr-db-field-url").val(globalDashboardNode.url);
-                }
-                awaitingGroups = {};
-                awaitingTabs = {};
-            }
-            RED.sidebar.addTab({
-                id: "dashboard",
-                label: "dashboard",
-                name: "Dashboard",
-                content: content,
-                closeable: true,
-                disableOnEdit: true,
-                onchange: function() { refresh(); }
-            });
-            editSaveEventHandler = function(node) {
-                if (/^ui_/.test(node.type)) {
-                    if (node.type === "ui_tab" || node.type === "ui_group") {
-                        if (listElements[node.id]) {
-                            // Existing element
-                            listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id);
-                            if (node.type === "ui_group") {
-                                refresh();
-                            }
-                        } else if (node.type === "ui_tab") {
-                            // Adding a tab
-                            tabContainer.editableList('addItem',{node:node,groups:[]})
+                    links.forEach(function(link) {
+                        if (linkNodes[link.id]) {
+                            var container = linkNodes[link.id];
+                            container.find(".nr-db-sb-link-name").html(link.name||"untitled");
+                            container.find(".nr-db-sb-link-url").html(link.link||"http://");
                         } else {
-                            // Adding a group
-                            if (tabLists[node.tab]) {
-                                tabLists[node.tab].editableList('addItem',{node:node,widgets:[]})
-                            }
+                            linksContainer.editableList('addItem',{node:link});
                         }
-                    } else if (node.type === "ui_link") {
-                        if (linkNodes[node.id]) {
-                            var container = linkNodes[node.id];
-                            container.find(".nr-db-sb-link-name").html(node.name||"untitled");
-                            container.find(".nr-db-sb-link-url").html(node.link||"http://");
+                    });
+                    ensureDashboardNode(true);
+                    if (globalDashboardNode) {
+                        $("#nr-db-field-title").val(globalDashboardNode.name);
+                        $("#nr-db-field-theme").val(globalDashboardNode.theme);
+                        $("#node-input-name").val(globalDashboardNode.customTheme.name);
+                        if (globalDashboardNode.theme === 'theme-custom') {
+                            $("#custom-theme-library-container").show();
+                            $("#custom-theme-settings").show();
+                        } else {
+                            $("#custom-theme-library-container").hide();
+                            $("#custom-theme-settings").hide();
                         }
-                    } else {
-                        refreshOrphanedWidgets();
-                        if (listElements[node.id]) {
-                            if (node.group != elementParents[node.id]) {
-                                // Moved to a different group
-                                if (groupLists[elementParents[node.id]]) {
-                                    groupLists[elementParents[node.id]].editableList('removeItem',listElements[node.id].data('data'))
+
+                        //set colour start
+                        var currentTheme = globalDashboardNode.theme.split("-")[1];
+                        var startingValue = globalDashboardNode[currentTheme+"Theme"].baseColor;
+                        $("#base-color").val(startingValue);
+
+                        if (globalDashboardNode.theme === 'theme-light' || globalDashboardNode.theme === 'theme-dark') {
+                            addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
+                        }
+
+                        editor = RED.editor.createEditor({
+                            id: 'node-input-format-editor',
+                            mode: 'ace/mode/javascript',
+                            value: JSON.stringify(globalDashboardNode.customTheme)
+                        });
+
+                        RED.library.create({
+                                url:"themes", // where to get the data from
+                                type:"theme", // the type of object the library is for
+                                editor: editor, // the field name the main text body goes to
+                                mode:"ace/mode/javascript",
+                                fields:['name']
+                            });
+
+                        editor.on('input', function() {
+                            // Check for any changes on the editor object
+                            // i.e. has the theme been customised compared
+                            // to what is stored
+                            var editorObject = JSON.parse(editor.getValue());
+                            var objectsEqual = true;
+                            var keysEqual = true;
+                            var editorKeys = Object.keys(editorObject);
+                            var dashNodeKeys = Object.keys(globalDashboardNode.customTheme);
+
+                            // Test equality
+                            for (var i=0; i<editorKeys.length; i++) {
+                                if (editorKeys[i] !== dashNodeKeys[i]) {
+                                    keysEqual = false;
+                                    break;
                                 }
-                                if (groupLists[node.group]) {
-                                    groupLists[node.group].editableList('addItem',node);
+                            }
+                            if (keysEqual) {
+                                for (var i=0; i<editorKeys.length; i++) {
+                                    var key = editorKeys[i];
+                                    if (editorObject[key] !== globalDashboardNode.customTheme[key]) {
+                                        objectsEqual = false;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (!objectsEqual) { globalDashboardNode.customTheme = editorObject; }
+
+                            //If custom theme is chosen, update the elements and current state
+                            if (globalDashboardNode.theme === 'theme-custom') {
+                                $("#base-color").val(globalDashboardNode.customTheme.baseColor);
+                                globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
+                                generateColours(globalDashboardNode.customTheme.baseColor);
+                                if (!objectsEqual) { RED.nodes.dirty(true); }
+                            }
+                        });
+
+                    }
+                    awaitingGroups = {};
+                    awaitingTabs = {};
+                }
+                RED.sidebar.addTab({
+                    id: "dashboard",
+                    label: "dashboard",
+                    name: "Dashboard",
+                    content: content,
+                    closeable: true,
+                    disableOnEdit: true,
+                    onchange: function() { refresh(); }
+                });
+                editSaveEventHandler = function(node) {
+                    if (/^ui_/.test(node.type)) {
+                        if (node.type === "ui_tab" || node.type === "ui_group") {
+                            if (listElements[node.id]) {
+                                // Existing element
+                                listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id);
+                                if (node.type === "ui_group") {
+                                    refresh();
+                                }
+                            } else if (node.type === "ui_tab") {
+                                // Adding a tab
+                                tabContainer.editableList('addItem',{node:node,groups:[]})
+                            } else {
+                                // Adding a group
+                                if (tabLists[node.tab]) {
+                                    tabLists[node.tab].editableList('addItem',{node:node,widgets:[]})
+                                }
+                            }
+                        } else if (node.type === "ui_link") {
+                            if (linkNodes[node.id]) {
+                                var container = linkNodes[node.id];
+                                container.find(".nr-db-sb-link-name").html(node.name||"untitled");
+                                container.find(".nr-db-sb-link-url").html(node.link||"http://");
+                            }
+                        } else {
+                            refreshOrphanedWidgets();
+                            if (listElements[node.id]) {
+                                if (node.group != elementParents[node.id]) {
+                                    // Moved to a different group
+                                    if (groupLists[elementParents[node.id]]) {
+                                        groupLists[elementParents[node.id]].editableList('removeItem',listElements[node.id].data('data'))
+                                    }
+                                    if (groupLists[node.group]) {
+                                        groupLists[node.group].editableList('addItem',node);
+                                    }
+                                } else {
+                                    var l = node._def.label;
+                                    try {
+                                        l = (typeof l === "function" ? l.call(node) : l)||"";
+                                    } catch(err) {
+                                        console.log("Definition error: "+d.type+".label",err);
+                                        l = d.type;
+                                    }
+                                    listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(l);
                                 }
                             } else {
-                                var l = node._def.label;
-                                try {
-                                    l = (typeof l === "function" ? l.call(node) : l)||"";
-                                } catch(err) {
-                                    console.log("Definition error: "+d.type+".label",err);
-                                    l = d.type;
+                                if (groupLists[node.group]) {
+                                    groupLists[node.group].editableList('addItem',node)
                                 }
-                                listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(l);
-                            }
-                        } else {
-                            if (groupLists[node.group]) {
-                                groupLists[node.group].editableList('addItem',node)
                             }
                         }
                     }
-                }
-            };
+                };
 
-            RED.events.on("editor:save",editSaveEventHandler);
+                RED.events.on("editor:save",editSaveEventHandler);
 
-            var pendingAdd = [];
-            var pendingAddTimer = null;
+                var pendingAdd = [];
+                var pendingAddTimer = null;
 
-            function handlePendingAdds() {
-                var hasTabs = false;
-                var hasGroups = false;
-                pendingAdd.sort(function(A,B) {
-                    hasTabs = hasTabs || A.type === "ui_tab" || B.type === "ui_tab";
-                    hasGroups = hasGroups || A.type === "ui_group" || B.type === "ui_group";
-                    if (A.type === B.type) {
-                        return 0;
-                    }
-                    if (A.type === "ui_tab") {
-                        return -1;
-                    } else if (B.type === "ui_tab") {
-                        return 1;
-                    } else if (A.type === "ui_group") {
-                        return -1;
-                    } else if (B.type === "ui_group") {
-                        return 1;
-                    }
-                    return 0
-                });
-                for (var i=0;i<pendingAdd.length;i++) {
-                    var node = pendingAdd[i];
-                    if (node.type === "ui_tab") {
-                        tabContainer.editableList('addItem',{node:node,groups:[]});
-                    } else {
-                        if (hasTabs) {
-                            // We've added some tabs, need to give jquery time to add the lists
-                            pendingAdd = pendingAdd.slice(i);
-                            pendingAddTimer = setTimeout(handlePendingAdds,50);
-                            return;
+                function handlePendingAdds() {
+                    var hasTabs = false;
+                    var hasGroups = false;
+                    pendingAdd.sort(function(A,B) {
+                        hasTabs = hasTabs || A.type === "ui_tab" || B.type === "ui_tab";
+                        hasGroups = hasGroups || A.type === "ui_group" || B.type === "ui_group";
+                        if (A.type === B.type) {
+                            return 0;
                         }
-                        if (node.type === "ui_group") {
-                            if (tabLists[node.tab]) {
-                                tabLists[node.tab].editableList('addItem',{node:node,widgets:[]});
-                            }
+                        if (A.type === "ui_tab") {
+                            return -1;
+                        } else if (B.type === "ui_tab") {
+                            return 1;
+                        } else if (A.type === "ui_group") {
+                            return -1;
+                        } else if (B.type === "ui_group") {
+                            return 1;
+                        }
+                        return 0
+                    });
+                    for (var i=0;i<pendingAdd.length;i++) {
+                        var node = pendingAdd[i];
+                        if (node.type === "ui_tab") {
+                            tabContainer.editableList('addItem',{node:node,groups:[]});
                         } else {
-                            if (hasGroups) {
+                            if (hasTabs) {
                                 // We've added some tabs, need to give jquery time to add the lists
                                 pendingAdd = pendingAdd.slice(i);
                                 pendingAddTimer = setTimeout(handlePendingAdds,50);
                                 return;
                             }
-                            if (groupLists[node.group]) {
-                                groupLists[node.group].editableList('addItem',node)
+                            if (node.type === "ui_group") {
+                                if (tabLists[node.tab]) {
+                                    tabLists[node.tab].editableList('addItem',{node:node,widgets:[]});
+                                }
                             } else {
-                                refreshOrphanedWidgets();
+                                if (hasGroups) {
+                                    // We've added some tabs, need to give jquery time to add the lists
+                                    pendingAdd = pendingAdd.slice(i);
+                                    pendingAddTimer = setTimeout(handlePendingAdds,50);
+                                    return;
+                                }
+                                if (groupLists[node.group]) {
+                                    groupLists[node.group].editableList('addItem',node)
+                                } else {
+                                    refreshOrphanedWidgets();
+                                }
                             }
                         }
                     }
+                    pendingAdd = [];
                 }
-                pendingAdd = [];
-            }
-            nodesAddEventHandler = function(node) {
-                if (/^ui_/.test(node.type) && !listElements[node.id]) {
-                    pendingAdd.push(node);
-                    clearTimeout(pendingAddTimer);
-                    pendingAddTimer = setTimeout(handlePendingAdds,100);
-                }
-            };
-            RED.events.on("nodes:add", nodesAddEventHandler);
-
-            nodesRemoveEventHandler = function(node) {
-                if (/^ui_/.test(node.type)) {
-                    if (node.type === "ui_tab") {
-                        if (listElements[node.id]) {
-                            tabContainer.editableList('removeItem',listElements[node.id].data('data'));
-                            delete tabLists[node.id];
-                        }
-                    } else if (node.type === "ui_group") {
-                        if (tabLists[node.tab] && listElements[node.id]) {
-                            tabLists[node.tab].editableList('removeItem',listElements[node.id].data('data'));
-                        }
-                        delete groupLists[node.id];
-                    } else if (node.type === 'ui_link') {
-                        if (linkNodes[node.id]) {
-                            linksContainer.editableList('removeItem',linkNodes[node.id].data('data'));
-                            delete linkNodes[node.id];
-                        }
-                    } else {
-                        if (groupLists[node.group]) {
-                            groupLists[node.group].editableList('removeItem',node)
-                        }
+                nodesAddEventHandler = function(node) {
+                    if (/^ui_/.test(node.type) && !listElements[node.id]) {
+                        pendingAdd.push(node);
+                        clearTimeout(pendingAddTimer);
+                        pendingAddTimer = setTimeout(handlePendingAdds,100);
                     }
-                    refreshOrphanedWidgets();
-                    delete listElements[node.id];
-                }
-            };
+                };
+                RED.events.on("nodes:add", nodesAddEventHandler);
 
-            RED.events.on("nodes:remove", nodesRemoveEventHandler);
-        }
-    });
+                nodesRemoveEventHandler = function(node) {
+                    if (/^ui_/.test(node.type)) {
+                        if (node.type === "ui_tab") {
+                            if (listElements[node.id]) {
+                                tabContainer.editableList('removeItem',listElements[node.id].data('data'));
+                                delete tabLists[node.id];
+                            }
+                        } else if (node.type === "ui_group") {
+                            if (tabLists[node.tab] && listElements[node.id]) {
+                                tabLists[node.tab].editableList('removeItem',listElements[node.id].data('data'));
+                            }
+                            delete groupLists[node.id];
+                        } else if (node.type === 'ui_link') {
+                            if (linkNodes[node.id]) {
+                                linksContainer.editableList('removeItem',linkNodes[node.id].data('data'));
+                                delete linkNodes[node.id];
+                            }
+                        } else {
+                            if (groupLists[node.group]) {
+                                groupLists[node.group].editableList('removeItem',node)
+                            }
+                        }
+                        refreshOrphanedWidgets();
+                        delete listElements[node.id];
+                    }
+                };
+
+                RED.events.on("nodes:remove", nodesRemoveEventHandler);
+            }
+        });
 
     $.widget( "nodereddashboard.elementSizer", {
         _create: function() {
@@ -1072,15 +1564,15 @@
 
                 if (hasAuto) {
                     var button = $('<a>',{href:"#",class:"editor-button editor-button-small",style:"margin-bottom: 5px"})
-                        .html("auto")
-                        .appendTo(buttonRow)
-                        .on('mouseup',function(evt) {
-                            that.element.html("auto")
-                            $(that.options.width).val(0).change();
-                            $(that.options.height).val(0).change();
-                            evt.preventDefault();
-                            container.fadeOut(200, function() { $(this).remove(); });
-                        });
+                    .html("auto")
+                    .appendTo(buttonRow)
+                    .on('mouseup',function(evt) {
+                        that.element.html("auto")
+                        $(that.options.width).val(0).change();
+                        $(that.options.height).val(0).change();
+                        evt.preventDefault();
+                        container.fadeOut(200, function() { $(this).remove(); });
+                    });
                 }
 
                 var cellBorder = "1px dashed lightGray";
@@ -1151,7 +1643,6 @@
                         })
                     }
                 }
-
                 var cells = [];
                 for (var i=0;i<maxHeight;i++) {
                     addRow(i);
@@ -1168,9 +1659,9 @@
 </script>
 
 <script type="text/x-red" data-template-name="ui_base">
-<div class='form-row'>
-    <a href="#" onclick="RED.sidebar.show('dashboard'); $('#node-config-dialog-cancel').click(); return false" class="editor-button">Open dashboard sidebar</a>
-</div>
+    <div class='form-row'>
+        <a href="#" onclick="RED.sidebar.show('dashboard'); $('#node-config-dialog-cancel').click(); return false" class="editor-button">Open dashboard sidebar</a>
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="ui_base">

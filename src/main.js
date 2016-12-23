@@ -62,20 +62,58 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             $mdSidenav('left').close();
         };
 
+        function applyStyle(theme) {
+
+            // less needs a corresponding css variable for each style
+            // in camel case. e.g. 'page-backgroundColor' -> '@pageBackgroundColor'
+            var configurableStyles = Object.keys(theme.themeState);
+
+            var lessObj = {};
+            for (var i=0; i<configurableStyles.length; i++) {
+
+                //remove dash and camel case
+                var arr = configurableStyles[i].split('-');
+                for (var j=1; j<arr.length; j++) {
+                    arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
+                }
+                var lessVariable = arr.join("");
+                var colour = theme.themeState[configurableStyles[i]].value;
+                lessObj["@"+lessVariable] = colour;
+            }
+            less.modifyVars(lessObj);
+        }
+
         events.connect(function (ui, done) {
             main.tabs = ui.tabs;
             main.links = ui.links;
             $document[0].title = ui.title;
 
             var prevTabIndex = parseInt($location.path().substr(1));
+
+            var finishLoading = function() {
+                if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
+                    applyStyle(main.selectedTab.theme);
+                    $mdToast.hide();
+                    done();
+                }
+                else {
+                    if (typeof(ui.theme) === 'object') {
+                        applyStyle(ui.theme);
+                    }
+                }
+            }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {
                 main.selectedTab = main.tabs[prevTabIndex];
+                finishLoading();
             }
             else {
-                $timeout( function() { main.select(0); }, 50 );
+                $timeout( function() {
+                    main.select(0);
+                    finishLoading();
+                }, 50 );
             }
-            $mdToast.hide();
-            done();
+
+
         }, function () {
             main.loaded = true;
             main.len = main.tabs.length + main.links.length;
