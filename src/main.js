@@ -92,12 +92,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
-                    console.log('hi');
                    applyStyle(main.selectedTab.theme);
                    $mdToast.hide();
                    done(); 
                 } else if (typeof(ui.theme) === 'object'){
-                    console.log('yo');
                     applyStyle(ui.theme);
                 }
             }
