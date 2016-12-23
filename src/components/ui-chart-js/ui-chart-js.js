@@ -9,7 +9,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
                     scope.config = loadConfiguration(type, scope);
-                    console.log(scope.$eval('me.item'));
 
                     // When new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
@@ -203,7 +202,6 @@ function loadConfiguration(type,scope) {
         
         //generate white or black depending on group background colour
         var groupBackgroundColor = tinycolor(themeState.groupBackgroundColor).toRgb();
-        console.log(groupBackgroundColor);
         var gridlineColour = "rgba("+groupBackgroundColor.r+","+groupBackgroundColor.g+","+groupBackgroundColor.b+",0.1)";
 
         config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {

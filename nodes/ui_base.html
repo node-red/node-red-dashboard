@@ -191,6 +191,10 @@
         font-weight: bold;
     }
 
+    #custom-theme-library-container .btn-group {
+        margin-bottom: 10px;
+    }
+
 </style>
 <script type="text/javascript">
     (function($) {
@@ -205,19 +209,19 @@
             $.ajax({ cache: false,
               url: path,
               success: function (data) {
-                    var jsScript = document.createElement("script");
-                    jsScript.type = "application/javascript";
-                    jsScript.src = path;
-                    document.body.appendChild(jsScript);
-                    console.log('Tiny Color Loaded');
-              },
-              error:function (xhr, ajaxOptions, thrownError){
-                    if(xhr.status === 404 && !attemptedVendorLoad) {
-                        loadTinyColor(uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
-                        attemptedVendorLoad = true;
-                    }
-              }
-            });
+                var jsScript = document.createElement("script");
+                jsScript.type = "application/javascript";
+                jsScript.src = path;
+                document.body.appendChild(jsScript);
+                console.log('Tiny Color Loaded');
+            },
+            error:function (xhr, ajaxOptions, thrownError){
+                if(xhr.status === 404 && !attemptedVendorLoad) {
+                    loadTinyColor(uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
+                    attemptedVendorLoad = true;
+                }
+            }
+        });
         }
         
         // Try to load dist version first
@@ -267,20 +271,29 @@
                         }
                         return leastColor;
                     },
+                    whiteBlackLeastReadable: function(base) {
+                        return this.leastReadable(base, ["#000000", "#ffffff"]);
+                    },
                     calculate_page_backgroundColor: function(base) {
-                        return this.leastReadable(base, ["#fafafa", "#111111"]);
+                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                        var pageBackground;
+                        (whiteOrBlack === "#000000") ? pageBackground = "#111111" : pageBackground = "#fafafa";
+                        return pageBackground;
                     },
                     calculate_group_textColor: function(base) {
                         return tinycolor(base).lighten(25).toHexString();
                     },
                     calculate_page_sidebar_backgroundColor: function(base) {
-                        return this.leastReadable(base, ["#000000", "#ffffff"]);
+                        return this.whiteBlackLeastReadable(base);
                     },
                     calculate_page_titlebar_backgroundColor: function(base) {
                         return tinycolor(base).darken(10).toHexString();
                     },
                     calculate_group_backgroundColor: function(base) {
-                        return this.leastReadable(base, ["#ffffff", "#333333"]);
+                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                        var groupBackground;
+                        (whiteOrBlack === "#000000") ? groupBackground = "#333333" : groupBackground = "#ffffff";
+                        return groupBackground;
                     },
                     calculate_group_borderColor: function(base) {
                         var groupBackground = this.calculate_group_backgroundColor(base);
@@ -553,7 +566,7 @@
                 $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
                 var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('widget-textColor', 'Widget Text', widgetStyles);
-                addCustomisableStyle('widget-backkgroundColor', 'Widget Background', widgetStyles);
+                addCustomisableStyle('widget-backgroundColor', 'Widget Background', widgetStyles);
 
                 function addCustomisableStyle(id, name, parentUl) {
                     var styleLi = $('<li class="red-ui-dashboard-theme-item"><span>'+name+'</span></li>').appendTo(parentUl);
@@ -578,16 +591,16 @@
                 function addResetButton(id, parent) {
                     var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
                     .click(function(e) {
-                     resetClick(e);
-                 })
+                       resetClick(e);
+                   })
                     .appendTo(parent);
                 }
 
                 function addLightAndDarkResetButton(id, parent) {
                     var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
                     .click(function(e) {
-                     lightAndDarkResetClick(e);
-                 })
+                       lightAndDarkResetClick(e);
+                   })
                     .appendTo(parent);
                 }
 
@@ -926,7 +939,7 @@ sortItems: function(items) {
 });
 
 
-var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(form);
+var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(layoutTab);
 $('<span><i class="fa fa-info-circle"></i> There <span id="nr-db-missing-group-count"></span> not in a group. Click <a id="nr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
 orphanedWidgets.find('a').click(function(event) {
     var unknownGroups = {};
@@ -1261,50 +1274,78 @@ function refresh() {
 
                         if (globalDashboardNode.theme === 'theme-light' || globalDashboardNode.theme === 'theme-dark') {
                             addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
-                        // } else {
-                        //     addResetButton('base-color', $('#base-settings-ul').children());
-                    }
+                        }
 
-                    editor = RED.editor.createEditor({
-                        id: 'node-input-format-editor',
-                        mode: 'ace/mode/javascript',
-                        value: JSON.stringify(globalDashboardNode.customTheme)
-                    });
-
-                    RED.library.create({
-                            url:"themes", // where to get the data from
-                            type:"theme", // the type of object the library is for
-                            editor: editor, // the field name the main text body goes to
-                            mode:"ace/mode/javascript",
-                            fields:['name']
+                        editor = RED.editor.createEditor({
+                            id: 'node-input-format-editor',
+                            mode: 'ace/mode/javascript',
+                            value: JSON.stringify(globalDashboardNode.customTheme)
                         });
 
-                    editor.on('input', function() {
-                        globalDashboardNode.customTheme = JSON.parse(editor.getValue());
-                        if (globalDashboardNode.theme === 'theme-custom') {
-                            $("#base-color").val(globalDashboardNode.customTheme.baseColor);
-                            globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
-                            generateColours(globalDashboardNode.customTheme.baseColor);
-                        }  
-                    });
+                        RED.library.create({
+                                url:"themes", // where to get the data from
+                                type:"theme", // the type of object the library is for
+                                editor: editor, // the field name the main text body goes to
+                                mode:"ace/mode/javascript",
+                                fields:['name']
+                            });
 
+                        editor.on('input', function() {
+
+                            // Check for any changes on the editor object
+                            // i.e. has the theme been customised compared
+                            // to what is stored
+                            var editorObject = JSON.parse(editor.getValue());
+                            var objectsEqual = true;
+                            var keysEqual = true;
+                            var editorKeys = Object.keys(editorObject);
+                            var dashNodeKeys = Object.keys(globalDashboardNode.customTheme);
+
+                            // Test equality
+                            for (var i=0; i<editorKeys.length; i++) {
+                                if (editorKeys[i] !== dashNodeKeys[i]) {
+                                    keysEqual = false;
+                                    break;
+                                }
+                            }
+                            if (keysEqual) {
+                               for (var i=0; i<editorKeys.length; i++) {
+                                   var key = editorKeys[i];
+                                   if (editorObject[key] !== globalDashboardNode.customTheme[key]) {
+                                       objectsEqual = false;
+                                       break;
+                                   }
+                               } 
+                            }
+
+                            if (!objectsEqual) { globalDashboardNode.customTheme = editorObject };
+                            
+                            //If custom theme is chosen, update the elements and current state
+                            if (globalDashboardNode.theme === 'theme-custom') {
+                                $("#base-color").val(globalDashboardNode.customTheme.baseColor);
+                                globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
+                                generateColours(globalDashboardNode.customTheme.baseColor);
+                                if (!objectsEqual) { RED.nodes.dirty(true) };
+                            }  
+                        });
+
+                    }
+                    awaitingGroups = {};
+                    awaitingTabs = {};
                 }
-                awaitingGroups = {};
-                awaitingTabs = {};
-            }
-            RED.sidebar.addTab({
-                id: "dashboard",
-                label: "dashboard",
-                name: "Dashboard",
-                content: content,
-                closeable: true,
-                disableOnEdit: true,
-                onchange: function() { refresh(); }
-            });
-            editSaveEventHandler = function(node) {
-                if (/^ui_/.test(node.type)) {
-                    if (node.type === "ui_tab" || node.type === "ui_group") {
-                        if (listElements[node.id]) {
+                RED.sidebar.addTab({
+                    id: "dashboard",
+                    label: "dashboard",
+                    name: "Dashboard",
+                    content: content,
+                    closeable: true,
+                    disableOnEdit: true,
+                    onchange: function() { refresh(); }
+                });
+                editSaveEventHandler = function(node) {
+                    if (/^ui_/.test(node.type)) {
+                        if (node.type === "ui_tab" || node.type === "ui_group") {
+                            if (listElements[node.id]) {
                                 // Existing element
                                 listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id);
                                 if (node.type === "ui_group") {
