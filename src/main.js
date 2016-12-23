@@ -92,9 +92,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var prevTabIndex = parseInt($location.path().substr(1));
 
             var finishLoading = function() {
-                applyStyle(main.selectedTab.theme);
-                $mdToast.hide();
-                done();
+                if (main.selectedTab) {
+                   applyStyle(main.selectedTab.theme);
+                   $mdToast.hide();
+                   done(); 
+                }
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {
                 main.selectedTab = main.tabs[prevTabIndex];

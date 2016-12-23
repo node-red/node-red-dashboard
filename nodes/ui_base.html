@@ -146,6 +146,55 @@
     #dashboard-tabs-list li a:hover {
         cursor: pointer;
     }
+    ul.red-ui-tabs {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: block;
+        height: 35px;
+        box-sizing: border-box;
+        white-space: nowrap;
+        border-bottom: 1px solid #bbb;
+        background: #fff;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    ul.red-ui-tabs li.active {
+        background: #fff;
+        font-weight: bold;
+        border-bottom: 1px solid #fff;
+        z-index: 2;
+    }
+
+    ul.red-ui-tabs li {
+        box-sizing: border-box;
+        display: inline-block;
+        border-left: 1px solid #bbb;
+        border-top: 1px solid #bbb;
+        border-right: 1px solid #bbb;
+        border-bottom: 1px solid #bbb;
+        background: #f0f0f0;
+        margin: 3px 3px 0 3px;
+        height: 32px;
+        line-height: 29px;
+        max-width: 200px;
+        width: 14%;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+    }
+
+    ul.red-ui-tabs li a.red-ui-tab-label {
+        display: block;
+        font-size: 14px;
+        padding-left: 12px;
+        width: 100%;
+        height: 100%;
+        color: #666;
+    }
 
     #dash-link-button {
         position: absolute;
@@ -194,10 +243,30 @@
         var uip = RED.settings.uiPath || 'ui';
         RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
 
-        var jsScript = document.createElement("script");
-        jsScript.type = "application/javascript";
-        jsScript.src = uip+'/js/tinycolor.js';
-        document.body.appendChild(jsScript);
+        var attemptedVendorLoad = false;
+        var loadTinyColor = function(path) {
+            $.ajax({ cache: false,
+              url: path,
+              success: function (data) {
+                    var jsScript = document.createElement("script");
+                    jsScript.type = "application/javascript";
+                    jsScript.src = path;
+                    document.body.appendChild(jsScript);
+                    console.log('Tiny Color Loaded');
+              },
+              error:function (xhr, ajaxOptions, thrownError){
+                    if(xhr.status === 404 && !attemptedVendorLoad) {
+                        loadTinyColor(uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
+                        attemptedVendorLoad = true;
+                    }
+              }
+            });
+        }
+        
+        // Try to load dist version first
+        // then if fails, load non dist version
+        loadTinyColor(uip+'/js/tinycolor.js');
+
 
         RED.nodes.registerType('ui_base',{
             category: 'config',
