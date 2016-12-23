@@ -23,13 +23,14 @@ module.exports = function(RED) {
         defaultThemeState['widget-textColor'] = defaultThemeState['widget-backgroundColor'] = { value: null, edited: false };
         this.config = {
             name: config.name || 'Node-RED Dashboard',
+            clock: config.clock || '',
             theme: config.theme || 'theme-light',
             lightTheme: config.lightTheme || defaultLightTheme,
             darkTheme: config.darkTheme || defaultDarkTheme,
             customTheme: config.customTheme || defaultCustomTheme,
             themeState: config.themeState || defaultThemeState
         };
-        ui.addBaseConfig(this.config.name, this.config.theme, this.config.lightTheme, this.config.darkTheme, this.config.customTheme, this.config.themeState);
+        ui.addBaseConfig(this.config.name, this.config.clock, this.config.theme, this.config.lightTheme, this.config.darkTheme, this.config.customTheme, this.config.themeState);
     }
     RED.nodes.registerType("ui_base", BaseNode);
     RED.library.register("themes");

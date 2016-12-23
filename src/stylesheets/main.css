@@ -41,6 +41,11 @@ md-card {
   width: 100%;
 }
 
+.toolbar-clock {
+    position: absolute;
+    margin: auto;
+}
+
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   img[src$=".svg"] {
     width: 100%;

@@ -233,6 +233,7 @@
             category: 'config',
             defaults: {
                 name: {value: ''},
+                clock: {clock: ''},
                 theme: {value: ''},
                 lightTheme: {value: {}},
                 darkTheme: {value: {}},
@@ -339,13 +340,14 @@
                             themeState[configurableStyles[i]] = {value: colour, edited: false};
                         }
 
-                        var missingFields = (!globalDashboardNode || !globalDashboardNode.lightTheme || !globalDashboardNode.darkTheme || !globalDashboardNode.customTheme || !globalDashboardNode.themeState);
+                        var missingFields = (!globalDashboardNode || !globalDashboardNode.lightTheme || !globalDashboardNode.darkTheme || !globalDashboardNode.customTheme || !globalDashboardNode.themeState || !globalDashboardNode.clock);
                         if (missingFields && createMissing) {
                             globalDashboardNode = {
                                 id: RED.nodes.id(),
                                 _def: RED.nodes.getType("ui_base"),
                                 type: "ui_base",
                                 name: "Node-RED Dashboard",
+                                clock: "",
                                 theme: "theme-light",
                                 lightTheme: {
                                     default: "#0094CE",
@@ -383,7 +385,7 @@
                 var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTabs);
                 var liLayoutTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
                 var liThemeTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
-                var liSiteTab = $('<li class="red-ui-tab" style="width: 80px;"><a class="red-ui-tab-label" title="Site" style="width: 80px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
+                var liSiteTab = $('<li class="red-ui-tab" style="width: 60px;"><a class="red-ui-tab-label" title="Site" style="width: 60px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
 
                 $('<span id="dash-link-button" class="editor-button"><i class="fa fa-external-link"></i></span>')
                 .click(function(evt) {
@@ -428,7 +430,7 @@
                 // Site Tab
                 var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
                 $('<label>').html('Title').appendTo(divTitle);
-                $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","calc(100% - 48px)")
+                $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","100%")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.name !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -437,6 +439,18 @@
                     }
                 })
                 .appendTo(divTitle);
+
+                var divClock = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                $('<label>').html('Clock Format (<a href="https://docs.angularjs.org/api/ng/filter/date" target="_blank">?</a>)').appendTo(divClock);
+                $('<input type="text" id="nr-db-field-clock">').val("").css("width","100%")
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.clock !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.clock = $(this).val();
+                        RED.nodes.dirty(true);
+                    }
+                })
+                .appendTo(divClock);
 
                 // Theme Tab
                 // For all customisable styles, generate and apply the css
@@ -1259,6 +1273,7 @@
                     ensureDashboardNode(true);
                     if (globalDashboardNode) {
                         $("#nr-db-field-title").val(globalDashboardNode.name);
+                        $("#nr-db-field-clock").val(globalDashboardNode.clock);
                         $("#nr-db-field-theme").val(globalDashboardNode.theme);
                         $("#node-input-name").val(globalDashboardNode.customTheme.name);
                         if (globalDashboardNode.theme === 'theme-custom') {
