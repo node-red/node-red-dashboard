@@ -267,20 +267,29 @@
                         }
                         return leastColor;
                     },
+                    whiteBlackLeastReadable: function(base) {
+                        return this.leastReadable(base, ["#000000", "#ffffff"]);
+                    },
                     calculate_page_backgroundColor: function(base) {
-                        return this.leastReadable(base, ["#fafafa", "#111111"]);
+                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                        var pageBackground;
+                        (whiteOrBlack === "#000000") ? pageBackground = "#111111" : pageBackground = "#fafafa";
+                        return pageBackground;
                     },
                     calculate_group_textColor: function(base) {
                         return tinycolor(base).lighten(25).toHexString();
                     },
                     calculate_page_sidebar_backgroundColor: function(base) {
-                        return this.leastReadable(base, ["#000000", "#ffffff"]);
+                        return this.whiteBlackLeastReadable(base);
                     },
                     calculate_page_titlebar_backgroundColor: function(base) {
                         return tinycolor(base).darken(10).toHexString();
                     },
                     calculate_group_backgroundColor: function(base) {
-                        return this.leastReadable(base, ["#ffffff", "#333333"]);
+                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                        var groupBackground;
+                        (whiteOrBlack === "#000000") ? groupBackground = "#333333" : groupBackground = "#ffffff";
+                        return groupBackground;
                     },
                     calculate_group_borderColor: function(base) {
                         var groupBackground = this.calculate_group_backgroundColor(base);
