@@ -62,10 +62,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             $mdSidenav('left').close();
         };
 
-        //Use tiny colour to apply inline styles to elements
         function applyStyle(theme) {
 
-            //less css needs a corresponding css variable for each style
+            // less needs a corresponding css variable for each style
             // in camel case. e.g. 'page-backgroundColor' -> '@pageBackgroundColor'
             var configurableStyles = Object.keys(theme.themeState);
 
@@ -96,6 +95,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                    applyStyle(main.selectedTab.theme);
                    $mdToast.hide();
                    done(); 
+                } else {
+                    applyStyle(ui.theme);
                 }
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {
