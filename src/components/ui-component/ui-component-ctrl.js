@@ -95,12 +95,12 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         format: me.item.format,
                         inline: me.item.showPicker,
                         alpha: me.item.showAlpha,
+                        lightness: me.item.showLightness,
                         swatch: me.item.showSwatch,
                         swatchOnly: (me.item.width < 2 || !(me.item.showValue)),
                         swatchPos: "right",
                         pos: "bottom right",
                         case: "lower",
-                        lightness: true,
                         round: true,
                         pickerOnly: me.item.showPicker && !(me.item.showSwatch || me.item.showValue)
                     };

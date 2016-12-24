@@ -12,6 +12,7 @@
             showPicker: {value: false},
             showValue: {value: false},
             showAlpha: {value: false},
+            showLightness: {value: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
                     var width = v||0;
@@ -79,7 +80,11 @@
             <option value="hsv">hsv</option>
             <option value="rgb">rgb</option>
         </select>
-        <span id="node-alpha-control" style="margin-left:40px">Show transparency: <input type="checkbox" id="node-input-showAlpha" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
+    </div>
+    <div class="form-row">
+        <span id="node-lightness-control" style="margin-left:40px">Show lightness slider: <input type="checkbox" id="node-input-showLightness" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
+        <br/>
+        <span id="node-alpha-control" style="margin-left:40px">Show transparency slider: <input type="checkbox" id="node-input-showAlpha" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
     </div>
     <div class="form-row">
         If width is 4 or greater:<br/>
