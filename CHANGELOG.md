@@ -1,4 +1,11 @@
 
+### 2.2.2: Maintenance Release - not yet on npm
+
+**Enhancements**
+
+ - Colourpicker - add configurable lightness slider PR123
+
+
 ### 2.2.1: Maintenance Release
 
 **Fixes**

@@ -73,32 +73,32 @@
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-keyboard-o"></i> Format</label>
-        <select id="node-input-format" style="width:100px;">
+        <select id="node-input-format" style="width:156px;">
             <option value="hex">hex</option>
-            <option value="hex8">hex8</option>    
+            <option value="hex8">hex8</option>
             <option value="hsl">hsl</option>
             <option value="hsv">hsv</option>
             <option value="rgb">rgb</option>
         </select>
     </div>
     <div class="form-row">
-        <span id="node-lightness-control" style="margin-left:40px">Show lightness slider: <input type="checkbox" id="node-input-showLightness" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
+        <label>&nbsp;</label> Show lightness slider : <input type="checkbox" id="node-input-showLightness" style="display:inline-block; width:auto; vertical-align:baseline;">
         <br/>
-        <span id="node-alpha-control" style="margin-left:40px">Show transparency slider: <input type="checkbox" id="node-input-showAlpha" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
+        <span id="node-alpha-control"><label>&nbsp;</label> Show transparency slider : <input type="checkbox" id="node-input-showAlpha" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
     </div>
     <div class="form-row">
         If width is 4 or greater:<br/>
         <label>&nbsp;</label>
-        Show swatch : <input type="checkbox" checked id="node-input-showSwatch" style="display:inline-block; width:auto; vertical-align:top;">
+        Always show swatch : <input type="checkbox" checked id="node-input-showSwatch" style="display:inline-block; width:auto; vertical-align:top;">
         <br/>
         <label>&nbsp;</label>
-        Show picker : <input type="checkbox" checked id="node-input-showPicker" style="display:inline-block; width:auto; vertical-align:top;">
+        Always show picker : <input type="checkbox" checked id="node-input-showPicker" style="display:inline-block; width:auto; vertical-align:top;">
         <br/>
         <label>&nbsp;</label>
-        Show value field : <input type="checkbox" checked id="node-input-showValue" style="display:inline-block; width:auto; vertical-align:top;">
+        Always show value field : <input type="checkbox" checked id="node-input-showValue" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output : </label>
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
@@ -113,7 +113,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
-        <input type="text" id="node-input-topic">
+        <input type="text" id="node-input-topic" placeholder="optional topic">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
