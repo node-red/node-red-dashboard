@@ -18,8 +18,8 @@ module.exports = function(RED) {
         }
         var defaultThemeState = {};
         defaultThemeState['base-color'] = defaultThemeState['base-font'] = { default: null, value: null, edited: false };
-        defaultThemeState['page-backgroundColor'] = defaultThemeState['page-sidebar-backgroundColor'] = defaultThemeState['page-titlebar-backgroundColor'] = 
-        defaultThemeState['group-backgroundColor'] = defaultThemeState['group-textColor'] = defaultThemeState['group-borderColor'] = 
+        defaultThemeState['page-backgroundColor'] = defaultThemeState['page-sidebar-backgroundColor'] = defaultThemeState['page-titlebar-backgroundColor'] =
+        defaultThemeState['group-backgroundColor'] = defaultThemeState['group-textColor'] = defaultThemeState['group-borderColor'] =
         defaultThemeState['widget-textColor'] = defaultThemeState['widget-backgroundColor'] = { value: null, edited: false };
         this.config = {
             name: config.name || 'Node-RED Dashboard',

@@ -10,22 +10,15 @@ app.config(['$mdThemingProvider', '$compileProvider',
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
     }]);
 
-app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$interval', '$scope',
-    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $interval, $scope) {
-        var main = this;
-
+app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope',
+    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope) {
         this.tabs = [];
         this.links = [];
         this.len = 0;
         this.selectedTab = null;
         this.loaded = false;
-
-        //Clock
-        function tick() {
-            main.time = Date.now();
-        }
-        tick();
-        $interval(tick, 1000);
+        this.showToolbar = true;
+        var main = this;
 
         function moveTab(d) {
             var len = main.tabs.length;
@@ -70,14 +63,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         };
 
         function applyStyle(theme) {
-
             // less needs a corresponding css variable for each style
             // in camel case. e.g. 'page-backgroundColor' -> '@pageBackgroundColor'
             var configurableStyles = Object.keys(theme.themeState);
-
             var lessObj = {};
-            for (var i=0; i<configurableStyles.length; i++) {
 
+            for (var i=0; i<configurableStyles.length; i++) {
                 //remove dash and camel case
                 var arr = configurableStyles[i].split('-');
                 for (var j=1; j<arr.length; j++) {
@@ -95,9 +86,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.links = ui.links;
             $document[0].title = ui.title;
             main.clock = ui.clock;
-
             var prevTabIndex = parseInt($location.path().substr(1));
-
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
                     applyStyle(main.selectedTab.theme);
@@ -120,8 +109,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     finishLoading();
                 }, 50 );
             }
-
-
         }, function () {
             main.loaded = true;
             main.len = main.tabs.length + main.links.length;
@@ -143,7 +130,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
             if (found === undefined) { return; }
             for (var key in msg) {
-
                 if (msg.hasOwnProperty(key)) {
                     if (key === 'id') { continue; }
                     found[key] = msg[key];

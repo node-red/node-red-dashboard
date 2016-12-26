@@ -10,7 +10,7 @@
         </md-list-item>
     </md-list>
 </md-sidenav>
-<md-toolbar id="toolbar">
+<md-toolbar ng-show="main.showToolbar === true" id="toolbar">
     <div class="md-toolbar-tools">
         <md-button ng-show="main.len > 1" ng-click="main.toggleSidenav()" class="md-icon-button" aria-label="menu button">
             <ng-md-icon icon="menu"></ng-md-icon>
