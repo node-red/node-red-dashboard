@@ -1,4 +1,4 @@
-<md-sidenav layout="column" class="md-sidenav-left" md-component-id="left">
+<md-sidenav ng-show="main.len <= 1" layout="column" class="md-sidenav-left" md-component-id="left">
     <md-list>
         <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
             <ui-icon icon="{{tab.icon}}" style="margin:5px"></ui-icon>
@@ -10,7 +10,7 @@
         </md-list-item>
     </md-list>
 </md-sidenav>
-<md-toolbar ng-show="main.showToolbar === true" id="toolbar">
+<md-toolbar ng-show="main.hideToolbar !== true" id="toolbar">
     <div class="md-toolbar-tools">
         <md-button ng-show="main.len > 1" ng-click="main.toggleSidenav()" class="md-icon-button" aria-label="menu button">
             <ng-md-icon icon="menu"></ng-md-icon>

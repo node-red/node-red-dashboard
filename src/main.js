@@ -17,7 +17,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.len = 0;
         this.selectedTab = null;
         this.loaded = false;
-        this.showToolbar = true;
+        this.hideToolbar = false;
+        this.allowSwipe = false;
         var main = this;
 
         function moveTab(d) {
@@ -30,9 +31,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        //TODO Disabled until we make it an option - too sensitive for some
-        //$scope.onSwipeLeft = function(ev) { moveTab(-1); }
-        //$scope.onSwipeRight = function(ev) { moveTab(1); }
+        if (this.allowSwipe) {
+            $scope.onSwipeLeft = function(ev) { moveTab(-1); }
+            $scope.onSwipeRight = function(ev) { moveTab(1); }
+        }
 
         this.toggleSidenav = function () {
             $mdSidenav('left').toggle();
@@ -43,7 +45,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (main.tabs.length > 0) { $mdSidenav('left').close(); }
             events.emit('ui-replay-state', {});
             $location.path(index);
-
         };
 
         this.open = function (link, index) {

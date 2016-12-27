@@ -18,6 +18,11 @@ module.exports = function (RED) {
         if (config.gtype && config.gtype !== "gage") { node.autoheight = parseInt(group.config.width*0.75+0.5); }
 
         var theme = ui.getTheme();
+        if (theme === undefined) {
+            theme = {"group-textColor":{value:"#000"}};
+            theme["widget-textColor"] = {value:"#000"};
+            theme["widget-backgroundColor"] = {value:'#1784be'};
+        }
 
         var gageoptions = {};
         gageoptions.lineWidth = {'theme-dark':0.75};
