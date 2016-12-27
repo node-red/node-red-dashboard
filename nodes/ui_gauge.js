@@ -17,17 +17,19 @@ module.exports = function (RED) {
         node.autoheight = parseInt(group.config.width*0.5+1.5) || 4;
         if (config.gtype && config.gtype !== "gage") { node.autoheight = parseInt(group.config.width*0.75+0.5); }
 
+        var theme = ui.getTheme();
+
         var gageoptions = {};
         gageoptions.lineWidth = {'theme-dark':0.75};
-        gageoptions.pointerOptions = {'theme-dark':{color:'#8e8e93'}};
-        gageoptions.backgroundColor = {'theme-dark':'#515151' };
-        gageoptions.compassColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be'};
+        gageoptions.pointerOptions = {'theme-dark':{color:'#8e8e93'}, 'theme-custom':theme["group-textColor"].value};
+        gageoptions.backgroundColor = {'theme-dark':'#515151', 'theme-custom':theme["widget-textColor"].value };
+        gageoptions.compassColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be', 'theme-custom':theme["widget-backgroundColor"].value};
 
         var waveoptions = {};
-        waveoptions.circleColor = {'theme-dark':'#097479', 'theme-light':'#0094ce'};
-        waveoptions.waveColor = {'theme-dark':'#097479', 'theme-light':'#0094ce'};
-        waveoptions.textColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be'};
-        waveoptions.waveTextColor = {'theme-dark':'#0fbbc3', 'theme-light':'#a4dbf8'};
+        waveoptions.circleColor = {'theme-dark':'#097479', 'theme-light':'#0094ce', 'theme-custom':theme["widget-backgroundColor"].value};
+        waveoptions.waveColor = {'theme-dark':'#097479', 'theme-light':'#0094ce', 'theme-custom':theme["widget-backgroundColor"].value};
+        waveoptions.textColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be', 'theme-custom':theme["widget-textColor"].value};
+        waveoptions.waveTextColor = {'theme-dark':'#0fbbc3', 'theme-light':'#a4dbf8', 'theme-custom':theme["widget-textColor"].value};
 
         var done = ui.add({
             node: node,

@@ -18,9 +18,6 @@
         <h1 ng-show="main.len <= 1" style="width:30px"> </h1>
         <h1 ng-show="main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
     </div>
-    <div ng-show="!!(main.clock)" class="md-toolbar-tools toolbar-clock">
-        <h1>{{main.time | date:main.clock}}</h1>
-    </div>
 </md-toolbar>
 <md-content flex>
     <div ui-masonry ng-show="main.selectedTab.header" md-swipe-right="onSwipeRight();" md-swipe-left="onSwipeLeft();">

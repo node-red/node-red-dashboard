@@ -85,7 +85,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.tabs = ui.tabs;
             main.links = ui.links;
             $document[0].title = ui.title;
-            main.clock = ui.clock;
             var prevTabIndex = parseInt($location.path().substr(1));
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {

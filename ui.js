@@ -15,7 +15,8 @@ module.exports = function(RED) {
         toNumber: toNumber.bind(null, false),
         toFloat: toNumber.bind(null, true),
         updateUi: updateUi,
-        ev: ev
+        ev: ev,
+        getTheme: getTheme
     };
 };
 
@@ -28,7 +29,6 @@ var serveStatic = require('serve-static'),
 
 var baseConfiguration = {
     title: "Node-RED Dashboard",
-    clock: "",
     theme: "theme-light"
 };
 
@@ -280,8 +280,7 @@ function updateUi(to) {
             title: baseConfiguration.title,
             tabs: tabs,
             links: links,
-            theme: baseConfiguration.theme,
-            clock: baseConfiguration.clock
+            theme: baseConfiguration.theme
         });
         updateUiPending = false;
     });
@@ -385,9 +384,8 @@ function addLink(name, link, icon, order, target) {
     }
 }
 
-function addBaseConfig(title, clock, theme, lightTheme, darkTheme, customTheme, themeState) {
+function addBaseConfig(title, theme, lightTheme, darkTheme, customTheme, themeState) {
     if (title) { baseConfiguration.title = title; }
-    baseConfiguration.clock = clock; // Can be set to blank.
     if (theme) {
         baseConfiguration.theme = {
             name: theme,
@@ -398,4 +396,8 @@ function addBaseConfig(title, clock, theme, lightTheme, darkTheme, customTheme, 
         };
     }
     updateUi();
+}
+
+function getTheme() {
+    return baseConfiguration.theme.themeState;
 }
