@@ -42,7 +42,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                     var ch = child.height() * parseInt($scope.group.header.config.width)/width;
                     if (!ch) { // if height is 0 or undefined
                         var t = (child[0].innerHTML).toLowerCase();
-                        if (t.indexOf('<style') === -1) { ch = 1; } // and if no style tag
+                        if ((t.indexOf('<style') === -1) && (t.indexOf('<link') === -1)) { ch = 1; } // and if no style or link tag
                         else {                                      // or if any common tags for content
                             if (t.indexOf('<div') !== -1) { ch = 1; }
                             if (t.indexOf('<p') !== -1) { ch = 1; }
