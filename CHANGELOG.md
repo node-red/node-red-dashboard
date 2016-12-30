@@ -5,6 +5,9 @@
 
  - Colourpicker - add configurable lightness slider PR123
 
+**Fixes**
+
+ - also check template for existence of sole <link tag : if so set height to 0
 
 ### 2.2.1: Maintenance Release
 
