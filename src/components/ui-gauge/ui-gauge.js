@@ -9,8 +9,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var gauge;
-                    var bgnd = scope.$eval('me.item.waveoptions').waveColor['theme-custom'];
-                    var fgnd = scope.$eval('me.item.waveoptions').textColor['theme-custom'];
+                    var bgnd = scope.$eval('main.selectedTab.theme.themeState.base-color.value');
+                    var fgnd = scope.$eval('main.selectedTab.theme.themeState.widget-TextColor.value');
 
                     // Wave type gauge
                     if (scope.$eval('me.item.gtype') === 'wave') {
