@@ -9,11 +9,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var gauge;
-                    var bgnd = $('#toolbar').css("background-color");
-                    //Detect panel background colour and make foreground text b/w depending.
-                    var colors = $('ui-card-panel').css("background-color").match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-                    var level = ((colors[1]*299) + (colors[2]*587) + (colors[3]*114))/1000;
-                    var fgnd = (level >= 128) ? '#111' : '#eee';
+                    var bgnd = scope.$eval('me.item.waveoptions').waveColor['theme-custom'];
+                    var fgnd = scope.$eval('me.item.waveoptions').textColor['theme-custom'];
 
                     // Wave type gauge
                     if (scope.$eval('me.item.gtype') === 'wave') {
