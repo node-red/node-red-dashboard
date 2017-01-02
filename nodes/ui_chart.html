@@ -26,7 +26,8 @@
             removeOlder: {value: 1, validate:RED.validators.number(), required:true},
             removeOlderPoints: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             removeOlderUnit: {value: '3600', required:true},
-            cutout: {value: 0}
+            cutout: {value: 0},
+            colors: {value: ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5']},
         },
         inputs:1,
         outputs:2,
@@ -92,11 +93,26 @@
                 default: odef,
                 types:[ ohms, ohm, oahm, odm, oymd, ocus ]
             });
+            var defaultColors = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
+            if (this.colors) {
+                for (var i=0; i<this.colors.length; i++) {
+                    $("#node-input-color"+(i+1)).val(this.colors[i] || defaultColors[i] );
+                }
+            }
+            else {
+                for (var i=0; i<defaultColors.length; i++) {
+                    $("#node-input-color"+(i+1)).val(defaultColors[i]);
+                }
+            }
         },
         oneditsave: function() {
             if ($("#node-input-xformat").typedInput('type') !== 'custom') {
                 $("#node-input-xformat").val($("#node-input-xformat").typedInput('type'));
             }
+            this.colors = [$("#node-input-color1").val(),$("#node-input-color2").val(),$("#node-input-color3").val(),
+            $("#node-input-color4").val(),$("#node-input-color5").val(),$("#node-input-color6").val(),
+            $("#node-input-color7").val(),$("#node-input-color8").val(),$("#node-input-color9").val()];
+
         }
     });
 </script>
@@ -168,6 +184,22 @@
         <span id="hole-size-show">&nbsp;&nbsp;&nbsp;&nbsp;Cutout
         <input type="text" id="node-input-cutout" style="width:35px"> %
         </span>
+    </div>
+    <div class="form-row" id="ui-chart-colours">
+        <label for="node-input-color1">Series Colours</label>
+        <input type="color" id="node-input-color1" style="width:100px"/>
+        <input type="color" id="node-input-color2" style="width:100px"/>
+        <input type="color" id="node-input-color3" style="width:100px"/>
+        <div style="margin-top: 5px; margin-left: 104px;">
+            <input type="color" id="node-input-color4" style="width:100px"/>
+            <input type="color" id="node-input-color5" style="width:100px"/>
+            <input type="color" id="node-input-color6" style="width:100px"/>
+        </div>
+        <div style="margin-top: 5px; margin-left: 104px;">
+            <input type="color" id="node-input-color7" style="width:100px"/>
+            <input type="color" id="node-input-color8" style="width:100px"/>
+            <input type="color" id="node-input-color9" style="width:100px"/>
+        </div>
     </div>
     <div class="form-row">
         <label for="node-input-nodata">Blank label</label>
