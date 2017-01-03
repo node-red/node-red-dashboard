@@ -273,7 +273,10 @@
                         return leastColor;
                     },
                     whiteGreyMostReadable: function (base) {
-                        return tinycolor.mostReadable(base, ["#111111", "#eeeeee"]).toHexString();
+                        var rgb = tinycolor(base).toRgb();
+                        var level = ((rgb.r*299) + (rgb.g*587) + (rgb.b*114))/1000;
+                        var readable = (level >= 128) ? '#111111' : '#eeeeee';
+                        return readable;
                     },
                     whiteBlackLeastReadable: function(base) {
                         return this.leastReadable(base, ["#000000", "#ffffff"]);
