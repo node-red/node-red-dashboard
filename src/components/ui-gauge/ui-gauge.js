@@ -12,6 +12,18 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                     var themeState = scope.$eval('main.selectedTab.theme.themeState');
                     var bgnd = themeState["base-color"].value;
                     var fgnd = themeState['widget-textColor'].value;
+                    var theme = scope.$eval('main.selectedTab.theme.name');
+                    
+                    //Backwards compatability for background and foreground
+                    if (!bgnd || !fgnd) {
+                        if (theme === 'theme-light') {
+                            bgnd = "#097479";
+                            fgnd = "#111111";
+                        } else {
+                            bgnd = "#0094CE";
+                            fgnd = "#eeeeee";
+                        }
+                    }
 
                     // Wave type gauge
                     if (scope.$eval('me.item.gtype') === 'wave') {
@@ -25,10 +37,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         gaugeConfig.displayPercent = false;
                         // TODO - Opinionated colours - should be moved to themes
                         var opts = scope.$eval('me.item.waveoptions');
-                        gaugeConfig.circleColor = opts.circleColor["theme-custom"];
-                        gaugeConfig.waveColor = opts.waveColor["theme-custom"];
-                        gaugeConfig.textColor = opts.textColor["theme-custom"];
-                        gaugeConfig.waveTextColor = opts.waveTextColor["theme-custom"];
+                        gaugeConfig.circleColor = opts.circleColor[theme];
+                        gaugeConfig.waveColor = opts.waveColor[theme];
+                        gaugeConfig.textColor = opts.textColor[theme];
+                        gaugeConfig.waveTextColor = opts.waveTextColor[theme];
                         if (gaugeConfig.circleColor === undefined) { gaugeConfig.circleColor = bgnd; }
                         if (gaugeConfig.waveColor === undefined) { gaugeConfig.waveColor = bgnd; }
                         if (gaugeConfig.textColor === undefined) { gaugeConfig.textColor = fgnd; }
@@ -79,8 +91,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             gaugeOptions.refreshAnimationTime = 5;
                             // gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:scope.$eval('me.item.gageoptions.compassColor')};
                             gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:undefined};
-                            gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor["theme-custom"]');
-                            gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor["theme-custom"]')];
+                            gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor[theme]');
+                            gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor[theme]')];
                             if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = bgnd; }
                             if (gaugeOptions.pointerOptions.color === undefined) { gaugeOptions.pointerOptions.color = bgnd; }
                         }
