@@ -273,7 +273,10 @@
                         return leastColor;
                     },
                     whiteGreyMostReadable: function (base) {
-                        return tinycolor.mostReadable(base, ["#111111", "#eeeeee"]).toHexString();
+                        var rgb = tinycolor(base).toRgb();
+                        var level = ((rgb.r*299) + (rgb.g*587) + (rgb.b*114))/1000;
+                        var readable = (level >= 128) ? '#111111' : '#eeeeee';
+                        return readable;
                     },
                     whiteBlackLeastReadable: function(base) {
                         return this.leastReadable(base, ["#000000", "#ffffff"]);
@@ -1289,6 +1292,7 @@
                         var currentTheme = globalDashboardNode.theme.split("-")[1];
                         var startingValue = globalDashboardNode[currentTheme+"Theme"].baseColor;
                         setColourPickerColour("base-color", startingValue);
+                        generateColours(startingValue);
 
                         if (globalDashboardNode.theme === 'theme-light' || globalDashboardNode.theme === 'theme-dark') {
                             addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
