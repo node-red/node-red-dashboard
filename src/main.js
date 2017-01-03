@@ -97,7 +97,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 }
                 else {
                     if (typeof(ui.theme) === 'object') {
-                        // applyStyle(ui.theme);
+                        applyStyle(ui.theme);
                     }
                 }
             }
