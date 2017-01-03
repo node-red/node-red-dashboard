@@ -323,9 +323,11 @@
                         if (n===null) { globalDashboardNode = null; }
                     }
                     if (globalDashboardNode === null) {
+                        var oldId;
                         RED.nodes.eachConfig(function(n) {
                             if (globalDashboardNode === null && n.type === 'ui_base') {
                                 globalDashboardNode = n;
+                                oldId = n.id;
                             }
                         });
 
@@ -370,6 +372,10 @@
                                 themeState: themeState,
                                 url: 'ui',
                                 users:[]
+                            }
+                            //Check if we need to remove the old ui_base node first
+                            if (oldId) {
+                                RED.nodes.remove(oldId);
                             }
                             RED.nodes.add(globalDashboardNode);
                             RED.nodes.dirty(true);
