@@ -657,13 +657,11 @@
                 }
 
                 function setColourPickerColour(id, val) {
-                    console.log(id,val);
                     $("#"+id).val(val);
                     $("#"+id).css("background-color", val);
 
                     //call mostReadableGreyWhite to set text colour
                     var textColor = colours.whiteGreyMostReadable(val);
-                    console.log(textColor);
                     $("#"+id).css("color", textColor);
                 }
 
