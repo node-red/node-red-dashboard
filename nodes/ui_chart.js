@@ -14,7 +14,6 @@ module.exports = function(RED) {
         if (config.height === "0") { delete config.height; }
         // number of pixels wide the chart will be... 43 = sizes.sx - sizes.px
         var pixelsWide = ((config.width || group.config.width || 6) - 1) * 43 - 15;
-
         if (!tab || !group) { return; }
         var options = {
             emitOnlyNewValues: false,
@@ -34,7 +33,8 @@ module.exports = function(RED) {
                 ymin: config.ymin,
                 ymax: config.ymax,
                 xformat : config.xformat || "HH:mm:SS",
-                cutout: parseInt(config.cutout || 0)
+                cutout: parseInt(config.cutout || 0),
+                colors: config.colors
             },
             convertBack: function(data) {
                 if (data[0]) {

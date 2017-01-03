@@ -564,7 +564,6 @@
                 addCustomisableStyle('group-textColor', 'Group Text', groupStyles);
                 addCustomisableStyle('group-borderColor', 'Group Border', groupStyles);
 
-
                 // Widget styles
                 var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
                 $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
@@ -578,7 +577,6 @@
                     $('<input id="'+id+'" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
                     .change(function() {
                         colourPickerChangeHandler($(this).attr('id'), $(this).val());
-
                     })
                     .appendTo(spanColorContainer);
                     addResetButton(id, styleLi);
@@ -590,7 +588,6 @@
                     globalDashboardNode.themeState[id].value = value;
                     RED.nodes.dirty(true);
                 }
-
 
                 function addResetButton(id, parent) {
                     var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
@@ -624,10 +621,8 @@
                             globalDashboardNode[key].baseColor = defaultColor;
                             globalDashboardNode[key].edited = false;
                             RED.nodes.dirty(true);
-
                         }
                     }
-
                 }
 
                 function resetClick(e) {
