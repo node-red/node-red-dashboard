@@ -130,13 +130,14 @@
         margin-left: 15px;
     }
     input.nr-db-field-themeColor {
-        width: 50px !important;
-        padding: 0;
+        width: 60px !important;
+        padding: 1px;
         height: 20px;
         border: none;
         box-shadow: none;
         position: absolute;
         right: 36px;
+        border-radius: 3px !important;
     }
 
     .red-ui-tabs {
@@ -271,6 +272,9 @@
                         }
                         return leastColor;
                     },
+                    whiteGreyMostReadable: function (base) {
+                        return tinycolor.mostReadable(base, ["#111111", "#eeeeee"]).toHexString();
+                    },
                     whiteBlackLeastReadable: function(base) {
                         return this.leastReadable(base, ["#000000", "#ffffff"]);
                     },
@@ -319,9 +323,11 @@
                         if (n===null) { globalDashboardNode = null; }
                     }
                     if (globalDashboardNode === null) {
+                        var oldId;
                         RED.nodes.eachConfig(function(n) {
                             if (globalDashboardNode === null && n.type === 'ui_base') {
                                 globalDashboardNode = n;
+                                oldId = n.id;
                             }
                         });
 
@@ -343,8 +349,8 @@
                                 id: RED.nodes.id(),
                                 _def: RED.nodes.getType("ui_base"),
                                 type: "ui_base",
-                                name: "Node-RED Dashboard",
-                                theme: "theme-light",
+                                name: globalDashboardNode.name || "Node-RED Dashboard",
+                                theme: globalDashboardNode.theme || "theme-light",
                                 lightTheme: {
                                     default: "#0094CE",
                                     baseColor: "#0094CE",
@@ -366,6 +372,10 @@
                                 themeState: themeState,
                                 url: 'ui',
                                 users:[]
+                            }
+                            //Check if we need to remove the old ui_base node first
+                            if (oldId) {
+                                RED.nodes.remove(oldId);
                             }
                             RED.nodes.add(globalDashboardNode);
                             RED.nodes.dirty(true);
@@ -445,7 +455,7 @@
 
                         if (!globalDashboardNode.themeState[styleID].edited) {
                             var colour = colours['calculate_'+underscore](base);
-                            $("#"+styleID).val(colour);
+                            setColourPickerColour(styleID, colour);
                             globalDashboardNode.themeState[styleID].value = colour;
                         }
                     }
@@ -466,7 +476,7 @@
 
                             var theme = globalDashboardNode.theme.split('-')[1];
                             var baseColour = globalDashboardNode[theme+'Theme'].baseColor;
-                            $("#base-color").val(baseColour);
+                            setColourPickerColour("base-color", baseColour);
                             globalDashboardNode.themeState['base-color'].value = baseColour;
                             globalDashboardNode.themeState['base-color'].default = baseColour;
                             //generate colours for all colour settings from base colour
@@ -583,6 +593,7 @@
                 }
 
                 function colourPickerChangeHandler(id, value) {
+                    $("#"+id).css("background-color", value);
                     $("#"+id+"-reset").css({opacity: 1});
                     globalDashboardNode.themeState[id].edited = true;
                     globalDashboardNode.themeState[id].value = value;
@@ -615,7 +626,7 @@
                         if (globalDashboardNode[key].edited) {
                             var defaultColor = globalDashboardNode[key].default;
                             generateColours(defaultColor);
-                            $("#"+elementID).val(defaultColor);
+                            setColourPickerColour(elementID, defaultColor);
                             $("#"+elementID+"-reset").css({opacity: 0.6});
                             globalDashboardNode.themeState[elementID].value = defaultColor;
                             globalDashboardNode[key].baseColor = defaultColor;
@@ -642,13 +653,22 @@
                             var underscore = elementID.split('-').join('_');
                             colour = colours['calculate_'+underscore](defaultColor);
                         }
-                        $("#"+elementID).val(colour);
+                        setColourPickerColour(elementID, colour);
                         $("#"+elementID+"-reset").css({opacity: 0.6});
                         globalDashboardNode.themeState[elementID].edited = false;
                         globalDashboardNode.themeState[elementID].value = colour;
 
                         RED.nodes.dirty(true);
                     }
+                }
+
+                function setColourPickerColour(id, val) {
+                    $("#"+id).val(val);
+                    $("#"+id).css("background-color", val);
+
+                    //call mostReadableGreyWhite to set text colour
+                    var textColor = colours.whiteGreyMostReadable(val);
+                    $("#"+id).css("color", textColor);
                 }
 
 
@@ -1268,7 +1288,7 @@
                         //set colour start
                         var currentTheme = globalDashboardNode.theme.split("-")[1];
                         var startingValue = globalDashboardNode[currentTheme+"Theme"].baseColor;
-                        $("#base-color").val(startingValue);
+                        setColourPickerColour("base-color", startingValue);
 
                         if (globalDashboardNode.theme === 'theme-light' || globalDashboardNode.theme === 'theme-dark') {
                             addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
@@ -1319,7 +1339,7 @@
 
                             //If custom theme is chosen, update the elements and current state
                             if (globalDashboardNode.theme === 'theme-custom') {
-                                $("#base-color").val(globalDashboardNode.customTheme.baseColor);
+                                setColourPickerColour("base-color", globalDashboardNode.customTheme.baseColor)
                                 globalDashboardNode.themeState['base-color'].default = globalDashboardNode.customTheme.baseColor;
                                 generateColours(globalDashboardNode.customTheme.baseColor);
                                 if (!objectsEqual) { RED.nodes.dirty(true); }
