@@ -3,7 +3,7 @@
 angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout', '$scope',
     function(sizes, $timeout, $scope) {
         var ctrl = this;
-        ctrl.width = sizes.columns($scope.group) * sizes.sx + sizes.px * 2 + (sizes.columns($scope.group) - 1) * sizes.cx;
+        ctrl.width = (sizes.columns($scope.group) * sizes.sx) + (sizes.px * 2) + ((sizes.columns($scope.group) - 1) * sizes.cx);
         var defaultWidth = sizes.columns($scope.group);
         var defaultHeight = 1;
 

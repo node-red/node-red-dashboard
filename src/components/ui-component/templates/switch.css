@@ -8,11 +8,11 @@
 }
 
 .nr-dashboard-switch p {
-    padding: 0 0 0 10px;
+    padding: 0 0 0 12px;
 }
 
 .nr-dashboard-switch md-switch {
-    padding: 0 0 0 8px;
+    padding: 0 8px 0 8px;
 }
 
 .nr-dashboard-switch md-switch:hover {

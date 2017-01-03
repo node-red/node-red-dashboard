@@ -12,10 +12,16 @@
 	opacity: 1;
 }
 
+.nr-dashboard-cardpanel {
+    box-sizing: border-box;
+}
+
 .nr-dashboard-cardpanel > p {
-	margin-left: 14px;
-	margin-top: 17px;
-	margin-bottom: 7px;
+    max-height: 28px;
+    min-height: 28px;
+    margin-left: 12px;
+	margin-top: 10px;
+	margin-bottom: 8px;
     font-size: 1.2em;
     font-weight: 500;
 }
