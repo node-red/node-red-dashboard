@@ -349,8 +349,8 @@
                                 id: RED.nodes.id(),
                                 _def: RED.nodes.getType("ui_base"),
                                 type: "ui_base",
-                                name: "Node-RED Dashboard",
-                                theme: "theme-light",
+                                name: globalDashboardNode.name || "Node-RED Dashboard",
+                                theme: globalDashboardNode.theme || "theme-light",
                                 lightTheme: {
                                     default: "#0094CE",
                                     baseColor: "#0094CE",
