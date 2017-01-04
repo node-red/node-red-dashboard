@@ -131,13 +131,18 @@
     }
     input.nr-db-field-themeColor {
         width: 60px !important;
-        padding: 1px;
+        padding: 0px;
         height: 20px;
         border: none;
         box-shadow: none;
         position: absolute;
         right: 36px;
         border-radius: 3px !important;
+        border: solid 1px #ccc;
+        -webkit-appearance: none;
+    }
+    input.nr-db-field-themeColor::-webkit-color-swatch {
+        border: none;
     }
 
     .red-ui-tabs {
