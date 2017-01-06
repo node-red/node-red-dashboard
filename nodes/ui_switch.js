@@ -1,6 +1,22 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
 
+    function validateSwitchValue(node,property,type,payload) {
+        if (payloadType === 'flow' || payloadType === 'global') {
+            try {
+                var parts = RED.util.normalisePropertyExpression(payload);
+                if (parts.length === '') {
+                    throw new Error();
+                }
+            } catch(err) {
+                node.warn("Invalid payload property expression - defaulting to node id")
+                payload = node.id;
+                payloadType = 'str';
+            }
+        } else {
+            payload = payload || node.id;
+        }
+    }
     function SwitchNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
@@ -10,8 +26,36 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(group.config.tab);
         if (!tab) { return; }
 
+        var parts;
+        var onvalue = config.onvalue;
         var onvalueType = config.onvalueType;
+        if (onvalueType === 'flow' || onvalueType === 'global') {
+            try {
+                parts = RED.util.normalisePropertyExpression(onvalue);
+                console.log(parts);
+                if (parts.length === 0) {
+                    throw new Error();
+                }
+            } catch(err) {
+                node.warn("Invalid onvalue property expression - defaulting to true")
+                onvalue = true;
+                onvalueType = 'bool';
+            }
+        }
+        var offvalue = config.offvalue;
         var offvalueType = config.offvalueType;
+        if (offvalueType === 'flow' || offvalueType === 'global') {
+            try {
+                parts = RED.util.normalisePropertyExpression(offvalue);
+                if (parts.length === 0) {
+                    throw new Error();
+                }
+            } catch(err) {
+                node.warn("Invalid offvalue property expression - defaulting to false")
+                offvalue = false;
+                offvalueType = 'bool';
+            }
+        }
 
         var done = ui.add({
             node: node,
@@ -31,20 +75,19 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             convert: function (payload,oldval) {
-                var onvalue;
-                if (onvalueType === "date") { onvalue = Date.now(); } 
-                else { onvalue = RED.util.evaluateNodeProperty(config.onvalue,onvalueType,node); }
+                var myOnValue,myOffvalue;
+                if (onvalueType === "date") { myOnValue = Date.now(); }
+                else { myOnValue = RED.util.evaluateNodeProperty(onvalue,onvalueType,node); }
 
-                var offvalue;
-                if (offvalueType === "date") { offvalue = Date.now(); }
-                else { offvalue = RED.util.evaluateNodeProperty(config.offvalue,offvalueType,node); }
+                if (offvalueType === "date") { myOffvalue = Date.now(); }
+                else { myOffvalue = RED.util.evaluateNodeProperty(offvalue,offvalueType,node); }
 
-                if (RED.util.compareObjects(onvalue,payload)) { return true; }
-                else if (RED.util.compareObjects(offvalue,payload)) { return false; }
+                if (RED.util.compareObjects(myOnValue,payload)) { return true; }
+                else if (RED.util.compareObjects(myOffvalue,payload)) { return false; }
                 else { return oldval; }
             },
             convertBack: function (value) {
-                var payload = value ? config.onvalue : config.offvalue;
+                var payload = value ? onvalue : offvalue;
                 var payloadType = value ? onvalueType : offvalueType;
                 if (payloadType === "date") { value = Date.now(); }
                 else { value = RED.util.evaluateNodeProperty(payload,payloadType,node); }
