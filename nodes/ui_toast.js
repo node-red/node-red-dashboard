@@ -10,6 +10,7 @@ module.exports = function(RED) {
         else { this.displayTime = 3000; }
         if (this.displayTime <= 0) { this.displayTime = 1; }
         this.position = config.position || "top right";
+        this.highlight = config.highlight;
         this.ok = config.ok;
         this.cancel = config.cancel;
         var node = this;
@@ -31,6 +32,7 @@ module.exports = function(RED) {
             ui.emitSocket('show-toast', {
                 title: msg.topic,
                 message: msg.payload,
+                highlight: node.highlight || msg.highlight,
                 displayTime: node.displayTime,
                 position: node.position,
                 id: node.id,
