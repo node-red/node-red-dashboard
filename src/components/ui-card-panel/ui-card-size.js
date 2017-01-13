@@ -12,4 +12,5 @@ angular.module('ui').directive('uiCardSize', ['uiSizes',
                 });
             }
         }
-    }]);
+    }
+]);
