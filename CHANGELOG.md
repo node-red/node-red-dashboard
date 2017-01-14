@@ -4,10 +4,13 @@
 **Enhancements**
 
  - Colourpicker - add configurable lightness slider PR123
+ - Configurable colour for Notification toasts - Issue145
+
 
 **Fixes**
 
  - also check template for existence of sole <link tag : if so set height to 0
+ - ensure ui_base node has a user to prevent node appearing in "unused" config nodes tab - Issue110
 
 ### 2.2.1: Maintenance Release
 

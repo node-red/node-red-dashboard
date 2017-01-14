@@ -173,12 +173,14 @@
                             name: "Node-RED Dashboard",
                             theme: "theme-light",
                             url: 'ui',
-                            users:[]
+                            users: []
                         }
                         RED.nodes.add(globalDashboardNode);
                         RED.nodes.dirty(true);
                     }
                 }
+                // force there to be one user (the dashboard itself) so won't be in unused config tab
+                globalDashboardNode.users = [1];
             }
             var content = $("<div>").css({"position":"relative","height":"100%"});
             var mainContent = $("<div>",{class:"nr-db-sb"}).appendTo(content);
