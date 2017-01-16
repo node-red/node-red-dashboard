@@ -155,7 +155,7 @@
                 if (globalDashboardNode !== null) {
                     // Check if it has been deleted beneath us
                     var n = RED.nodes.node(globalDashboardNode.id);
-                    if (n===null) {
+                    if (n === null) {
                         globalDashboardNode = null;
                     }
                 }
@@ -179,8 +179,6 @@
                         RED.nodes.dirty(true);
                     }
                 }
-                // force there to be one user (the dashboard itself) so won't be in unused config tab
-                globalDashboardNode.users = [1];
             }
             var content = $("<div>").css({"position":"relative","height":"100%"});
             var mainContent = $("<div>",{class:"nr-db-sb"}).appendTo(content);

@@ -6,11 +6,11 @@
  - Colourpicker - add configurable lightness slider PR123
  - Configurable colour for Notification toasts - Issue145
 
-
 **Fixes**
 
  - also check template for existence of sole <link tag : if so set height to 0
- - ensure ui_base node has a user to prevent node appearing in "unused" config nodes tab - Issue110
+ - ensure ui_base node has a user to prevent node appearing in "unused" config nodes tab - Issue110 - actually fixed in core for 0.16.1
+ - chart no longer emits a blank array on start (which was wiping out file storage of data)
 
 ### 2.2.1: Maintenance Release
 

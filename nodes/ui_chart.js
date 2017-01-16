@@ -46,8 +46,8 @@ module.exports = function(RED) {
                         }
                         data = o;
                     }
+                    return data;
                 }
-                return data;
             },
             convert: function(value, oldValue, msg) {
                 if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {
