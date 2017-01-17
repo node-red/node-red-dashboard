@@ -40,11 +40,11 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     var changeValue = function (delta) {
                         if (delta > 0) {
                             if (me.item.value < me.item.max) {
-                                me.item.value = Math.min(me.item.value + delta, me.item.max);
+                                me.item.value = Math.round(Math.min(me.item.value + delta, me.item.max)*10000)/10000;
                             }
                         } else if (delta < 0) {
                             if (me.item.value > me.item.min) {
-                                me.item.value = Math.max(me.item.value + delta, me.item.min);
+                                me.item.value = Math.round(Math.max(me.item.value + delta, me.item.min)*10000)/10000;
                             }
                         }
                     };
@@ -56,15 +56,11 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         var i = 0;
                         promise = $interval(function () {
                             i++;
-                            if (i > 35) {
-                                changeValue(Math.sign(delta) * Math.floor(range / 10));
-                            } else if (i > 25) {
-                                changeValue(delta * 2);
-                            } else if (i > 15) {
-                                changeValue(delta);
-                            } else if (i > 5 && i % 2) {
-                                changeValue(delta);
-                            }
+                            if (i > 50) { changeValue( delta * 50); }
+                            else if (i > 35) { changeValue(delta * 10); }
+                            else if (i > 25) { changeValue(delta * 2); }
+                            else if (i > 15) { changeValue(delta); }
+                            else if (i > 5 && i % 2) { changeValue(delta); }
                         }, 100);
                     };
                     me.stopPeriodic = function () {
