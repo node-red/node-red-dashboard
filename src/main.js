@@ -66,6 +66,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.tabs = ui.tabs;
             main.links = ui.links;
             $document[0].title = ui.title;
+            $document[0].theme = ui.theme;
 
             var prevTabIndex = parseInt($location.path().substr(1));
             if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {

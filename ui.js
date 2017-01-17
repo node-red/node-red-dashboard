@@ -274,9 +274,13 @@ function updateUi(to) {
     process.nextTick(function() {
         tabs.forEach(function(t) {
             t.theme = baseConfiguration.theme;
-        })
+        });
+        links.forEach(function(l) {
+            l.theme = baseConfiguration.theme;
+        });
         to.emit('ui-controls', {
             title: baseConfiguration.title,
+            theme: baseConfiguration.theme,
             tabs: tabs,
             links: links
         });
