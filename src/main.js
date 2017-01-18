@@ -92,14 +92,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var prevTabIndex = parseInt($location.path().substr(1));
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
-                    console.log(main.selectedTab.theme);
-                    if (main.selectedTab.theme.themeState['base-color'].value) {
-                        applyStyle(main.selectedTab.theme); 
-                    }
+                    applyStyle(main.selectedTab.theme); 
                     $mdToast.hide();
                     done();
-                }
-                else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
+                } else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
                     applyStyle(ui.theme); 
                 }
             }
