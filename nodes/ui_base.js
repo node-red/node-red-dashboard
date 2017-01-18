@@ -21,15 +21,26 @@ module.exports = function(RED) {
         defaultThemeState['page-backgroundColor'] = defaultThemeState['page-sidebar-backgroundColor'] = defaultThemeState['page-titlebar-backgroundColor'] =
         defaultThemeState['group-backgroundColor'] = defaultThemeState['group-textColor'] = defaultThemeState['group-borderColor'] =
         defaultThemeState['widget-textColor'] = defaultThemeState['widget-backgroundColor'] = { value: null, edited: false };
+
+        var defaultThemeObject = {
+            name: config.theme.name || "theme-light",
+            lightTheme: config.theme.lightTheme || defaultLightTheme,
+            darkTheme: config.theme.darkTheme || defaultDarkTheme,
+            customTheme: config.theme.customTheme || defaultCustomTheme,
+            themeState: config.theme.themeState || defaultThemeState
+        }
+        var siteName = "Node-RED Dashboard";
+        if (config.site) {
+            siteName = config.site.name
+        }
+        var defaultSiteObject = {
+            name: siteName
+        }
         this.config = {
-            name: config.name || 'Node-RED Dashboard',
-            theme: config.theme || 'theme-light',
-            lightTheme: config.lightTheme || defaultLightTheme,
-            darkTheme: config.darkTheme || defaultDarkTheme,
-            customTheme: config.customTheme || defaultCustomTheme,
-            themeState: config.themeState || defaultThemeState
-        };
-        ui.addBaseConfig(this.config.name, this.config.theme, this.config.lightTheme, this.config.darkTheme, this.config.customTheme, this.config.themeState);
+            theme: defaultThemeObject,
+            site: defaultSiteObject
+        }
+        ui.addBaseConfig(this.config);
     }
     RED.nodes.registerType("ui_base", BaseNode);
     RED.library.register("themes");
