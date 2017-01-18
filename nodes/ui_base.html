@@ -329,15 +329,20 @@
                         var n = RED.nodes.node(globalDashboardNode.id);
                         if (n===null) { globalDashboardNode = null; }
                     }
+
+                    // Find the old dashboard node
                     if (globalDashboardNode === null) {
                         var oldId;
                         RED.nodes.eachConfig(function(n) {
                             if (globalDashboardNode === null && n.type === 'ui_base') {
                                 globalDashboardNode = n;
-                                oldId = n.id;
                             }
                         });
 
+                        // If there is no dashboard node, ensure we create it after
+                        // initialising
+                        var noDashboardNode = (globalDashboardNode === null);
+                        
                         // set up theme state
                         var themeState = {};
                         var base = "#0094CE"
@@ -373,7 +378,7 @@
                                 baseFont: "Helvetica Neue"
                             }
                             var oldThemeName;
-                            if (typeof(globalDashboardNode.theme === 'string')) { oldThemeName = globalDashboardNode.theme; }
+                            if (globalDashboardNode && typeof(globalDashboardNode.theme === 'string')) { oldThemeName = globalDashboardNode.theme; }
 
                             var theme = {
                                 name: oldThemeName || "theme-light",
@@ -381,9 +386,11 @@
                                 darkTheme: darkTheme,
                                 customTheme: customTheme,
                                 themeState: themeState
-                            } 
-                            var site = { name: globalDashboardNode.name || "Node-RED Dashboard" }
-
+                            }
+                            var siteName;
+                            (globalDashboardNode !== null) ? siteName = globalDashboardNode.name : siteName = "Node-RED Dashboard";
+                            var site = { name: siteName }
+                            
                             globalDashboardNode = {
                                 id: RED.nodes.id(),
                                 _def: RED.nodes.getType("ui_base"),
@@ -392,11 +399,9 @@
                                 theme: theme,
                                 users: []
                             }
-                            //Check if we need to remove the old ui_base node first
-                            if (oldId) {
-                                RED.nodes.remove(oldId);
+                            if (noDashboardNode) {
+                                RED.nodes.add(globalDashboardNode);
                             }
-                            RED.nodes.add(globalDashboardNode);
                             RED.nodes.dirty(true);
                         }
                     }
