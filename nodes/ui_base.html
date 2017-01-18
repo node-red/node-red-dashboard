@@ -240,6 +240,7 @@
     RED.nodes.registerType('ui_base',{
             category: 'config',
             defaults: {
+                name: {},
                 theme: {},
                 site: {}
             },
@@ -371,14 +372,17 @@
                                 default: "#0094CE",
                                 baseFont: "Helvetica Neue"
                             }
+                            var oldThemeName;
+                            if (typeof(globalDashboardNode.theme === 'string')) { oldThemeName = globalDashboardNode.theme; }
+
                             var theme = {
-                                name: "theme-light",
+                                name: oldThemeName || "theme-light",
                                 lightTheme: lightTheme,
                                 darkTheme: darkTheme,
                                 customTheme: customTheme,
                                 themeState: themeState
-                            }
-                            var site = { name: "Node-RED Dashboard" }
+                            } 
+                            var site = { name: globalDashboardNode.name || "Node-RED Dashboard" }
 
                             globalDashboardNode = {
                                 id: RED.nodes.id(),
@@ -521,6 +525,7 @@
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
+                        editor.setValue(JSON.stringify(globalDashboardNode.theme.customTheme),1);
                         RED.nodes.dirty(true);
                     }
                 })

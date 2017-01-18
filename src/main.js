@@ -85,40 +85,16 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         events.connect(function (ui, done) {
             main.tabs = ui.tabs;
             main.links = ui.links;
-            $document[0].title = ui.site.name;
+            var name;
+            if (ui.site) { name = ui.site.name };
+            if (ui.title) { name = ui.title };
+            $document[0].title = name || "Node-RED Dashboard";
             var prevTabIndex = parseInt($location.path().substr(1));
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
+                    console.log(main.selectedTab.theme);
                     if (main.selectedTab.theme.themeState['base-color'].value) {
                         applyStyle(main.selectedTab.theme); 
-                    } else {
-                        //apply the correct theme - backwards compatability
-                        var themeSettings = {themeState: {}};
-                        if (main.selectedTab.theme.name === 'theme-dark') {
-                            themeSettings.themeState["base-color"] = {value: "#097479"};
-                            themeSettings.themeState["page-backgroundColor"] = {value: "#111111"};
-                            themeSettings.themeState["page-titlebar-backgroundColor"] = {value: "#097479"};
-                            themeSettings.themeState["page-sidebar-backgroundColor"] = {value: "#000000"};
-                            themeSettings.themeState["group-backgroundColor"] = {value: "#333333"};
-                            themeSettings.themeState["group-textColor"] = {value: "#10cfd8"};
-                            themeSettings.themeState["group-borderColor"] = {value: "#555555"};
-                            themeSettings.themeState["widget-textColor"] = {value: "#eeeeee"};
-                            themeSettings.themeState["widget-backgroundColor"] = {value: "#097479"};
-
-                        } else {
-                            //light theme backwards compatability
-                            themeSettings.themeState["base-color"] = {value: "#0094CE"};
-                            themeSettings.themeState["page-backgroundColor"] = {value: "#fafafa"};
-                            themeSettings.themeState["page-titlebar-backgroundColor"] = {value: "#0094CE"};
-                            themeSettings.themeState["page-sidebar-backgroundColor"] = {value: "#ffffff"};
-                            themeSettings.themeState["group-backgroundColor"] = {value: "#ffffff"};
-                            themeSettings.themeState["group-textColor"] = {value: "#000000"};
-                            themeSettings.themeState["group-borderColor"] = {value: "#ffffff"};
-                            themeSettings.themeState["widget-textColor"] = {value: "#111111"};
-                            themeSettings.themeState["widget-backgroundColor"] = {value: "#0094CE"};
-                        }
-                        applyStyle(themeSettings);
-                        
                     }
                     $mdToast.hide();
                     done();
