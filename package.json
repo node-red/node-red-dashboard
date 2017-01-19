@@ -78,7 +78,7 @@
     "gulp-jshint": "^2.0.1",
     "gulp-manifest": "^0.1.1",
     "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
+    "gulp-util": "^3.0.8",
     "jquery": "^2.2.4",
     "jshint": "^2.9.2",
     "justgage": "^1.1.0",

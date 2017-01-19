@@ -56,7 +56,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         var i = 0;
                         promise = $interval(function () {
                             i++;
-                            if (i > 50) { changeValue( delta * 50); }
+                            if (i > 75) { changeValue( delta * 250); }
+                            else if (i > 50) { changeValue( delta * 50); }
                             else if (i > 35) { changeValue(delta * 10); }
                             else if (i > 25) { changeValue(delta * 2); }
                             else if (i > 15) { changeValue(delta); }

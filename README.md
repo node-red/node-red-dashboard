@@ -101,6 +101,9 @@ notified of that change.
 Use the Node-RED google group: <https://groups.google.com/forum/#!forum/node-red>
 or the Dashboard-ui channel in <a href="http://nodered.org/slack/">Slack</a>
 
+The current work in progress list is shown in the
+<a href="https://github.com/node-red/node-red-dashboard/projects/1" target="_blank"> Github Project</a>.
+
 ## Contributing
 
 Before raising a pull-request, please read our

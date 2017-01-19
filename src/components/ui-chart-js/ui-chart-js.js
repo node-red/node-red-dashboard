@@ -9,16 +9,16 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
                     scope.config = loadConfiguration(type, scope);
-                    
+
                     // Fix autoskip so last two scale labels don't overlap
                     Chart.scaleService.updateScaleDefaults('time', {
-                        afterBuildTicks: function(me){
+                        afterBuildTicks: function(me) {
                             var end = me.ticks.length-1;
                             if (end > 1) {
                                 var lastDiff = me.parseTime(me.ticks[end]).diff(me.parseTime(me.ticks[end-1]));
                                 var penulDiff = me.parseTime(me.ticks[end-1]).diff(me.parseTime(me.ticks[end-2]));
                                 if (lastDiff < penulDiff) {
-                                   me.ticks.splice(end-1,1);
+                                    me.ticks.splice(end-1,1);
                                 }
                             }
                         }
