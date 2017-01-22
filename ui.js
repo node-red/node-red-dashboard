@@ -27,10 +27,7 @@ var serveStatic = require('serve-static'),
     events = require('events'),
     dashboardVersion = require('./package.json').version;
 
-var baseConfiguration = {
-    title: "Node-RED Dashboard",
-    theme: "theme-light"
-};
+var baseConfiguration = {};
 
 var tabs = [];
 var links = [];
@@ -277,7 +274,7 @@ function updateUi(to) {
             t.theme = baseConfiguration.theme;
         })
         to.emit('ui-controls', {
-            title: baseConfiguration.title,
+            site: baseConfiguration.site,
             tabs: tabs,
             links: links,
             theme: baseConfiguration.theme
@@ -384,17 +381,8 @@ function addLink(name, link, icon, order, target) {
     }
 }
 
-function addBaseConfig(title, theme, lightTheme, darkTheme, customTheme, themeState) {
-    if (title) { baseConfiguration.title = title; }
-    if (theme) {
-        baseConfiguration.theme = {
-            name: theme,
-            lightTheme: lightTheme,
-            darkTheme: darkTheme,
-            customTheme: customTheme,
-            themeState: themeState
-        };
-    }
+function addBaseConfig(config) {
+    if (config) { baseConfiguration = config; }
     updateUi();
 }
 
