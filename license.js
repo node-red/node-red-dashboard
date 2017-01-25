@@ -1,5 +1,5 @@
 /* */
-/* Copyright 2016 JS Foundation and other contributors, https://js.foundation/ */
+/* Copyright 2016,2017 JS Foundation and other contributors, https://js.foundation/ */
 /* Copyright 2016 IBM Corp.                                                 */
 /* Copyright 2015 Andrei Tatar                                              */
 /* */

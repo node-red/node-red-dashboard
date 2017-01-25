@@ -12,6 +12,22 @@ module.exports = function(RED) {
         if (!tab) { return; }
 
         var payloadType = config.payloadType;
+        var payload = config.payload;
+
+        if (payloadType === 'flow' || payloadType === 'global') {
+            try {
+                var parts = RED.util.normalisePropertyExpression(payload);
+                if (parts.length === 0) {
+                    throw new Error();
+                }
+            } catch(err) {
+                node.warn("Invalid payload property expression - defaulting to node id")
+                payload = node.id;
+                payloadType = 'str';
+            }
+        } else {
+            payload = payload || node.id;
+        }
 
         var done = ui.add({
             node: node,
@@ -24,7 +40,7 @@ module.exports = function(RED) {
                 bgcolor: config.bgcolor,
                 icon: config.icon,
                 order: config.order,
-                value: config.payload || node.id,
+                value: payload,
                 width: config.width || group.config.width || 3,
                 height: config.height || 1
             },

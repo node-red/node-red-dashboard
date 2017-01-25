@@ -6,7 +6,11 @@
     box-shadow: none !important;
     width: 100% !important;
     height: 100% !important;
-    margin: 0 !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
+    margin: 0px !important;
+    min-width: 0px !important;
+    min-height: 0px !important;
+}
+
+md-card .nr-dashboard-button {
+    padding: 2px !important;
 }

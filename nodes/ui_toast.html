@@ -5,6 +5,7 @@
         defaults: {
             position: {value: 'top right'},
             displayTime: {value: '3'},
+            highlight: {value: ''},
             outputs: {value: 0},
             ok: {value: 'OK', required: true},
             cancel: {value: ''},
@@ -21,11 +22,13 @@
             $("#node-input-position").change(function() {
                 if ($("#node-input-position option:selected").val() === 'dialog') {
                     $("#node-toast-displaytime").hide();
+                    $("#node-toast-highlightcolor").hide();
                     $("#node-dialog-displayok").show();
                     $("#node-dialog-displaycancel").show();
                     $("#node-dialog-topic").show();
                 } else {
                     $("#node-toast-displaytime").show();
+                    $("#node-toast-highlightcolor").show();
                     $("#node-dialog-displayok").hide();
                     $("#node-dialog-displaycancel").hide();
                     $("#node-dialog-topic").hide();
@@ -54,6 +57,10 @@
         <label for="node-input-displayTime"><i class="fa fa-clock-o"></i> Timeout (S)</label>
         <input type="text" id="node-input-displayTime" placeholder="e.g. 3 seconds">
     </div>
+    <div class="form-row" id="node-toast-highlightcolor">
+        <label for="node-input-highlight"><i class="fa fa-square-o"></i> Border</label>
+        <input type="text" id="node-input-highlight" placeholder="(optional) border highlight colour">
+    </div>
     <div class="form-row" id="node-dialog-displayok">
         <label for="node-input-ok"><i class="fa fa-check"></i> Default action label</label>
         <input type="text" id="node-input-ok" placeholder="label for OK button">
@@ -76,6 +83,7 @@
     <p>Shows <code>msg.payload</code> as a popup notification or OK / Cancel dialog
     message on the user interface.</p>
     <p>If a <code>msg.topic</code> is available it will be used as the title.</p>
+    <p>If you do not set an optional border highlight colour, then it can be set dynamically by <code>msg.highlight</code>.</p>
     <p>You may also configure the position and duration of the notification.</p>
     <p>The dialog returns a <code>msg.payload</code> string of whatever you configure
     the button label(s) to be. The second (cancel) button is optional, as is the return

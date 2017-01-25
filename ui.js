@@ -272,7 +272,10 @@ function updateUi(to) {
     process.nextTick(function() {
         tabs.forEach(function(t) {
             t.theme = baseConfiguration.theme;
-        })
+        });
+        links.forEach(function(l) {
+            l.theme = baseConfiguration.theme;
+        });
         to.emit('ui-controls', {
             site: baseConfiguration.site,
             tabs: tabs,

@@ -11,7 +11,8 @@ angular.module('ui').directive('uiMasonry', ['$window',
                 });
             }
         };
-    }]);
+    }
+]);
 
 MasonryController.$inject = ['uiSizes', '$timeout'];
 
@@ -24,7 +25,6 @@ function blockSort(b1,b2) {
     }
     return (b1.x - b2.x)
 }
-
 
 function MasonryController(sizes, $timeout) {
     var ctrl = this;
