@@ -2,12 +2,12 @@
     <p class="label">{{me.item.label}}</p>
     <div layout="row" layout-align="center center">
         <md-button class="md-icon-button down-button" aria-label="{{me.item.label}}"
-            ng-mousedown="me.periodicChange(-me.item.step)" ng-mouseup="me.stopPeriodic()">
+            ng-mousedown="me.periodicChange(-me.item.step)" ng-mouseup="me.stopPeriodic()" ng-mouseleave="me.stopPeriodic()">
             <ui-icon icon="expand_more"></ui-icon>
         </md-button>
         <p class="value" ng-bind-html="me.item.getText()"></p>
         <md-button class="md-icon-button up-button" aria-label="{{me.item.label}}"
-            ng-mousedown="me.periodicChange(me.item.step)" ng-mouseup="me.stopPeriodic()">
+            ng-mousedown="me.periodicChange(me.item.step)" ng-mouseup="me.stopPeriodic()" ng-mouseleave="me.stopPeriodic()">
             <ui-icon icon="expand_less"></ui-icon>
         </md-button>
     </div>

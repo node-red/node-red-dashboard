@@ -4,7 +4,7 @@ reason: https://github.com/angular/material/issues/6214
 */
 
 .nr-dashboard-colour-picker p {
-    padding: 0 0 0 10px;
+    padding: 0 0 0 12px;
 }
 
 .color-picker-wrapper {
@@ -16,9 +16,15 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline {
+    right: 122px;
+}
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-lightness {
     right: 142px;
 }
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-alpha {
+    right: 142px;
+}
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-alpha.color-picker-show-lightness {
     right: 162px;
 }
 

@@ -53,7 +53,7 @@ dashboard sidebar. They can also be opened in an iframe - if allowed by the targ
 
 #### Widgets
 
-The width and height of widgets can be set, as can the width of *groups*. These are all specified in units of approximately 50 pixels.
+The **width** and **height** of widgets can be set, as can the width of *groups*. These are all specified in units of approximately 50 pixels.
 
 The default width of a group is 6 as it was in contrib-ui ( &approx;300 pixels ). Setting a widget to `auto` will fill the available
 width of the group. It is still advisable to use multiple groups if you can, rather than one big group, so that the page can dynamically resize on smaller screens.
@@ -79,15 +79,30 @@ Any widget can be disabled by passing in a `msg.enabled` property set to `false;
   - **Template** - the template node allows the user to specify and create their own widgets within the framework using HTML, Javascript. This is an Angular.js widget. You may also use this to override the built in CSS styles.
   - **Text** - A read only widget, the layout of the `label`, and `value` can be configured.
   - **Text input** - text input box, with optional label, can also support password, email and colour modes.
-  - **UI-Control** - a new to allow some dynamic control of the dashboard. Initial function is to allow switching tabs. Outputs a message for every browser connection and loss, that can be used to trigger other actions.
+  - **UI-Control** - allows some dynamic control of the dashboard. Sending a `msg.payload` of the tab number (from 0) or name will switch to that tab. Outputs a `msg.payload` for every browser *connection* and *loss*, that can be used to trigger other actions.
 
 **Tip:** The *Text* widget will accept html - so you can use it together with the *fa-icons* we
 already use to create indicator type widgets.
+
+## Securing the Dashboard
+
+You can use the `httpNodeAuth` property in your Node-RED settings.js file to secure the Dashboard as it is
+created the same way as other HTTP nodes are. The details can be found at the bottom of this page in the
+docs <http://nodered.org/docs/security>
+
+## Multiple Users
+
+This Dashboard does NOT support multiple individual users. It is a view of the status of the underlying
+Node-RED flow, which itself is single user. If the state of the flow changes then all clients will get
+notified of that change.
 
 ## Discussions and suggestions
 
 Use the Node-RED google group: <https://groups.google.com/forum/#!forum/node-red>
 or the Dashboard-ui channel in <a href="http://nodered.org/slack/">Slack</a>
+
+The current work in progress list is shown in the
+<a href="https://github.com/node-red/node-red-dashboard/projects/1" target="_blank"> Github Project</a>.
 
 ## Contributing
 
