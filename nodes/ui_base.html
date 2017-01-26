@@ -391,16 +391,21 @@
                             (globalDashboardNode !== null) ? siteName = globalDashboardNode.name : siteName = "Node-RED Dashboard";
                             var site = { name: siteName }
                             
-                            globalDashboardNode = {
-                                id: RED.nodes.id(),
-                                _def: RED.nodes.getType("ui_base"),
-                                type: "ui_base",
-                                site: site,
-                                theme: theme,
-                                users: []
-                            }
                             if (noDashboardNode) {
+                                globalDashboardNode = {
+                                    id: RED.nodes.id(),
+                                    _def: RED.nodes.getType("ui_base"),
+                                    type: "ui_base",
+                                    site: site,
+                                    theme: theme,
+                                    users: []
+                                }
                                 RED.nodes.add(globalDashboardNode);
+                            } else {
+                                globalDashboardNode["_def"] = RED.nodes.getType("ui_base");
+                                globalDashboardNode.site = site;
+                                globalDashboardNode.theme = theme;
+                                delete globalDashboardNode.name;
                             }
                             RED.nodes.dirty(true);
                         }
