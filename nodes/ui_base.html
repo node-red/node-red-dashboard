@@ -236,7 +236,6 @@
     // then if fails, load non dist version
     loadTinyColor(uip+'/js/tinycolor.js');
 
-
     RED.nodes.registerType('ui_base',{
             category: 'config',
             defaults: {
@@ -342,14 +341,14 @@
                         // If there is no dashboard node, ensure we create it after
                         // initialising
                         var noDashboardNode = (globalDashboardNode === null);
-                        
+
                         // set up theme state
                         var themeState = {};
                         var base = "#0094CE"
                         for (var i=0; i<baseStyles.length; i++) {
                             themeState[baseStyles[i]] = { default: base, value: base, edited: false };
                         }
-                        for (var i=0; i<configurableStyles.length; i++) {
+                        for (var i = 0; i < configurableStyles.length; i++) {
                             var underscore = configurableStyles[i].split("-").join("_");
                             var colour = colours['calculate_'+underscore](base);
                             themeState[configurableStyles[i]] = {value: colour, edited: false};
@@ -358,7 +357,7 @@
                         var missingFields = (!globalDashboardNode || !globalDashboardNode.theme || !globalDashboardNode.site );
 
                         if (missingFields && createMissing) {
-                            
+
                             var lightTheme = {
                                 default: "#0094CE",
                                 baseColor: "#0094CE",
@@ -390,7 +389,7 @@
                             var siteName;
                             (globalDashboardNode !== null) ? siteName = globalDashboardNode.name : siteName = "Node-RED Dashboard";
                             var site = { name: siteName }
-                            
+
                             if (noDashboardNode) {
                                 globalDashboardNode = {
                                     id: RED.nodes.id(),
@@ -661,7 +660,7 @@
                         globalDashboardNode.theme[key].baseColor = defaultColor;
                         globalDashboardNode.theme[key].edited = false;
                         RED.nodes.dirty(true);
-                        
+
                     }
                 }
 
@@ -699,7 +698,6 @@
                     var textColor = colours.whiteGreyMostReadable(val);
                     $("#"+id).css("color", textColor);
                 }
-
 
                 //Layout Tab
                 var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
