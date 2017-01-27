@@ -1,4 +1,4 @@
-<md-sidenav ng-show="main.len <= 1" layout="column" class="md-sidenav-left" md-component-id="left">
+<md-sidenav ng-hide="main.len <= 1" layout="column" class="md-sidenav-left" md-component-id="left">
     <md-list>
         <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
             <ui-icon icon="{{tab.icon}}" style="margin:5px"></ui-icon>

@@ -133,7 +133,12 @@
     Will display if the number received as <code>msg.payload</code> is even or odd. It will also
     change the color of the text to green if the number is even or red if odd.<br><br>
     <b>Sending a message:</b><br>
-    <pre>&lt;md-button ng-click=&quot;send({payload: 'Hello World'})&quot;&gt;
+    <pre>&lt;script&gt;
+var value = "hello world";
+// or overwrite value in your callback function ...
+this.scope.action = function() { return value; }
+&lt;/script&gt;
+&lt;md-button ng-click=&quot;send({payload:action()})&quot;&gt;
     Click me to send a hello world
 &lt;/md-button&gt;</pre>
     Will display a button that when clicked will send a message with the payload <code>'Hello world'</code>.

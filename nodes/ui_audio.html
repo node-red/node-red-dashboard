@@ -11,7 +11,8 @@
         defaults: {
             name: {value:""},
             group: {type: 'ui_group', required: true},
-            voice: {value:""}
+            voice: {value:""},
+            always: {value:""}
         },
         inputs:1,
         outputs:0,
@@ -49,14 +50,19 @@
 </script>
 
 <script type="text/x-red" data-template-name="ui_audio">
-<div class="form-row">
-    <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
-    <input type="text" id="node-input-group">
-</div>
-<div class="form-row" id="voice-input-row">
-    <label for="node-input-voice"><i class="fa fa-language"></i> TTS Voice</label>
-    <select id="node-input-voice" style="width:70%"></select>
-</div>
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+    <div class="form-row" id="voice-input-row">
+        <label for="node-input-voice"><i class="fa fa-language"></i> TTS Voice</label>
+        <select id="node-input-voice" style="width:70%"></select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-always"></label>
+        <input type="checkbox" checked id="node-input-always" style="display:inline-block; width:auto; vertical-align:top;">
+        Play audio when window not in focus.
+    </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">

@@ -86,17 +86,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.tabs = ui.tabs;
             main.links = ui.links;
             var name;
-            if (ui.site) { name = ui.site.name };
-            if (ui.title) { name = ui.title };
+            if (ui.site) { name = ui.site.name }
+            if (ui.title) { name = ui.title }
             $document[0].title = name || "Node-RED Dashboard";
+            $document[0].theme = ui.theme;
+
             var prevTabIndex = parseInt($location.path().substr(1));
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
-                    applyStyle(main.selectedTab.theme); 
+                    applyStyle(main.selectedTab.theme);
                     $mdToast.hide();
                     done();
                 } else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
-                    applyStyle(ui.theme); 
+                    applyStyle(ui.theme);
                 }
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {
@@ -109,9 +111,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     finishLoading();
                 }, 50 );
             }
+            main.len = main.tabs.length + main.links.length;
         }, function () {
             main.loaded = true;
-            main.len = main.tabs.length + main.links.length;
         });
 
         function findControl(id, items) {
@@ -222,12 +224,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('ui-audio', function(msg) {
-            var totab;
-            for (var i in main.tabs) {
-                if (msg.tabname === main.tabs[i].header) { totab = i; }
+            if (!msg.always) {
+                var totab;
+                for (var i in main.tabs) {
+                    if (msg.tabname === main.tabs[i].header) { totab = i; }
+                }
+                // only play sound/tts to tab if in focus
+                if (totab != parseInt($location.path().substr(1))) { return; }
             }
-            // only play sound/tts to tab if in focus
-            if (totab != parseInt($location.path().substr(1))) { return; }
 
             if (msg.hasOwnProperty("tts")) {
                 if ('speechSynthesis' in window) {

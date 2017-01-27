@@ -6,6 +6,7 @@
     "disallowMixedSpacesAndTabs": true,
     "disallowMultipleSpaces": {"allowEOLComments": true},
     "disallowKeywordsOnNewLine": [],
+    //"requireKeywordsOnNewLine": ["else", "catch"],
     "requireSpaceBeforeBlockStatements": 1,
     //"requireSpaceBeforeObjectValues": false,
     //"requireSemicolons": true,

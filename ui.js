@@ -278,9 +278,9 @@ function updateUi(to) {
         });
         to.emit('ui-controls', {
             site: baseConfiguration.site,
+            theme: baseConfiguration.theme,
             tabs: tabs,
-            links: links,
-            theme: baseConfiguration.theme
+            links: links
         });
         updateUiPending = false;
     });
