@@ -146,15 +146,12 @@
     input.nr-db-field-themeColor::-webkit-color-swatch {
         border: none;
     }
-
     .red-ui-tabs {
         margin-bottom: 15px;
     }
-
     #dashboard-tabs-list li a:hover {
         cursor: pointer;
     }
-
     #dash-link-button {
         background: none;
         border: none;
@@ -178,7 +175,6 @@
     ul.red-ui-dashboard-theme-styles li {
         margin-bottom: 10px;
     }
-
     .resetIcon {
         margin: 3px 6px 0px 6px;
         float: right;
@@ -189,21 +185,18 @@
     .resetIcon:hover {
         cursor: pointer;
     }
-
     #nr-db-field-font {
         margin-left: 2em;
         width: 150px;
     }
-
     label.theme-label {
         font-weight: bold;
     }
-
     #custom-theme-library-container .btn-group {
         margin-bottom: 10px;
     }
-
 </style>
+
 <script type="text/javascript">
 (function($) {
     var editSaveEventHandler;
@@ -246,8 +239,6 @@
             hasUsers: false,
             paletteLabel: 'Dashboard',
             label: function() { return this.name || 'Node-RED Dashboard'; },
-            oneditprepare: function() {
-            },
             onpaletteremove: function() {
                 RED.sidebar.removeTab("dashboard");
                 RED.events.off("editor:save",editSaveEventHandler);
@@ -386,9 +377,15 @@
                                 customTheme: customTheme,
                                 themeState: themeState
                             }
-                            var siteName;
-                            (globalDashboardNode !== null) ? siteName = globalDashboardNode.name : siteName = "Node-RED Dashboard";
-                            var site = { name: siteName }
+
+                            var site = { name:"Node-RED Dashboard", hideToolbar:false, allowSwipe:false }
+                            if (globalDashboardNode !== null) {
+                                site = {
+                                    name: globalDashboardNode.name,
+                                    hideToolbar: globalDashboardNode.hideToolbar,
+                                    allowSwipe: globalDashboardNode.allowSwipe
+                                }
+                            }
 
                             if (noDashboardNode) {
                                 globalDashboardNode = {
@@ -473,6 +470,34 @@
                     }
                 })
                 .appendTo(divTitle);
+
+                var divHideToolbar = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                $('<label>').html('Options').appendTo(divHideToolbar);
+                $('<select id="nr-db-field-hideToolbar">').val("false").css("width","100%")
+                .append($('<option>', { value:false, text:'Show the title bar' }))
+                .append($('<option>', { value:true, text:'Hide the title bar' }))
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.site.hideToolbar = $(this).val();
+                        RED.nodes.dirty(true);
+                    }
+                })
+                .appendTo(divHideToolbar);
+
+                var divAllowSwipe = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                $('<select id="nr-db-field-allowSwipe">').val("false").css("width","100%")
+                .append($('<option>', { value:false, text:'No swipe between tabs' }))
+                .append($('<option>', { value:true, text:'Allow swipe between tabs' }))
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.site.allowSwipe !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.site.allowSwipe = $(this).val();
+                        RED.nodes.dirty(true);
+                    }
+                })
+                .appendTo(divAllowSwipe);
+
 
                 // Theme Tab
                 // For all customisable styles, generate and apply the css
@@ -1302,6 +1327,8 @@
                     ensureDashboardNode(true);
                     if (globalDashboardNode) {
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
+                        $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe);
+                        $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar);
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
                         $("#node-input-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {

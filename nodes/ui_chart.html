@@ -40,6 +40,7 @@
         },
         inputs:1,
         outputs:2,
+        outputLabels: ["chart state","(deprecated)"],
         align: "right",
         icon: "ui_chart.png",
         paletteLabel: 'chart',
@@ -114,7 +115,7 @@
                 types:[ ohms, ohm, oahm, odm, oymd, ocus ]
             });
             var defaultColors = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
-            
+
             if (this.colors) {
                 for (var i=0; i<this.colors.length; i++) {
                     var value = this.colors[i] || defaultColors[i];
@@ -122,8 +123,8 @@
                 }
             }
             else {
-                for (var i=0; i<defaultColors.length; i++) {
-                    setColour("#node-input-color"+(i+1), defaultColors[i]);
+                for (var c=0; c<defaultColors.length; c++) {
+                    setColour("#node-input-color"+(c+1), defaultColors[c]);
                 }
             }
 

@@ -16,9 +16,9 @@ module.exports = function(RED) {
             baseColor: defaultLightTheme.baseColor,
             baseFont: defaultLightTheme.baseFont
         }
-        
+
         // Setup theme name
-        // First try old format (for upgrading with old flow file) 
+        // First try old format (for upgrading with old flow file)
         // Then try new format
         // Else fallback to theme-light
         var themeName;
@@ -47,7 +47,7 @@ module.exports = function(RED) {
             defaultThemeState["widget-textColor"] = {value: "#eeeeee"};
             defaultThemeState["widget-backgroundColor"] = {value: "#097479"};
         }
-        
+
         var defaultThemeObject = {
             name: themeName,
             lightTheme: config.theme.lightTheme || defaultLightTheme,
@@ -56,16 +56,16 @@ module.exports = function(RED) {
             themeState: config.theme.themeState || defaultThemeState
         }
 
-        var siteName = "Node-RED Dashboard";
-        if (config.name) { siteName = config.name }
-        if (config.site) { siteName = config.site.name }
-        var defaultSiteObject = {
-            name: siteName
-        }
+        // var siteName = "Node-RED Dashboard";
+        // if (config.name) { siteName = config.name }
+        // if (config.site) { siteName = config.site.name }
+        // var defaultSiteObject = {
+        //     name: siteName
+        // }
 
         this.config = {
             theme: defaultThemeObject,
-            site: defaultSiteObject
+            site: config.site
         }
         ui.addBaseConfig(this.config);
     }

@@ -31,21 +31,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        if (this.allowSwipe) {
-            $scope.onSwipeLeft = function(ev) { moveTab(-1); }
-            $scope.onSwipeRight = function(ev) { moveTab(1); }
-        }
+        $scope.onSwipeLeft = function(ev) { if (main.allowSwipe) { moveTab(-1); } }
+        $scope.onSwipeRight = function(ev) { if (main.allowSwipe) { moveTab(1); } }
 
-        this.toggleSidenav = function () {
-            $mdSidenav('left').toggle();
-        };
+        this.toggleSidenav = function () { $mdSidenav('left').toggle(); }
 
         this.select = function (index) {
             main.selectedTab = main.tabs[index];
             if (main.tabs.length > 0) { $mdSidenav('left').close(); }
             events.emit('ui-replay-state', {});
             $location.path(index);
-        };
+        }
 
         this.open = function (link, index) {
             // console.log("LINK",link,index);
@@ -61,7 +57,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 main.selectedTab = main.links[index];
             }
             $mdSidenav('left').close();
-        };
+        }
 
         function applyStyle(theme) {
             // less needs a corresponding css variable for each style
@@ -85,8 +81,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         events.connect(function (ui, done) {
             main.tabs = ui.tabs;
             main.links = ui.links;
+            console.log("SITE",ui.site);
+            if (ui.site) {
+                name = ui.site.name;
+                main.hideToolbar = (ui.site.hideToolbar == "true");
+                main.allowSwipe = (ui.site.allowSwipe == "true");
+            }
             var name;
-            if (ui.site) { name = ui.site.name }
             if (ui.title) { name = ui.title }
             $document[0].title = name || "Node-RED Dashboard";
             $document[0].theme = ui.theme;
@@ -97,7 +98,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     applyStyle(main.selectedTab.theme);
                     $mdToast.hide();
                     done();
-                } else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
+                }
+                else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
                     applyStyle(ui.theme);
                 }
             }
