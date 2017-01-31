@@ -2,14 +2,17 @@
         class="nr-dashboard-switch" ng-click="me.item.value = !me.item.value; me.valueChanged(0)" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
         <p ng-if="me.item.label && (me.item.width > 1)" class="label" ng-bind-html="me.item.getLabel()"></p>
         <!-- <p ng-if="me.item.label && (me.item.width > 1)" class="label">{{me.item.label}}</p> -->
-    <md-switch ng-model="me.item.value" ng-change="me.item.value = !me.item.value"
+    <md-switch ng-model="me.item.value"
+        ng-change="me.item.value = !me.item.value"
         aria-label="{{me.item.label}}"
         ng-class="{'center' : !me.item.label}"
-        ng-if="!me.item.oncolor || !me.item.onicon || !me.item.offcolor || !me.item.officon">
+        ng-if="!me.item.oncolor || !me.item.onicon || !me.item.offcolor || !me.item.officon"
+        style="z-index:1">
 	</md-switch>
 	<ui-icon icon="{{me.item.value ? me.item.onicon : me.item.officon}}"
         ng-style="{color: me.item.value ?  me.item.oncolor : me.item.offcolor}"
         ng-class="{'center' : !me.item.label}"
-        ng-if="me.item.oncolor && me.item.onicon && me.item.offcolor && me.item.officon">
+        ng-if="me.item.oncolor && me.item.onicon && me.item.offcolor && me.item.officon"
+        style="z-index:1">
     </ui-icon>
 </md-card>

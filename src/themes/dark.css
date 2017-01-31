@@ -142,7 +142,6 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 	fill: #eee;
 }
 
-
 /* Numeric */
 
 .nr-dashboard-theme-dark .nr-dashboard-numeric {}

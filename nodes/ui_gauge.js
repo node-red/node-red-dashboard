@@ -16,6 +16,7 @@ module.exports = function (RED) {
         if (config.height === "1") { config.hideMinMax = true; }
         node.autoheight = parseInt(group.config.width*0.5+1.5) || 4;
         if (config.gtype && config.gtype !== "gage") { node.autoheight = parseInt(group.config.width*0.75+0.5); }
+        if (!config.title) { node.autoheight -= 1; }
 
         var theme = ui.getTheme();
         if (theme === undefined) {

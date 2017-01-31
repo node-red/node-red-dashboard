@@ -120,6 +120,9 @@ function add(opt) {
             state.disabled = !msg.enabled;
             io.emit(updateValueEventName, state);
         }
+        // remove res and req as they are often circular
+        if (msg.hasOwnProperty("res")) { delete msg.res; }
+        if (msg.hasOwnProperty("req")) { delete msg.req; }
 
         // Retrieve the dataset for this node
         var oldValue = currentValues[opt.node.id];
@@ -134,7 +137,8 @@ function add(opt) {
         if ((typeof(conversion) === 'object') && (conversion.update !== undefined)) {
             newPoint = conversion.newPoint;
             fullDataset = conversion.updatedValues;
-        } else {
+        }
+        else {
             // If no update flag is set, this means the conversion contains
             // the full dataset or the new value (e.g. gauges)
             fullDataset = conversion;
@@ -149,7 +153,8 @@ function add(opt) {
             var toEmit;
             if (newPoint !== undefined) {
                 toEmit = opt.beforeEmit(msg, newPoint);
-            } else {
+            }
+            else {
                 toEmit = opt.beforeEmit(msg, fullDataset);
             }
 
@@ -224,7 +229,8 @@ function init(server, app, log, redSettings) {
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
         if (!err) {
             app.use(join(settings.path), serveStatic(path.join(__dirname, "dist")));
-        } else {
+        }
+        else {
             log.info("Using development folder");
             app.use(join(settings.path), serveStatic(path.join(__dirname, "src")));
             var vendor_packages = [
@@ -247,8 +253,8 @@ function init(server, app, log, redSettings) {
     io.on('connection', function(socket) {
         ev.emit("newsocket", socket.client.id, socket.request.connection.remoteAddress);
         updateUi(socket);
-        socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
 
+        socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
         socket.on('ui-replay-state', function() {
             var ids = Object.getOwnPropertyNames(replayMessages);
             ids.forEach(function (id) {
@@ -297,7 +303,8 @@ function find(array, predicate) {
 function itemSorter(item1, item2) {
     if (item1.order === 0 && item2.order !== 0) {
         return 1;
-    } else if (item1.order !== 0 && item2.order === 0) {
+    }
+    else if (item1.order !== 0 && item2.order === 0) {
         return -1;
     }
     return item1.order - item2.order;

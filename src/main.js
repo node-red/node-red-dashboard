@@ -20,6 +20,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.hideToolbar = false;
         this.allowSwipe = false;
         var main = this;
+        console.log("THIS",this);
 
         function moveTab(d) {
             var len = main.tabs.length;
@@ -81,13 +82,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         events.connect(function (ui, done) {
             main.tabs = ui.tabs;
             main.links = ui.links;
-            console.log("SITE",ui.site);
+            var name;
             if (ui.site) {
                 name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
             }
-            var name;
+            if (ui.site.sizes) { sizes.setSizes(ui.site.sizes); }
             if (ui.title) { name = ui.title }
             $document[0].title = name || "Node-RED Dashboard";
             $document[0].theme = ui.theme;

@@ -113,7 +113,6 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 .nr-dashboard-theme-light .nr-dashboard-gauge text {}
 
-
 /* Numeric */
 
 .nr-dashboard-theme-light .nr-dashboard-numeric {}

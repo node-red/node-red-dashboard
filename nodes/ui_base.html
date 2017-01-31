@@ -214,7 +214,7 @@
                 jsScript.type = "application/javascript";
                 jsScript.src = path;
                 document.body.appendChild(jsScript);
-                console.log('Tiny Color Loaded');
+                //console.log('Tiny Color Loaded');
             },
             error:function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 404 && !attemptedVendorLoad) {
@@ -312,12 +312,22 @@
                         return tinycolor(base).toHexString();
                     }
                 }
+                var sizes = {
+                    sx: 48, // width of <1> grid square
+                    sy: 48, // height of <1> grid square
+                    gx: 6, // gap between groups
+                    gy: 6, // gap between groups
+                    cx: 6, // gap between components
+                    cy: 6, // gap between components
+                    px: 0, // padding of group's cards
+                    py: 0  // padding of group's cards
+                };
 
                 function ensureDashboardNode(createMissing) {
                     if (globalDashboardNode !== null) {
                         // Check if it has been deleted beneath us
                         var n = RED.nodes.node(globalDashboardNode.id);
-                        if (n===null) { globalDashboardNode = null; }
+                        if (n === null) { globalDashboardNode = null; }
                     }
 
                     // Find the old dashboard node
@@ -339,13 +349,13 @@
                         for (var i=0; i<baseStyles.length; i++) {
                             themeState[baseStyles[i]] = { default: base, value: base, edited: false };
                         }
-                        for (var i = 0; i < configurableStyles.length; i++) {
-                            var underscore = configurableStyles[i].split("-").join("_");
+                        for (var j = 0; j < configurableStyles.length; j++) {
+                            var underscore = configurableStyles[j].split("-").join("_");
                             var colour = colours['calculate_'+underscore](base);
-                            themeState[configurableStyles[i]] = {value: colour, edited: false};
+                            themeState[configurableStyles[j]] = {value: colour, edited: false};
                         }
 
-                        var missingFields = (!globalDashboardNode || !globalDashboardNode.theme || !globalDashboardNode.site );
+                        var missingFields = (!globalDashboardNode || !globalDashboardNode.theme || !globalDashboardNode.site || !globalDashboardNode.site.sizes );
 
                         if (missingFields && createMissing) {
 
@@ -378,12 +388,13 @@
                                 themeState: themeState
                             }
 
-                            var site = { name:"Node-RED Dashboard", hideToolbar:false, allowSwipe:false }
+                            var site = { name:"Node-RED Dashboard", hideToolbar:false, allowSwipe:false, sizes:sizes }
                             if (globalDashboardNode !== null) {
                                 site = {
                                     name: globalDashboardNode.name,
                                     hideToolbar: globalDashboardNode.hideToolbar,
-                                    allowSwipe: globalDashboardNode.allowSwipe
+                                    allowSwipe: globalDashboardNode.allowSwipe,
+                                    sizes: globalDashboardNode.sizes
                                 }
                             }
 
@@ -397,7 +408,8 @@
                                     users: []
                                 }
                                 RED.nodes.add(globalDashboardNode);
-                            } else {
+                            }
+                            else {
                                 globalDashboardNode["_def"] = RED.nodes.getType("ui_base");
                                 globalDashboardNode.site = site;
                                 globalDashboardNode.theme = theme;
@@ -407,13 +419,14 @@
                         }
                     }
                 }
+
                 var content = $("<div>").css({"position":"relative","height":"100%"});
                 var mainContent = $("<div>",{class:"nr-db-sb"}).appendTo(content);
                 var form = $('<form class="dialog-form">').appendTo(mainContent);
 
                 // Dashboard Tabs markup
-                var divTabs = $('<div class="red-ui-tabs">').appendTo(form);
-                var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTabs);
+                var divTab = $('<div class="red-ui-tabs">').appendTo(form);
+                var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTab);
                 var liLayoutTab = $('<li class="red-ui-tab" style="width: 70px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
                 var liThemeTab = $('<li class="red-ui-tab" style="width: 70px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
                 var liSiteTab = $('<li class="red-ui-tab" style="width: 70px;"><a class="red-ui-tab-label" title="Site" style="width: 60px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
@@ -444,12 +457,14 @@
                         themeTab.hide();
                         siteTab.hide();
                         layoutTab.show();
-                    } else if (selectedTab === 'Theme') {
+                    }
+                    else if (selectedTab === 'Theme') {
                         layoutTab.hide();
                         siteTab.hide();
                         themeTab.show();
                         ($("#nr-db-field-theme option:selected").val() === 'theme-custom') ? themeSettingsContainer.show() : themeSettingsContainer.hide();
-                    } else {
+                    }
+                    else {
                         layoutTab.hide();
                         themeTab.hide();
                         siteTab.show();
@@ -498,6 +513,47 @@
                 })
                 .appendTo(divAllowSwipe);
 
+                var divSetSizes = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                $('<span style="height:25px; width:45%; display:inline-block">').html('Sizes').appendTo(divSetSizes);
+                $('<span style="width:25%; display:inline-block">').html('Horizontal').appendTo(divSetSizes);
+                $('<span style="width:20%; display:inline-block">').html('Vertical').appendTo(divSetSizes);
+
+                $('<br/><span style="width:45%; display:inline-block">').html('1x1 Widget Size').appendTo(divSetSizes);
+                $('<input type="number" name="sx" min="24" id="nr-db-field-sx">').val(48).css("width","20%")
+                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .appendTo(divSetSizes);
+                $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
+                $('<input type="number" name="sy" min="24" id="nr-db-field-sy">').val(48).css("width","20%")
+                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .appendTo(divSetSizes);
+
+                $('<br/><span style="width:45%; display:inline-block">').html('Widget Spacing').appendTo(divSetSizes);
+                $('<input type="number" name="cx" min="0" id="nr-db-field-cx">').val(6).css("width","20%")
+                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .appendTo(divSetSizes);
+                $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
+                $('<input type="number" name="cy" min="0" id="nr-db-field-cy">').val(6).css("width","20%")
+                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .appendTo(divSetSizes);
+
+                $('<br/><span style="width:45%; display:inline-block">').html('Group Padding').appendTo(divSetSizes);
+                $('<input type="number" name="px" min="0" id="nr-db-field-px">').val(0).css("width","20%")
+                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
+                .appendTo(divSetSizes);
+                $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
+                $('<input type="number" name="py" min="0" id="nr-db-field-py">').val(0).css("width","20%")
+                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
+                .appendTo(divSetSizes);
+
+                $('<br/><span style="width:45%; display:inline-block">').html('Group Spacing').appendTo(divSetSizes);
+                $('<input type="number" name="gx" min="0" id="nr-db-field-gx">').val(6).css("width","20%")
+                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .appendTo(divSetSizes);
+                $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
+                $('<input type="number" name="gy" min="0" id="nr-db-field-gy">').val(6).css("width","20%")
+                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .appendTo(divSetSizes);
+
 
                 // Theme Tab
                 // For all customisable styles, generate and apply the css
@@ -526,7 +582,6 @@
                         if (!globalDashboardNode || globalDashboardNode.theme.name !== $(this).val()) {
                             ensureDashboardNode(true);
                             globalDashboardNode.theme.name = $(this).val();
-
                             var theme = globalDashboardNode.theme.name.split('-')[1];
                             var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
                             setColourPickerColour("base-color", baseColour);
@@ -534,7 +589,6 @@
                             globalDashboardNode.theme.themeState['base-color'].default = baseColour;
                             //generate colours for all colour settings from base colour
                             generateColours(baseColour);
-
                             RED.nodes.dirty(true);
                         }
                         $('#base-color-reset').remove();
@@ -542,7 +596,8 @@
                             $("#custom-theme-library-container").show();
                             $("#custom-theme-settings").show();
                             //addResetButton('base-color', baseSettingsUl.children());
-                        } else {
+                        }
+                        else {
                             $("#custom-theme-library-container").hide();
                             $("#custom-theme-settings").hide();
                             addLightAndDarkResetButton('base-color', baseSettingsUl.children());
@@ -593,11 +648,10 @@
                         if (globalDashboardNode.theme.name === 'theme-light' || globalDashboardNode.theme.name === 'theme-dark') {
                             var theme = globalDashboardNode.theme.name.split('-')[1];
                             globalDashboardNode.theme[theme+'Theme'].baseColor = value;
-
                             //for light and dark themes, set the edited status to true
                             globalDashboardNode.theme[theme+'Theme'].edited = true;
-
-                        } else {
+                        }
+                        else {
                             //custom
                             globalDashboardNode.theme.customTheme.baseColor = value;
                             editor.setValue(JSON.stringify(globalDashboardNode.theme.customTheme),1);
@@ -690,7 +744,6 @@
                 }
 
                 function resetClick(e) {
-
                     //take off -reset
                     var elementID = e.target.id.split('-reset')[0];
                     if (globalDashboardNode.theme.themeState[elementID].edited) {
@@ -702,7 +755,8 @@
                         if (elementID === 'base-color') {
                             colour = defaultColor;
                             generateColours(colour);
-                        } else {
+                        }
+                        else {
                             var underscore = elementID.split('-').join('_');
                             colour = colours['calculate_'+underscore](defaultColor);
                         }
@@ -761,7 +815,8 @@
                             chevron.css({"transform":"rotate(-90deg)"});
                             content.addClass('nr-db-sb-collapsed');
                             listStates[id] = false;
-                        } else {
+                        }
+                        else {
                             content.slideDown();
                             chevron.css({"transform":""});
                             content.removeClass('nr-db-sb-collapsed');
@@ -811,7 +866,8 @@
                             chevron.css({"transform":"rotate(-90deg)"});
                             content.addClass('nr-db-sb-collapsed');
                             listStates[tabNode.id] = false;
-                        } else {
+                        }
+                        else {
                             listStates[tabNode.id] = true;
                         }
                         setTimeout(function() {
@@ -859,7 +915,8 @@
                                     chevron.css({"transform":"rotate(-90deg)"});
                                     content.addClass('nr-db-sb-collapsed');
                                     listStates[groupNode.id] = false;
-                                } else {
+                                }
+                                else {
                                     listStates[groupNode.id] = true;
                                 }
                                 setTimeout(function() {
@@ -879,7 +936,8 @@
                                         var l = widgetNode._def.label;
                                         try {
                                             l = (typeof l === "function" ? l.call(widgetNode) : l)||"";
-                                        } catch(err) {
+                                        }
+                                        catch(err) {
                                             console.log("Definition error: "+d.type+".label",err);
                                             l = d.type;
                                         }
@@ -1186,7 +1244,8 @@
                     if (count > 0) {
                         orphanedWidgets.show();
                         $("#nr-db-missing-group-count").text((count===1?"is ":"are ")+count+" widget"+(count === 1?"":"s"))
-                    } else {
+                    }
+                    else {
                         orphanedWidgets.hide();
                     }
                 }
@@ -1210,9 +1269,11 @@
                         if (node.type === 'ui_tab') {
                             tabs[node.id] = node;
                             //tabContainer.editableList('addItem',node);
-                        } else if (node.type === 'ui_group') {
+                        }
+                        else if (node.type === 'ui_group') {
                             groups[node.id] = node;
-                        } else if (node.type === 'ui_link') {
+                        }
+                        else if (node.type === 'ui_link') {
                             links.push(node);
                         }
                     });
@@ -1223,7 +1284,8 @@
                                 // This group belongs to a tab
                                 tabGroups[group.tab] = tabGroups[group.tab]||[];
                                 tabGroups[group.tab].push(group);
-                            } else {
+                            }
+                            else {
                                 unknownGroups++;
                             }
                         }
@@ -1234,9 +1296,11 @@
                             if (groups.hasOwnProperty(node.group)) {
                                 groupElements[node.group] = groupElements[node.group]||[];
                                 groupElements[node.group].push(node);
-                            } else if (node.type === 'ui_link') {
+                            }
+                            else if (node.type === 'ui_link') {
                                 links.push(node);
-                            } else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
+                            }
+                            else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
                                 unknownGroups++;
                             }
                         }
@@ -1244,7 +1308,8 @@
                     if (unknownGroups > 0) {
                         $("#nr-db-missing-group-count").text((unknownGroups===1?"is ":"are ")+unknownGroups+" widget"+(unknownGroups === 1?"":"s"))
                         orphanedWidgets.show();
-                    } else {
+                    }
+                    else {
                         orphanedWidgets.hide();
                     }
                     // Sort each group's array of widgets
@@ -1320,7 +1385,8 @@
                             var container = linkNodes[link.id];
                             container.find(".nr-db-sb-link-name").html(link.name||"untitled");
                             container.find(".nr-db-sb-link-url").html(link.link||"http://");
-                        } else {
+                        }
+                        else {
                             linksContainer.editableList('addItem',{node:link});
                         }
                     });
@@ -1329,12 +1395,26 @@
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
                         $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe);
                         $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar);
+
+                        if (typeof globalDashboardNode.site.sizes !== "object") {
+                            globalDashboardNode.site.sizes = sizes;
+                        }
+                        $("#nr-db-field-sx").val(globalDashboardNode.site.sizes.sx);
+                        $("#nr-db-field-sy").val(globalDashboardNode.site.sizes.sy);
+                        $("#nr-db-field-px").val(globalDashboardNode.site.sizes.px);
+                        $("#nr-db-field-py").val(globalDashboardNode.site.sizes.py);
+                        $("#nr-db-field-cx").val(globalDashboardNode.site.sizes.cx);
+                        $("#nr-db-field-cy").val(globalDashboardNode.site.sizes.cy);
+                        $("#nr-db-field-gx").val(globalDashboardNode.site.sizes.gx);
+                        $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
+
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
                         $("#node-input-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {
                             $("#custom-theme-library-container").show();
                             $("#custom-theme-settings").show();
-                        } else {
+                        }
+                        else {
                             $("#custom-theme-library-container").hide();
                             $("#custom-theme-settings").hide();
                         }
@@ -1344,7 +1424,6 @@
                         var startingValue = globalDashboardNode.theme[currentTheme+"Theme"].baseColor;
                         setColourPickerColour("base-color", startingValue);
                         generateColours(startingValue);
-
                         if (globalDashboardNode.theme.name === 'theme-light' || globalDashboardNode.theme.name === 'theme-dark') {
                             addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
                         }
@@ -1423,22 +1502,26 @@
                                 if (node.type === "ui_group") {
                                     refresh();
                                 }
-                            } else if (node.type === "ui_tab") {
+                            }
+                            else if (node.type === "ui_tab") {
                                 // Adding a tab
                                 tabContainer.editableList('addItem',{node:node,groups:[]})
-                            } else {
+                            }
+                            else {
                                 // Adding a group
                                 if (tabLists[node.tab]) {
                                     tabLists[node.tab].editableList('addItem',{node:node,widgets:[]})
                                 }
                             }
-                        } else if (node.type === "ui_link") {
+                        }
+                        else if (node.type === "ui_link") {
                             if (linkNodes[node.id]) {
                                 var container = linkNodes[node.id];
                                 container.find(".nr-db-sb-link-name").html(node.name||"untitled");
                                 container.find(".nr-db-sb-link-url").html(node.link||"http://");
                             }
-                        } else {
+                        }
+                        else {
                             refreshOrphanedWidgets();
                             if (listElements[node.id]) {
                                 if (node.group != elementParents[node.id]) {
@@ -1449,17 +1532,20 @@
                                     if (groupLists[node.group]) {
                                         groupLists[node.group].editableList('addItem',node);
                                     }
-                                } else {
+                                }
+                                else {
                                     var l = node._def.label;
                                     try {
                                         l = (typeof l === "function" ? l.call(node) : l)||"";
-                                    } catch(err) {
+                                    }
+                                    catch(err) {
                                         console.log("Definition error: "+d.type+".label",err);
                                         l = d.type;
                                     }
                                     listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(l);
                                 }
-                            } else {
+                            }
+                            else {
                                 if (groupLists[node.group]) {
                                     groupLists[node.group].editableList('addItem',node)
                                 }
@@ -1484,11 +1570,14 @@
                         }
                         if (A.type === "ui_tab") {
                             return -1;
-                        } else if (B.type === "ui_tab") {
+                        }
+                        else if (B.type === "ui_tab") {
                             return 1;
-                        } else if (A.type === "ui_group") {
+                        }
+                        else if (A.type === "ui_group") {
                             return -1;
-                        } else if (B.type === "ui_group") {
+                        }
+                        else if (B.type === "ui_group") {
                             return 1;
                         }
                         return 0
@@ -1497,7 +1586,8 @@
                         var node = pendingAdd[i];
                         if (node.type === "ui_tab") {
                             tabContainer.editableList('addItem',{node:node,groups:[]});
-                        } else {
+                        }
+                        else {
                             if (hasTabs) {
                                 // We've added some tabs, need to give jquery time to add the lists
                                 pendingAdd = pendingAdd.slice(i);
@@ -1508,7 +1598,8 @@
                                 if (tabLists[node.tab]) {
                                     tabLists[node.tab].editableList('addItem',{node:node,widgets:[]});
                                 }
-                            } else {
+                            }
+                            else {
                                 if (hasGroups) {
                                     // We've added some tabs, need to give jquery time to add the lists
                                     pendingAdd = pendingAdd.slice(i);
@@ -1517,7 +1608,8 @@
                                 }
                                 if (groupLists[node.group]) {
                                     groupLists[node.group].editableList('addItem',node)
-                                } else {
+                                }
+                                else {
                                     refreshOrphanedWidgets();
                                 }
                             }
@@ -1525,6 +1617,7 @@
                     }
                     pendingAdd = [];
                 }
+
                 nodesAddEventHandler = function(node) {
                     if (/^ui_/.test(node.type) && !listElements[node.id]) {
                         pendingAdd.push(node);
@@ -1541,17 +1634,20 @@
                                 tabContainer.editableList('removeItem',listElements[node.id].data('data'));
                                 delete tabLists[node.id];
                             }
-                        } else if (node.type === "ui_group") {
+                        }
+                        else if (node.type === "ui_group") {
                             if (tabLists[node.tab] && listElements[node.id]) {
                                 tabLists[node.tab].editableList('removeItem',listElements[node.id].data('data'));
                             }
                             delete groupLists[node.id];
-                        } else if (node.type === 'ui_link') {
+                        }
+                        else if (node.type === 'ui_link') {
                             if (linkNodes[node.id]) {
                                 linksContainer.editableList('removeItem',linkNodes[node.id].data('data'));
                                 delete linkNodes[node.id];
                             }
-                        } else {
+                        }
+                        else {
                             if (groupLists[node.group]) {
                                 groupLists[node.group].editableList('removeItem',node)
                             }
@@ -1596,7 +1692,8 @@
                         fixedWidth = true;
                     }
                     maxHeight = Math.max(6,+height+1);
-                } else {
+                }
+                else {
                     gridWidth = Math.max(12,+width);
                     maxWidth = gridWidth;
                     maxHeight = 1;

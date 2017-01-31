@@ -22,7 +22,7 @@ module.exports = function(RED) {
         // Then try new format
         // Else fallback to theme-light
         var themeName;
-        (typeof(config.theme) === 'string') ? themeName = config.theme : themeName = config.theme.name || "theme-light"
+        (typeof(config.theme) === 'string') ? themeName = config.theme : themeName = config.theme.name || "theme-light";
 
         // Setup other styles
         var defaultThemeState = {}
