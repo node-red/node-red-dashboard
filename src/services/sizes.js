@@ -21,8 +21,8 @@ sizes.setSizes = function(s) {
     sizes.gy = s.gy;
     sizes.cx = s.cx;
     sizes.cy = s.cy;
-    sizes.gx = s.gx;
-    sizes.gy = s.gy;
+    sizes.px = s.px;
+    sizes.py = s.py;
 }
 
 sizes.columns = function (group) {
