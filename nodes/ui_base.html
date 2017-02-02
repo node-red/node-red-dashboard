@@ -614,7 +614,7 @@
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
-                        editor.setValue(JSON.stringify(globalDashboardNode.theme.customTheme),1);
+                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.customTheme,site:globalDashboardNode.site}),1);
                         RED.nodes.dirty(true);
                     }
                 })
@@ -654,11 +654,10 @@
                         else {
                             //custom
                             globalDashboardNode.theme.customTheme.baseColor = value;
-                            editor.setValue(JSON.stringify(globalDashboardNode.theme.customTheme),1);
+                            editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.customTheme,site:globalDashboardNode.site}),1);
                         }
                         generateColours(value);
                         colourPickerChangeHandler($(this).attr('id'), value);
-
                     }
                 })
                 .appendTo(spanColorContainer);
@@ -710,17 +709,13 @@
 
                 function addResetButton(id, parent) {
                     var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
-                    .click(function(e) {
-                        resetClick(e);
-                    })
+                    .click(function(e) { resetClick(e); })
                     .appendTo(parent);
                 }
 
                 function addLightAndDarkResetButton(id, parent) {
                     var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
-                    .click(function(e) {
-                        lightAndDarkResetClick(e);
-                    })
+                    .click(function(e) { lightAndDarkResetClick(e); })
                     .appendTo(parent);
                 }
 
@@ -730,7 +725,6 @@
                     var key = currentTheme+'Theme';
                     //sanity check - light and dark only allow base-color-reset
                     if (elementID === 'base-color' && globalDashboardNode.theme[key].edited) {
-
                         var defaultColor = globalDashboardNode.theme[key].default;
                         generateColours(defaultColor);
                         setColourPickerColour(elementID, defaultColor);
@@ -739,7 +733,6 @@
                         globalDashboardNode.theme[key].baseColor = defaultColor;
                         globalDashboardNode.theme[key].edited = false;
                         RED.nodes.dirty(true);
-
                     }
                 }
 
@@ -747,10 +740,8 @@
                     //take off -reset
                     var elementID = e.target.id.split('-reset')[0];
                     if (globalDashboardNode.theme.themeState[elementID].edited) {
-
                         var defaultColor = globalDashboardNode.theme.themeState['base-color'].default;
                         var colour;
-
                         //set colour
                         if (elementID === 'base-color') {
                             colour = defaultColor;
@@ -764,7 +755,6 @@
                         $("#"+elementID+"-reset").css({opacity: 0.6});
                         globalDashboardNode.theme.themeState[elementID].edited = false;
                         globalDashboardNode.theme.themeState[elementID].value = colour;
-
                         RED.nodes.dirty(true);
                     }
                 }
@@ -772,7 +762,6 @@
                 function setColourPickerColour(id, val) {
                     $("#"+id).val(val);
                     $("#"+id).css("background-color", val);
-
                     //call mostReadableGreyWhite to set text colour
                     var textColor = colours.whiteGreyMostReadable(val);
                     $("#"+id).css("color", textColor);
@@ -1431,16 +1420,16 @@
                         editor = RED.editor.createEditor({
                             id: 'node-input-format-editor',
                             mode: 'ace/mode/javascript',
-                            value: JSON.stringify(globalDashboardNode.theme.customTheme)
+                            value: JSON.stringify({theme:globalDashboardNode.theme.customTheme, site:globalDashboardNode.site})
                         });
 
                         RED.library.create({
-                                url:"themes", // where to get the data from
-                                type:"theme", // the type of object the library is for
-                                editor: editor, // the field name the main text body goes to
-                                mode:"ace/mode/javascript",
-                                fields:['name']
-                            });
+                            url:"themes", // where to get the data from
+                            type:"theme", // the type of object the library is for
+                            editor: editor, // the field name the main text body goes to
+                            mode:"ace/mode/javascript",
+                            fields:['name']
+                        });
 
                         editor.on('input', function() {
                             // Check for any changes on the editor object
@@ -1450,26 +1439,28 @@
                             var objectsEqual = true;
                             var keysEqual = true;
                             var editorKeys = Object.keys(editorObject);
+                            var themeKeys = Object.keys(editorObject.theme);
+                            var siteKeys = Object.keys(editorObject.site);
                             var dashNodeKeys = Object.keys(globalDashboardNode.theme.customTheme);
 
                             // Test equality
-                            for (var i=0; i<editorKeys.length; i++) {
-                                if (editorKeys[i] !== dashNodeKeys[i]) {
+                            for (var i=0; i<themeKeys.length; i++) {
+                                if (themeKeys[i] !== dashNodeKeys[i]) {
                                     keysEqual = false;
                                     break;
                                 }
                             }
                             if (keysEqual) {
-                                for (var i=0; i<editorKeys.length; i++) {
-                                    var key = editorKeys[i];
-                                    if (editorObject[key] !== globalDashboardNode.theme.customTheme[key]) {
+                                for (var j=0; j<themeKeys.length; j++) {
+                                    var key = themeKeys[j];
+                                    if (editorObject.theme[key] !== globalDashboardNode.theme.customTheme[key]) {
                                         objectsEqual = false;
                                         break;
                                     }
                                 }
                             }
 
-                            if (!objectsEqual) { globalDashboardNode.theme.customTheme = editorObject; }
+                            if (!objectsEqual) { globalDashboardNode.theme.customTheme = editorObject.theme; }
 
                             //If custom theme is chosen, update the elements and current state
                             if (globalDashboardNode.theme.name === 'theme-custom') {
@@ -1477,6 +1468,12 @@
                                 globalDashboardNode.theme.themeState['base-color'].default = globalDashboardNode.theme.customTheme.baseColor;
                                 generateColours(globalDashboardNode.theme.customTheme.baseColor);
                                 if (!objectsEqual) { RED.nodes.dirty(true); }
+                            }
+
+                            //Update site object if necessary
+                            if (JSON.stringify(editorObject.site) !== JSON.stringify(globalDashboardNode.site)) {
+                                globalDashboardNode.site = editorObject.site;
+                                RED.nodes.dirty(true);
                             }
                         });
 
