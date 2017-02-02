@@ -1,10 +1,12 @@
 
-### 2.2.2: Maintenance Release - not yet on npm
+### 2.3.0-beta: Milestone Release - not yet on npm
 
 **Enhancements**
 
- - Colourpicker - add configurable lightness slider PR123
+ - Add Themes to Dashboard Tab - includes colour and sizes and other options - Issue137
+ - Colourpicker - add configurable lightness slider - PR123
  - Configurable colour for Notification toasts - Issue145
+ - Remove whitespace from above gauge with no label  - Issue159
 
 **Fixes**
 
@@ -13,6 +15,7 @@
  - chart no longer emits a blank array on start (which was wiping out file storage of data)
  - link tabs were stuck at light theme - now follow overall theme correctly - Issue149
  - fixed numeric widget to not have rounding error, and also occasional stall/hang - Issue150
+ - remove .res and .req properties of msg in case they have circular refs - Issue153
 
 ### 2.2.1: Maintenance Release
 

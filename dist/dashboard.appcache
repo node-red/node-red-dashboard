@@ -1,0 +1,22 @@
+CACHE MANIFEST
+
+CACHE:
+icon.jpg
+icon.png
+index.html
+css/app.min.css
+css/app.min.less
+css/index.html
+js/app.min.js
+js/tinycolor.js
+fonts/FontAwesome.otf
+fonts/fontawesome-webfont.eot
+fonts/fontawesome-webfont.svg
+fonts/fontawesome-webfont.ttf
+fonts/fontawesome-webfont.woff
+fonts/fontawesome-webfont.woff2
+
+NETWORK:
+*
+
+# hash: c5b36a2f9285f0de88fec84a0f9ac46c669e4e12835b23a8568b188f7662c82d
