@@ -489,9 +489,11 @@
 
                 var divHideToolbar = $('<div>',{class:"form-row"}).appendTo(siteTab);
                 $('<label class="theme-label">').html('Options').appendTo(divHideToolbar);
-                $('<select id="nr-db-field-hideToolbar">').val("false").css("width","100%")
-                .append($('<option>', { value:false, text:'Show the title bar' }))
-                .append($('<option>', { value:true, text:'Hide the title bar' }))
+                $('<select id="nr-db-field-hideToolbar">')
+                .css("width","100%")
+                .append($('<option>', { value:"false", text:'Show the title bar', selected:true }))
+                .append($('<option>', { value:"true", text:'Hide the title bar' }))
+                .val("false")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -502,9 +504,11 @@
                 .appendTo(divHideToolbar);
 
                 var divAllowSwipe = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<select id="nr-db-field-allowSwipe">').val("false").css("width","100%")
-                .append($('<option>', { value:false, text:'No swipe between tabs' }))
-                .append($('<option>', { value:true, text:'Allow swipe between tabs' }))
+                $('<select id="nr-db-field-allowSwipe">')
+                .css("width","100%")
+                .append($('<option>', { value:"false", text:'No swipe between tabs', selected:true }))
+                .append($('<option>', { value:"true", text:'Allow swipe between tabs' }))
+                .val("false")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowSwipe !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -1382,8 +1386,8 @@
                     ensureDashboardNode(true);
                     if (globalDashboardNode) {
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
-                        $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe);
-                        $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar);
+                        $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || false);
+                        $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar || false);
 
                         if (typeof globalDashboardNode.site.sizes !== "object") {
                             globalDashboardNode.site.sizes = sizes;
