@@ -213,7 +213,7 @@ function loadConfiguration(type,scope) {
         // Theme settings
         var themeState = scope.$eval('me.item.theme.themeState');
         config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = themeState['widget-textColor'].value;
-        
+
         //generate white or black depending on group background colour
         var groupBackgroundColor = tinycolor(themeState.groupBackgroundColor).toRgb();
         var gridlineColour = "rgba("+groupBackgroundColor.r+","+groupBackgroundColor.g+","+groupBackgroundColor.b+",0.1)";
@@ -241,8 +241,8 @@ function loadConfiguration(type,scope) {
         }
 
         //set colours based on widget text colour
-        var themeState = scope.$eval('me.item.theme.themeState');
-        config.options.legend.labels = { fontColor:themeState['widget-textColor'].value };
+        var themeStat = scope.$eval('me.item.theme.themeState');
+        config.options.legend.labels = { fontColor:themeStat['widget-textColor'].value };
     }
     return config;
 }
