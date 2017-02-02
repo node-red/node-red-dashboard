@@ -427,10 +427,10 @@
                 // Dashboard Tabs markup
                 var divTab = $('<div class="red-ui-tabs">').appendTo(form);
                 var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTab);
-                var liLayoutTab = $('<li class="red-ui-tab" style="width: 70px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
-                var liThemeTab = $('<li class="red-ui-tab" style="width: 70px;"><a class="red-ui-tab-label" title="Theme" style="width: 80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
-                var liSiteTab = $('<li class="red-ui-tab" style="width: 70px;"><a class="red-ui-tab-label" title="Site" style="width: 60px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
-
+                var liLayoutTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
+                var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
+                var liSiteTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Site" style="width:60px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
+                // Link out to dashboard
                 $('<span id="dash-link-button" class="editor-button" style="float:right"><i class="fa fa-external-link"></i></span>')
                 .click(function(evt) {
                     window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
@@ -440,8 +440,8 @@
 
                 // Dashboard Tab containers
                 var layoutTab = $('<div id="dashboard-layout">').appendTo(form);
-                var themeTab = $('<div id="dashboard-theme" style="display: none;">').appendTo(form);
-                var siteTab = $('<div id="dashboard-site" style="display: none;">').appendTo(form);
+                var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
+                var siteTab = $('<div id="dashboard-site" style="display:none;">').appendTo(form);
 
                 ulDashboardTabs.children().first().addClass("active");
 
@@ -462,7 +462,8 @@
                         layoutTab.hide();
                         siteTab.hide();
                         themeTab.show();
-                        ($("#nr-db-field-theme option:selected").val() === 'theme-custom') ? themeSettingsContainer.show() : themeSettingsContainer.hide();
+                        if ($("#nr-db-field-theme option:selected").val() === 'theme-custom') { themeSettingsContainer.show(); }
+                        else { themeSettingsContainer.hide(); }
                     }
                     else {
                         layoutTab.hide();
@@ -475,7 +476,7 @@
 
                 // Site Tab
                 var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<label>').html('Title').appendTo(divTitle);
+                $('<label class="theme-label">').html('Title').appendTo(divTitle);
                 $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","100%")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
@@ -487,7 +488,7 @@
                 .appendTo(divTitle);
 
                 var divHideToolbar = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<label>').html('Options').appendTo(divHideToolbar);
+                $('<label class="theme-label">').html('Options').appendTo(divHideToolbar);
                 $('<select id="nr-db-field-hideToolbar">').val("false").css("width","100%")
                 .append($('<option>', { value:false, text:'Show the title bar' }))
                 .append($('<option>', { value:true, text:'Hide the title bar' }))
@@ -514,7 +515,7 @@
                 .appendTo(divAllowSwipe);
 
                 var divSetSizes = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<span style="height:25px; width:45%; display:inline-block">').html('Sizes').appendTo(divSetSizes);
+                $('<span style="height:25px; width:45%; display:inline-block">').html('<b>Sizes</b>').appendTo(divSetSizes);
                 $('<span style="width:25%; display:inline-block; font-size:smaller">').html('Horizontal').appendTo(divSetSizes);
                 $('<span style="width:20%; display:inline-block; font-size:smaller">').html('Vertical').appendTo(divSetSizes);
 
@@ -605,11 +606,10 @@
                     })
                     .appendTo(divThemeStyle);
 
-                var customThemeLibraryContainer = $('<div id="custom-theme-library-container">',{class:"form-row"}).appendTo(themeTab);
+                var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
                 $('<label class="theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
                 $('<input type="text" id="node-input-name">')
-                .val("Untitled Theme 1...")
-                .css("width","100%")
+                .val("Untitled Theme 1")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -620,7 +620,7 @@
                 })
                 .appendTo(customThemeLibraryContainer);
                 $('<input type="hidden" id="node-input-format">').appendTo(customThemeLibraryContainer);
-                $('<div style="display: none;" class="node-text-editor" id="node-input-format-editor" ></div>').appendTo(customThemeLibraryContainer);
+                $('<div style="display:none;" class="node-text-editor" id="node-input-format-editor"></div>').appendTo(customThemeLibraryContainer);
 
                 var baseThemeSettingsContainer = $('<div id="base-theme-settings">').appendTo(themeTab);
 
@@ -701,7 +701,7 @@
 
                 function colourPickerChangeHandler(id, value) {
                     $("#"+id).css("background-color", value);
-                    $("#"+id+"-reset").css({opacity: 1});
+                    $("#"+id+"-reset").css({opacity:1});
                     globalDashboardNode.theme.themeState[id].edited = true;
                     globalDashboardNode.theme.themeState[id].value = value;
                     RED.nodes.dirty(true);
@@ -728,7 +728,7 @@
                         var defaultColor = globalDashboardNode.theme[key].default;
                         generateColours(defaultColor);
                         setColourPickerColour(elementID, defaultColor);
-                        $("#"+elementID+"-reset").css({opacity: 0.6});
+                        $("#"+elementID+"-reset").css({opacity:0.6});
                         globalDashboardNode.theme.themeState[elementID].value = defaultColor;
                         globalDashboardNode.theme[key].baseColor = defaultColor;
                         globalDashboardNode.theme[key].edited = false;
@@ -752,7 +752,7 @@
                             colour = colours['calculate_'+underscore](defaultColor);
                         }
                         setColourPickerColour(elementID, colour);
-                        $("#"+elementID+"-reset").css({opacity: 0.6});
+                        $("#"+elementID+"-reset").css({opacity:0.6});
                         globalDashboardNode.theme.themeState[elementID].edited = false;
                         globalDashboardNode.theme.themeState[elementID].value = colour;
                         RED.nodes.dirty(true);
@@ -842,7 +842,7 @@
                         container.addClass("nr-db-sb-tab-list-item");
                         var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
                         $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                        var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width: 10px;"}).appendTo(titleRow);
+                        var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
                         $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
                         var title = $('<span class="nr-db-sb-title">').html(tabNode.name||"").appendTo(titleRow);
                         listElements[tabNode.id] = container;
@@ -860,7 +860,7 @@
                             listStates[tabNode.id] = true;
                         }
                         setTimeout(function() {
-                            chevron.css({"transition": "transform 0.2s ease-in-out"});
+                            chevron.css({"transition":"transform 0.2s ease-in-out"});
                         },0);
                         var ol = $('<ol>',{class:"nr-db-sb-group-list"}).appendTo(content).editableList({
                             sortable:".nr-db-sb-group-list-header",
@@ -892,7 +892,7 @@
                                 elementParents[groupNode] = tabNode.id;
                                 var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-group-list-header"}).appendTo(container);
                                 $('<i class="nr-db-sb-list-handle nr-db-sb-group-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                                var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width: 10px;"}).appendTo(titleRow);
+                                var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
                                 $('<i class="nr-db-sb-icon nr-db-sb-group-icon fa fa-table"></i>').appendTo(titleRow);
                                 var title = $('<span class="nr-db-sb-title">').html(groupNode.name||groupNode.id||"").appendTo(titleRow);
                                 listElements[groupNode.id] = container;
@@ -909,7 +909,7 @@
                                     listStates[groupNode.id] = true;
                                 }
                                 setTimeout(function() {
-                                    chevron.css({"transition": "transform 0.2s ease-in-out"});
+                                    chevron.css({"transition":"transform 0.2s ease-in-out"});
                                 },0);
 
                                 var ol = $('<ol>',{class:"nr-db-sb-widget-list"}).appendTo(content).editableList({
@@ -1332,7 +1332,7 @@
                         var tab = {node:tabs[tabId],groups:[]};
                         if (tabGroups[tabId]) {
                             tabGroups[tabId].forEach(function(groupNode) {
-                                var group = {node: groupNode,widgets:[]};
+                                var group = {node:groupNode,widgets:[]};
                                 if (groupElements[groupNode.id]) {
                                     group.widgets = groupElements[groupNode.id];
                                 }
@@ -1417,19 +1417,21 @@
                             addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
                         }
 
-                        editor = RED.editor.createEditor({
-                            id: 'node-input-format-editor',
-                            mode: 'ace/mode/javascript',
-                            value: JSON.stringify({theme:globalDashboardNode.theme.customTheme, site:globalDashboardNode.site})
-                        });
+                        if (editor === undefined) {
+                            editor = RED.editor.createEditor({
+                                id: 'node-input-format-editor',
+                                mode: 'ace/mode/javascript',
+                                value: JSON.stringify({theme:globalDashboardNode.theme.customTheme, site:globalDashboardNode.site})
+                            });
 
-                        RED.library.create({
-                            url:"themes", // where to get the data from
-                            type:"theme", // the type of object the library is for
-                            editor: editor, // the field name the main text body goes to
-                            mode:"ace/mode/javascript",
-                            fields:['name']
-                        });
+                            RED.library.create({
+                                url:"themes", // where to get the data from
+                                type:"theme", // the type of object the library is for
+                                editor: editor, // the field name the main text body goes to
+                                mode:"ace/mode/javascript",
+                                fields:['name']
+                            });
+                        }
 
                         editor.on('input', function() {
                             // Check for any changes on the editor object
@@ -1481,6 +1483,7 @@
                     awaitingGroups = {};
                     awaitingTabs = {};
                 }
+
                 RED.sidebar.addTab({
                     id: "dashboard",
                     label: "dashboard",
@@ -1725,10 +1728,10 @@
                     paddingTop: '1px'
                 }).appendTo(container).html((width === 0 && height === 0)?"auto":(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
 
-                var buttonRow = $('<div>',{style:"text-align:right; height: 25px;"}).appendTo(container);
+                var buttonRow = $('<div>',{style:"text-align:right; height:25px;"}).appendTo(container);
 
                 if (hasAuto) {
-                    var button = $('<a>',{href:"#",class:"editor-button editor-button-small",style:"margin-bottom: 5px"})
+                    var button = $('<a>',{href:"#",class:"editor-button editor-button-small",style:"margin-bottom:5px"})
                     .html("auto")
                     .appendTo(buttonRow)
                     .on('mouseup',function(evt) {
