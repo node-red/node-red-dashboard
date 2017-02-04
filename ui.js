@@ -21,7 +21,6 @@ module.exports = function(RED) {
 };
 
 var serveStatic = require('serve-static'),
-    basicauth = require("basic-auth"),
     socketio = require('socket.io'),
     path = require('path'),
     fs = require('fs'),
@@ -227,41 +226,9 @@ function init(server, app, log, redSettings) {
 
     io = socketio(server, {path: socketIoPath});
 
-    function basicAuthMiddleware(user,pass) {
-        var basicAuth = require('basic-auth');
-        var checkPassword;
-        if (pass.length == "32") {
-            // Assume its a legacy md5 password
-            checkPassword = function(p) {
-                return crypto.createHash('md5').update(p,'utf8').digest('hex') === pass;
-            }
-        } else {
-            checkPassword = function(p) {
-                return bcrypt.compareSync(p,pass);
-            }
-        }
-
-        return function(req,res,next) {
-            if (req.method === 'OPTIONS') {
-                return next();
-            }
-            var requestUser = basicAuth(req);
-            if (!requestUser || requestUser.name !== user || !checkPassword(requestUser.pass)) {
-                res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-                return res.sendStatus(401);
-            }
-            next();
-        }
-    }
-
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
         if (!err) {
-            if (redSettings.httpNodeRoot !== false && redSettings.httpNodeAuth) {
-                app.use( join(settings.path), [ basicAuthMiddleware(redSettings.httpNodeAuth.user,redSettings.httpNodeAuth.pass), serveStatic(path.join(__dirname, "dist")) ] );
-            }
-            else {
-                app.use( join(settings.path), serveStatic(path.join(__dirname, "dist")) );
-            }
+            app.use( join(settings.path), serveStatic(path.join(__dirname, "dist")) );
         }
         else {
             log.info("Dashboard using development folder");
