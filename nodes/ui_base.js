@@ -79,4 +79,9 @@ module.exports = function(RED) {
         res.sendFile(filename);
     });
 
+    RED.httpAdmin.get('/uisettings', RED.auth.needsPermission('dashboard.read'), function(req, res) {
+        var ret = RED.settings.ui || "";
+        res.json(ret);
+    });
+
 };

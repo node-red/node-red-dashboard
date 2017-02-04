@@ -202,8 +202,7 @@
     var editSaveEventHandler;
     var nodesAddEventHandler;
     var nodesRemoveEventHandler;
-    //var uip = RED.settings.uiPath || 'ui';
-    var uip = RED.settings.httpNodeRoot + (RED.settings.uiPath || 'ui');
+    var uip = 'ui';
     RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
 
     var attemptedVendorLoad = false;
@@ -215,7 +214,7 @@
                 jsScript.type = "application/javascript";
                 jsScript.src = path;
                 document.body.appendChild(jsScript);
-                console.log('Tiny Color Loaded:',path);
+                //console.log('Tiny Color Loaded:',path);
             },
             error:function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 404 && !attemptedVendorLoad) {
@@ -247,6 +246,9 @@
                 RED.events.off("nodes:remove",nodesRemoveEventHandler);
             },
             onpaletteadd: function() {
+                $.getJSON('uisettings',function(data) {
+                    if (data.hasOwnProperty("path")) { uip = data.path; }
+                });
                 var globalDashboardNode = null;
                 var editor;
                 var baseStyles = ['base-color'];
@@ -434,7 +436,7 @@
                 // Link out to dashboard
                 $('<span id="dash-link-button" class="editor-button" style="float:right"><i class="fa fa-external-link"></i></span>')
                 .click(function(evt) {
-                    window.open(document.location.protocol+"//"+document.location.host+uip);
+                    window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
                     evt.preventDefault();
                 })
                 .appendTo(ulDashboardTabs);
