@@ -3,12 +3,11 @@ CACHE MANIFEST
 CACHE:
 icon.jpg
 icon.png
-index.html
 css/app.min.css
 css/app.min.less
 css/index.html
 js/app.min.js
-js/tinycolor.js
+js/tinycolor-min.js
 fonts/FontAwesome.otf
 fonts/fontawesome-webfont.eot
 fonts/fontawesome-webfont.svg
@@ -19,4 +18,4 @@ fonts/fontawesome-webfont.woff2
 NETWORK:
 *
 
-# hash: ee35346be6bc8b222b166b9d1ad6672c13d87a3075922ed3f55a8d5be0da586d
+# hash: 1e3168f726e2d85f143ee0902e9da576059ded981f31705ccd04826986d78f7b

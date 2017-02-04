@@ -37,7 +37,7 @@ gulp.task('manifest', ['build'], function() {
         //preferOnline: true,
         network: ['*'],
         filename: 'dashboard.appcache',
-        exclude: 'dashboard.appcache'
+        exclude: ['dashboard.appcache','index.html']
     }))
     .pipe(gulp.dest('dist/'));
 });
@@ -65,6 +65,10 @@ gulp.task('index', function() {
         'before': /<\/head>$/,
         'lineBefore': '<link rel="stylesheet/less" href="css/app.min.less" />'
     }))
+    .pipe(insertLines({
+        'before': /<\/body>$/,
+        'lineBefore': '<script src="js/tinycolor-min.js"></script>'
+    }))
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(gulp.dest('dist/'));
 });
@@ -86,7 +90,7 @@ gulp.task('js', function () {
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(templateCache('templates.js', {root:'', module:'ui'}));
 
-    var tiny = gulp.src('node_modules/tinycolor2/tinycolor.js')
+    var tiny = gulp.src('node_modules/tinycolor2/dist/tinycolor-min.js')
     .pipe(gulp.dest('./dist/js'));
 
     return streamqueue({ objectMode:true }, scripts, templates)

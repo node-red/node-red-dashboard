@@ -1,6 +1,6 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
-    var tc = require('../dist/js/tinycolor');
+    var tc = require('../dist/js/tinycolor-min');
 
     function ColourPickerNode(config) {
         RED.nodes.createNode(this, config);

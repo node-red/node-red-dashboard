@@ -1,5 +1,6 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
+    var path= require('path');
 
     function BaseNode(config) {
         RED.nodes.createNode(this, config);
@@ -72,4 +73,10 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType("ui_base", BaseNode);
     RED.library.register("themes");
+
+    RED.httpAdmin.get('/ui_base/js/*', RED.auth.needsPermission('dashboard.read'), function(req, res) {
+        var filename = path.join(__dirname , '../dist/js', req.params[0]);
+        res.sendFile(filename);
+    });
+
 };

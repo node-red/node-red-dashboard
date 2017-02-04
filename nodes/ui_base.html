@@ -215,7 +215,7 @@
                 jsScript.type = "application/javascript";
                 jsScript.src = path;
                 document.body.appendChild(jsScript);
-                //console.log('Tiny Color Loaded');
+                console.log('Tiny Color Loaded:',path);
             },
             error:function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 404 && !attemptedVendorLoad) {
@@ -228,7 +228,7 @@
 
     // Try to load dist version first
     // then if fails, load non dist version
-    loadTinyColor(uip+'/js/tinycolor.js');
+    loadTinyColor('ui_base/js/tinycolor-min.js');
 
     RED.nodes.registerType('ui_base',{
             category: 'config',
