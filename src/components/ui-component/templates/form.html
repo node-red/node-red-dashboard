@@ -1,6 +1,6 @@
 <md-card ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length) +(me.item.label? 4 : 3)) }}" layout="row" layout-align="space-between center" class="nr-dashboard-form">
     <form ng-submit="me.submit()" name ="form">
-       <p class="label" ng-if="me.item.label">{{ me.item.label }}</p>
+       <p class="label" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
            <md-input-container ng-if="opt.type != 'date'" class="md-block" flex>
                <label ng-if="(opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password') && opt.label">{{opt.label}}</label>

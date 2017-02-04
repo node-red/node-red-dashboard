@@ -7,6 +7,7 @@
  - Colourpicker - add configurable lightness slider - PR123
  - Configurable colour for Notification toasts - Issue145
  - Remove whitespace from above gauge with no label  - Issue159
+ - Let most labels show icons if required (via html <i syntax)
 
 **Fixes**
 

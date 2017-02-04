@@ -13,7 +13,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                     var bgnd = themeState["base-color"].value;
                     var fgnd = themeState['widget-textColor'].value;
                     var theme = scope.$eval('main.selectedTab.theme.name');
-                    
+
                     //Backwards compatability for background and foreground
                     if (!bgnd || !fgnd) {
                         if (theme === 'theme-light') {

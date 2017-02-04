@@ -14,25 +14,26 @@ Node-RED-Dashboard requires Node-RED version 0.14 or more recent.
 
 ## Install
 
-Run the following command in your Node-RED user directory (typically `~/.node-red`):
+To install the stable version run the following command in your Node-RED user directory (typically `~/.node-red`):
 
-```
-npm i node-red-dashboard
-```
+    npm i node-red-dashboard
 
-Open your Node-RED instance and you should have UI nodes available in the palette and a new `dashboard` tab in
-right side panel. The UI interface is available at <http://localhost:1880/ui> (if default Node-RED settings are used).
+Open your Node-RED instance and you should have UI nodes available in the palette and a new `dashboard` tab in the
+right side panel. The UI interface is available at <http://localhost:1880/ui> (if the default settings are used).
+
+If you want to try the latest version from github, you can install it by
+
+    npm i node-red/node-red-dashboard
 
 #### Migration from node-red-contrib-ui
 
 These nodes will replace the contrib-ui versions. node-red-contrib-ui
 **MUST** be uninstalled before installing node-red-dashboard.
 
- ```
- cd ~/.node-red
- npm uninstall node-red-contrib-ui
- ```
- In addition - some functionality is not exactly equivalent. There are breaking changes that will require some re-configuration.
+    cd ~/.node-red
+    npm uninstall node-red-contrib-ui
+
+In addition - some functionality is not exactly equivalent. There are breaking changes that will require some re-configuration.
 
 ## Features
 
@@ -40,29 +41,38 @@ These nodes will replace the contrib-ui versions. node-red-contrib-ui
 
 The widget layout is now managed by a `dashboard` tab in the sidebar of the Node-RED editor.
 
-**Title** - the `title` of the UI page can be set.
+##### Layout
 
-**Theme** - the theme of the UI is set in the dashboard sidebar. You
+ - **Tabs** - From here you can re-order the tabs, groups and widgets, and add and edit their properties.
+
+ - **Links** - are no longer added as nodes in the workspace - they are managed in the
+dashboard sidebar. They can also be opened in an iframe - if allowed by the target page.
+
+##### Theme
+
+ - **Style** - the theme of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme. You
 cannot have different themes for each tab.
 
-**Tabs** - From here you can re-order the tabs, groups and widgets, and add and edit their properties.
+##### Site
 
-**Links** - are no longer added as nodes in the workspace - they are managed in the
-dashboard sidebar. They can also be opened in an iframe - if allowed by the target page.
+ - **Title** - the `title` of the UI page can be set.
+
+ - **Options** - lets you optionally hide the title bar, and allow swiping sideways between tabs on a touch screen.
+
+ - **Sizes** - you can set the basic geometry of the grid layout in pixels. The **width** and **height** of widgets can be set, as can the width of *groups*. These are all specified in units of approximately 50 pixels.
 
 
 #### Widgets
 
-The **width** and **height** of widgets can be set, as can the width of *groups*. These are all specified in units of approximately 50 pixels.
-
-The default width of a group is 6 as it was in contrib-ui ( &approx;300 pixels ). Setting a widget to `auto` will fill the available
+The default width of a group is 6 units as it was in contrib-ui ( &approx;300 pixels ). Setting a widget to `auto` will fill the available
 width of the group. It is still advisable to use multiple groups if you can, rather than one big group, so that the page can dynamically resize on smaller screens.
 
 Group labels are optional.
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
-  - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.- **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
+  - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.
+  - **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
   - **Chart** - has both line, bar and pie chart modes. Also the X-Axis labels can be customised using a date formatter string. Uses the **Chart.js** library.
   - **Colour Picker** - a colour picker widget.
   - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified. The choices can also be set via `msg.options` containing an array of objects. If just text then the value will be the same as the label, otherwise you can specify both by using an object of "label":"value" pairs :
@@ -126,7 +136,7 @@ After changing the front-end code in the src folder, use ```gulp``` to update th
 
     gulp
 
-We also have have suggested *lint* and *js* styles that can be checked with:
+We also have suggested *lint* and *js* styles that can be checked with:
 
     gulp lint
     gulp jscs

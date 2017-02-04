@@ -202,7 +202,8 @@
     var editSaveEventHandler;
     var nodesAddEventHandler;
     var nodesRemoveEventHandler;
-    var uip = RED.settings.uiPath || 'ui';
+    //var uip = RED.settings.uiPath || 'ui';
+    var uip = RED.settings.httpNodeRoot + (RED.settings.uiPath || 'ui');
     RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
 
     var attemptedVendorLoad = false;
@@ -433,7 +434,7 @@
                 // Link out to dashboard
                 $('<span id="dash-link-button" class="editor-button" style="float:right"><i class="fa fa-external-link"></i></span>')
                 .click(function(evt) {
-                    window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
+                    window.open(document.location.protocol+"//"+document.location.host+uip);
                     evt.preventDefault();
                 })
                 .appendTo(ulDashboardTabs);
