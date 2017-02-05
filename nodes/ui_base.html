@@ -179,7 +179,7 @@
         margin: 3px 6px 0px 6px;
         float: right;
         color: grey;
-        opacity: 0.6;
+        opacity: 0.8;
         display: block;
     }
     .resetIcon:hover {
@@ -254,7 +254,7 @@
                 var baseStyles = ['base-color'];
                 var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
                 'group-backgroundColor', 'group-textColor', 'group-borderColor', 'widget-textColor',
-                'widget-backgroundColor'];
+                'widget-backgroundColor','widget-borderColor'];
                 // tiny colour implementation
                 var colours = {
                     leastReadable: function(base, colours) {
@@ -313,6 +313,12 @@
                     calculate_widget_backgroundColor: function(base) {
                         //return tinycolor(base).darken(5).toHexString()
                         return tinycolor(base).toHexString();
+                    },
+                    calculate_widget_borderColor: function(base) {
+                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                        var widgetBorder = "#ffffff";
+                        if (whiteOrBlack === "#000000") { widgetBorder = "#333333"; }
+                        return widgetBorder;
                     }
                 }
                 var sizes = {
@@ -350,18 +356,17 @@
                         var themeState = {};
                         var base = "#0094CE"
                         for (var i=0; i<baseStyles.length; i++) {
-                            themeState[baseStyles[i]] = { default: base, value: base, edited: false };
+                            themeState[baseStyles[i]] = { default:base, value:base, edited:false };
                         }
                         for (var j = 0; j < configurableStyles.length; j++) {
                             var underscore = configurableStyles[j].split("-").join("_");
                             var colour = colours['calculate_'+underscore](base);
-                            themeState[configurableStyles[j]] = {value: colour, edited: false};
+                            themeState[configurableStyles[j]] = {value:colour, edited:false};
                         }
 
                         var missingFields = (!globalDashboardNode || !globalDashboardNode.theme || !globalDashboardNode.site || !globalDashboardNode.site.sizes );
 
                         if (missingFields && createMissing) {
-
                             var lightTheme = {
                                 default: "#0094CE",
                                 baseColor: "#0094CE",
@@ -376,8 +381,8 @@
                             }
                             var customTheme = {
                                 name: 'Untitled Theme 1',
-                                baseColor: "#0094CE",
-                                default: "#0094CE",
+                                default: "#8BC249",
+                                baseColor: "##8BC249",
                                 baseFont: "Helvetica Neue"
                             }
                             var oldThemeName;
@@ -566,16 +571,20 @@
                 // Theme Tab
                 // For all customisable styles, generate and apply the css
                 var generateColours = function(base) {
+                    var theme = globalDashboardNode.theme.name.split('-')[1];
                     for (var i=0; i<configurableStyles.length; i++) {
                         var styleID = configurableStyles[i];
                         var underscore = styleID.split("-").join("_");
-
-                        if (!globalDashboardNode.theme.themeState[styleID].edited) {
+                        if (!globalDashboardNode.theme.themeState.hasOwnProperty(styleID)) {
+                            globalDashboardNode.theme.themeState[styleID] = {value:"#fff",edited:false};
+                        }
+                        if (!globalDashboardNode.theme.themeState[styleID].edited || globalDashboardNode.theme[theme+'Theme'].reset) {
                             var colour = colours['calculate_'+underscore](base);
                             setColourPickerColour(styleID, colour);
                             globalDashboardNode.theme.themeState[styleID].value = colour;
                         }
                     }
+                    globalDashboardNode.theme[theme+'Theme'].reset = false;
                 }
 
                 var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
@@ -585,45 +594,53 @@
                     '<option value="theme-dark">Dark</option>'+
                     '<option value="theme-custom">Custom</option>'+
                     '</select>')
-                    .css("width","100%")
-                    .change(function() {
-                        if (!globalDashboardNode || globalDashboardNode.theme.name !== $(this).val()) {
-                            ensureDashboardNode(true);
-                            globalDashboardNode.theme.name = $(this).val();
-                            var theme = globalDashboardNode.theme.name.split('-')[1];
-                            var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
-                            setColourPickerColour("base-color", baseColour);
-                            globalDashboardNode.theme.themeState['base-color'].value = baseColour;
-                            globalDashboardNode.theme.themeState['base-color'].default = baseColour;
-                            //generate colours for all colour settings from base colour
-                            generateColours(baseColour);
-                            RED.nodes.dirty(true);
-                        }
-                        $('#base-color-reset').remove();
-                        if ($(this).val() === 'theme-custom') {
-                            $("#custom-theme-library-container").show();
-                            $("#custom-theme-settings").show();
-                            //addResetButton('base-color', baseSettingsUl.children());
-                        }
-                        else {
-                            $("#custom-theme-library-container").hide();
-                            $("#custom-theme-settings").hide();
-                            addLightAndDarkResetButton('base-color', baseSettingsUl.children());
-                        }
-                    })
-                    .appendTo(divThemeStyle);
+                .css("width","100%")
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.theme.name !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.theme.name = $(this).val();
+                        var theme = globalDashboardNode.theme.name.split('-')[1];
+                        var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
+                        setColourPickerColour("base-color", baseColour);
+                        globalDashboardNode.theme.themeState['base-color'].value = baseColour;
+                        globalDashboardNode.theme.themeState['base-color'].default = baseColour;
+                        globalDashboardNode.theme[theme+'Theme'].reset = true;
+                        //generate colours for all colour settings from base colour
+                        generateColours(baseColour);
+                        RED.nodes.dirty(true);
+                    }
+                    $('#base-color-reset').remove();
+                    if ($(this).val() === 'theme-custom') {
+                        //$("#custom-theme-library-container").show(); //TODO undo this at some point
+                        $("#custom-theme-library-container").hide(); //TODO undo this at some point
+                        $("#custom-theme-settings").show();
+                        //addResetButton('base-color', baseSettingsUl.children());
+                    }
+                    else {
+                        $("#custom-theme-library-container").hide();
+                        $("#custom-theme-settings").hide();
+                        addLightAndDarkResetButton('base-color', baseSettingsUl.children());
+                    }
+                })
+                .appendTo(divThemeStyle);
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
                 $('<label class="theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="node-input-name" placeholder="name of profile">')
+                $('<input type="text" id="node-input-name" placeholder="profile name (not blank)">')
                 .val("Untitled Theme 1")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
-                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.customTheme,site:globalDashboardNode.site}),1);
+                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
                         RED.nodes.dirty(true);
                     }
+                })
+                .keyup(function() {
+                    if ($(this).val().length === 0) {
+                        $("#custom-theme-library-container div").css("pointer-events","none");
+                    }
+                    else { $("#custom-theme-library-container div").css("pointer-events","inherit"); }
                 })
                 .appendTo(customThemeLibraryContainer);
                 $('<input type="hidden" id="node-input-format">').appendTo(customThemeLibraryContainer);
@@ -656,14 +673,14 @@
                             var theme = globalDashboardNode.theme.name.split('-')[1];
                             globalDashboardNode.theme[theme+'Theme'].baseColor = value;
                             //for light and dark themes, set the edited status to true
-                            globalDashboardNode.theme[theme+'Theme'].edited = true;
+                            globalDashboardNode.theme[theme+'Theme'].reset = true;
                         }
                         else {
                             //custom
                             globalDashboardNode.theme.customTheme.baseColor = value;
-                            editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.customTheme,site:globalDashboardNode.site}),1);
                         }
                         generateColours(value);
+                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
                         colourPickerChangeHandler($(this).attr('id'), value);
                     }
                 })
@@ -684,9 +701,9 @@
                 var divGroupStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
                 $('<label class="theme-label">').html('Group Settings').appendTo(divGroupStyle);
                 var groupStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-                addCustomisableStyle('group-backgroundColor', 'Group Background', groupStyles)
                 addCustomisableStyle('group-textColor', 'Group Text', groupStyles);
                 addCustomisableStyle('group-borderColor', 'Group Border', groupStyles);
+                addCustomisableStyle('group-backgroundColor', 'Group Background', groupStyles);
 
                 // Widget styles
                 var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
@@ -694,6 +711,7 @@
                 var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('widget-textColor', 'Widget Text', widgetStyles);
                 addCustomisableStyle('widget-backgroundColor', 'Widget Colour', widgetStyles);
+                addCustomisableStyle('widget-borderColor', 'Widget Background', widgetStyles);
 
                 function addCustomisableStyle(id, name, parentUl) {
                     var styleLi = $('<li class="red-ui-dashboard-theme-item"><span>'+name+'</span></li>').appendTo(parentUl);
@@ -724,18 +742,19 @@
                     var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
                     .click(function(e) { lightAndDarkResetClick(e); })
                     .appendTo(parent);
+                    globalDashboardNode.theme[globalDashboardNode.theme.name.split('-')[1] + 'Theme'].edited = true;
                 }
 
                 function lightAndDarkResetClick(e) {
                     var elementID = e.target.id.split('-reset')[0];
-                    var currentTheme = globalDashboardNode.theme.name.split('-')[1];
-                    var key = currentTheme+'Theme';
+                    var key = globalDashboardNode.theme.name.split('-')[1] + 'Theme';
                     //sanity check - light and dark only allow base-color-reset
-                    if (elementID === 'base-color' && globalDashboardNode.theme[key].edited) {
+                    if (elementID === 'base-color') { // && globalDashboardNode.theme[key].edited) {
                         var defaultColor = globalDashboardNode.theme[key].default;
+                        globalDashboardNode.theme[key].reset = true;
                         generateColours(defaultColor);
                         setColourPickerColour(elementID, defaultColor);
-                        $("#"+elementID+"-reset").css({opacity:0.6});
+                        //$("#"+elementID+"-reset").css({opacity:0.3});
                         globalDashboardNode.theme.themeState[elementID].value = defaultColor;
                         globalDashboardNode.theme[key].baseColor = defaultColor;
                         globalDashboardNode.theme[key].edited = false;
@@ -759,7 +778,7 @@
                             colour = colours['calculate_'+underscore](defaultColor);
                         }
                         setColourPickerColour(elementID, colour);
-                        $("#"+elementID+"-reset").css({opacity:0.6});
+                        $("#"+elementID+"-reset").css({opacity:0.3});
                         globalDashboardNode.theme.themeState[elementID].edited = false;
                         globalDashboardNode.theme.themeState[elementID].value = colour;
                         RED.nodes.dirty(true);
@@ -1428,7 +1447,7 @@
                             editor = RED.editor.createEditor({
                                 id: 'node-input-format-editor',
                                 mode: 'ace/mode/javascript',
-                                value: JSON.stringify({theme:globalDashboardNode.theme.customTheme, site:globalDashboardNode.site})
+                                value: JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site})
                             });
 
                             RED.library.create({
@@ -1450,7 +1469,7 @@
                             var editorKeys = Object.keys(editorObject);
                             var themeKeys = Object.keys(editorObject.theme);
                             var siteKeys = Object.keys(editorObject.site);
-                            var dashNodeKeys = Object.keys(globalDashboardNode.theme.customTheme);
+                            var dashNodeKeys = Object.keys(globalDashboardNode.theme.themeState);
 
                             // Test equality
                             for (var i=0; i<themeKeys.length; i++) {
@@ -1462,20 +1481,22 @@
                             if (keysEqual) {
                                 for (var j=0; j<themeKeys.length; j++) {
                                     var key = themeKeys[j];
-                                    if (editorObject.theme[key] !== globalDashboardNode.theme.customTheme[key]) {
+                                    if (editorObject.theme[key] !== globalDashboardNode.theme.themeState[key]) {
                                         objectsEqual = false;
                                         break;
                                     }
                                 }
                             }
 
-                            if (!objectsEqual) { globalDashboardNode.theme.customTheme = editorObject.theme; }
+                            if (!objectsEqual) {
+                                globalDashboardNode.theme.themeState = editorObject.theme;
+                            }
 
                             //If custom theme is chosen, update the elements and current state
                             if (globalDashboardNode.theme.name === 'theme-custom') {
-                                setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor)
-                                globalDashboardNode.theme.themeState['base-color'].default = globalDashboardNode.theme.customTheme.baseColor;
+                                //globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState['base-color'].default;
                                 generateColours(globalDashboardNode.theme.customTheme.baseColor);
+                                //setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
                                 if (!objectsEqual) { RED.nodes.dirty(true); }
                             }
 
