@@ -252,9 +252,9 @@
                 var globalDashboardNode = null;
                 var editor;
                 var baseStyles = ['base-color'];
-                var configurableStyles = ['page-backgroundColor', 'page-sidebar-backgroundColor', 'page-titlebar-backgroundColor',
-                'group-backgroundColor', 'group-textColor', 'group-borderColor', 'widget-textColor',
-                'widget-backgroundColor','widget-borderColor'];
+                var configurableStyles = ['page-titlebar-backgroundColor', 'page-backgroundColor', 'page-sidebar-backgroundColor',
+                'group-textColor', 'group-borderColor', 'group-backgroundColor',
+                'widget-textColor', 'widget-backgroundColor','widget-borderColor'];
                 // tiny colour implementation
                 var colours = {
                     leastReadable: function(base, colours) {
@@ -530,6 +530,20 @@
                 $('<span style="height:25px; width:45%; display:inline-block">').html('<b>Sizes</b>').appendTo(divSetSizes);
                 $('<span style="width:25%; display:inline-block; font-size:smaller">').html('Horizontal').appendTo(divSetSizes);
                 $('<span style="width:20%; display:inline-block; font-size:smaller">').html('Vertical').appendTo(divSetSizes);
+                $('<i id="sizes-reset" class="fa fa-undo resetIcon"></i>')
+                .css({opacity:1.0})
+                .click(function(e) {
+                    $("#nr-db-field-sx").val(sizes.sx); globalDashboardNode.site.sizes.sx = sizes.sx;
+                    $("#nr-db-field-sy").val(sizes.sy); globalDashboardNode.site.sizes.sy = sizes.sy;
+                    $("#nr-db-field-px").val(sizes.px); globalDashboardNode.site.sizes.px = sizes.px;
+                    $("#nr-db-field-py").val(sizes.py); globalDashboardNode.site.sizes.py = sizes.py;
+                    $("#nr-db-field-gx").val(sizes.gx); globalDashboardNode.site.sizes.gx = sizes.gx;
+                    $("#nr-db-field-gy").val(sizes.gy); globalDashboardNode.site.sizes.gy = sizes.gy;
+                    $("#nr-db-field-cx").val(sizes.cx); globalDashboardNode.site.sizes.cx = sizes.cx;
+                    $("#nr-db-field-cy").val(sizes.cy); globalDashboardNode.site.sizes.cy = sizes.cy;
+                    RED.nodes.dirty(true);
+                })
+                .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').html('1x1 Widget Size').appendTo(divSetSizes);
                 $('<input type="number" name="sx" min="24" id="nr-db-field-sx">').val(48).css("width","20%")
@@ -580,9 +594,9 @@
                         }
                         if (!globalDashboardNode.theme.themeState[styleID].edited || globalDashboardNode.theme[theme+'Theme'].reset) {
                             var colour = colours['calculate_'+underscore](base);
-                            setColourPickerColour(styleID, colour);
                             globalDashboardNode.theme.themeState[styleID].value = colour;
                         }
+                        setColourPickerColour(styleID, globalDashboardNode.theme.themeState[styleID].value, globalDashboardNode.theme.themeState[styleID].edited);
                     }
                     globalDashboardNode.theme[theme+'Theme'].reset = false;
                 }
@@ -598,9 +612,13 @@
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.name !== $(this).val()) {
                         ensureDashboardNode(true);
-                        globalDashboardNode.theme.name = $(this).val();
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
+                        globalDashboardNode.theme.name = $(this).val();
+                        theme = globalDashboardNode.theme.name.split('-')[1];
+                        if (theme !== "custom") {
+                            baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
+                        }
                         setColourPickerColour("base-color", baseColour);
                         globalDashboardNode.theme.themeState['base-color'].value = baseColour;
                         globalDashboardNode.theme.themeState['base-color'].default = baseColour;
@@ -611,8 +629,7 @@
                     }
                     $('#base-color-reset').remove();
                     if ($(this).val() === 'theme-custom') {
-                        //$("#custom-theme-library-container").show(); //TODO undo this at some point
-                        $("#custom-theme-library-container").hide(); //TODO undo this at some point
+                        $("#custom-theme-library-container").show(); //TODO undo this at some point
                         $("#custom-theme-settings").show();
                         //addResetButton('base-color', baseSettingsUl.children());
                     }
@@ -632,7 +649,7 @@
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
-                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
+                        //editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
                         RED.nodes.dirty(true);
                     }
                 })
@@ -676,7 +693,7 @@
                             globalDashboardNode.theme[theme+'Theme'].reset = true;
                         }
                         generateColours(value);
-                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
+                        //editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
                         colourPickerChangeHandler($(this).attr('id'), value);
                     }
                 })
@@ -729,14 +746,14 @@
                 }
 
                 function addResetButton(id, parent) {
-                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
+                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo resetIcon"></i>')
                     .css({opacity:0.2})
                     .click(function(e) { resetClick(e); })
                     .appendTo(parent);
                 }
 
                 function addLightAndDarkResetButton(id, parent) {
-                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-refresh resetIcon"></i>')
+                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo resetIcon"></i>')
                     .css({opacity:1})
                     .click(function(e) { lightAndDarkResetClick(e); })
                     .appendTo(parent);
@@ -783,12 +800,14 @@
                     }
                 }
 
-                function setColourPickerColour(id, val) {
+                function setColourPickerColour(id, val, ed) {
                     $("#"+id).val(val);
                     $("#"+id).css("background-color", val);
                     //call mostReadableGreyWhite to set text colour
                     var textColor = colours.whiteGreyMostReadable(val);
                     $("#"+id).css("color", textColor);
+                    if (ed === true) { $("#"+id+"-reset").css({opacity:1}); }
+                    else { $("#"+id+"-reset").css({opacity:0.2}); }
                 }
 
                 //Layout Tab
@@ -1465,40 +1484,52 @@
                             // i.e. has the theme been customised compared
                             // to what is stored
                             var editorObject = JSON.parse(editor.getValue());
-                            var objectsEqual = true;
-                            var keysEqual = true;
-                            var editorKeys = Object.keys(editorObject);
-                            var themeKeys = Object.keys(editorObject.theme);
-                            var siteKeys = Object.keys(editorObject.site);
-                            var dashNodeKeys = Object.keys(globalDashboardNode.theme.themeState);
+                            // var objectsEqual = true;
+                            // var keysEqual = true;
+                            // var editorKeys = Object.keys(editorObject);
+                            // var themeKeys = Object.keys(editorObject.theme);
+                            // var siteKeys = Object.keys(editorObject.site);
+                            // var dashNodeKeys = Object.keys(globalDashboardNode.theme.themeState);
 
-                            // Test equality
-                            for (var i=0; i<themeKeys.length; i++) {
-                                if (themeKeys[i] !== dashNodeKeys[i]) {
-                                    keysEqual = false;
-                                    break;
-                                }
-                            }
-                            if (keysEqual) {
-                                for (var j=0; j<themeKeys.length; j++) {
-                                    var key = themeKeys[j];
-                                    if (editorObject.theme[key] !== globalDashboardNode.theme.themeState[key]) {
-                                        objectsEqual = false;
-                                        break;
-                                    }
-                                }
-                            }
+                            // // Test equality
+                            // for (var i=0; i<themeKeys.length; i++) {
+                            //     if (themeKeys[i] !== dashNodeKeys[i]) {
+                            //         keysEqual = false;
+                            //         break;
+                            //     }
+                            // }
+                            // if (keysEqual) {
+                            //     for (var j=0; j<themeKeys.length; j++) {
+                            //         var key = themeKeys[j];
+                            //         if (editorObject.theme[key] !== globalDashboardNode.theme.themeState[key]) {
+                            //             objectsEqual = false;
+                            //             break;
+                            //         }
+                            //     }
+                            // }
+                            //
+                            // if (!objectsEqual) {
+                            //     globalDashboardNode.theme.themeState = editorObject.theme;
+                            // }
+                            //
+                            // //If custom theme is chosen, update the elements and current state
+                            // if (globalDashboardNode.theme.name === 'theme-custom') {
+                            //     //globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState['base-color'].default;
+                            //     generateColours(globalDashboardNode.theme.customTheme.baseColor);
+                            //     //setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
+                            //     if (!objectsEqual) { RED.nodes.dirty(true); }
+                            // }
 
-                            if (!objectsEqual) {
+                            //Update theme object if necessary
+                            if (JSON.stringify(editorObject.theme) !== JSON.stringify(globalDashboardNode.theme.themeState)) {
                                 globalDashboardNode.theme.themeState = editorObject.theme;
-                            }
-
-                            //If custom theme is chosen, update the elements and current state
-                            if (globalDashboardNode.theme.name === 'theme-custom') {
-                                //globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState['base-color'].default;
-                                generateColours(globalDashboardNode.theme.customTheme.baseColor);
-                                //setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
-                                if (!objectsEqual) { RED.nodes.dirty(true); }
+                                if ($("#node-input-name").val() !== globalDashboardNode.theme.customTheme.name) {
+                                    globalDashboardNode.theme.customTheme.name = $("#node-input-name").val();
+                                    globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["base-color"].value;
+                                    setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
+                                }
+                                generateColours(globalDashboardNode.theme.themeState["base-color"].value);
+                                RED.nodes.dirty(true);
                             }
 
                             //Update site object if necessary
