@@ -1,14 +1,26 @@
 
 var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'sprintf', 'chart.js', 'color.picker']);
 
-app.config(['$mdThemingProvider', '$compileProvider',
-    function ($mdThemingProvider, $compileProvider) {
-        /*$mdThemingProvider.theme('default')
-            .primaryPalette('light-green')
-            .accentPalette('red');*/
+var dateFormat = "DD/MM/YYYY";
+
+app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
+    function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider) {
+        // $mdThemingProvider.theme('default')
+        //     .primaryPalette('light-green')
+        //     .accentPalette('red');
+
         //white-list all protocols
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
-    }]);
+
+        $mdDateLocaleProvider.formatDate = function(date) {
+            return date ? moment(date).format(dateFormat) : null;
+        };
+        $mdDateLocaleProvider.parseDate = function(dateString) {
+            var m = moment(dateString, dateFormat, true);
+            return m.isValid() ? m.toDate() : new Date(NaN);
+        };
+    }
+]);
 
 app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope',
     function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope) {
@@ -90,6 +102,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
+                dateFormat = ui.site.dateFormat || dateFormat;
                 if (ui.site.hasOwnProperty("sizes")) { sizes.setSizes(ui.site.sizes); }
             }
             if (ui.title) { name = ui.title }

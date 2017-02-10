@@ -396,13 +396,14 @@
                                 themeState: themeState
                             }
 
-                            var site = { name:"Node-RED Dashboard", hideToolbar:false, allowSwipe:false, sizes:sizes }
+                            var site = { name:"Node-RED Dashboard", hideToolbar:"false", allowSwipe:"false", dateFormat:"DD/MM/YYYY", sizes:sizes }
                             if (globalDashboardNode !== null) {
                                 site = {
-                                    name: globalDashboardNode.name,
-                                    hideToolbar: globalDashboardNode.hideToolbar,
-                                    allowSwipe: globalDashboardNode.allowSwipe,
-                                    sizes: globalDashboardNode.sizes
+                                    name: globalDashboardNode.site.name,
+                                    hideToolbar: globalDashboardNode.site.hideToolbar,
+                                    allowSwipe: globalDashboardNode.site.allowSwipe,
+                                    dateFormat: globalDashboardNode.site.dateFormat,
+                                    sizes: globalDashboardNode.site.sizes
                                 }
                             }
 
@@ -525,6 +526,18 @@
                     }
                 })
                 .appendTo(divAllowSwipe);
+
+                var divDateFormat = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                $('<label class="theme-label">').html('Date Format').appendTo(divDateFormat);
+                $('<input type="text" id="nr-db-field-dateFormat">').val("DD/MM/YYYY").css("width","100%")
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.site.dateFormat = $(this).val();
+                        RED.nodes.dirty(true);
+                    }
+                })
+                .appendTo(divDateFormat);
 
                 var divSetSizes = $('<div>',{class:"form-row"}).appendTo(siteTab);
                 $('<span style="height:25px; width:45%; display:inline-block">').html('<b>Sizes</b>').appendTo(divSetSizes);
@@ -1427,6 +1440,7 @@
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
                         $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || false);
                         $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar || false);
+                        $("#nr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
 
                         if (typeof globalDashboardNode.site.sizes !== "object") {
                             globalDashboardNode.site.sizes = sizes;
