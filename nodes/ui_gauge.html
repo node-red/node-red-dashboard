@@ -38,7 +38,7 @@
         align: "right",
         icon: "ui_gauge.png",
         paletteLabel: 'gauge',
-        label: function() { return this.name || this.label || 'gauge'; },
+        label: function() { return this.name || this.title || 'gauge'; },
         oneditprepare: function() {
             var setColour = function(id, value) {
                 $(id).val(value);
@@ -115,7 +115,7 @@
     </div>
     <div id="ui-gauge-labels">
         <div class="form-row">
-            <label for="node-input-title"><i class="fa fa-i-cursor"></i> Title</label>
+            <label for="node-input-title"><i class="fa fa-i-cursor"></i> Label</label>
             <input type="text" id="node-input-title">
         </div>
         <div class="form-row">
@@ -123,7 +123,7 @@
             <input type="text" id="node-input-format" placeholder="{{value}}">
         </div>
         <div class="form-row">
-            <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
+            <label for="node-input-label"><i class="fa fa-i-cursor"></i> Units</label>
             <input type="text" id="node-input-label" placeholder="optional sub-label">
         </div>
     </div>

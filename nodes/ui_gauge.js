@@ -15,8 +15,9 @@ module.exports = function (RED) {
         if (config.height === "0") { delete config.height; }
         if (config.height === "1") { config.hideMinMax = true; }
         node.autoheight = parseInt(group.config.width*0.5+1.5) || 4;
-        if (config.gtype && config.gtype !== "gage") { node.autoheight = parseInt(group.config.width*0.75+0.5); }
-        if (!config.title) { node.autoheight -= 1; }
+        if (config.gtype && config.gtype === "wave") { node.autoheight = parseInt(group.config.width*0.75+0.5); }
+        if (config.gtype && config.gtype === "donut") { node.autoheight = parseInt(group.config.width -1); }
+        if (config.gtype && config.gtype === "compass") { node.autoheight = parseInt(group.config.width -1); }
 
         var theme = ui.getTheme();
         if (theme === undefined) {
@@ -44,8 +45,8 @@ module.exports = function (RED) {
             control: {
                 type: 'gauge',
                 name: config.name,
-                title: config.title,
-                label: config.label,
+                label: config.title,
+                units: config.label,
                 order: config.order,
                 value: config.min,
                 format: config.format,
