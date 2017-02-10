@@ -191,6 +191,7 @@ function loadConfiguration(type,scope) {
         if (isNaN(yMin)) { yMin = 0; }
     }
 
+    var themeState = scope.$eval('me.item.theme.themeState');
     // Configure scales
     if (type !== 'pie') {
         config.options.scales.yAxes = [{}];
@@ -211,12 +212,9 @@ function loadConfiguration(type,scope) {
         }
 
         // Theme settings
-        var themeState = scope.$eval('me.item.theme.themeState');
         config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = themeState['widget-textColor'].value;
-
-        //generate white or black depending on group background colour
-        var groupBackgroundColor = tinycolor(themeState.groupBackgroundColor).toRgb();
-        var gridlineColour = "rgba("+groupBackgroundColor.r+","+groupBackgroundColor.g+","+groupBackgroundColor.b+",0.1)";
+        var gridColor = tinycolor(themeState['widget-textColor'].value).toRgb();
+        var gridlineColour = "rgba("+gridColor.r+","+gridColor.g+","+gridColor.b+",0.1)";
 
         config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
             color: gridlineColour,
@@ -232,7 +230,7 @@ function loadConfiguration(type,scope) {
         //Pie chart
         config.colours = baseColours;
     }
-
+ 
     // Configure legend
     if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
         config.options.legend = { display: true };
