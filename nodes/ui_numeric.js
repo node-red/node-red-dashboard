@@ -20,9 +20,9 @@ module.exports = function(RED) {
                 label: config.label,
                 order: config.order,
                 format: config.format,
-                value: config.min,
-                min: config.min,
-                max: config.max,
+                value: Number(config.min),
+                min: Number(config.min),
+                max: Number(config.max),
                 step: Number(config.step || 1),
                 width: config.width || group.config.width || 6,
                 height: config.height || 1

@@ -399,10 +399,10 @@
                             var site = { name:"Node-RED Dashboard", hideToolbar:"false", allowSwipe:"false", dateFormat:"DD/MM/YYYY", sizes:sizes }
                             if (globalDashboardNode !== null) {
                                 site = {
-                                    name: globalDashboardNode.site.name,
-                                    hideToolbar: globalDashboardNode.site.hideToolbar,
-                                    allowSwipe: globalDashboardNode.site.allowSwipe,
-                                    dateFormat: globalDashboardNode.site.dateFormat,
+                                    name: globalDashboardNode.site.name || globalDashboardNode.name || "Node-RED Dashboard",
+                                    hideToolbar: globalDashboardNode.site.hideToolbar || "false",
+                                    allowSwipe: globalDashboardNode.site.allowSwipe || "false",
+                                    dateFormat: globalDashboardNode.site.dateFormat || "DD/MM/YYYY",
                                     sizes: globalDashboardNode.site.sizes
                                 }
                             }
