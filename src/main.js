@@ -43,7 +43,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        if (main.allowSwipe) {
+        if (main.allowSwipe === true) {
             $scope.onSwipeLeft = function() { if (main.allowSwipe) { moveTab(-1); } }
             $scope.onSwipeRight = function() { if (main.allowSwipe) { moveTab(1); } }
             $scope.onSwipeUp = function() { $window.scrollBy(0, -300); }  //TODO: currently allowing swipe disables scroll...

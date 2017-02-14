@@ -32,6 +32,7 @@
       "ui_slider": "nodes/ui_slider.js",
       "ui_numeric": "nodes/ui_numeric.js",
       "ui_text_input": "nodes/ui_text_input.js",
+      "ui_date_picker": "nodes/ui_date_picker.js",
       "ui_colour_picker": "nodes/ui_colour_picker.js",
       "ui_form": "nodes/ui_form.js",
       "ui_text": "nodes/ui_text.js",

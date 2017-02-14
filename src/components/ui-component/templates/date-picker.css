@@ -1,0 +1,28 @@
+.nr-dashboard-date-picker {
+    padding: 0 0px;
+    width: 100%;
+}
+
+.md-button.md-icon-button {
+    margin: 0 0px;
+}
+
+.md-icon-button+.md-datepicker-input-container {
+    /* margin-left: 12px; */
+}
+
+.md-icon-button+.md-datepicker-input-container {
+    width: calc(100% - 55px);
+    margin-left: 0px;
+}
+
+._md-datepicker-floating-label>md-datepicker .md-datepicker-button {
+    float: left;
+    margin-top: -15px;
+}
+
+.nr-dashboard-date-picker .md-datepicker-triangle-button.md-button.md-icon-button {
+    height: 40px;
+    width: 40px;
+    top: -5px;
+}

@@ -80,7 +80,6 @@ body.nr-dashboard-theme md-sidenav {
 
 
 /* Button */
-
 .nr-dashboard-theme .nr-dashboard-button .md-button {
 	background-color: @widgetBackgroundColor;
 	color: white;
@@ -90,9 +89,29 @@ body.nr-dashboard-theme md-sidenav {
 	background-color: lighten(@widgetBackgroundColor, 5);
 }
 
+/* Date picker */
+.nr-dashboard-theme .nr-dashboard-date-picker md-input-container .md-input {
+    color: @widgetTextColor;
+    border-bottom-color: @widgetBackgroundColor;
+}
+
+.nr-dashboard-theme .nr-dashboard-date-picker md-input-container .md-input::-webkit-input-placeholder {
+    color: @widgetTextColor;
+}
+
+.nr-dashboard-theme .nr-dashboard-date-picker .md-button.md-icon-button {
+    /* background-color: @widgetBackgroundColor; */
+}
+
+.nr-dashboard-theme .nr-dashboard-date-picker .md-button.md-icon-button md-icon {
+    color: @widgetBackgroundColor;
+}
+
+.nr-dashboard-theme .nr-dashboard-date-picker .md-datepicker-triangle-button .md-datepicker-expand-triangle {
+    border-top-color: @widgetTextColor;
+}
 
 /* Chart */
-
 .nr-dashboard-theme .nr-dashboard-chart-title  {
 	font-size: larger;
 }

@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_date_picker',{
+        category: 'dashboard',
+        color: 'rgb(176, 223, 227)',
+        defaults: {
+            name: {value: ''},
+            label: {value: 'pick date'},
+            group: {type: 'ui_group', required: true},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                    var width = v||0;
+                    var currentGroup = $('#node-input-group').val()||this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    var valid = !groupNode || +width <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error",!valid);
+                    return valid;
+                }
+            },
+            height: {value: 0},
+            passthru: {value: true},
+            topic: {value: ''}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "ui_date_picker.png",
+        paletteLabel: 'date picker',
+        label: function() { return this.name || this.label || 'date-picker'; },
+        oneditprepare: function() {
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_date_picker">
+	<div class="form-row">
+        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
+    </div>
+    <div class="form-row">
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
+        <input type="text" id="node-input-label">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
+        <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When changed, send:</label>
+    </div>
+    <div class="form-row">
+        <label style="padding-left:25px; margin-right:-25px">Payload</label>
+        <label style="width:auto">Current value</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic" style="padding-left:25px; margin-right:-25px">Topic</label>
+        <input type="text" id="node-input-topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_date_picker">
+    <p>Adds a date picker widget to the user interface.</p>
+
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
+</script>

@@ -150,16 +150,13 @@ function add(opt) {
 
             // Determine what to emit over the websocket
             // (the new point or the full dataset).
-            var toEmit;
-            if (newPoint !== undefined) {
-                toEmit = opt.beforeEmit(msg, newPoint);
-            }
-            else {
-                toEmit = opt.beforeEmit(msg, fullDataset);
-            }
 
             // Always store the full dataset.
             var toStore = opt.beforeEmit(msg, fullDataset);
+            var toEmit;
+            if (newPoint !== undefined) { toEmit = opt.beforeEmit(msg, newPoint); }
+            else { toEmit = toStore; }
+
             toEmit.id = toStore.id = opt.node.id;
 
             // Emit and Store the data
