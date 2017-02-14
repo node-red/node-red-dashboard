@@ -51,7 +51,7 @@ module.exports = function(RED) {
                 if (payloadType === "date") {
                     value = Date.now();
                 } else {
-                    value = RED.util.evaluateNodeProperty(value,payloadType,node);
+                    value = RED.util.evaluateNodeProperty(payload,payloadType,node);
                 }
                 return value;
             },
