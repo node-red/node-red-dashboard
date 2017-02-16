@@ -157,7 +157,7 @@
         border: none;
         margin-top: 3px;
         display: inline-block;
-        margin: 3px 3px 0 3px;
+        margin: 3px 0px 0px 3px;
         height: 32px;
         line-height: 29px;
         max-width: 200px;
@@ -485,7 +485,7 @@
 
                 // Site Tab
                 var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<label class="theme-label">').html('Title').appendTo(divTitle);
+                $('<div>').html('<b>Title</b>').appendTo(divTitle);
                 $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","100%")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
@@ -497,7 +497,7 @@
                 .appendTo(divTitle);
 
                 var divHideToolbar = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<label class="theme-label">').html('Options').appendTo(divHideToolbar);
+                $('<div>').html('<b>Options</b>').appendTo(divHideToolbar);
                 $('<select id="nr-db-field-hideToolbar">')
                 .css("width","100%")
                 .append($('<option>', { value:"false", text:'Show the title bar', selected:true }))
@@ -528,7 +528,15 @@
                 .appendTo(divAllowSwipe);
 
                 var divDateFormat = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<label class="theme-label">').html('Date Format').appendTo(divDateFormat);
+                $('<div">').html('<b>Date Format</b>')
+                .css("width","80%")
+                .css("display","inline-block")
+                .appendTo(divDateFormat);
+                $('<div>').html("<a href='http://momentjs.com/docs/#/displaying/format/' target='_new'><i class='fa fa-info-circle' style='color:grey;'></i></a>")
+                .css("display","inline-block")
+                .css("margin-right","6px")
+                .css("float","right")
+                .appendTo(divDateFormat);
                 $('<input type="text" id="nr-db-field-dateFormat">').val("DD/MM/YYYY").css("width","100%")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
@@ -540,7 +548,7 @@
                 .appendTo(divDateFormat);
 
                 var divSetSizes = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<span style="height:25px; width:45%; display:inline-block">').html('<b>Sizes</b>').appendTo(divSetSizes);
+                $('<span style="width:45%; display:inline-block">').html('<b>Sizes</b>').appendTo(divSetSizes);
                 $('<span style="width:25%; display:inline-block; font-size:smaller">').html('Horizontal').appendTo(divSetSizes);
                 $('<span style="width:20%; display:inline-block; font-size:smaller">').html('Vertical').appendTo(divSetSizes);
                 $('<i id="sizes-reset" class="fa fa-undo resetIcon"></i>')

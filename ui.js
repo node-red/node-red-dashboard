@@ -167,9 +167,6 @@ function add(opt) {
             if (opt.forwardInputMessages && opt.node._wireCount) {
                 msg.payload = opt.convertBack(fullDataset);
                 msg = opt.beforeSend(msg) || msg;
-                //console.log("MSG1",msg);
-                //opt.beforeSend(msg);
-                //console.log("MSG2",msg);
                 opt.node.send(msg);
             }
         }

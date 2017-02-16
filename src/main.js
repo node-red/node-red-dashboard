@@ -1,7 +1,7 @@
 
 var app = angular.module('ui', ['ngMaterial', 'ngMdIcons', 'ngSanitize', 'sprintf', 'chart.js', 'color.picker']);
 
-var dateFormat = "DD/MM/YYYY";
+var dateFormat = "DD/MM/YYYY";  /// my choice - because I said so.
 
 app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
     function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider) {
@@ -43,12 +43,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        if (main.allowSwipe === true) {
-            $scope.onSwipeLeft = function() { if (main.allowSwipe) { moveTab(-1); } }
-            $scope.onSwipeRight = function() { if (main.allowSwipe) { moveTab(1); } }
-            $scope.onSwipeUp = function() { $window.scrollBy(0, -300); }  //TODO: currently allowing swipe disables scroll...
-            $scope.onSwipeDown = function() { $window.scrollBy(0, 300); } // this is a bodge to fix for now
-        }
+        $scope.onSwipeLeft = function() { if (main.allowSwipe) { moveTab(-1); } }
+        $scope.onSwipeRight = function() { if (main.allowSwipe) { moveTab(1); } }
 
         this.toggleSidenav = function () { $mdSidenav('left').toggle(); }
 
@@ -103,7 +99,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
                 dateFormat = ui.site.dateFormat || dateFormat;
-                if (ui.site.hasOwnProperty("sizes")) { sizes.setSizes(ui.site.sizes); }
+                if (ui.site.hasOwnProperty("sizes")) {
+                    sizes.setSizes(ui.site.sizes);
+                    main.sizes = ui.site.sizes;
+                }
             }
             if (ui.title) { name = ui.title }
             $document[0].title = name || "Node-RED Dashboard";
@@ -148,7 +147,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on(function (msg) {
             var found = findControl(msg.id, main.tabs);
-
             if (found === undefined) { return; }
             for (var key in msg) {
                 if (msg.hasOwnProperty(key)) {

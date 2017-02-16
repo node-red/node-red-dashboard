@@ -120,13 +120,14 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'date-picker': {
+                    me.processInput = function (msg) {
+                        msg.value = new Date(msg.value);
+                    };
                     me.setDate = function () {
                         me.item.value = me.item.ddd;
-                        console.log("ME",me.item);
-                        console.log("VAL",typeof me.item.value, me.item.value);
-                        //me.item.value = Date(me.item.ddd);
                         me.valueChanged(0);
                     };
+                    me.item.me = me;
                     break;
                 }
 
