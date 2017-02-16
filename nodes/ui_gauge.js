@@ -20,6 +20,7 @@ module.exports = function (RED) {
         if (config.gtype && config.gtype === "compass") { node.autoheight = parseInt(group.config.width -1); }
 
         var theme = ui.getTheme();
+        var sizes = ui.getSizes();
         if (theme === undefined) {
             theme = {"group-textColor":{value:"#000"}};
             theme["widget-textColor"] = {value:"#000"};
@@ -53,6 +54,7 @@ module.exports = function (RED) {
                 gtype: config.gtype || 'gage',
                 min: config.min,
                 max: config.max,
+                sizes: sizes,
                 hideMinMax: config.hideMinMax,
                 width: config.width || group.config.width || 6,
                 height: config.height || node.autoheight,

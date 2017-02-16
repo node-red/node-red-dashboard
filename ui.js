@@ -16,7 +16,8 @@ module.exports = function(RED) {
         toFloat: toNumber.bind(null, true),
         updateUi: updateUi,
         ev: ev,
-        getTheme: getTheme
+        getTheme: getTheme,
+        getSizes: getSizes
     };
 };
 
@@ -392,4 +393,8 @@ function addBaseConfig(config) {
 
 function getTheme() {
     return baseConfiguration.theme.themeState;
+}
+
+function getSizes() {
+    return baseConfiguration.site.sizes;
 }
