@@ -75,6 +75,7 @@ Any widget can be disabled by passing in a `msg.enabled` property set to `false;
   - **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
   - **Chart** - has both line, bar and pie chart modes. Also the X-Axis labels can be customised using a date formatter string. Uses the **Chart.js** library.
   - **Colour Picker** - a colour picker widget.
+  - **Date Picker** - a date picker widget. The displayed Date format can be specified in the Site tab using moment.js formatting.
   - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified. The choices can also be set via `msg.options` containing an array of objects. If just text then the value will be the same as the label, otherwise you can specify both by using an object of "label":"value" pairs :
 
         [ "Choice 1", "Choice 2", {"Choice 3","3"} ]
