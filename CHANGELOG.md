@@ -1,5 +1,6 @@
 
-### 2.3.0-beta: Milestone Release
+### 2.3.0: Milestone Release
+
 **Enhancements**
 
  - Add Themes to Dashboard Tab - includes colour and sizes and other options - Issue137
