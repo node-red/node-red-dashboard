@@ -1,4 +1,10 @@
 
+### 2.3.1: Maintenance Release
+
+**Fixes**
+
+Fix gauge initialisation for upgrading dashboard version
+
 ### 2.3.0: Milestone Release
 
 **Enhancements**

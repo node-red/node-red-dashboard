@@ -396,5 +396,10 @@ function getTheme() {
 }
 
 function getSizes() {
-    return baseConfiguration.site.sizes;
+    if (baseConfiguration && baseConfiguration.hasOwnProperty("site") && (typeof baseConfiguration.site !== "undefined") && baseConfiguration.site.hasOwnProperty("sizes")) {
+        return baseConfiguration.site.sizes;
+    }
+    else {
+        return { sx:48, sy:48, gx:6, gy:6, cx:6, cy:6, px:0, py:0 };
+    }
 }
