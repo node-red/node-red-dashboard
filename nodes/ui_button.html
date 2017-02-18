@@ -15,6 +15,7 @@
                     return valid;
                 }
             },
+            passthru: {value: true},
             height: {value: 0},
             label: {value: 'button'},
             color: {value: ''},
@@ -70,6 +71,10 @@
     <div class="form-row">
         <label for="node-input-bgcolor"><i class="fa fa-tint"></i>  Background</label>
         <input type="text" id="node-input-bgcolor" placeholder="optional background color">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
+        <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When clicked, send:</label>
