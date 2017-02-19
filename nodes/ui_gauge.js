@@ -19,8 +19,8 @@ module.exports = function (RED) {
         if (config.gtype && config.gtype === "donut") { node.autoheight = parseInt(group.config.width -1); }
         if (config.gtype && config.gtype === "compass") { node.autoheight = parseInt(group.config.width -1); }
 
-        var theme = ui.getTheme();
         var sizes = ui.getSizes();
+        var theme = ui.getTheme();
         if (theme === undefined) {
             theme = {"group-textColor":{value:"#000"}};
             theme["widget-textColor"] = {value:"#000"};

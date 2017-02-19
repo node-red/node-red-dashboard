@@ -32,7 +32,7 @@ module.exports = function(RED) {
         if (onvalueType === 'flow' || onvalueType === 'global') {
             try {
                 parts = RED.util.normalisePropertyExpression(onvalue);
-                console.log(parts);
+                //console.log(parts);
                 if (parts.length === 0) {
                     throw new Error();
                 }

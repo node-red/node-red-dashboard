@@ -3,9 +3,10 @@
 
 **Fixes**
 
- - stop reset icon repeating on tab changes
- - let helper library load from editor side
- - better detect height (or lack of) for template nodes
+ - Stop light and dark colour reset icon repeating on tab changes
+ - Let colour helper library load from editor side
+ - Better height detection (or lack of) for template nodes
+ - Catch ui_gauge initialisation errors
 
 ### 2.3.1: Maintenance Release
 
@@ -18,12 +19,12 @@
 **Enhancements**
 
  - Add Themes to Dashboard Tab - includes colour and sizes and other options - Issue137
- - Colourpicker - add configurable lightness slider - PR123
+ - Colour-picker - add configurable lightness slider - PR123
  - Configurable colour for Notification toasts - Issue145
  - Remove whitespace from above gauge with no label  - Issue159
  - Let gauge widgets scall larger when basic unit size increased - Issue162
  - Let most labels show icons if required (via html <i syntax)
- - Add date picker widget - Issue14
+ - Add date-picker widget - Issue14
  - Give audio node option to play when not in focus - Issue167
 
 **Fixes**

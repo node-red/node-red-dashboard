@@ -392,7 +392,12 @@ function addBaseConfig(config) {
 }
 
 function getTheme() {
-    return baseConfiguration.theme.themeState;
+    if (baseConfiguration && baseConfiguration.hasOwnProperty("theme") && (typeof baseConfiguration.theme !== "undefined") ) {
+        return baseConfiguration.theme.themeState;
+    }
+    else {
+        return undefined;
+    }
 }
 
 function getSizes() {

@@ -16,7 +16,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
 
                     //Backwards compatability for background and foreground
                     if (!bgnd || !fgnd) {
-                        if (theme === 'theme-light') {
+                        if (theme === 'theme-dark') {
                             bgnd = "#097479";
                             fgnd = "#111111";
                         } else {
