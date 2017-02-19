@@ -5,6 +5,7 @@
 
  - stop reset icon repeating on tab changes
  - let helper library load from editor side
+ - better detect height (or lack of) for template nodes
 
 ### 2.3.1: Maintenance Release
 
