@@ -1,9 +1,16 @@
 
+### 2.3.2: Maintenance Release
+
+**Fixes**
+
+ - stop reset icon repeating on tab changes
+ - let helper library load from editor side
+
 ### 2.3.1: Maintenance Release
 
 **Fixes**
 
-Fix gauge initialisation for upgrading dashboard version
+ - Fix gauge initialisation for upgrading dashboard version
 
 ### 2.3.0: Milestone Release
 
@@ -15,7 +22,8 @@ Fix gauge initialisation for upgrading dashboard version
  - Remove whitespace from above gauge with no label  - Issue159
  - Let gauge widgets scall larger when basic unit size increased - Issue162
  - Let most labels show icons if required (via html <i syntax)
- - Add date picker widget
+ - Add date picker widget - Issue14
+ - Give audio node option to play when not in focus - Issue167
 
 **Fixes**
 

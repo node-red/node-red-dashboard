@@ -74,14 +74,14 @@ module.exports = function(RED) {
     RED.nodes.registerType("ui_base", BaseNode);
     RED.library.register("themes");
 
-    RED.httpAdmin.get('/ui_base/js/*', RED.auth.needsPermission('dashboard.read'), function(req, res) {
-        var filename = path.join(__dirname , '../dist/js', req.params[0]);
-        res.sendFile(filename);
-    });
-
-    RED.httpAdmin.get('/uisettings', RED.auth.needsPermission('dashboard.read'), function(req, res) {
+    RED.httpAdmin.get('/uisettings', function(req, res) {
         var ret = RED.settings.ui || "";
         res.json(ret);
+    });
+
+    RED.httpAdmin.get('/ui_base/js/*', function(req, res) {
+        var filename = path.join(__dirname , '../dist/js', req.params[0]);
+        res.sendFile(filename);
     });
 
 };

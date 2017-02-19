@@ -207,8 +207,7 @@
 
     var attemptedVendorLoad = false;
     var loadTinyColor = function(path) {
-        $.ajax({ cache: false,
-            url: path,
+        $.ajax({ url: path,
             success: function (data) {
                 var jsScript = document.createElement("script");
                 jsScript.type = "application/javascript";
@@ -776,11 +775,13 @@
                 }
 
                 function addLightAndDarkResetButton(id, parent) {
-                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo resetIcon"></i>')
-                    .css({opacity:1})
-                    .click(function(e) { lightAndDarkResetClick(e); })
-                    .appendTo(parent);
-                    globalDashboardNode.theme[globalDashboardNode.theme.name.split('-')[1] + 'Theme'].edited = true;
+                    if ($("#" + id + "-reset").length === 0) {
+                        var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo resetIcon"></i>')
+                        .css({opacity:1})
+                        .click(function(e) { lightAndDarkResetClick(e); })
+                        .appendTo(parent);
+                        globalDashboardNode.theme[globalDashboardNode.theme.name.split('-')[1] + 'Theme'].edited = true;
+                    }
                 }
 
                 function lightAndDarkResetClick(e) {
