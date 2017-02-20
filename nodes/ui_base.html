@@ -671,7 +671,7 @@
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
-                        //editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
+                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
                         RED.nodes.dirty(true);
                     }
                 })
@@ -715,7 +715,7 @@
                             globalDashboardNode.theme[theme+'Theme'].reset = true;
                         }
                         generateColours(value);
-                        //editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
+                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
                         colourPickerChangeHandler($(this).attr('id'), value);
                     }
                 })

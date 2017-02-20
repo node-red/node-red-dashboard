@@ -1,4 +1,10 @@
 
+### 2.3.3: Maintenance Release
+
+**Fixes**
+
+ - Fix saving of named custom themes
+
 ### 2.3.2: Maintenance Release
 
 **Fixes**
