@@ -441,7 +441,7 @@
                 var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
                 var liSiteTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Site" style="width:60px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
                 // Link out to dashboard
-                $('<span id="dash-link-button" class="editor-button" style="float:right"><i class="fa fa-external-link"></i></span>')
+                $('<span id="dash-link-button" class="editor-button" style="position:absolute; right:0px;"><i class="fa fa-external-link"></i></span>')
                 .click(function(evt) {
                     window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
                     evt.preventDefault();

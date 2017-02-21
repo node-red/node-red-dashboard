@@ -4,6 +4,8 @@
 **Fixes**
 
  - Fix saving of named custom themes
+ - Fix dashboard link icon not appearing for FF and Safari
+ - Default old text colours so they are visible
 
 ### 2.3.2: Maintenance Release
 

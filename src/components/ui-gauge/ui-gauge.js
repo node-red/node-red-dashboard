@@ -8,11 +8,14 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
             templateUrl: 'components/ui-gauge/ui-gauge.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    var gauge;
-                    var themeState = scope.$eval('main.selectedTab.theme.themeState');
-                    var bgnd = themeState["base-color"].value;
-                    var fgnd = themeState['widget-textColor'].value;
+                    var gauge, bgnd, fgnd;
                     var theme = scope.$eval('main.selectedTab.theme.name');
+                    var themeState = scope.$eval('main.selectedTab.theme.themeState');
+                    console.log("THES",themeState,"::");
+                    if (themeState) {
+                        bgnd = themeState["base-color"].value;
+                        fgnd = themeState['widget-textColor'].value;
+                    }
 
                     //Backwards compatability for background and foreground
                     if (!bgnd || !fgnd) {
