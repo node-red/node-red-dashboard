@@ -9,9 +9,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var gauge, bgnd, fgnd;
-                    var theme = scope.$eval('main.selectedTab.theme.name');
+                    var theme = scope.$eval('main.selectedTab.theme.name') || "theme-light";
                     var themeState = scope.$eval('main.selectedTab.theme.themeState');
-                    console.log("THES",themeState,"::");
                     if (themeState) {
                         bgnd = themeState["base-color"].value;
                         fgnd = themeState['widget-textColor'].value;
@@ -21,10 +20,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                     if (!bgnd || !fgnd) {
                         if (theme === 'theme-dark') {
                             bgnd = "#097479";
-                            fgnd = "#111111";
+                            fgnd = "#eeeeee";
                         } else {
                             bgnd = "#0094CE";
-                            fgnd = "#eeeeee";
+                            fgnd = "#111111";
                         }
                     }
 

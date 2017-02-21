@@ -103,8 +103,8 @@ gulp.task('js', function () {
 
 gulp.task('css', function () {
     return gulp.src('src/index.html')
-    .pipe(ghtmlSrc({getFileName: getFileName.bind(this, 'href'), presets: 'css'}))
-    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(ghtmlSrc({getFileName:getFileName.bind(this, 'href'), presets:'css'}))
+    .pipe(minifyCss({compatibility:'ie8'}))
     .pipe(concat('app.min.css'))
     .pipe(header(fs.readFileSync('license.js')))
     .pipe(gulp.dest('dist/css/'));
@@ -112,7 +112,7 @@ gulp.task('css', function () {
 
 gulp.task('less', function() {
     return gulp.src('src/index.html')
-    .pipe(resources({less: true, css: false, js: false}))
+    .pipe(resources({less:true, css:false, js:false}))
     .pipe(removeHtml())
     .pipe(gulpif('**/*.less', concat('app.min.less')))
     .pipe(header(fs.readFileSync('license.js')))

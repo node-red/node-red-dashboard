@@ -111,6 +111,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var prevTabIndex = parseInt($location.path().substr(1));
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
+                    main.selectedTab.theme.themeState["widget-borderColor"] = main.selectedTab.theme.themeState["widget-borderColor"] || main.selectedTab.theme.themeState["group-backgroundColor"];
                     applyStyle(main.selectedTab.theme);
                     $mdToast.hide();
                     done();
