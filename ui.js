@@ -127,6 +127,7 @@ function add(opt) {
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.hidden = !msg.visible;
             io.emit(updateValueEventName, state);
+            updateUi();
         }
 
         // remove res and req as they are often circular
