@@ -33,6 +33,7 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
+            forwardInputMessages: false,
             control: {
                 type: 'button',
                 label: config.label,
