@@ -1,6 +1,6 @@
 {
 	"name": "node-red-dashboard",
-	"version": "2.3.3",
+	"version": "2.3.4-beta",
 	"description": "A set of dashboard nodes for Node-RED",
 	"keywords": [
 		"node-red"
@@ -63,6 +63,7 @@
     "angular-mocks": "~1.5.11",
     "angular-route": "~1.5.11",
     "angular-sanitize": "^1.4.8",
+    "angular-touch": "~1.5.11",
     "chart.js": "~2.3.0",
     "d3": "^3.5.17",
     "font-awesome": "^4.6.3",

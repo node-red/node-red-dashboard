@@ -20,7 +20,7 @@
     </div>
 </md-toolbar>
 <md-content flex>
-    <div ui-masonry ng-show="main.selectedTab.header" md-swipe-right="onSwipeRight();" md-swipe-left="onSwipeLeft();">
+    <div ui-masonry ng-show="main.selectedTab.header" ng-swipe-right="onSwipeRight();" ng-swipe-left="onSwipeLeft();">
         <ui-card-panel ng-repeat="group in main.selectedTab.items">
             <ui-component ng-repeat="control in group.items" item="control"></ui-component>
         </ui-card-panel>
