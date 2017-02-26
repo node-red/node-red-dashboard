@@ -78,7 +78,7 @@ Any widget can be disabled by passing in a `msg.enabled` property set to `false;
   - **Date Picker** - a date picker widget. The displayed Date format can be specified in the Site tab using moment.js formatting.
   - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified. The choices can also be set via `msg.options` containing an array of objects. If just text then the value will be the same as the label, otherwise you can specify both by using an object of "label":"value" pairs :
 
-        [ "Choice 1", "Choice 2", {"Choice 3","3"} ]
+        [ "Choice 1", "Choice 2", {"Choice 3": 3} ]
 
   Setting `msg.payload` will pre-select the value in the dropdown.
   - **Form** - a widget that can be composed of several sub-widgets. When submitted all values are submitted as a single message.
