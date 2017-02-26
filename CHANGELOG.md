@@ -1,4 +1,17 @@
 
+### 2.3.4-beta: Maintenance Release (Not on NPM)
+
+**Fixes**
+
+ - move to ngTouch rather than mdTouch to fix swipe/scroll Issue#164
+ - correct data output format from bar chart type chart - fixes Issue#181
+ - prevent button forwarding input messages as it makes no sense. - PR#170
+ - correct select box example - PR#182
+
+**Enhancements**
+
+ - Add IOS homescreen icon link - PR#176
+
 ### 2.3.3: Maintenance Release
 
 **Fixes**
