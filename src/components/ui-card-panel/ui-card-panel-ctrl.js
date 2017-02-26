@@ -41,13 +41,14 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                     // - child.height() defaults to calculating based on width of group
                     var ch = child.height() * parseInt($scope.group.header.config.width)/width;
                     if (!ch || (ch <= 0)) { // if height is 0 or undefined
+                        ch = 0;
                         var t = (child[0].innerHTML).toLowerCase();
-                        if ((t.indexOf('<style') === -1) && (t.indexOf('<link') === -1)) { ch = 1; } // and if no style or link tag
-                        else {                                      // or if any common tags for content
-                            if (t.indexOf('<div') !== -1) { ch = 1; }
-                            if (t.indexOf('<p') !== -1) { ch = 1; }
-                            if (t.indexOf('<span') !== -1) { ch = 1; }
-                        }
+                        if (t.indexOf('<div') !== -1) { ch = 1; }
+                        if (t.indexOf('<p') !== -1) { ch = 1; }
+                        if (t.indexOf('<span') !== -1) { ch = 1; }
+                        if (t.indexOf('<b') !== -1) { ch = 1; }
+                        if (t.indexOf('<h') !== -1) { ch = 1; }
+                        if (t.indexOf('<f') !== -1) { ch = 1; }
                     }
                     height = Math.ceil(ch / (sizes.cy + sizes.sy));
                 }
