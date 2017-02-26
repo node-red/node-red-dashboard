@@ -41,8 +41,13 @@ module.exports = function(RED) {
                     if (data[0] && data[0].hasOwnProperty("values") && data[0].values.hasOwnProperty("series") ) {
                         var o = [];
                         for (var i=0; i<data[0].values.series.length; i++) {
-                            var d = data[0].values.data[i].map(function(i) { return [i.x, i.y]; });
-                            o.push({ key:data[0].values.series[i], values:d });
+                            if (typeof data[0].values.data[i] === "number") {
+                                o.push({ key:data[0].values.series[i], values:data[0].values.data[i] });
+                            }
+                            else {
+                                var d = data[0].values.data[i].map(function(i) { return [i.x, i.y]; });
+                                o.push({ key:data[0].values.series[i], values:d });
+                            }
                         }
                         data = o;
                     }
