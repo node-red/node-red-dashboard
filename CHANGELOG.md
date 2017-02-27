@@ -7,6 +7,7 @@
  - correct data output format from bar chart type chart - fixes Issue#181
  - prevent button forwarding input messages as it makes no sense. - PR#170
  - correct select box example - PR#182
+ - fix compass colour to be set by custom widget colour
 
 **Enhancements**
 
