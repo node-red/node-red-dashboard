@@ -11,13 +11,11 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                     var gauge, bgnd, fgnd;
                     var theme = scope.$eval('main.selectedTab.theme.name') || "theme-light";
                     var themeState = scope.$eval('main.selectedTab.theme.themeState');
-                    console.log("THEME1",theme);
-                    console.log("THEMES",themeState);
                     if (themeState) {
                         bgnd = themeState["widget-borderColor"].value;
                         fgnd = themeState['widget-backgroundColor'].value;
                     }
-                    console.log("FGND:",fgnd,bgnd);
+
                     //Backwards compatability for background and foreground
                     if (!bgnd || !fgnd) {
                         if (theme === 'theme-dark') {
@@ -28,7 +26,6 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             fgnd = "#111111";
                         }
                     }
-                    console.log("FGND:",fgnd,bgnd);
 
                     // Wave type gauge
                     if (scope.$eval('me.item.gtype') === 'wave') {
@@ -92,7 +89,6 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         if (gaugeOptions.pointerOptions === undefined) { gaugeOptions.pointerOptions = {color:fgnd}; }
 
                         if (scope.$eval('me.item.gtype') === 'compass') {
-                            console.log("THEME",theme);
                             gaugeOptions.donut = true;
                             gaugeOptions.gaugeWidthScale = 0.2;
                             gaugeOptions.pointer = true;
