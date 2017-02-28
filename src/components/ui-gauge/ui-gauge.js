@@ -14,6 +14,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                     if (themeState) {
                         bgnd = themeState["widget-borderColor"].value;
                         fgnd = themeState['widget-backgroundColor'].value;
+                        tgnd = themeState['widget-textColor'].value;
                     }
 
                     //Backwards compatability for background and foreground
@@ -21,9 +22,11 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         if (theme === 'theme-dark') {
                             bgnd = "#097479";
                             fgnd = "#eeeeee";
+                            tgnd = "#eeeeee";
                         } else {
                             bgnd = "#0094CE";
                             fgnd = "#111111";
+                            tgnd = "#111111";
                         }
                     }
 
@@ -60,8 +63,6 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             value: scope.$eval('me.item.value'),
                             min: scope.$eval('me.item.min'),
                             max: scope.$eval('me.item.max'),
-                            // sx: scope.$eval('main.sizes.sx'),
-                            // sy: scope.$eval('main.sizes.sy'),
                             hideMinMax: scope.$eval('me.item.hideMinMax'),
                             levelColors: scope.$eval('me.item.colors'),
                             valueMinFontSize: 12,
@@ -80,13 +81,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             //gaugeOptions.donutStartAngle = 270;
                             gaugeOptions.pointer = false;
                         }
-                        // gaugeOptions.gaugeWidthScale = scope.$eval('me.item.gageoptions.lineWidth');
-                        // gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.backgroundColor');
-                        // gaugeOptions.pointerOptions = scope.$eval('me.item.gageoptions.pointerOptions');
 
                         if (gaugeOptions.gaugeWidthScale === undefined) { delete gaugeOptions.gaugeWidthScale; }
                         if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = "rgba(127,127,127,0.5)"; }
-                        if (gaugeOptions.pointerOptions === undefined) { gaugeOptions.pointerOptions = {color:fgnd}; }
+                        if (gaugeOptions.pointerOptions === undefined) { gaugeOptions.pointerOptions = {color:tgnd}; }
 
                         if (scope.$eval('me.item.gtype') === 'compass') {
                             gaugeOptions.donut = true;

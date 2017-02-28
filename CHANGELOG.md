@@ -12,6 +12,7 @@
 **Enhancements**
 
  - Add IOS homescreen icon link - PR#176
+ - Let datepicker accept timestamp input to preset date.
 
 ### 2.3.3: Maintenance Release
 
