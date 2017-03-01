@@ -60,7 +60,9 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                     width: sizes.sx * width + sizes.cx * (width-1),
                     height: sizes.sy * height + sizes.cy * (height-1)
                 });
-                child.addClass('visible');
+                if (height !== 0) {
+                    child.addClass('visible');
+                }
             });
             ctrl.height = rows.length ?
                 sizes.py * 2 + rows.length * sizes.sy + (rows.length - 1) * sizes.cy :
