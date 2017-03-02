@@ -13,7 +13,8 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
             if (msg.hasOwnProperty("resize")) {
-                setImmediate(function() { ui.updateUi() });
+                var t = parseInt(msg.resize) || 10;
+                setTimeout(function() { ui.updateUi() }, t);
             }
         });
 
