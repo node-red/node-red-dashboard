@@ -35,8 +35,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         function moveTab(d) {
             var len = main.tabs.length;
-            var i = parseInt($location.path().substr(1));
             if (len > 1) {
+                var i = parseInt($location.path().substr(1));
                 i = (i + d) % len;
                 if (i < 0) { i += len; }
                 main.select(i);

@@ -8,13 +8,14 @@
  - prevent button forwarding input messages as it makes no sense. - PR#170
  - correct select box example - PR#182
  - fix compass colour to be set by custom widget colour
- - centralise icon in button widget
+ - centre icon in button widget
 
 **Enhancements**
 
  - Add IOS homescreen icon link - PR#176
  - Let datepicker accept timestamp input to preset date.
- - Don't react to swipe in charts
+ - Don't react to swipe in charts, or slider
+ - Let `msg.resize` on ui_template trigger a screen redraw to cope with template content changes
 
 ### 2.3.3: Maintenance Release
 
