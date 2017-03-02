@@ -4,6 +4,8 @@
         <!-- <p ng-if="me.item.label && (me.item.width > 1)" class="label">{{me.item.label}}</p> -->
     <md-switch ng-model="me.item.value"
         ng-change="me.item.value = !me.item.value"
+        ng-swipe-right="$event.stopPropagation();"
+        ng-swipe-left="$event.stopPropagation();"
         aria-label="{{me.item.label}}"
         ng-class="{'center' : !me.item.label}"
         ng-if="!me.item.oncolor || !me.item.onicon || !me.item.offcolor || !me.item.officon"
