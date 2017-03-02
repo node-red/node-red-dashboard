@@ -71,6 +71,8 @@ Group labels are optional.
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
+Any widget can be hidden by passing in a `msg.visible` property set to `false;`. *Note:* this will update the whole ui and may cause flickering.
+
   - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.
   - **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
   - **Chart** - has both line, bar and pie chart modes. Also the X-Axis labels can be customised using a date formatter string. Uses the **Chart.js** library.

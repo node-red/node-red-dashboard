@@ -1,7 +1,7 @@
 <md-card
     ui-card-size="{{ me.item.width }}x{{ me.item.height }}"
     layout-align="center center"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+    ng-class="{'nr-dashboard-hidden':me.item.hidden, 'nr-dashboard-disabled':me.item.disabled}">
     <p  class="label nr-dashboard-gauge-title"
         ng-class = "{'nr-dashboard-gauge-titlel':(me.item.width > 3)}"
         ng-bind-html="me.item.getLabel()">

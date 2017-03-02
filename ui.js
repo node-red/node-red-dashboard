@@ -115,12 +115,21 @@ function add(opt) {
     var remove = addControl(opt.tab, opt.group, opt.control);
 
     opt.node.on("input", function(msg) {
+        var state;
         if (typeof msg.enabled === 'boolean') {
-            var state = replayMessages[opt.node.id];
+            state = replayMessages[opt.node.id];
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.disabled = !msg.enabled;
             io.emit(updateValueEventName, state);
         }
+        if (typeof msg.visible === 'boolean') {
+            state = replayMessages[opt.node.id];
+            if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
+            state.hidden = !msg.visible;
+            io.emit(updateValueEventName, state);
+            updateUi();
+        }
+
         // remove res and req as they are often circular
         if (msg.hasOwnProperty("res")) { delete msg.res; }
         if (msg.hasOwnProperty("req")) { delete msg.req; }

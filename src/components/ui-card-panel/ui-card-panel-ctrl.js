@@ -53,6 +53,10 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                     height = Math.ceil(ch / (sizes.cy + sizes.sy));
                 }
 
+                if (child.hasClass('nr-dashboard-hidden')) {
+                    height = 0;
+                }
+
                 var position = getNextPosition(width, height);
                 child.css({
                     left: position.left,
