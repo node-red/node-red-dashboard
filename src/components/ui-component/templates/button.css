@@ -14,3 +14,8 @@
 md-card .nr-dashboard-button {
     padding: 2px !important;
 }
+
+.nr-dashboard-button i {
+    vertical-align: middle;
+    width: unset;
+}
