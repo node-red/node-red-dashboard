@@ -11,13 +11,6 @@ module.exports = function(RED) {
         if (!tab) { return; }
         var hei = Number(config.height|| 0);
 
-        node.on('input', function(msg) {
-            if (msg.hasOwnProperty("resize")) {
-                var t = parseInt(msg.resize) || 10;
-                setTimeout(function() { ui.updateUi() }, t);
-            }
-        });
-
         var done = ui.add({
             forwardInputMessages: config.fwdInMessages,
             storeFrontEndInputAsState: config.storeOutMessages,
