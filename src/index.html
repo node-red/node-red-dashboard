@@ -59,7 +59,13 @@
 
     <title>Node-RED Dashboard</title>
 </head>
-<body ng-app="ui" ng-controller="MainController as main" ng-cloak layout="column"  style="background: {{main.backgroundColor}}" class="nr-dashboard-theme">
+<body ng-app="ui"
+    ng-controller="MainController as main"
+    ng-cloak layout="column"
+    style="background: {{main.backgroundColor}}"
+    class="nr-dashboard-theme"
+    ng-swipe-right="onSwipeRight();" 
+    ng-swipe-left="onSwipeLeft();">
 
 <md-content ng-if="main.loaded" ng-include="'partials/main.html'" layout="column" flex></md-content>
 

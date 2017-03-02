@@ -9,16 +9,7 @@ module.exports = function(RED) {
         if (!group) { return; }
         var tab = RED.nodes.getNode(group.config.tab);
         if (!tab) { return; }
-
         var hei = Number(config.height|| 0);
-        // if (hei === 0) {
-        //     if (config.format.indexOf('<div') !== -1) { hei = 1; }
-        //     if (config.format.indexOf('<p') !== -1) { hei = 1; }
-        //     if (config.format.indexOf('<span') !== -1) { hei = 1; }
-        //     if (config.format.indexOf('<b') !== -1) { hei = 1; }
-        //     if (config.format.indexOf('<h') !== -1) { hei = 1; }
-        //     if (config.format.indexOf('<f') !== -1) { hei = 1; }
-        // }
 
         var done = ui.add({
             forwardInputMessages: config.fwdInMessages,
