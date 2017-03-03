@@ -1,5 +1,11 @@
 
-### 2.3.4-beta: Maintenance Release (Not on NPM)
+### 2.3.4: Maintenance Release
+
+**Enhancements**
+
+ - Add IOS homescreen icon link - PR#176
+ - Let datepicker accept timestamp input to preset date.
+ - Don't react to swipe in charts, or slider
 
 **Fixes**
 
@@ -9,12 +15,6 @@
  - correct select box example - PR#182
  - fix compass colour to be set by custom widget colour
  - centre icon in button widget
-
-**Enhancements**
-
- - Add IOS homescreen icon link - PR#176
- - Let datepicker accept timestamp input to preset date.
- - Don't react to swipe in charts, or slider
 
 ### 2.3.3: Maintenance Release
 
