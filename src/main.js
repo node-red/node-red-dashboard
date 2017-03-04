@@ -114,11 +114,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     main.selectedTab.theme.themeState["widget-borderColor"] = main.selectedTab.theme.themeState["widget-borderColor"] || main.selectedTab.theme.themeState["group-backgroundColor"];
                     applyStyle(main.selectedTab.theme);
                     $mdToast.hide();
-                    done();
                 }
                 else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
                     applyStyle(ui.theme);
                 }
+                done();
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {
                 main.selectedTab = main.tabs[prevTabIndex];
@@ -128,7 +128,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $timeout( function() {
                     main.select(0);
                     finishLoading();
-                }, 50 );
+                }, 50);
             }
             main.len = main.tabs.length + main.links.length;
         }, function () {
@@ -162,7 +162,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on('disconnect', function(m) {
             $mdToast.show({
-                template: '<md-toast><div class="md-toast-error"><i class="fa fa-plug"></i>&nbsp; Connection lost</div></md-toast>',
+                template: '<md-toast><div class="md-toast-error">&#x2718; &nbsp; Connection lost</div></md-toast>',
                 position: 'top right',
                 hideDelay: 6000000
             });
