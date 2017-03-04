@@ -44,10 +44,12 @@ ev.setMaxListeners(0);
 var settings = {};
 
 function toNumber(keepDecimals, config, input) {
-    if (typeof input === "number") { return input; }
-    var inputString = input.toString();
-    var nr = keepDecimals ? parseFloat(inputString) : parseInt(inputString);
-    return isNaN(nr) ? config.min : nr;
+    if (typeof input !== "number") {
+        var inputString = input.toString();
+        input = keepDecimals ? parseFloat(inputString) : parseInt(inputString);
+    }
+    if (config.step) { input = Math.round(Math.round(input/config.step)*config.step*10000)/10000; }
+    return isNaN(input) ? config.min : input;
 }
 
 function emit(event, data) {
