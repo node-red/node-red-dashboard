@@ -21,15 +21,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="icon.jpg">
-    <link rel="shortcut icon" type="image/png" href="icon.png">
-
-    <!-- apple touch icon -->
-    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Node-RED">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="icon192.png">
+    <link rel="shortcut icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
 
     <!-- build:css -->
     <link rel="stylesheet" href="vendor/angular-material/angular-material.min.css">
@@ -64,7 +62,7 @@
     ng-cloak layout="column"
     style="background: {{main.backgroundColor}}"
     class="nr-dashboard-theme"
-    ng-swipe-right="onSwipeRight();" 
+    ng-swipe-right="onSwipeRight();"
     ng-swipe-left="onSwipeLeft();">
 
 <md-content ng-if="main.loaded" ng-include="'partials/main.html'" layout="column" flex></md-content>
