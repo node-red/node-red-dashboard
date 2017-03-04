@@ -3,3 +3,4 @@
 gulpfile.js
 .gitignore
 .npmignore
+node*.tgz

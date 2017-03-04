@@ -1,4 +1,11 @@
 
+### 2.3.5: Maintenance Release
+
+**Fixes**
+
+ - initialises OK if absolutely no theme present from old flow
+ - knock the corners off homescreen icon
+
 ### 2.3.4: Maintenance Release
 
 **Enhancements**
