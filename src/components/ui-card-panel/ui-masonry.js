@@ -64,14 +64,14 @@ function MasonryController(sizes, $timeout) {
             var j;
             var added = false;
             // For this group, find the best fit block to place it in
-            for (var i=0;i<blocks.length;i++) {
+            for (var i=0; i<blocks.length; i++) {
                 var b = blocks[i];
                 // Ignore blocks that have already been assigned, or that are too small
                 if (!b.used && cw <= b.w && ch <= b.h) {
                     var clear = true;
                     // If this group is placed in this block (b), check it won't overlap any
                     // existing occupied blocks
-                    for (j=0;j<assignedBlocks.length;j++) {
+                    for (j=0; j<assignedBlocks.length; j++) {
                         var b2 = assignedBlocks[j];
                         if ((b2.y < b.y && b2.y+b2.h > b.y && b.x<=b2.x && b.x+cw >= b2.x) ||
                                 (b.x > b2.x && b.x < b2.x+b2.w && b.y >= b2.y && b.y <= b2.y+b2.h)) {
@@ -112,7 +112,7 @@ function MasonryController(sizes, $timeout) {
                     blockCacheKey = (b.x+cw+sizes.gx)+":"+b.y;
                     if (!blockCache[blockCacheKey]) {
                         // Check the candidate block on the right doesn't overlap anything
-                        for (j=0;j<assignedBlocks.length;j++) {
+                        for (j=0; j<assignedBlocks.length; j++) {
                             var b3 = assignedBlocks[j];
                             if (b3 !== b && b3.x <= rightBlock.x && b3.x+b3.w >= rightBlock.x && b3.y <= rightBlock.y && b3.y+b3.h >= rightBlock.y) {
                                 clear = false;

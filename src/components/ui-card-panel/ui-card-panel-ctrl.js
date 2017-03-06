@@ -79,8 +79,8 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
 
         function getFreeAndOccupy(width, height) {
             var maxx = sizes.columns($scope.group) - width;
-            for (var y=0;y<1000;y++) {
-                for (var x=0;x<=maxx;x++) {
+            for (var y=0; y<1000; y++) {
+                for (var x=0; x<=maxx; x++) {
                     if (isFree(x, y, width, height)) {
                         occupy(x,y,width,height);
                         return {x:x, y:y};
@@ -102,12 +102,12 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
         }
 
         function isFree(x, y, width, height) {
-            for (var dy=0;dy<height; dy++) {
+            for (var dy=0; dy<height; dy++) {
                 var row = rows[y+dy];
                 if (!row) {
                     break;
                 }
-                for (var dx=0;dx<width;dx++) {
+                for (var dx=0; dx<width; dx++) {
                     if (row[x+dx]) {
                         return false;
                     }

@@ -22,13 +22,16 @@ var
     jshint = require('gulp-jshint'),
     jscs = require('gulp-jscs');
 
-gulp.task('default', ['manifest']);
+//gulp.task('default', ['manifest']);
+gulp.task('default', ['lint','jscs'], function() {
+    gulp.start('manifest');
+});
 
 gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
 
-gulp.task('publish', ['build'], function (done) {
-    spawn('npm', ['publish'], { stdio:'inherit' }).on('close', done);
-});
+// gulp.task('publish', ['build'], function (done) {
+//     spawn('npm', ['publish'], { stdio:'inherit' }).on('close', done);
+// });
 
 gulp.task('manifest', ['build'], function() {
     gulp.src(['dist/*','dist/css/*','dist/js/*','dist/fonts/*'], { base: 'dist/' })
@@ -53,7 +56,8 @@ gulp.task('lint', function() {
 gulp.task('jscs', function() {
     return gulp.src(['*.js','nodes/*.js','src/*.js','src/*/*.js','src/*/*/*.js'])
         .pipe(jscs())
-        .pipe(jscs.reporter());
+        //.pipe(jscs({fix: true}))
+        .pipe(jscs.reporter("inline"))
 });
 
 gulp.task('index', function() {

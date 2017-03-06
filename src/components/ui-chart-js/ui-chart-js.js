@@ -230,7 +230,7 @@ function loadConfiguration(type,scope) {
         //Pie chart
         config.colours = baseColours;
     }
- 
+
     // Configure legend
     if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
         config.options.legend = { display: true };

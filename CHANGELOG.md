@@ -1,8 +1,15 @@
 
+### 2.3.6-beta: Maintenance Release
+
+**Enhancements**
+
+ - enhance gulp, jshint and jscs checks
+
 ### 2.3.5: Maintenance Release
 
 **Fixes**
 
+ - let numeric (and slider) widget accept floating point presets if step set appropriately Issue#185
  - initialises OK if absolutely no theme present from old flow
  - knock the corners off homescreen icon
 

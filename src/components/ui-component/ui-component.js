@@ -1,4 +1,4 @@
-angular.module('ui').directive('uiComponent', ['$http', '$compile', '$templateCache', '$q', 
+angular.module('ui').directive('uiComponent', ['$http', '$compile', '$templateCache', '$q',
     function ($http, $compile, $templateCache, $q) {
         return {
             restrict: 'E',
