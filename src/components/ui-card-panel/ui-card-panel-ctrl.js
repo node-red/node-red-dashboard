@@ -21,10 +21,8 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
             $timeout(function() {
                 refreshSizes();
                 refreshInProgress = false;
-                if (done) {
-                    done();
-                }
-            }, 0);
+                if (done) { done(); }
+            }, 10);
         };
 
         var rows;

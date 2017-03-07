@@ -40,8 +40,8 @@ gulp.task('manifest', ['build'], function() {
         //preferOnline: true,
         network: ['*'],
         filename: 'dashboard.appcache',
-        exclude: 'dashboard.appcache'
-        //exclude: ['dashboard.appcache','index.html']
+        //exclude: 'dashboard.appcache'
+        exclude: ['dashboard.appcache','index.html']
     }))
     .pipe(gulp.dest('dist/'));
 });

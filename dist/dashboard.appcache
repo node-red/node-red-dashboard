@@ -1,10 +1,8 @@
 CACHE MANIFEST
 
 CACHE:
-icon.jpg
 icon.png
 icon192.png
-index.html
 css/app.min.css
 css/app.min.less
 css/index.html
@@ -20,4 +18,4 @@ fonts/fontawesome-webfont.woff2
 NETWORK:
 *
 
-# hash: cf346e0ce331d3d2fed9bdb9615f436c0ea619973ede49abe502232a6a588c94
+# hash: 8842f412ead6c0e86592314fdd6c16f99f572816d9a0b6d0cc070c0474250182
