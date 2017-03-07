@@ -1,8 +1,9 @@
 
-### 2.3.6-beta: Maintenance Release
+### 2.3.6-beta: Maintenance Release - (Not on NPM)
 
 **Enhancements**
 
+ - sending tab change of "" to ui_control refreshes current page
  - enhance gulp, jshint and jscs checks
 
 ### 2.3.5: Maintenance Release

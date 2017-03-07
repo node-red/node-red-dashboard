@@ -259,6 +259,9 @@ function init(server, app, log, redSettings) {
             });
             socket.emit('ui-replay-done');
         });
+        socket.on('ui-refresh', function() {
+            updateUi();
+        });
         socket.on('disconnect', function() {
             ev.emit("endsocket", socket.client.id, socket.request.connection.remoteAddress);
         });
