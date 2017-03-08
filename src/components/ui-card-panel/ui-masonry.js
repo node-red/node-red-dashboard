@@ -42,7 +42,7 @@ function MasonryController(sizes, $timeout) {
         $timeout(function () {
             refreshSizes();
             refreshInProgress = false;
-        }, 0);
+        }, 10);
     };
 
     function refreshSizes() {

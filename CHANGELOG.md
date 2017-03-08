@@ -4,7 +4,12 @@
 **Enhancements**
 
  - sending tab change of "" to ui_control refreshes current page
+ - let button widget pass messages (or be triggered by input)
  - enhance gulp, jshint and jscs checks
+
+ **Fixes**
+
+  - stop numeric widget emitting on accidental mouseover
 
 ### 2.3.5: Maintenance Release
 
