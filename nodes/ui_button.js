@@ -6,6 +6,10 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
+        this.on('input', function(msg) {
+            delete msg.payload;
+        });
+
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
         var tab = RED.nodes.getNode(group.config.tab);
@@ -33,7 +37,7 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
-            forwardInputMessages: false,
+            emitOnlyNewValues: false,
             control: {
                 type: 'button',
                 label: config.label,
