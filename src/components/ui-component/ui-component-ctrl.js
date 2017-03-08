@@ -50,7 +50,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     };
 
                     var range = me.item.max - me.item.min;
-                    var promise;
+                    var promise = null;
                     me.periodicChange = function (delta) {
                         changeValue(delta);
                         var i = 0;
@@ -65,8 +65,11 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         }, 100);
                     };
                     me.stopPeriodic = function () {
-                        $interval.cancel(promise);
-                        me.valueChanged(0);
+                        if (promise) {
+                            $interval.cancel(promise);
+                            promise = null;
+                            me.valueChanged(0);
+                        }
                     };
                     break;
                 }
