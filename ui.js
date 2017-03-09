@@ -215,7 +215,6 @@ function join() {
 function init(server, app, log, redSettings) {
     var uiSettings = redSettings.ui || {};
     settings.path = uiSettings.path || 'ui';
-    settings.title = uiSettings.title || 'Node-RED Dashboard';
     settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
 
     var fullPath = join(redSettings.httpNodeRoot, settings.path);
