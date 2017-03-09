@@ -3,6 +3,7 @@
       <label ng-bind-html="me.item.getLabel()"></label>
       <input ng-model="me.item.value"
              ng-keypress="me.keyPressed($event)"
+             ng-blur="me.keyPressed({charCode:13})"
              aria-label="{{me.item.label}}"
              type="{{me.item.mode}}"
              style="z-index:1"/>
