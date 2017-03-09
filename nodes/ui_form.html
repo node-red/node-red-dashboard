@@ -78,8 +78,6 @@
                 // var typeField = $('<input/>',{class:"node-input-option-type",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Type', value:option.type}).appendTo(row).typedInput({default:'str',types:['str', 'num']});
                 var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left: 7px; width: 19%"}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
 
-
-
                 var arr = [
                   {val : "text", text: 'Text'},
                   {val : "number", text: 'Number'},
@@ -128,7 +126,7 @@
                 $("#node-input-option-container-div").scrollTop($("#node-input-option-container-div").get(0).scrollHeight);
             });
 
-            for (var i=0;i<this.options.length;i++) {
+            for (var i=0; i<this.options.length; i++) {
                 var option = this.options[i];
                 generateOption(i+1,option);
             }
@@ -167,8 +165,8 @@
         }
     });
 </script>
-
 <script type="text/x-red" data-template-name="ui_form">
+
 <style>
 .switch {
     position: relative;
@@ -204,7 +202,7 @@
 }
 
 input:checked + .slider {
-    background-color: #ad1625;
+    background-color: #910000;
 }
 
 input:focus + .slider {
@@ -226,6 +224,7 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 </style>
+
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -242,10 +241,10 @@ input:checked + .slider:before {
     </div>
     <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%;min-width:520px">
         <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Form elements</label>
-        <div style="display: inline-block; width: calc(80% + 15px);border: 1px solid #ccc;border-radius: 5px;box-sizing: border-box;">
-          <div style="width:100%;display: inline-block; background-color:#f3f3f3;padding-top:10px;padding-buttom:10px;    border-top:0px solid ; border-radius: 5px  5px 0  0; border-bottom: 1px solid #ccc;">
-              <div style="width:94%;display: inline-block;margin-left:32px">
-                <div style="width:19%;text-align:center;float:left; ">Label</div>
+        <div style="display:inline-block; width:calc(80% + 15px); border: 1px solid #ccc; border-radius:5px; box-sizing:border-box;">
+          <div style="width:100%; display: inline-block; background-color:#f3f3f3;padding-top:10px;padding-buttom:10px; border-top:0px solid; border-radius: 5px 5px 0 0; border-bottom: 1px solid #ccc;">
+              <div style="width:94%;display:inline-block;margin-left:32px">
+                <div style="width:19%;text-align:center;float:left;">Label</div>
                 <div style="width:19%;text-align:center;float:left;">Name</div>
                 <div style="margin-left:7px;width:19%;text-align:center;float:left;">Type</div>
                 <div style="width:20%;text-align:center;float:left;">Required</div>
@@ -271,16 +270,16 @@ input:checked + .slider:before {
 </script>
 
 <script type="text/x-red" data-help-name="ui_form">
-  <p>Adds a form to user interface.</p>
-  <p>Helps to collect multiple value from the user on submit button click as an object in <code> msg.payload</code> </p>
-  <p>Multiple input elements can be added using add elements button</p>
-  <p>Each element contains following components:</p>
-  <ul>
-    <li> <b>Label</b>  : Value that will be the label of the element in the user interface</li>
-    <li> <b>Name</b>  : Represents the key (variable name) in the  <code> msg.payload</code> in which the value of the corresponding element present</li>
-    <li> <b>Type</b>  : Drop drown option to select the type of input element </li>
-    <li> <b>Required</b>  : On switching on the user has to supply the value before submitting </li>
-    <li> <b>Delete</b>  :To remove the current element form the form </li>
-  </ul>
-  <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+    <p>Adds a form to user interface.</p>
+    <p>Helps to collect multiple value from the user on submit button click as an object in <code> msg.payload</code> </p>
+    <p>Multiple input elements can be added using add elements button</p>
+    <p>Each element contains following components:</p>
+    <ul>
+        <li> <b>Label</b> : Value that will be the label of the element in the user interface</li>
+        <li> <b>Name</b> : Represents the key (variable name) in the <code>msg.payload</code> in which the value of the corresponding element present</li>
+        <li> <b>Type</b> : Drop drown option to select the type of input element</li>
+        <li> <b>Required</b> : On switching on the user has to supply the value before submitting</li>
+        <li> <b>Delete</b> : To remove the current element form the form</li>
+    </ul>
+    <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
 </script>

@@ -1,17 +1,20 @@
 <md-card ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length) +(me.item.label? 4 : 3)) }}" layout="row" layout-align="space-between center" class="nr-dashboard-form">
-    <form ng-submit="me.submit()" name ="form">
+    <form name ="form" ng-submit="form.$valid && me.submit(form)">
        <p class="label" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
            <md-input-container ng-if="opt.type != 'date'" class="md-block" flex>
                <label ng-if="(opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password') && opt.label">{{opt.label}}</label>
-               <input  ng-if="opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password' "  type="{{opt.type}}" ng-model="me.item.formValue[opt.value]" ng-required="opt.required" ng-keydown="me.stop($event)">
+               <input  ng-if="opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password' " type="{{opt.type}}"
+                ng-model="me.item.formValue[opt.value]"
+                ng-required="opt.required"
+                ng-keydown="me.stop($event)">
                <md-switch ng-if="opt.type == 'switch'" md-no-ink ng-model="me.item.formValue[opt.value]">{{opt.label}}</md-switch>
                <md-checkbox ng-if="opt.type == 'checkbox'" md-no-ink aria-label="Checkbox No Ink" ng-model="me.item.formValue[opt.value]"> {{opt.label}}</md-checkbox>
            </md-input-container>
            <md-datepicker ng-if="opt.type == 'date'" ng-model="me.item.formValue[opt.value]"></md-datepicker>
        </div>
        <div layout-gt-sm="row" style="padding:10px">
-           <md-button type="submit"  class="md-raised nr-dashboard-form-button">submit</md-button>
+           <md-button type="submit" class="md-raised nr-dashboard-form-button">submit</md-button>
            <md-button class="md-raised nr-dashboard-form-button" ng-click="me.reset()">cancel</md-button>
        </div>
    </form>

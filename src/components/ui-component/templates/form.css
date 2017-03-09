@@ -2,7 +2,6 @@
 	display: inline-block;
 	width: 100%;
 	overflow-y: auto;
-
 }
 .nr-dashboard-form form{
     padding: 15px;
@@ -21,9 +20,9 @@
 	margin-top: 0px;
 }
 .nr-dashboard-form input[type="checkbox"]{
-	height :auto !important;
+	height: auto !important;
 }
 .nr-dashboard-form-button {
-	width:50%;
-	float:left;
+	width: 50%;
+	float: left;
 }

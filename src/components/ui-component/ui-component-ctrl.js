@@ -168,7 +168,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
         }
 
         me.valueChanged = function (throttleTime) {
-            throttle({ id: me.item.id, value: me.item.value },
+            throttle({ id:me.item.id, value:me.item.value },
                 typeof throttleTime === "number" ? throttleTime : 10);
         };
 
