@@ -62,7 +62,7 @@
     "angular-messages": "~1.5.11",
     "angular-mocks": "~1.5.11",
     "angular-route": "~1.5.11",
-    "angular-sanitize": "^1.4.8",
+    "angular-sanitize": "~1.5.11",
     "angular-touch": "~1.5.11",
     "chart.js": "~2.3.0",
     "d3": "^3.5.17",
