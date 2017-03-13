@@ -6,7 +6,8 @@
  - sending tab change of "" to ui_control refreshes current page
  - let button widget pass messages (or be triggered by input)
  - enhance gulp, jshint and jscs checks
- - Hide page <title> until actually settings
+ - Hide page *title* tag until actually set
+ - add optional i18n.js file to dist
 
  **Fixes**
 

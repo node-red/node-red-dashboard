@@ -79,8 +79,8 @@ gulp.task('index', function() {
 });
 
 gulp.task('icon', function() {
-    gulp.src('src/icon192.png').pipe(gulp.dest('dist/'));
-    return gulp.src('src/icon.png').pipe(gulp.dest('dist/'));
+    gulp.src('src/icon192x192.png').pipe(gulp.dest('dist/'));
+    return gulp.src('src/icon64x64.png').pipe(gulp.dest('dist/'));
 });
 
 gulp.task('fonts', function() {
@@ -97,6 +97,8 @@ gulp.task('js', function () {
 
     var tiny = gulp.src('node_modules/tinycolor2/dist/tinycolor-min.js')
     .pipe(gulp.dest('./dist/js'));
+
+    var i18n = gulp.src('src/i18n.js').pipe(gulp.dest('dist/'));
 
     return streamqueue({ objectMode:true }, scripts, templates)
     .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
