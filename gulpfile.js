@@ -2,6 +2,7 @@
 var
     gulp = require('gulp'),
     concat = require('gulp-concat'),
+    exec = require('child_process').exec,
     fs = require('fs'),
     ghtmlSrc = require('gulp-html-src'),
     gutil = require('gulp-util'),
@@ -15,7 +16,7 @@ var
     path = require('path'),
     resources = require('gulp-resources'),
     removeHtml = require('gulp-remove-html'),
-    spawn = require('child_process').spawn,
+    //spawn = require('child_process').spawn,
     streamqueue = require('streamqueue'),
     templateCache = require('gulp-angular-templatecache'),
     uglify = require('gulp-uglify'),
@@ -108,6 +109,13 @@ gulp.task('js', function () {
 });
 
 gulp.task('css', function () {
+    exec('./fixfa.sh', function (err, stdout, stderr) {
+        if (err) {
+            console.log(stdout);
+            console.log(stderr);
+        }
+    });
+
     return gulp.src('src/index.html')
     .pipe(ghtmlSrc({getFileName:getFileName.bind(this, 'href'), presets:'css'}))
     .pipe(minifyCss({compatibility:'ie8'}))

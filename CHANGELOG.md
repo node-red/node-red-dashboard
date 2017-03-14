@@ -9,11 +9,11 @@
  - Hide page *title* tag until actually set
  - add optional i18n.js file to dist
 
- **Fixes**
+**Fixes**
 
-  - stop numeric widget emitting on accidental mouseover
-  - text input will now send it's payload on losing focus as well as enter (if in enter mode)
-  - fix form colours to be more dynamic to match theme, Issue#186
+- stop numeric widget emitting on accidental mouseover
+- text input will now send it's payload on losing focus as well as enter (if in enter mode)
+- fix form colours to be more dynamic to match theme, Issue#186
 
 ### 2.3.5: Maintenance Release
 
