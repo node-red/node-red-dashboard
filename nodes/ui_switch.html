@@ -18,6 +18,7 @@
             },
             height: {value: 0},
             passthru: {value: true},
+            decouple: {value: false},
             topic: {value: ''},
             style: {value: ''},
             onvalue: {value: true, required:true, validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('onvalueType'):function(v) { return true})},
@@ -116,6 +117,10 @@
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-decouple"><i class="fa fa-arrow-right"></i> If enabled, the switch shows the state of the input, not the output: </label>
+        <input type="checkbox" id="node-input-decouple" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-onvalue"><i class="fa fa-envelope-o"></i> When clicked, send:</label>

@@ -21,6 +21,13 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     break;
                 }
 
+                case 'switch': {
+                    me.switchClick = function () {
+                        throttle({ id:me.item.id, value:!me.item.value }, 0);
+                    };
+                    break;
+                }
+
                 case 'dropdown': {
                     me.itemChanged = function () {
                         me.valueChanged(0);
