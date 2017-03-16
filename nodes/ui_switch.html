@@ -66,8 +66,16 @@
                 typeField: $("#node-input-offvalueType"),
                 types: ['flow','global','str','num','bool','json','date']
             });
-
-
+            
+            $('#node-input-passthru').change(function() {
+                if(this.checked) {
+                    $('.form-row-decouple').hide();
+                    $('#node-input-decouple').prop('checked', false);
+                } else {
+                    $('.form-row-decouple').show();
+                }
+            });
+            
         },
         oneditsave: function() {
             if ($('#node-input-custom-icons').val() === 'default') {
@@ -118,7 +126,7 @@
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
-    <div class="form-row">
+    <div class="form-row form-row-decouple">
         <label style="width:auto" for="node-input-decouple"><i class="fa fa-arrow-right"></i> If enabled, the switch shows the state of the input, not the output: </label>
         <input type="checkbox" id="node-input-decouple" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
