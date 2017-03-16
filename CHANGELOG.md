@@ -3,6 +3,7 @@
 
 **Enhancements**
 
+ - let ui_gauge sector sizes be specified
  - sending tab change of "" to ui_control refreshes current page
  - let button widget pass messages (or be triggered by input)
  - enhance gulp, jshint and jscs checks

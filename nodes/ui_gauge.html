@@ -32,6 +32,8 @@
             min: {value: 0, required: true, validate: RED.validators.number()},
             max: {value: 10, required: true, validate: RED.validators.number()},
             colors: {value: ["#00B500","#E6E600","#CA3838"]},
+            seg1: {value: ""},
+            seg2: {value: ""}
         },
         inputs:1,
         outputs:0,
@@ -61,8 +63,8 @@
                 }
             }
             else {
-                for (var i=0; i<defaultColors.length; i++) {
-                    setColour("#node-input-color"+(i+1), defaultColors[i]);
+                for (var j=0; j<defaultColors.length; j++) {
+                    setColour("#node-input-color"+(j+1), defaultColors[j]);
                 }
             }
             if (this.gtype === undefined) {
@@ -85,6 +87,12 @@
                 } else {
                     $("#ui-gauge-colours").show();
                 }
+            });
+            $("#node-input-min").change(function() {
+                $("#seg-min").text($(this).val());
+            });
+            $("#node-input-max").change(function() {
+                $("#seg-max").text($(this).val());
             });
         },
         oneditsave: function() {
@@ -140,6 +148,13 @@
         <input type="color" id="node-input-color2" class="gauge-color"/>
         <input type="color" id="node-input-color3" class="gauge-color"/>
     </div>
+    <div class="form-row" id="ui-gauge-segments">
+        <label>Sectors</label>
+        <span id="seg-min" style="display:inline-block; width:40px;">0</span>...
+        <input type="text" id="node-input-seg1" style="text-align:center; width:87px;" placeholder="optional"> ...
+        <input type="text" id="node-input-seg2" style="text-align:center; width:87px;" placeholder="optional"> ...
+        <span id="seg-max" style="display:inline-block; width:40px; text-align:right">10</span>
+    </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
@@ -154,5 +169,7 @@
     <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and append a % sign.</p>
     <p>The colours of each of 3 sectors can be specified and the gauge will blend between them.
     The colours should be specified in hex (#rrggbb) format.</p>
+    <p>If you specify numbers for the sectors then the colours changes per sector.
+    If not specified the colours are blended across the total range.</p>
     <p>The gauge has several modes. Regular gauge, donut, compass and wave.</p>
 </script>

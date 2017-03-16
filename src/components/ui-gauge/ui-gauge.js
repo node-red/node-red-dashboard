@@ -98,6 +98,13 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = fgnd; }
                             if (gaugeOptions.pointerOptions.color === undefined) { gaugeOptions.pointerOptions.color = fgnd; }
                         }
+                        else {
+                            var cust = scope.$eval('me.item.gageoptions.customrange');
+                            if (cust !== undefined) {
+                                gaugeOptions.customSectors = cust;
+                                gaugeOptions.noGradient = true;
+                            }
+                        }
 
                         gauge = new JustGage(gaugeOptions);
                         scope.$watch('me.item.value', function (newValue) {
