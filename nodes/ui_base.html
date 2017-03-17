@@ -1175,7 +1175,7 @@
                                 RED.nodes.updateConfigNodeUsers(groupNode);
                             }
                             var widgets = unknownGroups[groupId];
-                            for (var i=0;i<widgets.length;i++) {
+                            for (var i=0; i<widgets.length; i++) {
                                 widgets[i].group = groupNode.id;
                                 widgets[i].changed = true;
                                 widgets[i].dirty = true;
@@ -1667,7 +1667,7 @@
                         }
                         return 0
                     });
-                    for (var i=0;i<pendingAdd.length;i++) {
+                    for (var i=0; i<pendingAdd.length; i++) {
                         var node = pendingAdd[i];
                         if (node.type === "ui_tab") {
                             tabContainer.editableList('addItem',{node:node,groups:[]});
@@ -1836,7 +1836,7 @@
                     var row = $('<div>').css({padding:0,margin:0,height:"25px","box-sizing":"border-box"}).appendTo(container);
                     rows.push(row);
                     cells.push([])
-                    for (var j=0;j<gridWidth;j++) {
+                    for (var j=0; j<gridWidth; j++) {
                         addCell(i,j);
                     }
                 }
@@ -1872,8 +1872,8 @@
                             var w = $(this).data("w");
                             var h = $(this).data("h");
                             label.html((w+1)+(that.options.hasOwnProperty('height')?" x "+(h+1):""));
-                            for (var y = 0;y<maxHeight;y++) {
-                                for (var x = 0;x<maxWidth;x++) {
+                            for (var y = 0; y<maxHeight; y++) {
+                                for (var x = 0; x<maxWidth; x++) {
                                     cells[y][x].css({
                                         background: (y<=h && x<=w)?'#ddd':'#fff',
                                         borderLeft: (x===0&&y<=h)?cellBorderHighlight:(x===0)?((y<=height-1)?cellBorderExisting:cellBorder):'',
@@ -1889,7 +1889,7 @@
                             if (!fixedWidth && w === maxWidth-1) {
                                 maxWidth++;
                                 gridWidth++;
-                                for (var r=0;r<maxHeight;r++) {
+                                for (var r=0; r<maxHeight; r++) {
                                     addCell(r,maxWidth-1);
                                 }
                             }
@@ -1897,7 +1897,7 @@
                     }
                 }
                 var cells = [];
-                for (var i=0;i<maxHeight;i++) {
+                for (var i=0; i<maxHeight; i++) {
                     addRow(i);
                 }
                 container.css({

@@ -20,5 +20,5 @@
     "requireSpacesInFunction": { "beforeOpeningCurlyBrace": true },
     //"validateParameterSeparator": ", ",
     //"validateQuoteMarks": false,
-    "maximumLineLength": 220
+    "maximumLineLength": 255
 }

@@ -9,6 +9,7 @@
  - enhance gulp, jshint and jscs checks
  - Hide page *title* tag until actually set
  - add optional i18n.js file to dist
+ - optionally let switch status be set by input/feedback rather than press - PR#188
 
 **Fixes**
 
