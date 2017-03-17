@@ -62,7 +62,7 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             forwardInputMessages: config.passthru,
-            storeFrontEndInputAsState: !config.decouple,
+            storeFrontEndInputAsState: (config.decouple === "true") ? false : true,
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),
                 label: config.label,
