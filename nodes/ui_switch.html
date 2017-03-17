@@ -18,6 +18,7 @@
             },
             height: {value: 0},
             passthru: {value: true},
+            decouple: {value: "false"},
             topic: {value: ''},
             style: {value: ''},
             onvalue: {value: true, required:true, validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('onvalueType'):function(v) { return true})},
@@ -65,8 +66,16 @@
                 typeField: $("#node-input-offvalueType"),
                 types: ['flow','global','str','num','bool','json','date']
             });
-
-
+            
+            $('#node-input-passthru').change(function() {
+                if(this.checked) {
+                    $('.form-row-decouple').hide();
+                    $('#node-input-decouple').val("false");
+                } else {
+                    $('.form-row-decouple').show();
+                }
+            });
+            
         },
         oneditsave: function() {
             if ($('#node-input-custom-icons').val() === 'default') {
@@ -116,6 +125,13 @@
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
+    </div>
+    <div class="form-row form-row-decouple">
+        <label for="node-input-decouple"><i class="fa fa-arrow-right"></i>State</label>
+        <select id="node-input-decouple" style="display: inline-block; vertical-align: middle; width:70%;">
+            <option value="false">Switch shows state of the output (default)</option>
+            <option value="true">Switch shows state of the input</option>
+        </select>        
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-onvalue"><i class="fa fa-envelope-o"></i> When clicked, send:</label>
