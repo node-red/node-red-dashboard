@@ -66,16 +66,16 @@
                 typeField: $("#node-input-offvalueType"),
                 types: ['flow','global','str','num','bool','json','date']
             });
-            
+
             $('#node-input-passthru').change(function() {
-                if(this.checked) {
+                if (this.checked) {
                     $('.form-row-decouple').hide();
                     $('#node-input-decouple').val("false");
                 } else {
                     $('.form-row-decouple').show();
                 }
             });
-            
+
         },
         oneditsave: function() {
             if ($('#node-input-custom-icons').val() === 'default') {
@@ -127,11 +127,11 @@
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row form-row-decouple">
-        <label for="node-input-decouple"><i class="fa fa-arrow-right"></i>State</label>
+        <label for="node-input-decouple"><i class="fa fa-toggle-on"></i> Indicator</label>
         <select id="node-input-decouple" style="display: inline-block; vertical-align: middle; width:70%;">
-            <option value="false">Switch shows state of the output (default)</option>
-            <option value="true">Switch shows state of the input</option>
-        </select>        
+            <option value="false">Switch icon shows state of the output</option>
+            <option value="true">Switch icon shows state of the input</option>
+        </select>
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-onvalue"><i class="fa fa-envelope-o"></i> When clicked, send:</label>
@@ -164,7 +164,8 @@
     toggle switch will be replaced with the relevant icons and their respective colors.</p>
     <p>The <b>On/Off Icon</b> field can be either <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a>
     <i>(e.g. 'check', 'close')</i> or <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
-    <p>The widget can be updated by an incoming <code>msg.payload</code> with the specified values.</p>
+    <p>The widget can be updated by an incoming <code>msg.payload</code> with the specified values,
+    that must also match the type of the input (number, string, etc).</p>
     <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
     <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
 </script>

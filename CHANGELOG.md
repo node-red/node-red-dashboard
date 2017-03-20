@@ -1,5 +1,5 @@
 
-### 2.3.6-beta: Maintenance Release - (Not on NPM)
+### 2.3.6: Maintenance Release
 
 **Enhancements**
 
