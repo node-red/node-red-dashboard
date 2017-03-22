@@ -1,4 +1,11 @@
 
+### 2.3.7-beta: Maintenance Release (not yet released to Npm)
+
+**Fixes**
+
+ - Let date-picker survive changes of tabs - Issue#189
+
+
 ### 2.3.6: Maintenance Release
 
 **Enhancements**
