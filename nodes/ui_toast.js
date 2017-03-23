@@ -29,7 +29,7 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
             if (node.position !== "dialog") { delete msg.socketid; }
-            ui.emitSocket('show-toast', {
+            ui.emit('show-toast', {
                 title: msg.topic,
                 message: msg.payload,
                 highlight: node.highlight || msg.highlight,
