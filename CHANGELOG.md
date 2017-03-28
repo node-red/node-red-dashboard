@@ -4,6 +4,7 @@
 **Fixes**
 
  - Let date-picker survive changes of tabs - Issue#189
+ - Change text input box to detect tab to send data (rather than loss of focus) - Issue#196
 
 
 ### 2.3.6: Maintenance Release

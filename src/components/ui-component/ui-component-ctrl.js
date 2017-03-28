@@ -112,7 +112,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         pickerOnly: me.item.showPicker && !(me.item.showSwatch || me.item.showValue)
                     };
                     me.item.key = function (event) {
-                        if ((event.charCode === 13) || (event.which === 13)) {
+                        if ((event.charCode === 13) || (event.which === 13) || (event.charCode === 9) || (event.which === 9)) {
                             events.emit({ id:me.item.id, value:me.item.value });
                             if (me.api) { me.api.close(); }
                         }
