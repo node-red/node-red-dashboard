@@ -5,6 +5,7 @@
 
  - Let date-picker survive changes of tabs - Issue#189
  - Change text input box to detect tab to send data (rather than loss of focus) - Issue#196
+ - Update Site properties in UI when theme loaded from library - Issue#197
 
 
 ### 2.3.6: Maintenance Release

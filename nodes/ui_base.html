@@ -1560,6 +1560,18 @@
                             //Update site object if necessary
                             if (JSON.stringify(editorObject.site) !== JSON.stringify(globalDashboardNode.site)) {
                                 globalDashboardNode.site = editorObject.site;
+                                $("#nr-db-field-title").val(globalDashboardNode.site.name);
+                                $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar);
+                                $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe);
+                                $("#nr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
+                                $("#nr-db-field-sx").val(globalDashboardNode.site.sizes.sx);
+                                $("#nr-db-field-sy").val(globalDashboardNode.site.sizes.sy);
+                                $("#nr-db-field-px").val(globalDashboardNode.site.sizes.px);
+                                $("#nr-db-field-py").val(globalDashboardNode.site.sizes.py);
+                                $("#nr-db-field-gx").val(globalDashboardNode.site.sizes.gx);
+                                $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
+                                $("#nr-db-field-cx").val(globalDashboardNode.site.sizes.cx);
+                                $("#nr-db-field-cy").val(globalDashboardNode.site.sizes.cy);
                                 RED.nodes.dirty(true);
                             }
                         });
