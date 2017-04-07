@@ -184,7 +184,9 @@ body.nr-dashboard-theme md-sidenav {
 .nr-dashboard-theme .nr-dashboard-dropdown md-select .md-select-value,
 .nr-dashboard-theme .nr-dashboard-dropdown md-select .md-select-value.md-select-placeholder {
 	color: @widgetTextColor;
-	border-color: #A9A9A9;
+	border-color: @widgetTextColor;
+    border-bottom-width: 2px;
+    padding: 2px 2px 0px;
 }
 .nr-dashboard-theme .nr-dashboard-dropdown .md-select-icon {
 	color: @widgetTextColor;
@@ -306,8 +308,9 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 	color: #DA5252;
 }
 .nr-dashboard-theme .nr-dashboard-textinput input {
-	border-color: @widgetTextColor;;
+	border-color: @widgetTextColor;
 	color: @widgetTextColor;
+    border-bottom-width: 2px;
 }
 
 /* Text */

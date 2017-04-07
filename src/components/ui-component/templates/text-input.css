@@ -4,14 +4,14 @@ reason: https://github.com/angular/material/issues/6214
 */
 
 .nr-dashboard-textinput md-input-container {
-	padding: 0px 12px;
+	padding: 0px 9px;
 	margin: 15px 0px;
 	transition: 0.3s margin;
 	-webkit-transition: 0.3s margin;
 }
 
 .nr-dashboard-textinput md-input-container .md-input {
-	padding-top: 5px;
+	padding-top: 1px;
 }
 
 .nr-dashboard-textinput md-input-container .md-errors-spacer {
