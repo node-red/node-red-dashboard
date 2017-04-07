@@ -1,6 +1,10 @@
 
 ### 2.3.7-beta: Maintenance Release (not yet released to Npm)
 
+**Enhancements**
+
+ - Let dropdown placeholder text be editable - Issue#202
+
 **Fixes**
 
  - Let date-picker survive changes of tabs - Issue#189

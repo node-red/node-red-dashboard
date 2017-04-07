@@ -13,6 +13,7 @@ module.exports = function(RED) {
         var control = {
                 type: 'dropdown',
                 label: config.label,
+                placeholder: config.place || "Select option",
                 order: config.order,
                 value: config.payload || node.id,
                 width: config.width || group.config.width || 6,

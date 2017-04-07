@@ -5,6 +5,7 @@
         defaults: {
             name: {value: ''},
             label: {value: ''},
+            place: {value: 'Select option'},
             group: {type: 'ui_group', required:true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -125,6 +126,10 @@
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
         <input type="text" id="node-input-label" placeholder="optional label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-place"><i class="fa fa-tag"></i> Placeholder</label>
+        <input type="text" id="node-input-place" placeholder="optional placeholder">
     </div>
     <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%">
         <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Options</label>
