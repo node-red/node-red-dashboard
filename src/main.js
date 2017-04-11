@@ -32,6 +32,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.hideToolbar = false;
         this.allowSwipe = false;
         var main = this;
+        var audiocontext;
 
         function moveTab(d) {
             var len = main.tabs.length;
@@ -262,14 +263,16 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 else { console.log("Your Browser does not support Text-to-Speech"); }
             }
             if (msg.hasOwnProperty("audio")) {
-                window.AudioContext = window.AudioContext||window.webkitAudioContext||window.mozAudioContext;
+                if (!window.hasOwnProperty("AudioContext")) {
+                    window.AudioContext = window.AudioContext||window.webkitAudioContext||window.mozAudioContext;
+                }
                 try {
-                    var context = new AudioContext();
-                    var source = context.createBufferSource();
+                    audiocontext = audiocontext || new AudioContext();
+                    var source = audiocontext.createBufferSource();
                     var buffer = new Uint8Array(msg.audio);
-                    context.decodeAudioData(buffer.buffer, function(buffer) {
+                    audiocontext.decodeAudioData(buffer.buffer, function(buffer) {
                         source.buffer = buffer;
-                        source.connect(context.destination);
+                        source.connect(audiocontext.destination);
                         source.start(0);
                     })
                 }

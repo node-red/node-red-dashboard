@@ -11,6 +11,7 @@
  - Change text input box to detect tab to send data (rather than loss of focus) - Issue#196
  - Update Site properties in UI when theme loaded from library - Issue#197
  - Better align text input and dropdown text inputs - Issue#201
+ - Fix audiocontext to reuse existing - Issue#199
 
 
 ### 2.3.6: Maintenance Release
