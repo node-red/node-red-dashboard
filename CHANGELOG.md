@@ -4,6 +4,7 @@
 **Enhancements**
 
  - Let dropdown placeholder text be editable - Issue#202
+ - stop rendering datapoints out of range on line charts - Issue#198
 
 **Fixes**
 

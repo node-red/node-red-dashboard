@@ -24,6 +24,20 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         }
                     });
 
+                    Chart.plugins.register({
+                        beforeDatasetsDraw: function(chartInstance) {
+                            var ctx = chartInstance.chart.ctx;
+                            var chartArea = chartInstance.chartArea;
+                            ctx.save();
+                            ctx.beginPath();
+                            ctx.rect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+                            ctx.clip();
+                        },
+                        afterDatasetsDraw: function(chartInstance) {
+                            chartInstance.chart.ctx.restore();
+                        },
+                    });
+
                     // When new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
                         if (newValue !== undefined && newValue.length > 0) {
