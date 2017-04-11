@@ -13,6 +13,7 @@
  - Update Site properties in UI when theme loaded from library - Issue#197
  - Better align text input and dropdown text inputs - Issue#201
  - Fix audiocontext to reuse existing - Issue#199
+ - let bar and pie charts be reloaded correctly from saved data - Issue#205
 
 
 ### 2.3.6: Maintenance Release

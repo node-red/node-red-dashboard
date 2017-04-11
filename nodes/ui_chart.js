@@ -62,21 +62,34 @@ module.exports = function(RED) {
                 ChartIdList[node.id] = node.chartType;
                 var converted = {};
                 if (Array.isArray(value)) {
-                    if (value[0] && value[0].hasOwnProperty("values")) {
-                        if (Array.isArray(value[0].values)) { // Handle "old" style data array
-                            var na = {series:[], data:[]};
-                            for (var n=0; n<value.length; n++) {
-                                na.series.push(value[n].key);
-                                na.data.push(value[n].values.map(function(i) {
-                                    return {x:i[0], y:i[1]};
-                                }));
+                    if (node.chartType !== "line") {
+                        var nb = {series:[], data:[]};
+                        for (var v in value) {
+                            if (value.hasOwnProperty(v)) {
+                                nb.data.push(value[v].values);
+                                nb.series.push(value[v].key);
                             }
-                            value = [{ key:node.id, values:na}];
+                        }
+                        value = [{key:node.id, values:nb}];
+                    }
+                    else {
+                        if (value[0] && value[0].hasOwnProperty("values")) {
+                            if (Array.isArray(value[0].values)) { // Handle "old" style data array
+                                var na = {series:[], data:[]};
+                                for (var n=0; n<value.length; n++) {
+                                    na.series.push(value[n].key);
+                                    na.data.push(value[n].values.map(function(i) {
+                                        return {x:i[0], y:i[1]};
+                                    }));
+                                }
+                                value = [{ key:node.id, values:na}];
+                            }
                         }
                     }
                     converted.update = false;
                     converted.updatedValues = value;
-                } else {
+                }
+                else {
                     value = parseFloat(value);
                     if (isNaN(value)) { return oldValue || []; }
                     var series = msg.topic || 'Series 1';
