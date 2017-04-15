@@ -203,8 +203,6 @@
     var nodesAddEventHandler;
     var nodesRemoveEventHandler;
     var uip = 'ui';
-    RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip) });
-
     var attemptedVendorLoad = false;
     var loadTinyColor = function(path) {
         $.ajax({ url: path,
@@ -245,9 +243,6 @@
                 RED.events.off("nodes:remove",nodesRemoveEventHandler);
             },
             onpaletteadd: function() {
-                $.getJSON('uisettings',function(data) {
-                    if (data.hasOwnProperty("path")) { uip = data.path; }
-                });
                 var globalDashboardNode = null;
                 var editor;
                 var baseStyles = ['base-color'];
@@ -440,13 +435,22 @@
                 var liLayoutTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
                 var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
                 var liSiteTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Site" style="width:60px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
+
                 // Link out to dashboard
-                $('<span id="dash-link-button" class="editor-button" style="position:absolute; right:0px;"><i class="fa fa-external-link"></i></span>')
-                .click(function(evt) {
-                    window.open(document.location.protocol+"//"+document.location.host+RED.settings.httpNodeRoot+uip);
-                    evt.preventDefault();
-                })
-                .appendTo(ulDashboardTabs);
+                $.getJSON('uisettings',function(data) {
+                    if (data.hasOwnProperty("path")) { uip = data.path; }
+                    var lnk = document.location.host+RED.settings.httpNodeRoot+uip;
+                    var re = new RegExp('\/{1,}','g');
+                    lnk = lnk.replace(re,'/');
+                    RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+lnk) });
+
+                    $('<span id="dash-link-button" class="editor-button" style="position:absolute; right:0px;"><i class="fa fa-external-link"></i></span>')
+                    .click(function(evt) {
+                        window.open(document.location.protocol+"//"+lnk);
+                        evt.preventDefault();
+                    })
+                    .appendTo(ulDashboardTabs);
+                });
 
                 // Dashboard Tab containers
                 var layoutTab = $('<div id="dashboard-layout">').appendTo(form);
@@ -639,7 +643,7 @@
                         globalDashboardNode.theme.name = $(this).val();
                         theme = globalDashboardNode.theme.name.split('-')[1];
                         if (theme !== "custom") {
-                            baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
+                            baseColour = globalDashboardNode.theme[theme+'Theme'].default;
                         }
                         setColourPickerColour("base-color", baseColour);
                         globalDashboardNode.theme.themeState['base-color'].value = baseColour;
@@ -1552,9 +1556,9 @@
                                     globalDashboardNode.theme.customTheme.name = $("#node-input-name").val();
                                     globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["base-color"].value;
                                     setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
+                                    generateColours(globalDashboardNode.theme.themeState["base-color"].value);
+                                    RED.nodes.dirty(true);
                                 }
-                                generateColours(globalDashboardNode.theme.themeState["base-color"].value);
-                                RED.nodes.dirty(true);
                             }
 
                             //Update site object if necessary

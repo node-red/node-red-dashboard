@@ -75,7 +75,7 @@ module.exports = function(RED) {
     RED.library.register("themes");
 
     RED.httpAdmin.get('/uisettings', function(req, res) {
-        var ret = RED.settings.ui || "";
+        var ret = RED.settings.ui || "{}";
         res.json(ret);
     });
 
