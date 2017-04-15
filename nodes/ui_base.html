@@ -273,15 +273,17 @@
                         return this.leastReadable(base, ["#000000", "#ffffff"]);
                     },
                     calculate_page_backgroundColor: function(base) {
-                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
                         var pageBackground = "#fafafa";
-                        if (whiteOrBlack === "#000000") { pageBackground = "#111111"; }
+                        var theme = globalDashboardNode.theme.name.split('-')[1];
+                        console.log("THE",theme);
+                        if (theme === "dark") {
+                            pageBackground = "#111111";
+                        }
+                        else if (theme === "custom") {
+                            var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                            if (whiteOrBlack === "#000000") { pageBackground = "#111111"; }
+                        }
                         return pageBackground;
-                    },
-                    calculate_group_textColor: function(base) {
-                        var groupTextColour = tinycolor(base).lighten(20).toHexString();
-                        if (this.whiteBlackLeastReadable(base) === "#ffffff") { groupTextColour = "#000000"; }
-                        return groupTextColour;
                     },
                     calculate_page_sidebar_backgroundColor: function(base) {
                         return this.whiteBlackLeastReadable(base);
@@ -289,10 +291,21 @@
                     calculate_page_titlebar_backgroundColor: function(base) {
                         return base;
                     },
+                    calculate_group_textColor: function(base) {
+                        var groupTextColour = tinycolor(base).lighten(15).toHexString();
+                        //if (this.whiteBlackLeastReadable(base) === "#ffffff") { groupTextColour = "#000000"; }
+                        return groupTextColour;
+                    },
                     calculate_group_backgroundColor: function(base) {
-                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
                         var groupBackground = "#ffffff";
-                        if (whiteOrBlack === "#000000") { groupBackground = "#333333"; }
+                        var theme = globalDashboardNode.theme.name.split('-')[1];
+                        if (theme === "dark") {
+                            groupBackground = "#333333";
+                        }
+                        else if (theme === "custom") {
+                            var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                            if (whiteOrBlack === "#000000") { groupBackground = "#333333"; }
+                        }
                         return groupBackground;
                     },
                     calculate_group_borderColor: function(base) {
@@ -309,9 +322,15 @@
                         return tinycolor(base).toHexString();
                     },
                     calculate_widget_borderColor: function(base) {
-                        var whiteOrBlack = this.whiteBlackLeastReadable(base);
                         var widgetBorder = "#ffffff";
-                        if (whiteOrBlack === "#000000") { widgetBorder = "#333333"; }
+                        var theme = globalDashboardNode.theme.name.split('-')[1];
+                        if (theme === "dark") {
+                            widgetBorder = "#333333";
+                        }
+                        else if (theme === "custom") {
+                            var whiteOrBlack = this.whiteBlackLeastReadable(base);
+                            if (whiteOrBlack === "#000000") { widgetBorder = "#333333"; }
+                        }
                         return widgetBorder;
                     }
                 }
