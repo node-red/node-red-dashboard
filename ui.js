@@ -214,7 +214,10 @@ function join() {
 
 function init(server, app, log, redSettings) {
     var uiSettings = redSettings.ui || {};
-    settings.path = uiSettings.path || 'ui';
+    if ((uiSettings.hasOwnProperty("path")) && (typeof uiSettings.path === "string")) {
+        settings.path = uiSettings.path;
+    }
+    else { settings.path = 'ui'; }
     settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
 
     var fullPath = join(redSettings.httpNodeRoot, settings.path);
