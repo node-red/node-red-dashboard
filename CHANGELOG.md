@@ -1,5 +1,5 @@
 
-### 2.3.7-beta: Maintenance Release (not yet released to Npm)
+### 2.3.7: Maintenance Release
 
 **Enhancements**
 
@@ -15,8 +15,7 @@
  - Better align text input and dropdown text inputs - Issue#201
  - Let ui be hosted at / if required - Issue204
  - Let bar and pie charts be reloaded correctly from saved data - Issue#205
-
-
+ - Let base colour theme edits work again (rather than resetting all the time)
 
 ### 2.3.6: Maintenance Release
 
