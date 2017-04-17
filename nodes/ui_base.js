@@ -38,7 +38,8 @@ module.exports = function(RED) {
             defaultThemeState["group-borderColor"] = {value: "#ffffff"};
             defaultThemeState["widget-textColor"] = {value: "#111111"};
             defaultThemeState["widget-backgroundColor"] = {value: "#0094CE"};
-        } else {
+        }
+        else {
             defaultThemeState["base-color"] = {value: "#097479"};
             defaultThemeState["page-backgroundColor"] = {value: "#111111"};
             defaultThemeState["page-titlebar-backgroundColor"] = {value: "#097479"};

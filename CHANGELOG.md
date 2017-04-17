@@ -1,4 +1,14 @@
 
+### 2.3.8: Maintenance Release
+
+**Enhancements**
+
+ - Add keyboard shortcut to menu of shortcuts (ctrl-shift-d - Show Dashboard)
+
+**Fixes**
+
+ - Critical Fix : for Dashboard tab not populating on initial empty flow
+
 ### 2.3.7: Maintenance Release
 
 **Enhancements**
