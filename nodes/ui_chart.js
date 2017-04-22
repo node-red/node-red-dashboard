@@ -98,7 +98,7 @@ module.exports = function(RED) {
                     if (!oldValue) { oldValue = [];}
                     if (node.chartType !== "line") {  // handle bar and pie type data
                         if (oldValue.length === 0) {
-                            oldValue = [{ key: storageKey, values: { data: [], series: [], labels: [] }
+                            oldValue = [{ key: storageKey, values: { data:[], series:[], labels:[] }
                             }]
                         }
                         for (var i=0; i<oldValue[0].values.series.length; i++) {
@@ -139,11 +139,11 @@ module.exports = function(RED) {
 
                         // Create the new point and add to the dataset
                         // Create series if it doesn't exist
-                        var seriesIndex = found.values.series.indexOf(series);
+                        var seriesIndex = found.values.series.indexOf(topic);
                         if (seriesIndex === -1) {
-                            found.values.series.push(series);
+                            found.values.series.push(topic);
                             found.values.data.push([]);
-                            seriesIndex = found.values.series.indexOf(series);
+                            seriesIndex = found.values.series.indexOf(topic);
                         }
 
                         // Add a new point
@@ -192,7 +192,7 @@ module.exports = function(RED) {
                         // Return an object including the new point and all the values
                         converted.update = true;
                         converted.newPoint = [{
-                            key: series,
+                            key: topic,
                             update: true,
                             removedData: removed,
                             removedSeries: removeSeries,
