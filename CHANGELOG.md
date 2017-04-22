@@ -1,4 +1,18 @@
 
+### 2.3.9-beta: Maintenance Release
+
+**Enhancements**
+
+ - better handle FA css fix for developer users
+
+**Fixes**
+
+ - Dashboard Tab - still occasionally empty (for very old dashboard migrations)
+ - Add CSS to try to help fix scroll of Edge Mobile devices - Issue#207
+ - Fix Apple Touch Icon - Issue#208
+ - Fix widget sy height (was picking up sx by mistake) - Issue#210
+ - Don't let widget bother handle msg with no payload (only handle enabled) - Issue#211,#212
+
 ### 2.3.8: Maintenance Release
 
 **Enhancements**
