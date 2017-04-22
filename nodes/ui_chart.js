@@ -92,29 +92,25 @@ module.exports = function(RED) {
                 else {
                     value = parseFloat(value);
                     if (isNaN(value)) { return oldValue || []; }
-                    var series = msg.topic || 'Series 1';
+                    var topic = msg.topic || 'Series 1';
                     var storageKey = node.id;
                     var found;
                     if (!oldValue) { oldValue = [];}
                     if (node.chartType !== "line") {  // handle bar and pie type data
                         if (oldValue.length === 0) {
-                            oldValue = [{
-                                key: storageKey,
-                                values: {
-                                    data: [],
-                                    series: []
-                                }
+                            oldValue = [{ key: storageKey, values: { data: [], series: [], labels: [] }
                             }]
                         }
                         for (var i=0; i<oldValue[0].values.series.length; i++) {
-                            if (oldValue[0].values.series[i] === series) {
+                            if (oldValue[0].values.series[i] === topic) {
                                 oldValue[0].values.data[i] = value;
                                 found = true;
                                 break;
                             }
                         }
                         if (!found) {
-                            oldValue[0].values.series.push(series);
+                            oldValue[0].values.series.push(topic);
+                            oldValue[0].values.labels.push(topic);
                             oldValue[0].values.data.push(value);
                         }
                         converted.update = false;
