@@ -1,13 +1,14 @@
 {
 	"name": "node-red-dashboard",
-	"version": "2.3.8",
+	"version": "2.3.9-beta",
 	"description": "A set of dashboard nodes for Node-RED",
 	"keywords": [
 		"node-red"
 	],
 	"main": "none",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+        "postinstall": "./fixfa.sh"
 	},
 	"contributors": [
 		{"name": "Andrei Tatar"},
