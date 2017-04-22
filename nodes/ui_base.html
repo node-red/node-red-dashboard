@@ -275,7 +275,7 @@
                     calculate_page_backgroundColor: function(base) {
                         var pageBackground = "#fafafa";
                         var theme = "light";
-                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme")) {
+                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
                             theme = globalDashboardNode.theme.name.split('-')[1];
                         }
                         if (theme === "dark") {
@@ -301,7 +301,7 @@
                     calculate_group_backgroundColor: function(base) {
                         var groupBackground = "#ffffff";
                         var theme = "light";
-                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme")) {
+                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
                             theme = globalDashboardNode.theme.name.split('-')[1];
                         }
                         if (theme === "dark") {
@@ -329,7 +329,7 @@
                     calculate_widget_borderColor: function(base) {
                         var widgetBorder = "#ffffff";
                         var theme = "light";
-                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme")) {
+                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
                             theme = globalDashboardNode.theme.name.split('-')[1];
                         }
                         if (theme === "dark") {
