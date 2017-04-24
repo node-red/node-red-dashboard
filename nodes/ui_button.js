@@ -6,10 +6,6 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        this.on('input', function(msg) {
-            delete msg.payload;
-        });
-
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
         var tab = RED.nodes.getNode(group.config.tab);
