@@ -1,4 +1,11 @@
 
+### 2.3.10-beta: Maintenance Release
+
+**Enhancements**
+
+ - Make fixup of Font Awesome fonts easier for developers
+
+
 ### 2.3.9: Maintenance Release
 
 **Fixes**

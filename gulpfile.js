@@ -109,7 +109,7 @@ gulp.task('js', function () {
 });
 
 gulp.task('css', function () {
-    exec('./fixfa.sh', function (err, stdout, stderr) {
+    exec('node fixfa.js', function (err, stdout, stderr) {
         if (err) {
             console.log(stdout);
             console.log(stderr);
