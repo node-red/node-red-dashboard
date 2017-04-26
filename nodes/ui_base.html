@@ -473,8 +473,8 @@
                         RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+lnk) });
                     }
                     else {
-                        RED.keyboard.add("*","ctrl-shift-d","Show Dashboard");
-                        RED.actions.add("Show Dashboard",function() { window.open(document.location.protocol+"//"+lnk) });
+                        RED.keyboard.add("*","ctrl-shift-d","dashboard:show-dashboard");
+                        RED.actions.add("dashboard:show-dashboard",function() { window.open(document.location.protocol+"//"+lnk) });
                     }
                     $('<span id="dash-link-button" class="editor-button" style="position:absolute; right:0px;"><i class="fa fa-external-link"></i></span>')
                     .click(function(evt) {
