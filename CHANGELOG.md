@@ -5,6 +5,9 @@
 
  - Make fixup of Font Awesome fonts easier for developers
 
+**Fixes**
+
+ - Let the Wave gauge display units if you wish
 
 ### 2.3.9: Maintenance Release
 

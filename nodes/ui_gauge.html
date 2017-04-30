@@ -78,14 +78,18 @@
             });
             $("#node-input-gtype").change(function() {
                 if ($(this).val() === "wave") {
-                    $("#ui-gauge-colours").hide();
-                } else {
-                    $("#ui-gauge-colours").show();
+                    $("#ui-gauge-format").hide();
+                }
+                else {
+                    $("#ui-gauge-format").show();
                 }
                 if (($(this).val() === "compass") || ($(this).val() === "wave")) {
                     $("#ui-gauge-colours").hide();
-                } else {
+                    $("#ui-gauge-segments").hide();
+                }
+                else {
                     $("#ui-gauge-colours").show();
+                    $("#ui-gauge-segments").show();
                 }
             });
             $("#node-input-min").change(function() {
@@ -126,11 +130,11 @@
             <label for="node-input-title"><i class="fa fa-i-cursor"></i> Label</label>
             <input type="text" id="node-input-title">
         </div>
-        <div class="form-row">
+        <div class="form-row" id="ui-gauge-format">
             <label for="node-input-format"><i class="fa fa-i-cursor"></i> Value format</label>
             <input type="text" id="node-input-format" placeholder="{{value}}">
         </div>
-        <div class="form-row">
+        <div class="form-row" id="ui-gauge-units">
             <label for="node-input-label"><i class="fa fa-i-cursor"></i> Units</label>
             <input type="text" id="node-input-label" placeholder="optional sub-label">
         </div>

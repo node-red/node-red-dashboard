@@ -35,6 +35,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         var gaugeConfig = liquidFillGaugeDefaultSettings();
                         gaugeConfig.minValue = scope.$eval('me.item.min');
                         gaugeConfig.maxValue = scope.$eval('me.item.max');
+                        gaugeConfig.units = scope.$eval('me.item.units');
                         gaugeConfig.textVertPosition = 0.33;
                         gaugeConfig.waveHeight = 0.09;
                         //gaugeConfig.waveAnimateTime = 10000;
