@@ -44,6 +44,7 @@ ev.setMaxListeners(0);
 var settings = {};
 
 function toNumber(keepDecimals, config, input) {
+    if (input === undefined) { return; }
     if (typeof input !== "number") {
         var inputString = input.toString();
         input = keepDecimals ? parseFloat(inputString) : parseInt(inputString);
@@ -123,7 +124,7 @@ function add(opt) {
             state.disabled = !msg.enabled;
             io.emit(updateValueEventName, state);
         }
-        if (!msg.hasOwnProperty("payload")) { return; } // return if no payload
+
         // remove res and req as they are often circular
         if (msg.hasOwnProperty("res")) { delete msg.res; }
         if (msg.hasOwnProperty("req")) { delete msg.req; }

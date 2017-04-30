@@ -16,6 +16,7 @@
                 }
             },
             height: {value: 0},
+            passthru: {value: false},
             label: {value: 'button'},
             color: {value: ''},
             bgcolor: {value: ''},
@@ -82,6 +83,10 @@
     <div class="form-row">
         <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
         <input type="text" id="node-input-topic">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
+        <input type="checkbox" id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
