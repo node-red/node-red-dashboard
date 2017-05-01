@@ -13,6 +13,7 @@
    - add passthru flag to button (as per other nodes) - Issue#211
    - fix bad number conversion for slider (and other nodes), if payload not set - Issue#212
      - now returns undefined which leaves UI unchanged, but passes through msg
+ - Fix bar charts not being cleared properly by [] - Issue#217
 
 ### 2.3.9: Maintenance Release
 

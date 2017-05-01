@@ -63,7 +63,7 @@ module.exports = function(RED) {
                 var converted = {};
                 if (Array.isArray(value)) {
                     if (node.chartType !== "line") {
-                        var nb = {series:[], data:[]};
+                        var nb = { series:[], data:[], labels:[] };
                         for (var v in value) {
                             if (value.hasOwnProperty(v)) {
                                 nb.data.push(value[v].values);
