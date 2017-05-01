@@ -14,6 +14,7 @@
    - fix bad number conversion for slider (and other nodes), if payload not set - Issue#212
      - now returns undefined which leaves UI unchanged, but passes through msg
  - Fix bar charts not being cleared properly by [] - Issue#217
+ - Fix Node-RED crashing on chart bad data input conversion - Issue#218
 
 ### 2.3.9: Maintenance Release
 
