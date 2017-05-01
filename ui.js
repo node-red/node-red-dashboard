@@ -263,6 +263,9 @@ function init(server, app, log, redSettings) {
             });
             socket.emit('ui-replay-done');
         });
+        socket.on('ui-change', function(index) {
+            ev.emit("changetab", index, socket.client.id, socket.request.connection.remoteAddress);
+        });
         socket.on('ui-refresh', function() {
             updateUi();
         });

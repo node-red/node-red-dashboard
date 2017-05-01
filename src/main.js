@@ -33,14 +33,18 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.allowSwipe = false;
         var main = this;
         var audiocontext;
+        var tabId = 0;
 
         function moveTab(d) {
-            var len = main.tabs.length;
+            var len = main.tabs.length + main.links.length;
             if (len > 1) {
-                var i = parseInt($location.path().substr(1));
+                //var i = parseInt($location.path().substr(1));
+                var i = tabId;
                 i = (i + d) % len;
                 if (i < 0) { i += len; }
-                main.select(i);
+                if (i < main.tabs.length) { main.select(i); }
+                else { main.open(main.links[i - main.tabs.length], i - main.tabs.length);}
+                tabId = i;
             }
         }
 
@@ -49,16 +53,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         this.toggleSidenav = function () { $mdSidenav('left').toggle(); }
 
-        this.select = function (index) {
+        this.select = function(index) {
             main.selectedTab = main.tabs[index];
             if (main.tabs.length > 0) { $mdSidenav('left').close(); }
-            events.emit('ui-replay-state', {});
+            tabId = index;
+            events.emit('ui-change', tabId);
             $location.path(index);
         }
 
         this.open = function (link, index) {
             // console.log("LINK",link,index);
             // open in new tab
+            tabId = main.tabs.length + index;
+            events.emit('ui-change', tabId);
             if (link.target === 'newtab') {
                 $window.open(link.link, link.name);
             }
@@ -218,6 +225,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
                 if (typeof msg.tab === 'string') {
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }
+                    if (msg.tab === "+1") { moveTab(1); return; }
+                    if (msg.tab === "-1") { moveTab(-1); return; }
                     // is it the name of a tab ?
                     for (var i in main.tabs) {
                         if (msg.tab == main.tabs[i].header) {

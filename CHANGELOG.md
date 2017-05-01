@@ -4,10 +4,11 @@
 **Enhancements**
 
  - Make fixup of Font Awesome fonts easier for developers
+ - Let the Wave gauge display units if you wish
+ - Add *change* tab event to ui_control output and also accept +1 and -1 to move to next/prev tab - Issue#194
 
 **Fixes**
 
- - Let the Wave gauge display units if you wish
  - Unbreak change made in 2.3.9 that dropped all msg with no payload.
    - add passthru flag to button (as per other nodes) - Issue#211
    - fix bad number conversion for slider (and other nodes), if payload not set - Issue#212
