@@ -5,26 +5,26 @@
 
  - Make fixup of Font Awesome fonts easier for developers
  - Let the Wave gauge display units if you wish
- - Add *change* tab event to ui_control output and also accept +1 and -1 to move to next/prev tab - Issue#194
+ - Add *change* tab event to ui_control output and also accept +1 and -1 to move to next/prev tab - Issue #194
 
 **Fixes**
 
  - Unbreak change made in 2.3.9 that dropped all msg with no payload.
-   - add passthru flag to button (as per other nodes) - Issue#211
-   - fix bad number conversion for slider (and other nodes), if payload not set - Issue#212
+   - add passthru flag to button (as per other nodes) - Issue #211
+   - fix bad number conversion for slider (and other nodes), if payload not set - Issue #212
      - now returns undefined which leaves UI unchanged, but passes through msg
- - Fix bar charts not being cleared properly by [] - Issue#217
- - Fix Node-RED crashing on chart bad data input conversion - Issue#218
+ - Fix bar charts not being cleared properly by [] - Issue #217
+ - Fix Node-RED crashing on chart bad data input conversion - Issue #218
 
 ### 2.3.9: Maintenance Release
 
 **Fixes**
 
  - Dashboard Tab - still occasionally empty (for old dashboard migrations)
- - Add CSS to try to help fix scroll of Edge Mobile devices - Issue#207
- - Fix Apple Touch Icon - Issue#208
- - Fix widget sy height (was picking up sx by mistake) - Issue#210
- - Don't let widget bother handle msg with no payload (only handle enabled) - Issue#211,#212
+ - Add CSS to try to help fix scroll of Edge Mobile devices - Issue #207
+ - Fix Apple Touch Icon - Issue #208
+ - Fix widget sy height (was picking up sx by mistake) - Issue #210
+ - Don't let widget bother handle msg with no payload (only handle enabled) - Issue #211, #212
 
 ### 2.3.8: Maintenance Release
 
@@ -40,18 +40,18 @@
 
 **Enhancements**
 
- - Stop rendering datapoints out of range on line charts - Issue#198
- - Let dropdown placeholder text be editable - Issue#202
+ - Stop rendering datapoints out of range on line charts - Issue #198
+ - Let dropdown placeholder text be editable - Issue #202
 
 **Fixes**
 
- - Let date-picker survive changes of tabs - Issue#189
- - Change text input box to detect tab to send data (rather than loss of focus) - Issue#196
- - Update Site properties in UI when theme loaded from library - Issue#197
- - Fix audiocontext to reuse existing - Issue#199
- - Better align text input and dropdown text inputs - Issue#201
+ - Let date-picker survive changes of tabs - Issue #189
+ - Change text input box to detect tab to send data (rather than loss of focus) - Issue #196
+ - Update Site properties in UI when theme loaded from library - Issue #197
+ - Fix audiocontext to reuse existing - Issue #199
+ - Better align text input and dropdown text inputs - Issue #201
  - Let ui be hosted at / if required - Issue204
- - Let bar and pie charts be reloaded correctly from saved data - Issue#205
+ - Let bar and pie charts be reloaded correctly from saved data - Issue #205
  - Let base colour theme edits work again (rather than resetting all the time)
 
 ### 2.3.6: Maintenance Release
@@ -64,19 +64,19 @@
  - enhance gulp, jshint and jscs checks
  - Hide page *title* tag until actually set
  - add optional i18n.js file to dist
- - optionally let switch status be set by input/feedback rather than press - PR#188
+ - optionally let switch status be set by input/feedback rather than press - PR #188
 
 **Fixes**
 
 - stop numeric widget emitting on accidental mouseover
 - text input will now send it's payload on losing focus as well as enter (if in enter mode)
-- fix form colours to be more dynamic to match theme, Issue#186
+- fix form colours to be more dynamic to match theme, Issue #186
 
 ### 2.3.5: Maintenance Release
 
 **Fixes**
 
- - let numeric (and slider) widget accept floating point presets if step set appropriately Issue#185
+ - let numeric (and slider) widget accept floating point presets if step set appropriately Issue #185
  - initialises OK if absolutely no theme present from old flow
  - knock the corners off homescreen icon
 
@@ -84,16 +84,16 @@
 
 **Enhancements**
 
- - Add IOS homescreen icon link - PR#176
+ - Add IOS homescreen icon link - PR #176
  - Let datepicker accept timestamp input to preset date.
  - Don't react to swipe in charts, or slider
 
 **Fixes**
 
- - move to ngTouch rather than mdTouch to fix swipe/scroll Issue#164
- - correct data output format from bar chart type chart - fixes Issue#181
- - prevent button forwarding input messages as it makes no sense. - PR#170
- - correct select box example - PR#182
+ - move to ngTouch rather than mdTouch to fix swipe/scroll Issue #164
+ - correct data output format from bar chart type chart - fixes Issue #181
+ - prevent button forwarding input messages as it makes no sense. - PR #170
+ - correct select box example - PR #182
  - fix compass colour to be set by custom widget colour
  - centre icon in button widget
 
@@ -124,25 +124,25 @@
 
 **Enhancements**
 
- - Add Themes to Dashboard Tab - includes colour and sizes and other options - Issue137
- - Colour-picker - add configurable lightness slider - PR123
- - Configurable colour for Notification toasts - Issue145
- - Remove whitespace from above gauge with no label  - Issue159
- - Let gauge widgets scall larger when basic unit size increased - Issue162
+ - Add Themes to Dashboard Tab - includes colour and sizes and other options - Issue #137
+ - Colour-picker - add configurable lightness slider - PR #123
+ - Configurable colour for Notification toasts - Issue #145
+ - Remove whitespace from above gauge with no label  - Issue #159
+ - Let gauge widgets scall larger when basic unit size increased - Issue #162
  - Let most labels show icons if required (via html <i syntax)
- - Add date-picker widget - Issue14
- - Give audio node option to play when not in focus - Issue167
+ - Add date-picker widget - Issue #14
+ - Give audio node option to play when not in focus - Issue #167
 
 **Fixes**
 
  - also check template for existence of sole <link tag : if so set height to 0
- - ensure ui_base node has a user to prevent node appearing in "unused" config nodes tab - Issue110 - actually fixed in core for 0.16.1
+ - ensure ui_base node has a user to prevent node appearing in "unused" config nodes tab - Issue #110 - actually fixed in core for 0.16.1
  - chart no longer emits a blank array on start (which was wiping out file storage of data)
- - link tabs were stuck at light theme - now follow overall theme correctly - Issue149
- - fixed numeric widget to not have rounding error, and also occasional stall/hang - Issue150
- - fixed numeric widget not starting at min value - Issue163
+ - link tabs were stuck at light theme - now follow overall theme correctly - Issue #149
+ - fixed numeric widget to not have rounding error, and also occasional stall/hang - Issue #150
+ - fixed numeric widget not starting at min value - Issue #163
  - dashboard root path re-write from UI now working
- - remove .res and .req properties of msg in case they have circular refs - Issue153
+ - remove .res and .req properties of msg in case they have circular refs - Issue #153
  - make dropdown widget arrow, chart gridlines, match theme
  - remove .req and .res properties to remove problems with circular references
 

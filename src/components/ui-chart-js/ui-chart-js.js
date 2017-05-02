@@ -81,11 +81,8 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             else {
                                 // Bar charts and non update line charts replace the data
                                 scope.config.data = newValue.values.data;
-                                // if (type === 'line') { scope.config.series = newValue.values.series }
-                                // else {
-                                scope.config.labels = newValue.values.labels;
                                 scope.config.series = newValue.values.series;
-                                //}
+                                scope.config.labels = newValue.values.labels;
                             }
                         }
                         else {
