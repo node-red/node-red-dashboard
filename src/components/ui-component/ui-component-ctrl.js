@@ -194,7 +194,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 events.emit(data);
                 return;
             }
-
             if (timer) {
                 clearTimeout(timer);
             }

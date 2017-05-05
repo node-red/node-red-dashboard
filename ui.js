@@ -162,7 +162,32 @@ function add(opt) {
             if (newPoint !== undefined) { toEmit = opt.beforeEmit(msg, newPoint); }
             else { toEmit = toStore; }
 
+            var addField = function(m) {
+                if (opt.control.hasOwnProperty(m) && opt.control[m].indexOf("{{") !== -1) {
+                    var b = opt.control[m].split("{{")[1].split("}}")[0].trim();
+                    if (b.indexOf("|") !== -1) { b = b.split("|")[0]; }
+                    if (b.indexOf(" ") !== -1) { b = b.split(" ")[0]; }
+                    if (b.indexOf("msg.") === 0) {
+                        b = b.split("msg.")[1];
+                        if (!toEmit.hasOwnProperty("msg")) { toEmit.msg = {}; }
+                        if (!toEmit.msg.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
+                            toEmit.msg[b] = JSON.parse(JSON.stringify(msg[b]));
+                        }
+                    }
+                    else {
+                        if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
+                        if (!toEmit.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
+                            toEmit[b] = JSON.parse(JSON.stringify(msg[b]));
+                        }
+                    }
+                }
+            }
+
+            // if label, or format field is set to a msg property, emit that as well
+            addField("label");
+            addField("format");
             toEmit.id = toStore.id = opt.node.id;
+            //console.log("EMIT",toEmit);
 
             // Emit and Store the data
             io.emit(updateValueEventName, toEmit);

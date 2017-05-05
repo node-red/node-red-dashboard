@@ -1,11 +1,12 @@
 
-### 2.3.10-beta: Maintenance Release
+### 2.3.10: Maintenance Release
 
 **Enhancements**
 
  - Make fixup of Font Awesome fonts easier for developers
  - Let the Wave gauge display units if you wish
  - Add *change* tab event to ui_control output and also accept +1 and -1 to move to next/prev tab - Issue #194
+ - Let label field be set by a {{msg.property}} (for all widgets with label field) - Issue #220
 
 **Fixes**
 
