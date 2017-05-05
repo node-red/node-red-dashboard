@@ -40,7 +40,7 @@
         align: "right",
         icon: "ui_gauge.png",
         paletteLabel: 'gauge',
-        label: function() { return this.name || this.title || 'gauge'; },
+        label: function() { return this.name || (~this.title.indexOf("{{") ? null : this.title) || ((this.gtype === "gage") ? "gauge" : this.gtype) || 'gauge'; },
         oneditprepare: function() {
             var setColour = function(id, value) {
                 $(id).val(value);

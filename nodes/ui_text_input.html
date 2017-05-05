@@ -26,7 +26,7 @@
         outputs:1,
         icon: "ui_text.png",
         paletteLabel: 'text input',
-        label: function() { return this.name || this.label || this.mode+' input'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || this.mode+' input'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

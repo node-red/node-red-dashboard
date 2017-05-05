@@ -29,7 +29,7 @@
         outputs:1,
         icon: "ui_button.png",
         paletteLabel: 'button',
-        label: function() { return this.name || this.label || 'button'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'button'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

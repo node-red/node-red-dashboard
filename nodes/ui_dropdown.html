@@ -27,7 +27,7 @@
         outputs:1,
         icon: "ui_dropdown.png",
         paletteLabel: 'dropdown',
-        label: function() { return this.name || this.label || 'dropdown'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'dropdown'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

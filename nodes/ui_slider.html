@@ -27,7 +27,7 @@
         outputs:1,
         icon: "ui_slider.png",
         paletteLabel: 'slider',
-        label: function() { return this.name || this.label || 'slider'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'slider'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
