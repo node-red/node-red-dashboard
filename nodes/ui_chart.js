@@ -149,7 +149,13 @@ module.exports = function(RED) {
                         }
 
                         // Add a new point
-                        var time = new Date().getTime();
+                        var timestamp = msg.timestamp
+                        var time
+                        if (timestamp == null) {
+                            time = new Date().getTime();
+                        } else {
+                            time = new Date(timestamp).getTime();
+                        }
 
                         // Add the data to the correct series
                         var point = {"x": time, "y": value};
