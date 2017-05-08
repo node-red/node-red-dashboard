@@ -33,6 +33,12 @@ module.exports = function(RED) {
                     var property = properties[i];
                     clonedMsg[property] = msg[property];
                 }
+
+                // transform to string if msg.template is buffer
+                if (clonedMsg.template !== undefined && Buffer.isBuffer(clonedMsg.template)) {
+                    clonedMsg.template = clonedMsg.template.toString();
+                }
+                
                 //This updates the whole page if the template input changes and
                 //height set to auto - performance killer, but here just in case
                 // if ((config.height == "0") && (value !== node.oldvalue)) {
