@@ -290,6 +290,7 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-change', function(index) {
             ev.emit("changetab", index, socket.client.id, socket.request.connection.remoteAddress);
+            updateUi();
         });
         socket.on('ui-refresh', function() {
             updateUi();

@@ -1,4 +1,10 @@
 
+### 2.3.11-beta: Maintenance Release
+
+**Fixes**
+
+ - Make sure chart display is fully refreshed on tab change - Issue #226
+
 ### 2.3.10: Maintenance Release
 
 **Enhancements**
