@@ -105,6 +105,7 @@ function loadConfiguration(type,scope) {
     var xFormat = scope.$eval('me.item.xformat');
     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
     var config = {};
+    var themeState = scope.$eval('me.item.theme.themeState');
     config.data = [];
     config.series = [];
     config.labels = [];
@@ -205,7 +206,6 @@ function loadConfiguration(type,scope) {
         if (isNaN(yMin)) { yMin = 0; }
     }
 
-    var themeState = scope.$eval('me.item.theme.themeState');
     // Configure scales
     if (type !== 'pie') {
         config.options.scales.yAxes = [{}];
@@ -226,13 +226,15 @@ function loadConfiguration(type,scope) {
         }
 
         // Theme settings
-        config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = themeState['widget-textColor'].value;
-        var gridColor = tinycolor(themeState['widget-textColor'].value).toRgb();
-        var gridlineColour = "rgba("+gridColor.r+","+gridColor.g+","+gridColor.b+",0.1)";
+        if (themeState) {
+            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = themeState['widget-textColor'].value;
+            var gridColor = tinycolor(themeState['widget-textColor'].value).toRgb();
+            var gridlineColour = "rgba("+gridColor.r+","+gridColor.g+","+gridColor.b+",0.1)";
 
-        config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
-            color: gridlineColour,
-            zeroLineColor: gridlineColour
+            config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
+                color: gridlineColour,
+                zeroLineColor: gridlineColour
+            }
         }
 
         // Ensure scale labels do not rotate
@@ -253,8 +255,9 @@ function loadConfiguration(type,scope) {
         }
 
         //set colours based on widget text colour
-        var themeStat = scope.$eval('me.item.theme.themeState');
-        config.options.legend.labels = { fontColor:themeStat['widget-textColor'].value };
+        if (themeState) {
+            config.options.legend.labels = { fontColor:themeState['widget-textColor'].value };
+        }
     }
     return config;
 }

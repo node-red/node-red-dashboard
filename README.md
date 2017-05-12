@@ -74,7 +74,7 @@ Any widget can be disabled by passing in a `msg.enabled` property set to `false;
 
         [ "Choice 1", "Choice 2", {"Choice 3": 3} ]
 
-  Setting `msg.payload` will pre-select the value in the dropdown.
+     Setting `msg.payload` will pre-select the value in the dropdown.
   - **Form** - a widget that can be composed of several sub-widgets. When submitted all values are submitted as a single message.
   - **Gauge** - has 4 modes - *standard* (simple gauge), *donut* (complete 360&deg;), *compass*, and *wave*. You can also specify the colour range of the standard and donut gauges.
   - **Notification** - creates alerts to the user - can either be a toast popup, or a dismissable alert box. The alert may be targeted to a single user.
@@ -126,8 +126,8 @@ git clone https://github.com/node-red/node-red-dashboard.git
 cd node-red-dashboard
 npm install
 ```
-The plugin uses the ```dist``` folder if it exists and contains an ```index.html``` file. Make sure to delete it if you want to use the non-minified version.
-After changing the front-end code in the src folder, use ```gulp``` to update the minified files and update the *appcache* manifest.
+The plugin uses the ```dist``` folder if it exists. Make sure it has been deleted if you want to use the non-minified version while developing.
+After finishing changes to the front-end code in the src folder, you can use ```gulp``` to update and rebuild the minified files and update the *appcache* manifest.
 
     gulp
 
