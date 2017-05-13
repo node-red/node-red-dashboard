@@ -92,7 +92,6 @@
                     value: option.find(".node-input-option-value").typedInput('value'),
                     type: option.find(".node-input-option-value").typedInput('type')
                 };
-                if (o.label === "") { o.label = o.value; }
                 if (option.find(".node-input-option-value").typedInput('type') === "num") {
                     o.value = Number(o.value);
                 }

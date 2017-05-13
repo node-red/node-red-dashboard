@@ -17,9 +17,13 @@ module.exports = function(RED) {
                 order: config.order,
                 value: config.payload || node.id,
                 width: config.width || group.config.width || 6,
-                height: config.height || 1,
-                options: config.options
+                height: config.height || 1
             };
+
+        for (var o=0; o<config.options.length; o++) {
+            config.options[o].label = config.options[o].label || config.options[o].value;
+        }
+        control.options = config.options;
 
         var emitOptions;
 
