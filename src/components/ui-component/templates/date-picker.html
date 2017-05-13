@@ -2,7 +2,7 @@
     <md-input-container flex layout="row">
         <md-datepicker
             class="nr-dashboard-date-picker"
-            md-placeholder="{{me.item.label}}"
+            md-placeholder="{{me.item.getLabel()}}"
             md-open-on-focus
             ng-model="me.item.ddd"
             ng-change="me.setDate()"

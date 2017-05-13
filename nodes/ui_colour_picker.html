@@ -31,7 +31,7 @@
         outputs:1,
         icon: "ui_colour_picker.png",
         paletteLabel: 'colour picker',
-        label: function() { return this.name || this.label || 'colour picker'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'colour picker'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

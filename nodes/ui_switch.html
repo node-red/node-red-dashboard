@@ -34,7 +34,7 @@
         outputs:1,
         icon: "ui_switch.png",
         paletteLabel: 'switch',
-        label: function() { return this.name || this.label || 'switch'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'switch'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

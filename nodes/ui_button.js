@@ -34,6 +34,7 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             emitOnlyNewValues: false,
+            forwardInputMessages: config.passthru || false,
             control: {
                 type: 'button',
                 label: config.label,

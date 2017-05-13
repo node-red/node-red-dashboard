@@ -44,7 +44,7 @@
         align: "right",
         icon: "ui_chart.png",
         paletteLabel: 'chart',
-        label: function() { return this.name || 'chart'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'chart'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

@@ -25,7 +25,7 @@
         align: "right",
         icon: "ui_text.png",
         paletteLabel: 'text',
-        label: function() { return this.name || this.label || 'text'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'text'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -169,5 +169,5 @@
     <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Value Format</b>.</p>
     <p>The <b>Value Format</b> field can be used to change the displayed format and can contain valid HTML and
     <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_blank">Angular filters</a>.</p>
-    <p>For example: <code>{{msg.payload | uppercase}} &amp;deg;</code> will uppercase the text and add the degree symbol.</p>
+    <p>For example: <code>{{payload | uppercase}} &amp;deg;</code> will uppercase the payload text and add the degree symbol.</p>
 </script>

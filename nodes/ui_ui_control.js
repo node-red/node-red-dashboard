@@ -13,12 +13,16 @@ module.exports = function(RED) {
             }
         });
 
-        ui.ev.on('newsocket', function(id,ip) {
+        ui.ev.on('newsocket', function(id, ip) {
             node.send({payload:"connect", socketid:id, socketip:ip});
         });
 
-        ui.ev.on('endsocket', function(id,ip) {
+        ui.ev.on('endsocket', function(id, ip) {
             node.send({payload:"lost", socketid:id, socketip:ip});
+        });
+
+        ui.ev.on('changetab', function(index, id, ip) {
+            node.send({payload:"change", tab:index, socketid:id, socketip:ip});
         });
 
         this.on('close', function() {

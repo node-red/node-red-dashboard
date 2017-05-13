@@ -4,7 +4,6 @@ CACHE:
 i18n.js
 icon192x192.png
 icon64x64.png
-index.html
 css/app.min.css
 css/app.min.less
 css/index.html
@@ -20,4 +19,4 @@ fonts/fontawesome-webfont.woff2
 NETWORK:
 *
 
-# hash: 0d00849c434afa80c89787a0c90f4e47172e4ec48c1c57b7504f8621255972b0
+# hash: 336cd8cf783e96e9d0e0868f7ad9c2977d0c0218fc5bb2829aa488dcaf0f45ad
