@@ -1,9 +1,15 @@
 
 ### 2.3.11-beta: Maintenance Release
 
+**Enhancements**
+
+- Add name of tab to ui_control node tab change msg
+- Let dropdown use value as label if not otherwise specified
+
 **Fixes**
 
  - Make sure chart display is fully refreshed on tab change - Issue #226
+ - Catch another possible missing theme escape path.
 
 ### 2.3.10: Maintenance Release
 
