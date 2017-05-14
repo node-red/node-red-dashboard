@@ -260,7 +260,7 @@ function init(server, app, log, redSettings) {
             log.info("Dashboard using development folder");
             app.use(join(settings.path), serveStatic(path.join(__dirname, "src")));
             var vendor_packages = [
-                'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material',
+                'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material', 'angular-touch',
                 'angular-material-icons', 'svg-morpheus', 'font-awesome',
                 'sprintf-js',
                 'jquery', 'jquery-ui',
