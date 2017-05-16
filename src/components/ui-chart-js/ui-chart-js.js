@@ -207,7 +207,7 @@ function loadConfiguration(type,scope) {
 
     var themeState = scope.$eval('me.item.theme.themeState');
     // Configure scales
-    if (type !== 'pie') {
+    if ((type !== 'pie') && (type !== 'polar-area') && (type !== 'radar')) {
         config.options.scales.yAxes = [{}];
         config.options.scales.xAxes[0].ticks = {};
         config.options.scales.yAxes[0].ticks = {};
@@ -248,7 +248,7 @@ function loadConfiguration(type,scope) {
     // Configure legend
     if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
         config.options.legend = { display: true };
-        if (type === 'pie') {
+        if ((type === 'pie') || (type="polar-area") || (type="radar")) {
             config.options.legend.position = 'left';
         }
 
