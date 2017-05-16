@@ -10,6 +10,7 @@
 
  - Make sure chart display is fully refreshed on tab change - Issue #226
  - Catch another possible missing theme escape path.
+ - Fix msg. label regression for ui_text node - Issue #230
 
 ### 2.3.10: Maintenance Release
 
