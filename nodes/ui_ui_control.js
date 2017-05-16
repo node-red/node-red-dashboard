@@ -21,8 +21,8 @@ module.exports = function(RED) {
             node.send({payload:"lost", socketid:id, socketip:ip});
         });
 
-        ui.ev.on('changetab', function(index, id, ip) {
-            node.send({payload:"change", tab:index, socketid:id, socketip:ip});
+        ui.ev.on('changetab', function(index, name, id, ip) {
+            node.send({payload:"change", tab:index, name:name, socketid:id, socketip:ip});
         });
 
         this.on('close', function() {
