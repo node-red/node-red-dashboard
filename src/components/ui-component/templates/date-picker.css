@@ -1,6 +1,12 @@
 .nr-dashboard-date-picker {
     padding: 0 0px;
     width: 100%;
+    margin-top: 8px;
+    margin-right: 0px;
+}
+
+.nr-dashboard-date-picker-label {
+    margin-left: 8px;
 }
 
 .md-button.md-icon-button {

@@ -5,6 +5,7 @@
 
 - Add name of tab to ui_control node tab change msg
 - Let dropdown use value as label if not otherwise specified
+- Add label field to date-picker
 
 **Fixes**
 

@@ -293,10 +293,10 @@ function init(server, app, log, redSettings) {
             var name = "";
             var tl = tabs.length + links.length;
             if (tl > 0 && index <= tl) {
-                name = index > tabs.length ? links[index - tabs.length].header : tabs[index].header;
+                name = index >= tabs.length ? links[index - tabs.length].name : tabs[index].header;
             }
             ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
-            updateUi();
+            if (index < tabs.length) { updateUi(); }
         });
         socket.on('ui-refresh', function() {
             updateUi();
