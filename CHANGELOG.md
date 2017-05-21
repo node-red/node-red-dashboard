@@ -6,12 +6,14 @@
 - Add name of tab to ui_control node tab change msg
 - Let dropdown use value as label if not otherwise specified
 - Add label field to date-picker
+- Adjust labels spacing on gauges to look better at small sizes
 
 **Fixes**
 
  - Make sure chart display is fully refreshed on tab change - Issue #226
  - Catch another possible missing theme escape path.
  - Fix msg. label regression for ui_text node - Issue #230
+ - Retain enable/disable state of widgets (broken in 2.3.10)
 
 ### 2.3.10: Maintenance Release
 
