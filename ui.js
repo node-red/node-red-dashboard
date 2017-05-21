@@ -187,6 +187,7 @@ function add(opt) {
             // if label, or format field is set to a msg property, emit that as well
             addField("label");
             addField("format");
+            if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
             //console.log("EMIT",toEmit);
 
