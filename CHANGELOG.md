@@ -1,5 +1,5 @@
 
-### 2.3.11-beta: Maintenance Release
+### 2.3.11: Maintenance Release
 
 **Enhancements**
 
@@ -14,7 +14,7 @@
  - Catch another possible missing theme escape path.
  - Fix msg. label regression for ui_text node - Issue #230
  - Retain enable/disable state of widgets (broken in 2.3.10)
- - Fix namespacing of base node inputs
+ - Fix name-spacing of base node inputs
  - Fix custom theme to default back to previous setting
 
 ### 2.3.10: Maintenance Release
