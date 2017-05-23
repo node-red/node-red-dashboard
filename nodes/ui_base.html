@@ -175,21 +175,21 @@
     ul.red-ui-dashboard-theme-styles li {
         margin-bottom: 10px;
     }
-    .resetIcon {
+    .nr-db-resetIcon {
         margin: 3px 6px 0px 6px;
         float: right;
         color: grey;
         opacity: 0.8;
         display: block;
     }
-    .resetIcon:hover {
+    .nr-db-resetIcon:hover {
         cursor: pointer;
     }
     #nr-db-field-font {
         margin-left: 2em;
         width: 150px;
     }
-    label.theme-label {
+    .nr-db-theme-label {
         font-weight: bold;
     }
     #custom-theme-library-container .btn-group {
@@ -589,7 +589,7 @@
                 $('<span style="width:45%; display:inline-block">').html('<b>Sizes</b>').appendTo(divSetSizes);
                 $('<span style="width:25%; display:inline-block; font-size:smaller">').html('Horizontal').appendTo(divSetSizes);
                 $('<span style="width:20%; display:inline-block; font-size:smaller">').html('Vertical').appendTo(divSetSizes);
-                $('<i id="sizes-reset" class="fa fa-undo resetIcon"></i>')
+                $('<i id="sizes-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                 .css({opacity:1.0})
                 .click(function(e) {
                     $("#nr-db-field-sx").val(sizes.sx); globalDashboardNode.site.sizes.sx = sizes.sx;
@@ -661,7 +661,7 @@
                 }
 
                 var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
-                $('<label class="theme-label">').html('Style').appendTo(divThemeStyle);
+                $('<label class="nr-db-theme-label">').html('Style').appendTo(divThemeStyle);
                 var themeSelection = $('<select id="nr-db-field-theme">'+
                     '<option value="theme-light">Light (default)</option>'+
                     '<option value="theme-dark">Dark</option>'+
@@ -678,6 +678,7 @@
                         if (theme !== "custom") {
                             baseColour = globalDashboardNode.theme[theme+'Theme'].default;
                         }
+                        else { baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor; }
                         setColourPickerColour("base-color", baseColour);
                         globalDashboardNode.theme.themeState['base-color'].value = baseColour;
                         globalDashboardNode.theme.themeState['base-color'].default = baseColour;
@@ -701,8 +702,8 @@
                 .appendTo(divThemeStyle);
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
-                $('<label class="theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="node-input-name" placeholder="profile name (not blank)">')
+                $('<label class="nr-db-theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
+                $('<input type="text" id="nr-db-field-name" placeholder="profile name (not blank)">')
                 .val("Untitled Theme 1")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
@@ -719,13 +720,13 @@
                     else { $("#custom-theme-library-container div").css("pointer-events","inherit"); }
                 })
                 .appendTo(customThemeLibraryContainer);
-                $('<input type="hidden" id="node-input-format">').appendTo(customThemeLibraryContainer);
-                $('<div style="display:none;" class="node-text-editor" id="node-input-format-editor"></div>').appendTo(customThemeLibraryContainer);
+                $('<input type="hidden" id="nr-db-field-format">').appendTo(customThemeLibraryContainer);
+                $('<div style="display:none;" class="node-text-editor" id="nr-db-field-format-editor"></div>').appendTo(customThemeLibraryContainer);
 
                 var baseThemeSettingsContainer = $('<div id="base-theme-settings">').appendTo(themeTab);
 
                 var baseSettings = $('<div>',{class:"form-row"}).appendTo(baseThemeSettingsContainer);
-                $('<label class="theme-label">').html('Base Settings').appendTo(baseSettings);
+                $('<label class="nr-db-theme-label">').html('Base Settings').appendTo(baseSettings);
                 var baseSettingsUl = $('<ul id="base-settings-ul" class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
 
                 var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Colour</span></li>').appendTo(baseSettingsUl);
@@ -763,7 +764,7 @@
                 // Markup
                 // Page styles
                 var divPageStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="theme-label">').html('Page Settings').appendTo(divPageStyle);
+                $('<label class="nr-db-theme-label">').html('Page Settings').appendTo(divPageStyle);
                 var pageStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('page-titlebar-backgroundColor', 'Title Bar Background', pageStyles);
                 addCustomisableStyle('page-backgroundColor', 'Page Background', pageStyles);
@@ -771,7 +772,7 @@
 
                 // Group styles
                 var divGroupStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="theme-label">').html('Group Settings').appendTo(divGroupStyle);
+                $('<label class="nr-db-theme-label">').html('Group Settings').appendTo(divGroupStyle);
                 var groupStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('group-textColor', 'Group Text', groupStyles);
                 addCustomisableStyle('group-borderColor', 'Group Border', groupStyles);
@@ -779,7 +780,7 @@
 
                 // Widget styles
                 var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
+                $('<label class="nr-db-theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
                 var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('widget-textColor', 'Widget Text', widgetStyles);
                 addCustomisableStyle('widget-backgroundColor', 'Widget Colour', widgetStyles);
@@ -805,7 +806,7 @@
                 }
 
                 function addResetButton(id, parent) {
-                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo resetIcon"></i>')
+                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:0.2})
                     .click(function(e) { resetClick(e); })
                     .appendTo(parent);
@@ -813,7 +814,7 @@
 
                 function addLightAndDarkResetButton(id, parent) {
                     if ($("#" + id + "-reset").length === 0) {
-                        var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo resetIcon"></i>')
+                        var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                         .css({opacity:1})
                         .click(function(e) { lightAndDarkResetClick(e); })
                         .appendTo(parent);
@@ -1503,7 +1504,7 @@
                         $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
 
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
-                        $("#node-input-name").val(globalDashboardNode.theme.customTheme.name);
+                        $("#nr-db-field-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {
                             $("#custom-theme-library-container").show();
                             $("#custom-theme-settings").show();
@@ -1527,7 +1528,7 @@
 
                         if (editor === undefined) {
                             editor = RED.editor.createEditor({
-                                id: 'node-input-format-editor',
+                                id: 'nr-db-field-format-editor',
                                 mode: 'ace/mode/javascript',
                                 value: JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site})
                             });
@@ -1585,8 +1586,8 @@
                             //Update theme object if necessary
                             if (JSON.stringify(editorObject.theme) !== JSON.stringify(globalDashboardNode.theme.themeState)) {
                                 globalDashboardNode.theme.themeState = editorObject.theme;
-                                if ($("#node-input-name").val() !== globalDashboardNode.theme.customTheme.name) {
-                                    globalDashboardNode.theme.customTheme.name = $("#node-input-name").val();
+                                if ($("#nr-db-field-name").val() !== globalDashboardNode.theme.customTheme.name) {
+                                    globalDashboardNode.theme.customTheme.name = $("#nr-db-field-name").val();
                                     globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["base-color"].value;
                                     setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
                                     generateColours(globalDashboardNode.theme.themeState["base-color"].value);

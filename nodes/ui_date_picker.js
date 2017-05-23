@@ -29,6 +29,7 @@ module.exports = function(RED) {
                 return payload;
             },
             beforeEmit: function (msg, value) {
+                if (value === undefined) { return; }
                 value = new Date(value);
                 return { msg:msg, value:value };
             },

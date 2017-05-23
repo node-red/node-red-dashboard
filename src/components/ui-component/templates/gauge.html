@@ -3,8 +3,13 @@
     layout-align="center center"
     ng-class="{'nr-dashboard-disabled':me.item.disabled}">
     <p  class="label nr-dashboard-gauge-title"
-        ng-class = "{'nr-dashboard-gauge-titlel':(me.item.width > 3)}"
-        ng-bind-html="me.item.getLabel()">
+        ng-class="{'nr-dashboard-gauge-titlel':(me.item.width > 3)}"
+        ng-bind-html="me.item.getLabel()"
+        ng-hide="(me.item.height == 1)">
+    </p>
+    <p  ng-show="(me.item.height == 1)"
+        ng-bind-html="me.item.getLabel()"
+        ng-class="{'nr-dashboard-gauge-titles':(me.item.height == 1)}">
     </p>
     <ui-gauge
         style="text-align:center;"

@@ -187,6 +187,7 @@ function add(opt) {
             // if label, or format field is set to a msg property, emit that as well
             addField("label");
             addField("format");
+            if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
             //console.log("EMIT",toEmit);
 
@@ -290,11 +291,25 @@ function init(server, app, log, redSettings) {
             socket.emit('ui-replay-done');
         });
         socket.on('ui-change', function(index) {
+<<<<<<< HEAD
             if (index <= (tabs.length + links.length)) {
                 var name = index > tabs.length ? links[index - tabs.length].header : tabs[index].header;
                 ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
             }
             updateUi();
+||||||| merged common ancestors
+            var name = index > tabs.length ? links[index].header : tabs[index].header;
+            ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
+            updateUi();
+=======
+            var name = "";
+            var tl = tabs.length + links.length;
+            if (tl > 0 && index <= tl) {
+                name = index >= tabs.length ? links[index - tabs.length].name : tabs[index].header;
+            }
+            ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
+            if (index < tabs.length) { updateUi(); }
+>>>>>>> master
         });
         socket.on('ui-refresh', function() {
             updateUi();

@@ -2,7 +2,8 @@
     style="
         width:{{me.item.width * me.item.sizes.sx}}px;
         height:{{(me.item.height * me.item.sizes.sy)+((me.item.title.length == 0) * me.item.sizes.sy)}}px;
-        margin-top: -60px;
+        margin-top:-40px;
+        padding-top:{{(me.item.gtype === 'compass') * 16}}px;
     "
 >
 <svg ng-show="me.item.gtype=='wave'" id="gauge{{$id}}" width="100%" height="100%"></svg>
