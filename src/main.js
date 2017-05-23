@@ -148,7 +148,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             else {
                 $timeout( function() {
-                    main.open(main.menu[0], 0);
+                    // open first menu, which is not new tab link
+                    var indexToOpen = null;
+                    main.menu.some(function (menu, i) {
+                        if (menu.target === undefined || menu.target === 'iframe') {
+                          indexToOpen = i;
+                          return true;
+                        }
+                    })
+                    if (indexToOpen !== null) {
+                        main.open(main.menu[indexToOpen], indexToOpen);
+                    }
                     finishLoading();
                 }, 50);
             }
