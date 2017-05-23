@@ -678,6 +678,7 @@
                         if (theme !== "custom") {
                             baseColour = globalDashboardNode.theme[theme+'Theme'].default;
                         }
+                        else { baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor; }
                         setColourPickerColour("base-color", baseColour);
                         globalDashboardNode.theme.themeState['base-color'].value = baseColour;
                         globalDashboardNode.theme.themeState['base-color'].default = baseColour;
