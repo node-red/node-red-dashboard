@@ -123,8 +123,8 @@
         display: inline-block;
         padding-left: 3px;
     }
-    .nr-db-sb-link-title {
-
+    .nr-db-sb-link-name-container .fa-link {
+      margin-right: 10px;
     }
     .nr-db-sb-link-url {
         font-size: 0.8em;
@@ -989,7 +989,9 @@
                         case 'ui_link':
                             $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
                             var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
-                            $('<div class="nr-db-sb-link-name">').html(item.node.name||"untitled").appendTo(title);
+                            var nameContainer = $('<div class="nr-db-sb-link-name-container">').appendTo(title);
+                            $('<i class="fa fa-link"></i>').appendTo(nameContainer);
+                            $('<span class="nr-db-sb-link-name">').html(item.node.name||"untitled").appendTo(nameContainer);
                             $('<div class="nr-db-sb-link-url">').html(item.node.link||"http://").appendTo(title);
                             break;
                     }
