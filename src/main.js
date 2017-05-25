@@ -64,21 +64,21 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 this.select(index) // select tab
             }
             else {
-              // open in new tab
-              if (menu.target === 'newtab') {
-                  $window.open(menu.link, menu.name);
-              }
-              // open in iframe  (if allowed by remote site)
-              else {
-                  if (typeof main.menu[index].link === "string") {
-                      main.menu[index].link = $sce.trustAsResourceUrl(main.menu[index].link);
-                  }
-                  main.selectedTab = main.menu[index];
-                  tabId = index;
-                  events.emit('ui-change', tabId);
-                  $location.path(index);
-              }
-              $mdSidenav('left').close();
+                // open in new tab
+                if (menu.target === 'newtab') {
+                    $window.open(menu.link, menu.name);
+                }
+                // open in iframe  (if allowed by remote site)
+                else {
+                    if (typeof main.menu[index].link === "string") {
+                        main.menu[index].link = $sce.trustAsResourceUrl(main.menu[index].link);
+                    }
+                    main.selectedTab = main.menu[index];
+                    tabId = index;
+                    events.emit('ui-change', tabId);
+                    $location.path(index);
+                }
+                $mdSidenav('left').close();
             }
         }
 
@@ -86,7 +86,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (menu.link !== undefined) {
                 return menu.name;
             }
-
             return menu.header;
         }
 
@@ -138,7 +137,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     applyStyle(ui.theme);
                 }
                 if (main.selectedTab.link !== undefined) {
-                  main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
+                    main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
                 done();
             }
@@ -152,8 +151,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     var indexToOpen = null;
                     main.menu.some(function (menu, i) {
                         if (menu.target === undefined || menu.target === 'iframe') {
-                          indexToOpen = i;
-                          return true;
+                            indexToOpen = i;
+                            return true;
                         }
                     })
                     if (indexToOpen !== null) {

@@ -1,4 +1,10 @@
 
+### 2.3.12-beta: Maintenance Release
+
+**Enhancements**
+
+ - merge tabs and links so all can be reordered - PR #234
+
 ### 2.3.11: Maintenance Release
 
 **Enhancements**

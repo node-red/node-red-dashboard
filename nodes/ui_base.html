@@ -20,6 +20,10 @@
     .nr-db-sb .red-ui-editableList-container {
         padding:0;
     }
+    .nr-db-sb-tab-list {
+        min-height: 250px;
+        height: 100%;
+    }
     .nr-db-sb-tab-list li {
         padding: 0;
     }
@@ -492,7 +496,7 @@
                 });
 
                 // Dashboard Tab containers
-                var layoutTab = $('<div id="dashboard-layout">').appendTo(form);
+                var layoutTab = $('<div id="dashboard-layout" style="height:calc(100% - 48px)">').appendTo(form);
                 var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
                 var siteTab = $('<div id="dashboard-site" style="display:none;">').appendTo(form);
 
@@ -1189,7 +1193,7 @@
                     }
                 }
 
-                var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css({"min-height":"350px","height":"700px"}).appendTo(divTabs).editableList({
+                var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).appendTo(divTabs).editableList({
                     sortable:".nr-db-sb-tab-list-header",
                     addButton: false,
                     addItem: addTabOrLinkItem,
