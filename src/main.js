@@ -248,6 +248,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
                 if (typeof msg.tab === 'string') {
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }
+                    if (msg.tab === "+1") { moveTab(1); return; }
+                    if (msg.tab === "-1") { moveTab(-1); return; }
                     for (var i in main.menu) {
                         // is it the name of a tab ?
                         if (msg.tab == main.menu[i].header) {
