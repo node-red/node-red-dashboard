@@ -136,7 +136,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
                     applyStyle(ui.theme);
                 }
-                if (main.selectedTab.link !== undefined) {
+                if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
                 done();
