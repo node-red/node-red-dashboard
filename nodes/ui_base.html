@@ -18,10 +18,11 @@
         margin-bottom:0;
     }
     .nr-db-sb .red-ui-editableList-container {
-        padding:0;
+        padding: 0;
+        height: auto !important;
     }
     .nr-db-sb-tab-list {
-        min-height: 250px;
+        min-height: 36px;
         height: 100%;
     }
     .nr-db-sb-tab-list li {
@@ -45,7 +46,8 @@
         background: #f3f3f3;
         padding:5px;
     }
-    .nr-db-sb-group-list-header:hover, .nr-db-sb-widget-list-header:hover {
+    .nr-db-sb-group-list-header:hover,
+    .nr-db-sb-widget-list-header:hover {
         background: #f9f9f9;
     }
     .nr-db-sb-list-chevron {
@@ -197,7 +199,7 @@
     }
     #nr-db-field-font {
         margin-left: 2em;
-        width: 150px;
+        width: calc(100% - 81px);
     }
     .nr-db-theme-label {
         font-weight: bold;
@@ -260,6 +262,7 @@
                 var configurableStyles = ['page-titlebar-backgroundColor', 'page-backgroundColor', 'page-sidebar-backgroundColor',
                 'group-textColor', 'group-borderColor', 'group-backgroundColor',
                 'widget-textColor', 'widget-backgroundColor','widget-borderColor'];
+                var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
                 // tiny colour implementation
                 var colours = {
                     leastReadable: function(base, colours) {
@@ -351,6 +354,9 @@
                             if (whiteOrBlack === "#000000") { widgetBorder = "#333333"; }
                         }
                         return widgetBorder;
+                    },
+                    calculate_base_font: function(base) {
+                        return baseFontName;
                     }
                 }
                 var sizes = {
@@ -386,36 +392,37 @@
 
                         // set up theme state
                         var themeState = {};
-                        var base = "#0094CE"
+                        var baseColor = "#0094CE"
                         for (var i=0; i<baseStyles.length; i++) {
-                            themeState[baseStyles[i]] = { default:base, value:base, edited:false };
+                            themeState[baseStyles[i]] = { default:baseColor, value:baseColor, edited:false };
                         }
                         for (var j = 0; j < configurableStyles.length; j++) {
                             var underscore = configurableStyles[j].split("-").join("_");
-                            var colour = colours['calculate_'+underscore](base);
+                            var colour = colours['calculate_'+underscore](baseColor);
                             themeState[configurableStyles[j]] = {value:colour, edited:false};
                         }
+                        themeState["base-font"] = {value:baseFontName};
 
                         var missingFields = (!globalDashboardNode || !globalDashboardNode.theme || !globalDashboardNode.site || !globalDashboardNode.site.sizes );
 
                         if (missingFields && createMissing) {
                             var lightTheme = {
-                                default: "#0094CE",
-                                baseColor: "#0094CE",
-                                baseFont: "Helvetica Neue",
+                                default: baseColor,
+                                baseColor: baseColor,
+                                baseFont: baseFontName,
                                 edited: false
                             }
                             var darkTheme = {
                                 default: "#097479",
                                 baseColor: "#097479",
-                                baseFont: "Helvetica Neue",
+                                baseFont: baseFontName,
                                 edited: false
                             }
                             var customTheme = {
                                 name: 'Untitled Theme 1',
                                 default: "#4B7930",
                                 baseColor: "#4B7930",
-                                baseFont: "Helvetica Neue"
+                                baseFont: baseFontName
                             }
                             var oldThemeName;
                             if (globalDashboardNode && typeof(globalDashboardNode.theme === 'string')) { oldThemeName = globalDashboardNode.theme; }
@@ -458,6 +465,7 @@
                                 globalDashboardNode.theme = theme;
                                 delete globalDashboardNode.name;
                             }
+                            $("#nr-db-field-font").val(baseFontName);
                             RED.nodes.dirty(true);
                         }
                     }
@@ -655,6 +663,13 @@
                 // For all customisable styles, generate and apply the css
                 var generateColours = function(base) {
                     var theme = globalDashboardNode.theme.name.split('-')[1];
+                    if (!globalDashboardNode.theme.themeState.hasOwnProperty["base-font"]) {
+                        if (globalDashboardNode.theme[theme+"Theme"].baseFont === "Helvetica Neue") {
+                            globalDashboardNode.theme[theme+"Theme"].baseFont = baseFontName;
+                        }
+                        globalDashboardNode.theme.themeState["base-font"] = {value:globalDashboardNode.theme[theme+"Theme"].baseFont};
+                        $("#nr-db-field-font").val(globalDashboardNode.theme[theme+"Theme"].baseFont);
+                    }
                     for (var i=0; i<configurableStyles.length; i++) {
                         var styleID = configurableStyles[i];
                         var underscore = styleID.split("-").join("_");
@@ -683,6 +698,7 @@
                         ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
+                        var baseFont = globalDashboardNode.theme[theme+'Theme'].baseFont;
                         globalDashboardNode.theme.name = $(this).val();
                         theme = globalDashboardNode.theme.name.split('-')[1];
                         if (theme !== "custom") {
@@ -692,6 +708,8 @@
                         setColourPickerColour("base-color", baseColour);
                         globalDashboardNode.theme.themeState['base-color'].value = baseColour;
                         globalDashboardNode.theme.themeState['base-color'].default = baseColour;
+                        globalDashboardNode.theme.themeState['base-font'] = {value:baseFont};
+                        $("#nr-db-field-font").val(baseFont);
                         globalDashboardNode.theme[theme+'Theme'].reset = true;
                         //generate colours for all colour settings from base colour
                         generateColours(baseColour);
@@ -706,7 +724,7 @@
                     else {
                         $("#custom-theme-library-container").hide();
                         $("#custom-theme-settings").hide();
-                        addLightAndDarkResetButton('base-color', baseSettingsUl.children());
+                        addLightAndDarkResetButton('base-color', baseSettingsUl.children().first());
                     }
                 })
                 .appendTo(divThemeStyle);
@@ -742,12 +760,6 @@
                 var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Colour</span></li>').appendTo(baseSettingsUl);
                 var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
 
-                // var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>Font</span></li>').appendTo(baseSettingsUl);
-                // var fontSelector = $('<select id="nr-db-field-font">'+
-                //     '<option value="arial">Arial (default)</option>'+
-                //     '<option value="helvetica">Helvetica</option>'+
-                //     '</select>').appendTo(baseFontItem);
-
                 $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
                 .change(function() {
                     ensureDashboardNode(true);
@@ -768,6 +780,36 @@
                     }
                 })
                 .appendTo(spanColorContainer);
+
+                var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>Font</span></li>').appendTo(baseSettingsUl);
+                var fontSelector = $('<select id="nr-db-field-font">'+
+                    '<option value="'+baseFontName+'" style="font-family:'+baseFontName+'">System Font (default)</option>'+
+                    '<option value="Arial,Arial,Helvetica,sans-serif" style="font-family:Arial,Arial,Helvetica,sans-serif">Arial</option>'+
+                    '<option value="Arial Black,Arial Black,Gadget,sans-serif" style="font-family:Arial Black,Arial Black,Gadget,sans-serif">Arial Black</option>'+
+                    '<option value="Arial Narrow,Nimbus Sans L,sans-serif" style="font-family:Arial Narrow,Nimbus Sans L,sans-serif">Arial Narrow</option>'+
+                    '<option value="Century Gothic,CenturyGothic,AppleGothic,sans-serif" style="font-family:Century Gothic,CenturyGothic,AppleGothic,sans-serif">Century Gothic</option>'+
+                    '<option value="Copperplate,Copperplate Gothic Light,fantasy" style="font-family:Copperplate,Copperplate Gothic Light,fantasy;">Copperplate</option>'+
+                    '<option value="Courier,monospace" style="font-family:Courier,monospace;">Courier</option>'+
+                    '<option value="Georgia,Georgia,serif" style="font-family:Georgia,Georgia,serif">Georgia</option>'+
+                    '<option value="Gill Sans,Geneva,sans-serif" style="font-family:Gill Sans,Geneva,sans-serif;">Gill Sans</option>'+
+                    //'<option value="Helvetica Neue,Helvetica,sans-serif" style="font-family:Helvetica Neue,Helvetica,sans-serif">Helvetica Neue</option>'+
+                    '<option value="Impact,Impact,Charcoal,sans-serif" style="font-family:Impact,Impact,Charcoal,sans-serif">Impact</option>'+
+                    '<option value="Lucida Sans Typewriter,Lucida Console,Monaco,monospace" style="font-family:Lucida Console,Monaco,monospace">Lucida Console</option>'+
+                    '<option value="Lucida Sans Unicode,Lucida Grande,sans-serif" style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif">Lucida Sans</option>'+
+                    '<option value="Palatino Linotype,Palatino,Book Antiqua,serif" style="font-family:Palatino Linotype,Palatino,Book Antiqua,serif">Palatino Linotype</option>'+
+                    '<option value="Tahoma,Geneva,sans-serif" style="font-family:Tahoma,Geneva,sans-serif">Tahoma</optionstyle="font-family:>'+
+                    '<option value="Times New Roman,Times,serif" style="font-family:Times New Roman,Times,serif">Times New Roman</option>'+
+                    '<option value="Trebuchet MS,Helvetica,sans-serif" style="font-family:Trebuchet MS,Helvetica,sans-serif">Trebuchet MS</option>'+
+                    '<option value="Verdana,Verdana,Geneva,sans-serif" style="font-family:Verdana,Verdana,Geneva,sans-serif">Verdana</option>'+
+                    '</select>')
+                    .change(function() {
+                        ensureDashboardNode(true);
+                        var theme = globalDashboardNode.theme.name.split('-')[1];
+                        globalDashboardNode.theme[theme+'Theme'].baseFont = $(this).val();
+                        globalDashboardNode.theme.themeState['base-font'] = {value:$(this).val()};
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(baseFontItem);
 
                 var themeSettingsContainer = $('<div id="custom-theme-settings">').appendTo(themeTab);
 
@@ -944,21 +986,21 @@
                     // create node if needed
                     if (!item.node) {
                         var defaultItem = {
-                          'ui_tab': {
-                            _def: RED.nodes.getType('ui_tab'),
-                            type: 'ui_tab',
-                            users: [],
-                            icon: 'dashboard',
-                            name: 'Tab'
-                          },
-                          'ui_link': {
-                            _def: RED.nodes.getType('ui_link'),
-                            type: 'ui_link',
-                            users: [],
-                            icon: 'open_in_browser',
-                            name: 'Link',
-                            target: 'newtab'
-                          }
+                            'ui_tab': {
+                                _def: RED.nodes.getType('ui_tab'),
+                                type: 'ui_tab',
+                                users: [],
+                                icon: 'dashboard',
+                                name: 'Tab'
+                            },
+                            'ui_link': {
+                                _def: RED.nodes.getType('ui_link'),
+                                type: 'ui_link',
+                                users: [],
+                                icon: 'open_in_browser',
+                                name: 'Link',
+                                target: 'newtab'
+                            }
                         }
                         item.node = defaultItem[item.type]
                         item.node.id = RED.nodes.id()
@@ -970,8 +1012,9 @@
                         }
                         RED.nodes.add(item.node);
                         RED.nodes.dirty(true);
-                    } else if (item.type === undefined) {
-                      item.type = item.node.type
+                    }
+                    else if (item.type === undefined) {
+                        item.type = item.node.type
                     }
 
                     listElements[item.node.id] = container;
@@ -982,15 +1025,16 @@
                     // title
                     var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
                     switch (item.type) {
-                        case 'ui_tab':
+                        case 'ui_tab': {
                             container.addClass("nr-db-sb-tab-list-item");
                             $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
                             var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
                             $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
                             var title = $('<span class="nr-db-sb-title">').html(item.node.name||"").appendTo(titleRow);
                             break;
+                        }
 
-                        case 'ui_link':
+                        case 'ui_link': {
                             $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
                             var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
                             var nameContainer = $('<div class="nr-db-sb-link-name-container">').appendTo(title);
@@ -998,6 +1042,7 @@
                             $('<span class="nr-db-sb-link-name">').html(item.node.name||"untitled").appendTo(nameContainer);
                             $('<div class="nr-db-sb-link-url">').html(item.node.link||"http://").appendTo(title);
                             break;
+                        }
                     }
                     // buttons
                     var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
@@ -1355,13 +1400,15 @@
                     RED.nodes.eachConfig(function(node) {
                         switch (node.type) {
                             case 'ui_tab':
-                            case 'ui_link':
+                            case 'ui_link': {
                                 tabs[node.id] = node;
                                 //tabContainer.editableList('addItem',node);
                                 break;
-                            case 'ui_group':
+                            }
+                            case 'ui_group': {
                                 groups[node.id] = node;
                                 break;
+                            }
                         }
                     });
                     for (groupId in groups) {
@@ -1498,9 +1545,10 @@
                         var currentTheme = globalDashboardNode.theme.name.split("-")[1];
                         var startingValue = globalDashboardNode.theme[currentTheme+"Theme"].baseColor;
                         setColourPickerColour("base-color", startingValue);
+                        $("#nr-db-field-font").val(globalDashboardNode.theme[currentTheme+"Theme"].baseFont);
                         generateColours(startingValue);
                         if (globalDashboardNode.theme.name === 'theme-light' || globalDashboardNode.theme.name === 'theme-dark') {
-                            addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
+                            addLightAndDarkResetButton('base-color', $('#base-settings-ul').children().first());
                         }
 
                         if (editor === undefined) {
