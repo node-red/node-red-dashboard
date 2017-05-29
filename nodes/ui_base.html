@@ -731,7 +731,7 @@
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
                 $('<label class="nr-db-theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="nr-db-field-name" placeholder="profile name (not blank)">')
+                $('<input type="text" id="node-input-name" placeholder="profile name (not blank)">')
                 .val("Untitled Theme 1")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
@@ -807,6 +807,7 @@
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         globalDashboardNode.theme[theme+'Theme'].baseFont = $(this).val();
                         globalDashboardNode.theme.themeState['base-font'] = {value:$(this).val()};
+                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
                         RED.nodes.dirty(true);
                     })
                     .appendTo(baseFontItem);
@@ -1033,7 +1034,6 @@
                             var title = $('<span class="nr-db-sb-title">').html(item.node.name||"").appendTo(titleRow);
                             break;
                         }
-
                         case 'ui_link': {
                             $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
                             var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
@@ -1528,7 +1528,7 @@
                         $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
 
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
-                        $("#nr-db-field-name").val(globalDashboardNode.theme.customTheme.name);
+                        $("#node-input-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {
                             $("#custom-theme-library-container").show();
                             $("#custom-theme-settings").show();
@@ -1611,8 +1611,8 @@
                             //Update theme object if necessary
                             if (JSON.stringify(editorObject.theme) !== JSON.stringify(globalDashboardNode.theme.themeState)) {
                                 globalDashboardNode.theme.themeState = editorObject.theme;
-                                if ($("#nr-db-field-name").val() !== globalDashboardNode.theme.customTheme.name) {
-                                    globalDashboardNode.theme.customTheme.name = $("#nr-db-field-name").val();
+                                if ($("#node-input-name").val() !== globalDashboardNode.theme.customTheme.name) {
+                                    globalDashboardNode.theme.customTheme.name = $("#node-input-name").val();
                                     globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["base-color"].value;
                                     setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
                                     generateColours(globalDashboardNode.theme.themeState["base-color"].value);
