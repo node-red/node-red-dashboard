@@ -807,7 +807,6 @@
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         globalDashboardNode.theme[theme+'Theme'].baseFont = $(this).val();
                         globalDashboardNode.theme.themeState['base-font'] = {value:$(this).val()};
-                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
                         RED.nodes.dirty(true);
                     })
                     .appendTo(baseFontItem);
