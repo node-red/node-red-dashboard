@@ -169,6 +169,7 @@ function add(opt) {
                     if (b.indexOf("msg.") === 0) {
                         b = b.split("msg.")[1];
                         if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
+                        if (b.indexOf("[") !== -1) { b = b.split("[")[0]; }
                         if (!toEmit.hasOwnProperty("msg")) { toEmit.msg = {}; }
                         if (!toEmit.msg.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
                             toEmit.msg[b] = JSON.parse(JSON.stringify(msg[b]));
@@ -176,6 +177,7 @@ function add(opt) {
                     }
                     else {
                         if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
+                        if (b.indexOf("[") !== -1) { b = b.split("[")[0]; }
                         if (!toEmit.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
                             toEmit[b] = JSON.parse(JSON.stringify(msg[b]));
                         }
@@ -188,7 +190,7 @@ function add(opt) {
             addField("format");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
-            //console.log("EMIT",toEmit);
+            //console.log("EMIT",JSON.stringify(toEmit));
 
             // Emit and Store the data
             io.emit(updateValueEventName, toEmit);
