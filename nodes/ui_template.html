@@ -18,7 +18,7 @@
             format: {value: '<div ng-bind-html="msg.payload"></div>'},
             storeOutMessages: {value: true},
             fwdInMessages: {value: true},
-            globalHeadTemplate: {value: false}
+            templateScope: {value: 'local'}
         },
         inputs:1,
         outputs:1,
@@ -43,10 +43,29 @@
                 $('#node-input-fwdInMessages').prop('checked', true);
             }
 
-            if (typeof this.globalHeadTemplate === 'undefined') {
-                this.globalHeadTemplate = false;
-                $('#node-input-globalHeadTemplate').prop('checked', false);
+            if (typeof this.templateScope === 'undefined') {
+                this.templateScope = 'local';
+                $('#node-input-templateScope').val(this.templateScope);
             }
+            $('#node-input-templateScope').on('change', function() {
+                if ($('#node-input-templateScope').val() === 'global') {
+                    $('#node-input-group, #node-input-lookup-group, #node-input-size')
+                        .attr('disabled', 'disabled')
+                        .css({
+                            pointerEvents: 'none',
+                            background: '#f3f3f3'
+                        })
+                        ;
+                } else {
+                    $('#node-input-group, #node-input-lookup-group, #node-input-size')
+                        .removeAttr('disabled')
+                        .css({
+                            pointerEvents: 'auto',
+                            background: 'inherit'
+                        })
+                        ;
+                }
+            })
 
             this.editor = RED.editor.createEditor({
                 id: 'node-input-format-editor',
@@ -119,10 +138,10 @@
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
         <input type="hidden" id="node-input-format">
-    </div>
-    <div class="form-row">
-        <input type="checkbox" id="node-input-globalHeadTemplate" style="display:inline-block; width:auto; vertical-align:top;">
-        <label for="node-input-globalHeadTemplate" style="width:90%;">Use this template to add extras html globally in <code>&lt;head&gt;</code> tag.</label>
+        <select id="node-input-templateScope">
+            <option value="local">is local to tab</option>
+            <option value="global">is applied globally to &lt;head&gt;</option>
+        </select>
     </div>
     <div class="form-row node-text-editor-row">
         <div style="height:250px;" class="node-text-editor" id="node-input-format-editor" ></div>
