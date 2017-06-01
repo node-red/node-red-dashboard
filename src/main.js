@@ -121,6 +121,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     headChildren[index].parentNode.removeChild(headChildren[index]);
                 })
             });
+            headChildrenLength = head.children().length;
             main.headElementsAppended = [];
 
             var needToReplace = [
