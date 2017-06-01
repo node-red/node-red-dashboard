@@ -17,7 +17,8 @@
             height: {value: 0},
             format: {value: '<div ng-bind-html="msg.payload"></div>'},
             storeOutMessages: {value: true},
-            fwdInMessages: {value: true}
+            fwdInMessages: {value: true},
+            globalHeadTemplate: {value: false}
         },
         inputs:1,
         outputs:1,
@@ -40,6 +41,11 @@
             if (typeof this.fwdInMessages === 'undefined') {
                 this.fwdInMessages = true;
                 $('#node-input-fwdInMessages').prop('checked', true);
+            }
+
+            if (typeof this.globalHeadTemplate === 'undefined') {
+                this.globalHeadTemplate = false;
+                $('#node-input-globalHeadTemplate').prop('checked', false);
             }
 
             this.editor = RED.editor.createEditor({
@@ -113,6 +119,10 @@
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
         <input type="hidden" id="node-input-format">
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-globalHeadTemplate" style="display:inline-block; width:auto; vertical-align:top;">
+        <label for="node-input-globalHeadTemplate" style="width:90%;">Use this template to add extras html globally in <code>&lt;head&gt;</code> tag.</label>
     </div>
     <div class="form-row node-text-editor-row">
         <div style="height:250px;" class="node-text-editor" id="node-input-format-editor" ></div>

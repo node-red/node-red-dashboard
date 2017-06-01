@@ -31,6 +31,7 @@ var serveStatic = require('serve-static'),
 var baseConfiguration = {};
 
 var menu = [];
+var globals = [];
 var updateValueEventName = 'update-value';
 var io;
 var currentValues = {};
@@ -323,7 +324,8 @@ function updateUi(to) {
         to.emit('ui-controls', {
             site: baseConfiguration.site,
             theme: baseConfiguration.theme,
-            menu: menu
+            menu: menu,
+            globals: globals
         });
         updateUiPending = false;
     });
@@ -349,60 +351,76 @@ function itemSorter(item1, item2) {
 
 function addControl(tab, groupHeader, control) {
     if (typeof control.type !== 'string') { return function() {}; }
-    groupHeader = groupHeader || settings.defaultGroupHeader;
-    control.order = parseFloat(control.order);
 
-    var foundTab = find(menu, function (t) {return t.id === tab.id });
-    if (!foundTab) {
-        foundTab = {
-            id: tab.id,
-            header: tab.config.name,
-            order: parseFloat(tab.config.order),
-            icon: tab.config.icon,
-            items: []
-        };
-        menu.push(foundTab);
-        menu.sort(itemSorter);
-    }
+    // global template?
+    if (control.type === 'template' && control.globalHeadTemplate) {
+        // add content to globals
+        globals.push(control);
 
-    var foundGroup = find(foundTab.items, function (g) {return g.header === groupHeader;});
-    if (!foundGroup) {
-        foundGroup = {
-            header: groupHeader,
-            items: []
-        };
-        foundTab.items.push(foundGroup);
-    }
-    foundGroup.items.push(control);
-    foundGroup.items.sort(itemSorter);
-    foundGroup.order = groupHeader.config.order;
-    foundTab.items.sort(itemSorter);
+        // return remove function
+        return function() {
+            var index = globals.indexOf(control);
+            if (index >= 0) {
+                globals.splice(index, 1);
+                updateUi();
+            }
+        }
+    } else {
+        groupHeader = groupHeader || settings.defaultGroupHeader;
+        control.order = parseFloat(control.order);
 
-    updateUi();
+        var foundTab = find(menu, function (t) {return t.id === tab.id });
+        if (!foundTab) {
+            foundTab = {
+                id: tab.id,
+                header: tab.config.name,
+                order: parseFloat(tab.config.order),
+                icon: tab.config.icon,
+                items: []
+            };
+            menu.push(foundTab);
+            menu.sort(itemSorter);
+        }
 
-    // Return the remove function for this control
-    return function() {
-        var index = foundGroup.items.indexOf(control);
-        if (index >= 0) {
-            // Remove the item from the group
-            foundGroup.items.splice(index, 1);
+        var foundGroup = find(foundTab.items, function (g) {return g.header === groupHeader;});
+        if (!foundGroup) {
+            foundGroup = {
+                header: groupHeader,
+                items: []
+            };
+            foundTab.items.push(foundGroup);
+        }
+        foundGroup.items.push(control);
+        foundGroup.items.sort(itemSorter);
+        foundGroup.order = groupHeader.config.order;
+        foundTab.items.sort(itemSorter);
 
-            // If the group is now empty, remove it from the tab
-            if (foundGroup.items.length === 0) {
-                index = foundTab.items.indexOf(foundGroup);
-                if (index >= 0) {
-                    foundTab.items.splice(index, 1);
+        updateUi();
 
-                    // If the tab is now empty, remove it as well
-                    if (foundTab.items.length === 0) {
-                        index = menu.indexOf(foundTab);
-                        if (index >= 0) {
-                            menu.splice(index, 1);
+        // Return the remove function for this control
+        return function() {
+            var index = foundGroup.items.indexOf(control);
+            if (index >= 0) {
+                // Remove the item from the group
+                foundGroup.items.splice(index, 1);
+
+                // If the group is now empty, remove it from the tab
+                if (foundGroup.items.length === 0) {
+                    index = foundTab.items.indexOf(foundGroup);
+                    if (index >= 0) {
+                        foundTab.items.splice(index, 1);
+
+                        // If the tab is now empty, remove it as well
+                        if (foundTab.items.length === 0) {
+                            index = menu.indexOf(foundTab);
+                            if (index >= 0) {
+                                menu.splice(index, 1);
+                            }
                         }
                     }
                 }
+                updateUi();
             }
-            updateUi();
         }
     }
 }

@@ -23,7 +23,8 @@ module.exports = function(RED) {
                 order: config.order,
                 width: config.width || group.config.width || 6,
                 height: hei,
-                format: config.format
+                format: config.format,
+                globalHeadTemplate: config.globalHeadTemplate,
             },
             beforeEmit: function(msg, value) {
                 var properties = Object.getOwnPropertyNames(msg).filter(function (p) { return p[0] != '_'; });
