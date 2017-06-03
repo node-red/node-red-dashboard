@@ -24,8 +24,7 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
 
 app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope',
     function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope) {
-        this.tabs = [];
-        this.links = [];
+        this.menu = [];
         this.len = 0;
         this.selectedTab = null;
         this.loaded = false;
@@ -36,14 +35,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         var tabId = 0;
 
         function moveTab(d) {
-            var len = main.tabs.length + main.links.length;
+            var len = main.menu.length;
             if (len > 1) {
                 //var i = parseInt($location.path().substr(1));
                 var i = tabId;
                 i = (i + d) % len;
                 if (i < 0) { i += len; }
-                if (i < main.tabs.length) { main.select(i); }
-                else { main.open(main.links[i - main.tabs.length], i - main.tabs.length);}
+                main.open(main.menu[i], i);
                 tabId = i;
             }
         }
@@ -53,30 +51,42 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         this.toggleSidenav = function () { $mdSidenav('left').toggle(); }
 
-        this.select = function(index) {
-            main.selectedTab = main.tabs[index];
-            if (main.tabs.length > 0) { $mdSidenav('left').close(); }
+        this.select = function (index) {
+            main.selectedTab = main.menu[index];
+            if (main.menu.length > 0) { $mdSidenav('left').close(); }
             tabId = index;
             events.emit('ui-change', tabId);
             $location.path(index);
         }
 
-        this.open = function (link, index) {
-            // console.log("LINK",link,index);
-            // open in new tab
-            tabId = main.tabs.length + index;
-            events.emit('ui-change', tabId);
-            if (link.target === 'newtab') {
-                $window.open(link.link, link.name);
+        this.open = function (menu, index) {
+            if (menu.link === undefined) {
+                this.select(index) // select tab
             }
-            // open in iframe  (if allowed by remote site)
             else {
-                if (typeof main.links[index].link === "string") {
-                    main.links[index].link = $sce.trustAsResourceUrl(main.links[index].link);
+                // open in new tab
+                if (menu.target === 'newtab') {
+                    $window.open(menu.link, menu.name);
                 }
-                main.selectedTab = main.links[index];
+                // open in iframe  (if allowed by remote site)
+                else {
+                    if (typeof main.menu[index].link === "string") {
+                        main.menu[index].link = $sce.trustAsResourceUrl(main.menu[index].link);
+                    }
+                    main.selectedTab = main.menu[index];
+                    tabId = index;
+                    events.emit('ui-change', tabId);
+                    $location.path(index);
+                }
+                $mdSidenav('left').close();
             }
-            $mdSidenav('left').close();
+        }
+
+        this.getMenuName = function (menu) {
+            if (menu.link !== undefined) {
+                return menu.name;
+            }
+            return menu.header;
         }
 
         function applyStyle(theme) {
@@ -99,8 +109,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         }
 
         events.connect(function (ui, done) {
-            main.tabs = ui.tabs;
-            main.links = ui.links;
+            main.menu = ui.menu;
             var name;
             if (ui.site) {
                 name = ui.site.name;
@@ -127,19 +136,32 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
                     applyStyle(ui.theme);
                 }
+                if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
+                    main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
+                }
                 done();
             }
-            if (!isNaN(prevTabIndex) && prevTabIndex < main.tabs.length) {
-                main.selectedTab = main.tabs[prevTabIndex];
+            if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length) {
+                main.selectedTab = main.menu[prevTabIndex];
                 finishLoading();
             }
             else {
                 $timeout( function() {
-                    main.select(0);
+                    // open first menu, which is not new tab link
+                    var indexToOpen = null;
+                    main.menu.some(function (menu, i) {
+                        if (menu.target === undefined || menu.target === 'iframe') {
+                            indexToOpen = i;
+                            return true;
+                        }
+                    })
+                    if (indexToOpen !== null) {
+                        main.open(main.menu[indexToOpen], indexToOpen);
+                    }
                     finishLoading();
                 }, 50);
             }
-            main.len = main.tabs.length + main.links.length;
+            main.len = main.menu.length;
         }, function () {
             main.loaded = true;
         });
@@ -156,7 +178,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         }
 
         events.on(function (msg) {
-            var found = findControl(msg.id, main.tabs);
+            var found = findControl(msg.id, main.menu);
             if (found === undefined) { return; }
             for (var key in msg) {
                 if (msg.hasOwnProperty(key)) {
@@ -227,17 +249,15 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }
                     if (msg.tab === "+1") { moveTab(1); return; }
                     if (msg.tab === "-1") { moveTab(-1); return; }
-                    // is it the name of a tab ?
-                    for (var i in main.tabs) {
-                        if (msg.tab == main.tabs[i].header) {
+                    for (var i in main.menu) {
+                        // is it the name of a tab ?
+                        if (msg.tab == main.menu[i].header) {
                             main.select(i);
                             return;
                         }
-                    }
-                    // or the name of a link ?
-                    for (var j in main.links) {
-                        if (msg.tab == main.links[j].name) {
-                            main.open(main.links[j], j);
+                        // or the name of a link ?
+                        else if (msg.tab == main.menu[i].name) {
+                            main.open(main.menu[i], i);
                             return;
                         }
                     }
@@ -245,19 +265,15 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 // or is it a valid index number ?
                 var index = parseInt(msg.tab);
                 if (Number.isNaN(index) || index < 0) { return; }
-                if (index < main.tabs.length) { main.select(index); }
-                else if ((index - main.tabs.length) < main.links.length) {
-                    index -= main.tabs.length;
-                    main.open(main.links[index], index);
-                }
+                if (index < main.menu.length) { main.open(main.menu[index], index); }
             }
         });
 
         events.on('ui-audio', function(msg) {
             if (!msg.always) {
                 var totab;
-                for (var i in main.tabs) {
-                    if (msg.tabname === main.tabs[i].header) { totab = i; }
+                for (var i in main.menu) {
+                    if (msg.tabname === main.menu[i].header) { totab = i; }
                 }
                 // only play sound/tts to tab if in focus
                 if (totab != parseInt($location.path().substr(1))) { return; }

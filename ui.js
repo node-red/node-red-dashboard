@@ -30,8 +30,7 @@ var serveStatic = require('serve-static'),
 
 var baseConfiguration = {};
 
-var tabs = [];
-var links = [];
+var menu = [];
 var updateValueEventName = 'update-value';
 var io;
 var currentValues = {};
@@ -164,21 +163,27 @@ function add(opt) {
 
             var addField = function(m) {
                 if (opt.control.hasOwnProperty(m) && opt.control[m].indexOf("{{") !== -1) {
-                    var b = opt.control[m].split("{{")[1].split("}}")[0].trim();
-                    if (b.indexOf("|") !== -1) { b = b.split("|")[0]; }
-                    if (b.indexOf(" ") !== -1) { b = b.split(" ")[0]; }
-                    if (b.indexOf("msg.") === 0) {
-                        b = b.split("msg.")[1];
-                        if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
-                        if (!toEmit.hasOwnProperty("msg")) { toEmit.msg = {}; }
-                        if (!toEmit.msg.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
-                            toEmit.msg[b] = JSON.parse(JSON.stringify(msg[b]));
+                    var a = opt.control[m].split("{{");
+                    a.shift();
+                    for (var i = 0; i < a.length; i++) {
+                        var b = a[i].split("}}")[0].trim();
+                        if (b.indexOf("|") !== -1) { b = b.split("|")[0]; }
+                        if (b.indexOf(" ") !== -1) { b = b.split(" ")[0]; }
+                        if (b.indexOf("msg.") === 0) {
+                            b = b.split("msg.")[1];
+                            if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
+                            if (b.indexOf("[") !== -1) { b = b.split("[")[0]; }
+                            if (!toEmit.hasOwnProperty("msg")) { toEmit.msg = {}; }
+                            if (!toEmit.msg.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
+                                toEmit.msg[b] = JSON.parse(JSON.stringify(msg[b]));
+                            }
                         }
-                    }
-                    else {
-                        if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
-                        if (!toEmit.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
-                            toEmit[b] = JSON.parse(JSON.stringify(msg[b]));
+                        else {
+                            if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
+                            if (b.indexOf("[") !== -1) { b = b.split("[")[0]; }
+                            if (!toEmit.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
+                                toEmit[b] = JSON.parse(JSON.stringify(msg[b]));
+                            }
                         }
                     }
                 }
@@ -189,7 +194,7 @@ function add(opt) {
             addField("format");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
-            //console.log("EMIT",toEmit);
+            //console.log("EMIT",JSON.stringify(toEmit));
 
             // Emit and Store the data
             io.emit(updateValueEventName, toEmit);
@@ -292,12 +297,12 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-change', function(index) {
             var name = "";
-            var tl = tabs.length + links.length;
+            var tl = menu.length;
             if (tl > 0 && index <= tl) {
-                name = index >= tabs.length ? links[index - tabs.length].name : tabs[index].header;
+                name = menu[index].header === undefined ? menu[index].name : menu[index].header;
             }
             ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
-            if (index < tabs.length) { updateUi(); }
+            if (index < menu.length) { updateUi(); }
         });
         socket.on('ui-refresh', function() {
             updateUi();
@@ -316,17 +321,13 @@ function updateUi(to) {
         to = io;
     }
     process.nextTick(function() {
-        tabs.forEach(function(t) {
-            t.theme = baseConfiguration.theme;
-        });
-        links.forEach(function(l) {
-            l.theme = baseConfiguration.theme;
+        menu.forEach(function(o) {
+            o.theme = baseConfiguration.theme;
         });
         to.emit('ui-controls', {
             site: baseConfiguration.site,
             theme: baseConfiguration.theme,
-            tabs: tabs,
-            links: links
+            menu: menu
         });
         updateUiPending = false;
     });
@@ -355,7 +356,7 @@ function addControl(tab, groupHeader, control) {
     groupHeader = groupHeader || settings.defaultGroupHeader;
     control.order = parseFloat(control.order);
 
-    var foundTab = find(tabs, function (t) {return t.id === tab.id });
+    var foundTab = find(menu, function (t) {return t.id === tab.id });
     if (!foundTab) {
         foundTab = {
             id: tab.id,
@@ -364,8 +365,8 @@ function addControl(tab, groupHeader, control) {
             icon: tab.config.icon,
             items: []
         };
-        tabs.push(foundTab);
-        tabs.sort(itemSorter);
+        menu.push(foundTab);
+        menu.sort(itemSorter);
     }
 
     var foundGroup = find(foundTab.items, function (g) {return g.header === groupHeader;});
@@ -398,9 +399,9 @@ function addControl(tab, groupHeader, control) {
 
                     // If the tab is now empty, remove it as well
                     if (foundTab.items.length === 0) {
-                        index = tabs.indexOf(foundTab);
+                        index = menu.indexOf(foundTab);
                         if (index >= 0) {
-                            tabs.splice(index, 1);
+                            menu.splice(index, 1);
                         }
                     }
                 }
@@ -419,14 +420,14 @@ function addLink(name, link, icon, order, target) {
         target: target
     };
 
-    links.push(newLink);
-    links.sort(itemSorter);
+    menu.push(newLink);
+    menu.sort(itemSorter);
     updateUi();
 
     return function() {
-        var index = links.indexOf(newLink);
+        var index = menu.indexOf(newLink);
         if (index < 0) { return; }
-        links.splice(index, 1);
+        menu.splice(index, 1);
         updateUi();
     }
 }

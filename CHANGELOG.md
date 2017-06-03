@@ -1,4 +1,12 @@
 
+### 2.4.0-beta: Milestone Release
+
+**Enhancements**
+
+ - add ability to specify basefont style. (NOTE the Cross Platform font uses a
+     system font stack approach that should look good across as many platforms as possible)
+ - merge tabs and links so all can be reordered - PR #234
+
 ### 2.3.11: Maintenance Release
 
 **Enhancements**

@@ -3,14 +3,15 @@
         category: 'dashboard',
         color: 'rgb( 63, 173, 181)',
         defaults: {
-            name: {value: 'ui control'}
+            name: {value:""}
         },
         inputs:1,
         outputs:1,
         align: "right",
         icon: "ui_link.png",
         paletteLabel: 'ui control',
-        label: function() { return this.name || "ui control"; }
+        label: function() { return this.name || "ui control"; },
+        labelStyle: function() { return this.name?"node_label_italic":""; }
     });
 </script>
 
@@ -26,7 +27,8 @@
     <p>The default function is to change the currently displayed tab. <code>msg.payload</code>
     should either be an object of the form <code>{tab:"(tab_name)"}</code>, or just be the <b>tab name</b>
     or <b>numeric index</b> (from 0) of the tab or link to be displayed.</p>
-    <p>Sending a blank tab name "" will refresh the current page.</p>
+    <p>Sending a blank tab name "" will refresh the current page.
+    You can also send "+1" for next tab and "-1" for previous tab.</p>
     <p>When any browser client connects or loses connection this node will emit a <code>msg</code> containing:</p>
     <ul>
     <li><code>payload</code> - <i>connect</i> or <i>lost</i>.

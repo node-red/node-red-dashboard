@@ -18,7 +18,12 @@
         margin-bottom:0;
     }
     .nr-db-sb .red-ui-editableList-container {
-        padding:0;
+        padding: 0;
+        height: auto !important;
+    }
+    .nr-db-sb-tab-list {
+        min-height: 36px;
+        height: 100%;
     }
     .nr-db-sb-tab-list li {
         padding: 0;
@@ -41,7 +46,8 @@
         background: #f3f3f3;
         padding:5px;
     }
-    .nr-db-sb-group-list-header:hover, .nr-db-sb-widget-list-header:hover {
+    .nr-db-sb-group-list-header:hover,
+    .nr-db-sb-widget-list-header:hover {
         background: #f9f9f9;
     }
     .nr-db-sb-list-chevron {
@@ -52,6 +58,7 @@
     .nr-db-sb-tab-list-item .red-ui-editableList-container {
         border-radius: 0;
         border: none;
+        height: auto !important;
     }
     .nr-db-sb-list-handle {
         vertical-align: top;
@@ -71,9 +78,14 @@
     }
     .nr-db-sb-tab-list-header>.nr-db-sb-list-chevron  {
         margin-left: 0px;
+        transition: transform 0.2s ease-in-out;
     }
     .nr-db-sb-group-list-header>.nr-db-sb-list-chevron {
-        margin-left: 20px
+        margin-left: 20px;
+        transition: transform 0.2s ease-in-out;
+    }
+    .nr-db-sb-group-list {
+        min-height: 10px;
     }
     .nr-db-sb-group-list li {
         border-bottom-color: #eee;
@@ -115,10 +127,10 @@
     }
     .nr-db-sb-link {
         display: inline-block;
-        padding-left: 3px;
+        padding-left: 20px;
     }
-    .nr-db-sb-link-title {
-
+    .nr-db-sb-link-name-container .fa-external-link {
+      margin-right: 10px;
     }
     .nr-db-sb-link-url {
         font-size: 0.8em;
@@ -187,7 +199,7 @@
     }
     #nr-db-field-font {
         margin-left: 2em;
-        width: 150px;
+        width: calc(100% - 81px);
     }
     .nr-db-theme-label {
         font-weight: bold;
@@ -237,6 +249,7 @@
             hasUsers: false,
             paletteLabel: 'Dashboard',
             label: function() { return this.name || 'Node-RED Dashboard'; },
+            labelStyle: function() { return this.name?"node_label_italic":""; },
             onpaletteremove: function() {
                 RED.sidebar.removeTab("dashboard");
                 RED.events.off("editor:save",editSaveEventHandler);
@@ -250,6 +263,7 @@
                 var configurableStyles = ['page-titlebar-backgroundColor', 'page-backgroundColor', 'page-sidebar-backgroundColor',
                 'group-textColor', 'group-borderColor', 'group-backgroundColor',
                 'widget-textColor', 'widget-backgroundColor','widget-borderColor'];
+                var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
                 // tiny colour implementation
                 var colours = {
                     leastReadable: function(base, colours) {
@@ -341,6 +355,9 @@
                             if (whiteOrBlack === "#000000") { widgetBorder = "#333333"; }
                         }
                         return widgetBorder;
+                    },
+                    calculate_base_font: function(base) {
+                        return baseFontName;
                     }
                 }
                 var sizes = {
@@ -376,36 +393,37 @@
 
                         // set up theme state
                         var themeState = {};
-                        var base = "#0094CE"
+                        var baseColor = "#0094CE"
                         for (var i=0; i<baseStyles.length; i++) {
-                            themeState[baseStyles[i]] = { default:base, value:base, edited:false };
+                            themeState[baseStyles[i]] = { default:baseColor, value:baseColor, edited:false };
                         }
                         for (var j = 0; j < configurableStyles.length; j++) {
                             var underscore = configurableStyles[j].split("-").join("_");
-                            var colour = colours['calculate_'+underscore](base);
+                            var colour = colours['calculate_'+underscore](baseColor);
                             themeState[configurableStyles[j]] = {value:colour, edited:false};
                         }
+                        themeState["base-font"] = {value:baseFontName};
 
                         var missingFields = (!globalDashboardNode || !globalDashboardNode.theme || !globalDashboardNode.site || !globalDashboardNode.site.sizes );
 
                         if (missingFields && createMissing) {
                             var lightTheme = {
-                                default: "#0094CE",
-                                baseColor: "#0094CE",
-                                baseFont: "Helvetica Neue",
+                                default: baseColor,
+                                baseColor: baseColor,
+                                baseFont: baseFontName,
                                 edited: false
                             }
                             var darkTheme = {
                                 default: "#097479",
                                 baseColor: "#097479",
-                                baseFont: "Helvetica Neue",
+                                baseFont: baseFontName,
                                 edited: false
                             }
                             var customTheme = {
                                 name: 'Untitled Theme 1',
                                 default: "#4B7930",
                                 baseColor: "#4B7930",
-                                baseFont: "Helvetica Neue"
+                                baseFont: baseFontName
                             }
                             var oldThemeName;
                             if (globalDashboardNode && typeof(globalDashboardNode.theme === 'string')) { oldThemeName = globalDashboardNode.theme; }
@@ -448,6 +466,7 @@
                                 globalDashboardNode.theme = theme;
                                 delete globalDashboardNode.name;
                             }
+                            $("#nr-db-field-font").val(baseFontName);
                             RED.nodes.dirty(true);
                         }
                     }
@@ -486,7 +505,7 @@
                 });
 
                 // Dashboard Tab containers
-                var layoutTab = $('<div id="dashboard-layout">').appendTo(form);
+                var layoutTab = $('<div id="dashboard-layout" style="height:calc(100% - 48px)">').appendTo(form);
                 var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
                 var siteTab = $('<div id="dashboard-site" style="display:none;">').appendTo(form);
 
@@ -645,6 +664,13 @@
                 // For all customisable styles, generate and apply the css
                 var generateColours = function(base) {
                     var theme = globalDashboardNode.theme.name.split('-')[1];
+                    if (!globalDashboardNode.theme.themeState.hasOwnProperty["base-font"]) {
+                        if (globalDashboardNode.theme[theme+"Theme"].baseFont === "Helvetica Neue") {
+                            globalDashboardNode.theme[theme+"Theme"].baseFont = baseFontName;
+                        }
+                        globalDashboardNode.theme.themeState["base-font"] = {value:globalDashboardNode.theme[theme+"Theme"].baseFont};
+                        $("#nr-db-field-font").val(globalDashboardNode.theme[theme+"Theme"].baseFont);
+                    }
                     for (var i=0; i<configurableStyles.length; i++) {
                         var styleID = configurableStyles[i];
                         var underscore = styleID.split("-").join("_");
@@ -673,6 +699,7 @@
                         ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
+                        var baseFont = globalDashboardNode.theme[theme+'Theme'].baseFont;
                         globalDashboardNode.theme.name = $(this).val();
                         theme = globalDashboardNode.theme.name.split('-')[1];
                         if (theme !== "custom") {
@@ -682,6 +709,8 @@
                         setColourPickerColour("base-color", baseColour);
                         globalDashboardNode.theme.themeState['base-color'].value = baseColour;
                         globalDashboardNode.theme.themeState['base-color'].default = baseColour;
+                        globalDashboardNode.theme.themeState['base-font'] = {value:baseFont};
+                        $("#nr-db-field-font").val(baseFont);
                         globalDashboardNode.theme[theme+'Theme'].reset = true;
                         //generate colours for all colour settings from base colour
                         generateColours(baseColour);
@@ -696,21 +725,23 @@
                     else {
                         $("#custom-theme-library-container").hide();
                         $("#custom-theme-settings").hide();
-                        addLightAndDarkResetButton('base-color', baseSettingsUl.children());
+                        addLightAndDarkResetButton('base-color', baseSettingsUl.children().first());
                     }
                 })
                 .appendTo(divThemeStyle);
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
                 $('<label class="nr-db-theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="nr-db-field-name" placeholder="profile name (not blank)">')
+                $('<input type="text" id="node-input-name" placeholder="profile name (not blank)">')
                 .val("Untitled Theme 1")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
-                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
-                        RED.nodes.dirty(true);
+                        if (editor) {
+                            editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
+                            RED.nodes.dirty(true);
+                        }
                     }
                 })
                 .keyup(function() {
@@ -732,12 +763,6 @@
                 var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Colour</span></li>').appendTo(baseSettingsUl);
                 var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
 
-                // var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>Font</span></li>').appendTo(baseSettingsUl);
-                // var fontSelector = $('<select id="nr-db-field-font">'+
-                //     '<option value="arial">Arial (default)</option>'+
-                //     '<option value="helvetica">Helvetica</option>'+
-                //     '</select>').appendTo(baseFontItem);
-
                 $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
                 .change(function() {
                     ensureDashboardNode(true);
@@ -758,6 +783,36 @@
                     }
                 })
                 .appendTo(spanColorContainer);
+
+                var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>Font</span></li>').appendTo(baseSettingsUl);
+                var fontSelector = $('<select id="nr-db-field-font">'+
+                    '<option value="'+baseFontName+'" style="font-family:'+baseFontName+'">System Font (default)</option>'+
+                    '<option value="Arial,Arial,Helvetica,sans-serif" style="font-family:Arial,Arial,Helvetica,sans-serif">Arial</option>'+
+                    '<option value="Arial Black,Arial Black,Gadget,sans-serif" style="font-family:Arial Black,Arial Black,Gadget,sans-serif">Arial Black</option>'+
+                    '<option value="Arial Narrow,Nimbus Sans L,sans-serif" style="font-family:Arial Narrow,Nimbus Sans L,sans-serif">Arial Narrow</option>'+
+                    '<option value="Century Gothic,CenturyGothic,AppleGothic,sans-serif" style="font-family:Century Gothic,CenturyGothic,AppleGothic,sans-serif">Century Gothic</option>'+
+                    '<option value="Copperplate,Copperplate Gothic Light,fantasy" style="font-family:Copperplate,Copperplate Gothic Light,fantasy;">Copperplate</option>'+
+                    '<option value="Courier,monospace" style="font-family:Courier,monospace;">Courier</option>'+
+                    '<option value="Georgia,Georgia,serif" style="font-family:Georgia,Georgia,serif">Georgia</option>'+
+                    '<option value="Gill Sans,Geneva,sans-serif" style="font-family:Gill Sans,Geneva,sans-serif;">Gill Sans</option>'+
+                    //'<option value="Helvetica Neue,Helvetica,sans-serif" style="font-family:Helvetica Neue,Helvetica,sans-serif">Helvetica Neue</option>'+
+                    '<option value="Impact,Impact,Charcoal,sans-serif" style="font-family:Impact,Impact,Charcoal,sans-serif">Impact</option>'+
+                    '<option value="Lucida Sans Typewriter,Lucida Console,Monaco,monospace" style="font-family:Lucida Console,Monaco,monospace">Lucida Console</option>'+
+                    '<option value="Lucida Sans Unicode,Lucida Grande,sans-serif" style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif">Lucida Sans</option>'+
+                    '<option value="Palatino Linotype,Palatino,Book Antiqua,serif" style="font-family:Palatino Linotype,Palatino,Book Antiqua,serif">Palatino Linotype</option>'+
+                    '<option value="Tahoma,Geneva,sans-serif" style="font-family:Tahoma,Geneva,sans-serif">Tahoma</optionstyle="font-family:>'+
+                    '<option value="Times New Roman,Times,serif" style="font-family:Times New Roman,Times,serif">Times New Roman</option>'+
+                    '<option value="Trebuchet MS,Helvetica,sans-serif" style="font-family:Trebuchet MS,Helvetica,sans-serif">Trebuchet MS</option>'+
+                    '<option value="Verdana,Verdana,Geneva,sans-serif" style="font-family:Verdana,Verdana,Geneva,sans-serif">Verdana</option>'+
+                    '</select>')
+                    .change(function() {
+                        ensureDashboardNode(true);
+                        var theme = globalDashboardNode.theme.name.split('-')[1];
+                        globalDashboardNode.theme[theme+'Theme'].baseFont = $(this).val();
+                        globalDashboardNode.theme.themeState['base-font'] = {value:$(this).val()};
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(baseFontItem);
 
                 var themeSettingsContainer = $('<div id="custom-theme-settings">').appendTo(themeTab);
 
@@ -874,9 +929,11 @@
 
                 //Layout Tab
                 var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
-                $('<label>').html('Tabs').appendTo(divTabs);
+                $('<label>').html('Tabs & Links').appendTo(divTabs);
 
                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
+
+                //Toggle expand buttons
                 $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-up"></i></a>')
                 .click(function(evt) {
                     tabContainer.find(".nr-db-sb-group-list-container").slideUp().addClass('nr-db-sb-collapsed');
@@ -891,9 +948,17 @@
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
+
+                //Add item button
                 $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> tab</a>')
                 .click(function(evt) {
-                    tabContainer.editableList('addItem',{});
+                    tabContainer.editableList('addItem',{type: 'ui_tab'});
+                    evt.preventDefault();
+                })
+                .appendTo(buttonGroup);
+                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> link</a>')
+                .click(function(evt) {
+                    tabContainer.editableList('addItem',{type: 'ui_link'});
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
@@ -902,7 +967,8 @@
                 var groupLists = {};
                 var linkNodes = {};
 
-                function titleToggle(id,content,chevron) {
+                // toggle slide tab group content
+                var titleToggle = function (id,content,chevron) {
                     return function(evt) {
                         if (content.is(":visible")) {
                             content.slideUp();
@@ -919,54 +985,94 @@
                     };
                 }
 
-                var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css({"min-height":"200px","height":"350px"}).appendTo(divTabs).editableList({
-                    sortable:".nr-db-sb-tab-list-header",
-                    addButton: false,
-                    addItem: function(container,i,tab) {
-                        var newTab = false;
-                        if (!tab.node) {
-                            tab.node = {
-                                id: RED.nodes.id(),
-                                _def: RED.nodes.getType("ui_tab"),
-                                type: "ui_tab",
+                var addTabOrLinkItem = function(container,i,item) {
+                    // create node if needed
+                    if (!item.node) {
+                        var defaultItem = {
+                            'ui_tab': {
+                                _def: RED.nodes.getType('ui_tab'),
+                                type: 'ui_tab',
                                 users: [],
-                                order: i+1,
-                                name: "Tab "+(i+1),
-                                icon: "dashboard"
-                            };
-                            listElements[tab.node.id] = container;
-                            RED.nodes.add(tab.node);
-                            tab.groups = [];
-                            RED.nodes.dirty(true);
-                            newTab = true;
+                                icon: 'dashboard',
+                                name: 'Tab'
+                            },
+                            'ui_link': {
+                                _def: RED.nodes.getType('ui_link'),
+                                type: 'ui_link',
+                                users: [],
+                                icon: 'open_in_browser',
+                                name: 'Link',
+                                target: 'newtab'
+                            }
                         }
-                        if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
-                            RED.nodes.updateConfigNodeUsers(tab.node);
+                        item.node = defaultItem[item.type]
+                        item.node.id = RED.nodes.id()
+                        item.node.order = i+1
+                        item.node.name += ' '+item.node.order
+                        listElements[item.node.id] = container;
+                        if (item.type === 'ui_tab') {
+                            item.groups = [];
                         }
-                        var tabNode = tab.node;
-                        container.addClass("nr-db-sb-tab-list-item");
-                        var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
-                        $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                        var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
-                        $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
-                        var title = $('<span class="nr-db-sb-title">').html(tabNode.name||"").appendTo(titleRow);
-                        listElements[tabNode.id] = container;
-                        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                        RED.nodes.add(item.node);
+                        RED.nodes.dirty(true);
+                    }
+                    else if (item.type === undefined) {
+                        item.type = item.node.type
+                    }
+
+                    listElements[item.node.id] = container;
+                    if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                        RED.nodes.updateConfigNodeUsers(item.node);
+                    }
+
+                    // title
+                    var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
+                    switch (item.type) {
+                        case 'ui_tab': {
+                            container.addClass("nr-db-sb-tab-list-item");
+                            $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                            var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
+                            $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
+                            var title = $('<span class="nr-db-sb-title">').html(item.node.name||"").appendTo(titleRow);
+                            break;
+                        }
+                        case 'ui_link': {
+                            $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                            var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
+                            var nameContainer = $('<div class="nr-db-sb-link-name-container">').appendTo(title);
+                            $('<i class="fa fa-external-link"></i>').appendTo(nameContainer);
+                            $('<span class="nr-db-sb-link-name">').html(item.node.name||"untitled").appendTo(nameContainer);
+                            $('<div class="nr-db-sb-link-url">').html(item.node.link||"http://").appendTo(title);
+                            break;
+                        }
+                    }
+                    // buttons
+                    var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                    if (item.type === 'ui_tab') {
                         var addGroupButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> group</a>').appendTo(buttonGroup);
-                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                    }
+                    var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                    editButton.on('click',function(evt) {
+                        RED.editor.editConfig("", item.type, item.node.id);
+                        evt.stopPropagation();
+                        evt.preventDefault();
+                    });
+
+                    if (item.type === 'ui_tab') {
                         var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
-                        if (listStates.hasOwnProperty(tabNode.id) && !listStates[tabNode.id]) {
+
+                        // ui_tab group chevron
+                        if (listStates.hasOwnProperty(item.node.id) && !listStates[item.node.id]) {
                             content.hide();
                             chevron.css({"transform":"rotate(-90deg)"});
                             content.addClass('nr-db-sb-collapsed');
-                            listStates[tabNode.id] = false;
+                            listStates[item.node.id] = false;
+                        } else {
+                            listStates[item.node.id] = true;
                         }
-                        else {
-                            listStates[tabNode.id] = true;
-                        }
-                        setTimeout(function() {
-                            chevron.css({"transition":"transform 0.2s ease-in-out"});
-                        },0);
+                        titleRow.click(titleToggle(item.node.id,content,chevron));
+
+                        // ui_tab group list
                         var ol = $('<ol>',{class:"nr-db-sb-group-list"}).appendTo(content).editableList({
                             sortable:".nr-db-sb-group-list-header",
                             addButton: false,
@@ -979,7 +1085,7 @@
                                         _def: RED.nodes.getType("ui_group"),
                                         type: "ui_group",
                                         users: [],
-                                        tab: tabNode.id,
+                                        tab: item.node.id,
                                         order: i+1,
                                         name: "Group "+(i+1),
                                         width: 6,
@@ -994,7 +1100,7 @@
                                     }
                                 }
                                 var groupNode = group.node;
-                                elementParents[groupNode] = tabNode.id;
+                                elementParents[groupNode] = item.node.id;
                                 var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-group-list-header"}).appendTo(container);
                                 $('<i class="nr-db-sb-list-handle nr-db-sb-group-list-handle fa fa-bars"></i>').appendTo(titleRow);
                                 var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
@@ -1013,9 +1119,6 @@
                                 else {
                                     listStates[groupNode.id] = true;
                                 }
-                                setTimeout(function() {
-                                    chevron.css({"transition":"transform 0.2s ease-in-out"});
-                                },0);
 
                                 var ol = $('<ol>',{class:"nr-db-sb-widget-list"}).appendTo(content).editableList({
                                     sortable:".nr-db-sb-widget-list-header",
@@ -1109,44 +1212,42 @@
                                         node.dirty = true;
                                         node.changed = true;
                                     }
-                                    if (node.tab !== tabNode.id) {
+                                    if (node.tab !== item.node.id) {
                                         var oldTabNode = RED.nodes.node(node.tab);
                                         if (oldTabNode) {
                                             var index = oldTabNode.users.indexOf(node);
                                             oldTabNode.users.splice(index,1);
                                         }
-                                        node.tab = tabNode.id;
-                                        tabNode.users.push(node);
+                                        node.tab = item.node.id;
+                                        item.node.users.push(node);
                                         changed = true;
                                     }
                                 })
                                 RED.nodes.dirty(true);
                                 RED.view.redraw();
                             }
-                        });
-                        ol.css("min-height","10px");
-                        if (tabNode.id) {
-                            tabLists[tabNode.id] = ol;
-                        }
-                        titleRow.click(titleToggle(tabNode.id,content,chevron));
-                        editButton.on('click',function(evt) {
-                            RED.editor.editConfig("", tabNode.type, tabNode.id);
-                            evt.stopPropagation();
-                            evt.preventDefault();
-                        });
+                        })
+                        tabLists[item.node.id] = ol;
+
                         addGroupButton.click(function(evt) {
                             ol.editableList('addItem',{});
                             evt.stopPropagation();
                             evt.preventDefault();
                         });
-                        tab.groups.forEach(function(group) {
+                        item.groups.forEach(function(group) {
                             ol.editableList('addItem',group);
                         });
-                    },
+                    }
+                }
+
+                var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).appendTo(divTabs).editableList({
+                    sortable:".nr-db-sb-tab-list-header",
+                    addButton: false,
+                    addItem: addTabOrLinkItem,
                     sortItems: function(items) {
                         items.each(function(i,el) {
-                            var tabData = el.data('data');
-                            var node = tabData.node;
+                            var itemData = el.data('data');
+                            var node = itemData.node;
                             var changed = false;
                             if (node.order !== i+1) {
                                 node.order = i+1;
@@ -1231,66 +1332,6 @@
                     event.preventDefault();
                 });
 
-                var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
-                $('<label>').html('Menu links').appendTo(divLinks);
-
-                buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divLinks);
-                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> link</a>')
-                .click(function(evt) {
-                    linksContainer.editableList('addItem',{});
-                    evt.preventDefault();
-                })
-                .appendTo(buttonGroup);
-
-                var linksContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css("height","150px").appendTo(divLinks).editableList({
-                    sortable: ".nr-db-sb-list-header",
-                    addButton: false,
-                    addItem: function(container,i,link) {
-                        if (!link.node) {
-                            link.node = {
-                                id: RED.nodes.id(),
-                                _def: RED.nodes.getType("ui_link"),
-                                type: "ui_link",
-                                users: [],
-                                order: i+1,
-                                icon: 'open_in_browser',
-                                target: 'newtab'
-                            }
-                            RED.nodes.add(link.node);
-                            RED.nodes.dirty(true);
-                        }
-                        var linkNode = link.node;
-                        linkNodes[linkNode.id] = container;
-                        var titleRow = $('<div>',{class:"nr-db-sb-list-header"}).appendTo(container);
-                        $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                        var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
-                        $('<div class="nr-db-sb-link-name">').html(link.node.name||"untitled").appendTo(title);
-                        $('<div class="nr-db-sb-link-url">').html(link.node.link||"http://").appendTo(title);
-                        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
-                        editButton.on('click',function(evt) {
-                            RED.editor.editConfig("", "ui_link", link.node.id);
-                            evt.stopPropagation();
-                            evt.preventDefault();
-                        });
-                    },
-                    sortItems: function(items) {
-                        items.each(function(i,el) {
-                            var node = el.data('data');
-                            var changed = false;
-                            if (node.node.order !== i+1) {
-                                node.node.order = i+1;
-                                changed = true;
-                            }
-                            if (changed) {
-                                node.node.dirty = true;
-                                node.node.changed = true;
-                            }
-                        })
-                        RED.nodes.dirty(true);
-                        RED.view.redraw();
-                    }
-                });
 
                 var listElements = {};
                 var dashboard = [];
@@ -1356,19 +1397,20 @@
                     var group;
                     var tabId;
                     var tab;
-                    var links = [];
                     var unknownGroups = 0;
                     // Find all the tabs and groups
                     RED.nodes.eachConfig(function(node) {
-                        if (node.type === 'ui_tab') {
-                            tabs[node.id] = node;
-                            //tabContainer.editableList('addItem',node);
-                        }
-                        else if (node.type === 'ui_group') {
-                            groups[node.id] = node;
-                        }
-                        else if (node.type === 'ui_link') {
-                            links.push(node);
+                        switch (node.type) {
+                            case 'ui_tab':
+                            case 'ui_link': {
+                                tabs[node.id] = node;
+                                //tabContainer.editableList('addItem',node);
+                                break;
+                            }
+                            case 'ui_group': {
+                                groups[node.id] = node;
+                                break;
+                            }
                         }
                     });
                     for (groupId in groups) {
@@ -1390,9 +1432,6 @@
                             if (groups.hasOwnProperty(node.group)) {
                                 groupElements[node.group] = groupElements[node.group]||[];
                                 groupElements[node.group].push(node);
-                            }
-                            else if (node.type === 'ui_link') {
-                                links.push(node);
                             }
                             else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
                                 unknownGroups++;
@@ -1471,19 +1510,6 @@
                             tabContainer.editableList('addItem',tab);
                         });
                     }
-                    links.sort(function(A,B) {
-                        return A.order - B.order;
-                    });
-                    links.forEach(function(link) {
-                        if (linkNodes[link.id]) {
-                            var container = linkNodes[link.id];
-                            container.find(".nr-db-sb-link-name").html(link.name||"untitled");
-                            container.find(".nr-db-sb-link-url").html(link.link||"http://");
-                        }
-                        else {
-                            linksContainer.editableList('addItem',{node:link});
-                        }
-                    });
                     ensureDashboardNode(true);
                     if (globalDashboardNode) {
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
@@ -1504,7 +1530,7 @@
                         $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
 
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
-                        $("#nr-db-field-name").val(globalDashboardNode.theme.customTheme.name);
+                        $("#node-input-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {
                             $("#custom-theme-library-container").show();
                             $("#custom-theme-settings").show();
@@ -1521,9 +1547,10 @@
                         var currentTheme = globalDashboardNode.theme.name.split("-")[1];
                         var startingValue = globalDashboardNode.theme[currentTheme+"Theme"].baseColor;
                         setColourPickerColour("base-color", startingValue);
+                        $("#nr-db-field-font").val(globalDashboardNode.theme[currentTheme+"Theme"].baseFont);
                         generateColours(startingValue);
                         if (globalDashboardNode.theme.name === 'theme-light' || globalDashboardNode.theme.name === 'theme-dark') {
-                            addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
+                            addLightAndDarkResetButton('base-color', $('#base-settings-ul').children().first());
                         }
 
                         if (editor === undefined) {
@@ -1586,8 +1613,8 @@
                             //Update theme object if necessary
                             if (JSON.stringify(editorObject.theme) !== JSON.stringify(globalDashboardNode.theme.themeState)) {
                                 globalDashboardNode.theme.themeState = editorObject.theme;
-                                if ($("#nr-db-field-name").val() !== globalDashboardNode.theme.customTheme.name) {
-                                    globalDashboardNode.theme.customTheme.name = $("#nr-db-field-name").val();
+                                if ($("#node-input-name").val() !== globalDashboardNode.theme.customTheme.name) {
+                                    globalDashboardNode.theme.customTheme.name = $("#node-input-name").val();
                                     globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["base-color"].value;
                                     setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
                                     generateColours(globalDashboardNode.theme.themeState["base-color"].value);
@@ -1650,8 +1677,8 @@
                             }
                         }
                         else if (node.type === "ui_link") {
-                            if (linkNodes[node.id]) {
-                                var container = linkNodes[node.id];
+                            if (listElements[node.id]) {
+                                var container = listElements[node.id];
                                 container.find(".nr-db-sb-link-name").html(node.name||"untitled");
                                 container.find(".nr-db-sb-link-url").html(node.link||"http://");
                             }
@@ -1764,7 +1791,7 @@
 
                 nodesRemoveEventHandler = function(node) {
                     if (/^ui_/.test(node.type)) {
-                        if (node.type === "ui_tab") {
+                        if (node.type === "ui_tab" || node.type === "ui_link") {
                             if (listElements[node.id]) {
                                 tabContainer.editableList('removeItem',listElements[node.id].data('data'));
                                 delete tabLists[node.id];
@@ -1775,12 +1802,6 @@
                                 tabLists[node.tab].editableList('removeItem',listElements[node.id].data('data'));
                             }
                             delete groupLists[node.id];
-                        }
-                        else if (node.type === 'ui_link') {
-                            if (linkNodes[node.id]) {
-                                linksContainer.editableList('removeItem',linkNodes[node.id].data('data'));
-                                delete linkNodes[node.id];
-                            }
                         }
                         else {
                             if (groupLists[node.group]) {

@@ -1,12 +1,8 @@
 <md-sidenav ng-hide="main.len <= 1" layout="column" class="md-sidenav-left" md-component-id="left">
     <md-list>
-        <md-list-item ng-repeat="tab in main.tabs" ng-click="main.select($index)">
-            <ui-icon icon="{{tab.icon}}" style="margin:5px"></ui-icon>
-            <p>{{tab.header}}</p>
-        </md-list-item>
-        <md-list-item ng-click="main.open(link, $index)" ng-repeat="link in main.links">
-            <ui-icon icon="{{link.icon}}" style="margin:5px"></ui-icon>
-            <p>{{link.name}}</p>
+        <md-list-item ng-repeat="obj in main.menu" ng-click="main.open(obj, $index)">
+            <ui-icon icon="{{obj.icon}}" style="margin:5px"></ui-icon>
+            <p>{{main.getMenuName(obj)}}</p>
         </md-list-item>
     </md-list>
 </md-sidenav>
