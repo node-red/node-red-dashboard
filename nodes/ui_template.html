@@ -3,21 +3,25 @@
         category: 'dashboard',
         color: 'rgb( 63, 173, 181)',
         defaults: {
-            group: {type: 'ui_group', required:true},
+            group: {type: 'ui_group', required:false},
             name: {value: ''},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
-                    var width = v||0;
-                    var currentGroup = $('#node-input-group').val()||this.group;
-                    var groupNode = RED.nodes.node(currentGroup);
-                    var valid = !groupNode || +width <= +groupNode.width;
-                    $("#node-input-size").toggleClass("input-error",!valid);
+                    var valid = true
+                    if (this.templateScope !== 'global') {
+                        var width = v||0;
+                        var currentGroup = $('#node-input-group').val()||this.group;
+                        var groupNode = RED.nodes.node(currentGroup);
+                        valid = !groupNode || +width <= +groupNode.width;
+                        $("#node-input-size").toggleClass("input-error",!valid);
+                    }
                     return valid;
                 }},
             height: {value: 0},
             format: {value: '<div ng-bind-html="msg.payload"></div>'},
             storeOutMessages: {value: true},
-            fwdInMessages: {value: true}
+            fwdInMessages: {value: true},
+            templateScope: {value: 'local'}
         },
         inputs:1,
         outputs:1,
@@ -41,6 +45,20 @@
                 this.fwdInMessages = true;
                 $('#node-input-fwdInMessages').prop('checked', true);
             }
+
+            if (typeof this.templateScope === 'undefined') {
+                this.templateScope = 'local';
+                $('#node-input-templateScope').val(this.templateScope);
+            }
+            $('#node-input-templateScope').on('change', function() {
+                if ($('#node-input-templateScope').val() === 'global') {
+                    $('#row-group, #row-size').hide();
+                    that._def.defaults.group.required = false;
+                } else {
+                    $('#row-group, #row-size').show();
+                    that._def.defaults.group.required = true;
+                }
+            })
 
             this.editor = RED.editor.createEditor({
                 id: 'node-input-format-editor',
@@ -86,11 +104,18 @@
 </script>
 
 <script type="text/x-red" data-template-name="ui_template">
-	<div class="form-row">
+  <div class="form-row">
+      <label for="node-input-format">Template scope</label>
+      <select id="node-input-templateScope">
+          <option value="local">Local to tab</option>
+          <option value="global">Applied globally to &lt;head&gt;</option>
+      </select>
+  </div>
+	<div class="form-row" id="row-group">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
-    <div class="form-row">
+    <div class="form-row" id="row-size">
         <label><i class="fa fa-object-group"></i> Size</label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">

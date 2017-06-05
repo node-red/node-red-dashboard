@@ -25,6 +25,8 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
 app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope',
     function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope) {
         this.menu = [];
+        this.headElementsAppended = [];
+        this.headOriginalElements = [];
         this.len = 0;
         this.selectedTab = null;
         this.loaded = false;
@@ -108,8 +110,80 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             less.modifyVars(lessObj);
         }
 
+        function processGlobals() {
+            var head = $document.find('head');
+            var headChildren = head.children();
+            var headChildrenLength = head.children().length;
+
+            // remove previous elements appended
+            main.headElementsAppended.forEach(function(headEl) {
+                headEl.childrenIndex.forEach(function(index) {
+                    headChildren[index].parentNode.removeChild(headChildren[index]);
+                })
+            });
+            headChildrenLength = head.children().length;
+            main.headElementsAppended = [];
+
+            var needToReplace = [
+                'meta[charset]',
+                'meta[name="viewport"]',
+                'meta[name="apple-mobile-web-app-capable"]',
+                'meta[name="apple-mobile-web-app-status-bar-style"]',
+                'meta[name="apple-mobile-web-app-title"]',
+                'meta[name="mobile-web-app-capable"]',
+                'link[rel="icon"]',
+                'link[rel="shortcut icon"]',
+                'link[rel="apple-touch-icon"]'
+            ];
+            // replace original elements
+            main.headOriginalElements.forEach(function(headOriginalEl) {
+                var currentEl = head.find(headOriginalEl.expression)[0];
+                angular.element(currentEl).replaceWith(headOriginalEl.html);
+            })
+
+            if (main.globals.length > 0) {
+                main.globals.forEach(function(control) {
+                    if (control.format !== undefined && control.format !== '') {
+                        // check if need to replace
+                        var simulateHead = angular.element('<head></head>');
+                        simulateHead.append(control.format);
+                        needToReplace.forEach(function(expression) {
+                            var el = simulateHead.find(expression);
+                            if (el.length > 0) {
+                                var originalEl = head.find(expression)[0];
+                                main.headOriginalElements.push({
+                                    expression: expression,
+                                    html: originalEl
+                                });
+                                angular.element(originalEl).replaceWith(el[0]);
+                                // prevent to append
+                                control.format = simulateHead.html();
+                                control.format.trim();
+                            }
+                        })
+
+                        // if still stuff
+                        if (control.format !== '') {
+                            head.append(control.format);
+
+                            // store index appended to remove later
+                            var childrenIndex = []
+                            for (var i=headChildrenLength; i<head.children().length; i++) {
+                                childrenIndex.push(i);
+                            }
+                            headChildrenLength = head.children().length;
+                            main.headElementsAppended.push({
+                                childrenIndex: childrenIndex
+                            })
+                        }
+                    }
+                })
+            }
+        }
+
         events.connect(function (ui, done) {
             main.menu = ui.menu;
+            main.globals = ui.globals;
             var name;
             if (ui.site) {
                 name = ui.site.name;
@@ -139,6 +213,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
+                processGlobals();
                 done();
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length) {
