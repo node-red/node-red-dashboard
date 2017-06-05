@@ -1366,7 +1366,7 @@
                     var unknownGroups = {};
                     var count = 0;
                     RED.nodes.eachNode(function(node) {
-                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
+                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && (node.type === 'ui_template' && node.templateScope !== 'global')) {
                             if (!RED.nodes.node(node.group)) {
                                 var g = node.group || "_BLANK_";
                                 unknownGroups[g] = unknownGroups[g] || [];
@@ -1433,7 +1433,7 @@
                                 groupElements[node.group] = groupElements[node.group]||[];
                                 groupElements[node.group].push(node);
                             }
-                            else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
+                            else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')&&(node.type === 'ui_template' && node.templateScope !== 'global')) {
                                 unknownGroups++;
                             }
                         }

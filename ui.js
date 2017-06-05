@@ -353,9 +353,10 @@ function addControl(tab, groupHeader, control) {
     if (typeof control.type !== 'string') { return function() {}; }
 
     // global template?
-    if (control.type === 'template' && control.globalHeadTemplate) {
+    if (control.type === 'template' && control.templateScope === 'global') {
         // add content to globals
         globals.push(control);
+        updateUi();
 
         // return remove function
         return function() {
