@@ -9,11 +9,11 @@ module.exports = function(RED) {
         if (!group && config.templateScope !== 'global') { return; }
         var tab = null;
         if (config.templateScope !== 'global') {
-          var tab = RED.nodes.getNode(group.config.tab);
-          if (!tab) { return; }
-          if (!config.width) {
-              config.width = group.config.width;
-          }
+            tab = RED.nodes.getNode(group.config.tab);
+            if (!tab) { return; }
+            if (!config.width) {
+                config.width = group.config.width;
+            }
         }
         var hei = Number(config.height|| 0);
 

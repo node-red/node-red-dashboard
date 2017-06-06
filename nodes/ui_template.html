@@ -50,14 +50,26 @@
                 this.templateScope = 'local';
                 $('#node-input-templateScope').val(this.templateScope);
             }
+
             $('#node-input-templateScope').on('change', function() {
                 if ($('#node-input-templateScope').val() === 'global') {
-                    $('#row-group, #row-size').hide();
+                    $('#template-row-group, #template-row-size, #template-pass-store').hide();
                     that._def.defaults.group.required = false;
                 } else {
-                    $('#row-group, #row-size').show();
+                    $('#template-row-group, #template-row-size, #template-pass-store').show();
                     that._def.defaults.group.required = true;
                 }
+
+                var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+                var height = $("#dialog-form").height();
+                for (var i=0; i<rows.size(); i++) {
+                    height = height - $(rows[i]).outerHeight(true);
+                }
+                if ($('#node-input-templateScope').val() === "global") { height += 240; }
+                var editorRow = $("#dialog-form>div.node-text-editor-row");
+                height -= (parseInt(editorRow.css("marginTop")) + parseInt(editorRow.css("marginBottom")));
+                $(".node-text-editor").css("height",height+"px");
+                if (this.editor) { this.editor.resize(); }
             })
 
             this.editor = RED.editor.createEditor({
@@ -93,10 +105,11 @@
             var rows = $("#dialog-form>div:not(.node-text-editor-row)");
             var height = $("#dialog-form").height();
             for (var i=0; i<rows.size(); i++) {
-                height -= $(rows[i]).outerHeight(true);
+                height = height - $(rows[i]).outerHeight(true);
             }
+            if ($('#node-input-templateScope').val() === "global") { height += 232; }
             var editorRow = $("#dialog-form>div.node-text-editor-row");
-            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            height -= (parseInt(editorRow.css("marginTop")) + parseInt(editorRow.css("marginBottom")));
             $(".node-text-editor").css("height",height+"px");
             this.editor.resize();
         }
@@ -105,17 +118,17 @@
 
 <script type="text/x-red" data-template-name="ui_template">
   <div class="form-row">
-      <label for="node-input-format">Template scope</label>
-      <select id="node-input-templateScope">
-          <option value="local">Local to tab</option>
-          <option value="global">Applied globally to &lt;head&gt;</option>
+      <label for="node-input-format">Template type</label>
+      <select style="width:76%" id="node-input-templateScope">
+          <option value="local">Widget in group</option>
+          <option value="global">Added to site &lt;head&gt; section</option>
       </select>
   </div>
-	<div class="form-row" id="row-group">
+	<div class="form-row" id="template-row-group">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
-    <div class="form-row" id="row-size">
+    <div class="form-row" id="template-row-size">
         <label><i class="fa fa-object-group"></i> Size</label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
@@ -125,6 +138,7 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
+    <div id="template-pass-store">
     <div class="form-row">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; width:auto; vertical-align:top;">
@@ -134,6 +148,7 @@
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; width:auto; vertical-align:top;">
         <label for="node-input-storeOutMessages" style="width:70%;"> Add output messages to stored state.</label>
+    </div>
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>

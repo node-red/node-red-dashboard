@@ -16,7 +16,8 @@
 		{"name": "Joe Pavitt"},
 		{"name": "Nick O'Leary"},
 		{"name": "Dan Cunnington"},
-        {"name": "Laurence Stant"}
+        {"name": "Laurence Stant"},
+        {"name": "Camille Boissel"}
 	],
 	"license": "Apache-2.0",
 	"repository": {

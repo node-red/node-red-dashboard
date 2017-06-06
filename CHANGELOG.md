@@ -3,9 +3,11 @@
 
 **Enhancements**
 
- - add ability to specify basefont style. (NOTE the Cross Platform font uses a
+ - Add ability to specify basefont style. (NOTE the Cross Platform font uses a
      system font stack approach that should look good across as many platforms as possible)
- - merge tabs and links so all can be reordered - PR #234
+ - Merge tabs and links so all can be re-ordered - PR #234
+ - Let labels handle multiple properties (like payload and colour)
+ - Add possibility to use a template node to add or replace content inside <head> tag. PR #239
 
 ### 2.3.11: Maintenance Release
 
