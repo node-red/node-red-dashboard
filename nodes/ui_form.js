@@ -20,7 +20,7 @@ module.exports = function(RED) {
                 order: config.order,
                 value: config.payload || node.id,
                 width: config.width || group.config.width || 6,
-                height: config.height || config.options.length ,//? config.options.length+3 : 3,
+                height: config.height || config.options.length ,
                 options: config.options,
                 formValue:config.formValue
             },

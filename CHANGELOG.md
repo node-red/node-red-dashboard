@@ -8,6 +8,7 @@
  - Merge tabs and links so all can be re-ordered - PR #234
  - Let labels handle multiple properties (like payload and colour)
  - Add possibility to use a template node to add or replace content inside <head> tag. PR #239
+ - Adjust Form widget spacing to line up with other widgets
 
 ### 2.3.11: Maintenance Release
 
