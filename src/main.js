@@ -287,8 +287,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var elFound = false;
             main.headElementsAppended.some(function(el) {
                 if (el.id === id) {
-                  elFound = el;
-                  return true;
+                    elFound = el;
+                    return true;
                 }
             })
             return elFound;
@@ -298,16 +298,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var elFound = false;
             main.headOriginalElements.some(function(el) {
                 if (el.id === id) {
-                  elFound = el;
-                  return true;
+                    elFound = el;
+                    return true;
                 }
             })
             return elFound;
         }
 
         events.on(function (msg) {
+            var found;
             if (msg.hasOwnProperty('msg') && msg.msg.templateScope === 'global') {
-                var found = findHeadOriginalEl(msg.id);
+                found = findHeadOriginalEl(msg.id);
                 if (found) {
                     replaceHeadOriginalEl(found, msg.msg.template)
                 } else {
@@ -315,11 +316,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     if (found) {
                         replaceHeadEl(found, msg.msg.template)
                     } else {
-                      return;
+                        return;
                     }
                 }
             } else {
-                var found = findControl(msg.id, main.menu);
+                found = findControl(msg.id, main.menu);
                 if (found === undefined) { return; }
                 for (var key in msg) {
                     if (msg.hasOwnProperty(key)) {
