@@ -111,20 +111,64 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         }
 
         function processGlobals() {
-            var head = $document.find('head');
-            var headChildren = head.children();
-            var headChildrenLength = head.children().length;
-
             // remove previous elements appended
             main.headElementsAppended.forEach(function(headEl) {
-                headEl.childrenIndex.forEach(function(index) {
-                    headChildren[index].parentNode.removeChild(headChildren[index]);
-                })
+                removeHeadElAppended(headEl)
             });
-            headChildrenLength = head.children().length;
             main.headElementsAppended = [];
 
-            var needToReplace = [
+            // reset original elements
+            main.headOriginalElements.forEach(function(headOriginalEl) {
+                resetOriginalHeadEl(headOriginalEl);
+            })
+
+            // add elements
+            if (main.globals.length > 0) {
+                main.globals.forEach(function(control) {
+                    if (control.format !== undefined && control.format !== '') {
+                        addHeadEl(control.id, control.format);
+                    }
+                })
+            }
+        }
+
+        function replaceHeadOriginalEl (headOriginalEl, format) {
+            resetHeadOriginalEl(headOriginalEl);
+            addHeadEl(headOriginalEl.id, format);
+        }
+
+        function replaceHeadEl (headEl, format) {
+            removeHeadElAppended(headEl);
+            var index = main.headElementsAppended.indexOf(headEl);
+            if (index >= 0) {
+                main.headElementsAppended.splice(index, 1);
+            }
+            addHeadEl(headEl.id, format);
+        }
+
+        function resetHeadOriginalEl (headOriginalEl) {
+            var head = $document.find('head');
+            var currentEl = head.find(headOriginalEl.expression)[0];
+            angular.element(currentEl).replaceWith(headOriginalEl.html);
+        }
+
+        function removeHeadElAppended (headEl) {
+            var head = $document.find('head');
+            var headChildren = head.children();
+            headEl.childrenIndex.forEach(function(index) {
+                headChildren[index].parentNode.removeChild(headChildren[index]);
+            })
+        }
+
+        function addHeadEl (id, format) {
+            var head = $document.find('head');
+            var headChildrenLength = head.children().length;
+
+            var simulateHead = angular.element('<head></head>');
+            simulateHead.append(format);
+
+            // check if need to replace
+            var headToReplace = [
                 'meta[charset]',
                 'meta[name="viewport"]',
                 'meta[name="apple-mobile-web-app-capable"]',
@@ -135,48 +179,35 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 'link[rel="shortcut icon"]',
                 'link[rel="apple-touch-icon"]'
             ];
-            // replace original elements
-            main.headOriginalElements.forEach(function(headOriginalEl) {
-                var currentEl = head.find(headOriginalEl.expression)[0];
-                angular.element(currentEl).replaceWith(headOriginalEl.html);
+            headToReplace.forEach(function(expression) {
+                var el = simulateHead.find(expression);
+                if (el.length > 0) {
+                    var originalEl = head.find(expression)[0];
+                    main.headOriginalElements.push({
+                        id: id,
+                        expression: expression,
+                        html: originalEl
+                    });
+                    angular.element(originalEl).replaceWith(el[0]);
+                    // prevent to append
+                    format = simulateHead.html();
+                    format.trim();
+                }
             })
 
-            if (main.globals.length > 0) {
-                main.globals.forEach(function(control) {
-                    if (control.format !== undefined && control.format !== '') {
-                        // check if need to replace
-                        var simulateHead = angular.element('<head></head>');
-                        simulateHead.append(control.format);
-                        needToReplace.forEach(function(expression) {
-                            var el = simulateHead.find(expression);
-                            if (el.length > 0) {
-                                var originalEl = head.find(expression)[0];
-                                main.headOriginalElements.push({
-                                    expression: expression,
-                                    html: originalEl
-                                });
-                                angular.element(originalEl).replaceWith(el[0]);
-                                // prevent to append
-                                control.format = simulateHead.html();
-                                control.format.trim();
-                            }
-                        })
+            // if still stuff
+            if (format !== '') {
+                head.append(format);
 
-                        // if still stuff
-                        if (control.format !== '') {
-                            head.append(control.format);
-
-                            // store index appended to remove later
-                            var childrenIndex = []
-                            for (var i=headChildrenLength; i<head.children().length; i++) {
-                                childrenIndex.push(i);
-                            }
-                            headChildrenLength = head.children().length;
-                            main.headElementsAppended.push({
-                                childrenIndex: childrenIndex
-                            })
-                        }
-                    }
+                // store index appended to remove later
+                var childrenIndex = []
+                for (var i=headChildrenLength; i<head.children().length; i++) {
+                    childrenIndex.push(i);
+                }
+                headChildrenLength = head.children().length;
+                main.headElementsAppended.push({
+                    id: id,
+                    childrenIndex: childrenIndex
                 })
             }
         }
@@ -252,17 +283,53 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        events.on(function (msg) {
-            var found = findControl(msg.id, main.menu);
-            if (found === undefined) { return; }
-            for (var key in msg) {
-                if (msg.hasOwnProperty(key)) {
-                    if (key === 'id') { continue; }
-                    found[key] = msg[key];
+        function findHeadElAppended(id) {
+            var elFound = false;
+            main.headElementsAppended.some(function(el) {
+                if (el.id === id) {
+                  elFound = el;
+                  return true;
                 }
-            }
-            if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
-                found.me.processInput(msg);
+            })
+            return elFound;
+        }
+
+        function findHeadOriginalEl(id) {
+            var elFound = false;
+            main.headOriginalElements.some(function(el) {
+                if (el.id === id) {
+                  elFound = el;
+                  return true;
+                }
+            })
+            return elFound;
+        }
+
+        events.on(function (msg) {
+            if (msg.hasOwnProperty('msg') && msg.msg.templateScope === 'global') {
+                var found = findHeadOriginalEl(msg.id);
+                if (found) {
+                    replaceHeadOriginalEl(found, msg.msg.template)
+                } else {
+                    found = findHeadElAppended(msg.id);
+                    if (found) {
+                        replaceHeadEl(found, msg.msg.template)
+                    } else {
+                      return;
+                    }
+                }
+            } else {
+                var found = findControl(msg.id, main.menu);
+                if (found === undefined) { return; }
+                for (var key in msg) {
+                    if (msg.hasOwnProperty(key)) {
+                        if (key === 'id') { continue; }
+                        found[key] = msg[key];
+                    }
+                }
+                if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
+                    found.me.processInput(msg);
+                }
             }
         });
 
