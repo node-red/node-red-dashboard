@@ -18,6 +18,7 @@
 	padding: 0px;
     margin-top: 11px;
     margin-bottom: 11px;
+    margin-right: 12px;
 	display: inline-block;
 }
 .nr-dashboard-form md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
