@@ -172,6 +172,7 @@ function add(opt) {
                         if (b.indexOf("|") !== -1) { b = b.split("|")[0]; }
                         if (b.indexOf(" ") !== -1) { b = b.split(" ")[0]; }
                         if (b.indexOf("?") !== -1) { b = b.split("?")[0]; }
+                        b.replace(/\(/g,'').replace(/\)/g,'');
                         if (b.indexOf("msg.") >= 0) {
                             b = b.split("msg.")[1];
                             if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
