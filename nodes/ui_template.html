@@ -99,6 +99,11 @@
                 }
             }
             $("#node-input-format").val(this.editor.getValue());
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditcancel: function() {
+            this.editor.destroy();
             delete this.editor;
         },
         oneditresize: function(size) {
