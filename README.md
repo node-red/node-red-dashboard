@@ -5,9 +5,6 @@ dashboard.
 
 <img src="http://nodered.org/images/dashboarde.png"/>
 
-It is a continuation of the [node-red-contrib-ui](https://www.npmjs.com/package/node-red-contrib-ui)
-module created by Andrei Tatar.
-
 ## Pre-requisites
 
 Node-RED-Dashboard requires Node-RED version 0.14 or more recent.
@@ -36,12 +33,11 @@ The widget layout is managed by a `dashboard` tab in the sidebar of the Node-RED
 
  - **Tabs** - From here you can re-order the tabs, groups and widgets, and add and edit their properties.
 
- - **Links** - are no longer added as nodes in the workspace - they are managed in the
-dashboard sidebar. They can also be opened in an iframe - if allowed by the target page.
+ - **Links** - to other web pages can also be added to the menu. They can optionally be opened in an iframe - if allowed by the target page.
 
 ##### Theme
 
- - **Style** - the theme of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme.
+ - **Style** - the theme and font of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme.
  You cannot have different themes for each tab.
 
 ##### Site

@@ -1,5 +1,5 @@
 
-### 2.4.0-beta: Milestone Release
+### 2.4.0: Milestone Release
 
 **Enhancements**
 
@@ -9,6 +9,11 @@
  - Let labels handle multiple properties (like payload and colour)
  - Add possibility to use a template node to add or replace content inside <head> tag. PR #239
  - Adjust Form widget spacing to line up with other widgets
+
+ **Fixes**
+
+  - Simpler, better date injection to preset date-picker
+  - Let switch resize after being set to 1x1
 
 ### 2.3.11: Maintenance Release
 
