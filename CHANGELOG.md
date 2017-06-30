@@ -1,4 +1,11 @@
 
+### 2.4.1: Maintenance Release
+
+**Fixes**
+
+ - Fix location for fa-icons
+ - Make Tabs/Links window correctly expandable on Firefox
+
 ### 2.4.0: Milestone Release
 
 **Enhancements**
