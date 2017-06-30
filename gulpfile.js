@@ -35,7 +35,8 @@ gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
 // });
 
 gulp.task('manifest', ['build'], function() {
-    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/fonts/*'], { base: 'dist/' })
+    //gulp.src(['dist/*','dist/css/*','dist/js/*','dist/fonts/*','dist/font-awesome/*'], { base: 'dist/' })
+    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*'], { base: 'dist/' })
     .pipe(manifest({
         hash: true,
         //preferOnline: true,
@@ -85,7 +86,8 @@ gulp.task('icon', function() {
 });
 
 gulp.task('fonts', function() {
-    return gulp.src('node_modules/font-awesome/fonts/*').pipe(gulp.dest('dist/fonts/'));
+    //return gulp.src('node_modules/font-awesome/fonts/*').pipe(gulp.dest('dist/fonts/'));
+    return gulp.src('node_modules/font-awesome/fonts/*').pipe(gulp.dest('dist/font-awesome/fonts/'));
 });
 
 gulp.task('js', function () {
