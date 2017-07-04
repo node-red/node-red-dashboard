@@ -1,4 +1,10 @@
 
+### 2.4.2: Maintenance Release
+
+**Fixes**
+
+ - Revert version of socket.io to keep working on node.js v0.10....
+
 ### 2.4.1: Maintenance Release
 
 **Fixes**
