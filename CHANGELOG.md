@@ -1,4 +1,10 @@
 
+### 2.4.3-beta: Maintenance Release
+
+**Fixes**
+
+ - Set y-Axis scale if max and min set to stop overlapping labels
+
 ### 2.4.2: Maintenance Release
 
 **Enhancements**

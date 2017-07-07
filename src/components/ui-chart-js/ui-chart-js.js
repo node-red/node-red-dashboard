@@ -214,8 +214,12 @@ function loadConfiguration(type,scope) {
         config.options.scales.yAxes[0].ticks = {};
 
         if ((type === 'line') || (type === 'bar')) {
+            config.options.scales.yAxes[0].ticks.autoSkip = true;
             if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
             if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
+            if ((!isNaN(yMin)) && (!isNaN(yMax))) {
+                config.options.scales.yAxes[0].ticks.stepSize = (yMax - yMin) / 4;
+            }
             if (type === 'bar') {
                 config.options.scales.yAxes[0].ticks.beginAtZero = true;
             }
