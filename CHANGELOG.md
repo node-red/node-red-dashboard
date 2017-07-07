@@ -1,6 +1,10 @@
 
 ### 2.4.2: Maintenance Release
 
+**Enhancements**
+
+ - Let ui_chart enlarge points so they are visible dots
+
 **Fixes**
 
  - Revert version of socket.io to keep working on node.js v0.10....
