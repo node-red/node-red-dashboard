@@ -4,6 +4,7 @@
 **Fixes**
 
  - Set y-Axis scale if max and min set to stop overlapping labels
+ - Make input field and justgage font match theme font choice
 
 ### 2.4.2: Maintenance Release
 
