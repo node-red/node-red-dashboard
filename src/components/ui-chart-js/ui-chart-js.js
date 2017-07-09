@@ -103,6 +103,7 @@ function loadConfiguration(type,scope) {
     var legend = scope.$eval('me.item.legend');
     var interpolate = scope.$eval('me.item.interpolate');
     var xFormat = scope.$eval('me.item.xformat');
+    var showDot = scope.$eval('me.item.dot');
     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
     var config = {};
     var themeState = scope.$eval('me.item.theme.themeState');
@@ -181,7 +182,7 @@ function loadConfiguration(type,scope) {
                 fill: false
             },
             point: {
-                radius: 0,
+                radius: showDot ? 2 : 0,
                 hitRadius: 4,
                 hoverRadius: 4 }
         }
@@ -213,8 +214,12 @@ function loadConfiguration(type,scope) {
         config.options.scales.yAxes[0].ticks = {};
 
         if ((type === 'line') || (type === 'bar')) {
+            config.options.scales.yAxes[0].ticks.autoSkip = true;
             if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
             if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
+            if ((!isNaN(yMin)) && (!isNaN(yMax))) {
+                config.options.scales.yAxes[0].ticks.stepSize = (yMax - yMin) / 4;
+            }
             if (type === 'bar') {
                 config.options.scales.yAxes[0].ticks.beginAtZero = true;
             }

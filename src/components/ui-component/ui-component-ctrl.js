@@ -131,9 +131,10 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                 case 'date-picker': {
                     if (me.item.ddd !== undefined) {
-                        if (typeof me.item.ddd !== "object") {
-                            var b = me.item.ddd.split(/\D+/);
-                            me.item.ddd = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+                        if (typeof me.item.ddd === "string") {
+                            me.item.ddd = new Date(me.item.ddd);
+                            //var b = me.item.ddd.split(/\D+/);
+                            //me.item.ddd = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
                         }
                     }
                     me.processInput = function (msg) {

@@ -1,11 +1,43 @@
 
-### 2.4.0-beta: Milestone Release
+### 2.4.3-beta: Maintenance Release
+
+**Fixes**
+
+ - Set y-Axis scale if max and min set to stop overlapping labels
+ - Make input field and justgage font match theme font choice
+
+### 2.4.2: Maintenance Release
 
 **Enhancements**
 
- - add ability to specify basefont style. (NOTE the Cross Platform font uses a
+ - Let ui_chart enlarge points so they are visible dots
+
+**Fixes**
+
+ - Revert version of socket.io to keep working on node.js v0.10....
+
+### 2.4.1: Maintenance Release
+
+**Fixes**
+
+ - Fix location for fa-icons
+ - Make Tabs/Links window correctly expandable on Firefox
+
+### 2.4.0: Milestone Release
+
+**Enhancements**
+
+ - Add ability to specify basefont style. (NOTE the Cross Platform font uses a
      system font stack approach that should look good across as many platforms as possible)
- - merge tabs and links so all can be reordered - PR #234
+ - Merge tabs and links so all can be re-ordered - PR #234
+ - Let labels handle multiple properties (like payload and colour)
+ - Add possibility to use a template node to add or replace content inside <head> tag. PR #239
+ - Adjust Form widget spacing to line up with other widgets
+
+ **Fixes**
+
+  - Simpler, better date injection to preset date-picker
+  - Let switch resize after being set to 1x1
 
 ### 2.3.11: Maintenance Release
 

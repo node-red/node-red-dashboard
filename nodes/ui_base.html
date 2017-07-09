@@ -19,11 +19,12 @@
     }
     .nr-db-sb .red-ui-editableList-container {
         padding: 0;
-        height: auto !important;
+        min-height: 250px;
+        height: auto;
     }
     .nr-db-sb-tab-list {
-        min-height: 36px;
-        height: 100%;
+        min-height: 250px;
+        height: auto;
     }
     .nr-db-sb-tab-list li {
         padding: 0;
@@ -59,6 +60,7 @@
         border-radius: 0;
         border: none;
         height: auto !important;
+        min-height: unset;
     }
     .nr-db-sb-list-handle {
         vertical-align: top;
@@ -929,7 +931,7 @@
 
                 //Layout Tab
                 var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
-                $('<label>').html('Tabs & Links').appendTo(divTabs);
+                $('<label>').html('<b>Tabs & Links</b>').appendTo(divTabs);
 
                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
 
@@ -1366,7 +1368,7 @@
                     var unknownGroups = {};
                     var count = 0;
                     RED.nodes.eachNode(function(node) {
-                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
+                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && (node.type === 'ui_template' && node.templateScope !== 'global')) {
                             if (!RED.nodes.node(node.group)) {
                                 var g = node.group || "_BLANK_";
                                 unknownGroups[g] = unknownGroups[g] || [];
@@ -1433,7 +1435,7 @@
                                 groupElements[node.group] = groupElements[node.group]||[];
                                 groupElements[node.group].push(node);
                             }
-                            else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
+                            else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')&&(node.type === 'ui_template' && node.templateScope !== 'global')) {
                                 unknownGroups++;
                             }
                         }

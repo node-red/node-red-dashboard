@@ -1,6 +1,6 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length) +(me.item.label? 4 : 3)) }}" layout="row" layout-align="space-between center" class="nr-dashboard-form">
+<md-card ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length)+(me.item.label? 2 : 1)) }}" layout="row" layout-align="space-between center" class="nr-dashboard-form">
     <form name ="form" ng-submit="form.$valid && me.submit(form)">
-       <p class="label" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
+       <p class="formlabel" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
            <md-input-container ng-if="opt.type != 'date'" class="md-block" flex>
                <label ng-if="(opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password') && opt.label">{{opt.label}}</label>
@@ -13,7 +13,7 @@
            </md-input-container>
            <md-datepicker ng-if="opt.type == 'date'" ng-model="me.item.formValue[opt.value]"></md-datepicker>
        </div>
-       <div layout-gt-sm="row" style="padding:10px">
+       <div layout-gt-sm="row" style="margin-top:0px">
            <md-button type="submit" class="md-raised nr-dashboard-form-button">submit</md-button>
            <md-button class="md-raised nr-dashboard-form-button" ng-click="me.reset()">cancel</md-button>
        </div>

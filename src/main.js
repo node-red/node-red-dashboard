@@ -25,6 +25,8 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
 app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope',
     function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope) {
         this.menu = [];
+        this.headElementsAppended = [];
+        this.headOriginalElements = [];
         this.len = 0;
         this.selectedTab = null;
         this.loaded = false;
@@ -108,8 +110,111 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             less.modifyVars(lessObj);
         }
 
+        function processGlobals() {
+            // remove previous elements appended
+            main.headElementsAppended.forEach(function(headEl) {
+                removeHeadElAppended(headEl)
+            });
+            main.headElementsAppended = [];
+
+            // reset original elements
+            main.headOriginalElements.forEach(function(headOriginalEl) {
+                resetOriginalHeadEl(headOriginalEl);
+            })
+
+            // add elements
+            if (main.globals.length > 0) {
+                main.globals.forEach(function(control) {
+                    if (control.format !== undefined && control.format !== '') {
+                        addHeadEl(control.id, control.format);
+                    }
+                })
+            }
+        }
+
+        function replaceHeadOriginalEl (headOriginalEl, format) {
+            resetHeadOriginalEl(headOriginalEl);
+            addHeadEl(headOriginalEl.id, format);
+        }
+
+        function replaceHeadEl (headEl, format) {
+            removeHeadElAppended(headEl);
+            var index = main.headElementsAppended.indexOf(headEl);
+            if (index >= 0) {
+                main.headElementsAppended.splice(index, 1);
+            }
+            addHeadEl(headEl.id, format);
+        }
+
+        function resetHeadOriginalEl (headOriginalEl) {
+            var head = $document.find('head');
+            var currentEl = head.find(headOriginalEl.expression)[0];
+            angular.element(currentEl).replaceWith(headOriginalEl.html);
+        }
+
+        function removeHeadElAppended (headEl) {
+            var head = $document.find('head');
+            var headChildren = head.children();
+            headEl.childrenIndex.forEach(function(index) {
+                headChildren[index].parentNode.removeChild(headChildren[index]);
+            })
+        }
+
+        function addHeadEl (id, format) {
+            var head = $document.find('head');
+            var headChildrenLength = head.children().length;
+
+            var simulateHead = angular.element('<head></head>');
+            simulateHead.append(format);
+
+            // check if need to replace
+            var headToReplace = [
+                'meta[charset]',
+                'meta[name="viewport"]',
+                'meta[name="apple-mobile-web-app-capable"]',
+                'meta[name="apple-mobile-web-app-status-bar-style"]',
+                'meta[name="apple-mobile-web-app-title"]',
+                'meta[name="mobile-web-app-capable"]',
+                'link[rel="icon"]',
+                'link[rel="shortcut icon"]',
+                'link[rel="apple-touch-icon"]'
+            ];
+            headToReplace.forEach(function(expression) {
+                var el = simulateHead.find(expression);
+                if (el.length > 0) {
+                    var originalEl = head.find(expression)[0];
+                    main.headOriginalElements.push({
+                        id: id,
+                        expression: expression,
+                        html: originalEl
+                    });
+                    angular.element(originalEl).replaceWith(el[0]);
+                    // prevent to append
+                    format = simulateHead.html();
+                    format.trim();
+                }
+            })
+
+            // if still stuff
+            if (format !== '') {
+                head.append(format);
+
+                // store index appended to remove later
+                var childrenIndex = []
+                for (var i=headChildrenLength; i<head.children().length; i++) {
+                    childrenIndex.push(i);
+                }
+                headChildrenLength = head.children().length;
+                main.headElementsAppended.push({
+                    id: id,
+                    childrenIndex: childrenIndex
+                })
+            }
+        }
+
         events.connect(function (ui, done) {
             main.menu = ui.menu;
+            main.globals = ui.globals;
             var name;
             if (ui.site) {
                 name = ui.site.name;
@@ -139,6 +244,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
+                processGlobals();
                 done();
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length) {
@@ -177,17 +283,54 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        events.on(function (msg) {
-            var found = findControl(msg.id, main.menu);
-            if (found === undefined) { return; }
-            for (var key in msg) {
-                if (msg.hasOwnProperty(key)) {
-                    if (key === 'id') { continue; }
-                    found[key] = msg[key];
+        function findHeadElAppended(id) {
+            var elFound = false;
+            main.headElementsAppended.some(function(el) {
+                if (el.id === id) {
+                    elFound = el;
+                    return true;
                 }
-            }
-            if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
-                found.me.processInput(msg);
+            })
+            return elFound;
+        }
+
+        function findHeadOriginalEl(id) {
+            var elFound = false;
+            main.headOriginalElements.some(function(el) {
+                if (el.id === id) {
+                    elFound = el;
+                    return true;
+                }
+            })
+            return elFound;
+        }
+
+        events.on(function (msg) {
+            var found;
+            if (msg.hasOwnProperty('msg') && msg.msg.templateScope === 'global') {
+                found = findHeadOriginalEl(msg.id);
+                if (found) {
+                    replaceHeadOriginalEl(found, msg.msg.template)
+                } else {
+                    found = findHeadElAppended(msg.id);
+                    if (found) {
+                        replaceHeadEl(found, msg.msg.template)
+                    } else {
+                        return;
+                    }
+                }
+            } else {
+                found = findControl(msg.id, main.menu);
+                if (found === undefined) { return; }
+                for (var key in msg) {
+                    if (msg.hasOwnProperty(key)) {
+                        if (key === 'id') { continue; }
+                        found[key] = msg[key];
+                    }
+                }
+                if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
+                    found.me.processInput(msg);
+                }
             }
         });
 

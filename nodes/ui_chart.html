@@ -30,7 +30,8 @@
             xformat: {value: 'HH:mm:ss'},
             interpolate: {value: 'linear', required:true},
             nodata: {value: ''},
-            useChartjs: {value: 'false'},
+            useChartjs: {value: false},
+            dot: {value: false},
             ymin: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             ymax: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             removeOlder: {value: 1, validate:RED.validators.number(), required:true},
@@ -68,10 +69,12 @@
                     $("#legend-show").show();
                     $("#y-axis-show").show();
                     $("#hole-size-show").hide();
+                    $("#show-dot-field").show();
                 } else {
                     $("#x-axis-show").hide();
                     $("#x-axis-label-show").hide();
                     $("#interpolate-show").hide();
+                    $("#show-dot-field").hide();
                     if ($(this).val() === "pie") {
                         $("#y-axis-show").hide();
                         $("#legend-show").show();
@@ -175,6 +178,9 @@
             <option value="polar-area"> &#xf200; Polar area chart</option>
             <option value="radar"> &#xf200; Radar chart</option>
         </select>
+        <div id="show-dot-field" style="display:inline-block;">
+            <input type="checkbox" id="node-input-dot" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:40px; margin-right:5px;">enlarge points
+        </div>
     </div>
     <div class="form-row" id="x-axis-show">
         <label for="node-input-removeOlder">X-axis</label>

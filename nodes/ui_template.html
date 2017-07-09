@@ -3,21 +3,25 @@
         category: 'dashboard',
         color: 'rgb( 63, 173, 181)',
         defaults: {
-            group: {type: 'ui_group', required:true},
+            group: {type: 'ui_group', required:false},
             name: {value: ''},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
-                    var width = v||0;
-                    var currentGroup = $('#node-input-group').val()||this.group;
-                    var groupNode = RED.nodes.node(currentGroup);
-                    var valid = !groupNode || +width <= +groupNode.width;
-                    $("#node-input-size").toggleClass("input-error",!valid);
+                    var valid = true
+                    if (this.templateScope !== 'global') {
+                        var width = v||0;
+                        var currentGroup = $('#node-input-group').val()||this.group;
+                        var groupNode = RED.nodes.node(currentGroup);
+                        valid = !groupNode || +width <= +groupNode.width;
+                        $("#node-input-size").toggleClass("input-error",!valid);
+                    }
                     return valid;
                 }},
             height: {value: 0},
             format: {value: '<div ng-bind-html="msg.payload"></div>'},
             storeOutMessages: {value: true},
-            fwdInMessages: {value: true}
+            fwdInMessages: {value: true},
+            templateScope: {value: 'local'}
         },
         inputs:1,
         outputs:1,
@@ -41,6 +45,32 @@
                 this.fwdInMessages = true;
                 $('#node-input-fwdInMessages').prop('checked', true);
             }
+
+            if (typeof this.templateScope === 'undefined') {
+                this.templateScope = 'local';
+                $('#node-input-templateScope').val(this.templateScope);
+            }
+
+            $('#node-input-templateScope').on('change', function() {
+                if ($('#node-input-templateScope').val() === 'global') {
+                    $('#template-row-group, #template-row-size, #template-pass-store').hide();
+                    that._def.defaults.group.required = false;
+                } else {
+                    $('#template-row-group, #template-row-size, #template-pass-store').show();
+                    that._def.defaults.group.required = true;
+                }
+
+                var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+                var height = $("#dialog-form").height();
+                for (var i=0; i<rows.size(); i++) {
+                    height = height - $(rows[i]).outerHeight(true);
+                }
+                if ($('#node-input-templateScope').val() === "global") { height += 240; }
+                var editorRow = $("#dialog-form>div.node-text-editor-row");
+                height -= (parseInt(editorRow.css("marginTop")) + parseInt(editorRow.css("marginBottom")));
+                $(".node-text-editor").css("height",height+"px");
+                if (this.editor) { this.editor.resize(); }
+            })
 
             this.editor = RED.editor.createEditor({
                 id: 'node-input-format-editor',
@@ -69,16 +99,22 @@
                 }
             }
             $("#node-input-format").val(this.editor.getValue());
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditcancel: function() {
+            this.editor.destroy();
             delete this.editor;
         },
         oneditresize: function(size) {
             var rows = $("#dialog-form>div:not(.node-text-editor-row)");
             var height = $("#dialog-form").height();
             for (var i=0; i<rows.size(); i++) {
-                height -= $(rows[i]).outerHeight(true);
+                height = height - $(rows[i]).outerHeight(true);
             }
+            if ($('#node-input-templateScope').val() === "global") { height += 232; }
             var editorRow = $("#dialog-form>div.node-text-editor-row");
-            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            height -= (parseInt(editorRow.css("marginTop")) + parseInt(editorRow.css("marginBottom")));
             $(".node-text-editor").css("height",height+"px");
             this.editor.resize();
         }
@@ -86,11 +122,18 @@
 </script>
 
 <script type="text/x-red" data-template-name="ui_template">
-	<div class="form-row">
+  <div class="form-row">
+      <label for="node-input-format">Template type</label>
+      <select style="width:76%" id="node-input-templateScope">
+          <option value="local">Widget in group</option>
+          <option value="global">Added to site &lt;head&gt; section</option>
+      </select>
+  </div>
+	<div class="form-row" id="template-row-group">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
     </div>
-    <div class="form-row">
+    <div class="form-row" id="template-row-size">
         <label><i class="fa fa-object-group"></i> Size</label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
@@ -100,6 +143,7 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
+    <div id="template-pass-store">
     <div class="form-row">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; width:auto; vertical-align:top;">
@@ -109,6 +153,7 @@
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; width:auto; vertical-align:top;">
         <label for="node-input-storeOutMessages" style="width:70%;"> Add output messages to stored state.</label>
+    </div>
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>

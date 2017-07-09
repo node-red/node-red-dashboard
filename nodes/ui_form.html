@@ -5,7 +5,7 @@
         defaults: {
             name: {value: ''},
             label: {value: ''},
-            group: {type: 'ui_group', required:true},
+            group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
                     var width = v||0;
@@ -17,7 +17,7 @@
                 }
             },
             height: {value: 0},
-            options: {value:[{value: '', label : '',type:'',required:true}], validate:function(value) {
+            options: {value:[{value:'', label :'', type:'', required:true}], validate:function(value) {
                     if (value.length ) {
                         for (var i = 0; i < value.length; i++) {
                             if (!value[i].value) {
@@ -38,7 +38,7 @@
         outputs:1,
         icon: "ui_form.png",
         paletteLabel: 'form',
-        label: function() { return this.name || this.label|| 'form'; },
+        label: function() { return this.name || this.label || 'form'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -55,12 +55,12 @@
             function generateOption(i, option) {
                 var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
                 var row = $('<div/>').appendTo(container);
-                var row2 = $('<div/>',{style:"padding-top: 5px; padding-left: 175px;"}).appendTo(container);
-                var row3 = $('<div/>',{style:"padding-top: 5px; padding-left: 120px;"}).appendTo(container);
+                var row2 = $('<div/>',{style:"padding-top:5px; padding-left:175px;"}).appendTo(container);
+                var row3 = $('<div/>',{style:"padding-top:5px; padding-left:120px;"}).appendTo(container);
 
-                $('<i style="color: #eee; cursor: move; margin-left: 3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
+                $('<i style="color:#eee; cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
-                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left: 7px; width: 19%;", placeholder: 'e.g. Name', value:option.label}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
+                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left:7px; width:19%;", placeholder: 'e.g. Name', value:option.label}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
                 var valueClass ="node-input-option-value"
                 if (!option.value) { valueClass ="node-input-option-value input-error"; }
                 var valueField = $('<input/>',{class:valueClass,type:"text",style:"margin-left: 7px; width: 19%;", placeholder: 'e.g. name',value:option.value}).appendTo(row);//.typedInput({default:'str',types:['str','num','bool']});
@@ -76,14 +76,14 @@
 
                 });
                 // var typeField = $('<input/>',{class:"node-input-option-type",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Type', value:option.type}).appendTo(row).typedInput({default:'str',types:['str', 'num']});
-                var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left: 7px; width: 19%"}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
+                var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left:7px; width:19%"}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
 
                 var arr = [
                   {val : "text", text: 'Text'},
                   {val : "number", text: 'Number'},
                   {val : "email", text: 'E-mail'},
                   {val : "password", text: 'Password'},
-                  {val : "checkbox", text: 'Checkbox'},//,
+                  {val : "checkbox", text: 'Checkbox'},
                   {val : "switch", text: 'Switch'}//,
                   //{val : "radio", text: 'Radio'}//,
                   //{val : "date", text: 'Date'}
@@ -99,15 +99,15 @@
                 });
 
                 //var labelForRequried = $('<span/>',{style:"margin: 10px;"}).text('Required').appendTo(row);
-                var requiredContainer= $('<div/>',{style:"display: inline-block;height: 34px;margin-left: 7px;width: 18%;"}).appendTo(row);
-                var requiredInnerContainer= $('<div/>',{style:"left: 35%;position:relative;width:30px"}).appendTo(requiredContainer);
-                var reqRow=$("<label />",{class:"switch",style:"top: 10px;width: 30px;"}).appendTo(requiredInnerContainer);
+                var requiredContainer= $('<div/>',{style:"display:inline-block; height:34px; margin-left:7px; width:18%;"}).appendTo(row);
+                var requiredInnerContainer= $('<div/>',{style:"left:35%; position:relative; width:30px"}).appendTo(requiredContainer);
+                var reqRow=$("<label />",{class:"switch",style:"top:10px; width:30px;"}).appendTo(requiredInnerContainer);
                 //var required = $('<input/>',{class:"node-input-option-required",style:"margin: 5px;width:19%",type:"checkbox", checked:option.required}).appendTo(row);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
                 var required = $('<input/>',{class:"node-input-option-required",type:"checkbox", checked:option.required}).appendTo(reqRow);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
                 var reqDiv=$("<div  />",{class:"slider round"}).appendTo(reqRow);
 
-                var finalspan = $('<div/>',{style:"display: inline-block; width: 16%;"}).appendTo(row);
-                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"left: 45%;position: relative;"}).appendTo(finalspan);
+                var finalspan = $('<div/>',{style:"display:inline-block; width:5%;"}).appendTo(row);
+                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"left:45%; position:relative;"}).appendTo(finalspan);
                 $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
 
                 deleteButton.click(function() {
@@ -141,17 +141,17 @@
             var options = $("#node-input-option-container").children();
             var node = this;
             node.options = [];
-            node.formValue ={};
+            node.formValue = {};
             options.each(function(i) {
                 var option = $(this);
                 var o = {
                     label: option.find(".node-input-option-label").val(),//typedInput('value'),
                     value: option.find(".node-input-option-value").val(),//typedInput('value'),
                     type: option.find(".node-input-option-type").val(),//typedInput('value')
-                    required:option.find(".node-input-option-required").is(':checked')
+                    required: option.find(".node-input-option-required").is(':checked')
                 };
                 // o.value= o.value||o.label||(o.type+"_"+i);
-                node.formValue[o.value]= o.type == "checkbox" || o.type == "switch" ? false :"";
+                node.formValue[o.value]= o.type == "checkbox" || o.type == "switch" ? false : "";
                 node.options.push(o);
             });
         },
@@ -239,16 +239,16 @@ input:checked + .slider:before {
         <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
         <input type="text" id="node-input-label" placeholder="optional label">
     </div>
-    <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%;min-width:520px">
-        <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Form elements</label>
-        <div style="display:inline-block; width:calc(80% + 15px); border: 1px solid #ccc; border-radius:5px; box-sizing:border-box;">
-          <div style="width:100%; display: inline-block; background-color:#f3f3f3;padding-top:10px;padding-buttom:10px; border-top:0px solid; border-radius: 5px 5px 0 0; border-bottom: 1px solid #ccc;">
-              <div style="width:94%;display:inline-block;margin-left:32px">
-                <div style="width:19%;text-align:center;float:left;">Label</div>
-                <div style="width:19%;text-align:center;float:left;">Name</div>
-                <div style="margin-left:7px;width:19%;text-align:center;float:left;">Type</div>
-                <div style="width:20%;text-align:center;float:left;">Required</div>
-                <div style="width:19%;text-align:center;float:left;">Remove</div>
+    <div class="form-row node-input-option-container-row" style="margin-bottom:0px; width:100%; min-width:520px">
+        <label style="vertical-align:top;"><i class="fa fa-list-alt"></i> Form elements</label>
+        <div style="display:inline-block; width:78%; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
+          <div style="width:100%; display: inline-block; background-color:#f3f3f3; padding-top:10px; padding-buttom:10px; border-top:0px solid; border-radius:5px 5px 0 0; border-bottom:1px solid #ccc;">
+              <div style="width:94%; display:inline-block; margin-left:32px">
+                <div style="width:19%; text-align:center; float:left;">Label</div>
+                <div style="width:19%; text-align:center; float:left;">Name</div>
+                <div style="margin-left:7px; width:19%; text-align:center; float:left;">Type</div>
+                <div style="width:20%; text-align:center; float:left;">Required</div>
+                <div style="width:16%; text-align:center; float:left;">Remove</div>
               </div>
           </div>
           <div id="node-input-option-container-div" style=" height: 257px; padding: 5px; overflow-y:scroll;">
