@@ -5,7 +5,12 @@
 
  - Set y-Axis scale if max and min set to stop overlapping labels
  - Make input field and justgage font match theme font choice
- - Add links to web pages of icons to Tab info 
+ - Fix icon position for min fab buttons - PR #255
+
+**Enhancements**
+
+ - Add links to web pages of icons to Tab info
+ - Let Alerts contain html content - Issue #253
 
 ### 2.4.2: Maintenance Release
 

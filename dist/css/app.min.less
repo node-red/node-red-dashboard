@@ -279,11 +279,15 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-template .md-button {
 	background: @widgetBackgroundColor;
 	color: white;
-    margin: 0px 6px;
-    padding: 0px 12px;
-    min-height: 26px;
-    min-width: unset;
-    line-height: unset;
+	margin: 0px 6px;
+	padding: 0px 12px;
+	min-height: 26px;
+	min-width: unset;
+	line-height: unset;
+	
+	&.md-fab.md-mini {
+		padding: unset;
+	}
 }
 
 .nr-dashboard-theme .nr-dashboard-template .md-button:hover {
