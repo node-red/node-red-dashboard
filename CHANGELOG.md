@@ -6,6 +6,7 @@
  - Set y-Axis scale if max and min set to stop overlapping labels
  - Make input field and justgage font match theme font choice
  - Fix icon position for min fab buttons - PR #255
+ - Redo update logic on tab change - Issue #256
 
 **Enhancements**
 
