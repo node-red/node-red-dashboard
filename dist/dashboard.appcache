@@ -9,14 +9,14 @@ css/app.min.less
 css/index.html
 js/app.min.js
 js/tinycolor-min.js
-fonts/FontAwesome.otf
-fonts/fontawesome-webfont.eot
-fonts/fontawesome-webfont.svg
-fonts/fontawesome-webfont.ttf
-fonts/fontawesome-webfont.woff
-fonts/fontawesome-webfont.woff2
+font-awesome/fonts/FontAwesome.otf
+font-awesome/fonts/fontawesome-webfont.eot
+font-awesome/fonts/fontawesome-webfont.svg
+font-awesome/fonts/fontawesome-webfont.ttf
+font-awesome/fonts/fontawesome-webfont.woff
+font-awesome/fonts/fontawesome-webfont.woff2
 
 NETWORK:
 *
 
-# hash: c6823d8281333d9702eb67d6d604a1270e66f2ca06c17909688a6976e8d9eb1c
+# hash: 4ea2876432c0684c92f951fe8feac074820261b4969188a6a1acdc0b1b7c1b8f

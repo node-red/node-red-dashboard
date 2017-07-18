@@ -88,9 +88,8 @@ module.exports = function(RED) {
                                             return {x:i[0], y:i[1]};
                                         }));
                                     }
-                                    value = [{ key:node.id, values:na}];
+                                    value = [{ key:node.id, values:na }];
                                 }
-                                value = [{ key:node.id, values:na }];
                             }
                         }
                     }

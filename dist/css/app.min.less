@@ -153,6 +153,7 @@ body.nr-dashboard-theme md-sidenav {
 .nr-dashboard-theme .nr-dashboard-date-picker md-input-container .md-input {
     color: @widgetTextColor;
     border-bottom-color: @widgetBackgroundColor;
+    font-family: inherit;
 }
 .nr-dashboard-theme .nr-dashboard-date-picker md-input-container .md-input::-webkit-input-placeholder {
     color: @widgetTextColor;
@@ -184,6 +185,7 @@ body.nr-dashboard-theme md-sidenav {
 .nr-dashboard-theme .color-picker-input-wrapper > input {
     color:#fff;
     background-color: #444;
+    font-family: inherit;
 }
 
 /* Dropdown */
@@ -277,11 +279,15 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-template .md-button {
 	background: @widgetBackgroundColor;
 	color: white;
-    margin: 0px 6px;
-    padding: 0px 12px;
-    min-height: 26px;
-    min-width: unset;
-    line-height: unset;
+	margin: 0px 6px;
+	padding: 0px 12px;
+	min-height: 26px;
+	min-width: unset;
+	line-height: unset;
+	
+	&.md-fab.md-mini {
+		padding: unset;
+	}
 }
 
 .nr-dashboard-theme .nr-dashboard-template .md-button:hover {
@@ -312,7 +318,8 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 	color: @groupTextColor;
 }
 .nr-dashboard-theme .nr-dashboard-textinput md-input-container.md-input-focused input {
-	border-color: @groupTextColor
+	border-color: @groupTextColor;
+    font-family: inherit;
 }
 .nr-dashboard-theme .nr-dashboard-textinput md-input-container .md-input:invalid {
 	color: #DA5252;
@@ -321,6 +328,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 	border-color: @widgetTextColor;
 	color: @widgetTextColor;
     border-bottom-width: 2px;
+    font-family: inherit;
 }
 
 /* Text */
@@ -356,23 +364,24 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-form form md-input-container input {
 	border-color: @widgetTextColor;
 	color: @widgetTextColor;
+    font-family: inherit;
 }
-.nr-dashboard-theme .nr-dashboard-form form md-input-container label{
+.nr-dashboard-theme .nr-dashboard-form form md-input-container label {
 	color: @widgetTextColor;;
 }
-.nr-dashboard-theme .nr-dashboard-form form md-input-container.md-input-has-value:not(.md-input-invalid) label{
+.nr-dashboard-theme .nr-dashboard-form form md-input-container.md-input-has-value:not(.md-input-invalid) label {
 		color: @widgetTextColor;;
 }
-.nr-dashboard-theme .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused input{
+.nr-dashboard-theme .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused input {
 	border-color: @groupTextColor ;
 }
-.nr-dashboard-theme .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused label{
+.nr-dashboard-theme .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused label {
 	color: @groupTextColor ;
 }
-.nr-dashboard-theme .nr-dashboard-form form .md-input-invalid input{
+.nr-dashboard-theme .nr-dashboard-form form .md-input-invalid input {
 	border-color: #d00 !important;
 }
-.nr-dashboard-theme md-content .nr-dashboard-form form .md-input-invalid label{
+.nr-dashboard-theme md-content .nr-dashboard-form form .md-input-invalid label {
 	color: #d00 !important;
 }
 .nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-checkbox.md-checked .md-icon {
