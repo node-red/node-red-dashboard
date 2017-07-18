@@ -12,6 +12,7 @@
 
  - Add links to web pages of icons to Tab info
  - Let Alerts contain html content - Issue #253
+ - Let bar charts use same colour for all bars
 
 ### 2.4.2: Maintenance Release
 
