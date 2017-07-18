@@ -348,7 +348,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (msg.cancel) {
                     confirm = $mdDialog.confirm()
                         .title(msg.title)
-                        .textContent(msg.message)
+                        .htmlContent(msg.message)
                         .ariaLabel(msg.ok + " or " + msg.cancel)
                         .ok(msg.ok)
                         .cancel(msg.cancel);
@@ -356,7 +356,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 else {
                     confirm = $mdDialog.alert()
                         .title(msg.title)
-                        .textContent(msg.message)
+                        .htmlContent(msg.message)
                         .ariaLabel(msg.ok)
                         .ok(msg.ok)
                         .clickOutsideToClose(false)

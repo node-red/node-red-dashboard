@@ -306,7 +306,7 @@ function init(server, app, log, redSettings) {
                 name = menu[index].header === undefined ? menu[index].name : menu[index].header;
             }
             ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
-            if (index < menu.length) { updateUi(); }
+            //if (index < menu.length) { updateUi(); }
         });
         socket.on('ui-refresh', function() {
             updateUi();
@@ -373,7 +373,8 @@ function addControl(tab, groupHeader, control) {
                 updateUi();
             }
         }
-    } else {
+    }
+    else {
         groupHeader = groupHeader || settings.defaultGroupHeader;
         control.order = parseFloat(control.order);
 
