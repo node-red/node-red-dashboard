@@ -182,9 +182,9 @@ module.exports = function(RED) {
                         // Add the data to the correct series
                         var point = {"x": time, "y": value};
                         var pointIndex = indexOfDataPoint(point, found.values.data[seriesIndex])
-                        var oldLenght = found.values.data[seriesIndex].length
+                        var oldLength = found.values.data[seriesIndex].length
                         insertIntoPosition(point, found.values.data[seriesIndex], pointIndex)
-                        if (pointIndex != oldLenght) { //wasn't added on the end of the set
+                        if (pointIndex != oldLength) { //wasn't added on the end of the set
                             //TODO find a way to redraw the chart
                         }
 
