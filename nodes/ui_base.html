@@ -1819,6 +1819,78 @@
             }
         });
 
+    $.widget("nodereddashboard.elementSizerByNum", {
+	_create: function() {
+	    var that = this;
+	    var has_height = this.options.has_height;
+            var pos = this.options.pos;
+	    var c_width = has_height ? '15%' : '6%';
+	    var container = $('<div>').css({
+                position: 'absolute',
+                background: 'white',
+                padding: '10px 10px 10px 10px',
+                border: '1px solid grey',
+                zIndex: '20',
+                borderRadius: "4px",
+                display:"none",
+		width: c_width
+	    }).appendTo(document.body);
+            var box0 = $("<div>").css({
+                fontSize: '13px',
+                color: '#aaa',
+                float: 'left',
+                paddingTop: '1px'
+            }).appendTo(container);
+
+	    var width = $(this.options.width).val();
+	    var height = has_height ? $(this.options.height).val() : undefined;
+	    var max_w = '';
+	    var groupNode = this.options.groupNode;
+	    if(groupNode) {
+		max_w = 'max="'+groupNode.width+'"';
+	    }
+	    width = (width > 0) ? width : 1;
+	    height = (height > 0) ? height : 1;
+	    var in0 = $('<input type="number" min="1" '+max_w+'>')
+	        .css("width", has_height ? "46%" : "100%")
+		.val(width)
+	    	.appendTo(box0);
+	    if(has_height) {
+		var pad = $('<span>')
+	            .html(" x ")
+	    	    .appendTo(box0);
+		var in1 = $('<input type="number" min="1">')
+	            .css("width", "46%")
+		    .val(height)
+	    	    .appendTo(box0);
+	    }
+	    var closeTimer;
+	    container.on('mouseleave', function(e) {
+		closeTimer = setTimeout(function() {
+		    container.fadeOut(200, function() {
+			var w = in0.val();
+			var h = has_height ? in1.val() : undefined;
+			var label = that.options.label;
+			label.html(w+(has_height ? (' x '+h) : ''));
+			$(that.options.width).val(w).change();
+			if(has_height) {
+			    $(that.options.height).val(h).change();
+			}
+			that.destroy();
+		    });
+		}, 100);
+	    });
+	    container.on('mouseenter', function(e) {
+		clearTimeout(closeTimer);
+	    });
+	    container.css({
+		top: (pos.top -10)+"px",
+		left: (pos.left +10)+"px"
+	    });
+	    container.fadeIn(200);
+	}
+    });
+
     $.widget( "nodereddashboard.elementSizer", {
         _create: function() {
             var that = this;
@@ -1885,6 +1957,29 @@
                     float: 'left',
                     paddingTop: '1px'
                 }).appendTo(container).html((width === 0 && height === 0)?"auto":(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
+		label.click(function(e) {
+		    var group = $(that.options.group).val();
+		    var groupNode = null;
+		    if(group) {
+			groupNode = RED.nodes.node(group);
+			if(groupNode === null) {
+			    return;
+			}
+		    }
+		    $(that).elementSizerByNum({
+			width: that.options.width,
+			height: that.options.height,
+			groupNode: groupNode,
+			pos: pos,
+			label: that.element,
+			has_height: that.options.hasOwnProperty('height')
+		    });
+                    closeTimer = setTimeout(function() {
+                        container.fadeOut(200, function() { 
+	                    $(this).remove();
+	                });
+                    },100)
+	       });
 
                 var buttonRow = $('<div>',{style:"text-align:right; height:25px;"}).appendTo(container);
 
