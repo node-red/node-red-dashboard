@@ -1,4 +1,11 @@
 
+### 2.4.4-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix ui_template msg.template lost on reload #266
+ - Fix notification popup displays incorrect topic #269
+
 ### 2.4.3: Maintenance Release
 
 **Enhancements**

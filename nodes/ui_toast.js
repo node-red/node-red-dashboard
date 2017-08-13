@@ -13,6 +13,7 @@ module.exports = function(RED) {
         this.highlight = config.highlight;
         this.ok = config.ok;
         this.cancel = config.cancel;
+        this.topic = config.topic;
         var node = this;
 
         var done = ui.add({
@@ -22,7 +23,7 @@ module.exports = function(RED) {
             forwardInputMessages: false,
             beforeSend: function (toSend,msg) {
                 var m = msg.value.msg;
-                m.topic = config.topic || m.topic;
+                m.topic = node.topic || m.topic;
                 return m;
             }
         });
@@ -30,7 +31,7 @@ module.exports = function(RED) {
         node.on('input', function(msg) {
             if (node.position !== "dialog") { delete msg.socketid; }
             ui.emitSocket('show-toast', {
-                title: msg.topic,
+                title: node.topic || msg.topic,
                 message: msg.payload,
                 highlight: node.highlight || msg.highlight,
                 displayTime: node.displayTime,

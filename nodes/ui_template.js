@@ -60,7 +60,7 @@ module.exports = function(RED) {
                 // }
 
                 if (clonedMsg.template) {
-                  previousTemplate = clonedMsg.template
+                    previousTemplate = clonedMsg.template
                 }
 
                 return { msg:clonedMsg };
