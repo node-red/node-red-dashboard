@@ -1865,19 +1865,25 @@
 	    	    .appendTo(box0);
 	    }
 	    var closeTimer;
+	    var closeFunc = function() {
+		var w = in0.val();
+		var h = has_height ? in1.val() : undefined;
+		var label = that.options.label;
+		label.html(w+(has_height ? (' x '+h) : ''));
+		$(that.options.width).val(w).change();
+		if(has_height) {
+		    $(that.options.height).val(h).change();
+		}
+		that.destroy();
+	    };
+	    container.keypress(function(e) {
+		if(e.which === 13) { // pressed ENTER
+		    container.fadeOut(100, closeFunc);
+		}
+	    });
 	    container.on('mouseleave', function(e) {
 		closeTimer = setTimeout(function() {
-		    container.fadeOut(200, function() {
-			var w = in0.val();
-			var h = has_height ? in1.val() : undefined;
-			var label = that.options.label;
-			label.html(w+(has_height ? (' x '+h) : ''));
-			$(that.options.width).val(w).change();
-			if(has_height) {
-			    $(that.options.height).val(h).change();
-			}
-			that.destroy();
-		    });
+		    container.fadeOut(200, closeFunc);
 		}, 100);
 	    });
 	    container.on('mouseenter', function(e) {
