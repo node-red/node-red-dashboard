@@ -1957,6 +1957,11 @@
                     float: 'left',
                     paddingTop: '1px'
                 }).appendTo(container).html((width === 0 && height === 0)?"auto":(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
+                label.hover(function() {
+		    $(this).css('text-decoration', 'underline');
+		}, function() {
+		    $(this).css('text-decoration', 'none');
+		});
 		label.click(function(e) {
 		    var group = $(that.options.group).val();
 		    var groupNode = null;
