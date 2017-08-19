@@ -2,6 +2,28 @@ module.exports = function(RED) {
     var ui = require('../ui')(RED);
     var ChartIdList = {};
 
+    function insertIntoPosition(element, array, position) {
+      array.splice(position, 0, element);
+      return array;
+    }
+
+    function indexOfDataPoint(value, array) {
+    	let mappedArray = array.map(function(val) { return val.x })
+    	return sortedIndex(value.x, mappedArray)
+    }
+
+    function sortedIndex(value, array) {
+        var low = 0,
+            high = array.length;
+
+        while (low < high) {
+            var mid = (low + high) >>> 1;
+            if (array[mid] < value) low = mid + 1;
+            else high = mid;
+        }
+        return low;
+    }
+
     function ChartNode(config) {
         RED.nodes.createNode(this, config);
         this.chartType = config.chartType || "line";
@@ -151,11 +173,22 @@ module.exports = function(RED) {
                         }
 
                         // Add a new point
-                        var time = new Date().getTime();
+                        var timestamp = msg.timestamp
+                        var time
+                        if (timestamp == null) {
+                            time = new Date().getTime();
+                        } else {
+                            time = new Date(timestamp).getTime();
+                        }
 
                         // Add the data to the correct series
                         var point = {"x": time, "y": value};
-                        found.values.data[seriesIndex].push(point);
+                        var pointIndex = indexOfDataPoint(point, found.values.data[seriesIndex])
+                        var oldLength = found.values.data[seriesIndex].length
+                        insertIntoPosition(point, found.values.data[seriesIndex], pointIndex)
+                        if (pointIndex != oldLength) { //wasn't added on the end of the set
+                            //TODO find a way to redraw the chart
+                        }
 
                         // Remove datapoints older than a certain time
                         var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
