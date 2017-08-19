@@ -36,7 +36,8 @@ module.exports = function(RED) {
                 dot: config.dot || false,
                 xformat : config.xformat || "HH:mm:SS",
                 cutout: parseInt(config.cutout || 0),
-                colors: config.colors
+                colors: config.colors,
+                useOneColor: config.useOneColor || false
             },
             convertBack: function(data) {
                 if (useChartjs) { return data; }

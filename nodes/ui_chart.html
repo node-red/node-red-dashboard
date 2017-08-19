@@ -38,6 +38,7 @@
             removeOlderPoints: {value: '', validate:function(value) { return value === '' || RED.validators.number(); }},
             removeOlderUnit: {value: '3600', required:true},
             cutout: {value: 0},
+            useOneColor: {value: false},
             colors: {value: ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5']},
         },
         inputs:1,
@@ -70,6 +71,7 @@
                     $("#y-axis-show").show();
                     $("#hole-size-show").hide();
                     $("#show-dot-field").show();
+                    $("#show-useOneColor").hide();
                 } else {
                     $("#x-axis-show").hide();
                     $("#x-axis-label-show").hide();
@@ -79,18 +81,12 @@
                         $("#y-axis-show").hide();
                         $("#legend-show").show();
                         $("#hole-size-show").show();
-                    } if ($(this).val() === "polar-area") {
-                        $("#y-axis-show").hide();
-                        $("#legend-show").show();
-                        $("#hole-size-show").hide();
-                    } if ($(this).val() === "radar") {
-                        $("#y-axis-show").hide();
-                        $("#legend-show").show();
-                        $("#hole-size-show").hide();
+                        ("#show-useOneColor").hide();
                     } else {
                         $("#y-axis-show").show();
                         $("#legend-show").hide();
                         $("#hole-size-show").hide();
+                        $("#show-useOneColor").show();
                     }
                 }
             });
@@ -225,6 +221,9 @@
         <span id="hole-size-show">&nbsp;&nbsp;&nbsp;&nbsp;Cutout
         <input type="text" id="node-input-cutout" style="width:35px"> %
         </span>
+    </div>
+    <div id="show-useOneColor" style="display:none;">
+        <input type="checkbox" id="node-input-useOneColor" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:105px; margin-right:5px;">Use first colour for all bars
     </div>
     <div class="form-row" id="ui-chart-colours">
         <label for="node-input-color1">Series Colours</label>

@@ -1,17 +1,29 @@
 
-### 2.4.3-beta: Maintenance Release
+### 2.4.4-beta: Maintenance Release
+
+**Enhancements**
+
+ - Let widget size be specified by typed input as well as drag #270
 
 **Fixes**
+
+ - Fix ui_template msg.template lost on reload #266
+ - Fix notification popup displays incorrect topic #269
+
+### 2.4.3: Maintenance Release
+
+**Enhancements**
+
+ - Add links to web pages of icons to Tab info
+ - Let alerts contain html content - Issue #253
+ - Let bar charts use same colour for all bars
+
+ **Fixes**
 
  - Set y-Axis scale if max and min set to stop overlapping labels
  - Make input field and justgage font match theme font choice
  - Fix icon position for min fab buttons - PR #255
  - Redo update logic on tab change - Issue #256
-
-**Enhancements**
-
- - Add links to web pages of icons to Tab info
- - Let Alerts contain html content - Issue #253
 
 ### 2.4.2: Maintenance Release
 
