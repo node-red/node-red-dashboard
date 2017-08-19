@@ -1,6 +1,10 @@
 
 ### 2.4.4-beta: Maintenance Release
 
+**Enhancements**
+
+ - Let widget size be specified by typed input as well as drag #270
+
 **Fixes**
 
  - Fix ui_template msg.template lost on reload #266
