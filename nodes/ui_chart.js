@@ -83,9 +83,8 @@ module.exports = function(RED) {
                             if (l > 0) { refill = true; }
                         }
                         if (node.chartType === "line") {
-                            var timestamp = msg.timestamp;
                             var time;
-                            if (timestamp !== undefined) { time = new Date(timestamp).getTime(); }
+                            if (msg.timestamp !== undefined) { time = new Date(msg.timestamp).getTime(); }
                             else { time = new Date().getTime(); }
                             var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
                             var limitTime = time - limitOffsetSec * 1000;
@@ -94,6 +93,15 @@ module.exports = function(RED) {
                             oldValue[0].values.data[s].push(point);
                             if (oldValue[0].values.data[s].length > config.removeOlderPoints) {
                                 oldValue[0].values.data[s].shift();
+                            }
+                            var swap; // insert correctly if a timestamp was earlier.
+                            for (var t = oldValue[0].values.data[s].length-2; t>=0; t--) {
+                                if (oldValue[0].values.data[s][t].x <= time) { break; }
+                                else {
+                                    swap = oldValue[0].values.data[s][t];
+                                    oldValue[0].values.data[s][t] = oldValue[0].values.data[s][t+1];
+                                    oldValue[0].values.data[s][t+1] = swap;
+                                }
                             }
                         }
                         else {
