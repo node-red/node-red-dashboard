@@ -15,7 +15,6 @@ module.exports = function(RED) {
         // number of pixels wide the chart will be... 43 = sizes.sx - sizes.px
         var pixelsWide = ((config.width || group.config.width || 6) - 1) * 43 - 15;
         if (!tab || !group) { return; }
-        var useChartjs = config.useChartjs || false;
         var options = {
             emitOnlyNewValues: false,
             node: node,
@@ -36,64 +35,20 @@ module.exports = function(RED) {
                 dot: config.dot || false,
                 xformat : config.xformat || "HH:mm:SS",
                 cutout: parseInt(config.cutout || 0),
-                colors: config.colors,
-                useOneColor: config.useOneColor || false
+                colors: config.colors
             },
             convertBack: function(data) {
-                if (useChartjs) { return data; }
-                if (data[0]) {
-                    if (data[0] && data[0].hasOwnProperty("values") && data[0].values.hasOwnProperty("series") ) {
-                        var o = [];
-                        for (var i=0; i<data[0].values.series.length; i++) {
-                            if (data[0].values.data[i] !== undefined) {
-                                if (typeof data[0].values.data[i] === "number") {
-                                    o.push({ key:data[0].values.series[i], values:data[0].values.data[i] });
-                                }
-                                else {
-                                    var d = data[0].values.data[i].map(function(i) { return [i.x, i.y]; });
-                                    o.push({ key:data[0].values.series[i], values:d });
-                                }
-                            }
-                        }
-                        data = o;
-                    }
-                    return data;
-                }
+                if (data[0] && data[0].hasOwnProperty("values")) { return [data[0].values]; }
             },
             convert: function(value, oldValue, msg) {
+                var converted = {};
                 if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {
-                    value = "changed";
+                    value = [];
                     oldValue = [];
                 }
                 ChartIdList[node.id] = node.chartType;
-                var converted = {};
                 if (Array.isArray(value)) {
-                    if (!useChartjs) {
-                        if (node.chartType !== "line") {
-                            var nb = { series:[], data:[], labels:[] };
-                            for (var v in value) {
-                                if (value.hasOwnProperty(v)) {
-                                    nb.data.push(value[v].values);
-                                    nb.series.push(value[v].key);
-                                }
-                            }
-                            value = [{key:node.id, values:nb}];
-                        }
-                        else {
-                            if (value[0] && value[0].hasOwnProperty("values")) {
-                                if (Array.isArray(value[0].values)) { // Handle "old" style data array
-                                    var na = {series:[], data:[]};
-                                    for (var n=0; n<value.length; n++) {
-                                        na.series.push(value[n].key);
-                                        na.data.push(value[n].values.map(function(i) {
-                                            return {x:i[0], y:i[1]};
-                                        }));
-                                    }
-                                    value = [{ key:node.id, values:na }];
-                                }
-                            }
-                        }
-                    }
+                    value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
                     converted.update = false;
                     converted.updatedValues = value;
                 }
@@ -102,99 +57,16 @@ module.exports = function(RED) {
                     if (isNaN(value)) { return oldValue || []; }    // return if not a number
                     var label = msg.topic || 'Label';
                     var series = msg.series || "";
-                    var storageKey = node.id;
+                    if (node.chartType === "bar" || node.chartType === "horizontalBar") {
+                        label = msg.series || "";
+                        series = msg.topic || "";
+                    }
                     var found = false;
                     if (!oldValue) { oldValue = [];}
                     if (oldValue.length === 0) {
-                        oldValue = [{ key:storageKey, values:{ data:[], series:[], labels:[] } }];
+                        oldValue = [{ key:node.id, values:{ series:[], data:[], labels:[] } }];
                     }
-                    if (!useChartjs && node.chartType === "line") { // Line chart
-                        // Find the chart data
-                        for (var j = 0; j < oldValue.length; j++) {
-                            if (oldValue[j].key === storageKey) {
-                                found = oldValue[j];
-                                break;
-                            }
-                        }
-
-                        // Setup the data structure if this is the first time
-                        if (!found) {
-                            found = { key:storageKey, values:{ series:[], labels:[], data:[] } };
-                            oldValue.push(found);
-                        }
-
-                        // Create the new point and add to the dataset
-                        // Create series if it doesn't exist
-                        var seriesIndex = found.values.series.indexOf(series);
-                        if (seriesIndex === -1) {
-                            found.values.series.push(series);
-                            found.values.data.push([]);
-                            seriesIndex = found.values.series.indexOf(series);
-                        }
-
-                        // // Add a new point
-                        // //var time = new Date().getTime();
-                        // var timestamp = msg.timestamp;
-                        // var time;
-                        // if (timestamp == null) { time = new Date().getTime(); }
-                        // else { time = new Date(timestamp).getTime(); }
-                        //
-                        // // Remove datapoints older than a certain time
-                        // var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
-                        // var limitTime = new Date().getTime() - limitOffsetSec * 1000;
-                        // var pointsLimit = config.removeOlderPoints;
-                        // var removed = [];
-                        // var removeSeries = [];
-                        //
-                        // // don't bother add old data if out of window
-                        // if (time < limitTime) { return oldValue; }
-                        // // Add the data to the correct series
-                        // var point = {"x":time, "y":value};
-                        // found.values.data[seriesIndex].push(point);
-
-                        oldValue[0].values.data.forEach(function(series, seriesIndex) {
-                            var i = 0;
-                            while (i < series.length && series[i]['x'] < limitTime) { i++; }
-                            if (i > 0) {
-                                series.splice(0, i);
-                                removed.push({seriesIndex: seriesIndex, noPoints: i});
-                            }
-
-                            // Remove old datapoints if total is greater than points limit
-                            if (pointsLimit > 0 && series.length > pointsLimit) {
-                                var noToRemove = series.length - pointsLimit;
-                                series.splice(0, noToRemove);
-                                removed.push({seriesIndex: seriesIndex, noPoints: noToRemove});
-                            }
-
-                            if (series.length === 0) { removeSeries.push(seriesIndex); }
-                        });
-
-                        // Ensure series match up
-                        removeSeries.forEach(function(index) {
-                            oldValue[0].values.series.splice(index, 1);
-                            oldValue[0].values.data.splice(index, 1);
-                        });
-
-                        // If more datapoints than number of pixels wide...
-                        // if (found.values.data[seriesIndex].length % pixelsWide === 0) {
-                        //     node.warn("More than "+found.values.length+" datapoints");
-                        // }
-
-                        // Return an object including the new point and all the values
-                        converted.update = true;
-                        converted.newPoint = [{
-                            key: label,
-                            update: true,
-                            removedData: removed,
-                            removedSeries: removeSeries,
-                            values: {
-                                //  data: point
-                            }
-                        }];
-                        converted.updatedValues = oldValue;
-                    }
-                    else if (useChartjs && (node.chartType === "line" || node.chartType === "bar" || node.chartType === "horizontalBar" || node.chartType === "radar")) {  // Bar and Radar
+                    if (node.chartType === "line" || node.chartType === "bar" || node.chartType === "horizontalBar" || node.chartType === "radar") {  // Bar and Radar
                         var refill = false;
                         if (node.chartType === "line") { series = label; label = ""; }
                         var s = oldValue[0].values.series.indexOf(series);
@@ -212,13 +84,17 @@ module.exports = function(RED) {
                         }
                         if (node.chartType === "line") {
                             var timestamp = msg.timestamp;
-                            var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
-                            var time = new Date().getTime();
-                            var limitTime = time - limitOffsetSec * 1000;
+                            var time;
                             if (timestamp !== undefined) { time = new Date(timestamp).getTime(); }
+                            else { time = new Date().getTime(); }
+                            var limitOffsetSec = parseInt(config.removeOlder) * parseInt(config.removeOlderUnit);
+                            var limitTime = time - limitOffsetSec * 1000;
                             if (time < limitTime) { return oldValue; } // ignore if too old for window
                             var point = { "x":time, "y":value };
                             oldValue[0].values.data[s].push(point);
+                            if (oldValue[0].values.data[s].length > config.removeOlderPoints) {
+                                oldValue[0].values.data[s].shift();
+                            }
                         }
                         else {
                             oldValue[0].values.data[s][l] = value;
@@ -230,11 +106,10 @@ module.exports = function(RED) {
                                 }
                             }
                         }
-                        console.log(JSON.stringify(oldValue));
                         converted.update = false;
                         converted.updatedValues = oldValue;
                     }
-                    else { // Pie and Polar chart (or Bar chart in old format)
+                    else { // Pie and Polar chart
                         for (var p=0; p<oldValue[0].values.labels.length; p++) {
                             if (oldValue[0].values.labels[p] === label) {
                                 oldValue[0].values.data[p] = value;
