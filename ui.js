@@ -159,7 +159,7 @@ function add(opt) {
             // Always store the full dataset.
             var toStore = opt.beforeEmit(msg, fullDataset);
             var toEmit;
-            if (newPoint !== undefined) { toEmit = opt.beforeEmit(msg, newPoint); }
+            if ((newPoint !== undefined) && (typeof newPoint !== "boolean")) { toEmit = opt.beforeEmit(msg, newPoint); }
             else { toEmit = toStore; }
 
             var addField = function(m) {

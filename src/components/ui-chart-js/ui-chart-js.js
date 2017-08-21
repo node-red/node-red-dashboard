@@ -47,13 +47,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             // Updating line charts push to the data arrays
                             if (type === 'line' && newValue.update) {
                                 // Find the series index
-                                var seriesLabel = newValue.key;
-                                var seriesIndex = scope.config.series.indexOf(seriesLabel);
-
+                                var seriesName = newValue.values.series;
+                                var seriesIndex = scope.config.series.indexOf(seriesName);
                                 // If it's a new series, add it
                                 if (seriesIndex === -1) {
-                                    scope.config.series.push(seriesLabel);
-                                    seriesIndex = scope.config.series.indexOf(seriesLabel);
+                                    scope.config.series.push(seriesName);
+                                    seriesIndex = scope.config.series.indexOf(seriesName);
                                     scope.config.data.push([]);
                                 }
 
@@ -63,19 +62,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 // Add the data
                                 scope.config.data[seriesIndex].push(newValue.values.data);
 
-                                // Check for removal cases
-                                if (newValue.removedData.length > 0) {
-                                    newValue.removedData.forEach(function(series, index) {
-                                        scope.config.data[series.seriesIndex].splice(0, series.noPoints);
-                                    })
-                                }
-
-                                // Removal of series
-                                if (newValue.removedSeries.length > 0) {
-                                    newValue.removedSeries.forEach(function(index) {
-                                        scope.config.data.splice(index, 1);
-                                        scope.config.series.splice(index, 1);
-                                    })
+                                // Remove old data point(s)
+                                for (var a=0; a < (newValue.remove || 0); a++) {
+                                    scope.config.data[seriesIndex].shift();
                                 }
                             }
                             else {
@@ -124,7 +113,7 @@ function loadConfiguration(type,scope) {
     }
 
     //Build colours array
-    if ((type === 'bar') || (type === 'horizontalBar')) {
+    if ((type === 'line') || (type === 'bar') || (type === 'horizontalBar')) {
         var colours = [];
         baseColours.forEach(function(colour, index) {
             colours.push({
@@ -228,6 +217,7 @@ function loadConfiguration(type,scope) {
                 config.options.scales.yAxes[0].ticks.beginAtZero = true;
             }
         }
+
         if (type === 'horizontalBar') {
             config.options.scales.xAxes[0].ticks.beginAtZero = true;
             if (!isNaN(yMin)) { config.options.scales.xAxes[0].ticks.min = yMin; }

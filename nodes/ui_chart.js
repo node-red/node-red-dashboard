@@ -16,7 +16,7 @@ module.exports = function(RED) {
         var pixelsWide = ((config.width || group.config.width || 6) - 1) * 43 - 15;
         if (!tab || !group) { return; }
         var options = {
-            emitOnlyNewValues: false,
+            emitOnlyNewValues: true,
             node: node,
             tab: tab,
             group: group,
@@ -55,6 +55,7 @@ module.exports = function(RED) {
                 else {
                     value = parseFloat(value);                      // only handle numbers
                     if (isNaN(value)) { return oldValue || []; }    // return if not a number
+                    converted.newPoint = true;
                     var label = msg.topic || 'Label';
                     var series = msg.series || "";
                     if (node.chartType === "bar" || node.chartType === "horizontalBar") {
@@ -91,18 +92,34 @@ module.exports = function(RED) {
                             if (time < limitTime) { return oldValue; } // ignore if too old for window
                             var point = { "x":time, "y":value };
                             oldValue[0].values.data[s].push(point);
+                            converted.newPoint = [{ key:node.id, update:true, values:{ series:series, data:point, labels:label } }];
+                            var rc = 0;
+                            for (var u = 0; u < oldValue[0].values.data[s].length; u++) {
+                                if (oldValue[0].values.data[s][u].x >= limitTime) {
+                                    break;  // stop as soon as we are in time window.
+                                }
+                                else {
+                                    oldValue[0].values.data[s].shift();
+                                    rc += 1;
+                                }
+                            }
                             if (oldValue[0].values.data[s].length > config.removeOlderPoints) {
                                 oldValue[0].values.data[s].shift();
+                                rc += 1;
                             }
+                            if (rc > 0) { converted.newPoint[0].remove = rc; }
                             var swap; // insert correctly if a timestamp was earlier.
                             for (var t = oldValue[0].values.data[s].length-2; t>=0; t--) {
-                                if (oldValue[0].values.data[s][t].x <= time) { break; }
+                                if (oldValue[0].values.data[s][t].x <= time) {
+                                    break;  // stop if we are in the right place
+                                }
                                 else {
                                     swap = oldValue[0].values.data[s][t];
                                     oldValue[0].values.data[s][t] = oldValue[0].values.data[s][t+1];
                                     oldValue[0].values.data[s][t+1] = swap;
                                 }
                             }
+                            if (swap) { converted.newPoint = true; } // if inserted then update whole chart
                         }
                         else {
                             oldValue[0].values.data[s][l] = value;
