@@ -94,7 +94,6 @@ module.exports = function(RED) {
                             oldValue[0].values.data[s].push(point);
                             converted.newPoint = [{ key:node.id, update:true, values:{ series:series, data:point, labels:label } }];
                             var rc = 0;
-                            console.log("LIM",limitTime,config.removeOlderPoints,limitOffsetSec);
                             for (var u = 0; u < oldValue[0].values.data[s].length; u++) {
                                 if (oldValue[0].values.data[s][u].x >= limitTime) {
                                     break;  // stop as soon as we are in time window.
