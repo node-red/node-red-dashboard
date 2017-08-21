@@ -50,7 +50,7 @@ module.exports = function(RED) {
                 if (Array.isArray(value)) {
                     value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
                     converted.update = false;
-                    //converted.updatedValues = value;
+                    converted.updatedValues = value;
                 }
                 else {
                     value = parseFloat(value);                      // only handle numbers
@@ -134,7 +134,7 @@ module.exports = function(RED) {
                             }
                         }
                         converted.update = false;
-                        //converted.updatedValues = oldValue;
+                        converted.updatedValues = oldValue;
                     }
                     else { // Pie and Polar chart
                         for (var p=0; p<oldValue[0].values.labels.length; p++) {
@@ -149,7 +149,7 @@ module.exports = function(RED) {
                             oldValue[0].values.data.push(value);
                         }
                         converted.update = false;
-                        //converted.updatedValues = oldValue;
+                        converted.updatedValues = oldValue;
                     }
                 }
                 return converted;
