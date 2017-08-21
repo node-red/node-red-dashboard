@@ -104,7 +104,6 @@ function loadConfiguration(type,scope) {
     var interpolate = scope.$eval('me.item.interpolate');
     var xFormat = scope.$eval('me.item.xformat');
     var showDot = scope.$eval('me.item.dot');
-    var useOneColor = scope.$eval('me.item.useOneColor');
     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
     var config = {};
     var themeState = scope.$eval('me.item.theme.themeState');
@@ -125,19 +124,24 @@ function loadConfiguration(type,scope) {
     }
 
     //Build colours array
-    var colours = [];
-    baseColours.forEach(function(colour, index) {
-        colours.push({
-            backgroundColor: colour,
-            borderColor:colour
-            // hoverBackgroundColor:colour,
-            // hoverBorderColor:colour
+    if ((type === 'bar') || (type === 'horizontalBar')) {
+        var colours = [];
+        baseColours.forEach(function(colour, index) {
+            colours.push({
+                backgroundColor: colour,
+                borderColor: colour
+                // hoverBackgroundColor:colour,
+                // hoverBorderColor:colour
+            });
         });
-    });
+        config.colours = colours;
+    }
+    else {
+        config.colours = baseColours;
+    }
 
     // Configure axis
     if (type === 'line') {
-        config.colours = colours;
         config.options.scales.xAxes = [{
             type: 'time',
             time: {
@@ -203,15 +207,6 @@ function loadConfiguration(type,scope) {
         }
     }
     else if ((type === 'bar') || (type === 'horizontalBar')) {
-        if (useOneColor === true) {
-            config.colours = [];
-            for (var c =0; c<52; c++) {
-                config.colours.push( baseColours[0] );
-            }
-        }
-        else {
-            config.colours = baseColours;
-        }
         config.options.scales.xAxes = [{}];
         if (isNaN(yMin)) { yMin = 0; }
     }
@@ -255,10 +250,6 @@ function loadConfiguration(type,scope) {
         config.options.scales.xAxes[0].ticks.maxRotation = 0;
         config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
         config.options.scales.xAxes[0].ticks.autoSkip = true;
-    }
-    else {
-        //Pie chart
-        config.colours = baseColours;
     }
 
     // Configure legend
