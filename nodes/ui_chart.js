@@ -103,7 +103,7 @@ module.exports = function(RED) {
                                     rc += 1;
                                 }
                             }
-                            if (oldValue[0].values.data[s].length > config.removeOlderPoints) {
+                            while (oldValue[0].values.data[s].length > config.removeOlderPoints) {
                                 oldValue[0].values.data[s].shift();
                                 rc += 1;
                             }
