@@ -50,7 +50,7 @@ module.exports = function(RED) {
                 if (Array.isArray(value)) {
                     value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
                     converted.update = false;
-                    converted.updatedValues = value;
+                    //converted.updatedValues = value;
                 }
                 else {
                     value = parseFloat(value);                      // only handle numbers
@@ -94,6 +94,7 @@ module.exports = function(RED) {
                             oldValue[0].values.data[s].push(point);
                             converted.newPoint = [{ key:node.id, update:true, values:{ series:series, data:point, labels:label } }];
                             var rc = 0;
+                            console.log("LIM",limitTime,config.removeOlderPoints,limitOffsetSec);
                             for (var u = 0; u < oldValue[0].values.data[s].length; u++) {
                                 if (oldValue[0].values.data[s][u].x >= limitTime) {
                                     break;  // stop as soon as we are in time window.
@@ -103,9 +104,11 @@ module.exports = function(RED) {
                                     rc += 1;
                                 }
                             }
-                            while (oldValue[0].values.data[s].length > config.removeOlderPoints) {
-                                oldValue[0].values.data[s].shift();
-                                rc += 1;
+                            if (config.removeOlderPoints) {
+                                while (oldValue[0].values.data[s].length > config.removeOlderPoints) {
+                                    oldValue[0].values.data[s].shift();
+                                    rc += 1;
+                                }
                             }
                             if (rc > 0) { converted.newPoint[0].remove = rc; }
                             var swap; // insert correctly if a timestamp was earlier.
@@ -132,7 +135,7 @@ module.exports = function(RED) {
                             }
                         }
                         converted.update = false;
-                        converted.updatedValues = oldValue;
+                        //converted.updatedValues = oldValue;
                     }
                     else { // Pie and Polar chart
                         for (var p=0; p<oldValue[0].values.labels.length; p++) {
@@ -147,7 +150,7 @@ module.exports = function(RED) {
                             oldValue[0].values.data.push(value);
                         }
                         converted.update = false;
-                        converted.updatedValues = oldValue;
+                        //converted.updatedValues = oldValue;
                     }
                 }
                 return converted;
