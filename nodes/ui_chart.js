@@ -5,6 +5,7 @@ module.exports = function(RED) {
     function ChartNode(config) {
         RED.nodes.createNode(this, config);
         this.chartType = config.chartType || "line";
+        this.newStyle = (!config.hasOwnProperty("useOldStyle") || (config.useOldStyle === true)) ? false : true;
         var node = this;
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
@@ -38,17 +39,80 @@ module.exports = function(RED) {
                 colors: config.colors
             },
             convertBack: function(data) {
-                if (data[0] && data[0].hasOwnProperty("values")) { return [data[0].values]; }
+                if (node.newStyle) {
+                    if (data[0] && data[0].hasOwnProperty("values")) {
+                        return [data[0].values];
+                    }
+                }
+                else {
+                    if (data[0]) {
+                        if (data[0] && data[0].hasOwnProperty("values") && data[0].values.hasOwnProperty("series") ) {
+                            var o = [];
+                            for (var i=0; i<data[0].values.series.length; i++) {
+                                if (data[0].values.data[i] !== undefined) {
+                                    if (node.chartType !== "line") {
+                                        o.push({ key:data[0].values.series[i], values:data[0].values.data[i][0] });
+                                    }
+                                    else {
+                                        var d = data[0].values.data[i].map(function(i) { return [i.x, i.y]; });
+                                        o.push({ key:data[0].values.series[i], values:d });
+                                    }
+                                }
+                            }
+                            data = o;
+                        }
+                        return data;
+                    }
+                }
             },
             convert: function(value, oldValue, msg) {
                 var converted = {};
+                //console.log("VALUE ",JSON.stringify(value));
                 if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {
                     value = [];
                     oldValue = [];
                 }
                 ChartIdList[node.id] = node.chartType;
                 if (Array.isArray(value)) {
-                    value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
+                    if (node.newStyle && (!value[0].hasOwnProperty("key"))) {
+                        if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
+                            value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
+                            if (node.chartType === "line") { delete value[0].values.labels; }
+                        }
+                        else {
+                            node.warn("Bad data inject");
+                            value = oldValue;
+                        }
+                    }
+                    else {
+                        //console.log("OLDI1",JSON.stringify(value));
+                        if (node.chartType !== "line") {
+                            var nb = { series:[], data:[], labels:[] };
+                            for (var v in value) {
+                                if (value.hasOwnProperty(v)) {
+                                    nb.data.push([ value[v].values ]);
+                                    nb.series.push(value[v].key);
+                                }
+                            }
+                            value = [{key:node.id, values:nb}];
+                        }
+                        else {
+                            if (value[0] && value[0].hasOwnProperty("values")) {
+                                if (Array.isArray(value[0].values)) { // Handle "old" style data array
+                                    var na = {series:[], data:[]};
+                                    for (var n=0; n<value.length; n++) {
+                                        na.series.push(value[n].key);
+                                        na.data.push(value[n].values.map(function(i) {
+                                            return {x:i[0], y:i[1]};
+                                        }));
+                                    }
+                                    value = [{ key:node.id, values:na }];
+                                }
+                            }
+                        }
+                        //console.log("OLDI2",JSON.stringify(value));
+                    }
+                    //console.log("RETURN",JSON.stringify(value));
                     converted.update = false;
                     converted.updatedValues = value;
                 }
@@ -56,10 +120,10 @@ module.exports = function(RED) {
                     value = parseFloat(value);                      // only handle numbers
                     if (isNaN(value)) { return oldValue || []; }    // return if not a number
                     converted.newPoint = true;
-                    var label = msg.topic || 'Label';
+                    var label = msg.topic || "";
                     var series = msg.series || "";
                     if (node.chartType === "bar" || node.chartType === "horizontalBar") {
-                        label = msg.series || "";
+                        label = msg.series || " ";
                         series = msg.topic || "";
                     }
                     var found = false;
@@ -71,6 +135,7 @@ module.exports = function(RED) {
                         var refill = false;
                         if (node.chartType === "line") { series = label; label = ""; }
                         var s = oldValue[0].values.series.indexOf(series);
+                        if (!oldValue[0].values.hasOwnProperty("labels")) { oldValue[0].values.labels = []; }
                         var l = oldValue[0].values.labels.indexOf(label);
                         if (s === -1) {
                             oldValue[0].values.series.push(series);

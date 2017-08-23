@@ -38,6 +38,7 @@
             removeOlderUnit: {value: '3600', required:true},
             cutout: {value: 0},
             colors: {value: ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5']},
+            useOldStyle: {value: false}
         },
         inputs:1,
         outputs:2,
@@ -47,6 +48,12 @@
         paletteLabel: 'chart',
         label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'chart'; },
         oneditprepare: function() {
+            if (!$("#node-input-chartType").val()) {
+                $("#node-input-chartType").val("line");
+            }
+            if (this.useOldStyle === undefined) {
+                $("#node-input-useOldStyle").prop('checked', true);
+            }
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
@@ -96,9 +103,6 @@
             $(".series-color").change(function() {
                 setColour("#"+$(this).attr("id"), $(this).val());
             });
-            if (!$("#node-input-chartType").val()) {
-                $("#node-input-chartType").val("line");
-            }
             var oval = $("#node-input-xformat").val();
             if (!oval) { $("#node-input-xformat").val("HH:mm:ss"); }
             var odef = 'custom';
@@ -236,6 +240,9 @@
     <div class="form-row">
         <label for="node-input-nodata">Blank label</label>
         <input type="text" id="node-input-nodata" placeholder="display this text before valid data arrives">
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-useOldStyle" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:105px; margin-right:5px;">Use deprecated (pre 0.2.5) data format.
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

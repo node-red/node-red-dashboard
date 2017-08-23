@@ -1,9 +1,10 @@
 
-### 2.4.4-beta: Maintenance Release
+### 2.5.0-beta: Milestone Release
 
 **Enhancements**
 
- - Let widget size be specified by typed input as well as drag #270
+ - Let ui_chart use chart.js style data array - faster, better data import/export, allow insert of data with `msg.timestamp`, bar chart supports multiple series using `msg.series` - Issues #261, #224, #144
+ - Let widget size be specified by typed input as well as drag PR #270
 
 **Fixes**
 
