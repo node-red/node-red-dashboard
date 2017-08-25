@@ -66,8 +66,8 @@ module.exports = function(RED) {
                 }
             },
             convert: function(value, oldValue, msg) {
-                var converted = {};
                 //console.log("VALUE ",JSON.stringify(value));
+                var converted = {};
                 if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {
                     value = [];
                     oldValue = [];
@@ -85,7 +85,6 @@ module.exports = function(RED) {
                         }
                     }
                     else {
-                        //console.log("OLDI1",JSON.stringify(value));
                         if (node.chartType !== "line") {
                             var nb = { series:[], data:[], labels:[] };
                             for (var v in value) {
@@ -110,7 +109,6 @@ module.exports = function(RED) {
                                 }
                             }
                         }
-                        //console.log("OLDI2",JSON.stringify(value));
                     }
                     //console.log("RETURN",JSON.stringify(value));
                     converted.update = false;
@@ -118,7 +116,7 @@ module.exports = function(RED) {
                 }
                 else {
                     value = parseFloat(value);                      // only handle numbers
-                    if (isNaN(value)) { return oldValue || []; }    // return if not a number
+                    if (isNaN(value)) { return; }                   // return if not a number
                     converted.newPoint = true;
                     var label = msg.topic || "";
                     var series = msg.series || "";
@@ -131,7 +129,7 @@ module.exports = function(RED) {
                     if (oldValue.length === 0) {
                         oldValue = [{ key:node.id, values:{ series:[], data:[], labels:[] } }];
                     }
-                    if (node.chartType === "line" || node.chartType === "bar" || node.chartType === "horizontalBar" || node.chartType === "radar") {  // Bar and Radar
+                    if (node.chartType === "line" || node.chartType === "bar" || node.chartType === "horizontalBar" || node.chartType === "radar") {  // Line, Bar and Radar
                         var refill = false;
                         if (node.chartType === "line") { series = label; label = ""; }
                         var s = oldValue[0].values.series.indexOf(series);
@@ -222,7 +220,7 @@ module.exports = function(RED) {
         };
 
         ui.ev.on('changetab', function() {
-            node.receive({payload:"A"});
+            node.receive({payload:"R"});
         });
 
         var done = ui.add(options);
