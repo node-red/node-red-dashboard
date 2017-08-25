@@ -40,12 +40,12 @@ module.exports = function(RED) {
             },
             convertBack: function(data) {
                 if (node.newStyle) {
-                    if (data[0] && data[0].hasOwnProperty("values")) {
+                    if (data && data[0] && data[0].hasOwnProperty("values")) {
                         return [data[0].values];
                     }
                 }
                 else {
-                    if (data[0]) {
+                    if (data && data[0]) {
                         if (data[0] && data[0].hasOwnProperty("values") && data[0].values.hasOwnProperty("series") ) {
                             var o = [];
                             for (var i=0; i<data[0].values.series.length; i++) {
@@ -61,8 +61,8 @@ module.exports = function(RED) {
                             }
                             data = o;
                         }
-                        return data;
                     }
+                    return data;
                 }
             },
             convert: function(value, oldValue, msg) {
