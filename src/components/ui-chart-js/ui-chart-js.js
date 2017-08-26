@@ -47,13 +47,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             // Updating line charts push to the data arrays
                             if (type === 'line' && newValue.update) {
                                 // Find the series index
-                                var seriesLabel = newValue.key;
-                                var seriesIndex = scope.config.series.indexOf(seriesLabel);
-
+                                var seriesName = newValue.values.series;
+                                var seriesIndex = scope.config.series.indexOf(seriesName);
                                 // If it's a new series, add it
                                 if (seriesIndex === -1) {
-                                    scope.config.series.push(seriesLabel);
-                                    seriesIndex = scope.config.series.indexOf(seriesLabel);
+                                    scope.config.series.push(seriesName);
+                                    seriesIndex = scope.config.series.indexOf(seriesName);
                                     scope.config.data.push([]);
                                 }
 
@@ -63,19 +62,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 // Add the data
                                 scope.config.data[seriesIndex].push(newValue.values.data);
 
-                                // Check for removal cases
-                                if (newValue.removedData.length > 0) {
-                                    newValue.removedData.forEach(function(series, index) {
-                                        scope.config.data[series.seriesIndex].splice(0, series.noPoints);
-                                    })
-                                }
-
-                                // Removal of series
-                                if (newValue.removedSeries.length > 0) {
-                                    newValue.removedSeries.forEach(function(index) {
-                                        scope.config.data.splice(index, 1);
-                                        scope.config.series.splice(index, 1);
-                                    })
+                                // Remove old data point(s)
+                                for (var a=0; a < (newValue.remove || 0); a++) {
+                                    scope.config.data[seriesIndex].shift();
                                 }
                             }
                             else {
@@ -104,7 +93,6 @@ function loadConfiguration(type,scope) {
     var interpolate = scope.$eval('me.item.interpolate');
     var xFormat = scope.$eval('me.item.xformat');
     var showDot = scope.$eval('me.item.dot');
-    var useOneColor = scope.$eval('me.item.useOneColor');
     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
     var config = {};
     var themeState = scope.$eval('me.item.theme.themeState');
@@ -125,19 +113,24 @@ function loadConfiguration(type,scope) {
     }
 
     //Build colours array
-    var colours = [];
-    baseColours.forEach(function(colour, index) {
-        colours.push({
-            backgroundColor: colour,
-            borderColor:colour
-            // hoverBackgroundColor:colour,
-            // hoverBorderColor:colour
+    if ((type === 'line') || (type === 'bar') || (type === 'horizontalBar')) {
+        var colours = [];
+        baseColours.forEach(function(colour, index) {
+            colours.push({
+                backgroundColor: colour,
+                borderColor: colour
+                // hoverBackgroundColor:colour,
+                // hoverBorderColor:colour
+            });
         });
-    });
+        config.colours = colours;
+    }
+    else {
+        config.colours = baseColours;
+    }
 
     // Configure axis
     if (type === 'line') {
-        config.colours = colours;
         config.options.scales.xAxes = [{
             type: 'time',
             time: {
@@ -203,21 +196,12 @@ function loadConfiguration(type,scope) {
         }
     }
     else if ((type === 'bar') || (type === 'horizontalBar')) {
-        if (useOneColor === true) {
-            config.colours = [];
-            for (var c =0; c<52; c++) {
-                config.colours.push( baseColours[0] );
-            }
-        }
-        else {
-            config.colours = baseColours;
-        }
         config.options.scales.xAxes = [{}];
         if (isNaN(yMin)) { yMin = 0; }
     }
 
     // Configure scales
-    if (type !== 'pie') {
+    if ((type !== 'pie') && (type !== 'polar-area') && (type !== 'radar')) {
         config.options.scales.yAxes = [{}];
         config.options.scales.xAxes[0].ticks = {};
         config.options.scales.yAxes[0].ticks = {};
@@ -233,6 +217,7 @@ function loadConfiguration(type,scope) {
                 config.options.scales.yAxes[0].ticks.beginAtZero = true;
             }
         }
+
         if (type === 'horizontalBar') {
             config.options.scales.xAxes[0].ticks.beginAtZero = true;
             if (!isNaN(yMin)) { config.options.scales.xAxes[0].ticks.min = yMin; }
@@ -256,15 +241,11 @@ function loadConfiguration(type,scope) {
         config.options.scales.xAxes[0].ticks.autoSkipPadding = 4;
         config.options.scales.xAxes[0].ticks.autoSkip = true;
     }
-    else {
-        //Pie chart
-        config.colours = baseColours;
-    }
 
     // Configure legend
     if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
         config.options.legend = { display: true };
-        if (type === 'pie') {
+        if ((type === 'pie') || (type="polar-area") || (type="radar")) {
             config.options.legend.position = 'left';
         }
 

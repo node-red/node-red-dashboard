@@ -143,6 +143,10 @@ function add(opt) {
             newPoint = conversion.newPoint;
             fullDataset = conversion.updatedValues;
         }
+        else if (conversion === undefined) {
+            fullDataset = oldValue;
+            newPoint = true;
+        }
         else {
             // If no update flag is set, this means the conversion contains
             // the full dataset or the new value (e.g. gauges)
@@ -159,7 +163,7 @@ function add(opt) {
             // Always store the full dataset.
             var toStore = opt.beforeEmit(msg, fullDataset);
             var toEmit;
-            if (newPoint !== undefined) { toEmit = opt.beforeEmit(msg, newPoint); }
+            if ((newPoint !== undefined) && (typeof newPoint !== "boolean")) { toEmit = opt.beforeEmit(msg, newPoint); }
             else { toEmit = toStore; }
 
             var addField = function(m) {
@@ -198,9 +202,9 @@ function add(opt) {
             addField("format");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
-            //console.log("EMIT",JSON.stringify(toEmit));
 
             // Emit and Store the data
+            //console.log("EMIT",JSON.stringify(toEmit));
             io.emit(updateValueEventName, toEmit);
             replayMessages[opt.node.id] = toStore;
 
