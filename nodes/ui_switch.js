@@ -61,6 +61,7 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
+            emitOnlyNewValues: false,
             forwardInputMessages: config.passthru,
             storeFrontEndInputAsState: (config.decouple === "true") ? false : true,
             control: {
@@ -76,15 +77,16 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             convert: function (payload,oldval) {
-                var myOnValue,myOffvalue;
+                var myOnValue,myOffValue;
+
                 if (onvalueType === "date") { myOnValue = Date.now(); }
                 else { myOnValue = RED.util.evaluateNodeProperty(onvalue,onvalueType,node); }
 
-                if (offvalueType === "date") { myOffvalue = Date.now(); }
-                else { myOffvalue = RED.util.evaluateNodeProperty(offvalue,offvalueType,node); }
+                if (offvalueType === "date") { myOffValue = Date.now(); }
+                else { myOffValue = RED.util.evaluateNodeProperty(offvalue,offvalueType,node); }
 
                 if (RED.util.compareObjects(myOnValue,payload)) { return true; }
-                else if (RED.util.compareObjects(myOffvalue,payload)) { return false; }
+                else if (RED.util.compareObjects(myOffValue,payload)) { return false; }
                 else { return oldval; }
             },
             convertBack: function (value) {

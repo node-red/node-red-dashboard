@@ -204,7 +204,7 @@ function add(opt) {
             toEmit.id = toStore.id = opt.node.id;
 
             // Emit and Store the data
-            //console.log("EMIT",JSON.stringify(toEmit));
+            if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             io.emit(updateValueEventName, toEmit);
             replayMessages[opt.node.id] = toStore;
 
@@ -261,6 +261,7 @@ function init(server, app, log, redSettings) {
     }
     else { settings.path = 'ui'; }
     settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
+    settings.verbose = redSettings.verbose || false;
 
     var fullPath = join(redSettings.httpNodeRoot, settings.path);
     var socketIoPath = join(fullPath, 'socket.io');
