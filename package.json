@@ -17,7 +17,8 @@
         {"name": "Nick O'Leary"},
         {"name": "Dan Cunnington"},
         {"name": "Laurence Stant"},
-        {"name": "Camille Boissel"}
+        {"name": "Camille Boissel"},
+        {"name": "Hiroyasu Nishiyama"}
     ],
     "license": "Apache-2.0",
     "repository": {

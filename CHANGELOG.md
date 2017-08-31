@@ -8,8 +8,10 @@
 
 **Fixes**
 
- - Fix ui_template msg.template lost on reload #266
- - Fix notification popup displays incorrect topic #269
+ - Fix ui_template msg.template lost on reload - Issue #266
+ - Fix notification popup displays incorrect topic - Issue #269
+ - Let switch label be set my message even if payload same as previously -Issue #274
+ - Clean up any extra ui_base nodes that get imported - Issue #273
 
 ### 2.4.3: Maintenance Release
 

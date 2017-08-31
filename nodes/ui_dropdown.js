@@ -119,7 +119,7 @@ module.exports = function(RED) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
                 }
-                msg.topic = config.topic || msg.topic; //pass through topic if not set
+                msg.topic = config.topic || msg.topic;
             }
         });
         node.on("close", done);

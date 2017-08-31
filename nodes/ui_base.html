@@ -382,12 +382,21 @@
 
                     // Find the old dashboard node
                     if (globalDashboardNode === null) {
-                        var oldId;
+                        var bases = [];
                         RED.nodes.eachConfig(function(n) {
-                            if (globalDashboardNode === null && n.type === 'ui_base') {
-                                globalDashboardNode = n;
-                            }
+                            if (n.type === 'ui_base') { bases.push(n); }
                         });
+
+                        // make sure we only have one ui_base node
+                        // at the moment this will just use our existing one - deleting any new base node and theme
+                        // at some point we may want to make this an option to select one or the other.
+                        while (bases.length > 1) {
+                            var n = bases.pop();
+                            RED.nodes.remove(n.id);
+                            RED.nodes.dirty(true);
+                        }
+
+                        if (bases.length === 1) { globalDashboardNode = bases[0]; }
 
                         // If there is no dashboard node, ensure we create it after
                         // initialising
@@ -1986,7 +1995,7 @@
 			has_height: that.options.hasOwnProperty('height')
 		    });
                     closeTimer = setTimeout(function() {
-                        container.fadeOut(200, function() { 
+                        container.fadeOut(200, function() {
 	                    $(this).remove();
 	                });
                     },100)
