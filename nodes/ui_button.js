@@ -45,6 +45,7 @@ module.exports = function(RED) {
                 icon: config.icon,
                 order: config.order,
                 value: payload,
+                format: config.bgcolor,
                 width: config.width || group.config.width || 3,
                 height: config.height || 1
             },

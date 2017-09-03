@@ -5,6 +5,7 @@
 
  - Let ui_chart use chart.js style data array - faster, better data import/export, allow insert of data with `msg.timestamp`, bar chart supports multiple series using `msg.series` - Issues #261, #224, #144
  - Let widget size be specified by typed input as well as drag PR #270
+ - Let button set color and background color via msg properties
 
 **Fixes**
 

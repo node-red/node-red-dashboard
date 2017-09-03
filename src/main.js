@@ -156,7 +156,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var head = $document.find('head');
             var headChildren = head.children();
             headEl.childrenIndex.forEach(function(index) {
-                headChildren[index].parentNode.removeChild(headChildren[index]);
+                if (headChildren.hasOwnProperty(index) ) {
+                    headChildren[index].parentNode.removeChild(headChildren[index]);
+                }
             })
         }
 
