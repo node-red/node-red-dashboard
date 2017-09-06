@@ -5,6 +5,7 @@
 
  - Let ui_chart use chart.js style data array - faster, better data import/export, allow insert of data with `msg.timestamp`, bar chart supports multiple series using `msg.series` - Issues #261, #224, #144
  - Let chart accept non-timeseries array of data (just y values)
+ - Let chart set x-axis labelling to automatic to try to best guess time units
  - Let widget size be specified by typed input as well as drag PR #270
  - Allow button to set colour and background colour via msg properties
 

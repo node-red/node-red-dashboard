@@ -142,7 +142,13 @@ function loadConfiguration(type,scope) {
     if (type === 'line') {
         config.options.scales.xAxes = [{
             type: 'time',
-            time: {
+            scaleLabel: {
+                fontColor: "#fff",
+                display: true
+            },
+        }];
+        if (xFormat !== "auto") {
+            config.options.scales.xAxes[0].time = {
                 // Override xAxes formats
                 displayFormats: {
                     'millisecond': xFormat,
@@ -155,12 +161,8 @@ function loadConfiguration(type,scope) {
                     'quarter': xFormat,
                     'year': xFormat,
                 }
-            },
-            scaleLabel: {
-                fontColor: "#fff",
-                display: true
-            },
-        }];
+            };
+        }
 
         config.options.tooltips = {
             mode: 'x-axis',

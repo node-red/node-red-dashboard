@@ -111,15 +111,17 @@
             if (oval === "Y-M-D") { odef = oval; }
             if (oval === "D/M") { odef = oval; }
             if (oval === "dd HH:mm") { odef = oval; }
+            if (oval === "auto") { odef = oval; }
             var ohms = {value:"HH:mm:ss", label:"HH:mm:ss", hasValue:false};
             var ohm = {value:"HH:mm", label:"HH:mm", hasValue:false};
             var oymd = {value:"Y-M-D", label:"Year-Month-Date", hasValue:false};
             var odm = {value:"D/M", label:"Date/Month", hasValue:false};
             var oahm = {value:"dd HH:mm", label:"Day HH:mm", hasValue:false};
             var ocus = {value:"custom", label:"custom", icon:"red/images/typedInput/az.png"};
+            var oaut = {value:"auto", label:"automatic", hasValue:false};
             $("#node-input-xformat").typedInput({
                 default: odef,
-                types:[ ohms, ohm, oahm, odm, oymd, ocus ]
+                types:[ ohms, ohm, oahm, odm, oymd, ocus, oaut ]
             });
             var defaultColors = ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
 
