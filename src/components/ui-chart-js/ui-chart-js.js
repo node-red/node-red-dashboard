@@ -69,6 +69,15 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             }
                             else {
                                 // Bar charts and non update line charts replace the data
+                                if (type === "line") {
+                                    if (!isNaN(newValue.values.data[0][0])) {
+                                        delete scope.config.options.scales.xAxes[0].type;
+                                        delete scope.config.options.scales.xAxes[0].time;
+                                    }
+                                    else {
+                                        scope.config = loadConfiguration(type, scope);
+                                    }
+                                }
                                 scope.config.data = newValue.values.data;
                                 scope.config.series = newValue.values.series;
                                 scope.config.labels = newValue.values.labels;
@@ -152,6 +161,7 @@ function loadConfiguration(type,scope) {
                 display: true
             },
         }];
+
         config.options.tooltips = {
             mode: 'x-axis',
             callbacks: {

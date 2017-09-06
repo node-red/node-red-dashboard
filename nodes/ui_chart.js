@@ -76,8 +76,10 @@ module.exports = function(RED) {
                 if (Array.isArray(value)) {
                     if (node.newStyle && (!value[0].hasOwnProperty("key"))) {
                         if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
+                            if (node.chartType === "line") {
+                                if (isNaN(value[0].data[0][0])) { delete value[0].labels; }
+                            }
                             value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
-                            if (node.chartType === "line") { delete value[0].values.labels; }
                         }
                         else {
                             node.warn("Bad data inject");

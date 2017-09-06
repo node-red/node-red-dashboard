@@ -80,8 +80,8 @@ function MasonryController(sizes, $timeout) {
                                 blocks.push({
                                     x:b.x,
                                     y:b2.y+b2.h+sizes.gy,
-                                    w: b.w,
-                                    h: b.h,
+                                    w:b.w,
+                                    h:b.h,
                                     used:false
                                 });
                                 blockCache[blockCacheKey] = blocks[blocks.length-1];
@@ -105,8 +105,8 @@ function MasonryController(sizes, $timeout) {
                     var rightBlock = {
                         x:b.x+cw+sizes.gx,
                         y:b.y,
-                        w: b.w - sizes.gx - cw,
-                        h: b.h,
+                        w:b.w - sizes.gx - cw,
+                        h:b.h,
                         used:false
                     };
                     blockCacheKey = (b.x+cw+sizes.gx)+":"+b.y;

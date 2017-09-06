@@ -2,9 +2,9 @@
     <md-button class="md-raised"
                ng-click="me.buttonClick()"
                aria-label="{{'button' + me.item.label}}"
-			   ng-style="{color: me.item.color }"
+			   ng-style="{color:me.item.color }"
                style="background-color:{{me.item.bgcolor}}; z-index:1; padding:0px;">
-		<ui-icon ng-show="me.item.icon.length" icon="{{ me.item.icon }}" ng-style="{color: me.item.color}"></ui-icon>
+		<ui-icon ng-show="me.item.icon.length" icon="{{ me.item.icon }}" ng-style="{color:me.item.color}"></ui-icon>
         <span ng-bind-html="me.item.getLabel()"></span>
     </md-button>
 </md-card>

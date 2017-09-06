@@ -4,8 +4,9 @@
 **Enhancements**
 
  - Let ui_chart use chart.js style data array - faster, better data import/export, allow insert of data with `msg.timestamp`, bar chart supports multiple series using `msg.series` - Issues #261, #224, #144
+ - Let chart accept non-timeseries array of data (just y values)
  - Let widget size be specified by typed input as well as drag PR #270
- - Let button set color and background color via msg properties
+ - Allow button to set colour and background colour via msg properties
 
 **Fixes**
 
@@ -22,7 +23,7 @@
  - Let alerts contain html content - Issue #253
  - Let bar charts use same colour for all bars
 
- **Fixes**
+ **Fixes**s
 
  - Set y-Axis scale if max and min set to stop overlapping labels
  - Make input field and justgage font match theme font choice
