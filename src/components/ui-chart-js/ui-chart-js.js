@@ -176,7 +176,8 @@ function loadConfiguration(type,scope) {
                             largest = tooltip[i].xLabel;
                         }
                     }
-                    return moment(largest).format(xFormat);
+                    if (xFormat !== "auto") { return moment(largest).format(xFormat); }
+                    else { return moment(largest).toISOString(); }
                 }
             }
         }
