@@ -171,13 +171,22 @@ function loadConfiguration(type,scope) {
                     // Display and format the most recent time value as the title.
                     // This ensures the title reflects the xAxis time.
                     var largest = tooltip[0].xLabel;
+                    if (isNaN(largest) || (largest < 1000000)) { return largest; }
                     for (var i=1; i<tooltip.length; i++) {
                         if (tooltip[i].xLabel > largest) {
                             largest = tooltip[i].xLabel;
                         }
                     }
                     if (xFormat !== "auto") { return moment(largest).format(xFormat); }
-                    else { return moment(largest).toISOString(); }
+                    else {
+                        return moment(largest).calendar(null, {
+                            sameDay: 'HH:mm:ss',
+                            nextDay: 'HH:mm',
+                            lastDay: 'HH:mm',
+                            lastWeek: 'ddd HH:mm',
+                            sameElse: 'lll'
+                        });
+                    }
                 }
             }
         }
