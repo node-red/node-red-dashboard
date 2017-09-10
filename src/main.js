@@ -1,7 +1,8 @@
 
 var app = angular.module('ui',['ngMaterial', 'ngMdIcons', 'ngSanitize', 'ngTouch', 'sprintf', 'chart.js', 'color.picker']);
 
-var dateFormat = "DD/MM/YYYY";  /// my choice - because I said so.
+var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
+moment.locale(locale);
 
 app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
     function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider) {
@@ -12,12 +13,22 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
         //white-list all protocols
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
 
+        $mdDateLocaleProvider.months = moment.localeData().months();
+        $mdDateLocaleProvider.shortMonths = moment.localeData().monthsShort();
+        $mdDateLocaleProvider.days = moment.localeData().weekdays();
+        $mdDateLocaleProvider.shortDays = moment.localeData().weekdaysMin();
+
         $mdDateLocaleProvider.formatDate = function(date) {
-            return date ? moment(date).format(dateFormat) : null;
+            return date ? moment(date).format("DD MMM YYYY") : null;
         };
+
         $mdDateLocaleProvider.parseDate = function(dateString) {
-            var m = moment(dateString, dateFormat, true);
+            var m = moment(dateString, "DD MMM YYYY", true);
             return m.isValid() ? m.toDate() : new Date(NaN);
+        };
+
+        $mdDateLocaleProvider.monthHeaderFormatter = function(date) {
+            return moment(date).format("MMM YYYY");
         };
     }
 ]);

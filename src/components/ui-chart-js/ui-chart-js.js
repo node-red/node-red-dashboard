@@ -183,7 +183,7 @@ function loadConfiguration(type,scope) {
                             sameDay: 'HH:mm:ss',
                             nextDay: 'HH:mm',
                             lastDay: 'HH:mm',
-                            lastWeek: 'ddd HH:mm',
+                            lastWeek: 'MMM D, hA',
                             sameElse: 'lll'
                         });
                     }
@@ -230,6 +230,10 @@ function loadConfiguration(type,scope) {
 
         if ((type === 'line') || (type === 'bar')) {
             config.options.scales.yAxes[0].ticks.autoSkip = true;
+            config.options.scales.yAxes[0].ticks.callback = function(value, index, values) {
+                var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
+                return value.toLocaleString(locale);
+            }
             if (!isNaN(yMin)) { config.options.scales.yAxes[0].ticks.min = yMin; }
             if (!isNaN(yMax)) { config.options.scales.yAxes[0].ticks.max = yMax; }
             if ((!isNaN(yMin)) && (!isNaN(yMax))) {
@@ -244,6 +248,10 @@ function loadConfiguration(type,scope) {
             config.options.scales.xAxes[0].ticks.beginAtZero = true;
             if (!isNaN(yMin)) { config.options.scales.xAxes[0].ticks.min = yMin; }
             if (!isNaN(yMax)) { config.options.scales.xAxes[0].ticks.max = yMax; }
+            config.options.scales.xAxes[0].ticks.callback = function(value, index, values) {
+                var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
+                return value.toLocaleString(locale);
+            }
         }
 
         // Theme settings
