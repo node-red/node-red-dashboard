@@ -123,7 +123,7 @@ module.exports = function(RED) {
                     var label = msg.topic || "";
                     var series = msg.series || "";
                     if (node.chartType === "bar" || node.chartType === "horizontalBar") {
-                        label = msg.series || " ";
+                        label = msg.label || " ";
                         series = msg.topic || "";
                     }
                     var found = false;
