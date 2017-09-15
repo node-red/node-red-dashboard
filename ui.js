@@ -226,12 +226,10 @@ function add(opt) {
             currentValues[msg.id] = converted;
             replayMessages[msg.id] = msg;
         }
-        if (!opt.forwardInputMessages) { return; }
         var toSend = {payload: converted};
         toSend = opt.beforeSend(toSend, msg) || toSend;
         toSend.socketid = toSend.socketid || msg.socketid;
-        opt.node.send(toSend);
-
+        if (!msg.hasOwnProperty("fromInput")) { opt.node.send(toSend); }
         if (opt.storeFrontEndInputAsState) {
             //fwd to all UI clients
             io.emit(updateValueEventName, msg);
