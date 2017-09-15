@@ -7,7 +7,8 @@
  - Let chart accept non-timeseries array of data (just y values)
  - Let chart set x-axis labelling to automatic to try to best guess time units
  - Let widget size be specified by typed input as well as drag PR #270
- - Allow button to set colour and background colour via msg properties
+ - Allow button to set colour and background colour via msg properties #275
+ - Add browser side locale support for charts and datepicker number and date formatting.
 
 **Fixes**
 
@@ -15,6 +16,7 @@
  - Fix notification popup displays incorrect topic - Issue #269
  - Let switch label be set my message even if payload same as previously -Issue #274
  - Clean up any extra ui_base nodes that get imported - Issue #273
+ - Make sure dropdown doesn't pass through when set not to pass-through - Issue #276
 
 ### 2.4.3: Maintenance Release
 

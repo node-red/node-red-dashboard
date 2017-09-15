@@ -213,7 +213,7 @@ function add(opt) {
             if (opt.forwardInputMessages && opt.node._wireCount) {
                 msg.payload = opt.convertBack(fullDataset);
                 msg = opt.beforeSend(msg) || msg;
-                //if (settings.verbose) { console.log("UI-`SEND`",JSON.stringify(msg)); }
+                //if (settings.verbose) { console.log("UI-SEND",JSON.stringify(msg)); }
                 opt.node.send(msg);
             }
         }
@@ -226,6 +226,7 @@ function add(opt) {
             currentValues[msg.id] = converted;
             replayMessages[msg.id] = msg;
         }
+        if (!opt.forwardInputMessages) { return; }
         var toSend = {payload: converted};
         toSend = opt.beforeSend(toSend, msg) || toSend;
         toSend.socketid = toSend.socketid || msg.socketid;
