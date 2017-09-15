@@ -100,6 +100,19 @@ body.nr-dashboard-theme md-sidenav {
     border-top-color: @widgetTextColor;
 }
 
+.md-default-theme .md-calendar-day-header, .md-calendar-day-header {
+    color: contrast(@pageTitlebarBackgroundColor);
+    background-color: @pageTitlebarBackgroundColor;
+}
+.md-default-theme .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator, .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator, .md-default-theme .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator, .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator {
+    background: @widgetBackgroundColor;
+    color: contrast(@widgetBackgroundColor);
+    border-color: transparent;
+}
+.md-default-theme .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator, .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator {
+    border: 1px solid @widgetBackgroundColor;
+}
+
 /* Chart */
 .nr-dashboard-theme .nr-dashboard-chart-title  {
 }
@@ -216,7 +229,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 	min-height: 26px;
 	min-width: unset;
 	line-height: unset;
-	
+
 	&.md-fab.md-mini {
 		padding: unset;
 	}
