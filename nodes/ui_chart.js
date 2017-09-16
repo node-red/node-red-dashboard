@@ -77,7 +77,26 @@ module.exports = function(RED) {
                     if (node.newStyle && (!value[0].hasOwnProperty("key"))) {
                         if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
                             if (node.chartType === "line") {
-                                if (isNaN(value[0].data[0][0])) { delete value[0].labels; }
+                                if (isNaN(value[0].data[0][0])) {
+                                    // if (typeof value[0].data[0][0] === "undefined") {
+                                    //     value[0].data = [value[0].data];
+                                    // }
+                                    // else {
+                                    delete value[0].labels;
+                                    //}
+                                }
+                            }
+                            else if (node.chartType === "bar" || node.chartType === "horizontalBar") {
+                                if (isNaN(value[0].data[0][0])) {
+                                    var tmp = [];
+                                    for (var d=0; d<value[0].data.length; d++) {
+                                        tmp.push([value[0].data[d]]);
+                                    }
+                                    value[0].data = tmp;
+                                    var tmp2 = value[0].series;
+                                    value[0].series = value[0].labels;
+                                    value[0].labels = tmp2;
+                                }
                             }
                             value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
                         }
@@ -120,12 +139,12 @@ module.exports = function(RED) {
                     value = parseFloat(value);                      // only handle numbers
                     if (isNaN(value)) { return; }                   // return if not a number
                     converted.newPoint = true;
-                    var label = msg.topic || "";
-                    var series = msg.series || "";
-                    if (node.chartType === "bar" || node.chartType === "horizontalBar") {
-                        label = msg.label || " ";
-                        series = msg.topic || "";
-                    }
+                    var label = msg.label || " ";
+                    var series = msg.series || msg.topic || "";
+                    // if (node.chartType === "bar" || node.chartType === "horizontalBar") {
+                    //     label = msg.label || " ";
+                    //     series = msg.series || msg.topic || "";
+                    // }
                     var found = false;
                     if (!oldValue) { oldValue = [];}
                     if (oldValue.length === 0) {
@@ -133,7 +152,7 @@ module.exports = function(RED) {
                     }
                     if (node.chartType === "line" || node.chartType === "bar" || node.chartType === "horizontalBar" || node.chartType === "radar") {  // Line, Bar and Radar
                         var refill = false;
-                        if (node.chartType === "line") { series = label; label = ""; }
+                        if (node.chartType === "line") { label = ""; }
                         var s = oldValue[0].values.series.indexOf(series);
                         if (!oldValue[0].values.hasOwnProperty("labels")) { oldValue[0].values.labels = []; }
                         var l = oldValue[0].values.labels.indexOf(label);
@@ -210,7 +229,7 @@ module.exports = function(RED) {
                             }
                         }
                         if (!found) {
-                            oldValue[0].values.labels.push(label);
+                            oldValue[0].values.labels.push(msg.label || msg.topic);
                             oldValue[0].values.data.push(value);
                         }
                         converted.update = false;

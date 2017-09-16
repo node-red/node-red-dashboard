@@ -1,6 +1,6 @@
 # Node-RED-Dashboard Charts
 
-### Live data
+## Live data
 
 To display live data just wire up an input with a `msg.payload` that contains a number.
 
@@ -10,15 +10,18 @@ property that identifies which data series it belongs to - for example:
     {topic:"temperature", payload:22}
     {topic:"humidity", payload:66}
 
+You can alternatively use a `series` property instead of `topic` if you prefer.
 Each series will be represented by a different colour.
 
 For bar charts - if you want all the bars to be the same colour, then use the `label`
-property instead of `topic`.
+property instead.
 
     {label:"indoor temperature", payload:22}
     {label:"outdoor temperature", payload:15}
 
-### Stored data
+You can have both a label and series property if you want.
+
+## Stored data
 
 To display a complete chart in one go - for example from a set of points retrieved from a database,
 the data must be supplied in the form of an array, that holds an object that has `series`,`labels`, and 'data' arrays.
@@ -26,7 +29,7 @@ This is broadly the same as the raw chart.js format.
 
 You will need to process your data into this structure in order to render it correctly.
 
-#### Line charts
+### Line charts
 
 For line charts an example is given below
 
@@ -58,13 +61,13 @@ the format should be as follows:
         "labels": [ "Jan", "Feb", "Mar" ]
     }]
 
-#### Bar charts
+### Bar charts
 
 for bars of different colours
 
     [{
         "series": [ "X", "Y", "Z"],
-        "data": [ [9], [3], [7] ],
+        "data": [ [5], [3], [6] ],
         "labels": [ "Jan" ]
     }]
 
