@@ -5,6 +5,8 @@ dashboard.
 
 <img src="http://nodered.org/images/dashboarde.png"/>
 
+For the latest updates see the [CHANGELOG.md](https://github.com/node-red/node-red-dashboard/blob/master/CHANGELOG.md)
+
 ## Pre-requisites
 
 Node-RED-Dashboard requires Node-RED version 0.14 or more recent.
@@ -63,7 +65,7 @@ Any widget can be disabled by passing in a `msg.enabled` property set to `false;
 
   - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.
   - **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
-  - **Chart** - has both line, bar and pie chart modes. Also the X-Axis labels can be customised using a date formatter string. Uses the **Chart.js** library.
+  - **Chart** - has both line, bar and pie chart modes. Also the X-Axis labels can be customised using a date formatter string. See **[this document](https://github.com/node-red/node-red-dashboard/blob/master/Charts.md)** for more information on the chart data formats accepted.
   - **Colour Picker** - a colour picker widget.
   - **Date Picker** - a date picker widget. The displayed Date format can be specified in the Site tab using moment.js formatting.
   - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified. The choices can also be set via `msg.options` containing an array of objects. If just text then the value will be the same as the label, otherwise you can specify both by using an object of "label":"value" pairs :
