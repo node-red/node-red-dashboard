@@ -1,5 +1,5 @@
 
-### 2.5.0-beta: Milestone Release
+### 2.5.0: Milestone Release
 
 **Enhancements**
 
