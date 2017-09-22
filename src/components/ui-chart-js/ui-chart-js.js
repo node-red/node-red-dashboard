@@ -274,14 +274,18 @@ function loadConfiguration(type,scope) {
 
     // Configure legend
     if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
-        config.options.legend = { display: true };
-        if ((type === 'pie') || (type="polar-area") || (type="radar")) {
+        config.options.legend = {
+            display:true,
+            position:'top',
+            labels: { boxWidth:10, fontSize:12, padding:8 }
+        };
+        if ((type === "pie") || (type === "polar-area") || (type === "radar")) {
             config.options.legend.position = 'left';
         }
 
         //set colours based on widget text colour
         if (themeState) {
-            config.options.legend.labels = { fontColor:themeState['widget-textColor'].value };
+            config.options.legend.labels.fontColor = themeState['widget-textColor'].value;
         }
     }
     return config;

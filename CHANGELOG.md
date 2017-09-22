@@ -1,4 +1,13 @@
 
+### 2.5.1-beta: Maintenance Release
+
+**Fixes**
+
+ - fix chart reference to 0.2.5 to the correct 2.5.0 - Issue #281
+ - Fix line chart legend back to top and shrink colour swatch size - Issue #283
+ - slight chart positioning adjustment
+
+
 ### 2.5.0: Milestone Release
 
 **Enhancements**
