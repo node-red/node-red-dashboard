@@ -74,6 +74,7 @@ module.exports = function(RED) {
                 }
                 ChartIdList[node.id] = node.chartType;
                 if (Array.isArray(value)) {
+                    if (value.length === 0) { oldvalue = value = [{series:[], data:[], labels:[]}]; }
                     if (node.newStyle && (!value[0].hasOwnProperty("key"))) {
                         if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
                             if (node.chartType === "line") {
@@ -141,10 +142,12 @@ module.exports = function(RED) {
                     converted.newPoint = true;
                     var label = msg.label || " ";
                     var series = msg.series || msg.topic || "";
-                    // if (node.chartType === "bar" || node.chartType === "horizontalBar") {
-                    //     label = msg.label || " ";
-                    //     series = msg.series || msg.topic || "";
-                    // }
+                    if (node.chartType === "bar" || node.chartType === "horizontalBar") {
+                        if (!node.newStyle || !msg.series) {
+                            label = msg.topic || msg.label || " ";
+                            series = msg.series || "";
+                        }
+                    }
                     var found = false;
                     if (!oldValue) { oldValue = [];}
                     if (oldValue.length === 0) {
@@ -222,14 +225,14 @@ module.exports = function(RED) {
                     }
                     else { // Pie and Polar chart
                         for (var p=0; p<oldValue[0].values.labels.length; p++) {
-                            if (oldValue[0].values.labels[p] === label) {
+                            if (oldValue[0].values.labels[p] === msg.topic || msg.label) {
                                 oldValue[0].values.data[p] = value;
                                 found = true;
                                 break;
                             }
                         }
                         if (!found) {
-                            oldValue[0].values.labels.push(msg.label || msg.topic);
+                            oldValue[0].values.labels.push(msg.topic || msg.label);
                             oldValue[0].values.data.push(value);
                         }
                         converted.update = false;
