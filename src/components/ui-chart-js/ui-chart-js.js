@@ -12,6 +12,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
                     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
+                    var useOneColor = scope.$eval('me.item.useOneColor');
                     scope.config = loadConfiguration(type, scope);
 
                     // Chart.Tooltip.positioners = {};
@@ -88,7 +89,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     }
                                 }
                                 if ((type === "bar") || (type === "horizontalBar")) {
-                                    if (newValue.values.series.length > 1) {
+                                    if (useOneColor || (newValue.values.series.length > 1)) {
                                         scope.config.colours = lineColours;
                                     }
                                     else { scope.config.colours = barColours; }
