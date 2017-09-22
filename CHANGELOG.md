@@ -3,10 +3,11 @@
 
 **Fixes**
 
- - fix chart reference to 0.2.5 to the correct 2.5.0 - Issue #281
+ - Fix chart reference to 0.2.5 to the correct 2.5.0 - Issue #281
  - Fix line chart legend back to top and shrink colour swatch size - Issue #283
- - slight chart positioning adjustment
-
+ - Fix bar chart colours to be like previous style
+ - Fix blank array to clear out old and new style charts
+ - Slight chart positioning adjustment
 
 ### 2.5.0: Milestone Release
 

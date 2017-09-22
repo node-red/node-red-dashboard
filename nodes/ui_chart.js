@@ -74,17 +74,16 @@ module.exports = function(RED) {
                 }
                 ChartIdList[node.id] = node.chartType;
                 if (Array.isArray(value)) {
-                    if (value.length === 0) { oldvalue = value = [{series:[], data:[], labels:[]}]; }
-                    if (node.newStyle && (!value[0].hasOwnProperty("key"))) {
+                    if (value.length === 0) { // reset chart
+                        converted.update = false;
+                        converted.updatedValues = [];
+                        return converted;
+                    }
+                    if ((node.newStyle) && !value[0].hasOwnProperty("key")) {
                         if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
                             if (node.chartType === "line") {
                                 if (isNaN(value[0].data[0][0])) {
-                                    // if (typeof value[0].data[0][0] === "undefined") {
-                                    //     value[0].data = [value[0].data];
-                                    // }
-                                    // else {
                                     delete value[0].labels;
-                                    //}
                                 }
                             }
                             else if (node.chartType === "bar" || node.chartType === "horizontalBar") {
