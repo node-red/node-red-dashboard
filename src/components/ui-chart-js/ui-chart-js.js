@@ -94,6 +94,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     }
                                     else { scope.config.colours = barColours; }
                                 }
+                                if (type === "pie") {
+                                    scope.config.colours = barColours;
+                                }
                                 scope.config.data = newValue.values.data;
                                 scope.config.series = newValue.values.series;
                                 scope.config.labels = newValue.values.labels;
@@ -153,7 +156,8 @@ function loadConfiguration(type,scope) {
         baseColours.forEach(function(colour, index) {
             colours.push({
                 backgroundColor: baseColours,
-                borderColor: baseColours
+                borderColor: "#888",
+                borderWidth: 1
             });
         });
         config.colours = colours;

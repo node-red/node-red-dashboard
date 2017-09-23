@@ -87,15 +87,16 @@ options:
     [emitOnlyNewValues] - boolean (default true).
         If true, it checks if the payload changed before sending it
         to the front-end. If the payload is the same no message is sent.
+    [forwardInputMessages] - boolean (default true).
+        If true, forwards input messages to the output
+    [storeFrontEndInputAsState] - boolean (default true).
+        If true, any message received from front-end is stored as state
 
     [convert] - callback to convert the value before sending it to the front-end
-    [convertBack] - callback to convert the message from front-end before sending it to the next connected node
-
     [beforeEmit] - callback to prepare the message that is emitted to the front-end
-    [beforeSend] - callback to prepare the message that is sent to the output
 
-    [forwardInputMessages] - default true. If true, forwards input messages to the output
-    [storeFrontEndInputAsState] - default true. If true, any message received from front-end is stored as state
+    [convertBack] - callback to convert the message from front-end before sending it to the next connected node
+    [beforeSend] - callback to prepare the message that is sent to the output
 */
 function add(opt) {
     clearTimeout(removeStateTimers[opt.node.id]);
@@ -110,10 +111,10 @@ function add(opt) {
     if (typeof opt.storeFrontEndInputAsState === 'undefined') {
         opt.storeFrontEndInputAsState = true;
     }
-    opt.beforeEmit = opt.beforeEmit || beforeEmit;
-    opt.beforeSend = opt.beforeSend || beforeSend;
     opt.convert = opt.convert || noConvert;
+    opt.beforeEmit = opt.beforeEmit || beforeEmit;
     opt.convertBack = opt.convertBack || noConvert;
+    opt.beforeSend = opt.beforeSend || beforeSend;
     opt.control.id = opt.node.id;
     var remove = addControl(opt.tab, opt.group, opt.control);
 
@@ -213,7 +214,7 @@ function add(opt) {
             if (opt.forwardInputMessages && opt.node._wireCount) {
                 msg.payload = opt.convertBack(fullDataset);
                 msg = opt.beforeSend(msg) || msg;
-                //if (settings.verbose) { console.log("UI-SEND",JSON.stringify(msg)); }
+                if (settings.verbose) { console.log("UI-SEND",JSON.stringify(msg)); }
                 opt.node.send(msg);
             }
         }
