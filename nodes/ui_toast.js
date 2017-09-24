@@ -21,8 +21,8 @@ module.exports = function(RED) {
             control: {},
             storeFrontEndInputAsState: false,
             forwardInputMessages: false,
-            beforeSend: function (toSend,msg) {
-                var m = msg.value.msg;
+            beforeSend: function (msg) {
+                var m = msg.payload.msg;
                 m.topic = node.topic || m.topic;
                 return m;
             }

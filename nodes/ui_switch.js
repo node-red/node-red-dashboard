@@ -32,7 +32,6 @@ module.exports = function(RED) {
         if (onvalueType === 'flow' || onvalueType === 'global') {
             try {
                 parts = RED.util.normalisePropertyExpression(onvalue);
-                //console.log(parts);
                 if (parts.length === 0) {
                     throw new Error();
                 }
@@ -76,7 +75,7 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
-            convert: function (payload,oldval) {
+            convert: function (payload, oldval) {
                 var myOnValue,myOffValue;
 
                 if (onvalueType === "date") { myOnValue = Date.now(); }
@@ -92,6 +91,7 @@ module.exports = function(RED) {
             convertBack: function (value) {
                 var payload = value ? onvalue : offvalue;
                 var payloadType = value ? onvalueType : offvalueType;
+
                 if (payloadType === "date") { value = Date.now(); }
                 else { value = RED.util.evaluateNodeProperty(payload,payloadType,node); }
                 return value;

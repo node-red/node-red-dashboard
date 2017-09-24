@@ -21,27 +21,25 @@ module.exports = function(RED) {
     };
 };
 
-var serveStatic = require('serve-static'),
-    socketio = require('socket.io'),
-    path = require('path'),
-    fs = require('fs'),
-    events = require('events'),
-    dashboardVersion = require('./package.json').version;
+var fs = require('fs');
+var path = require('path');
+var events = require('events');
+var socketio = require('socket.io');
+var serveStatic = require('serve-static');
+var dashboardVersion = require('./package.json').version;
 
 var baseConfiguration = {};
-
+var io;
 var menu = [];
 var globals = [];
+var settings = {};
 var updateValueEventName = 'update-value';
-var io;
 var currentValues = {};
 var replayMessages = {};
 var removeStateTimers = {};
 var removeStateTimeout = 1000;
 var ev = new events.EventEmitter();
 ev.setMaxListeners(0);
-
-var settings = {};
 
 function toNumber(keepDecimals, config, input) {
     if (input === undefined) { return; }
@@ -78,7 +76,7 @@ function beforeSend(msg) {
     //do nothing
 }
 
-/*
+/* This is the handler for inbound msg from previous nodes...
 options:
     node - the node that represents the control on a flow
     control - the control to be added
@@ -214,23 +212,26 @@ function add(opt) {
             if (opt.forwardInputMessages && opt.node._wireCount) {
                 msg.payload = opt.convertBack(fullDataset);
                 msg = opt.beforeSend(msg) || msg;
-                if (settings.verbose) { console.log("UI-SEND",JSON.stringify(msg)); }
+                //if (settings.verbose) { console.log("UI-SEND",JSON.stringify(msg)); }
                 opt.node.send(msg);
             }
         }
     });
 
+    // This is the handler for messages coming back from the UI
     var handler = function (msg) {
-        if (msg.id !== opt.node.id) { return; }
+        if (msg.id !== opt.node.id) { return; }  // ignore if not us
         var converted = opt.convertBack(msg.value);
         if (opt.storeFrontEndInputAsState) {
             currentValues[msg.id] = converted;
             replayMessages[msg.id] = msg;
         }
-        var toSend = {payload: converted};
+        var toSend = {payload:converted};
         toSend = opt.beforeSend(toSend, msg) || toSend;
         toSend.socketid = toSend.socketid || msg.socketid;
-        if (!msg.hasOwnProperty("fromInput")) { opt.node.send(toSend); } // TODO: too specific
+        if (!msg.hasOwnProperty("_fromInput")) {   // TODO: too specific
+            opt.node.send(toSend);      // send to following nodes
+        }
         if (opt.storeFrontEndInputAsState) {
             //fwd to all UI clients
             io.emit(updateValueEventName, msg);
@@ -313,7 +314,6 @@ function init(server, app, log, redSettings) {
                 name = menu[index].header === undefined ? menu[index].name : menu[index].header;
             }
             ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
-            //if (index < menu.length) { updateUi(); }
         });
         socket.on('ui-refresh', function() {
             updateUi();

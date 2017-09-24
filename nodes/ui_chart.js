@@ -258,6 +258,7 @@ module.exports = function(RED) {
                 node.send([null, {payload:"restore", for:node.id}]);
             }
         }, 100);
+
         node.on("close", function() {
             ui.ev.removeAllListeners();
             done();

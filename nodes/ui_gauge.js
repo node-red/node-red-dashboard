@@ -69,9 +69,6 @@ module.exports = function (RED) {
                 gageoptions: gageoptions,
                 waveoptions: waveoptions
             },
-            beforeSend: function (msg) {
-                //msg.topic = config.topic;
-            },
             convert: ui.toFloat.bind(this, config)
         });
         node.on("close", done);
