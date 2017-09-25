@@ -1,5 +1,5 @@
 
-### 2.5.1-beta: Maintenance Release
+### 2.5.1: Maintenance Release
 
 **Fixes**
 
