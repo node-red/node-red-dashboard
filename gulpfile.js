@@ -2,26 +2,27 @@
 var
     gulp = require('gulp'),
     concat = require('gulp-concat'),
+    eol = require('gulp-eol'),
     exec = require('child_process').exec,
     fs = require('fs'),
     ghtmlSrc = require('gulp-html-src'),
-    gutil = require('gulp-util'),
     gulpif = require('gulp-if'),
+    gutil = require('gulp-util'),
     header = require("gulp-header"),
     htmlreplace = require('gulp-html-replace'),
     insertLines = require('gulp-insert-lines'),
+    jscs = require('gulp-jscs'),
+    jshint = require('gulp-jshint'),
     manifest = require('gulp-manifest'),
     minifyCss = require('gulp-clean-css'),
     minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
-    resources = require('gulp-resources'),
     removeHtml = require('gulp-remove-html'),
+    resources = require('gulp-resources'),
     //spawn = require('child_process').spawn,
     streamqueue = require('streamqueue'),
     templateCache = require('gulp-angular-templatecache'),
-    uglify = require('gulp-uglify'),
-    jshint = require('gulp-jshint'),
-    jscs = require('gulp-jscs');
+    uglify = require('gulp-uglify');
 
 //gulp.task('default', ['manifest']);
 gulp.task('default', ['lint','jscs'], function() {
@@ -45,6 +46,7 @@ gulp.task('manifest', ['build'], function() {
         //exclude: 'dashboard.appcache'
         exclude: ['dashboard.appcache','index.html']
     }))
+    .pipe(eol('\n'))
     .pipe(gulp.dest('dist/'));
 });
 
@@ -77,6 +79,7 @@ gulp.task('index', function() {
         'lineBefore': '<script src="js/tinycolor-min.js"></script>'
     }))
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
+    .pipe(eol('\n'))
     .pipe(gulp.dest('dist/'));
 });
 
@@ -99,14 +102,18 @@ gulp.task('js', function () {
     .pipe(templateCache('templates.js', {root:'', module:'ui'}));
 
     var tiny = gulp.src('node_modules/tinycolor2/dist/tinycolor-min.js')
+    .pipe(eol('\n'))
     .pipe(gulp.dest('./dist/js'));
 
-    var i18n = gulp.src('src/i18n.js').pipe(gulp.dest('dist/'));
+    var i18n = gulp.src('src/i18n.js')
+    .pipe(eol('\n'))
+    .pipe(gulp.dest('dist/'));
 
     return streamqueue({ objectMode:true }, scripts, templates)
     .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
     .pipe(concat('app.min.js'))
     .pipe(header(fs.readFileSync('license.js')))
+    .pipe(eol('\n'))
     .pipe(gulp.dest('dist/js/'));
 });
 
@@ -123,6 +130,7 @@ gulp.task('css', function () {
     .pipe(minifyCss({compatibility:'ie8'}))
     .pipe(concat('app.min.css'))
     .pipe(header(fs.readFileSync('license.js')))
+    .pipe(eol('\n'))
     .pipe(gulp.dest('dist/css/'));
 });
 
@@ -132,6 +140,7 @@ gulp.task('less', function() {
     .pipe(removeHtml())
     .pipe(gulpif('**/*.less', concat('app.min.less')))
     .pipe(header(fs.readFileSync('license.js')))
+    .pipe(eol('\n'))
     .pipe(gulp.dest('dist/css'));
 });
 

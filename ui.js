@@ -131,6 +131,25 @@ function add(opt) {
         // Retrieve the dataset for this node
         var oldValue = currentValues[opt.node.id];
 
+        // let any arriving msg.ui_control message mess with control parameters
+        if (msg.ui_control && (typeof msg.ui_control === "object") && (!Array.isArray(msg.ui_control)) && (!Buffer.isBuffer(msg.ui_control) )) {
+            //if (settings.verbose) { console.log("UI-OBJ",JSON.stringify(msg.ui_control)); }
+            if (settings.verbose) {
+                var p = opt.control;
+                delete p.order; delete p.id; delete p.name; delete p.value;
+                console.log("UI-OBJ",JSON.stringify(p));
+            }
+            for (var property in msg.ui_control) {
+                if (msg.ui_control.hasOwnProperty(property) && opt.control.hasOwnProperty(property)) {
+                    if ((property !== "id")&&(property !== "type")&&(property !== "order")&&(property !== "name")&&(property !== "value")) {
+                        opt.control[property] = msg.ui_control[property];
+                    }
+                }
+            }
+            updateUi();  // the flashing may deter people doing it all the time :-)
+            if (!msg.hasOwnProperty("payload")) { return; }
+        }
+
         // Call the convert function in the node to get the new value
         // as well as the full dataset.
         var conversion = opt.convert(msg.payload, oldValue, msg);

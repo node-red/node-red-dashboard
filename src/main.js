@@ -249,7 +249,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
                     main.selectedTab.theme.themeState["widget-borderColor"] = main.selectedTab.theme.themeState["widget-borderColor"] || main.selectedTab.theme.themeState["group-backgroundColor"];
                     applyStyle(main.selectedTab.theme);
-                    $mdToast.hide();
                 }
                 else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
                     applyStyle(ui.theme);
@@ -257,6 +256,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
+                $mdToast.hide();
                 processGlobals();
                 done();
             }
