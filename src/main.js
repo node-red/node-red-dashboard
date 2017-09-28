@@ -386,15 +386,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 );
             }
             else {
-                var toastScope = $rootScope.$new();
-                toastScope.toast = msg;
-                var opts = {
-                    scope: toastScope,
-                    templateUrl: 'partials/toast.html',
-                    hideDelay: msg.displayTime,
-                    position: msg.position
-                };
-                $mdToast.show(opts);
+                if (msg.hasOwnProperty("message") || msg.hasOwnProperty("title")) {
+                    var toastScope = $rootScope.$new();
+                    toastScope.toast = msg;
+                    var opts = {
+                        scope: toastScope,
+                        templateUrl: 'partials/toast.html',
+                        hideDelay: msg.displayTime,
+                        position: msg.position
+                    };
+                    $mdToast.show(opts);
+                }
             }
         });
 
