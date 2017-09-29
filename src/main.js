@@ -402,6 +402,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on('ui-control', function(msg) {
             if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
+            if (msg.hasOwnProperty("control")) {
+                //console.log("MSG",msg);
+                found = findControl(msg.id, main.menu);
+                //console.log("FOUND",found);
+                for (var property in msg.control) {
+                    if (msg.control.hasOwnProperty(property) && found.hasOwnProperty(property)) {
+                        found[property] = msg.control[property];
+                    }
+                }
+                //Object.assign(found,msg.control);
+            }
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
                 if (typeof msg.tab === 'string') {
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }

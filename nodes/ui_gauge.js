@@ -32,13 +32,6 @@ module.exports = function (RED) {
         gageoptions.pointerOptions = {'theme-dark':{color:'#8e8e93'}, 'theme-custom':theme["group-textColor"].value};
         gageoptions.backgroundColor = {'theme-dark':'#515151', 'theme-custom':theme["widget-textColor"].value };
         gageoptions.compassColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be', 'theme-custom':theme["widget-backgroundColor"].value};
-        if ((config.seg1 && config.seg1 !== "") && (config.seg2 && config.seg2 !== "")) {
-            gageoptions.customrange = [
-                { color : node.colors[0], lo : config.min, hi : config.seg1 },
-                { color : node.colors[1], lo : config.seg1, hi : config.seg2 },
-                { color : node.colors[2], lo : config.seg2, hi : config.max }
-            ];
-        }
 
         var waveoptions = {};
         waveoptions.circleColor = {'theme-dark':'#097479', 'theme-light':'#0094ce', 'theme-custom':theme["widget-backgroundColor"].value};
@@ -60,6 +53,8 @@ module.exports = function (RED) {
                 format: config.format,
                 gtype: config.gtype || 'gage',
                 min: config.min,
+                seg1: config.seg1,
+                seg2: config.seg2,
                 max: config.max,
                 sizes: sizes,
                 hideMinMax: config.hideMinMax,
@@ -67,7 +62,8 @@ module.exports = function (RED) {
                 height: config.height || node.autoheight,
                 colors: node.colors,
                 gageoptions: gageoptions,
-                waveoptions: waveoptions
+                waveoptions: waveoptions,
+                options: null
             },
             convert: ui.toFloat.bind(this, config)
         });
