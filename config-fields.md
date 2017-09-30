@@ -29,7 +29,8 @@ Note: It is still recommended that nodes are configured via the editor in order 
 |                       |showLightness      |boolean
 |ui_dropdown            |place              |string
 |                       |options            |array
-|ui_gauge               |min                |number
+|ui_gauge               |gtype              |string
+|                       |min                |number
 |                       |max                |number
 |                       |seg1               |number
 |                       |seg2               |number
