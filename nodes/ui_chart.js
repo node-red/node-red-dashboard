@@ -226,22 +226,6 @@ module.exports = function(RED) {
                     }
                     converted.update = true;
                     converted.updatedValues = oldValue;
-                    // }
-                    // else { // Polar chart
-                    //     for (var p=0; p<oldValue[0].values.labels.length; p++) {
-                    //         if (oldValue[0].values.labels[p] === msg.topic || msg.label) {
-                    //             oldValue[0].values.data[p] = value;
-                    //             found = true;
-                    //             break;
-                    //         }
-                    //     }
-                    //     if (!found) {
-                    //         oldValue[0].values.labels.push(msg.topic || msg.label);
-                    //         oldValue[0].values.data.push(value);
-                    //     }
-                    //     converted.update = true;
-                    //     converted.updatedValues = oldValue;
-                    // }
                 }
                 return converted;
             }

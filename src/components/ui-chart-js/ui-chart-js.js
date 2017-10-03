@@ -13,7 +13,11 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var type = scope.$eval('me.item.look');
                     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
                     var useOneColor = scope.$eval('me.item.useOneColor');
-                    scope.config = loadConfiguration(type, scope);
+
+                    //scope.config = loadConfiguration(type, scope);
+                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata'], function (newValue) {
+                        scope.config = loadConfiguration(type, scope);
+                    });
 
                     // Chart.Tooltip.positioners = {};
                     // Chart.Tooltip.positioners.cursor = function(chartElements, coordinates) {
@@ -105,7 +109,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         else {
                             // Reset config and clear data
                             scope.config = loadConfiguration(type, scope);
-                            scope.config.nodata = true;
                         }
                     });
                 }, 0);
@@ -122,11 +125,14 @@ function loadConfiguration(type,scope) {
     var xFormat = scope.$eval('me.item.xformat');
     var showDot = scope.$eval('me.item.dot');
     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
-    var config = {};
+    var config = scope.config || {};
     var themeState = scope.$eval('me.item.theme.themeState');
-    config.data = [];
-    config.series = [];
-    config.labels = [];
+    if (!scope.config) {
+        config.data = [];
+        config.series = [];
+        config.labels = [];
+        config.nodata = true;
+    }
     config.options = {
         animation: false,
         spanGaps: true,

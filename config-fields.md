@@ -1,55 +1,64 @@
 
-The following configuration properties of nodes can be set by using a `msg.ui_control` property.
+## UI Widget configuration via msg.ui_control
+
+The following configuration properties of ui widget nodes can be set by using a `msg.ui_control` property on a msg.
 Multiple properties of the node can be set at the same time. eg `{ "min":10, "max":50 }`
 
-Note: It is still recommended that nodes are configured via the editor in order to preset the default values.
+**Note**: It is still recommended that nodes are configured via the editor in order to preset the default values.
 
-|widget                 |property           |type
-|---                    |---                |---
-|ui_button              |color              |string
-|                       |bgcolor            |string
-|                       |icon               |string
-|                       |format             |string
-|ui_chart               |look               |string
-|                       |legend             |boolean
-|                       |interpolate        |string
-|                       |nodata             |string
-|                       |ymin               |string
-|                       |ymax               |string
-|                       |dot                |boolean
-|                       |xformat            |string
-|                       |cutout             |number
-|                       |colors             |object
-|                       |useOneColor        |boolean
-|ui_colour_picker       |format             |string
-|                       |showPicker         |boolean
-|                       |showSwatch         |boolean
-|                       |showValue          |boolean
-|                       |showAlpha          |boolean
-|                       |showLightness      |boolean
-|ui_dropdown            |place              |string
-|                       |options            |array
-|ui_gauge               |gtype              |string
-|                       |min                |number
-|                       |max                |number
-|                       |seg1               |number
-|                       |seg2               |number
-|                       |colors             |array
-|                       |options            |object
-|ui_numeric             |format             |string
-|                       |min                |number
-|                       |max                |number
-|                       |step               |number
-|ui_slider              |min                |number
-|                       |max                |number
-|                       |step               |number
-|ui_switch              |onicon             |string
-|                       |officon            |string
-|                       |oncolor            |string
-|                       |offcolor           |string
-|ui_template            |format             |string
-|                       |templateScope      |string
-|ui_text                |format             |string
-|                       |layout             |string
-|ui_text_input          |mode               |string
-|                       |delay              |number
+|widget                 |property           |type       | notes / example
+|---                    |---                |---        |---
+|ui_button              |color              |string     | not needed
+|                       |bgcolor            |string     | not needed
+|                       |icon               |string     | on refresh
+|                       |format             |string     | not needed
+|ui_chart               |look               |string     | not working
+|                       |legend             |boolean    |&nbsp;
+|                       |interpolate        |string     |"linear","step","bezier"
+|                       |nodata             |string     |&nbsp;
+|                       |ymin               |number     |&nbsp;
+|                       |ymax               |number     |&nbsp;
+|                       |dot                |boolean    |&nbsp;
+|                       |xformat            |string     |"HH:mm:ss"
+|                       |cutout             |number     |&nbsp;
+|                       |colors             |object     | n/a
+|                       |useOneColor        |boolean    | n/a
+|ui_colour_picker       |format             |string     | on refresh
+|                       |showPicker         |boolean    | on refresh
+|                       |showSwatch         |boolean    | on refresh
+|                       |showValue          |boolean    | on refresh
+|                       |showAlpha          |boolean    | on refresh
+|                       |showLightness      |boolean    | on refresh
+|ui_dropdown            |place              |string     |"placeholder text"
+|                       |options            |array      |[{"label":"foo","value":"0","type":"str"}]
+|ui_gauge               |gtype              |string     |"gage", "donut", "compass", "wave"
+|                       |min                |number     |&nbsp;
+|                       |seg1               |number     |segment 1 limit
+|                       |seg2               |number     |segment 2 limit
+|                       |max                |number     |&nbsp;
+|                       |colors             |array      |["blue","#00ff00","#f00"]
+|                       |options            |object     |(see Note 1 below)
+|ui_numeric             |min                |number     |&nbsp;
+|                       |max                |number     |&nbsp;
+|                       |step               |number     |&nbsp;
+|                       |format             |string     |"{{value}}"
+|ui_slider              |min                |number     |&nbsp;
+|                       |max                |number     |&nbsp;
+|                       |step               |number     |&nbsp;
+|ui_switch              |onicon             |string     | all or nothing
+|                       |officon            |string     | all or nothing
+|                       |oncolor            |string     | all or nothing
+|                       |offcolor           |string     | all or nothing
+|ui_template            |format             |string     | the script
+|                       |templateScope      |string     | "local" or "global"
+|ui_text                |format             |string     |"{{value}}"
+|                       |layout             |string     | "row-left", "row-right", etc
+|ui_text_input          |mode               |string     | "text", "email", "password", "color"
+|                       |delay              |number     |&nbsp;
+
+**Notes**:
+
+ 1. The gauge options can accept any of the [Justgage parameters](https://github.com/toorshia/justgage/blob/master/justgage.js#L42) for example:
+
+         {"options":{"pointer":false,"gaugeWidthScale":1.5}}
+         {"options":{"pointer":true,"gaugeWidthScale":0.4,"reverse":true}}

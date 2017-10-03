@@ -11,6 +11,6 @@
             ng-swipe-left="$event.stopPropagation();"
             >
         </ui-chart-js>
-        <p class="blank-label" ng-if="config.nodata">{{ me.item.nodata }}</p>
+        <p class="blank-label" ng-if="config && config.nodata">{{ me.item.nodata }}</p>
     </div>
 </md-card>
