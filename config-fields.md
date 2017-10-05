@@ -62,3 +62,7 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 
          {"options":{"pointer":false,"gaugeWidthScale":1.5}}
          {"options":{"pointer":true,"gaugeWidthScale":0.4,"reverse":true}}
+
+Likewise the Wave type gauge can accept [liquidfillgauge config](http://bl.ocks.org/brattonc/5e5ce9beee483220e2f6) options for example:
+
+        {options:{circleColor:"#FF7777", textColor:"#FF4444", waveTextColor:"#FFAAAA", waveColor:"#FFDDDD", circleThickness:0.3, textVertPosition:0.2, waveHeight:0.05, waveCount:8}}
