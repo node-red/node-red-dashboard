@@ -45,6 +45,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.allowSwipe = false;
         var main = this;
         var audiocontext;
+        var voices = [];
         var tabId = 0;
 
         function moveTab(d) {
@@ -245,11 +246,15 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             $('meta[name=apple-mobile-web-app-title]').attr('content', name || "Node-RED");
 
             var prevTabIndex = parseInt($location.path().substr(1));
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = function() {
+                    voices = window.speechSynthesis.getVoices();
+                }
+            }
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
                     main.selectedTab.theme.themeState["widget-borderColor"] = main.selectedTab.theme.themeState["widget-borderColor"] || main.selectedTab.theme.themeState["group-backgroundColor"];
                     applyStyle(main.selectedTab.theme);
-                    $mdToast.hide();
                 }
                 else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
                     applyStyle(ui.theme);
@@ -257,6 +262,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
+                $mdToast.hide();
                 processGlobals();
                 done();
             }
@@ -386,20 +392,33 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 );
             }
             else {
-                var toastScope = $rootScope.$new();
-                toastScope.toast = msg;
-                var opts = {
-                    scope: toastScope,
-                    templateUrl: 'partials/toast.html',
-                    hideDelay: msg.displayTime,
-                    position: msg.position
-                };
-                $mdToast.show(opts);
+                if (msg.hasOwnProperty("message") || msg.hasOwnProperty("title")) {
+                    var toastScope = $rootScope.$new();
+                    toastScope.toast = msg;
+                    var opts = {
+                        scope: toastScope,
+                        templateUrl: 'partials/toast.html',
+                        hideDelay: msg.displayTime,
+                        position: msg.position
+                    };
+                    $mdToast.show(opts);
+                }
             }
         });
 
         events.on('ui-control', function(msg) {
             if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
+            if (msg.hasOwnProperty("control")) {
+                //console.log("MSG",msg);
+                found = findControl(msg.id, main.menu);
+                //console.log("FOUND",found);
+                for (var property in msg.control) {
+                    if (msg.control.hasOwnProperty(property) && found.hasOwnProperty(property)) {
+                        found[property] = msg.control[property];
+                    }
+                }
+                //Object.assign(found,msg.control);
+            }
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
                 if (typeof msg.tab === 'string') {
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }
@@ -435,13 +454,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (totab != parseInt($location.path().substr(1))) { return; }
             }
             if (msg.hasOwnProperty("tts")) {
-                if ('speechSynthesis' in window) {
-                    var voices = window.speechSynthesis.getVoices();
+                if (voices.length > 0) {
                     var words = new SpeechSynthesisUtterance(msg.tts);
                     words.voice = voices[msg.voice];
                     window.speechSynthesis.speak(words);
                 }
-                else { console.log("Your Browser does not support Text-to-Speech"); }
+                else {
+                    console.log("Your Browser does not support Text-to-Speech");
+                    var toastScope = $rootScope.$new();
+                    toastScope.toast = {message:msg.tts, title:"Computer says..."};
+                    $mdToast.show({ scope:toastScope, position:'top right', templateUrl:'partials/toast.html' });
+                }
             }
             if (msg.hasOwnProperty("audio")) {
                 if (!window.hasOwnProperty("AudioContext")) {
