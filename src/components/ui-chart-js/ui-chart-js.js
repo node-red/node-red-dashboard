@@ -18,6 +18,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         scope.config = loadConfiguration(type, scope);
                     });
 
+                    scope.$watch('me.item.look', function (newValue) {
+                        if ((type === "line") || (newValue === "line")) { delete scope.config; }
+                        type = newValue;
+                        scope.config = loadConfiguration(type, scope);
+                    });
+
                     // Chart.Tooltip.positioners = {};
                     // Chart.Tooltip.positioners.cursor = function(chartElements, coordinates) {
                     //     return coordinates;
@@ -55,6 +61,10 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     scope.$watch('me.item.value', function (newValue) {
                         if (newValue !== undefined && newValue.length > 0) {
                             newValue = newValue[0];
+                            if (!scope.hasOwnProperty("config")) {
+                                scope.config = loadConfiguration(type, scope);
+                            }
+                            scope.config.nodata = false;
 
                             // Updating line charts push to the data arrays
                             if (type === 'line' && newValue.update) {
@@ -86,14 +96,8 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                         delete scope.config.options.scales.xAxes[0].type;
                                         delete scope.config.options.scales.xAxes[0].time;
                                     }
-                                    else {
-                                        scope.config = loadConfiguration(type, scope);
-                                    }
                                 }
                                 if ((type === "bar") || (type === "horizontalBar")) {
-                                    if (!scope.hasOwnProperty("config")) {
-                                        scope.config = loadConfiguration(type, scope);
-                                    }
                                     if (useOneColor || (newValue.values.series.length > 1)) {
                                         scope.config.colours = lineColours;
                                     }
@@ -105,9 +109,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 scope.config.data = newValue.values.data;
                                 scope.config.series = newValue.values.series;
                                 scope.config.labels = newValue.values.labels;
-                            }
-                            if (scope.hasOwnProperty("config")) {
-                                scope.config.nodata = false;
                             }
                         }
                         else {
@@ -164,7 +165,7 @@ function loadConfiguration(type,scope) {
         config.colours = colours;
         lineColours = colours;
     }
-    else if ((type === 'bar') || (type === 'horizontalBar')) {
+    else if ((type === 'bar') || (type === 'horizontalBar') || (type === 'pie')) {
         baseColours.forEach(function(colour, index) {
             colours.push({
                 backgroundColor: baseColours,
@@ -264,6 +265,11 @@ function loadConfiguration(type,scope) {
     else if ((type === 'bar') || (type === 'horizontalBar')) {
         config.options.scales.xAxes = [{}];
         if (isNaN(yMin)) { yMin = 0; }
+    }
+    else if (type === "radar") {
+        config.options.scale = {ticks:{}};
+        if (!isNaN(yMin)) { config.options.scale.ticks.min = yMin; }
+        if (!isNaN(yMax)) { config.options.scale.ticks.max = yMax; }
     }
 
     // Configure scales

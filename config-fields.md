@@ -12,7 +12,7 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 |                       |bgcolor            |string     | not needed
 |                       |icon               |string     | on refresh
 |                       |format             |string     | not needed
-|ui_chart               |look               |string     | not working
+|ui_chart               |look               |string     |"line","bar","horizontalBar","pie","polar-area","radar"
 |                       |legend             |boolean    |&nbsp;
 |                       |interpolate        |string     |"linear","step","bezier"
 |                       |nodata             |string     |&nbsp;
