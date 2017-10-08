@@ -14,7 +14,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
                     var useOneColor = scope.$eval('me.item.useOneColor');
 
-                    //scope.config = loadConfiguration(type, scope);
                     scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata'], function (newValue) {
                         scope.config = loadConfiguration(type, scope);
                     });
@@ -55,7 +54,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     // When new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
                         if (newValue !== undefined && newValue.length > 0) {
-                            scope.config.nodata = false;
                             newValue = newValue[0];
 
                             // Updating line charts push to the data arrays
@@ -93,6 +91,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     }
                                 }
                                 if ((type === "bar") || (type === "horizontalBar")) {
+                                    if (!scope.hasOwnProperty("config")) {
+                                        scope.config = loadConfiguration(type, scope);
+                                    }
                                     if (useOneColor || (newValue.values.series.length > 1)) {
                                         scope.config.colours = lineColours;
                                     }
@@ -105,9 +106,13 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 scope.config.series = newValue.values.series;
                                 scope.config.labels = newValue.values.labels;
                             }
+                            if (scope.hasOwnProperty("config")) {
+                                scope.config.nodata = false;
+                            }
                         }
                         else {
                             // Reset config and clear data
+                            delete scope.config;
                             scope.config = loadConfiguration(type, scope);
                         }
                     });
@@ -127,6 +132,7 @@ function loadConfiguration(type,scope) {
     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
     var config = scope.config || {};
     var themeState = scope.$eval('me.item.theme.themeState');
+    var useOneColor = scope.$eval('me.item.useOneColor');
     if (!scope.config) {
         config.data = [];
         config.series = [];
@@ -148,7 +154,7 @@ function loadConfiguration(type,scope) {
 
     //Build colours array
     var colours = [];
-    if (type === 'line') {
+    if ((type === 'line') || useOneColor === true) {
         baseColours.forEach(function(colour, index) {
             colours.push({
                 backgroundColor: colour,
