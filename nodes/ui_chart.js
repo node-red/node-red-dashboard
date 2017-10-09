@@ -67,10 +67,13 @@ module.exports = function(RED) {
                 }
             },
             convert: function(value, oldValue, msg) {
-                //console.log("VALUE ",JSON.stringify(value));
                 var converted = {};
                 if (ChartIdList.hasOwnProperty(node.id) && ChartIdList[node.id] !== node.chartType) {
                     value = [];
+                }
+                if (this.control.look !== node.chartType) {
+                    if ((this.control.look === "line") || (node.chartType === "line")) { value = []; }
+                    node.chartType = this.control.look;
                 }
                 ChartIdList[node.id] = node.chartType;
                 if (Array.isArray(value)) {
@@ -79,7 +82,7 @@ module.exports = function(RED) {
                         converted.updatedValues = [];
                         return converted;
                     }
-                    //if ((node.newStyle) && !value[0].hasOwnProperty("key")) {
+                    // New style
                     if (!value[0].hasOwnProperty("key")) {
                         if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
                             if (node.chartType === "line") {
@@ -111,6 +114,7 @@ module.exports = function(RED) {
                             value = oldValue;
                         }
                     }
+                    // Old style
                     else {
                         if (node.chartType !== "line") {
                             var nb = { series:[], data:[], labels:[] };
@@ -147,7 +151,8 @@ module.exports = function(RED) {
                     converted.newPoint = true;
                     var label = msg.label || " ";
                     var series = msg.series || msg.topic || "";
-                    if (node.chartType === "bar" || node.chartType === "horizontalBar") {
+                    //if (node.chartType === "bar" || node.chartType === "horizontalBar" || node.chartType === "pie") {
+                    if (node.chartType !== "line") {
                         if (!node.newStyle || !msg.series) {
                             label = msg.topic || msg.label || " ";
                             series = msg.series || "";
@@ -226,22 +231,6 @@ module.exports = function(RED) {
                     }
                     converted.update = true;
                     converted.updatedValues = oldValue;
-                    // }
-                    // else { // Polar chart
-                    //     for (var p=0; p<oldValue[0].values.labels.length; p++) {
-                    //         if (oldValue[0].values.labels[p] === msg.topic || msg.label) {
-                    //             oldValue[0].values.data[p] = value;
-                    //             found = true;
-                    //             break;
-                    //         }
-                    //     }
-                    //     if (!found) {
-                    //         oldValue[0].values.labels.push(msg.topic || msg.label);
-                    //         oldValue[0].values.data.push(value);
-                    //     }
-                    //     converted.update = true;
-                    //     converted.updatedValues = oldValue;
-                    // }
                 }
                 return converted;
             }

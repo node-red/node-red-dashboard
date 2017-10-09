@@ -15,7 +15,8 @@ angular.module('ui').directive('uiComponent', ['$http', '$compile', '$templateCa
                 ctrl.init();
             }
         };
-    }]);
+    }
+]);
 
 angular.module('ui').directive('includeReplace', function () {
     return {

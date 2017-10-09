@@ -166,6 +166,8 @@
     <i>(e.g. 'check', 'close')</i> or <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
     <p>The widget can be updated by an incoming <code>msg.payload</code> with the specified values,
     that must also match the type of the input (number, string, etc).</p>
-    <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
-    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>If a <b>Topic</b> is specified, it will be added to the output as <code>msg.topic</code>.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the switch output.</p>
 </script>

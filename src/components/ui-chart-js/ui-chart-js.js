@@ -13,7 +13,16 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var type = scope.$eval('me.item.look');
                     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
                     var useOneColor = scope.$eval('me.item.useOneColor');
-                    scope.config = loadConfiguration(type, scope);
+
+                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata'], function (newValue) {
+                        scope.config = loadConfiguration(type, scope);
+                    });
+
+                    scope.$watch('me.item.look', function (newValue) {
+                        if ((type === "line") || (newValue === "line")) { delete scope.config; }
+                        type = newValue;
+                        scope.config = loadConfiguration(type, scope);
+                    });
 
                     // Chart.Tooltip.positioners = {};
                     // Chart.Tooltip.positioners.cursor = function(chartElements, coordinates) {
@@ -51,8 +60,11 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     // When new values arrive, update the chart
                     scope.$watch('me.item.value', function (newValue) {
                         if (newValue !== undefined && newValue.length > 0) {
-                            scope.config.nodata = false;
                             newValue = newValue[0];
+                            if (!scope.hasOwnProperty("config")) {
+                                scope.config = loadConfiguration(type, scope);
+                            }
+                            scope.config.nodata = false;
 
                             // Updating line charts push to the data arrays
                             if (type === 'line' && newValue.update) {
@@ -84,9 +96,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                         delete scope.config.options.scales.xAxes[0].type;
                                         delete scope.config.options.scales.xAxes[0].time;
                                     }
-                                    else {
-                                        scope.config = loadConfiguration(type, scope);
-                                    }
                                 }
                                 if ((type === "bar") || (type === "horizontalBar")) {
                                     if (useOneColor || (newValue.values.series.length > 1)) {
@@ -104,8 +113,8 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         }
                         else {
                             // Reset config and clear data
+                            delete scope.config;
                             scope.config = loadConfiguration(type, scope);
-                            scope.config.nodata = true;
                         }
                     });
                 }, 0);
@@ -122,11 +131,15 @@ function loadConfiguration(type,scope) {
     var xFormat = scope.$eval('me.item.xformat');
     var showDot = scope.$eval('me.item.dot');
     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
-    var config = {};
+    var config = scope.config || {};
     var themeState = scope.$eval('me.item.theme.themeState');
-    config.data = [];
-    config.series = [];
-    config.labels = [];
+    var useOneColor = scope.$eval('me.item.useOneColor');
+    if (!scope.config) {
+        config.data = [];
+        config.series = [];
+        config.labels = [];
+        config.nodata = true;
+    }
     config.options = {
         animation: false,
         spanGaps: true,
@@ -142,7 +155,7 @@ function loadConfiguration(type,scope) {
 
     //Build colours array
     var colours = [];
-    if (type === 'line') {
+    if ((type === 'line') || useOneColor === true) {
         baseColours.forEach(function(colour, index) {
             colours.push({
                 backgroundColor: colour,
@@ -152,7 +165,7 @@ function loadConfiguration(type,scope) {
         config.colours = colours;
         lineColours = colours;
     }
-    else if ((type === 'bar') || (type === 'horizontalBar')) {
+    else if ((type === 'bar') || (type === 'horizontalBar') || (type === 'pie')) {
         baseColours.forEach(function(colour, index) {
             colours.push({
                 backgroundColor: baseColours,
@@ -252,6 +265,11 @@ function loadConfiguration(type,scope) {
     else if ((type === 'bar') || (type === 'horizontalBar')) {
         config.options.scales.xAxes = [{}];
         if (isNaN(yMin)) { yMin = 0; }
+    }
+    else if (type === "radar") {
+        config.options.scale = {ticks:{}};
+        if (!isNaN(yMin)) { config.options.scale.ticks.min = yMin; }
+        if (!isNaN(yMax)) { config.options.scale.ticks.max = yMax; }
     }
 
     // Configure scales

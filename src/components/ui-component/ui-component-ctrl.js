@@ -53,9 +53,16 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             if (me.item.value < me.item.max) {
                                 me.item.value = Math.round(Math.min(me.item.value + delta, me.item.max)*10000)/10000;
                             }
-                        } else if (delta < 0) {
+                            if (me.item.value < me.item.min) {
+                                me.item.value = me.item.min;
+                            }
+                        }
+                        else if (delta < 0) {
                             if (me.item.value > me.item.min) {
                                 me.item.value = Math.round(Math.max(me.item.value + delta, me.item.min)*10000)/10000;
+                            }
+                            if (me.item.value > me.item.max) {
+                                me.item.value = me.item.max;
                             }
                         }
                     };
@@ -137,8 +144,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     if (me.item.ddd !== undefined) {
                         if (typeof me.item.ddd === "string") {
                             me.item.ddd = new Date(me.item.ddd);
-                            //var b = me.item.ddd.split(/\D+/);
-                            //me.item.ddd = new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
                         }
                     }
                     me.processInput = function (msg) {

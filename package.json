@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.5.1",
+    "version": "2.6.0-beta",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -51,7 +51,7 @@
     }
   },
   "dependencies": {
-    "serve-static": "^1.11.2",
+    "serve-static": "^1.13.0",
     "socket.io": "^1.7.4"
   },
   "devDependencies": {
@@ -74,6 +74,7 @@
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-clean-css": "^3.0.4",
     "gulp-concat": "^2.6.1",
+    "gulp-eol": "^0.1.2",
     "gulp-header": "^1.8.8",
     "gulp-html-replace": "^1.6.2",
     "gulp-html-src": "^1.0.0",

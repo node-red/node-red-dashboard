@@ -1,4 +1,10 @@
 
+### 2.6.0-beta: Milestone Release
+
+**Enhancements**
+
+ - Let widgets have properties set by `msg.ui_control` object - Issue #235
+
 ### 2.5.1: Maintenance Release
 
 **Fixes**

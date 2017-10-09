@@ -8,7 +8,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
             templateUrl: 'components/ui-gauge/ui-gauge.html',
             link: function(scope, element, attrs) {
                 $timeout(function() {
-                    var gauge, bgnd, fgnd;
+                    var gauge, bgnd, fgnd, unreg, unregtype;
                     var theme = scope.$eval('main.selectedTab.theme.name') || "theme-light";
                     var themeState = scope.$eval('main.selectedTab.theme.themeState');
                     if (themeState) {
@@ -30,95 +30,118 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         }
                     }
 
-                    // Wave type gauge
-                    if (scope.$eval('me.item.gtype') === 'wave') {
-                        var gaugeConfig = liquidFillGaugeDefaultSettings();
-                        gaugeConfig.minValue = scope.$eval('me.item.min');
-                        gaugeConfig.maxValue = scope.$eval('me.item.max');
-                        gaugeConfig.units = scope.$eval('me.item.units');
-                        gaugeConfig.textVertPosition = 0.33;
-                        gaugeConfig.waveHeight = 0.09;
-                        //gaugeConfig.waveAnimateTime = 10000;
-                        gaugeConfig.waveRise = false;
-                        gaugeConfig.displayPercent = false;
-                        // TODO - Opinionated colours - should be moved to themes
-                        var opts = scope.$eval('me.item.waveoptions');
-                        gaugeConfig.circleColor = opts.circleColor[theme];
-                        gaugeConfig.waveColor = opts.waveColor[theme];
-                        gaugeConfig.textColor = opts.textColor[theme];
-                        gaugeConfig.waveTextColor = opts.waveTextColor[theme];
-                        if (gaugeConfig.circleColor === undefined) { gaugeConfig.circleColor = bgnd; }
-                        if (gaugeConfig.waveColor === undefined) { gaugeConfig.waveColor = bgnd; }
-                        if (gaugeConfig.textColor === undefined) { gaugeConfig.textColor = fgnd; }
-                        if (gaugeConfig.waveTextColor === undefined) { gaugeConfig.waveTextColor = fgnd; }
-                        gauge = loadLiquidFillGauge("gauge"+scope.$eval('$id'), scope.$eval('me.item.value'), gaugeConfig);
+                    scope.$watch('me.item.gtype', function() {
+                        if (unregtype) { unregtype(); }
+                        // Wave type gauge
+                        if (scope.$eval('me.item.gtype') === 'wave') {
+                            document.getElementById("gauge_"+scope.$eval('$id')).innerHTML = '<svg id="gauge'+scope.$eval("$id")+'" width="100%" height="100%"></svg>';
+                            unregtype = scope.$watchGroup(['me.item.min','me.item.max','me.item.units','me.item.waveoptions','me.item.options'], function() {
+                                if (unreg) { unreg(); }
+                                var gaugeConfig = liquidFillGaugeDefaultSettings();
+                                gaugeConfig.minValue = scope.$eval('me.item.min');
+                                gaugeConfig.maxValue = scope.$eval('me.item.max');
+                                gaugeConfig.units = scope.$eval('me.item.units');
+                                gaugeConfig.textVertPosition = 0.33;
+                                gaugeConfig.waveHeight = 0.09;
+                                //gaugeConfig.waveAnimateTime = 10000;
+                                gaugeConfig.waveRise = false;
+                                gaugeConfig.waveCount = 2;
+                                gaugeConfig.displayPercent = false;
+                                var opts = scope.$eval('me.item.waveoptions');
+                                gaugeConfig.circleColor = opts.circleColor[theme];
+                                gaugeConfig.waveColor = opts.waveColor[theme];
+                                gaugeConfig.textColor = opts.textColor[theme];
+                                gaugeConfig.waveTextColor = opts.waveTextColor[theme];
+                                if (gaugeConfig.circleColor === undefined) { gaugeConfig.circleColor = bgnd; }
+                                if (gaugeConfig.waveColor === undefined) { gaugeConfig.waveColor = bgnd; }
+                                if (gaugeConfig.textColor === undefined) { gaugeConfig.textColor = fgnd; }
+                                if (gaugeConfig.waveTextColor === undefined) { gaugeConfig.waveTextColor = fgnd; }
 
-                        scope.$watch('me.item.value', function (newValue) {
-                            gauge.update(newValue);
-                        });
-                    }
-                    // Justgage type gauges
-                    else {
-                        var gaugeOptions = {
-                            id: 'gauge_' + scope.$eval('$id'),
-                            value: scope.$eval('me.item.value'),
-                            min: scope.$eval('me.item.min'),
-                            max: scope.$eval('me.item.max'),
-                            hideMinMax: scope.$eval('me.item.hideMinMax'),
-                            levelColors: scope.$eval('me.item.colors'),
-                            valueMinFontSize: 12,
-                            minLabelMinFontSize: 8,
-                            labelMinFontSize: 8,
-                            titleFontFamily: "inherit",
-                            valueFontFamily: "inherit",
-                            //title: scope.$eval('me.item.title'),
-                            label: scope.$eval('me.item.units'),
-                            pointer: true,
-                            relativeGaugeSize: true,
-                            textRenderer: function(v) {
-                                return scope.$eval('me.item.getText()');
-                            }
+                                if (scope.$eval('me.item.options') !== null) {
+                                    Object.assign(gaugeConfig, scope.$eval('me.item.options'));
+                                }
+                                gauge = loadLiquidFillGauge("gauge"+scope.$eval('$id'), scope.$eval('me.item.value'), gaugeConfig);
+                                unreg = scope.$watch('me.item.value', function(newValue) {
+                                    gauge.update(newValue);
+                                });
+                            });
                         }
-                        if (scope.$eval('me.item.gtype') === 'donut') {
-                            gaugeOptions.donut = true;
-                            //gaugeOptions.donutStartAngle = 270;
-                            gaugeOptions.pointer = false;
-                        }
-
-                        if (gaugeOptions.gaugeWidthScale === undefined) { delete gaugeOptions.gaugeWidthScale; }
-                        if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = "rgba(127,127,127,0.5)"; }
-                        if (gaugeOptions.pointerOptions === undefined) { gaugeOptions.pointerOptions = {color:tgnd}; }
-
-                        if (scope.$eval('me.item.gtype') === 'compass') {
-                            gaugeOptions.donut = true;
-                            gaugeOptions.gaugeWidthScale = 0.2;
-                            gaugeOptions.pointer = true;
-                            gaugeOptions.refreshAnimationTime = 5;
-                            // gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:scope.$eval('me.item.gageoptions.compassColor')};
-                            gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:undefined};
-                            gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor[theme]');
-                            gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor[theme]')];
-                            if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = fgnd; }
-                            if (gaugeOptions.pointerOptions.color === undefined) { gaugeOptions.pointerOptions.color = fgnd; }
-                        }
+                        // Justgage type gauges
                         else {
-                            var cust = scope.$eval('me.item.gageoptions.customrange');
-                            if (cust !== undefined) {
-                                gaugeOptions.customSectors = cust;
-                                gaugeOptions.noGradient = true;
-                            }
-                        }
+                            unregtype = scope.$watchGroup(['me.item.min','me.item.max','me.item.seg1','me.item.seg2','me.item.colors','me.item.options'], function() {
+                                if (unreg) { unreg(); }
+                                document.getElementById("gauge_"+scope.$eval('$id')).innerHTML = "";
+                                var gaugeOptions = {
+                                    id: 'gauge_' + scope.$eval('$id'),
+                                    value: scope.$eval('me.item.value'),
+                                    min: scope.$eval('me.item.min'),
+                                    max: scope.$eval('me.item.max'),
+                                    hideMinMax: scope.$eval('me.item.hideMinMax'),
+                                    levelColors: scope.$eval('me.item.colors'),
+                                    valueMinFontSize: 12,
+                                    minLabelMinFontSize: 8,
+                                    labelMinFontSize: 8,
+                                    titleFontFamily: "inherit",
+                                    valueFontFamily: "inherit",
+                                    //title: scope.$eval('me.item.title'),
+                                    label: scope.$eval('me.item.units'),
+                                    pointer: true,
+                                    relativeGaugeSize: true,
+                                    textRenderer: function(v) {
+                                        return scope.$eval('me.item.getText()');
+                                    }
+                                }
+                                if (scope.$eval('me.item.gtype') === 'donut') {
+                                    gaugeOptions.donut = true;
+                                    //gaugeOptions.donutStartAngle = 270;
+                                    gaugeOptions.pointer = false;
+                                }
 
-                        gauge = new JustGage(gaugeOptions);
-                        scope.$watch('me.item.value', function (newValue) {
-                            if (scope.$eval('me.item.gtype') === 'compass') {
-                                var r = gaugeOptions.max - gaugeOptions.min;
-                                newValue = newValue % r;
-                                if (newValue < 0) { newValue += r; }
-                            }
-                            gauge.refresh(newValue);
-                        });
-                    }
+                                if (gaugeOptions.gaugeWidthScale === undefined) { delete gaugeOptions.gaugeWidthScale; }
+                                if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = "rgba(127,127,127,0.5)"; }
+                                if (gaugeOptions.pointerOptions === undefined) { gaugeOptions.pointerOptions = {color:tgnd}; }
+
+                                if (scope.$eval('me.item.gtype') === 'compass') {
+                                    gaugeOptions.donut = true;
+                                    gaugeOptions.gaugeWidthScale = 0.2;
+                                    gaugeOptions.pointer = true;
+                                    gaugeOptions.refreshAnimationTime = 5;
+                                    // gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:scope.$eval('me.item.gageoptions.compassColor')};
+                                    gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:undefined};
+                                    gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor[theme]');
+                                    gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor[theme]')];
+                                    if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = fgnd; }
+                                    if (gaugeOptions.pointerOptions.color === undefined) { gaugeOptions.pointerOptions.color = fgnd; }
+                                }
+                                else {
+                                    var seg1 = scope.$eval('me.item.seg1');
+                                    var seg2 = scope.$eval('me.item.seg2');
+                                    if ((!isNaN(parseFloat(seg1))) && (!isNaN(parseFloat(seg2)))) {
+                                        var colors = scope.$eval('me.item.colors');
+                                        gaugeOptions.customSectors = [
+                                            { color : colors[0], lo : gaugeOptions.min, hi : seg1 },
+                                            { color : colors[1], lo : seg1, hi : seg2 },
+                                            { color : colors[2], lo : seg2, hi : gaugeOptions.max }
+                                        ]
+                                        gaugeOptions.levelColorsGradient = false;
+                                    }
+                                }
+                                if (scope.$eval('me.item.options') !== null) {
+                                    Object.assign(gaugeOptions, scope.$eval('me.item.options'));
+                                }
+
+                                gauge = new JustGage(gaugeOptions);
+                                unreg = scope.$watch('me.item.value', function(newValue) {
+                                    if (scope.$eval('me.item.gtype') === 'compass') {
+                                        var r = gaugeOptions.max - gaugeOptions.min;
+                                        newValue = newValue % r;
+                                        if (newValue < 0) { newValue += r; }
+                                    }
+                                    gauge.refresh(newValue);
+                                });
+                            });
+                        }
+                    });
                 }, 0);
             }
         }
