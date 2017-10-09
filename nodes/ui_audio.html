@@ -32,7 +32,7 @@
                     var option = document.createElement('option');
                     option.textContent = i + " : " + voices[i].name + ' (' + voices[i].lang + ')';
                     if (voices[i].default) { option.textContent += ' -- DEFAULT'; }
-                    option.setAttribute('value', i);
+                    option.setAttribute('value', voices[i].lang);
                     document.getElementById("node-input-voice").appendChild(option);
                 }
                 $('#node-input-voice').val(this.voice || 0);

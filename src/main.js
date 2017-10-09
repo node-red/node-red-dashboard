@@ -45,6 +45,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.allowSwipe = false;
         var main = this;
         var audiocontext;
+        var voices = [];
         var tabId = 0;
 
         function moveTab(d) {
@@ -245,6 +246,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             $('meta[name=apple-mobile-web-app-title]').attr('content', name || "Node-RED");
 
             var prevTabIndex = parseInt($location.path().substr(1));
+            if ('speechSynthesis' in window) {
+                voices = window.speechSynthesis.getVoices();
+                window.speechSynthesis.onvoiceschanged = function() {
+                    voices = window.speechSynthesis.getVoices();
+                }
+            }
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
                     main.selectedTab.theme.themeState["widget-borderColor"] = main.selectedTab.theme.themeState["widget-borderColor"] || main.selectedTab.theme.themeState["group-backgroundColor"];
@@ -448,13 +455,22 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (totab != parseInt($location.path().substr(1))) { return; }
             }
             if (msg.hasOwnProperty("tts")) {
-                if ('speechSynthesis' in window) {
-                    var voices = window.speechSynthesis.getVoices();
+                if (voices.length > 0) {
                     var words = new SpeechSynthesisUtterance(msg.tts);
-                    words.voice = voices[msg.voice];
+                    for (var v=0; v<voices.length; v++) {
+                        if (voices[v].lang === msg.voice) {
+                            words.voice = voices[v];
+                            break;
+                        }
+                    }
                     window.speechSynthesis.speak(words);
                 }
-                else { console.log("Your Browser does not support Text-to-Speech"); }
+                else {
+                    console.log("Your Browser does not support Text-to-Speech");
+                    var toastScope = $rootScope.$new();
+                    toastScope.toast = {message:msg.tts, title:"Computer says..."};
+                    $mdToast.show({ scope:toastScope, position:'top right', templateUrl:'partials/toast.html' });
+                }
             }
             if (msg.hasOwnProperty("audio")) {
                 if (!window.hasOwnProperty("AudioContext")) {
