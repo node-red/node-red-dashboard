@@ -247,6 +247,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
             var prevTabIndex = parseInt($location.path().substr(1));
             if ('speechSynthesis' in window) {
+                voices = window.speechSynthesis.getVoices();
                 window.speechSynthesis.onvoiceschanged = function() {
                     voices = window.speechSynthesis.getVoices();
                 }
@@ -456,7 +457,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (msg.hasOwnProperty("tts")) {
                 if (voices.length > 0) {
                     var words = new SpeechSynthesisUtterance(msg.tts);
-                    words.voice = voices[msg.voice];
+                    for (var v=0; v<voices.length; v++) {
+                        if (voices[v].lang === msg.voice) {
+                            words.voice = voices[v];
+                            break;
+                        }
+                    }
                     window.speechSynthesis.speak(words);
                 }
                 else {
