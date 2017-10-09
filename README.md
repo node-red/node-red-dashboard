@@ -59,9 +59,12 @@ Group labels are optional.
 
 Most widgets can have a label and value - both of these can be specified by properties of the incoming msg if required, and modified by angular filters. For example the label can be set to `{{msg.topic}}`, or the value could be set to `{{value | number:1}}%` to round the value to one decimal place and append a % sign.
 
-**Note**: Each node may parse the `msg.payload` to make it suitable for display. This converted version is exposed as the variable called `value`, (see example above).  
+Each node may parse the `msg.payload` to make it suitable for display. This converted version is exposed as the variable called `value`, (see example above).  
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
+
+Most ui widgets can also be configured by using a `msg.ui_control` message - see **[config-fields.md](https://github.com/node-red/node-red-dashboard/blob/master/config-fields.md)**
+for futher details.
 
   - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.
   - **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
