@@ -148,7 +148,6 @@ function add(opt) {
                 }
             }
             if (Object.keys(changed).length !== 0) {
-                //updateUi();  // the flashing may deter people doing it all the time :-)
                 io.emit('ui-control', {control:changed, id:opt.node.id});
             }
             if (!msg.hasOwnProperty("payload")) { return; }

@@ -37,7 +37,9 @@ module.exports = function(RED) {
                 xformat : config.xformat || "HH:mm:ss",
                 cutout: parseInt(config.cutout || 0),
                 colors: config.colors,
-                useOneColor: config.useOneColor || false
+                useOneColor: config.useOneColor || false,
+                animation: false,
+                spanGaps: false
             },
             convertBack: function(data) {
                 if (node.newStyle) {
@@ -146,8 +148,10 @@ module.exports = function(RED) {
                     converted.updatedValues = value;
                 }
                 else {
-                    value = parseFloat(value);                      // only handle numbers
-                    if (isNaN(value)) { return; }                   // return if not a number
+                    if (value !== null) {                               // let null object through for gaps
+                        value = parseFloat(value);                      // only handle numbers
+                        if (isNaN(value)) { return; }                   // return if not a number
+                    }
                     converted.newPoint = true;
                     var label = msg.label || " ";
                     var series = msg.series || msg.topic || "";

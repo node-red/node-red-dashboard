@@ -141,8 +141,8 @@ function loadConfiguration(type,scope) {
         config.nodata = true;
     }
     config.options = {
-        animation: false,
-        spanGaps: true,
+        animation: scope.$eval('me.item.animation'),
+        spanGaps: scope.$eval('me.item.spanGaps'),
         scales: {},
         legend: false,
         responsive: true,
@@ -338,5 +338,6 @@ function loadConfiguration(type,scope) {
             config.options.legend.labels.fontColor = themeState['widget-textColor'].value;
         }
     }
+    
     return config;
 }
