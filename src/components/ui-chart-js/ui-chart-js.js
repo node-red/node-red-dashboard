@@ -14,7 +14,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
                     var useOneColor = scope.$eval('me.item.useOneColor');
 
-                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata'], function (newValue) {
+                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps'], function (newValue) {
                         scope.config = loadConfiguration(type, scope);
                     });
 
@@ -338,6 +338,6 @@ function loadConfiguration(type,scope) {
             config.options.legend.labels.fontColor = themeState['widget-textColor'].value;
         }
     }
-    
+
     return config;
 }

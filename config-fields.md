@@ -23,6 +23,8 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 |                       |cutout             |number     |&nbsp;
 |                       |colors             |object     | n/a
 |                       |useOneColor        |boolean    | n/a
+|                       |spanGaps           |boolean    | n/a
+|                       |animation          |string     | (Note 1), {duration:1000, easing:"easeInOutSine"}
 |ui_colour_picker       |format             |string     | on refresh
 |                       |showPicker         |boolean    | on refresh
 |                       |showSwatch         |boolean    | on refresh
@@ -37,7 +39,7 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 |                       |seg2               |number     |segment 2 limit
 |                       |max                |number     |&nbsp;
 |                       |colors             |array      |["blue","#00ff00","#f00"]
-|                       |options            |object     |(see Note 1 below)
+|                       |options            |object     |(see Note 2 below)
 |ui_numeric             |min                |number     |&nbsp;
 |                       |max                |number     |&nbsp;
 |                       |step               |number     |&nbsp;
@@ -58,7 +60,9 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 
 **Notes**:
 
- 1. The gauge options can accept any of the [Justgage parameters](https://github.com/toorshia/justgage/blob/master/justgage.js#L42) for example:
+ 1. See http://easings.net/ for examples of easings for chart animation.
+
+ 2. The gauge options can accept any of the [Justgage parameters](https://github.com/toorshia/justgage/blob/master/justgage.js#L42) for example:
 
          {"options":{"pointer":false,"gaugeWidthScale":1.5}}
          {"options":{"pointer":true,"gaugeWidthScale":0.4,"reverse":true}}
