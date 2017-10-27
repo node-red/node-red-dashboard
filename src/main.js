@@ -265,6 +265,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 }
                 $mdToast.hide();
                 processGlobals();
+                events.emit('ui-change', prevTabIndex);
                 done();
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length) {
