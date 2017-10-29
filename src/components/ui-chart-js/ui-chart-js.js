@@ -11,7 +11,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
             link: function(scope, element, attrs) {
                 $timeout(function() {
                     var type = scope.$eval('me.item.look');
-                    var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
                     var useOneColor = scope.$eval('me.item.useOneColor');
 
                     scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps'], function (newValue) {
@@ -98,7 +97,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     }
                                 }
                                 if ((type === "bar") || (type === "horizontalBar")) {
-                                    if (useOneColor || (newValue.values.series.length > 1)) {
+                                    if ((newValue.values.series.length > 1) || useOneColor) {
                                         scope.config.colours = lineColours;
                                     }
                                     else { scope.config.colours = barColours; }
@@ -154,31 +153,20 @@ function loadConfiguration(type,scope) {
     }
 
     //Build colours array
-    var colours = [];
-    if ((type === 'line') || useOneColor === true) {
-        baseColours.forEach(function(colour, index) {
-            colours.push({
-                backgroundColor: colour,
-                borderColor: colour
-            });
+    config.colours = config.colours || baseColours;
+    barColours = [];
+    lineColours = [];
+    baseColours.forEach(function(colour, index) {
+        lineColours.push({
+            backgroundColor: colour,
+            borderColor: colour
         });
-        config.colours = colours;
-        lineColours = colours;
-    }
-    else if ((type === 'bar') || (type === 'horizontalBar') || (type === 'pie')) {
-        baseColours.forEach(function(colour, index) {
-            colours.push({
-                backgroundColor: baseColours,
-                borderColor: "#888",
-                borderWidth: 1
-            });
+        barColours.push({
+            backgroundColor: baseColours,
+            borderColor: "#888",
+            borderWidth: 1
         });
-        config.colours = colours;
-        barColours = colours;
-    }
-    else {
-        config.colours = baseColours;
-    }
+    });
 
     // Configure axis
     if (type === 'line') {
