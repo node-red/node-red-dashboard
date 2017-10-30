@@ -10,6 +10,7 @@
 
  - Fix TTS to pick correct voice at start  - Issue #291
  - Fix TTS to try to select similar voice across different browsers - Issue #292
+ - Fix chart colours to re-initialise correctly on refresh - Issue #296
 
 ### 2.5.1: Maintenance Release
 

@@ -104,11 +104,6 @@ module.exports = function(RED) {
                                     value[0].labels = tmp2;
                                 }
                             }
-                            // else if (node.chartType === "pie") {
-                            //     var tmp3 = value[0].series;
-                            //     value[0].series = value[0].labels;
-                            //     value[0].labels = tmp3;
-                            // }
                             value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
                         }
                         else {
