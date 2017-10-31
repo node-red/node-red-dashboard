@@ -331,7 +331,6 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-change', function(index) {
             var name = "";
-            var tl = menu.length;
             if (index && menu.length > 0 && index <= menu.length) {
                 name = menu[index].header === undefined ? menu[index].name : menu[index].header;
             }
