@@ -1,4 +1,10 @@
 
+### 2.6.2: Maintenance Release
+
+**Fixes**
+
+ - Fix problem with partial deploy - Issue #279
+
 ### 2.6.1: Maintenance Release
 
 **Fixes**

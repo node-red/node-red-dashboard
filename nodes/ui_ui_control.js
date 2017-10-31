@@ -13,20 +13,25 @@ module.exports = function(RED) {
             }
         });
 
-        ui.ev.on('newsocket', function(id, ip) {
+        var sendconnect = function(id, ip) {
             node.send({payload:"connect", socketid:id, socketip:ip});
-        });
+        };
+        ui.ev.on('newsocket', sendconnect);
 
-        ui.ev.on('endsocket', function(id, ip) {
+        var sendlost = function(id, ip) {
             node.send({payload:"lost", socketid:id, socketip:ip});
-        });
+        };
+        ui.ev.on('endsocket', sendlost);
 
-        ui.ev.on('changetab', function(index, name, id, ip) {
+        var sendchange = function(index, name, id, ip) {
             node.send({payload:"change", tab:index, name:name, socketid:id, socketip:ip});
-        });
+        }
+        ui.ev.on('changetab', sendchange);
 
         this.on('close', function() {
-            ui.ev.removeAllListeners();
+            ui.ev.removeListener(sendconnect);
+            ui.ev.removeListener(sendlost);
+            ui.ev.removeListener(sendchange);
         })
     }
     RED.nodes.registerType("ui_ui_control", UiControlNode);

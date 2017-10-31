@@ -235,11 +235,13 @@ module.exports = function(RED) {
             }
         };
 
-        ui.ev.on('changetab', function() {
+        var chgtab = function() {
             node.receive({payload:"R"});
-        });
+        };
+        ui.ev.on('changetab', chgtab);
 
         var done = ui.add(options);
+
         setTimeout(function() {
             node.emit("input",{payload:"start"}); // trigger a redraw at start to flush out old data.
             if (node.wires.length === 2) { // if it's an old version of the node honour it
@@ -248,7 +250,7 @@ module.exports = function(RED) {
         }, 100);
 
         node.on("close", function() {
-            ui.ev.removeAllListeners();
+            ui.ev.removeListener(chgtab);
             done();
         })
     }
