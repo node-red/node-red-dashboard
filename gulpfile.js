@@ -36,8 +36,8 @@ gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
 // });
 
 gulp.task('manifest', ['build'], function() {
-    //gulp.src(['dist/*','dist/css/*','dist/js/*','dist/fonts/*','dist/font-awesome/*'], { base: 'dist/' })
-    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*'], { base: 'dist/' })
+    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*','dist/fonts/*'], { base: 'dist/' })
+    //gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*'], { base: 'dist/' })
     .pipe(manifest({
         hash: true,
         //preferOnline: true,

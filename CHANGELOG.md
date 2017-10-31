@@ -1,4 +1,11 @@
 
+### 2.6.1: Maintenance Release
+
+**Fixes**
+
+ - Fix "connection lost" on initial load - Issue #298
+
+
 ### 2.6.0: Milestone Release
 
 **Enhancements**

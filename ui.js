@@ -332,7 +332,7 @@ function init(server, app, log, redSettings) {
         socket.on('ui-change', function(index) {
             var name = "";
             var tl = menu.length;
-            if (tl > 0 && index <= tl) {
+            if (index && menu.length > 0 && index <= menu.length) {
                 name = menu[index].header === undefined ? menu[index].name : menu[index].header;
             }
             ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
