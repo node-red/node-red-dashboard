@@ -1,4 +1,5 @@
 {
+    //"undef": true,      // require all non-globals to be declared
     "asi": true,        // allow missing semicolons
     "curly": true,      // require braces
     "eqnull": true,     // ignore ==null

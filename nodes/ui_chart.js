@@ -242,7 +242,7 @@ module.exports = function(RED) {
 
         var done = ui.add(options);
 
-        setTimeout(function() {
+        var st = setTimeout(function() {
             node.emit("input",{payload:"start"}); // trigger a redraw at start to flush out old data.
             if (node.wires.length === 2) { // if it's an old version of the node honour it
                 node.send([null, {payload:"restore", for:node.id}]);
@@ -250,7 +250,7 @@ module.exports = function(RED) {
         }, 100);
 
         node.on("close", function() {
-            ui.ev.removeListener(chgtab);
+            ui.ev.removeListener('changetab', chgtab);
             done();
         })
     }

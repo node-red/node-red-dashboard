@@ -29,9 +29,9 @@ module.exports = function(RED) {
         ui.ev.on('changetab', sendchange);
 
         this.on('close', function() {
-            ui.ev.removeListener(sendconnect);
-            ui.ev.removeListener(sendlost);
-            ui.ev.removeListener(sendchange);
+            ui.ev.removeListener('newsocket', sendconnect);
+            ui.ev.removeListener('endsocket', sendlost);
+            ui.ev.removeListener('changetab', sendchange);
         })
     }
     RED.nodes.registerType("ui_ui_control", UiControlNode);
