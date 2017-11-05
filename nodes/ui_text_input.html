@@ -58,7 +58,11 @@
             <option value="text">text input</option>
             <option value="email">email address</option>
             <option value="password">password</option>
+            <option value="tel">telephone input</option>
             <option value="color">color picker</option>
+            <option value="time">time picker</option>
+            <option value="week">week picker</option>
+            <option value="month">month picker</option>
         </select>
         <label for="node-input-delay" style="text-align:right; width:100px"><i class="fa fa-clock-o"></i> Delay (ms)</label>
         <input type="text" style="width:58px" id="node-input-delay">
@@ -87,11 +91,14 @@
 
 <script type="text/x-red" data-help-name="ui_text_input">
   <p>Adds a text input field to the user interface. Mode can be regular text, email or color picker.</p>
-  <p>Text written by the user is sent in realtime as the <code>msg.payload</code>. You can also
+  <p>Any input is sent as <code>msg.payload</code> automatically. You can also
   preset the text of the input field by sending in a <code>msg.payload</code>.</p>
   <p>The <b>Delay</b> <i>(default : 300ms)</i> sets the amount of time in milliseconds before the output is sent.
   Setting to <code>0</code> waits for "Enter" or "Tab" key to send.</p>
   <p>The email mode will color in red if it is not a valid address and will return undefined.</p>
+  <p>The time input type returns a number of milliseconds from midnight.</p>
+  <p>Not all browsers support the <i>week</i> and <i>month</i> input types, and may return <i>undefined</i>.
+  Please test your target browser(s) before use.</p>
   <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
   <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
 </script>
