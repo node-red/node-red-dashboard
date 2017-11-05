@@ -98,7 +98,6 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 }
 
                 case 'colour-picker': {
-                    me.item.me = me;
                     if ((me.item.width < 4) || (!me.item.showValue && !me.item.showPicker)) {
                         me.item.showPicker = false;
                         me.item.showValue = false;
@@ -137,6 +136,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             me.api = api;
                         }
                     }
+                    $scope.$watch('me.item.value', function() {
+                        if (me.item.dynOutput === "true") { me.valueChanged(20); }
+                    });
                     break;
                 }
 

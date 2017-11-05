@@ -13,6 +13,7 @@
             showValue: {value: false},
             showAlpha: {value: false},
             showLightness: {value: true},
+            dynOutput: {value: "false"},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
                     var width = v||0;
@@ -102,11 +103,15 @@
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When changed, send: </label>
+        <label for="node-input-dynOutput"><i class="fa fa-envelope-o"></i> Send</label>
+        <select id="node-input-dynOutput" style="width:60%">
+            <option value="false">one value when released/closed</option>
+            <option value="true">multiple values during editing</option>
+        </select>
     </div>
     <div class="form-row">
-        <label style="padding-left:25px; margin-right:-25px">Payload</label>
-        <select id="node-input-outformat">
+        <label for="node-input-outformat" style="padding-left: 25px; margin-right: -25px">Payload</label>
+        <select id="node-input-outformat" style="width:60%">
             <option value="string">current value as a string</option>
             <option value="object">current value as an object</option>
         </select>
