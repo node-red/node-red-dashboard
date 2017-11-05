@@ -4,6 +4,12 @@
 **Fixes**
 
  - Fix problem with partial deploy - Issue #279
+ - Remove `msg.` option from Button as makes no sense without node context - Issue #301
+
+**Enhancements**
+
+ - Add time option to text input widget.
+ - Let colour picker optionally send outputs as they change - Issue #299
 
 ### 2.6.1: Maintenance Release
 
