@@ -133,11 +133,6 @@ function add(opt) {
 
         // let any arriving msg.ui_control message mess with control parameters
         if (msg.ui_control && (typeof msg.ui_control === "object") && (!Array.isArray(msg.ui_control)) && (!Buffer.isBuffer(msg.ui_control) )) {
-            // if (settings.verbose) {
-            //     var p = opt.control;
-            //     delete p.order; delete p.id; delete p.name; delete p.value;
-            //     console.log("UI-OBJ",JSON.stringify(p));
-            // }
             var changed = {};
             for (var property in msg.ui_control) {
                 if (msg.ui_control.hasOwnProperty(property) && opt.control.hasOwnProperty(property)) {

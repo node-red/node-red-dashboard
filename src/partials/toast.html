@@ -1,6 +1,6 @@
 <md-toast layout="column" style="background-color:{{::toast.highlight}};">
     <div>
         <h3 ng-if="toast.title">{{::toast.title}}</h3>
-        <h4 flex>{{::toast.message}}</h4>
+        <h4 flex ng-bind-html="::toast.message | trusted"></h4>
     </div>
 </md-toast>
