@@ -91,6 +91,10 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             else {
                                 // Bar charts and non update line charts replace the data
                                 if (type === "line") {
+                                    scope.config = loadConfiguration(type, scope);
+                                    if (newValue.values.data[0][0] === undefined) {
+                                        newValue.values.data[0] = [null];
+                                    }
                                     if (!isNaN(newValue.values.data[0][0])) {
                                         delete scope.config.options.scales.xAxes[0].type;
                                         delete scope.config.options.scales.xAxes[0].time;

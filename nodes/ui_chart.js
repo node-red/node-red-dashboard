@@ -87,13 +87,15 @@ module.exports = function(RED) {
                     // New style
                     if (!value[0].hasOwnProperty("key")) {
                         if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
+                            var flag = true;
+                            for (var dd = 0; dd < value[0].data.length; dd++ ) {
+                                if (!isNaN(value[0].data[dd][0])) { flag = false; }
+                            }
                             if (node.chartType === "line") {
-                                if (isNaN(value[0].data[0][0])) {
-                                    delete value[0].labels;
-                                }
+                                if (flag) { delete value[0].labels; }
                             }
                             else if (node.chartType === "bar" || node.chartType === "horizontalBar") {
-                                if (isNaN(value[0].data[0][0])) {
+                                if (flag) {
                                     var tmp = [];
                                     for (var d=0; d<value[0].data.length; d++) {
                                         tmp.push([value[0].data[d]]);
