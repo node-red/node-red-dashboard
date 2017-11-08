@@ -93,7 +93,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 if (type === "line") {
                                     scope.config = loadConfiguration(type, scope);
                                     if (newValue.values.data[0][0] === undefined) {
-                                        newValue.values.data[0] = [null];
+                                        var flag = false;
+                                        for (var i=1; i < newValue.values.data.length; i++ ) {
+                                            if ((newValue.values.data[i][0]) && (newValue.values.data[i][0].hasOwnProperty("x"))) { flag = true; }
+                                        }
+                                        if (flag) { newValue.values.data[0] = [{x:null, y:null}]; }
+                                        else { newValue.values.data[0] = [null]; }
                                     }
                                     if (!isNaN(newValue.values.data[0][0])) {
                                         delete scope.config.options.scales.xAxes[0].type;

@@ -5,6 +5,7 @@
 
  - Fix problem with partial deploy - Issue #279
  - Remove `msg.` option from Button as makes no sense without node context - Issue #301
+ - Better handling of empty data series in chart data
 
 **Enhancements**
 
