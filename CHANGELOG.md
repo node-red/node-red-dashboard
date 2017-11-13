@@ -1,4 +1,10 @@
 
+### 2.6.3-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix tab to send data from text entry field - Issue #307
+
 ### 2.6.2: Maintenance Release
 
 **Fixes**

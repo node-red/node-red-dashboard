@@ -2,7 +2,7 @@
     <md-input-container class="md-block" flex md-is-error="false" ng-class="{'has-label':me.item.label}">
       <label ng-bind-html="me.item.getLabel()"></label>
       <input ng-model="me.item.value"
-             ng-keypress="me.keyPressed($event)"
+             ng-keydown="me.keyPressed($event)"
              aria-label="{{me.item.label}}"
              type="{{me.item.mode}}"
              style="z-index:1"/>

@@ -208,7 +208,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
         // will emit me.item.value when enter is pressed
         me.keyPressed = function (event) {
-            if ((event.charCode === 13) || (event.which === 13)) {
+            if ((event.charCode === 13) || (event.which === 13) || (event.which === 9) || (event.which === 9)) {
                 events.emit({ id:me.item.id, value:me.item.value });
             }
         }
