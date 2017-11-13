@@ -743,7 +743,7 @@
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
                 $('<label class="nr-db-theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="node-input-name" placeholder="profile name (not blank)">')
+                $('<input type="text" id="node-input-tname" placeholder="profile name (not blank)">')
                 .val("Untitled Theme 1")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {

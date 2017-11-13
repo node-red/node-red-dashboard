@@ -34,7 +34,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         if (unregtype) { unregtype(); }
                         // Wave type gauge
                         if (scope.$eval('me.item.gtype') === 'wave') {
-                            document.getElementById("gauge_"+scope.$eval('$id')).innerHTML = '<svg id="gauge'+scope.$eval("$id")+'" width="100%" height="100%"></svg>';
+                            document.getElementById("gauge_"+scope.$eval('$id')).innerHTML = '<svg id="gauge'+scope.$eval("$id")+'" style="width:100%; height:100%;"></svg>';
                             unregtype = scope.$watchGroup(['me.item.min','me.item.max','me.item.units','me.item.waveoptions','me.item.options'], function() {
                                 if (unreg) { unreg(); }
                                 var gaugeConfig = liquidFillGaugeDefaultSettings();
