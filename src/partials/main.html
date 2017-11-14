@@ -17,7 +17,7 @@
 </md-toolbar>
 <md-content flex>
     <div ui-masonry ng-show="main.selectedTab.header">
-        <ui-card-panel ng-repeat="group in main.selectedTab.items" id="{{group.header.name}}">
+        <ui-card-panel ng-repeat="group in main.selectedTab.items" id="{{main.selectedTab.header+'_'+group.header.name | spaceToUnderscore}}">
             <ui-component ng-repeat="control in group.items" item="control"></ui-component>
         </ui-card-panel>
     </div>
