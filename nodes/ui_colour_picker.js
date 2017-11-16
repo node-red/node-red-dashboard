@@ -40,12 +40,6 @@ module.exports = function(RED) {
                     if (node.format === 'rgb') { msg.payload = pay.toRgb(); }
                     if (node.format === 'hsl') { msg.payload = pay.toHsl(); }
                     if (node.format === 'hsv') { msg.payload = pay.toHsv(); }
-                    if (node.format === 'hex') { msg.payload = "#" + pay.toHex(); }
-                    if (node.format === 'hex8') { msg.payload = "#" + pay.toHex8(); }
-                }
-                else {
-                    if (node.format === 'hex') { msg.payload = "#" + msg.payload; }
-                    if (node.format === 'hex8') { msg.payload = "#" + msg.payload; }
                 }
                 msg.topic = config.topic || msg.topic;
             },
