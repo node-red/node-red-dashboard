@@ -75,7 +75,8 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
-            convert: function (payload, oldval) {
+            convert: function (payload, oldval, msg) {
+                if (config.matchtopic && msg.topic !== config.topic) { return oldval; }
                 var myOnValue,myOffValue;
 
                 if (onvalueType === "date") { myOnValue = Date.now(); }
