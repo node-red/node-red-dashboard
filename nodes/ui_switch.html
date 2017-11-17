@@ -18,6 +18,7 @@
             },
             height: {value: 0},
             passthru: {value: true},
+            matchtopic: {value: false},
             decouple: {value: "false"},
             topic: {value: ''},
             style: {value: ''},
@@ -125,6 +126,9 @@
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
+            <br/>
+        <label style="width:auto" for="node-input-matchtopic"><i class="fa fa-arrow-right"></i> Accept input <code>msg</code> only if its <code>msg.topic</code> matches: </label>
+        <input type="checkbox" id="node-input-matchtopic" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row form-row-decouple">
         <label for="node-input-decouple"><i class="fa fa-toggle-on"></i> Indicator</label>
