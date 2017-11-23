@@ -284,8 +284,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     })
                     if (indexToOpen !== null) {
                         main.open(main.menu[indexToOpen], indexToOpen);
+                        finishLoading();
                     }
-                    finishLoading();
                 }, 50);
             }
             main.len = main.menu.length;

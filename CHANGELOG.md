@@ -4,6 +4,9 @@
 **Fixes**
 
  - Fix tab to send data from text entry field - Issue #307
+ - Fix colour picker hex output/passthrough - Issue #308
+ - Constrain changetab event when starting up with blank dashboard
+ - Update ui-masonry to fix layouts - PR #312
 
 ### 2.6.2: Maintenance Release
 

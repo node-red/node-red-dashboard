@@ -326,10 +326,10 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-change', function(index) {
             var name = "";
-            if (index && menu.length > 0 && index <= menu.length) {
-                name = menu[index].header === undefined ? menu[index].name : menu[index].header;
+            if (index && !isNaN(index) && menu.length > 0 && index <= menu.length) {
+                name = (menu[index].hasOwnProperty("header") && typeof menu[index].header !== 'undefined') ? menu[index].header : menu[index].name;
+                ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
             }
-            ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
         });
         socket.on('ui-refresh', function() {
             updateUi();
