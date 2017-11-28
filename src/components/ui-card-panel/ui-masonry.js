@@ -26,17 +26,13 @@ function blockSort(b1,b2) {
     return (b1.x - b2.x)
 }
 
-function intersectBlock(r1, r2){
-  // left .x
-  // top .y
-  // right x + w
-  // bottom y + h
-  // !(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)
-
- return ! ( r2.x > r1.x  ||
-      r2.x + r2.w < r1.x ||
-      r2.y > r1.y + r1.h ||
-      r2.y + r2.h < r1.y);
+function intersectBlock(r1, r2) {
+    // left .x
+    // top .y
+    // right x + w
+    // bottom y + h
+    // !(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)
+    return ! ( r2.x > r1.x || r2.x + r2.w < r1.x || r2.y > r1.y + r1.h || r2.y + r2.h < r1.y);
 }
 
 function MasonryController(sizes, $timeout) {

@@ -75,7 +75,6 @@
         "angular-animate": "~1.5.11",
         "angular-aria": "~1.5.11",
         "angular-chart.js": "^1.1.1",
-        "angularjs-color-picker": "^3.4.8",
         "angular-material": "^1.1.1",
         "angular-material-icons": "^0.7.1",
         "angular-messages": "~1.5.11",
@@ -83,6 +82,7 @@
         "angular-route": "~1.5.11",
         "angular-sanitize": "~1.5.11",
         "angular-touch": "~1.5.11",
+        "angularjs-color-picker": "^3.4.8",
         "chart.js": "~2.3.0",
         "d3": "^3.5.17",
         "font-awesome": "^4.7.0",
@@ -112,6 +112,7 @@
         "sprintf-js": "^1.0.3",
         "streamqueue": "^1.1.1",
         "svg-morpheus": "^0.3.0",
-        "tinycolor2": "^1.4.1"
+        "tinycolor2": "^1.4.1",
+        "weather-icons-lite": "Paul-Reed/weather-icons-lite"
     }
 }

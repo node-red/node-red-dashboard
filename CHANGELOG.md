@@ -1,6 +1,10 @@
 
 ### 2.6.3-beta: Maintenance Release
 
+**Enhancements**
+
+ - Add weather-icons-lite font - may finally close #165
+
 **Fixes**
 
  - Fix tab to send data from text entry field - Issue #307

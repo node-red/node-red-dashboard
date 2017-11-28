@@ -36,7 +36,7 @@ gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
 // });
 
 gulp.task('manifest', ['build'], function() {
-    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*','dist/fonts/*'], { base: 'dist/' })
+    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*','dist/weather-icons-lite/fonts/*','dist/fonts/*'], { base: 'dist/' })
     //gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*'], { base: 'dist/' })
     .pipe(manifest({
         hash: true,
@@ -90,7 +90,11 @@ gulp.task('icon', function() {
 
 gulp.task('fonts', function() {
     //return gulp.src('node_modules/font-awesome/fonts/*').pipe(gulp.dest('dist/fonts/'));
-    return gulp.src('node_modules/font-awesome/fonts/*').pipe(gulp.dest('dist/font-awesome/fonts/'));
+    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff').pipe(gulp.dest('dist/font-awesome/fonts/'));
+    gulp.src('node_modules/weather-icons-lite/fonts/weather-icons-lite.woff').pipe(gulp.dest('dist/weather-icons-lite/fonts/'));
+    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff2').pipe(gulp.dest('dist/font-awesome/fonts/'));
+    gulp.src('node_modules/weather-icons-lite/fonts/weather-icons-lite.woff2').pipe(gulp.dest('dist/weather-icons-lite/fonts/'));
+    return;
 });
 
 gulp.task('js', function () {

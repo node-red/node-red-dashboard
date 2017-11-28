@@ -9,14 +9,12 @@ css/app.min.less
 css/index.html
 js/app.min.js
 js/tinycolor-min.js
-font-awesome/fonts/FontAwesome.otf
-font-awesome/fonts/fontawesome-webfont.eot
-font-awesome/fonts/fontawesome-webfont.svg
-font-awesome/fonts/fontawesome-webfont.ttf
 font-awesome/fonts/fontawesome-webfont.woff
 font-awesome/fonts/fontawesome-webfont.woff2
+weather-icons-lite/fonts/weather-icons-lite.woff
+weather-icons-lite/fonts/weather-icons-lite.woff2
 
 NETWORK:
 *
 
-# hash: 259bff5b3745c77d748aab61865da9ea1494449f762d6c43f8629fd921a7bc45
+# hash: 8ffdc96577b1faeb11721c77a14c07cb46d6d4fe96cf37a62bea5420a5a16340
