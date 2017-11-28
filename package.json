@@ -108,11 +108,11 @@
         "jshint": "^2.9.4",
         "justgage": "^1.2.2",
         "less": "^2.7.2",
-        "moment": "^2.18.1",
+        "moment": "^2.19.2",
         "sprintf-js": "^1.0.3",
         "streamqueue": "^1.1.1",
         "svg-morpheus": "^0.3.0",
         "tinycolor2": "^1.4.1",
-        "weather-icons-lite": "Paul-Reed/weather-icons-lite"
+        "weather-icons-lite": "^0.0.1"
     }
 }
