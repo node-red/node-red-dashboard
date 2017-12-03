@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.6.3-beta",
+    "version": "2.7.0-beta",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -108,11 +108,11 @@
         "jshint": "^2.9.4",
         "justgage": "^1.2.2",
         "less": "^2.7.2",
-        "moment": "^2.19.2",
+        "moment": "~2.19.3",
         "sprintf-js": "^1.0.3",
-        "streamqueue": "^1.1.1",
+        "streamqueue": "~1.1.2",
         "svg-morpheus": "^0.3.0",
         "tinycolor2": "^1.4.1",
-        "weather-icons-lite": "^0.0.1"
+        "weather-icons-lite": "^0.1.0"
     }
 }

@@ -1,8 +1,9 @@
 
-### 2.6.3-beta: Maintenance Release
+### 2.7.0-beta: Milestone Release
 
 **Enhancements**
 
+ - Add initial manifest.json capability for Android add to home screen
  - Add weather-icons-lite font - may finally close #165
 
 **Fixes**
