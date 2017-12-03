@@ -499,8 +499,8 @@ function addBaseConfig(config) {
     if (config) { baseConfiguration = config; }
     mani.name = config.site.name;
     mani.short_name = mani.name.replace("Node-RED","").trim();
-    mani.background_color = config.theme.themeState["base-color"].default;
-    mani.theme_color = config.theme.themeState["base-color"].default;
+    mani.background_color = config.theme.themeState["page-titlebar-backgroundColor"].default;
+    mani.theme_color = config.theme.themeState["page-titlebar-backgroundColor"].default;
     updateUi();
 }
 
