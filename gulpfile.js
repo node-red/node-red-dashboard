@@ -18,6 +18,7 @@ var
     minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
     removeHtml = require('gulp-remove-html'),
+    replace = require('gulp-replace'),
     resources = require('gulp-resources'),
     //spawn = require('child_process').spawn,
     streamqueue = require('streamqueue'),
@@ -37,15 +38,15 @@ gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
 
 gulp.task('manifest', ['build'], function() {
     gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*','dist/weather-icons-lite/fonts/*','dist/fonts/*'], { base: 'dist/' })
-    //gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*'], { base: 'dist/' })
     .pipe(manifest({
         hash: true,
         //preferOnline: true,
         network: ['*'],
         filename: 'dashboard.appcache',
-        //exclude: 'dashboard.appcache'
-        exclude: ['dashboard.appcache','index.html']
+        exclude: 'dashboard.appcache'
+        //exclude: ['dashboard.appcache','index.html']
     }))
+    .pipe(replace('tinycolor-min.js', 'tinycolor-min.js\nsocket.io/socket.io.js'))
     .pipe(eol('\n'))
     .pipe(gulp.dest('dist/'));
 });
@@ -85,6 +86,7 @@ gulp.task('index', function() {
 
 gulp.task('icon', function() {
     gulp.src('src/icon192x192.png').pipe(gulp.dest('dist/'));
+    gulp.src('src/icon120x120.png').pipe(gulp.dest('dist/'));
     return gulp.src('src/icon64x64.png').pipe(gulp.dest('dist/'));
 });
 
