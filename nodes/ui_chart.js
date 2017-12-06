@@ -145,6 +145,7 @@ module.exports = function(RED) {
                     converted.updatedValues = value;
                 }
                 else {
+                    if (value === false) { value = null; }              // let false also create gaps in chart
                     if (value !== null) {                               // let null object through for gaps
                         value = parseFloat(value);                      // only handle numbers
                         if (isNaN(value)) { return; }                   // return if not a number

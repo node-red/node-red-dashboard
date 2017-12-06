@@ -5,11 +5,13 @@
 
  - Add initial manifest.json capability for Android add to home screen
  - Add weather-icons-lite font - may finally close #165
+ - Let boolean false values also create gaps in charts (as well as null)
 
 **Fixes**
 
  - Fix tab to send data from text entry field - Issue #307
  - Fix colour picker hex output/passthrough - Issue #308
+ - Ensure there is a base tab to switch to at start - Issue #310
  - Constrain changetab event when starting up with blank dashboard
  - Update ui-masonry to fix layouts - PR #312
 

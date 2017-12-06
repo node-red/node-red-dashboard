@@ -24,6 +24,21 @@ If you want to try the latest version from github, you can install it by
 
     npm i node-red/node-red-dashboard
 
+## Layout
+
+The dashboard layout should be considered as a grid.
+
+Each **group** element has a width - by default 6 'units' (a unit is 48px wide by default with a 6px gap).
+
+Each **widget** in the group also has a width - by default, 'auto' which means it will fill the width of the group it is in, but you can set it to a fixed number of units.
+
+The layout algorithm of the dashboard always tries to place items as high and to the left as they can within their container - this applies to how groups are positioned on the page, as well as how widgets are positioned in a group.
+
+Given a group with width 6, if you add six widgets, each with a width of 2, then they will be laid out in two rows - three widgets in each.
+
+If you add two groups of width 6, as long as your browser window is wide enough, they will sit alongside each other. If you shrink the browser, at some point the second group will shift to be below the first, in a column.
+
+It is advisable to use multiple groups if possible, rather than one big group, so that the page can dynamically resize on smaller screens.
 
 ## Features
 
@@ -39,8 +54,7 @@ The widget layout is managed by a `dashboard` tab in the sidebar of the Node-RED
 
 ##### Theme
 
- - **Style** - the theme and font of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme.
- You cannot have different themes for each tab.
+ - **Style** - the theme and font of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme. You cannot have different themes for each tab.
 
 ##### Site
 
@@ -48,12 +62,9 @@ The widget layout is managed by a `dashboard` tab in the sidebar of the Node-RED
 
  - **Options** - optionally hide the title bar, and allow swiping sideways between tabs on a touch screen.
 
- - **Sizes** - sets the basic geometry of the grid layout in pixels. The **width** and **height** of widgets can be set, as can the width of *groups*. These are all specified in units of approximately 50 pixels.
+ - **Sizes** - sets the basic geometry of the grid layout in pixels. The **width** and **height** of widgets can be set, as can the width of *groups*. These are the basic definitions of the "units' used elsewhere within the dashboard.
 
 #### Widgets
-
-The default width of a group is 6 units ( &approx;300 pixels ). Setting a widget to `auto` will fill the available
-width of the group. It is still advisable to use multiple groups if possible, rather than one big group, so that the page can dynamically resize on smaller screens.
 
 Group labels are optional.
 

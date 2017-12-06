@@ -16,6 +16,8 @@ property that identifies which data series it belongs to - for example:
 Each series will be represented by a different colour.
 Alternatively you can use the property `series` instead of `topic` if you prefer.
 
+It is possible to create "gaps" in line charts by sending either a null or boolean false as the payload.
+
 ### Bar, and other charts
 
 If you want all the bars to be the same colour, then use the `label` property instead.
