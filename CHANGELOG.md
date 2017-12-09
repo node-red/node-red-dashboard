@@ -6,6 +6,7 @@
  - Add initial manifest.json capability for Android add to home screen
  - Add weather-icons-lite font - may finally close #165
  - Let boolean false values also create gaps in charts (as well as null)
+ - Add status to switch widget (and slider, numeric and dropdown) - Issue #314
 
 **Fixes**
 

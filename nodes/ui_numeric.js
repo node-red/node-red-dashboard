@@ -4,6 +4,7 @@ module.exports = function(RED) {
     function NumericNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+        node.status({});
 
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
@@ -29,6 +30,7 @@ module.exports = function(RED) {
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic || msg.topic;
+                node.status({shape:"dot",fill:"grey",text:msg.payload});
             },
             convert: ui.toFloat.bind(this, config)
         });
