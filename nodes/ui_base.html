@@ -579,7 +579,7 @@
                 $('<select id="nr-db-field-hideToolbar">')
                 .css("width","100%")
                 .append($('<option>', { value:"false", text:c_("title-bar.show"), selected:true }))
-                .append($('<option>', { value:"true", text:c_("title-bar.show") }))
+                .append($('<option>', { value:"true", text:c_("title-bar.hide") }))
                 .val("false")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
