@@ -1,9 +1,20 @@
 
-### 2.6.3-beta: Maintenance Release
+### 2.7.0-beta: Milestone Release
+
+**Enhancements**
+
+ - Add initial manifest.json capability for Android add to home screen
+ - Add weather-icons-lite font - may finally close #165
+ - Let boolean false values also create gaps in charts (as well as null)
+ - Add status to switch widget (and slider, numeric and dropdown) - Issue #314
 
 **Fixes**
 
  - Fix tab to send data from text entry field - Issue #307
+ - Fix colour picker hex output/passthrough - Issue #308
+ - Ensure there is a base tab to switch to at start - Issue #310
+ - Constrain changetab event when starting up with blank dashboard
+ - Update ui-masonry to fix layouts - PR #312
 
 ### 2.6.2: Maintenance Release
 

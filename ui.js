@@ -41,6 +41,22 @@ var removeStateTimeout = 1000;
 var ev = new events.EventEmitter();
 ev.setMaxListeners(0);
 
+// default manifest.json to be returned as required.
+var mani = {
+    "name": "Node-RED Dashboard",
+    "short_name": "Dashboard",
+    "description": "A dashboard for Node-RED",
+    "start_url": "./#/0",
+    "background_color": "#910000",
+    "theme_color": "#910000",
+    "display": "standalone",
+    "icons": [
+        {"src":"icon192x192.png", "sizes":"192x192", "type":"image/png"},
+        {"src":"icon120x120.png", "sizes":"120x120", "type":"image/png"},
+        {"src":"icon64x64.png", "sizes":"64x64", "type":"image/png"}
+    ]
+}
+
 function toNumber(keepDecimals, config, input) {
     if (input === undefined) { return; }
     if (typeof input !== "number") {
@@ -290,6 +306,7 @@ function init(server, app, log, redSettings) {
 
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
         if (!err) {
+            app.use( join(settings.path,"manifest.json"), function(req, res) { res.send(mani); });
             app.use( join(settings.path), serveStatic(path.join(__dirname, "dist")) );
         }
         else {
@@ -297,7 +314,7 @@ function init(server, app, log, redSettings) {
             app.use(join(settings.path), serveStatic(path.join(__dirname, "src")));
             var vendor_packages = [
                 'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material', 'angular-touch',
-                'angular-material-icons', 'svg-morpheus', 'font-awesome',
+                'angular-material-icons', 'svg-morpheus', 'font-awesome', 'weather-icons-lite',
                 'sprintf-js',
                 'jquery', 'jquery-ui',
                 'd3', 'raphael', 'justgage',
@@ -326,10 +343,10 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-change', function(index) {
             var name = "";
-            if (index && menu.length > 0 && index <= menu.length) {
-                name = menu[index].header === undefined ? menu[index].name : menu[index].header;
+            if (index && !isNaN(index) && menu.length > 0 && index <= menu.length) {
+                name = (menu[index].hasOwnProperty("header") && typeof menu[index].header !== 'undefined') ? menu[index].header : menu[index].name;
+                ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
             }
-            ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
         });
         socket.on('ui-refresh', function() {
             updateUi();
@@ -480,6 +497,10 @@ function addLink(name, link, icon, order, target) {
 
 function addBaseConfig(config) {
     if (config) { baseConfiguration = config; }
+    mani.name = config.site.name;
+    mani.short_name = mani.name.replace("Node-RED","").trim();
+    mani.background_color = config.theme.themeState["page-titlebar-backgroundColor"].value;
+    mani.theme_color = config.theme.themeState["page-titlebar-backgroundColor"].value;
     updateUi();
 }
 

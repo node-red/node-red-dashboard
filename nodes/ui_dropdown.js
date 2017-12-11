@@ -4,6 +4,7 @@ module.exports = function(RED) {
     function DropdownNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+        node.status({});
 
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
@@ -120,6 +121,7 @@ module.exports = function(RED) {
                     msg.payload = emitOptions.value;
                 }
                 msg.topic = config.topic || msg.topic;
+                node.status({shape:"dot",fill:"grey",text:msg.payload});
             }
         });
         node.on("close", done);

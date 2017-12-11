@@ -26,6 +26,15 @@ function blockSort(b1,b2) {
     return (b1.x - b2.x)
 }
 
+function intersectBlock(r1, r2) {
+    // left .x
+    // top .y
+    // right x + w
+    // bottom y + h
+    // !(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)
+    return ! ( r2.x > r1.x || r2.x + r2.w < r1.x || r2.y > r1.y + r1.h || r2.y + r2.h < r1.y);
+}
+
 function MasonryController(sizes, $timeout) {
     var ctrl = this;
     var root;
@@ -73,8 +82,7 @@ function MasonryController(sizes, $timeout) {
                     // existing occupied blocks
                     for (j=0; j<assignedBlocks.length; j++) {
                         var b2 = assignedBlocks[j];
-                        if ((b2.y < b.y && b2.y+b2.h > b.y && b.x<=b2.x && b.x+cw >= b2.x) ||
-                                (b.x > b2.x && b.x < b2.x+b2.w && b.y >= b2.y && b.y <= b2.y+b2.h)) {
+                        if (intersectBlock(b, b2)) {
                             blockCacheKey = b.x+":"+(b2.y+b2.h+sizes.gy);
                             if (!blockCache[blockCacheKey]) {
                                 blocks.push({

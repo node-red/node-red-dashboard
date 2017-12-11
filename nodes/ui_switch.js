@@ -20,6 +20,7 @@ module.exports = function(RED) {
     function SwitchNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+        node.status({});
 
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
@@ -63,6 +64,7 @@ module.exports = function(RED) {
             emitOnlyNewValues: false,
             forwardInputMessages: config.passthru,
             storeFrontEndInputAsState: (config.decouple === "true") ? false : true,
+            state: false,
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),
                 label: config.label,
@@ -89,6 +91,7 @@ module.exports = function(RED) {
                 else { return oldval; }
             },
             convertBack: function (value) {
+                node.status({fill:(value?"green":"red"),shape:(value?"dot":"ring"),text:value?"on":"off"});
                 var payload = value ? onvalue : offvalue;
                 var payloadType = value ? onvalueType : offvalueType;
 
