@@ -1,0 +1,77 @@
+{
+    "ui_base" : {
+        "label" : {
+            "dashboard" : "ダッシュボード",
+            "title" : "タイトル",
+            "options" : "オプション",
+            "date-format" : "日付形式",
+            "sizes" : "サイズ",
+            "horizontal" : "横",
+            "vertical" : "縦",
+            "widget-size" : "最小Widgetサイズ",
+            "widget-spacing" : "Widget間隔",
+            "group-padding" : "グループパディング",
+            "group-spacing" : "グループ間隔",
+            "layout" : "配置",
+            "theme" : "テーマ",
+            "site" : "サイト"
+        },
+        "auto" : "自動",
+        "title" : "Node-REDダッシュボード",
+        "layout" : {
+            "tab-and-link" : "タブ & リンク",
+            "tab" : "タブ",
+            "link" : "リンク",
+            "group" : "グループ",
+            "edit" : "編集"
+        },
+        "theme" : {
+            "style" : "スタイル",
+            "custom-profile" : "カスタムプロファイル",
+            "custom-profile-name" : "名称未設定テーマ 1",
+            "base-settings" : "基本設定",
+            "page-settings" : "ページ設定",
+            "page" : {
+                "title" : "タイトルバー背景色",
+                "page" : "ページ背景色",
+                "side" : "サイドバー背景色"
+            },
+            "group-settings" : "グループ設定",
+            "group" : {
+                "text" : "グループ文字色",
+                "border" : "グループボーダー色",
+                "background" : "グループ背景色"
+            },
+            "widget-settings" : "Widget設定",
+            "widget" : {
+                "text" : "Widget文字色",
+                "colour" : "Widget色",
+                "background" : "Widget背景色"
+            }
+        },
+        "style" : {
+            "light" : "ライト (デフォルト)",
+            "dark" : "ダーク",
+            "custom" : "カスタム"
+        },
+        "base" : {
+            "colour" : "色",
+            "font" : "フォント"
+        },
+        "font" : {
+            "system" : "システムフォント (デフォルト)"
+        },
+        "site" : {
+            "title" : "Node-RED ダッシュボード",
+            "date-format" : "YYYY/MM/DD"
+        },
+        "title-bar" : {
+            "show" : "タイトルバー表示",
+            "hide" : "タイトルバー非表示"
+        },
+        "swipe" : {
+            "no-swipe" : "スワイプによるタブ切り替えをしない",
+            "allow-swipe" : "スワイプによるタブ切り替えをする"
+        }
+    }
+}
