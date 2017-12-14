@@ -1,13 +1,18 @@
 <script type="text/javascript">
+    // convert to i18 text
+    function c_(x) {
+        return RED._("node-red-dashboard/ui_tab:ui_tab."+x);
+    }
+
     RED.nodes.registerType('ui_tab',{
         category: 'config',
         defaults: {
-            name: {value: 'Home'},
+            name: {value: c_("label.home")},
             icon: {value: 'dashboard'},
             order: {value: 0}
         },
         paletteLabel: 'dashboard tab',
-        label: function() { return this.name || 'Tab'; },
+        label: function() { return this.name || c_("label.tab"); },
         sort: function(A,B) {
             return A.order - B.order;
         }
@@ -16,11 +21,11 @@
 
 <script type="text/x-red" data-template-name="ui_tab">
     <div class="form-row">
-        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_tab.label.name"></span></label>
         <input type="text" id="node-config-input-name">
     </div>
     <div class="form-row">
-        <label for="node-config-input-icon"><i class="fa fa-file-image-o"></i> Icon</label>
+        <label for="node-config-input-icon"><i class="fa fa-file-image-o"></i> <span data-i18n="ui_tab.label.icon"></span></label>
         <input type="text" id="node-config-input-icon">
     </div>
 </script>
