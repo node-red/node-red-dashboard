@@ -7,6 +7,8 @@
  - Add weather-icons-lite font - may finally close #165
  - Let boolean false values also create gaps in charts (as well as null)
  - Add status to switch widget (and slider, numeric and dropdown) - Issue #314
+ - Add "welcome" page to blank dashboard - Issue #318
+ - Add start of i18n for base pages - PR #315
 
 **Fixes**
 
@@ -15,6 +17,7 @@
  - Ensure there is a base tab to switch to at start - Issue #310
  - Constrain changetab event when starting up with blank dashboard
  - Update ui-masonry to fix layouts - PR #312
+ - Fix path join for icon link to dashboard - Issue #319
 
 ### 2.6.2: Maintenance Release
 

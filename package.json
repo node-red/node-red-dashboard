@@ -114,6 +114,6 @@
         "streamqueue": "~1.1.2",
         "svg-morpheus": "^0.3.0",
         "tinycolor2": "^1.4.1",
-        "weather-icons-lite": "^0.1.0"
+        "weather-icons-lite": "^1.0.0"
     }
 }
