@@ -142,6 +142,37 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     break;
                 }
 
+                case 'text-input': {
+                    if (me.item.mode === "time") {
+                        me.processInput = function (msg) {
+                            var dtmval = new Date(msg.value);
+                            // initial check for millisecond timestamp
+                            if ( isNaN(msg.value) ) {
+                                // first check for a time string like "22:30"
+                                var check = msg.value.match(/^(\d\d):(\d\d)/);
+                                if (check == null) {
+                                    // then check for an input date (string)
+                                    var millis = Date.parse(msg.value);
+                                    if (Number.isNaN(millis)) {
+                                        // unknown format, default to 00:00
+                                        millis = 0;
+                                    }
+                                    dtmval = new Date(millis); //.toJSON().substr(11, 5);
+                                }
+                                else {
+                                    dtmval = new Date(1970, 0, 1, +check[1], +check[2], 0);
+                                }
+                            }
+                            dtmval.setMilliseconds(0);
+                            dtmval.setSeconds(0);
+                            msg.value = dtmval;
+                            me.item.value = msg.value;
+                        }
+                        me.item.me = me;
+                    }
+                    break;
+                }
+
                 case 'date-picker': {
                     if (me.item.ddd !== undefined) {
                         if (typeof me.item.ddd === "string") {
