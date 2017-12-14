@@ -1,8 +1,13 @@
 <script type="text/javascript">
+    // convert to i18 text
+    function c_(x) {
+        return RED._("node-red-dashboard/ui_group:ui_group."+x);
+    }
+
     RED.nodes.registerType('ui_group',{
         category: 'config',
         defaults: {
-            name: {value: 'Default'},
+            name: {value: c_("label.default")},
             tab: {type:"ui_tab",required: true },
             order: {value: 0},
             disp: {value: true},
@@ -26,9 +31,9 @@
         label: function() {
             var tabNode = RED.nodes.node(this.tab);
             if (tabNode) {
-                return (this.name||"Group")+ " ["+(tabNode.name||"Tab")+"]"
+                return (this.name||c_("label.group"))+ " ["+(tabNode.name||c_("label.tab"))+"]"
             }
-            return (this.name || 'Group')+" [unassigned]";
+            return (this.name || c_("label.group"))+" ["+c_("label.unassigned")+"]";
         },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
@@ -41,20 +46,20 @@
 
 <script type="text/x-red" data-template-name="ui_group">
     <div class="form-row">
-        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_group.label.name"></span></label>
         <input type="text" id="node-config-input-name">
     </div>
     <div class="form-row">
-        <label for="node-config-input-tab"><i class="fa fa-table"></i> Tab</label>
+        <label for="node-config-input-tab"><i class="fa fa-table"></i> <span data-i18n="ui_group.label.tab"></span></label>
         <input type="text" id="node-config-input-tab">
     </div>
     <div class="form-row">
-        <label for="node-config-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+        <label for="node-config-input-width"><i class="fa fa-arrows-h"></i> <span data-i18n="ui_group.label.width"></span></label>
         <input type="hidden" id="node-config-input-width">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <input style="margin:8px 0 10px 102px; width:20px;" type="checkbox" checked id="node-config-input-disp"> <label style="width:auto" for="node-config-input-disp">Display group name</label>
+        <input style="margin:8px 0 10px 102px; width:20px;" type="checkbox" checked id="node-config-input-disp"> <label style="width:auto" for="node-config-input-disp"><span data-i18n="ui_group.display-name"></span></label>
     </div>
 </script>
 
