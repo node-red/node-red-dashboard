@@ -142,7 +142,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     break;
                 }
 
-                case 'text-input': {
+                case 'text-input':
+                case 'text-input-CR': {
                     if (me.item.mode === "time") {
                         me.processInput = function (msg) {
                             var dtmval = new Date(msg.value);
@@ -154,10 +155,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                                     // then check for an input date (string)
                                     var millis = Date.parse(msg.value);
                                     if (Number.isNaN(millis)) {
-                                        // unknown format, default to 00:00
-                                        millis = 0;
+                                        millis = 0;     // unknown format, default to 00:00
                                     }
-                                    dtmval = new Date(millis); //.toJSON().substr(11, 5);
+                                    dtmval = new Date(millis);
                                 }
                                 else {
                                     dtmval = new Date(1970, 0, 1, +check[1], +check[2], 0);
@@ -166,6 +166,13 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             dtmval.setMilliseconds(0);
                             dtmval.setSeconds(0);
                             msg.value = dtmval;
+                            me.item.value = msg.value;
+                        }
+                        me.item.me = me;
+                    }
+                    if ((me.item.mode === "week") || (me.item.mode === "month")) {
+                        me.processInput = function (msg) {
+                            msg.value = new Date(msg.value);
                             me.item.value = msg.value;
                         }
                         me.item.me = me;
