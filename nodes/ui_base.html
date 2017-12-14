@@ -453,7 +453,7 @@
                             }
 
                             var site_name = c_("site.title");
-                            var site_date_format = c_("site.date-format");                            
+                            var site_date_format = c_("site.date-format");
                             var site = { name:site_name, hideToolbar:"false", allowSwipe:"false", dateFormat:site_date_format, sizes:sizes };
                             if (globalDashboardNode !== null) {
                                 if (typeof globalDashboardNode.site !== "undefined") {
@@ -497,9 +497,9 @@
                 // Dashboard Tabs markup
                 var divTab = $('<div class="red-ui-tabs">').appendTo(form);
                 var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTab);
-                var layout_label = c_("label.layout");                
+                var layout_label = c_("label.layout");
                 var theme_label = c_("label.theme");
-                var site_label = c_("label.site");                
+                var site_label = c_("label.site");
                 var liLayoutTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Layout"><span>'+layout_label+'</span></a></li>').appendTo(ulDashboardTabs);
                 var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>'+theme_label+'</span></a></li>').appendTo(ulDashboardTabs);
                 var liSiteTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Site" style="width:60px;"><span>'+site_label+'</span></a></li>').appendTo(ulDashboardTabs);
@@ -507,7 +507,7 @@
                 // Link out to dashboard
                 $.getJSON('uisettings',function(data) {
                     if (data.hasOwnProperty("path")) { uip = data.path; }
-                    var lnk = document.location.host+RED.settings.httpNodeRoot+uip;
+                    var lnk = document.location.host+RED.settings.httpNodeRoot+"/"+uip;
                     var re = new RegExp('\/{1,}','g');
                     lnk = lnk.replace(re,'/');
                     if (!RED.hasOwnProperty("actions")) {
@@ -606,7 +606,7 @@
                 .appendTo(divAllowSwipe);
 
                 var site_name = c_("site.title");
-                var site_date_format = c_("site.date-format");                            
+                var site_date_format = c_("site.date-format");
                 var divDateFormat = $('<div>',{class:"form-row"}).appendTo(siteTab);
                 $('<div">').html('<b>'+c_("label.date-format")+'</b>')
                 .css("width","80%")
