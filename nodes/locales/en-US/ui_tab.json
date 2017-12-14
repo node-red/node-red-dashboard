@@ -1,0 +1,10 @@
+{
+    "ui_tab" : {
+        "label" : {
+            "home" : "Home",
+            "tab" : "Tab",
+            "name" : "Name",
+            "icon" : "Icon"
+        }
+    }
+}
