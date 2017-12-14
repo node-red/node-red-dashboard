@@ -1,0 +1,13 @@
+{
+    "ui_group" : {
+        "label" : {
+            "name" : "Name",
+            "tab" : "Tab",
+            "width" : "Width",
+            "default" : "Default",
+            "group" : "Group",
+            "unassigned" : "unassigned"
+        },
+        "display-name" : "Display group name"
+    }
+}
