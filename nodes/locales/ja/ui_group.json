@@ -8,6 +8,6 @@
             "group" : "グループ",
             "unassigned" : "未設定"
         },
-        "display-name" : "ディスプレイグループの名前"
+        "display-name" : "グループ名を表示する"
     }
 }
