@@ -144,22 +144,19 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                 case 'text-input':
                 case 'text-input-CR': {
-                    if (me.item.mode === "time") {
+                    if (me.item.mode == "time") {
                         me.processInput = function (msg) {
                             var dtmval = new Date(msg.value);
                             // initial check for millisecond timestamp
-                            console.log("V1",msg.value);
                             if ( isNaN(msg.value) ) {
                                 // first check for a time string like "22:30"
                                 var check = msg.value.match(/^(\d\d):(\d\d)/);
                                 if (check == null) {
-                                    console.log("V2",msg.value);
                                     // then check for an input date (string)
                                     var millis = Date.parse(msg.value);
                                     if ( isNaN(millis) ) {
                                         millis = Date.now();     // unknown format, default to now
                                     }
-                                    console.log(millis);
                                     dtmval = new Date(millis);
                                 }
                                 else {

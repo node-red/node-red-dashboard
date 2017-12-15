@@ -336,9 +336,11 @@ function init(server, app, log, redSettings) {
         socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
         socket.on('ui-replay-state', function() {
             var ids = Object.getOwnPropertyNames(replayMessages);
-            ids.forEach(function (id) {
-                socket.emit(updateValueEventName, replayMessages[id]);
-            });
+            setTimeout(function() {
+                ids.forEach(function (id) {
+                    socket.emit(updateValueEventName, replayMessages[id]);
+                });
+            }, 50);
             socket.emit('ui-replay-done');
         });
         socket.on('ui-change', function(index) {
