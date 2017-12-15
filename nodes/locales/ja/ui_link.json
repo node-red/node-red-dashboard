@@ -1,0 +1,12 @@
+{
+    "ui_link" : {
+        "label" : {
+            "name" : "名前",
+            "link" : "リンク",
+            "icon" : "アイコン",
+            "open-in" : "開く方法",
+            "new-tab" : "新規タブ",
+            "iframe" : "iframe"
+        }
+    }
+}
