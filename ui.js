@@ -283,7 +283,7 @@ function add(opt) {
     };
 }
 
-//from: http://stackoverflow.com/a/28592528/3016654
+//from: https://stackoverflow.com/a/28592528/3016654
 function join() {
     var trimRegex = new RegExp('^\\/|\\/$','g'),
     paths = Array.prototype.slice.call(arguments);

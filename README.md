@@ -13,7 +13,7 @@ Node-RED-Dashboard requires Node-RED version 0.14 or more recent.
 
 ## Install
 
-To install the stable version run the following command in your Node-RED user directory (typically `~/.node-red`):
+To install the stable version use the `Menu - Manage palette` option and search for `node-red-dashboard`, or run the following command in your Node-RED user directory (typically `~/.node-red`):
 
     npm i node-red-dashboard
 

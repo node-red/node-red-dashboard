@@ -1,5 +1,5 @@
 
-### 2.7.0-beta: Milestone Release
+### 2.7.0: Milestone Release
 
 **Enhancements**
 
@@ -8,7 +8,7 @@
  - Let boolean false values also create gaps in charts (as well as null)
  - Add status to switch widget (and slider, numeric and dropdown) - Issue #314
  - Add "welcome" page to blank dashboard - Issue #318
- - Add start of i18n for base pages - PR #315
+ - Add i18n for base pages (thanks Nishiyama-san)- PR #315
 
 **Fixes**
 
