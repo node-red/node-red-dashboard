@@ -160,7 +160,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                                     dtmval = new Date(millis);
                                 }
                                 else {
-                                    dtmval = new Date(1970, 0, 1, +check[1], +check[2], 0);
+                                    dtmval = new Date("1970-01-01 " + check[1] + ":" + check[2] + ":00Z");
                                 }
                             }
                             dtmval.setMilliseconds(0);

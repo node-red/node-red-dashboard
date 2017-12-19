@@ -1,4 +1,10 @@
 
+### 2.7.1: Maintenance Release
+
+**Fixes**
+
+ - Fix text time input format to report in millisecs from local midnight
+
 ### 2.7.0: Milestone Release
 
 **Enhancements**

@@ -1,10 +1,11 @@
 <md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout="row" layout-align="space-between center" class="nr-dashboard-textinput" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
     <md-input-container class="md-block" flex md-is-error="false" ng-class="{'has-label':me.item.label}">
-      <label ng-bind-html="me.item.getLabel()"></label>
-      <input ng-model="me.item.value"
-             ng-keydown="me.keyPressed($event)"
-             aria-label="{{me.item.label}}"
-             type="{{me.item.mode}}"
-             style="z-index:1"/>
+        <label ng-bind-html="me.item.getLabel()"></label>
+        <input ng-model="me.item.value"
+            ng-model-options="{'timezone':'UTC'}"
+            ng-keydown="me.keyPressed($event)"
+            aria-label="{{me.item.label}}"
+            type="{{me.item.mode}}"
+            style="z-index:1"/>
     </md-input-container>
 </md-card>
