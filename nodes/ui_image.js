@@ -18,7 +18,7 @@ module.exports = function (RED) {
 
             form.parse(req, function (err, fields, files) {
 
-                var category = fields['category'];
+                var category = fields['category'];                
                 var extensao = path.extname(files[0].name);
 
                 if (extensao != '.jpg' && extensao != '.png' && extensao != '.jpeg') {
@@ -57,12 +57,16 @@ module.exports = function (RED) {
                         }
     
                         var pathExtern = path.join("/", "uiimage", "upload", files[0].name);
+                        var reference = "Uncategorized/"+files[0].name;
     
                         if(pathCategory){
                             pathExtern = path.join("/", "uiimage", "upload", category, files[0].name);
+                            reference = category + "/" + files[0].name;
                         }
+
+                        var obj = {path: pathExtern, ref: reference};
     
-                        res.status(201).send(pathExtern).end();
+                        res.status(201).send(obj).end();
                     });
                 });
             });
@@ -161,7 +165,7 @@ module.exports = function (RED) {
 
         RED.httpAdmin.get("/uiimage/:category/:id", (req, res) => {
 
-            let pathBase = path.join('uiimage', 'upload');
+            let pathBase = path.join('/', 'uiimage', 'upload');
             let id = req.params.id;
             let category = req.params.category;
 
@@ -175,7 +179,9 @@ module.exports = function (RED) {
                         return;
                     }
 
-                    res.status(200).send(path.join(pathBase, id)).end();
+                    var obj = {path: path.join(pathBase, id), ref: "Uncategorized/" + id};
+
+                    res.status(200).send(obj).end();
                 });
 
                 return;
@@ -189,7 +195,9 @@ module.exports = function (RED) {
                     return;
                 }
 
-                res.status(200).send(path.join(pathBase, category, id)).end();
+                var obj = {path: path.join(pathBase, category, id), ref: category + "/" + id};
+
+                res.status(200).send(obj).end();
             });
 
         });
@@ -221,7 +229,7 @@ module.exports = function (RED) {
         //--> Centralizar (centro da imagem) - background-size: 100%; + background-position: center;
         //--> Ampliar (estica a imagem) - size = cover
 
-        var image = "<div style=\"width: 100%; height: 100%; background-image: url('" + config.path + "');";
+        var image = "<div style=\"width: 100%; height: 100%; background-image: url('" + config.path.path + "');";
 
         if (config.layout === 'adjust') {
             image += "background-size: contain; background-position: center; background-repeat: no-repeat\" > </div>"

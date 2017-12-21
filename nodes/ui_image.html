@@ -28,8 +28,12 @@
             height: {
                 value: 0
             },
-            file: {},
-            path: {},
+            file: {
+                value: ''
+            },
+            path: {
+                value: ''
+            },
             layout: {
                 value: 'adjust'
             }
@@ -47,48 +51,68 @@
             $("#upload-file").hide();
             $("#image-preview").hide();
 
+            if (that.path != null) {
+                $("#image-preview").attr('src', that.path.path).show();
+            }
+
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
 
+            getListImages(that.path.ref);
 
-            $.get('/uiimage', function (data) {
+            function getListImages(selected) {
 
-                data.forEach(function (element) {
+                $.get('/uiimage', function (data) {
 
-                    var category = element.name;
-                    var numItem = element.list.length;
+                    data.forEach(function (element) {
 
-                    var optgroup = $('<optgroup>');
-                    optgroup.attr('label', category);
+                        var category = element.name;
+                        var numItem = element.list.length;
 
-                    element.list.forEach(function (item) {
+                        var optgroup = $('<optgroup>');
+                        optgroup.attr('label', category);
 
-                        var option = $("<option></option>");
-                        option.val(category + '/' + item);
-                        option.text(item);
+                        element.list.forEach(function (item) {
 
-                        optgroup.append(option);
+                            var option = $("<option></option>");
+
+                            if (selected == (category + '/' + item)) {
+                                option = $("<option selected></option>");
+                            }
+
+                            option.val(category + '/' + item);
+                            option.text(item);
+
+                            optgroup.append(option);
+
+                        });
+
+                        $("#node-input-file").append(optgroup);
 
                     });
-
-                    $("#node-input-file").append(optgroup);
-
                 });
-            });
+            }
 
             $("#node-input-file").change(function () {
                 var value = $('#node-input-file').val()
 
-                if(value === 'add'){
+                if (value === 'add') {
                     $("#upload-file").show();
-                }else{
+                } else {
                     $("#upload-file").hide();
                 }
 
-                console.log(value);
+                if (value != null && value != 'add') {
+                    var url = '/uiimage/' + value;
+
+                    $.get(url, function (data) {
+                        that.path = data;
+                        $("#image-preview").attr('src', data.path).show();
+                    });
+                }
             });
 
             var files;
@@ -124,7 +148,6 @@
                 data.append("category", $("#node-input-category").val());
 
                 $.ajax({
-                    //url: urlServer,
                     url: '/uiimage',
                     type: 'POST',
                     data: data,
@@ -132,24 +155,21 @@
                     processData: false, // Don't process the files
                     contentType: false, // Set content type to false as jQuery will tell the server its a query string request
                     success: function (data, textStatus) {
-
                         $("#node-input-upload").val('');
 
-                        $("#node-input-path").val(data);
+                        that.path = data;
 
-                        $("#image-preview").attr('src', data);
+                        getListImages(data.ref);
 
+                        $("#upload-file").hide();
+
+                        $("#image-preview").attr('src', data.path).show();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log('ERRORS: ' + errorThrown);
                     }
                 });
             }
-
-            $("#node-input-path").focusout(() => {
-                $("#image-preview").attr('src', $("#node-input-path").val());
-            });
-
 
         }
     });
@@ -193,21 +213,18 @@
 
     <!-- List -->
     <div class="form-row">
-        <label>
+        <label for="node-input-file">
             <i class="fa fa-file-image-o"></i> File</label>
 
         <select id="node-input-file">
-            <option></option>
             <option value="add"> Add image... </option>
         </select>
     </div>
     <!-- List -->
 
-
-
     <!-- Add Image -->
     <div id="upload-file">
-        
+
         <div class="form-row">
             <label for="node-input-category">
                 <i class="fa fa-tag"></i> Category</label>
@@ -217,7 +234,8 @@
         <div class="form-row">
             <label>
                 <i class="fa fa-file-image-o"></i> Add file</label>
-            <input type="file" id="node-input-upload" name="fileuploadfile" style="width: 63%" accept="image/*" multiple>
+            <!-- <input type="file" id="node-input-upload" name="fileuploadfile" style="width: 63%" accept="image/*" multiple> -->
+            <input type="file" id="node-input-upload" name="fileuploadfile" style="width: 63%" accept="image/*">
             <button id="bt-upload">Upload</button>
         </div>
 
