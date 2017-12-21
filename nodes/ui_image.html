@@ -1,0 +1,237 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_image', {
+        category: 'dashboard',
+        color: 'rgb( 63, 173, 181)',
+        defaults: {
+            group: {
+                type: 'ui_group',
+                required: false
+            },
+            name: {
+                value: '',
+                required: true
+            },
+            width: {
+                value: 0,
+                validate: function (v) {
+                    var valid = true
+
+                    var width = v || 0;
+                    var currentGroup = $('#node-input-group').val() || this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    valid = !groupNode || +width <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error", !valid);
+
+                    return valid;
+                }
+            },
+            height: {
+                value: 0
+            },
+            file: {},
+            path: {},
+            layout: {
+                value: 'adjust'
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "ui_template.png",
+        paletteLabel: 'image',
+        label: function () {
+            return this.name || 'image';
+        },
+        oneditprepare: function () {
+            var that = this;
+
+            $("#upload-file").hide();
+            $("#image-preview").hide();
+
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
+
+
+            $.get('/uiimage', function (data) {
+
+                data.forEach(function (element) {
+
+                    var category = element.name;
+                    var numItem = element.list.length;
+
+                    var optgroup = $('<optgroup>');
+                    optgroup.attr('label', category);
+
+                    element.list.forEach(function (item) {
+
+                        var option = $("<option></option>");
+                        option.val(category + '/' + item);
+                        option.text(item);
+
+                        optgroup.append(option);
+
+                    });
+
+                    $("#node-input-file").append(optgroup);
+
+                });
+            });
+
+            $("#node-input-file").change(function () {
+                var value = $('#node-input-file').val()
+
+                if(value === 'add'){
+                    $("#upload-file").show();
+                }else{
+                    $("#upload-file").hide();
+                }
+
+                console.log(value);
+            });
+
+            var files;
+
+            $("#node-input-upload").on('change', prepareUpload);
+
+            function prepareUpload(event) {
+                files = event.target.files;
+            }
+
+            $("#bt-upload").click(uploadFiles);
+
+            function uploadFiles(event) {
+
+                if ($("#node-input-name").val() == null || $("#node-input-name").val() == '') {
+                    return;
+                }
+
+                event.stopPropagation(); // Stop stuff happening
+                event.preventDefault(); // Totally stop stuff happening
+
+                var url = location.href; //pega endereço que esta no navegador
+                url = url.split("/"); //quebra o endeço de acordo com a / (barra)
+                var urlServer = url[0] + url[1] + "/upload"; // retorna a parte www.endereco.com.br
+
+                // Create a formdata object and add the files
+                var data = new FormData();
+
+                $.each(files, function (key, value) {
+                    data.append(key, value);
+                });
+
+                data.append("category", $("#node-input-category").val());
+
+                $.ajax({
+                    //url: urlServer,
+                    url: '/uiimage',
+                    type: 'POST',
+                    data: data,
+                    cache: false,
+                    processData: false, // Don't process the files
+                    contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+                    success: function (data, textStatus) {
+
+                        $("#node-input-upload").val('');
+
+                        $("#node-input-path").val(data);
+
+                        $("#image-preview").attr('src', data);
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log('ERRORS: ' + errorThrown);
+                    }
+                });
+            }
+
+            $("#node-input-path").focusout(() => {
+                $("#image-preview").attr('src', $("#node-input-path").val());
+            });
+
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_image">
+
+    <div class="form-row">
+        <label for="node-input-name">
+            <i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+
+    <div class="form-row" id="template-row-group">
+        <label for="node-input-group">
+            <i class="fa fa-table"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+
+    <div class="form-row" id="template-row-size">
+        <label>
+            <i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
+    </div>
+
+    <!-- Layout -->
+    <div class="form-row">
+        <label>
+            <i class="fa fa-th-large"></i> Layout</label>
+
+        <select id="node-input-layout">
+            <option value="adjust">Adjust</option>
+            <option value="center">Center</option>
+            <option value="expand">Expand</option>
+            <option value="side">Side by Side</option>
+        </select>
+    </div>
+    <!-- Layout -->
+
+    <!-- List -->
+    <div class="form-row">
+        <label>
+            <i class="fa fa-file-image-o"></i> File</label>
+
+        <select id="node-input-file">
+            <option></option>
+            <option value="add"> Add image... </option>
+        </select>
+    </div>
+    <!-- List -->
+
+
+
+    <!-- Add Image -->
+    <div id="upload-file">
+        
+        <div class="form-row">
+            <label for="node-input-category">
+                <i class="fa fa-tag"></i> Category</label>
+            <input type="text" id="node-input-category">
+        </div>
+
+        <div class="form-row">
+            <label>
+                <i class="fa fa-file-image-o"></i> Add file</label>
+            <input type="file" id="node-input-upload" name="fileuploadfile" style="width: 63%" accept="image/*" multiple>
+            <button id="bt-upload">Upload</button>
+        </div>
+
+    </div>
+    <!-- Add Image -->
+
+    <div class="form-row">
+        <div id="preview-image" align="center">
+            <img id="image-preview" style="height:auto; width:400px" src="">
+        </div>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="ui_image">
+    IMAGE
+</script>

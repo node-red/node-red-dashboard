@@ -1,0 +1,25 @@
+.nr-dashboard-image {
+	padding: 8px 12px;
+	overflow-y: auto;
+    vertical-align: inherit;
+}
+
+.nr-dashboard-image p {
+	margin: 0.2em 0;
+}
+
+.nr-dashboard-image h4 {
+	margin: 0.2em 0;
+}
+
+.nr-dashboard-image h3 {
+	margin: 0.2em 0;
+}
+
+.nr-dashboard-image h2 {
+	margin: 0.3em 0;
+}
+
+.nr-dashboard-image h1 {
+	margin: 0.4em 0;
+}
