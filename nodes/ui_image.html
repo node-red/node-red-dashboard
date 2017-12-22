@@ -8,8 +8,7 @@
                 required: false
             },
             name: {
-                value: '',
-                required: true
+                value: ''
             },
             width: {
                 value: 0,
@@ -28,22 +27,20 @@
             height: {
                 value: 0
             },
-            file: {
-                value: ''
-            },
-            path: {
-                value: ''
-            },
+            file: {},
+            path: {},
             layout: {
                 value: 'adjust'
             }
         },
         inputs: 1,
-        outputs: 1,
-        icon: "ui_template.png",
+        icon: "ui_image.png",
         paletteLabel: 'image',
         label: function () {
             return this.name || 'image';
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
         },
         oneditprepare: function () {
             var that = this;
@@ -51,7 +48,7 @@
             $("#upload-file").hide();
             $("#image-preview").hide();
 
-            if (that.path != null) {
+            if (that.path.path != null) {
                 $("#image-preview").attr('src', that.path.path).show();
             }
 
@@ -67,7 +64,7 @@
 
                 $.get('/uiimage', function (data) {
 
-                    data.forEach(function (element) {
+                    data.object.forEach(function (element) {
 
                         var category = element.name;
                         var numItem = element.list.length;
@@ -93,25 +90,62 @@
                         $("#node-input-file").append(optgroup);
 
                     });
+
+                    data.listCat.forEach(function (category) {
+
+                        var option = $("<option></option>");
+                        option.val(category);
+                        option.text(category);
+
+                        $("#node-input-category").append(option);
+
+                    });
+
                 });
+
             }
 
             $("#node-input-file").change(function () {
                 var value = $('#node-input-file').val()
 
-                if (value === 'add') {
-                    $("#upload-file").show();
-                } else {
-                    $("#upload-file").hide();
-                }
-
-                if (value != null && value != 'add') {
+                if (value != null) {
                     var url = '/uiimage/' + value;
 
                     $.get(url, function (data) {
                         that.path = data;
                         $("#image-preview").attr('src', data.path).show();
                     });
+                }
+            });
+
+            $("#bt-add-new-image").click(function () {
+                $("#upload-file").show();
+                $("#new-category").hide();
+                $("#div-file").hide();
+            });
+
+            var setNewCategory = false;
+            var lockUpload = false;
+
+            $("#bt-add-new-category").click(function () {
+                $("#new-category").show();
+                $("#div-category").hide();
+
+                setNewCategory = true;
+            });
+
+            $("#node-input-newCategory").focusout(function () {
+                if (setNewCategory) {
+                    let value = $("#node-input-newCategory").val();
+
+                    if (value != null && value != '') {
+                        $("#node-input-newCategory").removeClass("input-error");
+                        lockUpload = false;
+                        return;
+                    }
+
+                    $("#node-input-newCategory").addClass("input-error");
+                    lockUpload = true;
                 }
             });
 
@@ -127,16 +161,19 @@
 
             function uploadFiles(event) {
 
-                if ($("#node-input-name").val() == null || $("#node-input-name").val() == '') {
+                if(lockUpload){
                     return;
+                }
+
+                let category = $("#node-input-category").val();
+                let newCategory = $("#node-input-newCategory").val();
+
+                if(setNewCategory){
+                    category = newCategory;
                 }
 
                 event.stopPropagation(); // Stop stuff happening
                 event.preventDefault(); // Totally stop stuff happening
-
-                var url = location.href; //pega endereço que esta no navegador
-                url = url.split("/"); //quebra o endeço de acordo com a / (barra)
-                var urlServer = url[0] + url[1] + "/upload"; // retorna a parte www.endereco.com.br
 
                 // Create a formdata object and add the files
                 var data = new FormData();
@@ -145,7 +182,7 @@
                     data.append(key, value);
                 });
 
-                data.append("category", $("#node-input-category").val());
+                data.append("category", category);
 
                 $.ajax({
                     url: '/uiimage',
@@ -170,7 +207,6 @@
                     }
                 });
             }
-
         }
     });
 </script>
@@ -202,7 +238,7 @@
         <label>
             <i class="fa fa-th-large"></i> Layout</label>
 
-        <select id="node-input-layout">
+        <select style="width:70%" id="node-input-layout">
             <option value="adjust">Adjust</option>
             <option value="center">Center</option>
             <option value="expand">Expand</option>
@@ -212,23 +248,44 @@
     <!-- Layout -->
 
     <!-- List -->
-    <div class="form-row">
+    <div id="div-file" class="form-row">
         <label for="node-input-file">
             <i class="fa fa-file-image-o"></i> File</label>
 
-        <select id="node-input-file">
-            <option value="add"> Add image... </option>
-        </select>
+        <div style="display: inline-block; position: relative; width: 70%; height: 20px;">
+            <div style="position: absolute; left: 0px; right: 40px;">
+                <select style="width:100%" id="node-input-file"></select>
+            </div>
+            <a id="bt-add-new-image" class="editor-button" style="position: absolute; right: 0px; top: 0px;">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+
     </div>
     <!-- List -->
 
     <!-- Add Image -->
     <div id="upload-file">
 
-        <div class="form-row">
+        <div id="div-category" class="form-row">
             <label for="node-input-category">
                 <i class="fa fa-tag"></i> Category</label>
-            <input type="text" id="node-input-category">
+
+            <div style="display: inline-block; position: relative; width: 70%; height: 20px;">
+                <div style="position: absolute; left: 0px; right: 40px;">
+                    <select style="width:100%" id="node-input-category"></select>
+                </div>
+                <a id="bt-add-new-category" class="editor-button" style="position: absolute; right: 0px; top: 0px;">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <div id="new-category" class="form-row">
+            <label for="node-input-newCategory">
+                <i class="fa fa-tag"></i> New Category</label>
+            <input type="text" id="node-input-newCategory">
         </div>
 
         <div class="form-row">
