@@ -26,3 +26,14 @@
 		<!-- <div>The url {{ }} cannot be loaded into an iframe.</div> -->
 	</div>
 </md-content>
+
+<script>
+$('div.nr-dashboard-cardpanel > p:first-child').addClass('cardTitle');
+$('div.nr-dashboard-cardcontainer').addClass('card');
+$( '.cardTitle' ).click(function() {
+    var newwidth = $(this).css("width");
+    $(this).css("width",newwidth);
+    $(this).next('.card').slideToggle(600);
+    setTimeout(function() {$(window).trigger('resize');}, 700);
+});
+</script>
