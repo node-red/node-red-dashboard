@@ -39,3 +39,7 @@
 .nr-dashboard-cardcontainer > .visible {
 	opacity: 1;
 }
+
+.nr-dashboard-cardpanel > p:focus {
+    outline: 0;
+}
