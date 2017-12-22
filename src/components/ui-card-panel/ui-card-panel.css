@@ -43,3 +43,7 @@
 .nr-dashboard-cardpanel > p:focus {
     outline: 0;
 }
+
+.nr-dashboard-carat {
+	float:left;
+}
