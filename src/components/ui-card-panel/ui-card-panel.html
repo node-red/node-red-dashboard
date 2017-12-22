@@ -1,7 +1,7 @@
 <div layout="column" class="nr-dashboard-cardpanel">
     <p class="nr-dashboard-cardTitle" ng-click="collapse = !collapse;collapseCard()" ng-if="group.header && group.header.config.disp && group.header[group.header.length-1]!='!'">{{group.header.name}}
-	<span ng-show="!collapse" class="fa fa-caret-down"></span>
-    <span ng-show="collapse" class="fa fa-caret-up"></span>
+	<span ng-show="!collapse" class="nr-dashboard-carat fa fa-caret-down"></span>
+    <span ng-show="collapse" class="nr-dashboard-carat fa fa-caret-right"></span>
 	</p>
 	
     <div class="nr-dashboard-cardcontainer" id="{{main.selectedTab.header+'_'+group.header.name | spaceToUnderscore}}_cards" ng-transclude ng-style="{width:ctrl.width, height:ctrl.height}"></div>
