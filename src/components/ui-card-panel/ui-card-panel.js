@@ -1,4 +1,5 @@
 /* global angular */
+
 angular.module('ui').directive('uiCardPanel', [
     function() {
         return {
@@ -10,6 +11,16 @@ angular.module('ui').directive('uiCardPanel', [
             link: function (scope, element, attrs, controller) {
                 var root = element.find(".nr-dashboard-cardcontainer");
                 controller.init(root);
+				
+				scope.collapseCard = function () {
+				var slideDuration = parseInt(attrs.slideToggleDuration, 10) || 200;      
+				scope.$watch('isOpen', function(newIsOpenVal, oldIsOpenVal){
+					if(newIsOpenVal !== oldIsOpenVal){ 
+						element.stop().slideToggle(slideDuration);
+					}
+				});
+			}
             }
         };
-    }]);
+    }
+]);
