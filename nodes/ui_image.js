@@ -4,214 +4,79 @@ module.exports = function (RED) {
     var fs = require('fs');
     var path = require('path');
     var mkdirp = require('mkdirp');
+    var FileInterface = require('../src/images/FileInterface');
 
     function ImageNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
+        var fileInterface = new FileInterface();
+
         var pathDir = path.join(process.cwd(), "public", "uiimage", "upload");
 
-        ///------> Upload Files
+        ///------> API
+
         RED.httpAdmin.post('/uiimage', (req, res) => {
 
             var form = new formidable.IncomingForm();
 
             form.parse(req, function (err, fields, files) {
 
-                var category = fields['category'];                
-                var extensao = path.extname(files[0].name);
+                var params = {
+                    category: fields['category'],
+                    name: files[0].name,
+                    path: files[0].path
+                };
 
-                if (extensao != '.jpg' && extensao != '.png' && extensao != '.jpeg') {
-                    res.status(400).send("Incompatible file").end();
-                    return;
-                }
-
-                let pathBase = pathDir;
-
-                var oldpath = files[0].path;
-
-                var newpath = path.join(pathBase, files[0].name);
-
-                var pathCategory = false;
-
-                if(category != 'Uncategorized' && category != null && category != ''){
-
-                    pathBase = path.join(pathBase, category);
-
-                    newpath = path.join(pathBase, files[0].name);
-                    pathCategory = true;
-                }
-
-                mkdirp(pathBase, (err) => {
-                    if(err){
-                        console.log("ERROR - mk: ", err);
-                        res.status(500).end();
+                fileInterface.saveFile(params, (err, result) => {
+                    if (err) {
+                        res.status(err.cod).send(err).end();
                         return;
                     }
-
-                    fs.rename(oldpath, newpath, function (err) {
-                        if (err) {
-                            console.log("ERROR: ", err);
-                            res.status(500).end();
-                            return;
-                        }
-    
-                        var pathExtern = path.join("/", "uiimage", "upload", files[0].name);
-                        var reference = "Uncategorized/"+files[0].name;
-    
-                        if(pathCategory){
-                            pathExtern = path.join("/", "uiimage", "upload", category, files[0].name);
-                            reference = category + "/" + files[0].name;
-                        }
-
-                        var obj = {path: pathExtern, ref: reference};
-    
-                        res.status(201).send(obj).end();
-                    });
+                    res.status(result.cod).send(result.object).end();
                 });
-            });
-        });
 
+            });
+        }); //--> POST /uiimage
 
         RED.httpAdmin.get("/uiimage", (req, res) => {
-
-            fs.readdir(pathDir, 'utf-8', (err, files) => {
+            fileInterface.getFiles((err, result) => {
                 if (err) {
-                    res.status(500).end();
+                    res.status(err.cod).send(err).end();
                     return;
                 }
-
-                var response = [];
-                var listUncategorized = [];
-
-                var numFiles = files.length;
-
-                files.forEach(file => {
-
-                    var dirFile = path.join(pathDir, file);
-
-                    fs.stat(dirFile, (err, stat) => {
-                        if (err) {
-                            return;
-                        }
-
-                        if (stat.isDirectory()) {
-
-                            var category = file;
-
-                            fs.readdir(dirFile, 'utf-8', (err, itens) => {
-
-                                if (err) {
-                                    res.status(500).end();
-                                    return;
-                                }
-
-                                var listItens = [];
-
-                                var numFilesSub = itens.length;
-
-                                itens.forEach(item => {
-
-                                    listItens.push(item);
-
-                                    numFilesSub--;
-
-                                    if (numFilesSub === 0) {
-                                        let obj = {
-                                            name: category,
-                                            list: listItens
-                                        };
-                                        response.push(obj);
-
-                                        numFiles--;
-
-                                        if (numFiles === 0) {
-                                            let obj = {
-                                                name: "Uncategorized",
-                                                list: listUncategorized
-                                            };
-                                            response.push(obj);
-
-                                            res.status(200).send(response).end();
-                                        }
-                                    }
-                                });
-                            });
-
-                            return;
-                        }
-
-                        listUncategorized.push(file);
-
-                        numFiles--;
-
-                        if (numFiles === 0) {
-                            let obj = {
-                                name: "Uncategorized",
-                                list: listUncategorized
-                            };
-                            response.push(obj);
-
-                            res.status(200).send(response).end();
-                        }
-
-                    });
-                });
-
+                res.status(result.cod).send(result).end();
             });
-
-        });
-
+        }); //--> GET /uiimage
 
         RED.httpAdmin.get("/uiimage/:category/:id", (req, res) => {
 
-            let pathBase = path.join('/', 'uiimage', 'upload');
-            let id = req.params.id;
-            let category = req.params.category;
+            let params = {
+                id: req.params.id,
+                category: req.params.category
+            };
 
-            let pathFile = path.join(pathDir, id);
-
-            if (category == 'Uncategorized') {
-
-                fs.access(pathFile, (err) => {
-                    if (err) {
-                        res.status(404).end();
-                        return;
-                    }
-
-                    var obj = {path: path.join(pathBase, id), ref: "Uncategorized/" + id};
-
-                    res.status(200).send(obj).end();
-                });
-
-                return;
-            }
-
-            pathFile = path.join(pathDir, category, id);
-
-            fs.access(pathFile, (err) => {
+            fileInterface.getFile(params, (err, result) => {
                 if (err) {
-                    res.status(404).end();
+                    res.status(err.cod).send(err).end();
                     return;
                 }
-
-                var obj = {path: path.join(pathBase, category, id), ref: category + "/" + id};
-
-                res.status(200).send(obj).end();
+                res.status(result.cod).send(result.object).end();
             });
+        }); //--> GET /uiimage/'category'/'id'
 
-        });
-        ///------> Upload Files
+        ///------> API
 
-
-
-
+        // console.log("----->> CONFIG: ", config);
 
         var group = RED.nodes.getNode(config.group);
-        if (!group && config.templateScope !== 'global') {
+
+        if (!group) {
             return;
         }
+
         var tab = null;
+
         if (config.templateScope !== 'global') {
             tab = RED.nodes.getNode(group.config.tab);
             if (!tab) {
@@ -221,6 +86,7 @@ module.exports = function (RED) {
                 config.width = group.config.width;
             }
         }
+
         var hei = Number(config.height || 0);
         var previousTemplate = null
 
@@ -248,19 +114,15 @@ module.exports = function (RED) {
         }
 
         var done = ui.add({
-            forwardInputMessages: config.fwdInMessages,
-            storeFrontEndInputAsState: config.storeOutMessages,
             emitOnlyNewValues: false,
             node: node,
             tab: tab,
             group: group,
             control: {
                 type: 'template',
-                order: config.order,
                 width: config.width || 6,
                 height: hei,
                 format: image, //config.format,
-                templateScope: config.templateScope,
             },
             beforeEmit: function (msg, value) {
                 var properties = Object.getOwnPropertyNames(msg).filter(function (p) {
@@ -300,5 +162,4 @@ module.exports = function (RED) {
         node.on("close", done);
     }
     RED.nodes.registerType("ui_image", ImageNode);
-    RED.library.register("uiimage");
 };
