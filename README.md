@@ -1,5 +1,7 @@
 # node-red-dashboard
 
+[![NPM version](https://badge.fury.io/js/node-red-dashboard.svg)](http://badge.fury.io/js/node-red-dashboard)
+
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard.
 
