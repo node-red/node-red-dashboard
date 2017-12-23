@@ -1,5 +1,9 @@
 
-### 2.7.1: Maintenance Release
+### 2.8.0-beta: Milestone Release
+
+**Enhancements**
+
+ - Allow groups to be collapsed (extra option in group config) - PR #333 Issue #73 and #177
 
 **Fixes**
 
