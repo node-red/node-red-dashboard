@@ -8,6 +8,7 @@
             "group" : "Group",
             "unassigned" : "unassigned"
         },
-        "display-name" : "Display group name"
+        "display-name" : "Display group name",
+        "collapse-name" : "Allow group to be collapsed"
     }
 }

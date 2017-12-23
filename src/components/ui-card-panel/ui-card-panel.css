@@ -26,6 +26,17 @@
     font-weight: 500;
 }
 
+.nr-dashboard-cardcarat:focus {
+    outline: 0;
+}
+
+.nr-dashboard-cardcarat {
+    float: right;
+    vertical-align: baseline;
+    font-size: 1.2em;
+    margin-right: 12px;
+}
+
 .nr-dashboard-cardcontainer {
 	position: relative;
 }
@@ -38,12 +49,4 @@
 
 .nr-dashboard-cardcontainer > .visible {
 	opacity: 1;
-}
-
-.nr-dashboard-cardpanel > p:focus {
-    outline: 0;
-}
-
-.nr-dashboard-carat {
-	float:left;
 }

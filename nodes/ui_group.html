@@ -8,10 +8,11 @@
         category: 'config',
         defaults: {
             name: {value: c_("label.default")},
-            tab: {type:"ui_tab",required: true },
+            tab: {type:"ui_tab", required: true },
             order: {value: 0},
             disp: {value: true},
-            width: {value: 6}
+            width: {value: 6},
+            collapse: {value: false}
         },
         sort: function(A,B) {
             if (A.tab !== B.tab) {
@@ -40,6 +41,15 @@
                 width: "#node-config-input-width",
                 auto: false
             });
+            $("#node-config-input-disp").change(function() {
+                if ($("#node-config-input-disp").is(":checked")) {
+                    $("#group-collapse-flag").show();
+                }
+                else {
+                    $("#group-collapse-flag").hide();
+                    $("#node-config-input-collapse").prop("checked",false);
+                }
+            });
         }
     });
 </script>
@@ -60,6 +70,9 @@
     </div>
     <div class="form-row">
         <input style="margin:8px 0 10px 102px; width:20px;" type="checkbox" checked id="node-config-input-disp"> <label style="width:auto" for="node-config-input-disp"><span data-i18n="ui_group.display-name"></span></label>
+    </div>
+    <div class="form-row" id="group-collapse-flag">
+        <input style="margin:8px 0 10px 102px; width:20px;" type="checkbox" id="node-config-input-collapse"> <label style="width:auto" for="node-config-input-collapse"><span data-i18n="ui_group.collapse-name"></span></label>
     </div>
 </script>
 
