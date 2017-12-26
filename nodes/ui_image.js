@@ -65,6 +65,25 @@ module.exports = function (RED) {
             });
         }); //--> GET /uiimage/'category'/'id'
 
+        RED.httpAdmin.delete("/uiimage/:category/:id", (req, res) => {
+
+            let params = {
+                id: req.params.id,
+                category: req.params.category
+            };
+
+            fileInterface.deleteFile(params, (err, result) => {
+                if (err) {
+                    res.status(err.cod).send(err).end();
+                    return;
+                }
+
+                res.status(result.cod).end();
+
+            });
+
+        }); //--> DELETE /uiimage/'category'/'id'
+
         ///------> API
 
         // console.log("----->> CONFIG: ", config);

@@ -48,9 +48,6 @@
             $("#upload-file").hide();
             $("#image-preview").hide();
 
-            if (that.path.path != null) {
-                $("#image-preview").attr('src', that.path.path).show();
-            }
 
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -63,6 +60,8 @@
             function getListImages(selected) {
 
                 $.get('/uiimage', function (data) {
+
+                    var found = false;
 
                     data.object.forEach(function (element) {
 
@@ -78,6 +77,7 @@
 
                             if (selected == (category + '/' + item)) {
                                 option = $("<option selected></option>");
+                                found = true;
                             }
 
                             option.val(category + '/' + item);
@@ -88,6 +88,10 @@
                         });
 
                         $("#node-input-file").append(optgroup);
+
+                        if (found) {
+                            $("#image-preview").attr('src', that.path.path).show();
+                        }
 
                     });
 
@@ -106,7 +110,7 @@
             }
 
             $("#node-input-file").change(function () {
-                var value = $('#node-input-file').val()
+                var value = $('#node-input-file').val();
 
                 if (value != null) {
                     var url = '/uiimage/' + value;
@@ -116,6 +120,30 @@
                         $("#image-preview").attr('src', data.path).show();
                     });
                 }
+            });
+
+            $("#bt-remove-image").click(function () {
+                var value = $('#node-input-file').val();
+                console.log("O que temos? " + value);
+
+                var newUrl = "/uiimage/" + value;
+
+                $.ajax({
+                    url: newUrl,
+                    type: 'DELETE',
+                    cache: false,
+                    processData: false, // Don't process the files
+                    contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+                    success: function (data, textStatus) {
+                        getListImages(undefined);
+                        that.path = null;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log('ERRORS: ' + errorThrown);
+                    }
+                });
+
+
             });
 
             $("#bt-add-new-image").click(function () {
@@ -161,14 +189,14 @@
 
             function uploadFiles(event) {
 
-                if(lockUpload){
+                if (lockUpload) {
                     return;
                 }
 
                 let category = $("#node-input-category").val();
                 let newCategory = $("#node-input-newCategory").val();
 
-                if(setNewCategory){
+                if (setNewCategory) {
                     category = newCategory;
                 }
 
@@ -253,12 +281,26 @@
             <i class="fa fa-file-image-o"></i> File</label>
 
         <div style="display: inline-block; position: relative; width: 70%; height: 20px;">
-            <div style="position: absolute; left: 0px; right: 40px;">
+
+            <div style="position: absolute; left: 0px; right: 50px;">
                 <select style="width:100%" id="node-input-file"></select>
             </div>
-            <a id="bt-add-new-image" class="editor-button" style="position: absolute; right: 0px; top: 0px;">
-                <i class="fa fa-plus"></i>
-            </a>
+
+            <div class="btn-group" style="position: absolute; right: 0px; top: 0px;">
+                <a class="editor-button" data-toggle="dropdown">
+                    <i class="fa fa-book"></i>
+                    <i class="fa fa-caret-down"></i>
+                </a>
+
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li>
+                        <a id="bt-add-new-image" tabindex="-1" href="#">Add new...</a>
+                    </li>
+                    <li>
+                        <a id="bt-remove-image" tabindex="-1" href="#">Remove image...</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>

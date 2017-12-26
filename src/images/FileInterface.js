@@ -23,6 +23,11 @@ function listFilesDir(pathDir, cb) {
 
         let countFiles = files.length;
 
+        if (countFiles === 0) {
+            doCallback(null, image);
+            return;
+        }
+
         files.forEach(file => {
 
             fs.stat(path.join(pathDir, file), (err, stat) => {
@@ -301,5 +306,43 @@ class FileInterface {
             });
         });
     } //--> getFile
+
+    deleteFile(params, cb) {
+        let callbackDone = false;
+
+        function doCallback(err, data) {
+
+            console.log("CB Delete");
+
+            if (callbackDone) return;
+            callbackDone = true;
+            cb(err, data);
+        }
+
+        var file = path.join(this.pathDir, params.id);
+
+        if (params.category != 'Uncategorized') {
+            file = path.join(this.pathDir, params.category, params.id);
+        }
+
+        console.log("Delete file: ", file);
+
+        fs.unlink(file, (err) => {
+
+            if (err) {
+                let obj = {
+                    message: err,
+                    cod: 404
+                };
+                doCallback(obj, null);
+                return;
+            }
+
+            doCallback(null, {
+                cod: 301
+            });
+
+        });
+    } //--> deleteFile
 }
 module.exports = FileInterface;
