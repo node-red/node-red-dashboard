@@ -2,8 +2,8 @@
     padding: 0 12px;
 }
 
-.nr-dashboard-text p {
-    margin: 0.1em;
+.nr-dashboard-text .label {
+    margin-right: 0.5em;
 }
 
 .nr-dashboard-text .value {
