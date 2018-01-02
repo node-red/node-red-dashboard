@@ -3,6 +3,8 @@ module.exports = function(RED) {
 
     function NumericNode(config) {
         RED.nodes.createNode(this, config);
+        this.pt = config.passthru;
+        this.state = [" "," "];
         var node = this;
         node.status({});
 
@@ -30,10 +32,22 @@ module.exports = function(RED) {
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic || msg.topic;
-                node.status({shape:"dot",fill:"grey",text:msg.payload});
+                if (node.pt) {
+                    node.status({shape:"dot",fill:"grey",text:msg.payload});
+                }
+                else {
+                    node.state[1] = msg.payload;
+                    node.status({shape:"dot",fill:"grey",text:node.state[1] + " | " + node.state[1]});
+                }
             },
             convert: ui.toFloat.bind(this, config)
         });
+        if (!node.pt) {
+            node.on("input", function(msg) {
+                node.state[0] = msg.payload;
+                node.status({shape:"dot",fill:"grey",text:node.state[0] + " | " + node.state[1]});
+            });
+        }
         node.on("close", done);
     }
     RED.nodes.registerType("ui_numeric", NumericNode);

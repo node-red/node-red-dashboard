@@ -19,6 +19,9 @@ module.exports = function(RED) {
     }
     function SwitchNode(config) {
         RED.nodes.createNode(this, config);
+        this.pt = config.passthru;
+        this.state = ["off"," "];
+        this.decouple = (config.decouple === "true") ? false : true;
         var node = this;
         node.status({});
 
@@ -86,12 +89,21 @@ module.exports = function(RED) {
                 if (offvalueType === "date") { myOffValue = Date.now(); }
                 else { myOffValue = RED.util.evaluateNodeProperty(offvalue,offvalueType,node); }
 
-                if (RED.util.compareObjects(myOnValue,payload)) { return true; }
-                else if (RED.util.compareObjects(myOffValue,payload)) { return false; }
+                if (RED.util.compareObjects(myOnValue,payload)) { node.state[0] = "on"; return true; }
+                else if (RED.util.compareObjects(myOffValue,payload)) { node.state[0] = "off"; return false; }
                 else { return oldval; }
             },
             convertBack: function (value) {
-                node.status({fill:(value?"green":"red"),shape:(value?"dot":"ring"),text:value?"on":"off"});
+                node.state[1] = value?"on":"off";
+                if (node.pt) {
+                    node.status({fill:(value?"green":"red"),shape:(value?"dot":"ring"),text:value?"on":"off"});
+                }
+                else {
+                    var col = (node.decouple) ? ((node.state[1]=="on")?"green":"red") : ((node.state[0]=="on")?"green":"red");
+                    var shp = (node.decouple) ? ((node.state[1]=="on")?"dot":"ring") : ((node.state[0]=="on")?"dot":"ring");
+                    var txt = (node.decouple) ? (node.state[0] +" | "+node.state[1].toUpperCase()) : (node.state[0].toUpperCase() +" | "+node.state[1])
+                    node.status({fill:col, shape:shp, text:txt});
+                }
                 var payload = value ? onvalue : offvalue;
                 var payloadType = value ? onvalueType : offvalueType;
 
@@ -103,6 +115,15 @@ module.exports = function(RED) {
                 msg.topic = config.topic || msg.topic;
             }
         });
+
+        if (!node.pt) {
+            node.on("input", function(msg) {
+                var col = (node.state[0]=="on") ? "green" : "red";
+                var shp = (node.state[0]=="on") ? "dot" : "ring";
+                var txt = (node.decouple) ? (node.state[0] +" | "+node.state[1].toUpperCase()) : (node.state[0].toUpperCase() +" | "+node.state[1])
+                node.status({fill:col, shape:shp, text:txt});
+            });
+        }
         node.on("close", done);
     }
     RED.nodes.registerType("ui_switch", SwitchNode);

@@ -4,6 +4,7 @@
 **Enhancements**
 
  - Allow groups to be collapsed (extra option in group config) - PR #333 Issue #73 and #177
+ - Add a bit more status to switch, slider, numeric and dropdown - Issue #335
 
 **Fixes**
 
