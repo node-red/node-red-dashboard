@@ -4,6 +4,8 @@
 
 .nr-dashboard-slider-v {
     flex-direction: column;
+    padding: 0;
+    font-size: small;
 }
 
 .nr-dashboard-slider p.label {

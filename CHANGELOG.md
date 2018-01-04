@@ -10,6 +10,7 @@
 **Fixes**
 
  - Fix text time input format to report in millisecs from local midnight
+ - Fix change tab event to report correctly when switching to tab 0
 
 ### 2.7.0: Milestone Release
 
