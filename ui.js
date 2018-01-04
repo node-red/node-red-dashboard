@@ -345,7 +345,7 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-change', function(index) {
             var name = "";
-            if ((index !== undefined) && !isNaN(index) && (menu.length > 0) && (index <= menu.length)) {
+            if ((index != null) && !isNaN(index) && (menu.length > 0) && (index <= menu.length)) {
                 name = (menu[index].hasOwnProperty("header") && typeof menu[index].header !== 'undefined') ? menu[index].header : menu[index].name;
                 ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
             }

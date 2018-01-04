@@ -2,10 +2,10 @@
     flex layout="row"
     layout-align="space-between center"
     class="nr-dashboard-slider"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="{'nr-dashboard-disabled':me.item.disabled, 'nr-dashboard-slider-v':(me.item.width < me.item.height) }"
     ng-swipe-right="$event.stopPropagation();"
     ng-swipe-left="$event.stopPropagation();">
-    <p class="label" ng-bind-html="me.item.getLabel()"></p>
+    <p ng-show="{{me.item.width >= me.item.height}}" class="label" ng-bind-html="me.item.getLabel()"></p>
     <md-slider flex="100"
         min="{{me.item.min}}"
         max="{{me.item.max}}"
@@ -13,5 +13,8 @@
         ng-model="me.item.value"
         aria-label="{{me.item.label}}"
         ng-change="me.valueChanged(20)"
-        style="z-index:1; touch-action:none; min-width:32px;"/>
+        style="z-index:1; touch-action:none; min-width:32px;"
+        ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
+    ></md-slider>
+    <p ng-hide="{{me.item.width >= me.item.height}}" class="label-v" ng-bind-html="me.item.getLabel()"></p>
 </md-card>
