@@ -6,6 +6,8 @@
  - Allow groups to be collapsed (extra option in group config) - PR #333 Issue #73 and #177
  - Add a bit more status to switch, slider, numeric and dropdown - Issue #335
  - Add vertical slider capability if height > width
+ - Add scope.theme to ui_template scope to allow users to pick up default colours
+ - Add scope watch example to ui_template info panel
 
 **Fixes**
 
