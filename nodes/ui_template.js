@@ -17,6 +17,13 @@ module.exports = function(RED) {
         }
         var hei = Number(config.height|| 0);
         var previousTemplate = null
+        var theme = ui.getTheme();
+        var colortheme = {};
+        for (var i in theme) {
+            if (theme.hasOwnProperty(i)) {
+                colortheme[i.replace(/-/g, "_")] = theme[i].value;
+            }
+        }
 
         var done = ui.add({
             forwardInputMessages: config.fwdInMessages,
@@ -32,6 +39,7 @@ module.exports = function(RED) {
                 height: hei,
                 format: config.format,
                 templateScope: config.templateScope,
+                theme: colortheme
             },
             beforeEmit: function(msg, value) {
                 var properties = Object.getOwnPropertyNames(msg).filter(function (p) { return p[0] != '_'; });

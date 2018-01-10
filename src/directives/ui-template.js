@@ -19,6 +19,7 @@ angular.module('ui').directive('uiTemplate', ['$compile', '$rootScope', 'UiEvent
                     innerScope.$destroy();
                 }
                 innerScope = createInnerScope(id);
+                innerScope.theme = scope.$eval('me.item.theme');
                 window.scope = innerScope;
                 element.html(value);
                 delete window.scope;
