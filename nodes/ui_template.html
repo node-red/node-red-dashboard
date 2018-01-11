@@ -144,23 +144,23 @@
         <input type="text" id="node-input-name">
     </div>
     <div id="template-pass-store">
-    <div class="form-row">
+    <div class="form-row" style="margin-bottom:0px;">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; width:auto; vertical-align:top;">
         <label for="node-input-fwdInMessages" style="width:70%;"> Pass through messages from input.</label>
     </div>
-    <div class="form-row">
+    <div class="form-row" style="margin-bottom:0px;">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; width:auto; vertical-align:top;">
         <label for="node-input-storeOutMessages" style="width:70%;"> Add output messages to stored state.</label>
     </div>
     </div>
-    <div class="form-row">
+    <div class="form-row" style="margin-bottom:0px;">
         <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
         <input type="hidden" id="node-input-format">
     </div>
     <div class="form-row node-text-editor-row">
-        <div style="height:250px;" class="node-text-editor" id="node-input-format-editor" ></div>
+        <div style="height:250px; min-height:100px" class="node-text-editor" id="node-input-format-editor" ></div>
     </div>
 </script>
 
@@ -178,22 +178,22 @@
     Will display if the number received as <code>msg.payload</code> is even or odd. It will also
     change the color of the text to green if the number is even or red if odd.<br/>
     The next example shows how to set a unique id for your template, pick up the default theme colour,
-    and generically watch for any incoming message.</p>
+    and watch for any incoming message.</p>
     <pre style="font-size:smaller;">
 &lt;div id="{{'my_'+$id}}" style="{{'color:'+theme.base_color}}"&gt;Some text&lt;/div&gt;
 &lt;script&gt;
 console.log("ID",scope.$id);
 console.log("THEME",scope.theme);
-  (function(scope) {
-    scope.$watch('msg', function(msg) {
-      if (msg) {
-        // Do something when msg arrives
-        $("#my_"+scope.$id).html(msg.payload);
-      }
-    });
-  })(scope);
+(function(scope) {
+  scope.$watch('msg', function(msg) {
+    if (msg) {
+      // Do something when msg arrives
+      $("#my_"+scope.$id).html(msg.payload);
+    }
+  });
+})(scope);
 &lt;/script&gt;</pre>
-    <p>Templates made in this way can be replicated and remain independent of each other.</p>
+    <p>Templates made in this way can be copied and remain independent of each other.</p>
     <p><b>Sending a message:</b><br>
     <pre style="font-size:smaller;">
 &lt;script&gt;
