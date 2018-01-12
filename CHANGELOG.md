@@ -13,6 +13,7 @@
 
  - Fix text time input format to report in millisecs from local midnight
  - Fix change tab event to report correctly when switching to tab 0
+ - Fix template editor minimum height so always visible
 
 ### 2.7.0: Milestone Release
 
