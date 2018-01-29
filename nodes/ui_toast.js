@@ -16,6 +16,13 @@ module.exports = function(RED) {
         this.topic = config.topic;
         var node = this;
 
+        var noscript = function (content) {
+            content = content.replace(/<.*cript.*\/scrip.*>/ig, '');
+            content = content.replace(/ on\w+=".*"/g, '');
+            content = content.replace(/ on\w+=\'.*\'/g, '');
+            return content;
+        }
+
         var done = ui.add({
             node: node,
             control: {},
@@ -30,6 +37,7 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
             if (node.position !== "dialog") { delete msg.socketid; }
+            msg.payload = noscript(msg.payload);
             ui.emitSocket('show-toast', {
                 title: node.topic || msg.topic,
                 message: msg.payload,
