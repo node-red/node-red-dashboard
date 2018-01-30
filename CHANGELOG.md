@@ -1,5 +1,5 @@
 
-### 2.8.0-beta: Milestone Release
+### 2.8.0: Milestone Release
 
 **Enhancements**
 
@@ -11,10 +11,10 @@
 
 **Fixes**
 
- - Fix text time input format to report in millisecs from local midnight
+ - Fix text time input format to report in milliseconds from local midnight
  - Fix change tab event to report correctly when switching to tab 0
  - Fix template editor minimum height so always visible
- - Fix sanitize notification html input, but allow basic markup.
+ - Fix sanitise notification html input, but allow basic markup.
 
 ### 2.7.0: Milestone Release
 
