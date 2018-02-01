@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.8.0",
+    "version": "2.8.1-beta",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"

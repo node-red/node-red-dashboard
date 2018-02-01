@@ -1,4 +1,10 @@
 
+### 2.8.1-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix references to FontAwesome to pin to version 4.7.0 icons
+
 ### 2.8.0: Milestone Release
 
 **Enhancements**
