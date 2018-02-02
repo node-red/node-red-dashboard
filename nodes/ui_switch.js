@@ -80,7 +80,7 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
-            convert: function (payload, oldval) {
+            convert: function (payload, oldval, msg) {
                 var myOnValue,myOffValue;
 
                 if (onvalueType === "date") { myOnValue = Date.now(); }
@@ -89,8 +89,8 @@ module.exports = function(RED) {
                 if (offvalueType === "date") { myOffValue = Date.now(); }
                 else { myOffValue = RED.util.evaluateNodeProperty(offvalue,offvalueType,node); }
 
-                if (RED.util.compareObjects(myOnValue,payload)) { node.state[0] = "on"; return true; }
-                else if (RED.util.compareObjects(myOffValue,payload)) { node.state[0] = "off"; return false; }
+                if (RED.util.compareObjects(myOnValue,msg.payload)) { node.state[0] = "on"; return true; }
+                else if (RED.util.compareObjects(myOffValue,msg.payload)) { node.state[0] = "off"; return false; }
                 else { return oldval; }
             },
             convertBack: function (value) {

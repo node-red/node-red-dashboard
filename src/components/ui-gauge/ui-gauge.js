@@ -88,7 +88,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     pointer: true,
                                     relativeGaugeSize: true,
                                     textRenderer: function(v) {
-                                        return scope.$eval('me.item.getText()');
+                                        return scope.$eval('me.item.getText()') || 0;
                                     }
                                 }
                                 if (scope.$eval('me.item.gtype') === 'donut') {

@@ -1,9 +1,14 @@
 
 ### 2.8.1-beta: Maintenance Release
 
+**Enhancements**
+
+ - Let Gauge widget accept {{payload.foo.bar}} style property input
+
 **Fixes**
 
  - Fix references to FontAwesome to pin to version 4.7.0 icons
+ - Give numeric field a width so buttons don't wobble (so much)
 
 ### 2.8.0: Milestone Release
 
