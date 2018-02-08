@@ -43,6 +43,7 @@ module.exports = function (RED) {
             node: node,
             tab: tab,
             group: group,
+            emitOnlyNewValues: false,
             control: {
                 type: 'gauge',
                 name: config.name,

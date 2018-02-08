@@ -9,6 +9,7 @@
 
  - Fix references to FontAwesome to pin to version 4.7.0 icons
  - Give numeric field a width so buttons don't wobble (so much)
+ - Let gauge change labels more dynamically
 
 ### 2.8.0: Milestone Release
 
