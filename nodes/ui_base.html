@@ -755,7 +755,7 @@
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
                 $('<label class="nr-db-theme-label">').html(c_("theme.custom-profile")).appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="node-input-name" placeholder="profile name (not blank)">')
+                $('<input type="text" id="ui-sidebar-name" placeholder="profile name (not blank)">')
                 .val(c_("theme.custom-profile-name"))
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
@@ -1553,7 +1553,7 @@
                         $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
 
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
-                        $("#node-input-name").val(globalDashboardNode.theme.customTheme.name);
+                        $("#ui-sidebar-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {
                             $("#custom-theme-library-container").show();
                             $("#custom-theme-settings").show();
@@ -1588,7 +1588,8 @@
                                 type:"theme", // the type of object the library is for
                                 editor: editor, // the field name the main text body goes to
                                 mode:"ace/mode/javascript",
-                                fields:['name']
+                                fields:['name'],
+                                elementPrefix:"ui-sidebar-"
                             });
                         }
 
@@ -1636,8 +1637,8 @@
                             //Update theme object if necessary
                             if (JSON.stringify(editorObject.theme) !== JSON.stringify(globalDashboardNode.theme.themeState)) {
                                 globalDashboardNode.theme.themeState = editorObject.theme;
-                                if ($("#node-input-name").val() !== globalDashboardNode.theme.customTheme.name) {
-                                    globalDashboardNode.theme.customTheme.name = $("#node-input-name").val();
+                                if ($("#ui-sidebar-name").val() !== globalDashboardNode.theme.customTheme.name) {
+                                    globalDashboardNode.theme.customTheme.name = $("#ui-sidebar-name").val();
                                     globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["base-color"].value;
                                     setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
                                     generateColours(globalDashboardNode.theme.themeState["base-color"].value);
