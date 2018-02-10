@@ -235,7 +235,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
-                dateFormat = ui.site.dateFormat || dateFormat;
+                dateFormat = ui.site.dateFormat || "DD/MM/YYYY";
                 if (ui.site.hasOwnProperty("sizes")) {
                     sizes.setSizes(ui.site.sizes);
                     main.sizes = ui.site.sizes;
