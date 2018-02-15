@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.8.1-beta",
+    "version": "2.8.1",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -67,7 +67,7 @@
         }
     },
     "dependencies": {
-        "serve-static": "^1.13.0",
+        "serve-static": "~1.13.2",
         "socket.io": "^1.7.4"
     },
     "devDependencies": {
@@ -75,7 +75,7 @@
         "angular-animate": "~1.5.11",
         "angular-aria": "~1.5.11",
         "angular-chart.js": "^1.1.1",
-        "angular-material": "^1.1.6",
+        "angular-material": "~1.1.7",
         "angular-material-icons": "^0.7.1",
         "angular-messages": "~1.5.11",
         "angular-mocks": "~1.5.11",
