@@ -182,8 +182,6 @@
     <pre style="font-size:smaller;">
 &lt;div id="{{'my_'+$id}}" style="{{'color:'+theme.base_color}}"&gt;Some text&lt;/div&gt;
 &lt;script&gt;
-console.log("ID",scope.$id);
-console.log("THEME",scope.theme);
 (function(scope) {
   scope.$watch('msg', function(msg) {
     if (msg) {
