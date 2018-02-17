@@ -67,6 +67,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         }
                     };
 
+                    me.item.maxWidth = (me.item.max + me.item.step).toString().length * 10;
                     var range = me.item.max - me.item.min;
                     var promise = null;
                     me.periodicChange = function (delta) {
