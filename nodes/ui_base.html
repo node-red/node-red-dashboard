@@ -880,6 +880,9 @@
                     $("#"+id+"-reset").css({opacity:1});
                     globalDashboardNode.theme.themeState[id].edited = true;
                     globalDashboardNode.theme.themeState[id].value = value;
+                    if (editor) {
+                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
+                    }
                     RED.nodes.dirty(true);
                 }
 
@@ -921,7 +924,7 @@
                     //take off -reset
                     var elementID = e.target.id.split('-reset')[0];
                     if (globalDashboardNode.theme.themeState[elementID].edited) {
-                        var defaultColor = globalDashboardNode.theme.themeState['base-color'].default;
+                        var defaultColor = globalDashboardNode.theme.themeState['base-color'].value;
                         var colour;
                         //set colour
                         if (elementID === 'base-color') {
