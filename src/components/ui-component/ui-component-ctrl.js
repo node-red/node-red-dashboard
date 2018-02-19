@@ -67,8 +67,11 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         }
                     };
 
-                    me.item.maxWidth = (me.item.max + me.item.step).toString().length * 10;
-                    var range = me.item.max - me.item.min;
+                    var regex = /({{([^}}]+)}})/ig
+                    var fl = me.item.format.replace(regex, "").length * 9.5;
+                    var mnw = (me.item.min + me.item.step).toString().length * 9.5;
+                    var mxw = (me.item.max + me.item.step).toString().length * 9.5;
+                    me.item.minWidth = (mnw > mxw ? mnw : mxw) + fl;
                     var promise = null;
                     me.periodicChange = function (delta) {
                         changeValue(delta);
