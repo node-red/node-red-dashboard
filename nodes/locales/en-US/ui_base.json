@@ -1,7 +1,7 @@
 {
     "ui_base" : {
         "label" : {
-            "dashboard" : "dashboard",
+            "dashboard" : "mdashboard",
             "title" : "Title",
             "options" : "Options",
             "date-format" : "Date Format",
