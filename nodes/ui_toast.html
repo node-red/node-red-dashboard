@@ -1,10 +1,11 @@
 <script type="text/javascript">
     RED.nodes.registerType('ui_toast', {
-        category: 'dashboard',
+        category: 'mdashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
             position: {value: 'top right'},
             displayTime: {value: '3'},
+            multi: {value: true},
             highlight: {value: ''},
             outputs: {value: 0},
             ok: {value: 'OK', required: true},
@@ -52,6 +53,10 @@
             <option value="bottom left">Bottom Left</option>
             <option value="dialog">OK / Cancel Dialog</option>
         </select>
+    </div>
+    <div class="form-row">
+            <label style="width:auto" for="node-input-displaymulti"><i class="fa fa-arrow-right"></i>  Update Multi Users or Unchecked Single User </label>
+            <input type="checkbox" id="node-input-displaymulti"  style="display:inline-block; width:auto;   vertical-align:top;">
     </div>
     <div class="form-row" id="node-toast-displaytime">
         <label for="node-input-displayTime"><i class="fa fa-clock-o"></i> Timeout (S)</label>
