@@ -1,6 +1,6 @@
 {
     "name": "node-red-mdashboard",
-    "version": "2.8.1",
+    "version": "2.8.2",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
