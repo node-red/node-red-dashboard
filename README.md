@@ -1,7 +1,7 @@
 # node-red-mdashboard
 
-//TODO- change this
-![NPM version](https://badge.fury.io/js/node-red-dashboard.svg)
+
+[![npm version](https://badge.fury.io/js/node-red-mdashboard.svg)](https://badge.fury.io/js/node-red-mdashboard)
 
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard. This project contains a set of changes to the original node-red dashboard to make it multi-user compatible. Specifically, widget state is emitted only to the socket origin that caused the change.
