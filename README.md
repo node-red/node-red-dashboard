@@ -1,14 +1,15 @@
-# node-red-mdashboard
+# mdashboard
 
 
-[![npm version](https://badge.fury.io/js/node-red-mdashboard.svg)](https://badge.fury.io/js/node-red-mdashboard)
+[![npm version](https://badge.fury.io/js/mdashboard.svg)](https://badge.fury.io/js/mdashboard)
+Note that this is not the official node-red-dashboard. This is a fork which solves a very specific requirement- widget state is emitted only to the socket origin that caused the change. For example, if two users have the same dashboard open and one user types into a text input, the other user will not get the text update. This is a meant as a replacement for the original node-red-dashboard- **DO NOT INSTALL** this with the node-red-dashboard- it can result in unpredictable behaviour.
+
+Most of the documentation is left as is from the original project as it is applicable to the current project as well.
 
 This module provides a set of nodes in Node-RED to quickly create a live data
-dashboard. This project contains a set of changes to the original node-red dashboard to make it multi-user compatible. Specifically, widget state is emitted only to the socket origin that caused the change.
-           For example, if two users have the same dashboard open and one user types into a text input, the other user will not get the text update.
-           This is a meant as a replacement for the original node-red-dashboard- **DO NOT INSTALL** this with the node-red-dashboard- it can result in unpredictable behaviour.
-
-For the latest updates see the [CHANGELOG.md](https://github.com/umasudhan/node-red-dashboard/blob/master/CHANGELOG.md)
+dashboard. 
+           
+For the latest updates see the [CHANGELOG.md](https://github.com/umasudhan/mdashboard/blob/master/CHANGELOG.md)
 
 <img src="http://nodered.org/images/dashboarde.png"/>
 
@@ -44,7 +45,7 @@ It is advisable to use multiple groups if possible, rather than one big group, s
 
 #### Dashboard sidebar
 
-The widget layout is managed by a `dashboard` tab in the sidebar of the Node-RED editor.
+The widget layout is managed by a `mdashboard` tab in the sidebar of the Node-RED editor.
 
 ##### Layout
 
@@ -74,7 +75,7 @@ Each node may parse the `msg.payload` to make it suitable for display. This conv
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
-Most ui widgets can also be configured by using a `msg.ui_control` message - see **[config-fields.md](https://github.com/node-red/node-red-dashboard/blob/master/config-fields.md)**
+Most ui widgets can also be configured by using a `msg.ui_control` message - see **[config-fields.md](https://github.com/umasudhan/mdashboard/blob/master/config-fields.md)**
 for futher details.
 
   - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.
