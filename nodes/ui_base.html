@@ -170,7 +170,7 @@
         background: none;
         border: none;
         margin-top: 3px;
-        display: inline-block;
+        display: none; /*changed to hide the launch dashboard link button*/
         margin: 3px 0px 0px 3px;
         height: 32px;
         line-height: 29px;
@@ -238,7 +238,7 @@
 
     // convert to i18 text
     function c_(x) {
-        return RED._("node-red-dashboard/ui_base:ui_base."+x);
+        return RED._("node-red-mdashboard/ui_base:ui_base."+x);
     }
 
     // Try to load dist version first
@@ -258,7 +258,7 @@
             label: function() { return this.name || 'Node-RED Dashboard'; },
             labelStyle: function() { return this.name?"node_label_italic":""; },
             onpaletteremove: function() {
-                RED.sidebar.removeTab("dashboard");
+                RED.sidebar.removeTab("mdashboard");
                 RED.events.off("editor:save",editSaveEventHandler);
                 RED.events.off("nodes:add",nodesAddEventHandler);
                 RED.events.off("nodes:remove",nodesRemoveEventHandler);
