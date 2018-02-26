@@ -137,7 +137,7 @@ function add(opt) {
             var state = replayMessages[opt.node.id];
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.disabled = !msg.enabled;
-            io.emit(updateValueEventName, state);
+            // io.emit(updateValueEventName, state);
         }
 
         // remove res and req as they are often circular
