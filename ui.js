@@ -76,7 +76,7 @@ function emitSocket(event, data) {
         io.to(data.socketid).emit(event,data);
     }
     else {
-        io.emit(event, data);
+        //io.emit(event, data);
     }
 }
 
@@ -235,11 +235,18 @@ function add(opt) {
             addField("color");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
+            toEmit.socketid = msg.socketid;
 
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
-            io.emit(updateValueEventName, toEmit);
-            replayMessages[opt.node.id] = toStore;
+            /*
+                Commented out for multi user dash- update only the particular socket
+                io.emit(updateValueEventName, toEmit);
+                replayMessages[opt.node.id] = toStore;
+            */
+            if (toEmit.socketid) {
+                io.to(toEmit.socketid).emit(updateValueEventName, toEmit);
+            }
 
             // Handle the node output
             if (opt.forwardInputMessages && opt.node._wireCount) {
