@@ -19,7 +19,7 @@ Node-RED-mDashboard requires Node-RED version 0.14 or more recent.
 
 ## Install
 
-To install the stable version use the `Menu - Manage palette` option and search for `node-red-mdashboard`.
+To install the stable version use the `Menu - Manage palette` option and search for `mdashboard`.
 
 Open your Node-RED instance and you should have UI nodes available in the palette and a new `mdashboard` tab in the
 right side panel. The UI interface is available at <http://localhost:1880/ui> (if the default settings are used).
