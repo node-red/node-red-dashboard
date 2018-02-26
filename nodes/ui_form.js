@@ -14,6 +14,7 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
+            storeFrontEndInputAsState: false,
             control: {
                 type: 'form',
                 label: config.label,

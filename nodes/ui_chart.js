@@ -18,6 +18,7 @@ module.exports = function(RED) {
         if (!tab || !group) { return; }
         var options = {
             emitOnlyNewValues: true,
+            storeFrontEndInputAsState: false,
             node: node,
             tab: tab,
             group: group,
