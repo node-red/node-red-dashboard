@@ -16,6 +16,7 @@ module.exports = function(RED) {
         // number of pixels wide the chart will be... 43 = sizes.sx - sizes.px
         var pixelsWide = ((config.width || group.config.width || 6) - 1) * 43 - 15;
         if (!tab || !group) { return; }
+        var dnow = Date.now();
         var options = {
             emitOnlyNewValues: true,
             node: node,
@@ -220,6 +221,23 @@ module.exports = function(RED) {
                             }
                         }
                         if (swap) { converted.newPoint = true; } // if inserted then update whole chart
+
+                        if (Date.now() > (dnow + 60000)) {
+                            dnow = Date.now();
+                            for (var x = 0; x < oldValue[0].values.data.length; x++) {
+                                for (var y = 0; y < oldValue[0].values.data[x].length; y++) {
+                                    if (oldValue[0].values.data[x][y].x >= limitTime) {
+                                        break;  // stop as soon as we are in time window.
+                                    }
+                                    else {
+                                        oldValue[0].values.data[x].shift();
+                                        converted.newPoint = true;
+                                        y = y - 1;
+                                    }
+                                }
+                            }
+                        }
+
                     }
                     else {
                         oldValue[0].values.data[s][l] = value;

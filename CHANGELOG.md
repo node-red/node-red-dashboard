@@ -1,4 +1,9 @@
 
+### 2.8.2-beta: Maintenance Release
+
+- Better fix for numeric field widths Issue #344
+- Fix some theme <-> library consistency issues
+
 ### 2.8.1: Maintenance Release
 
 **Enhancements**
@@ -8,7 +13,7 @@
 **Fixes**
 
  - Fix references to FontAwesome to pin to version 4.7.0 icons
- - Give numeric field a width so buttons don't wobble (so much)
+ - Give numeric field a width so buttons don't wobble (so much) #344
  - Let gauge change labels more dynamically
  - ensure dateFormat defaults to something valid
 
