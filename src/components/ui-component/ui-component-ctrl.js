@@ -16,6 +16,10 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
             me.item.getColor = $interpolate(me.item.color).bind(null, me.item);
         }
 
+        if (typeof me.item.units === "string") {
+            me.item.getUnits = $interpolate(me.item.units).bind(null, me.item);
+        }
+
         me.init = function () {
             switch (me.item.type) {
                 case 'button': {

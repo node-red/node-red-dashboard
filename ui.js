@@ -233,6 +233,7 @@ function add(opt) {
             addField("label");
             addField("format");
             addField("color");
+            addField("units");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
 

@@ -1,8 +1,15 @@
 
 ### 2.8.2-beta: Maintenance Release
 
-- Better fix for numeric field widths Issue #344
-- Fix some theme <-> library consistency issues
+**Enhancements**
+
+  - Let Gauge units be specified by msg {{property}}
+
+**Fixes**
+
+ - Better fix for numeric field widths Issue #344
+ - Fix some theme <-> library consistency issues
+ - Clean up old line chart data from other topics after 60s. Issue #342 and #360
 
 ### 2.8.1: Maintenance Release
 
@@ -13,7 +20,7 @@
 **Fixes**
 
  - Fix references to FontAwesome to pin to version 4.7.0 icons
- - Give numeric field a width so buttons don't wobble (so much) #344
+ - Give numeric field a width so buttons don't wobble (so much). Issue #344
  - Let gauge change labels more dynamically
  - ensure dateFormat defaults to something valid
 
