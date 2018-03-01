@@ -1,5 +1,5 @@
 
-### 2.8.2-beta: Maintenance Release
+### 2.8.2: Maintenance Release
 
 **Enhancements**
 
