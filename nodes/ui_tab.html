@@ -4,7 +4,7 @@
         return RED._("mdashboard/ui_tab:ui_tab."+x);
     }
 
-    RED.nodes.registerType('ui_tab',{
+    RED.nodes.registerType('mui_tab',{
         category: 'config',
         defaults: {
             name: {value: c_("label.home")},
@@ -19,7 +19,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_tab">
+<script type="text/x-red" data-template-name="mui_tab">
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_tab.label.name"></span></label>
         <input type="text" id="node-config-input-name">
@@ -30,7 +30,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_tab">
+<script type="text/x-red" data-help-name="mui_tab">
     <p>Tab configuration for Dashboard</p>
     <p>The <b>Icon</b> field can be either
     <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a> <i>(e.g. 'check', 'close')</i>

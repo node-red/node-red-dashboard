@@ -51,5 +51,5 @@ module.exports = function(RED) {
         });
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_colour_picker", ColourPickerNode);
+    RED.nodes.registerType("mui_colour_picker", ColourPickerNode);
 };

@@ -8,5 +8,5 @@ module.exports = function(RED) {
         node.on("close", done);
     }
 
-    RED.nodes.registerType("ui_link", LinkNode);
+    RED.nodes.registerType("mui_link", LinkNode);
 };

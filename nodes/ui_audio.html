@@ -4,13 +4,13 @@
 (function() {
     var myvoice = 0;
     var voices;
-    RED.nodes.registerType('ui_audio',{
+    RED.nodes.registerType('mui_audio',{
         category: 'mdashboard',
         paletteLabel: 'audio out',
         color: 'rgb(119, 198, 204)',
         defaults: {
             name: {value:""},
-            group: {type: 'ui_group', required: true},
+            group: {type: 'mui_group', required: true},
             voice: {value:""},
             always: {value:""}
         },
@@ -49,7 +49,7 @@
 })();
 </script>
 
-<script type="text/x-red" data-template-name="ui_audio">
+<script type="text/x-red" data-template-name="mui_audio">
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -69,7 +69,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_audio">
+<script type="text/x-red" data-help-name="mui_audio">
     <p>Plays audio or text to speech (TTS) in the dashboard.</p>
     <p>To work the dashboard web page must be open.</p>
     <p>Expects <code>msg.payload</code> to contain a buffer of a <b>wav</b> or <b>mp3</b> file.</p>

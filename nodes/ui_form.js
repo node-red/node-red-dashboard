@@ -31,5 +31,5 @@ module.exports = function(RED) {
         });
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_form", FormNode);
+    RED.nodes.registerType("mui_form", FormNode);
 };

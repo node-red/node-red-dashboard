@@ -33,5 +33,5 @@ module.exports = function(RED) {
         });
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_text_input", TextInputNode);
+    RED.nodes.registerType("mui_text_input", TextInputNode);
 };

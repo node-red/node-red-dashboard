@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_numeric',{
+    RED.nodes.registerType('mui_numeric',{
         category: 'mdashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
@@ -39,7 +39,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_numeric">
+<script type="text/x-red" data-template-name="mui_numeric">
 	<div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -88,7 +88,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_numeric">
+<script type="text/x-red" data-help-name="mui_numeric">
     <p>Adds a numeric input widget to the user interface.</p>
 	<p>The user can set the value between
     the limits (<b>min</b> and <b>max</b>). Each value change will generate a <code>msg.payload</code>.</p>

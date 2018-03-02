@@ -298,11 +298,11 @@ function join() {
 }
 
 function init(server, app, log, redSettings) {
-    var uiSettings = redSettings.ui || {};
+    var uiSettings = redSettings.mui || {};
     if ((uiSettings.hasOwnProperty("path")) && (typeof uiSettings.path === "string")) {
         settings.path = uiSettings.path;
     }
-    else { settings.path = 'ui'; }
+    else { settings.path = 'mui'; }
     settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
     settings.verbose = redSettings.verbose || false;
 

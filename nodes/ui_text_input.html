@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_text_input',{
+    RED.nodes.registerType('mui_text_input',{
         category: 'mdashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
@@ -37,7 +37,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_text_input">
+<script type="text/x-red" data-template-name="mui_text_input">
 	<div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -89,7 +89,7 @@
     <div class="form-tips">Setting <b>Delay</b> to 0 waits for Enter or Tab key, to send input.</span></div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_text_input">
+<script type="text/x-red" data-help-name="mui_text_input">
   <p>Adds a text input field to the user interface. Mode can be regular text, email or color picker.</p>
   <p>Any input is sent as <code>msg.payload</code> automatically. You can also
   preset the text of the input field by sending in a <code>msg.payload</code>.</p>

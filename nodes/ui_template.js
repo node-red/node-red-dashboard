@@ -79,6 +79,6 @@ module.exports = function(RED) {
         });
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_template", TemplateNode);
+    RED.nodes.registerType("mui_template", TemplateNode);
     RED.library.register("uitemplates");
 };

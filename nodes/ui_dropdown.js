@@ -140,5 +140,5 @@ module.exports = function(RED) {
         }
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_dropdown", DropdownNode);
+    RED.nodes.registerType("mui_dropdown", DropdownNode);
 };

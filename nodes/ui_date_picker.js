@@ -43,5 +43,5 @@ module.exports = function(RED) {
         });
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_date_picker", DatePickerNode);
+    RED.nodes.registerType("mui_date_picker", DatePickerNode);
 };

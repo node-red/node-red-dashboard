@@ -246,7 +246,7 @@
     loadTinyColor('ui_base/js/tinycolor-min.js');
     //loadTinyColor('ui_base/tinycolor2/dist/tinycolor-min.js');
 
-    RED.nodes.registerType('ui_base',{
+    RED.nodes.registerType('mui_base',{
             category: 'config',
             defaults: {
                 name: {},
@@ -254,8 +254,8 @@
                 site: {}
             },
             hasUsers: false,
-            paletteLabel: 'Dashboard',
-            label: function() { return this.name || 'Node-RED Dashboard'; },
+            paletteLabel: 'mDashboard',
+            label: function() { return this.name || 'Node-RED mDashboard'; },
             labelStyle: function() { return this.name?"node_label_italic":""; },
             onpaletteremove: function() {
                 RED.sidebar.removeTab("mdashboard");
@@ -389,7 +389,7 @@
                     if (globalDashboardNode === null) {
                         var bases = [];
                         RED.nodes.eachConfig(function(n) {
-                            if (n.type === 'ui_base') { bases.push(n); }
+                            if (n.type === 'mui_base') { bases.push(n); }
                         });
 
                         // make sure we only have one ui_base node
@@ -470,8 +470,8 @@
                             if (noDashboardNode) {
                                 globalDashboardNode = {
                                     id: RED.nodes.id(),
-                                    _def: RED.nodes.getType("ui_base"),
-                                    type: "ui_base",
+                                    _def: RED.nodes.getType("mui_base"),
+                                    type: "mui_base",
                                     site: site,
                                     theme: theme,
                                     users: []
@@ -479,7 +479,7 @@
                                 RED.nodes.add(globalDashboardNode);
                             }
                             else {
-                                globalDashboardNode["_def"] = RED.nodes.getType("ui_base");
+                                globalDashboardNode["_def"] = RED.nodes.getType("mui_base");
                                 globalDashboardNode.site = site;
                                 globalDashboardNode.theme = theme;
                                 delete globalDashboardNode.name;
@@ -2116,11 +2116,11 @@
 })(jQuery);
 </script>
 
-<script type="text/x-red" data-template-name="ui_base">
+<script type="text/x-red" data-template-name="mui_base">
     <div class='form-row'>
         <a href="#" onclick="RED.sidebar.show('dashboard'); $('#node-config-dialog-cancel').click(); return false" class="editor-button">Open dashboard sidebar</a>
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_base">
+<script type="text/x-red" data-help-name="mui_base">
 </script>

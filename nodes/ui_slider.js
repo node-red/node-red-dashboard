@@ -50,5 +50,5 @@ module.exports = function(RED) {
         }
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_slider", SliderNode);
+    RED.nodes.registerType("mui_slider", SliderNode);
 };

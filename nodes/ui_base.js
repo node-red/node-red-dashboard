@@ -69,12 +69,12 @@ module.exports = function(RED) {
         }
         ui.addBaseConfig(this.config);
     }
-    RED.nodes.registerType("ui_base", BaseNode);
+    RED.nodes.registerType("mui_base", BaseNode);
 
     RED.library.register("themes");
 
     RED.httpAdmin.get('/uisettings', function(req, res) {
-        var ret = RED.settings.ui || "{}";
+        var ret = RED.settings.mui || "{}";
         res.json(ret);
     });
 

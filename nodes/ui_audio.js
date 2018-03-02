@@ -19,5 +19,5 @@ module.exports = function(RED) {
             }
         });
     }
-    RED.nodes.registerType("ui_audio", uiAudioNode);
+    RED.nodes.registerType("mui_audio", uiAudioNode);
 }

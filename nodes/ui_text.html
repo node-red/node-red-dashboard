@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_text',{
+    RED.nodes.registerType('mui_text',{
         category: 'mdashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
@@ -48,7 +48,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_text">
+<script type="text/x-red" data-template-name="mui_text">
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -164,7 +164,7 @@
     }
 
 </style>
-<script type="text/x-red" data-help-name="ui_text">
+<script type="text/x-red" data-help-name="mui_text">
     <p>Will display a non-editable text field on the user interface.</p>
     <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Value Format</b>.</p>
     <p>The <b>Value Format</b> field can be used to change the displayed format and can contain valid HTML and

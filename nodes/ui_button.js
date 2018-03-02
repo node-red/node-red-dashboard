@@ -64,5 +64,5 @@ module.exports = function(RED) {
         });
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_button", ButtonNode);
+    RED.nodes.registerType("mui_button", ButtonNode);
 };

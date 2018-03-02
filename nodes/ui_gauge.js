@@ -76,5 +76,5 @@ module.exports = function (RED) {
         });
         node.on("close", done);
     }
-    RED.nodes.registerType("ui_gauge", GaugeNode);
+    RED.nodes.registerType("mui_gauge", GaugeNode);
 };

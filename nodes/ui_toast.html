@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_toast', {
+    RED.nodes.registerType('mui_toast', {
         category: 'mdashboard',
         color: 'rgb(119, 198, 204)',
         defaults: {
@@ -43,7 +43,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_toast">
+<script type="text/x-red" data-template-name="mui_toast">
     <div class="form-row">
         <label for="node-input-position"><i class="fa fa-th-large"></i> Layout</label>
         <select type="text" id="node-input-position" style="display:inline-block; width:70%; vertical-align:top;">
@@ -84,7 +84,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_toast">
+<script type="text/x-red" data-help-name="mui_toast">
     <p>Shows <code>msg.payload</code> as a popup notification or OK / Cancel dialog
     message on the user interface.</p>
     <p>If a <code>msg.topic</code> is available it will be used as the title.</p>

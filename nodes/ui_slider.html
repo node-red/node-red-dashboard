@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ui_slider',{
+    RED.nodes.registerType('mui_slider',{
         category: 'mdashboard',
         color: 'rgb(176, 223, 227)',
         defaults: {
@@ -38,7 +38,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_slider">
+<script type="text/x-red" data-template-name="mui_slider">
 	<div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -83,7 +83,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_slider">
+<script type="text/x-red" data-help-name="mui_slider">
     <p>Adds a slider widget to the user interface.</p>
 	<p>The user can change its value between the limits (<b>min</b> and <b>max</b>). Each value change
     will generate a message with the value set as <b>payload</b>.</p>

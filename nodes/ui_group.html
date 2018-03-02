@@ -4,11 +4,11 @@
         return RED._("mdashboard/ui_group:ui_group."+x);
     }
 
-    RED.nodes.registerType('ui_group',{
+    RED.nodes.registerType('mui_group',{
         category: 'config',
         defaults: {
             name: {value: c_("label.default")},
-            tab: {type:"ui_tab", required: true },
+            tab: {type:"mui_tab", required: true },
             order: {value: 0},
             disp: {value: true},
             width: {value: 6},
@@ -54,7 +54,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_group">
+<script type="text/x-red" data-template-name="mui_group">
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_group.label.name"></span></label>
         <input type="text" id="node-config-input-name">
@@ -76,6 +76,6 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_group">
+<script type="text/x-red" data-help-name="mui_group">
     <p>Group</p>
 </script>

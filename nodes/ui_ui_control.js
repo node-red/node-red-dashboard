@@ -34,5 +34,5 @@ module.exports = function(RED) {
             ui.ev.removeListener('changetab', sendchange);
         })
     }
-    RED.nodes.registerType("ui_ui_control", UiControlNode);
+    RED.nodes.registerType("mui_ui_control", UiControlNode);
 };

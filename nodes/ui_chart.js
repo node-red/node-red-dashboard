@@ -258,5 +258,5 @@ module.exports = function(RED) {
             done();
         })
     }
-    RED.nodes.registerType("ui_chart", ChartNode);
+    RED.nodes.registerType("mui_chart", ChartNode);
 };
