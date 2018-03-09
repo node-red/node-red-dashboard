@@ -131,7 +131,10 @@
         display: inline-block;
         padding-left: 20px;
     }
-    .nr-db-sb-link-name-container .fa-external-link {
+    .fa-external-link {
+        display: none;
+    }
+    .nr-db-sb-link-name-container  {
       margin-right: 10px;
     }
     .nr-db-sb-link-url {
@@ -163,10 +166,10 @@
     .red-ui-tabs {
         margin-bottom: 15px;
     }
-    #dashboard-tabs-list li a:hover {
+    #mdashboard-tabs-list li a:hover {
         cursor: pointer;
     }
-    #dash-link-button {
+    #mdash-link-button {
         background: none;
         border: none;
         margin-top: 3px;
@@ -199,14 +202,14 @@
     .nr-db-resetIcon:hover {
         cursor: pointer;
     }
-    #nr-db-field-font {
+    #mnr-db-field-font {
         margin-left: 2em;
         width: calc(100% - 81px);
     }
     .nr-db-theme-label {
         font-weight: bold;
     }
-    #custom-theme-library-container .btn-group {
+    #mcustom-theme-library-container .btn-group {
         margin-bottom: 10px;
     }
 </style>
@@ -238,7 +241,7 @@
 
     // convert to i18 text
     function c_(x) {
-        return RED._("mdashboard/mui_base:ui_base."+x);
+        return RED._("node-red-contrib-mdashboard/mui_base:ui_base."+x);
     }
 
     // Try to load dist version first
@@ -266,10 +269,10 @@
             onpaletteadd: function() {
                 var globalDashboardNode = null;
                 var editor;
-                var baseStyles = ['base-color'];
-                var configurableStyles = ['page-titlebar-backgroundColor', 'page-backgroundColor', 'page-sidebar-backgroundColor',
-                'group-textColor', 'group-borderColor', 'group-backgroundColor',
-                'widget-textColor', 'widget-backgroundColor','widget-borderColor'];
+                var baseStyles = ['m-base-color'];
+                var configurableStyles = ['m-page-titlebar-backgroundColor', 'm-page-backgroundColor', 'm-page-sidebar-backgroundColor',
+                'm-group-textColor', 'm-group-borderColor', 'm-group-backgroundColor',
+                'm-widget-textColor', 'm-widget-backgroundColor','m-widget-borderColor'];
                 var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
                 // tiny colour implementation
                 var colours = {
@@ -294,7 +297,7 @@
                     whiteBlackLeastReadable: function(base) {
                         return this.leastReadable(base, ["#000000", "#ffffff"]);
                     },
-                    calculate_page_backgroundColor: function(base) {
+                    calculate_m_page_backgroundColor: function(base) {
                         var pageBackground = "#fafafa";
                         var theme = "light";
                         if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
@@ -309,18 +312,18 @@
                         }
                         return pageBackground;
                     },
-                    calculate_page_sidebar_backgroundColor: function(base) {
+                    calculate_m_page_sidebar_backgroundColor: function(base) {
                         return this.whiteBlackLeastReadable(base);
                     },
-                    calculate_page_titlebar_backgroundColor: function(base) {
+                    calculate_m_page_titlebar_backgroundColor: function(base) {
                         return base;
                     },
-                    calculate_group_textColor: function(base) {
+                    calculate_m_group_textColor: function(base) {
                         var groupTextColour = tinycolor(base).lighten(15).toHexString();
                         //if (this.whiteBlackLeastReadable(base) === "#ffffff") { groupTextColour = "#000000"; }
                         return groupTextColour;
                     },
-                    calculate_group_backgroundColor: function(base) {
+                    calculate_m_group_backgroundColor: function(base) {
                         var groupBackground = "#ffffff";
                         var theme = "light";
                         if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
@@ -335,20 +338,20 @@
                         }
                         return groupBackground;
                     },
-                    calculate_group_borderColor: function(base) {
-                        var groupBackground = this.calculate_group_backgroundColor(base);
+                    calculate_m_group_borderColor: function(base) {
+                        var groupBackground = this.calculate_m_group_backgroundColor(base);
                         return this.leastReadable(groupBackground, ["#ffffff", "#555555"]);
                     },
-                    calculate_widget_textColor: function(base) {
+                    calculate_m_widget_textColor: function(base) {
                         //most readable against group background
-                        var groupBackground = this.calculate_group_backgroundColor(base);
+                        var groupBackground = this.calculate_m_group_backgroundColor(base);
                         return tinycolor.mostReadable(groupBackground, ["#111111", "#eeeeee"]).toHexString();
                     },
-                    calculate_widget_backgroundColor: function(base) {
+                    calculate_m_widget_backgroundColor: function(base) {
                         //return tinycolor(base).darken(5).toHexString()
                         return tinycolor(base).toHexString();
                     },
-                    calculate_widget_borderColor: function(base) {
+                    calculate_m_widget_borderColor: function(base) {
                         var widgetBorder = "#ffffff";
                         var theme = "light";
                         if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
@@ -484,7 +487,7 @@
                                 globalDashboardNode.theme = theme;
                                 delete globalDashboardNode.name;
                             }
-                            $("#nr-db-field-font").val(baseFontName);
+                            $("#mnr-db-field-font").val(baseFontName);
                             RED.nodes.dirty(true);
                         }
                     }
@@ -496,7 +499,7 @@
 
                 // Dashboard Tabs markup
                 var divTab = $('<div class="red-ui-tabs">').appendTo(form);
-                var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTab);
+                var ulDashboardTabs = $('<ul id="mdashboard-tabs-list"></ul>').appendTo(divTab);
                 var layout_label = c_("label.layout");
                 var theme_label = c_("label.theme");
                 var site_label = c_("label.site");
@@ -517,7 +520,7 @@
                         RED.keyboard.add("*","ctrl-shift-d","dashboard:show-dashboard");
                         RED.actions.add("dashboard:show-dashboard",function() { window.open(document.location.protocol+"//"+lnk) });
                     }
-                    $('<span id="dash-link-button" class="editor-button" style="position:absolute; right:0px;"><i class="fa fa-external-link"></i></span>')
+                    $('<span id="mdash-link-button" class="editor-button" style="position:absolute; right:0px;"><i class="fa fa-external-link"></i></span>')
                     .click(function(evt) {
                         window.open(document.location.protocol+"//"+lnk);
                         evt.preventDefault();
@@ -526,9 +529,9 @@
                 });
 
                 // Dashboard Tab containers
-                var layoutTab = $('<div id="dashboard-layout" style="height:calc(100% - 48px)">').appendTo(form);
-                var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
-                var siteTab = $('<div id="dashboard-site" style="display:none;">').appendTo(form);
+                var layoutTab = $('<div id="mdashboard-layout" style="height:calc(100% - 48px)">').appendTo(form);
+                var themeTab = $('<div id="mdashboard-theme" style="display:none;">').appendTo(form);
+                var siteTab = $('<div id="mdashboard-site" style="display:none;">').appendTo(form);
 
                 ulDashboardTabs.children().first().addClass("active");
 
@@ -549,7 +552,7 @@
                         layoutTab.hide();
                         siteTab.hide();
                         themeTab.show();
-                        if ($("#nr-db-field-theme option:selected").val() === 'theme-custom') { themeSettingsContainer.show(); }
+                        if ($("#mnr-db-field-theme option:selected").val() === 'theme-custom') { themeSettingsContainer.show(); }
                         else { themeSettingsContainer.hide(); }
                     }
                     else {
@@ -564,7 +567,7 @@
                 // Site Tab
                 var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
                 $('<div>').html('<b>'+c_("label.title")+'</b>').appendTo(divTitle);
-                $('<input type="text" id="nr-db-field-title">').val(site_name).css("width","100%")
+                $('<input type="text" id="mnr-db-field-title">').val(site_name).css("width","100%")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -576,7 +579,7 @@
 
                 var divHideToolbar = $('<div>',{class:"form-row"}).appendTo(siteTab);
                 $('<div>').html('<b>'+c_("label.options")+'</b>').appendTo(divHideToolbar);
-                $('<select id="nr-db-field-hideToolbar">')
+                $('<select id="mnr-db-field-hideToolbar">')
                 .css("width","100%")
                 .append($('<option>', { value:"false", text:c_("title-bar.show"), selected:true }))
                 .append($('<option>', { value:"true", text:c_("title-bar.hide") }))
@@ -591,7 +594,7 @@
                 .appendTo(divHideToolbar);
 
                 var divAllowSwipe = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<select id="nr-db-field-allowSwipe">')
+                $('<select id="mnr-db-field-allowSwipe">')
                 .css("width","100%")
                 .append($('<option>', { value:"false", text:c_("swipe.no-swipe"), selected:true }))
                 .append($('<option>', { value:"true", text:c_("swipe.allow-swipe") }))
@@ -617,7 +620,7 @@
                 .css("margin-right","6px")
                 .css("float","right")
                 .appendTo(divDateFormat);
-                $('<input type="text" id="nr-db-field-dateFormat">').val(site_date_format).css("width","100%")
+                $('<input type="text" id="mnr-db-field-dateFormat">').val(site_date_format).css("width","100%")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -631,54 +634,54 @@
                 $('<span style="width:45%; display:inline-block">').html('<b>'+c_("label.sizes")+'</b>').appendTo(divSetSizes);
                 $('<span style="width:25%; display:inline-block; font-size:smaller">').html(c_("label.horizontal")).appendTo(divSetSizes);
                 $('<span style="width:20%; display:inline-block; font-size:smaller">').html(c_("label.vertical")).appendTo(divSetSizes);
-                $('<i id="sizes-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                $('<i id="msizes-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                 .css({opacity:1.0})
                 .click(function(e) {
-                    $("#nr-db-field-sx").val(sizes.sx); globalDashboardNode.site.sizes.sx = sizes.sx;
-                    $("#nr-db-field-sy").val(sizes.sy); globalDashboardNode.site.sizes.sy = sizes.sy;
-                    $("#nr-db-field-px").val(sizes.px); globalDashboardNode.site.sizes.px = sizes.px;
-                    $("#nr-db-field-py").val(sizes.py); globalDashboardNode.site.sizes.py = sizes.py;
-                    $("#nr-db-field-gx").val(sizes.gx); globalDashboardNode.site.sizes.gx = sizes.gx;
-                    $("#nr-db-field-gy").val(sizes.gy); globalDashboardNode.site.sizes.gy = sizes.gy;
-                    $("#nr-db-field-cx").val(sizes.cx); globalDashboardNode.site.sizes.cx = sizes.cx;
-                    $("#nr-db-field-cy").val(sizes.cy); globalDashboardNode.site.sizes.cy = sizes.cy;
+                    $("#mnr-db-field-sx").val(sizes.sx); globalDashboardNode.site.sizes.sx = sizes.sx;
+                    $("#mnr-db-field-sy").val(sizes.sy); globalDashboardNode.site.sizes.sy = sizes.sy;
+                    $("#mnr-db-field-px").val(sizes.px); globalDashboardNode.site.sizes.px = sizes.px;
+                    $("#mnr-db-field-py").val(sizes.py); globalDashboardNode.site.sizes.py = sizes.py;
+                    $("#mnr-db-field-gx").val(sizes.gx); globalDashboardNode.site.sizes.gx = sizes.gx;
+                    $("#mnr-db-field-gy").val(sizes.gy); globalDashboardNode.site.sizes.gy = sizes.gy;
+                    $("#mnr-db-field-cx").val(sizes.cx); globalDashboardNode.site.sizes.cx = sizes.cx;
+                    $("#mnr-db-field-cy").val(sizes.cy); globalDashboardNode.site.sizes.cy = sizes.cy;
                     RED.nodes.dirty(true);
                 })
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').html(c_("label.widget-size")).appendTo(divSetSizes);
-                $('<input type="number" name="sx" min="24" id="nr-db-field-sx">').val(48).css("width","20%")
+                $('<input type="number" name="sx" min="24" id="mnr-db-field-sx">').val(48).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
-                $('<input type="number" name="sy" min="24" id="nr-db-field-sy">').val(48).css("width","20%")
+                $('<input type="number" name="sy" min="24" id="mnr-db-field-sy">').val(48).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').html(c_("label.widget-spacing")).appendTo(divSetSizes);
-                $('<input type="number" name="cx" min="0" id="nr-db-field-cx">').val(6).css("width","20%")
+                $('<input type="number" name="cx" min="0" id="mnr-db-field-cx">').val(6).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
-                $('<input type="number" name="cy" min="0" id="nr-db-field-cy">').val(6).css("width","20%")
+                $('<input type="number" name="cy" min="0" id="mnr-db-field-cy">').val(6).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').html(c_("label.group-padding")).appendTo(divSetSizes);
-                $('<input type="number" name="px" min="0" id="nr-db-field-px">').val(0).css("width","20%")
+                $('<input type="number" name="px" min="0" id="mnr-db-field-px">').val(0).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
-                $('<input type="number" name="py" min="0" id="nr-db-field-py">').val(0).css("width","20%")
+                $('<input type="number" name="py" min="0" id="mnr-db-field-py">').val(0).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').html(c_("label.group-spacing")).appendTo(divSetSizes);
-                $('<input type="number" name="gx" min="0" id="nr-db-field-gx">').val(6).css("width","20%")
+                $('<input type="number" name="gx" min="0" id="mnr-db-field-gx">').val(6).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
-                $('<input type="number" name="gy" min="0" id="nr-db-field-gy">').val(6).css("width","20%")
+                $('<input type="number" name="gy" min="0" id="mnr-db-field-gy">').val(6).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
@@ -692,7 +695,7 @@
                             globalDashboardNode.theme[theme+"Theme"].baseFont = baseFontName;
                         }
                         globalDashboardNode.theme.themeState["base-font"] = {value:globalDashboardNode.theme[theme+"Theme"].baseFont};
-                        $("#nr-db-field-font").val(globalDashboardNode.theme[theme+"Theme"].baseFont);
+                        $("#mnr-db-field-font").val(globalDashboardNode.theme[theme+"Theme"].baseFont);
                     }
                     for (var i=0; i<configurableStyles.length; i++) {
                         var styleID = configurableStyles[i];
@@ -711,7 +714,7 @@
 
                 var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
                 $('<label class="nr-db-theme-label">').html(c_("theme.style")).appendTo(divThemeStyle);
-                var themeSelection = $('<select id="nr-db-field-theme">'+
+                var themeSelection = $('<select id="mnr-db-field-theme">'+
                     '<option value="theme-light">'+c_("style.light")+'</option>'+
                     '<option value="theme-dark">'+c_("style.dark")+'</option>'+
                     '<option value="theme-custom">'+c_("style.custom")+'</option>'+
@@ -729,33 +732,33 @@
                             baseColour = globalDashboardNode.theme[theme+'Theme'].default;
                         }
                         else { baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor; }
-                        setColourPickerColour("base-color", baseColour);
-                        globalDashboardNode.theme.themeState['base-color'].value = baseColour;
-                        globalDashboardNode.theme.themeState['base-color'].default = baseColour;
+                        setColourPickerColour("m-base-color", baseColour);
+                        globalDashboardNode.theme.themeState['m-base-color'].value = baseColour;
+                        globalDashboardNode.theme.themeState['m-base-color'].default = baseColour;
                         globalDashboardNode.theme.themeState['base-font'] = {value:baseFont};
-                        $("#nr-db-field-font").val(baseFont);
+                        $("#mnr-db-field-font").val(baseFont);
                         globalDashboardNode.theme[theme+'Theme'].reset = true;
                         //generate colours for all colour settings from base colour
                         generateColours(baseColour);
                         RED.nodes.dirty(true);
                     }
-                    $('#base-color-reset').remove();
+                    $('#m-base-color-reset').remove();
                     if ($(this).val() === 'theme-custom') {
-                        $("#custom-theme-library-container").show(); //TODO undo this at some point
-                        $("#custom-theme-settings").show();
+                        $("#mcustom-theme-library-container").show(); //TODO undo this at some point
+                        $("#mcustom-theme-settings").show();
                         //addResetButton('base-color', baseSettingsUl.children());
                     }
                     else {
-                        $("#custom-theme-library-container").hide();
-                        $("#custom-theme-settings").hide();
-                        addLightAndDarkResetButton('base-color', baseSettingsUl.children().first());
+                        $("#mcustom-theme-library-container").hide();
+                        $("#mcustom-theme-settings").hide();
+                        addLightAndDarkResetButton('m-base-color', baseSettingsUl.children().first());
                     }
                 })
                 .appendTo(divThemeStyle);
 
-                var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
+                var customThemeLibraryContainer = $('<div id="mcustom-theme-library-container">').appendTo(themeTab);
                 $('<label class="nr-db-theme-label">').html(c_("theme.custom-profile")).appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="ui-sidebar-name" placeholder="profile name (not blank)">')
+                $('<input type="text" id="mui-sidebar-name" placeholder="profile name (not blank)">')
                 .val(c_("theme.custom-profile-name"))
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
@@ -769,24 +772,24 @@
                 })
                 .keyup(function() {
                     if ($(this).val().length === 0) {
-                        $("#custom-theme-library-container div").css("pointer-events","none");
+                        $("#mcustom-theme-library-container div").css("pointer-events","none");
                     }
-                    else { $("#custom-theme-library-container div").css("pointer-events","inherit"); }
+                    else { $("#mcustom-theme-library-container div").css("pointer-events","inherit"); }
                 })
                 .appendTo(customThemeLibraryContainer);
-                $('<input type="hidden" id="nr-db-field-format">').appendTo(customThemeLibraryContainer);
-                $('<div style="display:none;" class="node-text-editor" id="nr-db-field-format-editor"></div>').appendTo(customThemeLibraryContainer);
+                $('<input type="hidden" id="mnr-db-field-format">').appendTo(customThemeLibraryContainer);
+                $('<div style="display:none;" class="node-text-editor" id="mnr-db-field-format-editor"></div>').appendTo(customThemeLibraryContainer);
 
-                var baseThemeSettingsContainer = $('<div id="base-theme-settings">').appendTo(themeTab);
+                var baseThemeSettingsContainer = $('<div id="mbase-theme-settings">').appendTo(themeTab);
 
                 var baseSettings = $('<div>',{class:"form-row"}).appendTo(baseThemeSettingsContainer);
                 $('<label class="nr-db-theme-label">').html(c_("theme.base-settings")).appendTo(baseSettings);
-                var baseSettingsUl = $('<ul id="base-settings-ul" class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
+                var baseSettingsUl = $('<ul id="mbase-settings-ul" class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
 
                 var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>'+c_("base.colour")+'</span></li>').appendTo(baseSettingsUl);
                 var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
 
-                $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
+                $('<input id="m-base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
                 .change(function() {
                     ensureDashboardNode(true);
                     var value = $(this).val();
@@ -808,7 +811,7 @@
                 .appendTo(spanColorContainer);
 
                 var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>'+c_("base.font")+'</span></li>').appendTo(baseSettingsUl);
-                var fontSelector = $('<select id="nr-db-field-font">'+
+                var fontSelector = $('<select id="mnr-db-field-font">'+
                     '<option value="'+baseFontName+'" style="font-family:'+baseFontName+'">'+c_("font.system")+'</option>'+
                     '<option value="Arial,Arial,Helvetica,sans-serif" style="font-family:Arial,Arial,Helvetica,sans-serif">Arial</option>'+
                     '<option value="Arial Black,Arial Black,Gadget,sans-serif" style="font-family:Arial Black,Arial Black,Gadget,sans-serif">Arial Black</option>'+
@@ -837,32 +840,32 @@
                     })
                     .appendTo(baseFontItem);
 
-                var themeSettingsContainer = $('<div id="custom-theme-settings">').appendTo(themeTab);
+                var themeSettingsContainer = $('<div id="mcustom-theme-settings">').appendTo(themeTab);
 
                 // Markup
                 // Page styles
                 var divPageStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
                 $('<label class="nr-db-theme-label">').html(c_("theme.page-settings")).appendTo(divPageStyle);
                 var pageStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-                addCustomisableStyle('page-titlebar-backgroundColor', c_("theme.page.title"), pageStyles);
-                addCustomisableStyle('page-backgroundColor', c_("theme.page.page"), pageStyles);
-                addCustomisableStyle('page-sidebar-backgroundColor', c_("theme.page.side"), pageStyles);
+                addCustomisableStyle('m-page-titlebar-backgroundColor', c_("theme.page.title"), pageStyles);
+                addCustomisableStyle('m-page-backgroundColor', c_("theme.page.page"), pageStyles);
+                addCustomisableStyle('m-page-sidebar-backgroundColor', c_("theme.page.side"), pageStyles);
 
                 // Group styles
                 var divGroupStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
                 $('<label class="nr-db-theme-label">').html(c_("theme.group-settings")).appendTo(divGroupStyle);
                 var groupStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-                addCustomisableStyle('group-textColor', c_("theme.group.text"), groupStyles);
-                addCustomisableStyle('group-borderColor', c_("theme.group.border"), groupStyles);
-                addCustomisableStyle('group-backgroundColor', c_("theme.group.background"), groupStyles);
+                addCustomisableStyle('m-group-textColor', c_("theme.group.text"), groupStyles);
+                addCustomisableStyle('m-group-borderColor', c_("theme.group.border"), groupStyles);
+                addCustomisableStyle('m-group-backgroundColor', c_("theme.group.background"), groupStyles);
 
                 // Widget styles
                 var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
                 $('<label class="nr-db-theme-label">').html(c_("theme.widget-settings")).appendTo(divWidgetStyle);
                 var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-                addCustomisableStyle('widget-textColor', c_("theme.widget.text"), widgetStyles);
-                addCustomisableStyle('widget-backgroundColor', c_("theme.widget.colour"), widgetStyles);
-                addCustomisableStyle('widget-borderColor', c_("theme.widget.background"), widgetStyles);
+                addCustomisableStyle('m-widget-textColor', c_("theme.widget.text"), widgetStyles);
+                addCustomisableStyle('m-widget-backgroundColor', c_("theme.widget.colour"), widgetStyles);
+                addCustomisableStyle('m-widget-borderColor', c_("theme.widget.background"), widgetStyles);
 
                 function addCustomisableStyle(id, name, parentUl) {
                     var styleLi = $('<li class="red-ui-dashboard-theme-item"><span>'+name+'</span></li>').appendTo(parentUl);
@@ -906,8 +909,8 @@
                 function lightAndDarkResetClick(e) {
                     var elementID = e.target.id.split('-reset')[0];
                     var key = globalDashboardNode.theme.name.split('-')[1] + 'Theme';
-                    //sanity check - light and dark only allow base-color-reset
-                    if (elementID === 'base-color') { // && globalDashboardNode.theme[key].edited) {
+                    //sanity check - light and dark only allow mbase-color-reset
+                    if (elementID === 'm-base-color') { // && globalDashboardNode.theme[key].edited) {
                         var defaultColor = globalDashboardNode.theme[key].default;
                         globalDashboardNode.theme[key].reset = true;
                         generateColours(defaultColor);
@@ -924,10 +927,10 @@
                     //take off -reset
                     var elementID = e.target.id.split('-reset')[0];
                     if (globalDashboardNode.theme.themeState[elementID].edited) {
-                        var defaultColor = globalDashboardNode.theme.themeState['base-color'].value;
+                        var defaultColor = globalDashboardNode.theme.themeState['m-base-color'].value;
                         var colour;
                         //set colour
-                        if (elementID === 'base-color') {
+                        if (elementID === 'm-base-color') {
                             colour = defaultColor;
                             generateColours(colour);
                         }
@@ -978,13 +981,13 @@
                 //Add item button
                 $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.tab")+'</a>')
                 .click(function(evt) {
-                    tabContainer.editableList('addItem',{type: 'ui_tab'});
+                    tabContainer.editableList('addItem',{type: 'mui_tab'});
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
                 $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.link")+'</a>')
                 .click(function(evt) {
-                    tabContainer.editableList('addItem',{type: 'ui_link'});
+                    tabContainer.editableList('addItem',{type: 'mui_link'});
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
@@ -1015,16 +1018,16 @@
                     // create node if needed
                     if (!item.node) {
                         var defaultItem = {
-                            'ui_tab': {
-                                _def: RED.nodes.getType('ui_tab'),
-                                type: 'ui_tab',
+                            'mui_tab': {
+                                _def: RED.nodes.getType('mui_tab'),
+                                type: 'mui_tab',
                                 users: [],
                                 icon: 'dashboard',
                                 name: 'Tab'
                             },
-                            'ui_link': {
-                                _def: RED.nodes.getType('ui_link'),
-                                type: 'ui_link',
+                            'mui_link': {
+                                _def: RED.nodes.getType('mui_link'),
+                                type: 'mui_link',
                                 users: [],
                                 icon: 'open_in_browser',
                                 name: 'Link',
@@ -1036,7 +1039,7 @@
                         item.node.order = i+1
                         item.node.name += ' '+item.node.order
                         listElements[item.node.id] = container;
-                        if (item.type === 'ui_tab') {
+                        if (item.type === 'mui_tab') {
                             item.groups = [];
                         }
                         RED.nodes.add(item.node);
@@ -1054,7 +1057,7 @@
                     // title
                     var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
                     switch (item.type) {
-                        case 'ui_tab': {
+                        case 'mui_tab': {
                             container.addClass("nr-db-sb-tab-list-item");
                             $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
                             var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
@@ -1062,7 +1065,7 @@
                             var title = $('<span class="nr-db-sb-title">').html(item.node.name||"").appendTo(titleRow);
                             break;
                         }
-                        case 'ui_link': {
+                        case 'mui_link': {
                             $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
                             var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
                             var nameContainer = $('<div class="nr-db-sb-link-name-container">').appendTo(title);
@@ -1074,7 +1077,7 @@
                     }
                     // buttons
                     var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                    if (item.type === 'ui_tab') {
+                    if (item.type === 'mui_tab') {
                         var addGroupButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.group")+'</a>').appendTo(buttonGroup);
                     }
                     var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
@@ -1084,7 +1087,7 @@
                         evt.preventDefault();
                     });
 
-                    if (item.type === 'ui_tab') {
+                    if (item.type === 'mui_tab') {
                         var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
 
                         // ui_tab group chevron
@@ -1108,12 +1111,12 @@
                                 if (!group.node) {
                                     group.node = {
                                         id: RED.nodes.id(),
-                                        _def: RED.nodes.getType("ui_group"),
-                                        type: "ui_group",
+                                        _def: RED.nodes.getType("mui_group"),
+                                        type: "mui_group",
                                         users: [],
                                         tab: item.node.id,
                                         order: i+1,
-                                        name: "Group "+(i+1),
+                                        name: "mGroup "+(i+1),
                                         width: 6,
                                         disp: true
                                     };
@@ -1290,11 +1293,11 @@
                 });
 
                 var orphanedWidgets = $('<div>',{class:"form-row"}).appendTo(layoutTab);
-                $('<span><i class="fa fa-info-circle"></i> There <span id="nr-db-missing-group-count"></span> not in a group. Click <a id="nr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
+                $('<span><i class="fa fa-info-circle"></i> There <span id="mnr-db-missing-group-count"></span> not in a group. Click <a id="mnr-db-add-missing-groups" href="#">here</a> to create the missing groups</span>').appendTo(orphanedWidgets);
                 orphanedWidgets.find('a').click(function(event) {
                     var unknownGroups = {};
                     RED.nodes.eachNode(function(node) {
-                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
+                        if (/^mui_/.test(node.type) && node.type !== 'mui_link' && node.type !== 'mui_toast' && node.type !== 'mui_ui_control') {
                             if (!RED.nodes.node(node.group)) {
                                 var g = node.group || "_BLANK_";
                                 unknownGroups[g] = unknownGroups[g] || [];
@@ -1312,8 +1315,8 @@
                     if (tab === null) {
                         tab = {
                             id: RED.nodes.id(),
-                            _def: RED.nodes.getType("ui_tab"),
-                            type: "ui_tab",
+                            _def: RED.nodes.getType("mui_tab"),
+                            type: "mui_tab",
                             users: [],
                             order: 0,
                             name: "Tab",
@@ -1325,8 +1328,8 @@
                         if (unknownGroups.hasOwnProperty(groupId)) {
                             var groupNode = {
                                 id: RED.nodes.id(),
-                                _def: RED.nodes.getType("ui_group"),
-                                type: "ui_group",
+                                _def: RED.nodes.getType("mui_group"),
+                                type: "mui_group",
                                 users: [],
                                 tab: tab.id,
                                 order: i+1,
@@ -1392,7 +1395,7 @@
                     var unknownGroups = {};
                     var count = 0;
                     RED.nodes.eachNode(function(node) {
-                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && (node.type === 'ui_template' && node.templateScope !== 'global')) {
+                        if (/^mui_/.test(node.type) && node.type !== 'mui_link' && node.type !== 'mui_toast' && node.type !== 'mui_ui_control' && (node.type === 'mui_template' && node.templateScope !== 'global')) {
                             if (!RED.nodes.node(node.group)) {
                                 var g = node.group || "_BLANK_";
                                 unknownGroups[g] = unknownGroups[g] || [];
@@ -1404,7 +1407,7 @@
 
                     if (count > 0) {
                         orphanedWidgets.show();
-                        $("#nr-db-missing-group-count").text((count===1?"is ":"are ")+count+" widget"+(count === 1?"":"s"))
+                        $("#mnr-db-missing-group-count").text((count===1?"is ":"are ")+count+" widget"+(count === 1?"":"s"))
                     }
                     else {
                         orphanedWidgets.hide();
@@ -1427,13 +1430,13 @@
                     // Find all the tabs and groups
                     RED.nodes.eachConfig(function(node) {
                         switch (node.type) {
-                            case 'ui_tab':
-                            case 'ui_link': {
+                            case 'mui_tab':
+                            case 'mui_link': {
                                 tabs[node.id] = node;
                                 //tabContainer.editableList('addItem',node);
                                 break;
                             }
-                            case 'ui_group': {
+                            case 'mui_group': {
                                 groups[node.id] = node;
                                 break;
                             }
@@ -1454,18 +1457,18 @@
                     }
                     // Find all ui widgets - list them by their group id
                     RED.nodes.eachNode(function(node) {
-                        if (/^ui_/.test(node.type)) {
+                        if (/^mui_/.test(node.type)) {
                             if (groups.hasOwnProperty(node.group)) {
                                 groupElements[node.group] = groupElements[node.group]||[];
                                 groupElements[node.group].push(node);
                             }
-                            else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')&&(node.type === 'ui_template' && node.templateScope !== 'global')) {
+                            else if ((node.type !== 'mui_toast')&&(node.type !== 'mui_ui_control')&&(node.type === 'mui_template' && node.templateScope !== 'global')) {
                                 unknownGroups++;
                             }
                         }
                     });
                     if (unknownGroups > 0) {
-                        $("#nr-db-missing-group-count").text((unknownGroups===1?"is ":"are ")+unknownGroups+" widget"+(unknownGroups === 1?"":"s"))
+                        $("#mnr-db-missing-group-count").text((unknownGroups===1?"is ":"are ")+unknownGroups+" widget"+(unknownGroups === 1?"":"s"))
                         orphanedWidgets.show();
                     }
                     else {
@@ -1538,32 +1541,32 @@
                     }
                     ensureDashboardNode(true);
                     if (globalDashboardNode) {
-                        $("#nr-db-field-title").val(globalDashboardNode.site.name);
-                        $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || false);
-                        $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar || false);
-                        $("#nr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
+                        $("#mnr-db-field-title").val(globalDashboardNode.site.name);
+                        $("#mnr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || false);
+                        $("#mnr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar || false);
+                        $("#mnr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
 
                         if (typeof globalDashboardNode.site.sizes !== "object") {
                             globalDashboardNode.site.sizes = sizes;
                         }
-                        $("#nr-db-field-sx").val(globalDashboardNode.site.sizes.sx);
-                        $("#nr-db-field-sy").val(globalDashboardNode.site.sizes.sy);
-                        $("#nr-db-field-px").val(globalDashboardNode.site.sizes.px);
-                        $("#nr-db-field-py").val(globalDashboardNode.site.sizes.py);
-                        $("#nr-db-field-cx").val(globalDashboardNode.site.sizes.cx);
-                        $("#nr-db-field-cy").val(globalDashboardNode.site.sizes.cy);
-                        $("#nr-db-field-gx").val(globalDashboardNode.site.sizes.gx);
-                        $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
+                        $("#mnr-db-field-sx").val(globalDashboardNode.site.sizes.sx);
+                        $("#mnr-db-field-sy").val(globalDashboardNode.site.sizes.sy);
+                        $("#mnr-db-field-px").val(globalDashboardNode.site.sizes.px);
+                        $("#mnr-db-field-py").val(globalDashboardNode.site.sizes.py);
+                        $("#mnr-db-field-cx").val(globalDashboardNode.site.sizes.cx);
+                        $("#mnr-db-field-cy").val(globalDashboardNode.site.sizes.cy);
+                        $("#mnr-db-field-gx").val(globalDashboardNode.site.sizes.gx);
+                        $("#mnr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
 
-                        $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
-                        $("#ui-sidebar-name").val(globalDashboardNode.theme.customTheme.name);
+                        $("#mnr-db-field-theme").val(globalDashboardNode.theme.name);
+                        $("#mui-sidebar-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {
-                            $("#custom-theme-library-container").show();
-                            $("#custom-theme-settings").show();
+                            $("#mcustom-theme-library-container").show();
+                            $("#mcustom-theme-settings").show();
                         }
                         else {
-                            $("#custom-theme-library-container").hide();
-                            $("#custom-theme-settings").hide();
+                            $("#mcustom-theme-library-container").hide();
+                            $("#mcustom-theme-settings").hide();
                         }
 
                         //set colour start
@@ -1572,27 +1575,27 @@
                         }
                         var currentTheme = globalDashboardNode.theme.name.split("-")[1];
                         var startingValue = globalDashboardNode.theme[currentTheme+"Theme"].baseColor;
-                        setColourPickerColour("base-color", startingValue);
-                        $("#nr-db-field-font").val(globalDashboardNode.theme[currentTheme+"Theme"].baseFont);
+                        setColourPickerColour("m-base-color", startingValue);
+                        $("#mnr-db-field-font").val(globalDashboardNode.theme[currentTheme+"Theme"].baseFont);
                         generateColours(startingValue);
                         if (globalDashboardNode.theme.name === 'theme-light' || globalDashboardNode.theme.name === 'theme-dark') {
-                            addLightAndDarkResetButton('base-color', $('#base-settings-ul').children().first());
+                            addLightAndDarkResetButton('m-base-color', $('#mbase-settings-ul').children().first());
                         }
 
                         if (editor === undefined) {
                             editor = RED.editor.createEditor({
-                                id: 'nr-db-field-format-editor',
+                                id: 'mnr-db-field-format-editor',
                                 mode: 'ace/mode/javascript',
                                 value: JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site})
                             });
 
                             RED.library.create({
                                 url:"themes", // where to get the data from
-                                type:"theme", // the type of object the library is for
+                                type:"mtheme", // the type of object the library is for
                                 editor: editor, // the field name the main text body goes to
                                 mode:"ace/mode/javascript",
                                 fields:['name'],
-                                elementPrefix:"ui-sidebar-"
+                                elementPrefix:"mui-sidebar-"
                             });
                         }
 
@@ -1640,11 +1643,11 @@
                             //Update theme object if necessary
                             if (JSON.stringify(editorObject.theme) !== JSON.stringify(globalDashboardNode.theme.themeState)) {
                                 globalDashboardNode.theme.themeState = editorObject.theme;
-                                if ($("#ui-sidebar-name").val() !== globalDashboardNode.theme.customTheme.name) {
-                                    globalDashboardNode.theme.customTheme.name = $("#ui-sidebar-name").val();
-                                    globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["base-color"].value;
-                                    setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
-                                    generateColours(globalDashboardNode.theme.themeState["base-color"].value);
+                                if ($("#mui-sidebar-name").val() !== globalDashboardNode.theme.customTheme.name) {
+                                    globalDashboardNode.theme.customTheme.name = $("#mui-sidebar-name").val();
+                                    globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["m-base-color"].value;
+                                    setColourPickerColour("m-base-color", globalDashboardNode.theme.customTheme.baseColor);
+                                    generateColours(globalDashboardNode.theme.themeState["m-base-color"].value);
                                     RED.nodes.dirty(true);
                                 }
                             }
@@ -1652,18 +1655,18 @@
                             //Update site object if necessary
                             if (JSON.stringify(editorObject.site) !== JSON.stringify(globalDashboardNode.site)) {
                                 globalDashboardNode.site = editorObject.site;
-                                $("#nr-db-field-title").val(globalDashboardNode.site.name);
-                                $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar);
-                                $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe);
-                                $("#nr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
-                                $("#nr-db-field-sx").val(globalDashboardNode.site.sizes.sx);
-                                $("#nr-db-field-sy").val(globalDashboardNode.site.sizes.sy);
-                                $("#nr-db-field-px").val(globalDashboardNode.site.sizes.px);
-                                $("#nr-db-field-py").val(globalDashboardNode.site.sizes.py);
-                                $("#nr-db-field-gx").val(globalDashboardNode.site.sizes.gx);
-                                $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
-                                $("#nr-db-field-cx").val(globalDashboardNode.site.sizes.cx);
-                                $("#nr-db-field-cy").val(globalDashboardNode.site.sizes.cy);
+                                $("#mnr-db-field-title").val(globalDashboardNode.site.name);
+                                $("#mnr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar);
+                                $("#mnr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe);
+                                $("#mnr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
+                                $("#mnr-db-field-sx").val(globalDashboardNode.site.sizes.sx);
+                                $("#mnr-db-field-sy").val(globalDashboardNode.site.sizes.sy);
+                                $("#mnr-db-field-px").val(globalDashboardNode.site.sizes.px);
+                                $("#mnr-db-field-py").val(globalDashboardNode.site.sizes.py);
+                                $("#mnr-db-field-gx").val(globalDashboardNode.site.sizes.gx);
+                                $("#mnr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
+                                $("#mnr-db-field-cx").val(globalDashboardNode.site.sizes.cx);
+                                $("#mnr-db-field-cy").val(globalDashboardNode.site.sizes.cy);
                                 RED.nodes.dirty(true);
                             }
                         });
@@ -1674,7 +1677,7 @@
                 }
 
                 RED.sidebar.addTab({
-                    id: "dashboard",
+                    id: "mdashboard",
                     label: c_("label.dashboard"),
                     name: "Dashboard",
                     content: content,
@@ -1683,16 +1686,16 @@
                     onchange: function() { refresh(); }
                 });
                 editSaveEventHandler = function(node) {
-                    if (/^ui_/.test(node.type)) {
-                        if (node.type === "ui_tab" || node.type === "ui_group") {
+                    if (/^mui_/.test(node.type)) {
+                        if (node.type === "mui_tab" || node.type === "mui_group") {
                             if (listElements[node.id]) {
                                 // Existing element
                                 listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id);
-                                if (node.type === "ui_group") {
+                                if (node.type === "mui_group") {
                                     refresh();
                                 }
                             }
-                            else if (node.type === "ui_tab") {
+                            else if (node.type === "mui_tab") {
                                 // Adding a tab
                                 tabContainer.editableList('addItem',{node:node,groups:[]})
                             }
@@ -1703,7 +1706,7 @@
                                 }
                             }
                         }
-                        else if (node.type === "ui_link") {
+                        else if (node.type === "mui_link") {
                             if (listElements[node.id]) {
                                 var container = listElements[node.id];
                                 container.find(".nr-db-sb-link-name").html(node.name||"untitled");
@@ -1752,28 +1755,28 @@
                     var hasTabs = false;
                     var hasGroups = false;
                     pendingAdd.sort(function(A,B) {
-                        hasTabs = hasTabs || A.type === "ui_tab" || B.type === "ui_tab";
-                        hasGroups = hasGroups || A.type === "ui_group" || B.type === "ui_group";
+                        hasTabs = hasTabs || A.type === "mui_tab" || B.type === "mui_tab";
+                        hasGroups = hasGroups || A.type === "mui_group" || B.type === "mui_group";
                         if (A.type === B.type) {
                             return 0;
                         }
-                        if (A.type === "ui_tab") {
+                        if (A.type === "mui_tab") {
                             return -1;
                         }
-                        else if (B.type === "ui_tab") {
+                        else if (B.type === "mui_tab") {
                             return 1;
                         }
-                        else if (A.type === "ui_group") {
+                        else if (A.type === "mui_group") {
                             return -1;
                         }
-                        else if (B.type === "ui_group") {
+                        else if (B.type === "mui_group") {
                             return 1;
                         }
                         return 0
                     });
                     for (var i=0; i<pendingAdd.length; i++) {
                         var node = pendingAdd[i];
-                        if (node.type === "ui_tab") {
+                        if (node.type === "mui_tab") {
                             tabContainer.editableList('addItem',{node:node,groups:[]});
                         }
                         else {
@@ -1783,7 +1786,7 @@
                                 pendingAddTimer = setTimeout(handlePendingAdds,50);
                                 return;
                             }
-                            if (node.type === "ui_group") {
+                            if (node.type === "mui_group") {
                                 if (tabLists[node.tab]) {
                                     tabLists[node.tab].editableList('addItem',{node:node,widgets:[]});
                                 }
@@ -1808,7 +1811,7 @@
                 }
 
                 nodesAddEventHandler = function(node) {
-                    if (/^ui_/.test(node.type) && !listElements[node.id]) {
+                    if (/^mui_/.test(node.type) && !listElements[node.id]) {
                         pendingAdd.push(node);
                         clearTimeout(pendingAddTimer);
                         pendingAddTimer = setTimeout(handlePendingAdds,100);
@@ -1817,14 +1820,14 @@
                 RED.events.on("nodes:add", nodesAddEventHandler);
 
                 nodesRemoveEventHandler = function(node) {
-                    if (/^ui_/.test(node.type)) {
-                        if (node.type === "ui_tab" || node.type === "ui_link") {
+                    if (/^mui_/.test(node.type)) {
+                        if (node.type === "mui_tab" || node.type === "mui_link") {
                             if (listElements[node.id]) {
                                 tabContainer.editableList('removeItem',listElements[node.id].data('data'));
                                 delete tabLists[node.id];
                             }
                         }
-                        else if (node.type === "ui_group") {
+                        else if (node.type === "mui_group") {
                             if (tabLists[node.tab] && listElements[node.id]) {
                                 tabLists[node.tab].editableList('removeItem',listElements[node.id].data('data'));
                             }
