@@ -2,7 +2,6 @@ module.exports = function(RED) {
 
     function GroupNode(config) {
         RED.nodes.createNode(this, config);
-        console.log('\n\n\n\n\n\n\nin groupnode create node config is:', config);
         this.config = {
             name: config.name,
             disp: config.disp,
