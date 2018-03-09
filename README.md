@@ -1,29 +1,33 @@
 # mdashboard
 
 
-[![npm version](https://badge.fury.io/js/mdashboard.svg)](https://badge.fury.io/js/mdashboard)
-Note that this is not the official node-red-dashboard. This is a fork which solves a very specific requirement- widget state is emitted only to the socket origin that caused the change. For example, if two users have the same dashboard open and one user types into a text input, the other user will not get the text update. This is a meant as a replacement for the original node-red-dashboard- **DO NOT INSTALL** this with the node-red-dashboard- it can result in unpredictable behaviour.
+[![npm version](https://badge.fury.io/js/node-red-contrib-mdashboard.svg)](https://badge.fury.io/js/node-red-contrib-mdashboard)
+Note that this is not the official node-red-dashboard. This is a fork which solves a very specific requirement- widget
+state is emitted only to the socket origin that caused the change. For example, if two users have the same dashboard open
+and one user types into a text input, the other user will not get the text update. This works well when a typical web form
+like behavior is needed- multiple users can use the same dashboard url as a form to submit data back to the flow. This
+version of the dashboard can be installed along with the original node-red-dashboard- the UI configuration for the two
+dashboards are distinct and the settings appear in different tabs in the sidebar.
 
 Most of the documentation is left as is from the original project as it is applicable to the current project as well.
 
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard. 
            
-For the latest updates see the [CHANGELOG.md](https://github.com/umasudhan/mdashboard/blob/master/CHANGELOG.md)
+For the latest updates see the [CHANGELOG.md](https://github.com/umasudhan/node-red-contrib-mdashboard/blob/master/CHANGELOG.md)
 
 <img src="http://nodered.org/images/dashboarde.png"/>
 
 ## Pre-requisites
 
-Node-RED-mDashboard requires Node-RED version 0.14 or more recent.
+mDashboard requires Node-RED version 0.14 or more recent.
 
 ## Install
 
-To install the stable version use the `Menu - Manage palette` option and search for `mdashboard`.
+To install the stable version use the `Menu - Manage palette` option and search for `node-red-contrib-mdashboard`.
 
 Open your Node-RED instance and you should have UI nodes available in the palette and a new `mdashboard` tab in the
-right side panel. The UI interface is available at <http://localhost:1880/ui> (if the default settings are used).
-
+right side panel. The UI interface is available at <http://localhost:1880/mui> (if the default settings are used).
 
 ## Layout
 
@@ -75,8 +79,8 @@ Each node may parse the `msg.payload` to make it suitable for display. This conv
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
-Most ui widgets can also be configured by using a `msg.ui_control` message - see **[config-fields.md](https://github.com/umasudhan/mdashboard/blob/master/config-fields.md)**
-for futher details.
+Most ui widgets can also be configured by using a `msg.ui_control` message - see **[config-fields.md](https://github.com/umasudhan/node-red-contrib-mdashboard/blob/master/config-fields.md)**
+for further details.
 
   - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.
   - **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
@@ -106,10 +110,4 @@ already use to create indicator type widgets.
 ## Multiple Users
 
 This Dashboard supports multiple individual users. If a widget state on a dashboard changes, the event is emitted only to the dashboard from which it originated.
-
-## For mdashboard Developers
-The plugin uses the ```dist``` folder if it exists. Make sure it has been deleted if you want to use the non-minified version while developing.
-After finishing changes to the front-end code in the src folder, you can use ```gulp``` to update and rebuild the minified files and update the *appcache* manifest.
-
-    gulp
 
