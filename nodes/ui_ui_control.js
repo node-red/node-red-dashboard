@@ -11,6 +11,9 @@ module.exports = function(RED) {
             if (msg.payload.hasOwnProperty("tab")) {
                 ui.emit('ui-control', {tab:msg.payload.tab, socketid:msg.socketid});
             }
+            if (msg.payload.hasOwnProperty("group")) {
+                ui.emit('ui-control', {group:msg.payload.group, socketid:msg.socketid});
+            }
         });
 
         var sendconnect = function(id, ip) {

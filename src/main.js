@@ -144,6 +144,24 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
+        function hideGroups() {
+            var flag = false;
+            for (var t in main.menu) {
+                if (main.menu.hasOwnProperty(t)) {
+                    for (var g in main.menu[t].items) {
+                        if (main.menu[t].items.hasOwnProperty(g)) {
+                            var c = (main.menu[t].header+" "+main.menu[t].items[g].header.name).replace(/ /g,"_");
+                            if (localStorage.getItem(c) == "true") {
+                                main.menu[t].items[g].header.config.hidden = true;
+                                flag = true;
+                            }
+                        }
+                    }
+                }
+            }
+            if (flag === true) { $(window).trigger('resize'); }
+        }
+
         function replaceHeadOriginalEl (headOriginalEl, format) {
             resetHeadOriginalEl(headOriginalEl);
             addHeadEl(headOriginalEl.id, format);
@@ -267,6 +285,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $mdToast.hide();
                 processGlobals();
                 events.emit('ui-change', prevTabIndex);
+                hideGroups();
                 done();
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length) {
@@ -447,6 +466,32 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 var index = parseInt(msg.tab);
                 if (Number.isNaN(index) || index < 0) { return; }
                 if (index < main.menu.length) { main.open(main.menu[index], index); }
+            }
+            if (msg.hasOwnProperty("group")) {  // it's to control a group item
+                if (typeof msg.group === 'object') {
+                    for (var t in main.menu) {
+                        if (main.menu.hasOwnProperty(t)) {
+                            for (var g in main.menu[t].items) {
+                                if (main.menu[t].items.hasOwnProperty(g)) {
+                                    var c = (main.menu[t].header+" "+main.menu[t].items[g].header.name).replace(/ /g,"_");
+                                    if (msg.group.hasOwnProperty("show")) {
+                                        if (msg.group.show.indexOf(c) > -1) {
+                                            main.menu[t].items[g].header.config.hidden = undefined;
+                                            localStorage.removeItem(c);
+                                        }
+                                    }
+                                    if (msg.group.hasOwnProperty("hide")) {
+                                        if (msg.group.hide.indexOf(c) > -1) {
+                                            main.menu[t].items[g].header.config.hidden = true;
+                                            localStorage.setItem(c,true);
+                                        }
+                                    }
+                                    $(window).trigger('resize');
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
 
