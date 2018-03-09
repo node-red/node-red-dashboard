@@ -14,3 +14,17 @@ fs.readFile("node_modules/font-awesome/css/font-awesome.css", 'utf8', function (
         });
     }
 });
+// Monkeypatch for justgage negative numbers...
+fs.readFile("node_modules/justgage/justgage.js", 'utf8', function (err, file) {
+    if (err) { return; }
+    else {
+        console.log("Fixing up JustGage.js");
+        var res1 = file.replace(/var alpha, Ro, Ri, Cx, Cy, Xo, Yo, Xi, Yi, path;\n\n/, 'var alpha, Ro, Ri, Cx, Cy, Xo, Yo, Xi, Yi, path;\n\tif (min < 0) {max -= min; value -= min; min = 0; }\n\n');
+        fs.writeFile("node_modules/justgage/justgage.js", res1, 'utf8', function (err) {
+            if (err) { console.log("Failed to re-write file."); }
+            else {
+                console.log("Fixed  up JustGage.js");
+            }
+        });
+    }
+});
