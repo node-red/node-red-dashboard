@@ -106,18 +106,25 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         function applyStyle(theme) {
             // less needs a corresponding css variable for each style
             // in camel case. e.g. 'page-backgroundColor' -> '@pageBackgroundColor'
+            console.log('\n\n\n\n\n in applyStyle, themeState is:', theme.themeState);
             var configurableStyles = Object.keys(theme.themeState);
             var lessObj = {};
 
             for (var i=0; i<configurableStyles.length; i++) {
                 //remove dash and camel case
-                var arr = configurableStyles[i].split('-');
+                var style = configurableStyles[i];
+                if(style.startsWith('m-')){
+                    style = style.substring(2);
+                }
+                var arr = style.split('-');
                 for (var j=1; j<arr.length; j++) {
                     arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
                 }
                 var lessVariable = arr.join("");
-                var colour = theme.themeState[configurableStyles[i]].value;
-                lessObj["@"+lessVariable] = colour;
+                var themeState = theme.themeState[configurableStyles[i]]; //getting weird orphaned widget-color- temp fix need to see why this is happening
+                if(themeState){
+                    lessObj["@"+lessVariable] = themeState.value;
+                }
             }
             less.modifyVars(lessObj);
         }
