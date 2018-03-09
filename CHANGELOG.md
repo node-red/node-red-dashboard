@@ -1,4 +1,15 @@
 
+### 2.8.3-beta: Maintenance Release
+
+**Fixes**
+
+ - Monkeypatch fix for Justgage negative numbers Issue #113
+
+**Enhancements**
+
+ - Allow groups to be hidden and made visible via ui_control {group:{hide:["group_name_with_underscores"],show:["another_group"]}}
+ - Allow readonly:true in settings.js ui section to disable all input to dashboard You can still click/type but nothing gets sent to backend.
+
 ### 2.8.2: Maintenance Release
 
 **Enhancements**
