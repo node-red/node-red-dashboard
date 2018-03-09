@@ -334,7 +334,7 @@ function init(server, app, log, redSettings) {
         }
     });
 
-    log.info("Dashboard version " + dashboardVersion + " started at " + fullPath);
+    log.info("mDashboard version " + dashboardVersion + " started at " + fullPath);
 
     io.on('connection', function(socket) {
         ev.emit("newsocket", socket.client.id, socket.request.connection.remoteAddress);
@@ -352,6 +352,7 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-change', function(index) {
             var name = "";
+            console.log('in ui ~ 355 io.on>socket.on(ui-change) index, menu:', index, menu);
             if ((index != null) && !isNaN(index) && (menu.length > 0) && (index <= menu.length)) {
                 name = (menu[index].hasOwnProperty("header") && typeof menu[index].header !== 'undefined') ? menu[index].header : menu[index].name;
                 ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
