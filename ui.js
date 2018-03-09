@@ -255,16 +255,21 @@ function add(opt) {
     // This is the handler for messages coming back from the UI
     var handler = function (msg) {
         if (msg.id !== opt.node.id) { return; }  // ignore if not us
-        var converted = opt.convertBack(msg.value);
-        if (opt.storeFrontEndInputAsState) {
-            currentValues[msg.id] = converted;
-            replayMessages[msg.id] = msg;
-        }
-        var toSend = {payload:converted};
-        toSend = opt.beforeSend(toSend, msg) || toSend;
-        toSend.socketid = toSend.socketid || msg.socketid;
-        if (!msg.hasOwnProperty("_fromInput")) {   // TODO: too specific
-            opt.node.send(toSend);      // send to following nodes
+        if (settings.readonly === true) {
+            msg.value = currentValues[msg.id];
+        } // don't accept input if we are in read only mode
+        else {
+            var converted = opt.convertBack(msg.value);
+            if (opt.storeFrontEndInputAsState) {
+                currentValues[msg.id] = converted;
+                replayMessages[msg.id] = msg;
+            }
+            var toSend = {payload:converted};
+            toSend = opt.beforeSend(toSend, msg) || toSend;
+            toSend.socketid = toSend.socketid || msg.socketid;
+            if (!msg.hasOwnProperty("_fromInput")) {   // TODO: too specific
+                opt.node.send(toSend);      // send to following nodes
+            }
         }
         if (opt.storeFrontEndInputAsState) {
             //fwd to all UI clients
@@ -297,6 +302,10 @@ function init(server, app, log, redSettings) {
         settings.path = uiSettings.path;
     }
     else { settings.path = 'ui'; }
+    if ((uiSettings.hasOwnProperty("readonly")) && (typeof uiSettings.readonly === "boolean")) {
+        settings.readonly = uiSettings.readonly;
+    }
+    else { settings.readonly = false; }
     settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
     settings.verbose = redSettings.verbose || false;
 
