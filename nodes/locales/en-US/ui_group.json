@@ -5,7 +5,7 @@
             "tab" : "Tab",
             "width" : "Width",
             "default" : "Default",
-            "group" : "Group",
+            "group" : "mGroup",
             "unassigned" : "unassigned"
         },
         "display-name" : "Display group name",

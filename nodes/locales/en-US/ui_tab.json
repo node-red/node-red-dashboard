@@ -2,7 +2,7 @@
     "ui_tab" : {
         "label" : {
             "home" : "Home",
-            "tab" : "Tab",
+            "tab" : "mTab",
             "name" : "Name",
             "icon" : "Icon"
         }
