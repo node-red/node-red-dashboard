@@ -303,8 +303,8 @@ function loadConfiguration(type,scope) {
 
         // Theme settings
         if (themeState) {
-            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = themeState['widget-textColor'].value;
-            var gridColor = tinycolor(themeState['widget-textColor'].value).toRgb();
+            config.options.scales.xAxes[0].ticks.fontColor = config.options.scales.yAxes[0].ticks.fontColor = themeState['m-widget-textColor'].value;
+            var gridColor = tinycolor(themeState['m-widget-textColor'].value).toRgb();
             var gridlineColour = "rgba("+gridColor.r+","+gridColor.g+","+gridColor.b+",0.1)";
 
             config.options.scales.xAxes[0].gridLines = config.options.scales.yAxes[0].gridLines = {
@@ -332,7 +332,7 @@ function loadConfiguration(type,scope) {
 
         //set colours based on widget text colour
         if (themeState) {
-            config.options.legend.labels.fontColor = themeState['widget-textColor'].value;
+            config.options.legend.labels.fontColor = themeState['m-widget-textColor'].value;
         }
     }
 

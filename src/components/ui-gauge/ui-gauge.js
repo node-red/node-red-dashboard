@@ -12,9 +12,13 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                     var theme = scope.$eval('main.selectedTab.theme.name') || "theme-light";
                     var themeState = scope.$eval('main.selectedTab.theme.themeState');
                     if (themeState) {
-                        bgnd = themeState["widget-borderColor"].value;
-                        fgnd = themeState['widget-backgroundColor'].value;
-                        tgnd = themeState['widget-textColor'].value;
+                        try {
+                            bgnd = themeState["m-widget-borderColor"].value;
+                            fgnd = themeState['m-widget-backgroundColor'].value;
+                            tgnd = themeState['m-widget-textColor'].value;
+                        } catch (e) {
+                            console.log('exception in ui-gauge.js', e);
+                        }
                     }
 
                     //Backwards compatability for background and foreground
