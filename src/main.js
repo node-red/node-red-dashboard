@@ -471,6 +471,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (typeof msg.group === 'object') {
                     for (var t in main.menu) {
                         if (main.menu.hasOwnProperty(t)) {
+                            var eldiv;
                             for (var g in main.menu[t].items) {
                                 if (main.menu[t].items.hasOwnProperty(g)) {
                                     var c = (main.menu[t].header+" "+main.menu[t].items[g].header.name).replace(/ /g,"_");
@@ -478,6 +479,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                                         if (msg.group.show.indexOf(c) > -1) {
                                             main.menu[t].items[g].header.config.hidden = undefined;
                                             localStorage.removeItem(c);
+                                            eldiv = c;
                                         }
                                     }
                                     if (msg.group.hasOwnProperty("hide")) {
@@ -488,6 +490,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                                     }
                                     $(window).trigger('resize');
                                 }
+                            }
+                            if (msg.group.hasOwnProperty("focus") && eldiv) {
+                                setTimeout(function() {
+                                    eldiv = $(window)[0].document.getElementById(eldiv);
+                                    if (eldiv) { eldiv.scrollIntoView(); }
+                                }, 50);
                             }
                         }
                     }
