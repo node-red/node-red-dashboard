@@ -262,10 +262,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             var finishLoading = function() {
                 if (main.selectedTab && typeof(main.selectedTab.theme) === 'object') {
-                    main.selectedTab.theme.themeState["widget-borderColor"] = main.selectedTab.theme.themeState["widget-borderColor"] || main.selectedTab.theme.themeState["group-backgroundColor"];
+                    main.selectedTab.theme.themeState["m-widget-borderColor"] = main.selectedTab.theme.themeState["m-widget-borderColor"] || main.selectedTab.theme.themeState["m-group-backgroundColor"];
                     applyStyle(main.selectedTab.theme);
                 }
-                else if (typeof(ui.theme) === 'object' && ui.theme.themeState['base-color'].value) {
+                else if (typeof(ui.theme) === 'object' && ui.theme.themeState['m-base-color'].value) {
                     applyStyle(ui.theme);
                 }
                 if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
