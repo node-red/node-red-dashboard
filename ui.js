@@ -352,7 +352,6 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-change', function(index) {
             var name = "";
-            console.log('in ui ~ 355 io.on>socket.on(ui-change) index, menu:', index, menu);
             if ((index != null) && !isNaN(index) && (menu.length > 0) && (index <= menu.length)) {
                 name = (menu[index].hasOwnProperty("header") && typeof menu[index].header !== 'undefined') ? menu[index].header : menu[index].name;
                 ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
@@ -509,8 +508,8 @@ function addBaseConfig(config) {
     if (config) { baseConfiguration = config; }
     mani.name = config.site ? config.site.name : "Node-RED Dashboard";
     mani.short_name = mani.name.replace("Node-RED","").trim();
-    mani.background_color = config.theme.themeState["page-titlebar-backgroundColor"].value;
-    mani.theme_color = config.theme.themeState["page-titlebar-backgroundColor"].value;
+    mani.background_color = config.theme.themeState["m-page-titlebar-backgroundColor"].value;
+    mani.theme_color = config.theme.themeState["m-page-titlebar-backgroundColor"].value;
     updateUi();
 }
 
