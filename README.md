@@ -7,7 +7,9 @@ state is emitted only to the socket origin that caused the change. For example, 
 and one user types into a text input, the other user will not get the text update. This works well when a typical web form
 like behavior is needed- multiple users can use the same dashboard url as a form to submit data back to the flow. This
 version of the dashboard can be installed along with the original node-red-dashboard- the UI configuration for the two
-dashboards are distinct and the settings appear in different tabs in the sidebar.
+dashboards are distinct and the settings appear in different tabs in the sidebar. Note that this changes the behavior of
+the original node-red-dashboard - specifically, one user's changes could overwrite another's without them knowing about it.
+In that sense, this dashboard is multi-user only for input- all dashboard users still share the same backend instance.
 
 Most of the documentation is left as is from the original project as it is applicable to the current project as well.
 
@@ -109,5 +111,5 @@ already use to create indicator type widgets.
 
 ## Multiple Users
 
-This Dashboard supports multiple individual users. If a widget state on a dashboard changes, the event is emitted only to the dashboard from which it originated.
+This Dashboard supports multiple individual users- see note at top. If a widget state on a dashboard changes, the event is emitted only to the dashboard from which it originated.
 
