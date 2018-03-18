@@ -1,9 +1,11 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
     var path= require('path');
+    var node;
 
     function BaseNode(config) {
         RED.nodes.createNode(this, config);
+        node = this;
         var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
 
         var defaultLightTheme = {
@@ -80,6 +82,8 @@ module.exports = function(RED) {
 
     RED.httpAdmin.get('/ui_base/js/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/js', req.params[0]);
-        res.sendFile(filename);
+        res.sendFile(filename, function (err) {
+            if (err) { node.warn(filename + " not found. Maybe running in dev mode."); }
+        });
     });
 };

@@ -20,7 +20,6 @@ var
     removeHtml = require('gulp-remove-html'),
     replace = require('gulp-replace'),
     resources = require('gulp-resources'),
-    //spawn = require('child_process').spawn,
     streamqueue = require('streamqueue'),
     templateCache = require('gulp-angular-templatecache'),
     uglify = require('gulp-uglify');
@@ -31,10 +30,6 @@ gulp.task('default', ['lint','jscs'], function() {
 });
 
 gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
-
-// gulp.task('publish', ['build'], function (done) {
-//     spawn('npm', ['publish'], { stdio:'inherit' }).on('close', done);
-// });
 
 gulp.task('manifest', ['build'], function() {
     gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*','dist/weather-icons-lite/fonts/*','dist/fonts/*'], { base: 'dist/' })
@@ -75,10 +70,10 @@ gulp.task('index', function() {
         'before': /<\/head>$/,
         'lineBefore': '<link rel="stylesheet/less" href="css/app.min.less" />'
     }))
-    .pipe(insertLines({
-        'before': /<\/body>$/,
-        'lineBefore': '<script src="js/tinycolor-min.js"></script>'
-    }))
+    // .pipe(insertLines({
+    //     'before': /<\/body>$/,
+    //     'lineBefore': '<script src="js/tinycolor-min.js"></script>'
+    // }))
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(eol('\n'))
     .pipe(gulp.dest('dist/'));

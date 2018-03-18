@@ -227,9 +227,9 @@
                 document.body.appendChild(jsScript);
                 //console.log('Tiny Color Loaded:',path);
             },
-            error:function (xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 404 && !attemptedVendorLoad) {
-                    loadTinyColor(uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
+                    loadTinyColor('/'+uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
                     attemptedVendorLoad = true;
                 }
             }
