@@ -4,10 +4,15 @@
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
            <md-input-container ng-if="opt.type != 'date'" class="md-block" flex>
                <label ng-if="(opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password') && opt.label">{{opt.label}}</label>
-               <input  ng-if="opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password' " type="{{opt.type}}"
+               <input ng-if="opt.type == 'text' || opt.type == 'email' ||opt.type == 'password' " type="{{opt.type}}"
                 ng-model="me.item.formValue[opt.value]"
                 ng-required="opt.required"
                 ng-keydown="me.stop($event)">
+               <input ng-if="opt.type == 'number'" type="{{opt.type}}"
+                 ng-model="me.item.formValue[opt.value]"
+                 ng-required="opt.required"
+                 ng-keydown="me.stop($event)"
+                 step="any">
                <md-switch ng-if="opt.type == 'switch'" md-no-ink ng-model="me.item.formValue[opt.value]">{{opt.label}}</md-switch>
                <md-checkbox ng-if="opt.type == 'checkbox'" md-no-ink aria-label="Checkbox No Ink" ng-model="me.item.formValue[opt.value]"> {{opt.label}}</md-checkbox>
            </md-input-container>

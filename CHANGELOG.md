@@ -3,14 +3,15 @@
 
 **Fixes**
 
- - Monkeypatch fix for Justgage negative numbers Issue #113
+ - Monkeypatch fix for Justgage negative numbers. Issue #113
  - Ensure toast is a string.
-
+ - Clean up require of tinycolor2 so dev environment works. Issue #367
+ - Allow numeric input in form to accept floating point numbers. Issue #368
 
 **Enhancements**
 
  - Allow groups to be hidden and made visible via ui_control {group:{hide:["group_name_with_underscores"],show:["another_group"],focus:true}}
- - Allow readonly:true in settings.js ui section to disable all input to dashboard You can still click/type but nothing gets sent to backend.
+ - Allow readonly:true in settings.js ui section to disable all input to dashboard. You can still click/type but nothing gets sent to backend.
 
 ### 2.8.2: Maintenance Release
 
@@ -20,7 +21,7 @@
 
 **Fixes**
 
- - Better fix for numeric field widths Issue #344
+ - Better fix for numeric field widths. Issue #344
  - Fix some theme <-> library consistency issues
  - Clean up old line chart data from other topics after 60s. Issue #342 and #360
 
