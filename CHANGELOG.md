@@ -7,6 +7,7 @@
  - Ensure toast is a string.
  - Clean up require of tinycolor2 so dev environment works. Issue #367
  - Allow numeric input in form to accept floating point numbers. Issue #368
+ - Fix small wrinkle in reset of head elements on reload
 
 **Enhancements**
 
