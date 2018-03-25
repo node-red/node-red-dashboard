@@ -131,7 +131,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
             // reset original elements
             main.headOriginalElements.forEach(function(headOriginalEl) {
-                resetOriginalHeadEl(headOriginalEl);
+                resetHeadOriginalEl(headOriginalEl);
             })
 
             // add elements
