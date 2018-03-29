@@ -58,7 +58,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                 if (gaugeConfig.waveTextColor === undefined) { gaugeConfig.waveTextColor = fgnd; }
 
                                 if (scope.$eval('me.item.options') !== null) {
-                                    Object.assign(gaugeConfig, scope.$eval('me.item.options'));
+                                    //Object.assign(gaugeConfig, scope.$eval('me.item.options'));
+                                    Object.keys(scope.$eval('me.item.options')).forEach(function(key) {
+                                        gaugeConfig[key] = scope.$eval('me.item.options')[key];
+                                    });
                                 }
                                 gauge = loadLiquidFillGauge("gauge"+scope.$eval('$id'), scope.$eval('me.item.value'), gaugeConfig);
                                 unreg = scope.$watch('me.item.value', function(newValue) {
@@ -127,7 +130,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     }
                                 }
                                 if (scope.$eval('me.item.options') !== null) {
-                                    Object.assign(gaugeOptions, scope.$eval('me.item.options'));
+                                    //Object.assign(gaugeOptions, scope.$eval('me.item.options'));
+                                    Object.keys(scope.$eval('me.item.options')).forEach(function(key) {
+                                        gaugeOptions[key] = scope.$eval('me.item.options')[key];
+                                    });
                                 }
 
                                 gauge = new JustGage(gaugeOptions);
