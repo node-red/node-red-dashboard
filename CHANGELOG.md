@@ -8,11 +8,14 @@
  - Clean up require of tinycolor2 so dev environment works. Issue #367
  - Allow numeric input in form to accept floating point numbers. Issue #368
  - Fix small wrinkle in reset of head elements on reload
+ - Fix Use of object assign for IE11. Issue #372
+ - Fix button background colour for IE11. Issue #373
 
 **Enhancements**
 
  - Allow groups to be hidden and made visible via ui_control {group:{hide:["group_name_with_underscores"],show:["another_group"],focus:true}}
- - Allow readonly:true in settings.js ui section to disable all input to dashboard. You can still click/type but nothing gets sent to backend.
+ - Allow `readOnly:true` in settings.js ui section to disable all input to dashboard.
+ You can still click/type but nothing gets sent to backend.
 
 ### 2.8.2: Maintenance Release
 

@@ -255,7 +255,7 @@ function add(opt) {
     // This is the handler for messages coming back from the UI
     var handler = function (msg) {
         if (msg.id !== opt.node.id) { return; }  // ignore if not us
-        if (settings.readonly === true) {
+        if (settings.readOnly === true) {
             msg.value = currentValues[msg.id];
         } // don't accept input if we are in read only mode
         else {
@@ -302,10 +302,10 @@ function init(server, app, log, redSettings) {
         settings.path = uiSettings.path;
     }
     else { settings.path = 'ui'; }
-    if ((uiSettings.hasOwnProperty("readonly")) && (typeof uiSettings.readonly === "boolean")) {
-        settings.readonly = uiSettings.readonly;
+    if ((uiSettings.hasOwnProperty("readOnly")) && (typeof uiSettings.readOnly === "boolean")) {
+        settings.readOnly = uiSettings.readOnly;
     }
-    else { settings.readonly = false; }
+    else { settings.readOnly = false; }
     settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
     settings.verbose = redSettings.verbose || false;
 
