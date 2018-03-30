@@ -153,7 +153,7 @@ function loadConfiguration(type,scope) {
         spanGaps: scope.$eval('me.item.spanGaps'),
         scales: {},
         legend: false,
-        responsive: true,
+        responsive: false,
         maintainAspectRatio: false
     };
     if (type === 'pie') {
