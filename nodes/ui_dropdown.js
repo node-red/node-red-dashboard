@@ -35,8 +35,8 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             forwardInputMessages: config.passthru,
+            storeFrontEndInputAsState: false,
             control: control,
-
             convert: function (payload, oldValue, msg) {
                 // convert msg
                 // as of now, only allow a full replacement of options
