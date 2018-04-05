@@ -18,6 +18,7 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             forwardInputMessages: config.passthru,
+            storeFrontEndInputAsState: false,
             control: {
                 type: 'numeric',
                 label: config.label,
