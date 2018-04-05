@@ -1,10 +1,10 @@
 {
     "name": "node-red-contrib-mdashboard",
     "original_node_red_dashboard_version": "2.8.2-beta",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A set of multi-user dashboard nodes for Node-RED",
     "keywords": [
-        "multi-user","dashboard"
+        "node-red"
     ],
     "main": "none",
     "scripts": {
