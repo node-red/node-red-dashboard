@@ -69,8 +69,8 @@ module.exports = function (RED) {
             convert: function(p,o,m) {
                 var form = config.format.replace(/{{/g,"").replace(/}}/g,"").replace(/\s/g,"");
                 var value = RED.util.getMessageProperty(m,form);
-                if (value !== undefined) { return parseFloat(value) || 0; }
-                return parseFloat(p) || 0;
+                if (value !== undefined) { return value; }
+                return p;
                 //return ui.toFloat.bind(this, config);
             }
         });

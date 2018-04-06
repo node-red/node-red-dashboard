@@ -141,6 +141,9 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
 
                                 var oldUnits = "";
                                 unreg = scope.$watch('me.item.value', function(newValue) {
+                                    if (isNaN(newValue = parseFloat(newValue))) {
+                                        newValue = gaugeOptions.min;
+                                    }
                                     if (scope.$eval('me.item.getUnits()') !== oldUnits) {
                                         oldUnits = scope.$eval('me.item.getUnits()');
                                         gaugeOptions.label = oldUnits;
