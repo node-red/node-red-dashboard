@@ -53,7 +53,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         },
                         afterDatasetsDraw: function(chartInstance) {
                             chartInstance.chart.ctx.restore();
-                        },
+                        }
                     });
 
                     // When new values arrive, update the chart
@@ -126,6 +126,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         }
                     });
                 }, 0);
+                $timeout(function() {
+                    scope.$broadcast("$resize");
+                }, 100);
             }
         }
     }
