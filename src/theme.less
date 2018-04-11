@@ -132,9 +132,15 @@ body.nr-dashboard-theme md-sidenav {
     box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 .nr-dashboard-theme .color-picker-input-wrapper > input {
-    color:#fff;
-    background-color: #444;
+    color: @widgetTextColor;
+    background-color: @widgetBorderColor;
     font-family: inherit;
+}
+.nr-dashboard-theme .color-picker-wrapper .color-picker-panel.color-picker-panel-round .color-picker-grid-wrapper .color-picker-row .color-picker-grid .color-picker-grid-inner {
+    background-color: @widgetBorderColor;
+}
+.nr-dashboard-theme .color-picker-wrapper.color-picker-open {
+    border-width:0;
 }
 
 /* Dropdown */
