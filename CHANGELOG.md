@@ -1,5 +1,5 @@
 
-### 2.8.3-beta: Maintenance Release
+### 2.9.0-beta: Milestone Release
 
 **Fixes**
 
@@ -10,12 +10,15 @@
  - Fix small wrinkle in reset of head elements on reload
  - Fix Use of object assign for IE11. Issue #372
  - Fix button background colour for IE11. Issue #373
+ - Let Gauge display invalid value as text, and set pointer to minimum value rather than 0
+ - Fix date picker width to stop css overrides. Issue #378
 
 **Enhancements**
 
  - Allow groups to be hidden and made visible via ui_control {group:{hide:["group_name_with_underscores"],show:["another_group"],focus:true}}
- - Allow `readOnly:true` in settings.js ui section to disable all input to dashboard.
+ - Allow `readOnly:true` in settings.js `ui` section to disable all input to dashboard.
  You can still click/type but nothing gets sent to backend.
+ - Add "No theme in ui_template" option to site options to allow regular angular themeing through. Issue #379
 
 ### 2.8.2: Maintenance Release
 

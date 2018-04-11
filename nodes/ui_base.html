@@ -454,13 +454,14 @@
 
                             var site_name = c_("site.title");
                             var site_date_format = c_("site.date-format");
-                            var site = { name:site_name, hideToolbar:"false", allowSwipe:"false", dateFormat:site_date_format, sizes:sizes };
+                            var site = { name:site_name, hideToolbar:"false", allowSwipe:"false", allowTempTheme:"true", dateFormat:site_date_format, sizes:sizes };
                             if (globalDashboardNode !== null) {
                                 if (typeof globalDashboardNode.site !== "undefined") {
                                     site = {
                                         name: globalDashboardNode.site.name || globalDashboardNode.name,
                                         hideToolbar: globalDashboardNode.site.hideToolbar,
                                         allowSwipe: globalDashboardNode.site.allowSwipe,
+                                        allowTempTheme: globalDashboardNode.site.allowTempTheme,
                                         dateFormat: globalDashboardNode.site.dateFormat,
                                         sizes: globalDashboardNode.site.sizes
                                     }
@@ -604,6 +605,21 @@
                     }
                 })
                 .appendTo(divAllowSwipe);
+
+                var divAllowTempTheme = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                $('<select id="nr-db-field-allowTempTheme">')
+                .css("width","100%")
+                .append($('<option>', { value:"true", text:c_("temp.allow-theme"), selected:true }))
+                .append($('<option>', { value:"false", text:c_("temp.no-theme") }))
+                .val("true")
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.site.allowTempTheme !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.site.allowTempTheme = $(this).val();
+                        RED.nodes.dirty(true);
+                    }
+                })
+                .appendTo(divAllowTempTheme);
 
                 var site_name = c_("site.title");
                 var site_date_format = c_("site.date-format");
@@ -1539,8 +1555,9 @@
                     ensureDashboardNode(true);
                     if (globalDashboardNode) {
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
-                        $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || false);
-                        $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar || false);
+                        $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || "false");
+                        $("#nr-db-field-allowTempTheme").val(globalDashboardNode.site.allowTempTheme || "true");
+                        $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar || "false");
                         $("#nr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
 
                         if (typeof globalDashboardNode.site.sizes !== "object") {
@@ -1655,6 +1672,7 @@
                                 $("#nr-db-field-title").val(globalDashboardNode.site.name);
                                 $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar);
                                 $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe);
+                                $("#nr-db-field-allowTempTheme").val(globalDashboardNode.site.allowTempTheme);
                                 $("#nr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
                                 $("#nr-db-field-sx").val(globalDashboardNode.site.sizes.sx);
                                 $("#nr-db-field-sy").val(globalDashboardNode.site.sizes.sy);

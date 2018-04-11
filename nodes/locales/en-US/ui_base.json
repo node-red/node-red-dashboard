@@ -72,6 +72,10 @@
         "swipe" : {
             "no-swipe" : "No swipe between tabs",
             "allow-swipe" : "Allow swipe between tabs"
+        },
+        "temp" : {
+            "no-theme" : "No theme in ui_template",
+            "allow-theme" : "Set theme in ui_template"
         }
     }
 }

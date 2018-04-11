@@ -43,6 +43,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.loaded = false;
         this.hideToolbar = false;
         this.allowSwipe = false;
+        this.allowTempTheme = true;
         var main = this;
         var audiocontext;
         var voices = [];
@@ -119,6 +120,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 var colour = theme.themeState[configurableStyles[i]].value;
                 lessObj["@"+lessVariable] = colour;
             }
+            if (typeof main.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
+            lessObj["@nrTemplateTheme"] = main.allowTempTheme;
+
             less.modifyVars(lessObj);
         }
 
@@ -253,6 +257,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
+                main.allowTempTheme = (ui.site.allowTempTheme == "true");
                 dateFormat = ui.site.dateFormat || "DD/MM/YYYY";
                 if (ui.site.hasOwnProperty("sizes")) {
                     sizes.setSizes(ui.site.sizes);
@@ -405,7 +410,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .ok(msg.ok)
                         .clickOutsideToClose(false)
                 }
-                $mdDialog.show(confirm).then(
+                $mdDialog.show(confirm, { panelClass:'nt-dashboard-dialog' }).then(
                     function() {
                         msg.msg.payload = msg.ok;
                         events.emit({ id:msg.id, value:msg });

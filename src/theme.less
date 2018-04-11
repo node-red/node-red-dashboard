@@ -12,6 +12,7 @@
 @widgetTextColor: #000;
 @widgetBackgroundColor: #4FBAE4;
 @widgetBorderColor: #fff;
+@nrTemplateTheme: true;
 
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
@@ -111,6 +112,9 @@ body.nr-dashboard-theme md-sidenav {
 }
 .md-default-theme .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator, .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator {
     border: 1px solid @widgetBackgroundColor;
+}
+.md-datepicker-calendar-pane.md-pane-open {
+    width: 345px;
 }
 
 /* Chart */
@@ -221,33 +225,35 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 }
 
 /* Template */
-.nr-dashboard-theme .nr-dashboard-template .md-button {
-	background: @widgetBackgroundColor;
-	color: white;
-	margin: 0px 6px;
-	padding: 0px 12px;
-	min-height: 26px;
-	min-width: unset;
-	line-height: unset;
+& when (@nrTemplateTheme = true) {
+    .nr-dashboard-theme .nr-dashboard-template .md-button {
+    	background: @widgetBackgroundColor;
+    	color: white;
+    	margin: 0px 6px;
+    	padding: 0px 12px;
+    	min-height: 26px;
+    	min-width: unset;
+    	line-height: unset;
 
-	&.md-fab.md-mini {
-		padding: unset;
-	}
-}
-
-.nr-dashboard-theme .nr-dashboard-template .md-button:hover {
-	background-color: lighten(@widgetBackgroundColor, 5);
-}
-.nr-dashboard-theme .nr-dashboard-template {
-    ::-webkit-scrollbar {
-        height: 12px;
-        width: 12px;
-        background: @widgetBackgroundColor;
+    	&.md-fab.md-mini {
+    		padding: unset;
+    	}
     }
-    ::-webkit-scrollbar-thumb {
-        background: @baseColor;
-        -webkit-border-radius: 1ex;
-        -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+    .nr-dashboard-theme .nr-dashboard-template .md-button:hover {
+    	background-color: lighten(@widgetBackgroundColor, 5);
+    }
+
+    .nr-dashboard-theme .nr-dashboard-template {
+        ::-webkit-scrollbar {
+            height: 12px;
+            width: 12px;
+            background: @widgetBackgroundColor;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: @baseColor;
+            -webkit-border-radius: 1ex;
+            -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+        }
     }
 }
 
@@ -289,7 +295,11 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     padding: 24px;
 }
 .nr-dashboard-theme .md-button.md-primary {
-	color: @widgetBackgroundColor !important;
+	color: @widgetBackgroundColor;
+}
+.nr-dashboard-theme .md-button[disabled] {
+    color: rgba(0,0,0,0.38);
+    cursor: default;
 }
 
 /* Form */

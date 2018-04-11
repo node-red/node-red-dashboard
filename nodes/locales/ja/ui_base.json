@@ -72,6 +72,10 @@
         "swipe" : {
             "no-swipe" : "スワイプによるタブ切り替えをしない",
             "allow-swipe" : "スワイプによるタブ切り替えをする"
+        },
+        "temp" : {
+            "no-theme" : "No theme in ui_template",
+            "allow-theme" : "Set theme in ui_template"
         }
     }
 }
