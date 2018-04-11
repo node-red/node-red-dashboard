@@ -18,7 +18,8 @@
  - Allow groups to be hidden and made visible via ui_control {group:{hide:["group_name_with_underscores"],show:["another_group"],focus:true}}
  - Allow `readOnly:true` in settings.js `ui` section to disable all input to dashboard.
  You can still click/type but nothing gets sent to backend.
- - Add "No theme in ui_template" option to site options to allow regular angular themeing through. Issue #379
+ - Add "No theme in ui_template" option to site options to allow regular angular theme through. Issue #379
+ - Add option to remove hue slider from color-picker 
 
 ### 2.8.2: Maintenance Release
 

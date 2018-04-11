@@ -119,6 +119,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     me.item.options = {
                         format: me.item.format,
                         inline: me.item.showPicker,
+                        hue: me.item.showHue,
                         alpha: me.item.showAlpha,
                         lightness: me.item.showLightness,
                         swatch: me.item.showSwatch,
