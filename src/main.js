@@ -122,7 +122,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             if (typeof main.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
             lessObj["@nrTemplateTheme"] = main.allowTempTheme;
-
             less.modifyVars(lessObj);
         }
 
@@ -257,7 +256,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
-                main.allowTempTheme = (ui.site.allowTempTheme == "true");
+                if (typeof ui.site.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
+                else { main.allowTempTheme = (ui.site.allowTempTheme == "true"); }
                 dateFormat = ui.site.dateFormat || "DD/MM/YYYY";
                 if (ui.site.hasOwnProperty("sizes")) {
                     sizes.setSizes(ui.site.sizes);

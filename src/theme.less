@@ -24,11 +24,11 @@ body.nr-dashboard-theme {
     font-family: @baseFont;
 }
 
-& when (@nrTemplateTheme = true) {
-    body.nr-dashboard-theme md-content {
-    	color: @groupTextColor;
-        background: transparent;
-        height: 100%;
+body.nr-dashboard-theme md-content {
+    background: transparent;
+    height: 100%;
+    & when (@nrTemplateTheme = true) {
+        color: @groupTextColor;
     }
 }
 
@@ -60,6 +60,7 @@ body.nr-dashboard-theme md-toolbar {
 	DASHBOARD SIDEBAR
 */
 body.nr-dashboard-theme md-sidenav {
+    color: @groupTextColor;
 	background-color: @pageSidebarBackgroundColor;
 }
 
