@@ -398,7 +398,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     padding: 24px;
 }
 .nr-dashboard-theme .md-button.md-primary {
-	color: @widgetBackgroundColor;
+	color: lighten(@widgetBackgroundColor, 10);
 }
 .nr-dashboard-theme .md-button[disabled] {
     color: rgba(0,0,0,0.38);
@@ -407,14 +407,14 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 /* Form */
 .nr-dashboard-theme .nr-dashboard-form-button {
-    background-color:  @widgetBackgroundColor;
+    background-color: @widgetBackgroundColor;
     color: white;
 }
 .nr-dashboard-theme .nr-dashboard-form-button:hover {
-    background-color:  lighten(@widgetBackgroundColor, 10) !important;
+    background-color: lighten(@widgetBackgroundColor, 10) !important;
 }
 .nr-dashboard-theme .nr-dashboard-form-button:focus {
-    background-color:  lighten(@widgetBackgroundColor, 10) !important;
+    background-color: lighten(@widgetBackgroundColor, 10) !important;
 }
 .nr-dashboard-theme .nr-dashboard-form {
 	color: @widgetTextColor;
