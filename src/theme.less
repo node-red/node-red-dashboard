@@ -24,10 +24,12 @@ body.nr-dashboard-theme {
     font-family: @baseFont;
 }
 
-body.nr-dashboard-theme md-content {
-	color: @groupTextColor;
-    background: transparent;
-    height: 100%;
+& when (@nrTemplateTheme = true) {
+    body.nr-dashboard-theme md-content {
+    	color: @groupTextColor;
+        background: transparent;
+        height: 100%;
+    }
 }
 
 body.nr-dashboard-theme md-select-menu md-content {
@@ -67,6 +69,9 @@ body.nr-dashboard-theme md-sidenav {
 .nr-dashboard-theme ui-card-panel {
 	background-color: @groupBackgroundColor;
 	border: 1px solid @groupBorderColor;
+    & p.nr-dashboard-cardtitle {
+        color: @groupTextColor;
+    }
 }
 
 /*
