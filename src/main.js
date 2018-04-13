@@ -7,7 +7,7 @@ moment.locale(locale);
 app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
     function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider) {
         // $mdThemingProvider.theme('default')
-        //     .primaryPalette('light-green')
+        //     .primaryPalette('light-blue')
         //     .accentPalette('red');
 
         //white-list all protocols

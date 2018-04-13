@@ -1,17 +1,5 @@
 
-### 2.9.0-beta: Milestone Release
-
-**Fixes**
-
- - Monkeypatch fix for Justgage negative numbers. Issue #113
- - Ensure toast is a string.
- - Clean up require of tinycolor2 so dev environment works. Issue #367
- - Allow numeric input in form to accept floating point numbers. Issue #368
- - Fix small wrinkle in reset of head elements on reload
- - Fix Use of object assign for IE11. Issue #372
- - Fix button background colour for IE11. Issue #373
- - Let Gauge display invalid value as text, and set pointer to minimum value rather than 0
- - Fix date picker width to stop css overrides. Issue #378
+### 2.9.0: Milestone Release
 
 **Enhancements**
 
@@ -19,7 +7,20 @@
  - Allow `readOnly:true` in settings.js `ui` section to disable all input to dashboard.
  You can still click/type but nothing gets sent to backend.
  - Add "No theme in ui_template" option to site options to allow regular angular theme through. Issue #379
- - Add option to remove hue slider from color-picker 
+ - Add option to remove hue slider from color-picker
+
+ **Fixes**
+
+ - Monkeypatch fix for Justgage negative numbers. Issue #113
+ - Ensure toast is a string.
+ - Clean up require of tinycolor2. Issue #367
+ - Allow numeric input in form to accept floating point numbers. Issue #368
+ - Fix small wrinkle in reset of head elements on reload
+ - Fix Use of object assign for IE11. Issue #372
+ - Fix button background colour for IE11. Issue #373
+ - Let Gauge display invalid value as text, and set pointer to minimum value rather than 0
+ - Fix date picker width to stop css overrides. Issue #378
+ - Try to resolve blurred charts. Issues #302 and #380
 
 ### 2.8.2: Maintenance Release
 
