@@ -1,4 +1,10 @@
 
+### 2.9.1-beta: Maintenance Release
+
+**Fixes**
+
+- Let dashboard work without Localstorage. PR #383
+
 ### 2.9.0: Milestone Release
 
 **Enhancements**

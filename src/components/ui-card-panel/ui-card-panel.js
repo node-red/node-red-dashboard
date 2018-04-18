@@ -15,7 +15,7 @@ angular.module('ui').directive('uiCardPanel', ['$timeout',
                 controller.init(root);
                 scope.collapseCard = function() {
                     scope.collapsed = !scope.collapsed;
-                    if (localStorage) localStorage.setItem(attrs.id,scope.collapsed);
+                    if (localStorage) { localStorage.setItem(attrs.id,scope.collapsed); }
                     root.slideToggle(slideDuration);
                     $timeout(function() { $(window).trigger('resize'); }, slideDuration);
                     slideDuration = parseInt(attrs.slideToggleDuration, 10) || 150;
