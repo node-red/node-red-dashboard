@@ -4,6 +4,7 @@
 **Fixes**
 
 - Let dashboard work without Localstorage. PR #383
+- Let numeric field also be editable 
 
 ### 2.9.0: Milestone Release
 

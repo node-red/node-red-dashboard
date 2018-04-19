@@ -31,6 +31,7 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             beforeSend: function (msg) {
+                msg.payload = parseFloat(msg.payload);
                 msg.topic = config.topic || msg.topic;
                 if (node.pt) {
                     node.status({shape:"dot",fill:"grey",text:msg.payload});

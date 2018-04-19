@@ -53,6 +53,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                 case 'numeric': {
                     var changeValue = function (delta) {
+                        me.item.value = parseFloat(me.item.value);
+                        if (isNaN(me.item.value)) { me.item.value = me.item.min; }
                         if (delta > 0) {
                             if (me.item.value < me.item.max) {
                                 me.item.value = Math.round(Math.min(me.item.value + delta, me.item.max)*10000)/10000;
@@ -78,7 +80,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     me.item.minWidth = (mnw > mxw ? mnw : mxw) + fl;
                     var promise = null;
                     me.newValue = function() {
-                        me.item.value = parseFloat(me.item.value);
+                        //me.item.value = parseFloat(me.item.value);
+                        if (isNaN(parseFloat(me.item.value))) { return; }
                         if (me.item.value < me.item.min) { me.item.value = me.item.min; }
                         if (me.item.value > me.item.max) { me.item.value = me.item.max; }
                         events.emit({ id:me.item.id, value:me.item.value });
