@@ -9,7 +9,8 @@
             style="z-index:1">
             <ui-icon icon="expand_more"></ui-icon>
         </md-button>
-        <center><p class="value" style="min-width:{{me.item.minWidth}}px;" ng-bind-html="me.item.getText()"></p></center>
+        <!-- <center><p class="value" style="min-width:{{me.item.minWidth}}px;" ng-bind-html="me.item.getText()"></p></center> -->
+        <center><input ng-model="me.item.value" ng-change="me.newValue()" class="value" style="max-width:{{me.item.minWidth}}px;"></center>
         <md-button class="md-icon-button up-button"
             aria-label="{{me.item.label}}"
             ng-mousedown="me.periodicChange(me.item.step)"
