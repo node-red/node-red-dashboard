@@ -1,10 +1,11 @@
 
-### 2.9.1-beta: Maintenance Release
+### 2.9.1: Maintenance Release
 
 **Fixes**
 
-- Let dashboard work without Localstorage. PR #383
-- Let numeric field also be editable 
+- Let dashboard work if localstorage not available. PR #383
+- Let numeric field also be editable
+- Clean up gauge value (to be more as previously). Issue #385
 
 ### 2.9.0: Milestone Release
 
