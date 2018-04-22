@@ -69,7 +69,11 @@ module.exports = function (RED) {
             convert: function(p,o,m) {
                 var form = config.format.replace(/{{/g,"").replace(/}}/g,"").replace(/\s/g,"");
                 var value = RED.util.getMessageProperty(m,form);
-                if (value !== undefined) { return value; }
+                if (value !== undefined) {
+                    if (!isNaN(parseFloat(value))) { value = parseFloat(value); }
+                    return value;
+                }
+                if (!isNaN(parseFloat(p))) { p = parseFloat(p); }
                 return p;
                 //return ui.toFloat.bind(this, config);
             }
