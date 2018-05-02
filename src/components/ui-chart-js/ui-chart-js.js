@@ -264,7 +264,6 @@ function loadConfiguration(type,scope) {
     }
     else if ((type === 'bar') || (type === 'horizontalBar')) {
         config.options.scales.xAxes = [{}];
-        if (isNaN(yMin)) { yMin = 0; }
     }
     else if (type === "radar") {
         config.options.scale = {ticks:{}};
