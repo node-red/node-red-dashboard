@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.9.1",
+    "version": "2.9.2-beta",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -75,7 +75,7 @@
         "angular-animate": "~1.5.11",
         "angular-aria": "~1.5.11",
         "angular-chart.js": "^1.1.1",
-        "angular-material": "~1.1.8",
+        "angular-material": "~1.1.9",
         "angular-material-icons": "^0.7.1",
         "angular-messages": "~1.5.11",
         "angular-mocks": "~1.5.11",
@@ -108,8 +108,8 @@
         "jquery": "^3.3.1",
         "jshint": "^2.9.4",
         "justgage": "^1.2.2",
-        "less": "^2.7.2",
-        "moment": "~2.22.0",
+        "less": "^3.0.2",
+        "moment": "~2.22.1",
         "sprintf-js": "^1.0.3",
         "streamqueue": "~1.1.2",
         "svg-morpheus": "^0.3.0",

@@ -1,4 +1,11 @@
 
+### 2.9.2-beta: Maintenance Release
+
+**Fixes**
+
+ - Let dropdown edit config scale more sensibly on slide out.
+ - Let bar charts also auto scale negative values. Issue #387
+
 ### 2.9.1: Maintenance Release
 
 **Fixes**
