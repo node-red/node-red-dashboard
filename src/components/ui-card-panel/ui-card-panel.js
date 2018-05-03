@@ -9,13 +9,13 @@ angular.module('ui').directive('uiCardPanel', ['$timeout',
             controller: 'uiCardPanelController',
             controllerAs: 'ctrl',
             link: function (scope, element, attrs, controller) {
-                scope.collapsed = ((((typeof localStorage !== 'undefined') && localStorage.getItem(attrs.id)) || false) == 'true');
+                //scope.collapsed = ((((typeof localStorage !== 'undefined') && localStorage.getItem(attrs.id)) || false) == 'true');
                 var root = element.find(".nr-dashboard-cardcontainer");
                 var slideDuration = 0;
                 controller.init(root);
                 scope.collapseCard = function() {
                     scope.collapsed = !scope.collapsed;
-                    if (typeof localStorage !== 'undefined') { localStorage.setItem(attrs.id,scope.collapsed); }
+                    //if (typeof localStorage !== 'undefined') { localStorage.setItem(attrs.id,scope.collapsed); }
                     root.slideToggle(slideDuration);
                     $timeout(function() { $(window).trigger('resize'); }, slideDuration);
                     slideDuration = parseInt(attrs.slideToggleDuration, 10) || 150;
