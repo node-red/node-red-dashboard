@@ -6,6 +6,8 @@
  - Let dropdown edit config scale more sensibly on slide out.
  - Ensure groups are restored rather than completely disappeared on refresh. Issue #386
  - Let bar charts also auto scale negative values. Issue #387
+ - Use rounded line joins on charts to reduce spikyness.
+ - Ensure numeric input matches them (now that it is editable)
 
 ### 2.9.1: Maintenance Release
 

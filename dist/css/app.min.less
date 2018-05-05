@@ -294,7 +294,10 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 }
 
 /* Numeric */
-.nr-dashboard-theme .nr-dashboard-numeric {}
+.nr-dashboard-theme .nr-dashboard-numeric .value {
+    background-color: @groupBackgroundColor;
+    color: @widgetTextColor;
+}
 
 /* Slider */
 .nr-dashboard-theme .nr-dashboard-slider {}
