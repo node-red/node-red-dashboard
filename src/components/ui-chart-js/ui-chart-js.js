@@ -42,6 +42,9 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         }
                     });
 
+                    // Override the default "miter" linejoin setting
+                    Chart.defaults.global.elements.line.borderJoinStyle = "round";
+
                     Chart.plugins.register({
                         beforeDatasetsDraw: function(chartInstance) {
                             var ctx = chartInstance.chart.ctx;
