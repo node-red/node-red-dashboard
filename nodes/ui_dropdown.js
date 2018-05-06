@@ -96,7 +96,8 @@ module.exports = function(RED) {
                 if (emitOptions.isOptionsValid) {
                     control.options = emitOptions.newOptions;
                     control.value = emitOptions.value;
-                } else {
+                }
+                else {
                     if (msg.options) {
                         node.error("ERR: Invalid Options", msg);
                     }

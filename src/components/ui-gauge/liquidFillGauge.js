@@ -46,7 +46,8 @@ function loadLiquidFillGauge(elementId, value, config) {
         waveHeightScale = d3.scale.linear()
             .range([0,config.waveHeight,0])
             .domain([0,50,100]);
-    } else {
+    }
+    else {
         waveHeightScale = d3.scale.linear()
             .range([config.waveHeight,config.waveHeight])
             .domain([0,100]);
@@ -184,7 +185,8 @@ function loadLiquidFillGauge(elementId, value, config) {
             .each("start", function() { wave.attr('transform','translate(1,0)'); });
         // This transform is necessary to get the clip wave positioned correctly when waveRise=true and waveAnimate=false.
         // The wave will not position correctly without this, but it's not clear why this is actually necessary.
-    } else {
+    }
+    else {
         waveGroup.attr('transform','translate('+waveGroupXPosition+','+waveRiseScale(fillPercent)+')');
     }
 
@@ -243,7 +245,8 @@ function loadLiquidFillGauge(elementId, value, config) {
                     .x(function(d) { return waveScaleX(d.x); } )
                     .y0(function(d) { return waveScaleY(Math.sin(Math.PI*2*config.waveOffset*-1 + Math.PI*2*(1-config.waveCount) + d.y*2*Math.PI));} )
                     .y1(function(d) { return (fillCircleRadius*2 + waveHeight); } );
-            } else {
+            }
+            else {
                 newClipArea = clipArea;
             }
 

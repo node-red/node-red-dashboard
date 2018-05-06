@@ -360,15 +360,18 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 found = findHeadOriginalEl(msg.id);
                 if (found) {
                     replaceHeadOriginalEl(found, msg.msg.template)
-                } else {
+                }
+                else {
                     found = findHeadElAppended(msg.id);
                     if (found) {
                         replaceHeadEl(found, msg.msg.template)
-                    } else {
+                    }
+                    else {
                         return;
                     }
                 }
-            } else {
+            }
+            else {
                 found = findControl(msg.id, main.menu);
                 if (found === undefined) { return; }
                 for (var key in msg) {

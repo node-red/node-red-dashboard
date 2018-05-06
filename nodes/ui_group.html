@@ -20,9 +20,11 @@
                 var tabB = RED.nodes.node(B.tab);
                 if (!tabA && tabB) {
                     return -1;
-                } else if (tabA && !tabB) {
+                }
+                else if (tabA && !tabB) {
                     return 1;
-                } else {
+                }
+                else {
                     return tabA.order - tabB.order;
                 }
             }

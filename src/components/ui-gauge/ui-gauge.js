@@ -23,7 +23,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             bgnd = "#097479";
                             fgnd = "#eeeeee";
                             tgnd = "#eeeeee";
-                        } else {
+                        }
+                        else {
                             bgnd = "#0094CE";
                             fgnd = "#111111";
                             tgnd = "#111111";

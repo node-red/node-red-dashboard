@@ -13,7 +13,8 @@ module.exports = function(RED) {
                 payload = node.id;
                 payloadType = 'str';
             }
-        } else {
+        }
+        else {
             payload = payload || node.id;
         }
     }

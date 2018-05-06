@@ -17,15 +17,11 @@ angular.module('ui').directive('uiIcon',
                     if (url.test(newValue)) {
                         scope.iconType = 'image';
                         scope.url = newValue;
-                    } else if (fa.test(newValue)) {
-                        scope.iconType = 'fa';
-                    } else if (wi.test(newValue)) {
-                        scope.iconType = 'wi';
-                    } else if (ic.test(newValue)) {
-                        scope.iconType = 'icofont';
-                    } else {
-                        scope.iconType = 'angular-material';
                     }
+                    else if (fa.test(newValue)) { scope.iconType = 'fa'; }
+                    else if (wi.test(newValue)) { scope.iconType = 'wi'; }
+                    else if (ic.test(newValue)) { scope.iconType = 'icofont'; }
+                    else { scope.iconType = 'angular-material'; }
                 });
             }
         };

@@ -45,14 +45,16 @@
                 var v = $(this).val();
                 if (v === "default") {
                     $(".form-row-custom-icons").hide();
-                } else {
+                }
+                else {
                     $(".form-row-custom-icons").show();
                 }
             });
 
             if (this.onicon !== "" || this.oncolor !== "" || this.officon !=="" || this.offcolor !== "") {
                 $('#node-input-custom-icons').val('custom');
-            } else {
+            }
+            else {
                 $('#node-input-custom-icons').change();
             }
 
@@ -71,7 +73,8 @@
                 if (this.checked) {
                     $('.form-row-decouple').hide();
                     $('#node-input-decouple').val("false");
-                } else {
+                }
+                else {
                     $('.form-row-decouple').show();
                 }
             });
