@@ -1,14 +1,15 @@
 
-### 2.9.2-beta: Maintenance Release
+### 2.9.2: Maintenance Release
 
 **Fixes**
 
- - Let dropdown edit config scale more sensibly on slide out.
- - Change to sessionStorage to mitigate httpAuthissue. Issue #384
+ - Let dropdown edit config, scale more sensibly on slide out.
+ - Change to sessionStorage to mitigate httpAuth issue. Issue #384
  - Ensure groups are restored rather than completely disappeared on refresh. Issue #386
  - Let bar charts also auto scale negative values. Issue #387
- - Use rounded line joins on charts to reduce spikyness.
- - Ensure numeric input matches them (now that it is editable)
+ - Use rounded line joins on charts to reduce spiky-ness.
+ - Ensure numeric input matches theme (now that it is editable)
+ - Fix Gauge so {{ format }} works again.
 
 ### 2.9.1: Maintenance Release
 
