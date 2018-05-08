@@ -154,7 +154,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     for (var g in main.menu[t].items) {
                         if (main.menu[t].items.hasOwnProperty(g)) {
                             var c = (main.menu[t].header+" "+main.menu[t].items[g].header.name).replace(/ /g,"_");
-                            if ((typeof sessionStorage !== 'undefined') && (sessionStorage.getItem("g"+c) == "true")) {
+                            if ((typeof localStorage !== 'undefined') && (localStorage.getItem("g"+c) == "true")) {
                                 main.menu[t].items[g].header.config.hidden = true;
                                 flag = true;
                             }
@@ -486,14 +486,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                                     if (msg.group.hasOwnProperty("show")) {
                                         if (msg.group.show.indexOf(c) > -1) {
                                             main.menu[t].items[g].header.config.hidden = undefined;
-                                            sessionStorage.removeItem("g"+c);
+                                            localStorage.removeItem("g"+c);
                                             eldiv = c;
                                         }
                                     }
                                     if (msg.group.hasOwnProperty("hide")) {
                                         if (msg.group.hide.indexOf(c) > -1) {
                                             main.menu[t].items[g].header.config.hidden = true;
-                                            sessionStorage.setItem("g"+c,true);
+                                            localStorage.setItem("g"+c,true);
                                         }
                                     }
                                     $(window).trigger('resize');

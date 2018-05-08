@@ -1,4 +1,10 @@
 
+### 2.9.3: Maintenance Release
+
+**Fixes**
+
+ - Revert change to sessionStorage - better fix for Issue #386, unfix Issue #384
+
 ### 2.9.2: Maintenance Release
 
 **Fixes**
