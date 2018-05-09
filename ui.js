@@ -316,7 +316,7 @@ function init(server, app, log, redSettings) {
 
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
         if (!err) {
-            app.use( join(settings.path,"manifest.json"), function(req, res) { res.send(mani); });
+            app.use( join(settings.path, "manifest.json"), function(req, res) { res.send(mani); });
             app.use( join(settings.path), serveStatic(path.join(__dirname, "dist")) );
         }
         else {

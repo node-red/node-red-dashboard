@@ -1,0 +1,43 @@
+<head></head>
+<body>
+<script src="js/app.min.js"></script>
+<script>
+for (var key in localStorage) {
+    if (localStorage.hasOwnProperty(key)) {
+        if (key.indexOf("nr-") === 0) {
+            localStorage.removeItem(key);
+        }
+    }
+}
+$.ajax({
+    type: "GET",
+    url: window.location.href,
+    async: true,
+    username: "some_non_user_name",
+    password: "a_not_valid_password"
+})
+.done(function() { alert('Error!') })
+.fail(function() {
+    var url = window.location.href.split("logout")[0];
+    setTimeout(function() { window.location.href = url; }, 1000);
+});
+</script>
+<style>
+div {
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+}
+</style>
+<div class="node-red-ui--notabs">
+    <table><tr><td><center><a href= "./"><img src="icon120x120.png"/></a></center></td></tr>
+    <tr><td><center><h2>Welcome to the Node-RED Dashboard</h2></center></td></tr>
+    <tr><td><center>Please <a href ="./">sign in</a> to see your flow.</center></td></tr></table>
+</div>
+</body>

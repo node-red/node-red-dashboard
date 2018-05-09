@@ -1,4 +1,10 @@
 
+### 2.9.4-beta: Maintenance Release
+
+**Fixes**
+
+ - Let text input node handle floating point input when in numeric mode. Issue #391
+
 ### 2.9.3: Maintenance Release
 
 **Fixes**
