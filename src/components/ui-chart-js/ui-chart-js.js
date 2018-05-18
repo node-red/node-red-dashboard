@@ -1,5 +1,3 @@
-var lineColours = [];
-var barColours = [];
 
 /* global angular */
 angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
@@ -110,12 +108,12 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 }
                                 if ((type === "bar") || (type === "horizontalBar")) {
                                     if ((newValue.values.series.length > 1) || useOneColor) {
-                                        scope.config.colours = lineColours;
+                                        scope.config.colours = scope.lineColours;
                                     }
-                                    else { scope.config.colours = barColours; }
+                                    else { scope.config.colours = scope.barColours; }
                                 }
                                 if (type === "pie") {
-                                    scope.config.colours = barColours;
+                                    scope.config.colours = scope.barColours;
                                 }
                                 scope.config.data = newValue.values.data;
                                 scope.config.series = newValue.values.series;
@@ -169,14 +167,14 @@ function loadConfiguration(type,scope) {
 
     //Build colours array
     config.colours = config.colours || baseColours;
-    barColours = [];
-    lineColours = [];
+    scope.barColours = [];
+    scope.lineColours = [];
     baseColours.forEach(function(colour, index) {
-        lineColours.push({
+        scope.lineColours.push({
             backgroundColor: colour,
             borderColor: colour
         });
-        barColours.push({
+        scope.barColours.push({
             backgroundColor: baseColours,
             borderColor: "#888",
             borderWidth: 1

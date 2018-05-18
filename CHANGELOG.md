@@ -4,6 +4,7 @@
 **Fixes**
 
  - Let text input node handle floating point input when in numeric mode. Issue #391
+ - Fix incorrect scoping of colour palettes in charts. Issue #396
 
 ### 2.9.3: Maintenance Release
 
