@@ -1,10 +1,11 @@
 
-### 2.9.4-beta: Maintenance Release
+### 2.9.4: Maintenance Release
 
 **Fixes**
 
  - Let text input node handle floating point input when in numeric mode. Issue #391
  - Fix incorrect scoping of colour palettes in charts. Issue #396
+ - Docs updates re some of the ui_control to make groups show/hide.
 
 ### 2.9.3: Maintenance Release
 
