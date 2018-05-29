@@ -1,4 +1,10 @@
 
+### 2.9.5-beta: Maintenance Release
+
+**Fixes**
+
+ - remove colour from button when in template in no style mode
+
 ### 2.9.4: Maintenance Release
 
 **Fixes**
