@@ -3,7 +3,8 @@
 
 **Fixes**
 
- - remove colour from button when in template in no style mode
+ - Remove colour from button when in template in no style mode. Issue #400
+ - Fix format support for numeric widget. Issue #401
 
 ### 2.9.4: Maintenance Release
 

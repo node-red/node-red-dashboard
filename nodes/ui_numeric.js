@@ -23,6 +23,8 @@ module.exports = function(RED) {
                 label: config.label,
                 order: config.order,
                 format: config.format,
+                pre: config.format.split('{{')[0] || "",
+                post: config.format.split('}}')[1] || "",
                 value: Number(config.min),
                 min: Number(config.min),
                 max: Number(config.max),
