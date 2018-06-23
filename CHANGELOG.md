@@ -5,6 +5,7 @@
 
  - Remove colour from button when in template in no style mode. Issue #400
  - Fix format support for numeric widget. Issue #401
+ - Let form buttons have changeable text. Issue #408
 
 ### 2.9.4: Maintenance Release
 

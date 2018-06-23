@@ -22,7 +22,9 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || config.options.length ,
                 options: config.options,
-                formValue:config.formValue
+                formValue: config.formValue,
+                submit: config.submit,
+                cancel: config.cancel
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;

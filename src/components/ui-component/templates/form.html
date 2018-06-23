@@ -4,7 +4,7 @@
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
            <md-input-container ng-if="opt.type != 'date'" class="md-block" flex>
                <label ng-if="(opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password') && opt.label">{{opt.label}}</label>
-               <input ng-if="opt.type == 'text' || opt.type == 'email' ||opt.type == 'password' " type="{{opt.type}}"
+               <input ng-if="opt.type == 'text' || opt.type == 'email' || opt.type == 'password' " type="{{opt.type}}"
                 ng-model="me.item.formValue[opt.value]"
                 ng-required="opt.required"
                 ng-keydown="me.stop($event)">
@@ -19,8 +19,8 @@
            <md-datepicker ng-if="opt.type == 'date'" ng-model="me.item.formValue[opt.value]"></md-datepicker>
        </div>
        <div layout-gt-sm="row" style="margin-top:0px">
-           <md-button type="submit" class="md-raised nr-dashboard-form-button">submit</md-button>
-           <md-button class="md-raised nr-dashboard-form-button" ng-click="me.reset()">cancel</md-button>
+           <md-button class="md-raised nr-dashboard-form-button" type="submit">{{me.item.submit}}</md-button>
+           <md-button class="md-raised nr-dashboard-form-button" ng-click="me.reset()">{{me.item.cancel}}</md-button>
        </div>
    </form>
 </md-card>
