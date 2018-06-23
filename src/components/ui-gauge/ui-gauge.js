@@ -151,11 +151,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                         gaugeOptions.label = oldUnits;
                                         gauge.refreshLabel(oldUnits);
                                     }
-                                    if (scope.$eval('me.item.gtype') === 'compass') {
-                                        var r = gaugeOptions.max - gaugeOptions.min;
-                                        newValue = newValue % r;
-                                        if (newValue < 0) { newValue += r; }
-                                    }
+                                    // if (scope.$eval('me.item.gtype') === 'compass') {
+                                    //     var r = gaugeOptions.max - gaugeOptions.min;
+                                    //     newValue = (newValue + r) % r;
+                                    // }
                                     gauge.refresh(newValue);
                                 });
                             });
