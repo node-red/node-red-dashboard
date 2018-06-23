@@ -67,7 +67,7 @@ module.exports = function (RED) {
                 options: null
             },
             convert: function(p,o,m) {
-                var form = config.format.replace(/{{/g,"").replace(/}}/g,"").replace(/\s/g,"");
+                var form = config.format.replace(/{{/g,"").replace(/}}/g,"").replace(/\s/g,"") || "_zzz_zzz_zzz_";
                 var value = RED.util.getMessageProperty(m,form);
                 if (value !== undefined) {
                     if (!isNaN(parseFloat(value))) { value = parseFloat(value); }

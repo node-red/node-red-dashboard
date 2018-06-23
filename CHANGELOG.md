@@ -5,6 +5,8 @@
 
  - Remove colour from button when in template in no style mode. Issue #400
  - Fix format support for numeric widget. Issue #401
+ - Fix min-width of dropdown label field. Issue #405
+ - Let blank value field in gauge NOT display the value text (default to payload). Issue #406
  - Let form buttons have changeable text. Issue #408
 
 ### 2.9.4: Maintenance Release

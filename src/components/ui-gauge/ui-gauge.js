@@ -92,7 +92,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     pointer: true,
                                     relativeGaugeSize: true,
                                     textRenderer: function(v) {
-                                        return scope.$eval('me.item.getText()') || 0;
+                                        return scope.$eval('me.item.getText()') || "";
                                     }
                                 }
                                 if (scope.$eval('me.item.gtype') === 'donut') {
@@ -138,11 +138,11 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                 }
 
                                 gauge = new JustGage(gaugeOptions);
-                                gauge.refreshLabel = function(label) { var obj = this; if (label && (typeof label == "string")) { obj.txtLabel.attr({ "text": label }); }}
+                                gauge.refreshLabel = function(label) { var obj = this; if (label && (typeof label == "string")) { obj.txtLabel.attr({ "text":label }); }}
 
                                 var oldUnits = "";
                                 unreg = scope.$watch('me.item.value', function(newValue) {
-                                    newValue = scope.$eval('me.item.getText()');
+                                    //newValue = scope.$eval('me.item.getText()');
                                     if (isNaN(newValue = parseFloat(newValue))) {
                                         newValue = gaugeOptions.min;
                                     }
