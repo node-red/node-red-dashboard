@@ -48,7 +48,7 @@
 
                 $('<i style="color:#eee; cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
-                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left:7px; width:calc(50% - 32px);", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:option.type||'str',types:['str','num','bool']});
+                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left:7px; min-width:calc(50% - 32px);", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:option.type||'str',types:['str','num','bool']});
                 var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left:7px; min-width:calc(50% - 32px);", placeholder: 'Label', value:option.label}).appendTo(row);
 
                 var finalspan = $('<span/>',{style:"float:right; margin-right:8px;"}).appendTo(row);
