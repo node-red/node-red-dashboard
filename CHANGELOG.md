@@ -1,5 +1,5 @@
 
-### 2.9.5-beta: Maintenance Release
+### 2.9.5: Maintenance Release
 
 **Fixes**
 
