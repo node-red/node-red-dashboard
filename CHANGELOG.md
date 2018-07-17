@@ -1,4 +1,10 @@
 
+### 2.9.6: Maintenance Release
+
+**Fixes**
+
+ - Update socket.io to remove audit vulnerability. Issue #411
+
 ### 2.9.5: Maintenance Release
 
 **Fixes**

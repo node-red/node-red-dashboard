@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.9.5",
+    "version": "2.9.6",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -68,7 +68,7 @@
     },
     "dependencies": {
         "serve-static": "~1.13.2",
-        "socket.io": "^1.7.4"
+        "socket.io": "^2.1.1"
     },
     "devDependencies": {
         "angular": "~1.5.11",
@@ -108,7 +108,7 @@
         "jquery": "^3.3.1",
         "jshint": "^2.9.4",
         "justgage": "^1.2.2",
-        "less": "^3.5.3",
+        "less": "^3.7.1",
         "moment": "~2.22.2",
         "sprintf-js": "^1.0.3",
         "streamqueue": "~1.1.2",
