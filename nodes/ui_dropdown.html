@@ -35,11 +35,6 @@
                 group: "#node-input-group"
             });
 
-            this.resizeRule = function(option,newWidth) {
-                option.find(".node-input-option-label").width(newWidth);
-                option.find(".node-input-option-value").width(newWidth);
-            }
-
             function generateOption(i, option) {
                 var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
                 var row = $('<div/>').appendTo(container);
@@ -48,8 +43,8 @@
 
                 $('<i style="color:#eee; cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
-                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left:7px; min-width:calc(50% - 32px);", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:option.type||'str',types:['str','num','bool']});
-                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left:7px; min-width:calc(50% - 32px);", placeholder: 'Label', value:option.label}).appendTo(row);
+                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left:7px; width:calc(50% - 32px);", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:option.type||'str',types:['str','num','bool']});
+                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left:7px; width:calc(50% - 32px);", placeholder: 'Label', value:option.label}).appendTo(row);
 
                 var finalspan = $('<span/>',{style:"float:right; margin-right:8px;"}).appendTo(row);
                 var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"margin-top:7px; margin-left:5px;"}).appendTo(finalspan);
@@ -102,12 +97,6 @@
             });
         },
         oneditresize: function() {
-            var options = $("#node-input-option-container").children();
-            var newWidth = ($("#node-input-option-container").width() - 175)/2;
-            var node = this;
-            options.each(function(i) {
-                node.resizeRule($(this),newWidth);
-            });
         }
     });
 </script>
