@@ -1,4 +1,12 @@
 
+### 2.9.7-beta: Maintenance Release
+
+**Enhancements**
+
+ - Let link specify existing tab. Issue #420
+ - Let bar charts specify legend if required. Issue #423
+ - Add more links to lists of icons available.
+
 ### 2.9.6: Maintenance Release
 
 **Fixes**
