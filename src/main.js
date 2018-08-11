@@ -83,6 +83,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (menu.target === 'newtab') {
                     $window.open(menu.link, menu.name);
                 }
+                // open in existing tab (closes dashboard)
+                else if (menu.target === 'thistab') {
+                    $window.open(menu.link, "_self");
+                }
                 // open in iframe  (if allowed by remote site)
                 else {
                     if (typeof main.menu[index].link === "string") {

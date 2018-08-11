@@ -19,9 +19,13 @@
         oneditprepare: function() {
             document.getElementById('node-config-input-target-opentab').checked = (this.target === 'newtab');
             document.getElementById('node-config-input-target-openiframe').checked = (this.target === 'iframe');
+            document.getElementById('node-config-input-target-openthis').checked = (this.target === 'thistab');
         },
         oneditsave : function () {
-            this.target = document.getElementById('node-config-input-target-opentab').checked ? 'newtab' : 'iframe';
+            var t = 'iframe';
+            if (document.getElementById('node-config-input-target-opentab').checked) { t = 'newtab'; }
+            if (document.getElementById('node-config-input-target-openthis').checked) { t = 'thistab'; }
+            this.target = t;
         },
         onadd: function() {
             //console.log("PING");
@@ -44,9 +48,11 @@
     </div>
     <div class="form-row">
         <label><i class="fa fa-link"></i> <span data-i18n="ui_link.label.open-in"></span></label>
-        <input type="radio" id="node-config-input-target-opentab" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px" checked>
-        <label for="node-config-input-target-opentab" data-i18n="ui_link.label.new-tab"></label>
-        <input type="radio" id="node-config-input-target-openiframe" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px">
+        <input type="radio" id="node-config-input-target-opentab" name="open-link-method" style="width:20px; margin-top:0px; margin-bottom:5px" checked>
+        <label for="node-config-input-target-opentab" data-i18n="ui_link.label.new-tab"></label><br/>
+        <input type="radio" id="node-config-input-target-openthis" name="open-link-method" style="width:20px; margin-left:104px; margin-top:0px; margin-bottom:5px">
+        <label for="node-config-input-target-openthis" data-i18n="ui_link.label.this-tab"></label><br/>
+        <input type="radio" id="node-config-input-target-openiframe" name="open-link-method" style="width:20px; margin-left:104px; margin-top:0px; margin-bottom:5px">
         <label for="node-config-input-target-openiframe" data-i18n="ui_link.label.iframe"></label>
     </div>
 </script>
