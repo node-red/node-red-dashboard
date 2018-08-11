@@ -61,6 +61,7 @@
                 group: "#node-input-group"
             });
             $("#node-input-chartType").change(function() {
+                $("#legend-show").hide();
                 if ($(this).val() === "horizontalBar") {
                     $("#y-label-show").hide();
                     $("#x-label-show").show();
@@ -86,6 +87,7 @@
                     $("#show-dot-field").hide();
                     if (($(this).val() === "bar")||($(this).val() === "horizontalBar")) {
                         $("#show-useOneColor").show();
+                        $("#legend-show").show();
                     }
                     else {
                         $("#show-useOneColor").hide();
@@ -97,10 +99,10 @@
                     }
                     else {
                         $("#y-axis-show").show();
-                        $("#legend-show").hide();
                         $("#hole-size-show").hide();
                     }
                 }
+
             });
             var setColour = function(id, value) {
                 $(id).val(value);
@@ -191,7 +193,7 @@
     </div>
     <div class="form-row" id="x-axis-show">
         <label for="node-input-removeOlder">X-axis</label>
-        <label for="node-input-removeOlder" style="width: auto">last</label>
+        <label for="node-input-removeOlder" style="width:auto">last</label>
         <input type="text" id="node-input-removeOlder" style="width:50px;">
         <select id="node-input-removeOlderUnit" style="width:80px;">
             <option value="1">seconds</option>
@@ -200,9 +202,9 @@
             <option value="86400">days</option>
             <option value="604800">weeks</option>
         </select>
-        <label for="node-input-removeOlderPoints" style="width: auto; margin-left: 10px; margin-right: 10px;">OR</label>
+        <label for="node-input-removeOlderPoints" style="width:auto; margin-left:10px; margin-right:10px;">OR</label>
         <input type="text" id="node-input-removeOlderPoints" style="width:60px;" placeholder="1000">
-        <span style="margin-left: 5px;">points</span>
+        <span style="margin-left:5px;">points</span>
     </div>
     <div class="form-row" id="x-axis-label-show">
         <label for="node-input-xformat">X-axis Label</label>
@@ -212,9 +214,9 @@
         <label id="y-label-show" for="node-input-ymin">Y-axis</label>
         <label id="x-label-show" for="node-input-ymin">X-axis</label>
         <label for="node-input-ymin" style="width:auto">min</label>
-        <input type="text" id="node-input-ymin" style="width:80px">
-        <label for="not-input-ymax" style="width:auto; margin-left: 20px;">max</label>
-        <input type="text" id="node-input-ymax" style="width:80px">
+        <input type="text" id="node-input-ymin" style="width:92px">
+        <label for="not-input-ymax" style="width:auto; margin-left:20px;">max</label>
+        <input type="text" id="node-input-ymax" style="width:92px">
     </div>
     <div class="form-row" id="legend-show">
         <label for="node-input-legend">Legend</label>
@@ -230,7 +232,7 @@
             </select>
         </span>
         <span id="hole-size-show">&nbsp;&nbsp;&nbsp;&nbsp;Cutout
-        <input type="text" id="node-input-cutout" style="width:35px"> %
+            <input type="text" id="node-input-cutout" style="width:35px"> %
         </span>
     </div>
     <div id="show-useOneColor" style="display:none;">
@@ -241,12 +243,12 @@
         <input type="color" id="node-input-color1" class="series-color"/>
         <input type="color" id="node-input-color2" class="series-color"/>
         <input type="color" id="node-input-color3" class="series-color"/>
-        <div style="margin-top: 5px; margin-left: 104px;">
+        <div style="margin-top:5px; margin-left:104px;">
             <input type="color" id="node-input-color4" class="series-color"/>
             <input type="color" id="node-input-color5" class="series-color"/>
             <input type="color" id="node-input-color6" class="series-color"/>
         </div>
-        <div style="margin-top: 5px; margin-left: 104px;">
+        <div style="margin-top:5px; margin-left:104px;">
             <input type="color" id="node-input-color7" class="series-color"/>
             <input type="color" id="node-input-color8" class="series-color"/>
             <input type="color" id="node-input-color9" class="series-color"/>
