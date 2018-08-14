@@ -7,6 +7,11 @@
  - Let bar charts specify legend if required. Issue #423
  - Add more links to lists of icons available.
 
+**Fixes**
+
+ - Ensure old forms Submit/Cancel buttons still display a value.
+ - Let internal form elements scale more appropriately with grid size. Issue #416
+
 ### 2.9.6: Maintenance Release
 
 **Fixes**

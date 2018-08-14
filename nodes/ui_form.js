@@ -24,7 +24,8 @@ module.exports = function(RED) {
                 options: config.options,
                 formValue: config.formValue,
                 submit: config.submit,
-                cancel: config.cancel
+                cancel: config.cancel,
+                sy: ui.getSizes().sy
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic;

@@ -13,13 +13,9 @@
     margin-left: -4px;
 }
 .nr-dashboard-form md-input-container {
-	/* width: 100%;
-	height: 100%; */
-	padding: 0px;
-    margin-top: 11px;
-    margin-bottom: 11px;
-    margin-right: 12px;
 	display: inline-block;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 .nr-dashboard-form md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
     -webkit-transform: translate3d(0,10px,0) scale(.75);
@@ -47,6 +43,6 @@
     min-width: 1px;
 }
 .nr-dashboard-form-button {
-	width: 50%;
+	width: 43%;
 	float: left;
 }

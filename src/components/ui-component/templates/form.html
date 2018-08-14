@@ -2,7 +2,7 @@
     <form name ="form" ng-submit="form.$valid && me.submit(form)">
        <p class="formlabel" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
-           <md-input-container ng-if="opt.type != 'date'" class="md-block" flex>
+           <md-input-container ng-if="opt.type != 'date'" class="md-block" style="height:{{me.item.sy}}px !important" flex>
                <label ng-if="(opt.type == 'text' || opt.type == 'number' || opt.type == 'email' ||opt.type == 'password') && opt.label">{{opt.label}}</label>
                <input ng-if="opt.type == 'text' || opt.type == 'email' || opt.type == 'password' " type="{{opt.type}}"
                 ng-model="me.item.formValue[opt.value]"

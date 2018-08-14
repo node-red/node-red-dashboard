@@ -42,6 +42,8 @@
         paletteLabel: 'form',
         label: function() { return this.name || this.label || 'form'; },
         oneditprepare: function() {
+            if ($("#node-input-submit").val() === null) { $("#node-input-submit").val("submit"); }
+            if ($("#node-input-cancel").val() === null) { $("#node-input-cancel").val("cancel"); }
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
