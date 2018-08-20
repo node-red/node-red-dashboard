@@ -283,13 +283,15 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 events.emit(data);
                 return;
             }
-            if (timer) {
-                clearTimeout(timer);
+            // if (timer) {
+            //     clearTimeout(timer);
+            // }
+            if (!timer) {
+                timer = setTimeout(function () {
+                    timer = undefined;
+                    events.emit(data);
+                }, timeout);
             }
-            timer = setTimeout(function () {
-                timer = undefined;
-                events.emit(data);
-            }, timeout);
         };
 
         // may add additional input processing for other controls
