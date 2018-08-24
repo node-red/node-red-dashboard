@@ -38,8 +38,8 @@ gulp.task('manifest', ['build'], function() {
         //preferOnline: true,
         network: ['*'],
         filename: 'dashboard.appcache',
-        exclude: 'dashboard.appcache'
-        //exclude: ['dashboard.appcache','index.html']
+        // exclude: 'dashboard.appcache'
+        exclude: ['dashboard.appcache','index.html']
     }))
     .pipe(replace('tinycolor-min.js', 'tinycolor-min.js\nsocket.io/socket.io.js'))
     .pipe(eol('\n'))

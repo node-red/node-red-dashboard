@@ -5,7 +5,6 @@ i18n.js
 icon120x120.png
 icon192x192.png
 icon64x64.png
-index.html
 css/app.min.css
 css/app.min.less
 css/index.html
@@ -20,4 +19,4 @@ weather-icons-lite/fonts/weather-icons-lite.woff2
 NETWORK:
 *
 
-# hash: 25bf4d4d7adec71f6cc50e0ecfb4246465e2859519fbcd9dfb54e204386fc016
+# hash: e22d8625b19464e665f41af3eb167f5e9ae86102e155d5c7c5f2254f646349d3

@@ -1,5 +1,5 @@
 
-### 2.9.7-beta: Maintenance Release
+### 2.9.7: Maintenance Release
 
 **Enhancements**
 
@@ -11,6 +11,7 @@
 
  - Ensure old forms Submit/Cancel buttons still display a value.
  - Let internal form elements scale more appropriately with grid size. Issue #416
+ - Adjust slider timing to try to better smooth output
 
 ### 2.9.6: Maintenance Release
 
