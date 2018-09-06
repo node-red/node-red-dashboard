@@ -30,7 +30,8 @@ module.exports = function(RED) {
                 max: Number(config.max),
                 step: Number(config.step || 1),
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                ed: (config.format.includes("value") ? false : true)
             },
             beforeSend: function (msg) {
                 msg.payload = parseFloat(msg.payload);
