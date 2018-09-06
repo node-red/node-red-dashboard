@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 var fs = require("fs");
 fs.readFile("node_modules/font-awesome/css/font-awesome.css", 'utf8', function (err, file) {

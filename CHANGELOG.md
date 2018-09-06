@@ -1,4 +1,11 @@
 
+### 2.9.8: Maintenance Release
+
+**Fixes**
+
+ - Tidy up menu list if widget. Issue #426
+ - Let numeric widget handle angular filters again for value. Issue #428
+
 ### 2.9.7: Maintenance Release
 
 **Enhancements**
