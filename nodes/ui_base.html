@@ -1740,6 +1740,7 @@
                                         groupLists[elementParents[node.id]].editableList('removeItem',listElements[node.id].data('data'))
                                     }
                                     if (groupLists[node.group]) {
+                                        groupLists[node.group].editableList('removeItem',node)
                                         groupLists[node.group].editableList('addItem',node);
                                     }
                                 }
