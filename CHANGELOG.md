@@ -3,7 +3,7 @@
 
 **Fixes**
 
- - Tidy up menu list if widget. Issue #426
+ - Tidy up dashboard widget list if widget moved then renamed. Issue #426
  - Let numeric widget handle angular filters again for value. Issue #428
 
 ### 2.9.7: Maintenance Release
