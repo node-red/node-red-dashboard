@@ -29,3 +29,17 @@ fs.readFile("node_modules/justgage/justgage.js", 'utf8', function (err, file) {
         });
     }
 });
+// Monkeypatch for colour picker ...
+fs.readFile("node_modules/angularjs-color-picker/dist/angularjs-color-picker.js", 'utf8', function (err, file) {
+    if (err) { return; }
+    else {
+        console.log("Fixing up angularjs-color-picker.js");
+        var res1 = file.replace(/this\.saturation = tmpSaturation \* 100;/,'this.lightness = 100 - (tmpSaturation * 100)/2;\n            this.saturation = 100;');
+        fs.writeFile("node_modules/angularjs-color-picker/dist/angularjs-color-picker.js", res1, 'utf8', function (err) {
+            if (err) { console.log("Failed to re-write file."); }
+            else {
+                console.log("Fixed  up angularjs-color-picker.js");
+            }
+        });
+    }
+});

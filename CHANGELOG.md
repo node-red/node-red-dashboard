@@ -1,4 +1,11 @@
 
+### 2.9.9-beta: Maintenance Release
+
+**Fixes**
+
+ - Add polyfill for IE11 Object.assign. Issue #402
+ - Tweak colour picker to default to solid colours
+
 ### 2.9.8: Maintenance Release
 
 **Fixes**
