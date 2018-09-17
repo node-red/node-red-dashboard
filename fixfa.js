@@ -15,6 +15,7 @@ fs.readFile("node_modules/font-awesome/css/font-awesome.css", 'utf8', function (
         });
     }
 });
+
 // Monkeypatch for justgage negative numbers...
 fs.readFile("node_modules/justgage/justgage.js", 'utf8', function (err, file) {
     if (err) { return; }
@@ -29,6 +30,7 @@ fs.readFile("node_modules/justgage/justgage.js", 'utf8', function (err, file) {
         });
     }
 });
+
 // Monkeypatch for colour picker ...
 fs.readFile("node_modules/angularjs-color-picker/dist/angularjs-color-picker.js", 'utf8', function (err, file) {
     if (err) { return; }
