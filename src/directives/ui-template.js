@@ -26,6 +26,16 @@ angular.module('ui').directive('uiTemplate', ['$compile', '$rootScope', 'UiEvent
                 if (oldMsg !== undefined) {
                     innerScope.msg = oldMsg;
                 }
+
+                var ic = scope.$eval("me.item.initController");
+                if (ic) {
+                    var func = eval("("+ic+")"); // jshint ignore:line
+                    func(innerScope, events);
+                }
+                innerScope.width = scope.$eval("me.item.width");
+                innerScope.height = scope.$eval("me.item.height");
+                innerScope.label = scope.$eval("me.item.label");
+
                 $compile(element.contents())(innerScope);
             });
 
