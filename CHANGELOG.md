@@ -5,6 +5,7 @@
 
  - Add polyfill for IE11 Object.assign. Issue #402
  - Tweak colour picker to default to solid colours
+ - Add PR to start to allow pluggable widgets. PR #427
 
 ### 2.9.8: Maintenance Release
 
