@@ -1172,7 +1172,7 @@
                                         elementParents[widgetNode.id] = groupNode.id;
                                         var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-widget-list-header"}).appendTo(container);
                                         $('<i class="nr-db-sb-list-handle nr-db-sb-widget-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                                        $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa-picture-o"></i>').appendTo(titleRow);
+                                        $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa-picture-o"></i>').click(function(e) { e.preventDefault(); RED.search.show(widgetNode.id); }).appendTo(titleRow);
                                         var l = widgetNode._def.label;
                                         try {
                                             l = (typeof l === "function" ? l.call(widgetNode) : l)||"";
