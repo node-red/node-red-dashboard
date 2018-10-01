@@ -7,7 +7,7 @@
     </md-list>
 </md-sidenav>
 <md-toolbar ng-show="main.hideToolbar !== true" id="toolbar">
-    <div class="md-toolbar-tools">
+    <div class="md-toolbar-tools" id="nr-dashboard-toolbar">
         <md-button ng-show="main.len > 1" ng-click="main.toggleSidenav()" class="md-icon-button" aria-label="menu button">
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
@@ -26,3 +26,4 @@
 		<!-- <div>The url {{ }} cannot be loaded into an iframe.</div> -->
 	</div>
 </md-content>
+<div id="nr-dashboard-footer" layout="row"></div>
