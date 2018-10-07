@@ -90,7 +90,7 @@ body.nr-dashboard-theme md-sidenav {
 /* Button */
 .nr-dashboard-theme .nr-dashboard-button .md-button {
     background-color: @widgetBackgroundColor;
-    color: @widgetBorderColor;
+    color: white;
 }
 .nr-dashboard-theme .nr-dashboard-button .md-button:hover {
     background-color: lighten(@widgetBackgroundColor, 5);
@@ -258,14 +258,14 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     .md-list-item-inner {
         background: @widgetBorderColor;
         color: @widgetTextColor;
+        padding-left: 8px;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button .md-no-style {
         background: initial !important;
         color: initial !important;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button .ng-scope {
-        background: @widgetBackgroundColor;
-        color: white;
+        background: lighten(@widgetBackgroundColor, 5);
         padding: 4px 8px;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button {
