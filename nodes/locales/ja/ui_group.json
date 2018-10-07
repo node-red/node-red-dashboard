@@ -8,6 +8,7 @@
             "group" : "グループ",
             "unassigned" : "未設定"
         },
-        "display-name" : "グループ名を表示する"
+        "display-name" : "グループ名を表示する",
+        "collapse-name" : "グループの折りたたみを有効にする"
     }
 }
