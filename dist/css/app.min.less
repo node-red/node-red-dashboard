@@ -181,7 +181,7 @@ body.nr-dashboard-theme md-sidenav {
 /* Button */
 .nr-dashboard-theme .nr-dashboard-button .md-button {
     background-color: @widgetBackgroundColor;
-    color: white;
+    color: @widgetBorderColor;
 }
 .nr-dashboard-theme .nr-dashboard-button .md-button:hover {
     background-color: lighten(@widgetBackgroundColor, 5);
@@ -340,9 +340,26 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 /* Template */
 & when (@nrTemplateTheme = true) {
+    md-list {
+        padding: unset;
+    }
+    md-list-item._md-button-wrap>div.md-button {
+        background: @widgetBorderColor;
+    }
+    .md-list-item-inner {
+        background: @widgetBorderColor;
+        color: @widgetTextColor;
+    }
+    .nr-dashboard-theme .nr-dashboard-template .md-button .md-no-style {
+        background: initial !important;
+        color: initial !important;
+    }
+    .nr-dashboard-theme .nr-dashboard-template .md-button .ng-scope {
+        background: @widgetBackgroundColor;
+        color: @widgetBorderColor;
+        padding: 4px 8px;
+    }
     .nr-dashboard-theme .nr-dashboard-template .md-button {
-    	background: @widgetBackgroundColor;
-    	color: white;
     	margin: 0px 6px;
     	padding: 0px 12px;
     	min-height: 26px;
