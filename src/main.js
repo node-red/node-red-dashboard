@@ -30,6 +30,7 @@ moment.locale(locale);
 
 app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
     function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider) {
+        // $mdThemingProvider.setDefaultTheme("none");
         // $mdThemingProvider.theme('default')
         //     .primaryPalette('light-blue')
         //     .accentPalette('red');

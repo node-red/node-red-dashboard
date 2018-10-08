@@ -260,12 +260,22 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
         color: @widgetTextColor;
         padding-left: 8px;
     }
+    .nr-dashboard-theme path {
+        stroke: @widgetBackgroundColor;
+    }
+    .nr-dashboard-template {
+        p, h1, h2, h3, h4 {
+            color: @widgetTextColor !important;
+            background : @groupBackgroundColor !important;
+        }
+    }
     .nr-dashboard-theme .nr-dashboard-template .md-button .md-no-style {
         background: initial !important;
         color: initial !important;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button .ng-scope {
         background: lighten(@widgetBackgroundColor, 5);
+        color: white;
         padding: 4px 8px;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button {
