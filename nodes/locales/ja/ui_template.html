@@ -1,0 +1,44 @@
+<script type="text/x-red" data-help-name="ui_template">
+  <p>Template WidgetにはHTMLコードおよびAngular/Angular-Materialディレクティブを指定できます。</p>
+  <p>このノードで動的なユーザインターフェイス要素を作成し、入力によって見た目を変更したり、メッセージをNode-REDに送り返したりできます。</p>
+    <p><b>例:</b><br>
+  <pre style="font-size:smaller;">&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
+  &lt;p&gt;数値は&lt;/p&gt;
+  &lt;p ng-style=&quot;{color: (msg.payload || 0) % 2 === 0 ? 'green' : 'red'}&quot;&gt;
+    {{(msg.payload || 0) % 2 === 0 ? '偶数' : '奇数'}}
+  &lt;/p&gt;
+&lt;/div&gt;</pre>
+    このコードは<code>msg.payload</code>で受け取った数値が偶数か奇数かを表示します。同時に、偶数であれば緑に、奇数であれば赤にテキストの色を変更します。<br/>
+    次は、一意なIDをテンプレートに設定、デフォルトのテーマカラーを設定、入力メッセージの到着を監視する例です。</p>
+    <pre style="font-size:smaller;">
+&lt;div id="{{'my_'+$id}}" style="{{'color:'+theme.base_color}}"&gt;何らかのテキスト&lt;/div&gt;
+&lt;script&gt;
+(function(scope) {
+  scope.$watch('msg', function(msg) {
+    if (msg) {
+      // メッセージ同着時に適当な処理を実行
+      $("#my_"+scope.$id).html(msg.payload);
+    }
+  });
+})(scope);
+&lt;/script&gt;</pre>
+    <p>この方法で作成したテンプレートはコピー可能です。コピーはそれぞれ独立して利用できます。</p>
+    <p><b>メッセージ送信:</b><br>
+    <pre style="font-size:smaller;">
+&lt;script&gt;
+var value = "こんにちは世界";
+// もしくは、コールバック関数で値を書き換え
+this.scope.action = function() { return value; }
+&lt;/script&gt;
+&lt;md-button ng-click=&quot;send({payload:action()})&quot;&gt;
+    クリックすると「こんにちは世界」を送信します
+&lt;/md-button&gt;</pre>
+    この例は、クリックするとペイロードに<code>'こんにちは世界'</code>を持つメッセージを送信するボタンを表示します。</p>
+  <p><b><code>msg.template</code>の使用:</b><br>
+    <code>msg.template</code>によってテンプレートを定義することもできます。例えば、外部ファイルに格納したテンプレートを用いる場合に有用です。<br>
+    テンプレートは入力が変化した場合に再ロードされます。<br>
+    「HTMLコード」フィールドに記述したコードは、<code>msg.template</code>が存在する場合には無視されます。</p>
+    <p>以下のアイコンフォントの利用も可能です: <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a>,
+    <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icons</a>,
+    <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css/weather-icons-lite.css" target="_blank">Weather icons</a></p>
+</script>
