@@ -1,6 +1,11 @@
 <script type="text/javascript">
+    // convert to i18 text
+    function c_(x) {
+        return RED._("node-red-dashboard/ui_template:ui_template."+x);
+    }
+
     RED.nodes.registerType('ui_template',{
-        category: 'dashboard',
+        category: c_("label.category"),
         color: 'rgb( 63, 173, 181)',
         defaults: {
             group: {type: 'ui_group', required:false},
@@ -124,40 +129,40 @@
 
 <script type="text/x-red" data-template-name="ui_template">
   <div class="form-row">
-      <label for="node-input-format">Template type</label>
+      <label for="node-input-format"><span data-i18n="ui_template.label.type"></span></label>
       <select style="width:76%" id="node-input-templateScope">
-          <option value="local">Widget in group</option>
-          <option value="global">Added to site &lt;head&gt; section</option>
+          <option value="local" data-i18n="ui_template.label.local"></option>
+          <option value="global" data-i18n="ui_template.label.global"></option>
       </select>
   </div>
 	<div class="form-row" id="template-row-group">
-        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <label for="node-input-group"><i class="fa fa-table"></i> <span data-i18n="ui_template.label.group"></span></label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row" id="template-row-size">
-        <label><i class="fa fa-object-group"></i> Size</label>
+        <label><i class="fa fa-object-group"></i> <span data-i18n="ui_template.label.size"></span></label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_template.label.name"></span></label>
         <input type="text" id="node-input-name">
     </div>
     <div id="template-pass-store">
     <div class="form-row" style="margin-bottom:0px;">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; width:auto; vertical-align:top;">
-        <label for="node-input-fwdInMessages" style="width:70%;"> Pass through messages from input.</label>
+        <label for="node-input-fwdInMessages" style="width:70%;"> <span data-i18n="ui_template.label.pass-through"></span></label>
     </div>
     <div class="form-row" style="margin-bottom:0px;">
         <label>&nbsp;</label>
         <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; width:auto; vertical-align:top;">
-        <label for="node-input-storeOutMessages" style="width:70%;"> Add output messages to stored state.</label>
+        <label for="node-input-storeOutMessages" style="width:70%;"> <span data-i18n="ui_template.label.store-state"></span></label>
     </div>
     </div>
     <div class="form-row" style="margin-bottom:0px;">
-        <label for="node-input-format"><i class="fa fa-copy"></i> Template</label>
+        <label for="node-input-format"><i class="fa fa-copy"></i> <span data-i18n="ui_template.label.template"></span></label>
         <input type="hidden" id="node-input-format">
     </div>
     <div class="form-row node-text-editor-row">
@@ -171,10 +176,10 @@
     based on the input message and can send back messages to Node-RED.</p>
     <p><b>For example:</b><br>
     <pre style="font-size:smaller;">&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
-&lt;p&gt;The number is&lt;/p&gt;
-&lt;p ng-style=&quot;{color: (msg.payload || 0) % 2 === 0 ? 'green' : 'red'}&quot;&gt;
-  {{(msg.payload || 0) % 2 === 0 ? 'even' : 'odd'}}
-&lt;/p&gt;
+  &lt;p&gt;The number is&lt;/p&gt;
+  &lt;p ng-style=&quot;{color: (msg.payload || 0) % 2 === 0 ? 'green' : 'red'}&quot;&gt;
+    {{(msg.payload || 0) % 2 === 0 ? 'even' : 'odd'}}
+  &lt;/p&gt;
 &lt;/div&gt;</pre>
     Will display if the number received as <code>msg.payload</code> is even or odd. It will also
     change the color of the text to green if the number is even or red if odd.<br/>
