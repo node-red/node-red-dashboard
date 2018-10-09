@@ -30,10 +30,11 @@ moment.locale(locale);
 
 app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
     function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider) {
+        // red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, deep-orange, brown, grey, blue-grey
         // $mdThemingProvider.setDefaultTheme("none");
-        // $mdThemingProvider.theme('default')
-        //     .primaryPalette('light-blue')
-        //     .accentPalette('light-blue');
+        $mdThemingProvider.theme('default')
+            .primaryPalette('indigo')
+            .accentPalette('blue');
 
         //white-list all protocols
         $compileProvider.aHrefSanitizationWhitelist(/.*/);

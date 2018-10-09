@@ -103,8 +103,11 @@ md-card {
 @widgetTextColor: #000;
 @widgetBackgroundColor: #4FBAE4;
 @widgetBorderColor: #fff;
+@nrTheme: true;
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
+
+& when (@nrTheme = true) {
 
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
@@ -373,6 +376,15 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
         background-color: lighten(@widgetBackgroundColor, 5);
         border-color: transparent !important;
     }
+    md-radio-button .md-off, md-radio-button .md-on {
+        border-color: @widgetBackgroundColor !important;
+    }
+    md-radio-button.md-checked .md-on {
+        background-color: @widgetBackgroundColor !important;
+    }
+    md-divider {
+        border-color: @widgetBackgroundColor !important;
+    }
     .md-list-item-inner {
         background: @widgetBorderColor;
         color: @widgetTextColor;
@@ -539,4 +551,6 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 }
 .nr-dashboard-theme md-content .nr-dashboard-form form .md-datepicker-expand-triangle{
     border-top-color: @widgetBackgroundColor ;
+}
+
 }
