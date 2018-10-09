@@ -104,6 +104,7 @@ md-card {
 @widgetBackgroundColor: #4FBAE4;
 @widgetBorderColor: #fff;
 @nrTemplateTheme: true;
+@nrUnitHeight: 48px;
 
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
@@ -345,6 +346,15 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     }
     md-list-item._md-button-wrap>div.md-button {
         background: @widgetBorderColor;
+        height: inherit;
+    }
+    md-list-item.md-2-line {
+        height: @nrUnitHeight;
+        min-height: @nrUnitHeight;
+    }
+    md-list-item.md-3-line {
+        height: @nrUnitHeight * 1.5;
+        min-height: @nrUnitHeight * 1.5;
     }
     .md-list-item-inner {
         background: @widgetBorderColor;

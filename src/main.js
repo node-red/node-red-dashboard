@@ -151,6 +151,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             if (typeof main.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
             lessObj["@nrTemplateTheme"] = main.allowTempTheme;
+            //lessObj["@nrUnitHeight"] = main.sizes.sy;
             less.modifyVars(lessObj);
         }
 
