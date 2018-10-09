@@ -155,6 +155,9 @@ body.nr-dashboard-theme md-sidenav {
     color: @groupTextColor;
     background-color: @pageSidebarBackgroundColor;
 }
+a.md-no-style, button.md-no-style {
+    background-color: transparent;
+}
 
 /*
     GROUP SPECIFIC
@@ -364,10 +367,11 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
         background-color: lighten(@widgetBackgroundColor, 5);
     }
     md-checkbox .md-icon {
-        border-color: @widgetTextColor !important;
+        border-color: @widgetBackgroundColor !important;
     }
     md-checkbox.md-checked .md-icon {
-        background-color: @widgetBackgroundColor;
+        background-color: lighten(@widgetBackgroundColor, 5);
+        border-color: transparent !important;
     }
     .md-list-item-inner {
         background: @widgetBorderColor;

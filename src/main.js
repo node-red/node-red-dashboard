@@ -33,7 +33,7 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
         // $mdThemingProvider.setDefaultTheme("none");
         // $mdThemingProvider.theme('default')
         //     .primaryPalette('light-blue')
-        //     .accentPalette('red');
+        //     .accentPalette('light-blue');
 
         //white-list all protocols
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
