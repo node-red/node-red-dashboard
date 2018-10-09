@@ -13,7 +13,7 @@
 @widgetBackgroundColor: #4FBAE4;
 @widgetBorderColor: #fff;
 @nrTemplateTheme: true;
-@nrUnitHeight: 48px;
+@nrUnitHeight: 24px;
 
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
@@ -258,12 +258,25 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
         height: inherit;
     }
     md-list-item.md-2-line {
-        height: @nrUnitHeight;
-        min-height: @nrUnitHeight;
+        height: @nrUnitHeight * 2;
+        min-height: @nrUnitHeight * 2;
     }
     md-list-item.md-3-line {
-        height: @nrUnitHeight * 1.5;
-        min-height: @nrUnitHeight * 1.5;
+        height: @nrUnitHeight * 3;
+        min-height: @nrUnitHeight * 3;
+    }
+    md-progress-linear .md-container {
+        margin-top: @nrUnitHeight / 2;
+        background-color: @pageBackgroundColor;
+    }
+    md-progress-linear .md-container .md-bar {
+        background-color: lighten(@widgetBackgroundColor, 5);
+    }
+    md-checkbox .md-icon {
+        border-color: @widgetTextColor !important;
+    }
+    md-checkbox.md-checked .md-icon {
+        background-color: @widgetBackgroundColor;
     }
     .md-list-item-inner {
         background: @widgetBorderColor;
