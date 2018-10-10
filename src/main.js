@@ -28,17 +28,18 @@ var app = angular.module('ui',['ngMaterial', 'ngMdIcons', 'ngSanitize', 'ngTouch
 var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
 moment.locale(locale);
 
-app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
-    function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider) {
+app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider', '$provide',
+    function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider, $provide) {
+        // base theme can be default, dark, light or none
+        // allowed colours for palettes
         // red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, deep-orange, brown, grey, blue-grey
-        // $mdThemingProvider.setDefaultTheme("none");
-        $mdThemingProvider.theme('default')
-            .primaryPalette('indigo')
-            .accentPalette('blue');
+        $mdThemingProvider.generateThemesOnDemand(true);
+        $provide.value('themeProvider', $mdThemingProvider);
 
         //white-list all protocols
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
 
+        //set the locale provider
         $mdDateLocaleProvider.months = moment.localeData().months();
         $mdDateLocaleProvider.shortMonths = moment.localeData().monthsShort();
         $mdDateLocaleProvider.days = moment.localeData().weekdays();
@@ -59,8 +60,8 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider',
     }
 ]);
 
-app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope',
-    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope) {
+app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope', 'themeProvider', '$mdTheming',
+    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope, themeProvider, $mdTheming) {
         this.menu = [];
         this.headElementsAppended = [];
         this.headOriginalElements = [];
@@ -152,6 +153,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             if (typeof main.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
             lessObj["@nrTemplateTheme"] = main.allowTempTheme;
+            lessObj["@nrTheme"] = !main.allowAngularTheme;
             //lessObj["@nrUnitHeight"] = main.sizes.sy;
             less.modifyVars(lessObj);
         }
@@ -288,12 +290,22 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
                 if (typeof ui.site.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
-                else { main.allowTempTheme = (ui.site.allowTempTheme == "true"); }
+                else {
+                    main.allowTempTheme = (ui.site.allowTempTheme == "true");
+                    main.allowAngularTheme = (ui.site.allowTempTheme == "none");
+                }
                 dateFormat = ui.site.dateFormat || "DD/MM/YYYY";
                 if (ui.site.hasOwnProperty("sizes")) {
                     sizes.setSizes(ui.site.sizes);
                     main.sizes = ui.site.sizes;
                 }
+            }
+            if (ui.theme && ui.theme.angularTheme) {
+                themeProvider.theme(ui.theme.angularTheme.base || 'default')
+                    .primaryPalette(ui.theme.angularTheme.primary || 'indigo')
+                    .accentPalette(ui.theme.angularTheme.accent || 'blue')
+                    .backgroundPalette(ui.theme.angularTheme.background || 'grey');
+                $mdTheming.generateTheme('default');
             }
             $document[0].theme = ui.theme;
             if (ui.title) { name = ui.title }

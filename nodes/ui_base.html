@@ -163,6 +163,9 @@
     .red-ui-tabs {
         margin-bottom: 15px;
     }
+    .red-ui-tab.hidden {
+        display: none;;
+    }
     #dashboard-tabs-list li a:hover {
         cursor: pointer;
     }
@@ -499,11 +502,11 @@
                 var divTab = $('<div class="red-ui-tabs">').appendTo(form);
                 var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTab);
                 var layout_label = c_("label.layout");
-                var theme_label = c_("label.theme");
                 var site_label = c_("label.site");
+                var theme_label = c_("label.theme");
                 var liLayoutTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Layout"><span>'+layout_label+'</span></a></li>').appendTo(ulDashboardTabs);
-                var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>'+theme_label+'</span></a></li>').appendTo(ulDashboardTabs);
                 var liSiteTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Site" style="width:60px;"><span>'+site_label+'</span></a></li>').appendTo(ulDashboardTabs);
+                var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>'+theme_label+'</span></a></li>').appendTo(ulDashboardTabs);
 
                 // Link out to dashboard
                 $.getJSON('uisettings',function(data) {
@@ -528,8 +531,8 @@
 
                 // Dashboard Tab containers
                 var layoutTab = $('<div id="dashboard-layout" style="height:calc(100% - 48px)">').appendTo(form);
-                var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
                 var siteTab = $('<div id="dashboard-site" style="display:none;">').appendTo(form);
+                var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
 
                 ulDashboardTabs.children().first().addClass("active");
 
@@ -611,6 +614,7 @@
                 .css("width","100%")
                 .append($('<option>', { value:"true", text:c_("temp.allow-theme"), selected:true }))
                 .append($('<option>', { value:"false", text:c_("temp.no-theme") }))
+                .append($('<option>', { value:"none", text:c_("temp.none") }))
                 .val("true")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowTempTheme !== $(this).val()) {
@@ -618,6 +622,8 @@
                         globalDashboardNode.site.allowTempTheme = $(this).val();
                         RED.nodes.dirty(true);
                     }
+                    if ($('#nr-db-field-allowTempTheme').val() === "none") { ulDashboardTabs.children().eq(2).addClass("hidden"); }
+                    else { ulDashboardTabs.children().eq(2).removeClass("hidden");}
                 })
                 .appendTo(divAllowTempTheme);
 
@@ -1583,6 +1589,8 @@
                             $("#custom-theme-library-container").hide();
                             $("#custom-theme-settings").hide();
                         }
+                        if ($('#nr-db-field-allowTempTheme').val() === "none") { ulDashboardTabs.children().eq(2).addClass("hidden"); }
+                        else { ulDashboardTabs.children().eq(2).removeClass("hidden");}
 
                         //set colour start
                         if (typeof globalDashboardNode.theme.name !== "string") {
@@ -1686,7 +1694,6 @@
                                 RED.nodes.dirty(true);
                             }
                         });
-
                     }
                     awaitingGroups = {};
                     awaitingTabs = {};
