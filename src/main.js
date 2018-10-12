@@ -301,7 +301,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 }
             }
             if (ui.theme && ui.theme.angularTheme) {
-                themeProvider.theme(ui.theme.angularTheme.base || 'default')
+                themeProvider.theme('default')
                     .primaryPalette(ui.theme.angularTheme.primary || 'indigo')
                     .accentPalette(ui.theme.angularTheme.accent || 'blue')
                     .backgroundPalette(ui.theme.angularTheme.background || 'grey');

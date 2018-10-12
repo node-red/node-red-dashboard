@@ -274,6 +274,7 @@
                 'group-textColor', 'group-borderColor', 'group-backgroundColor',
                 'widget-textColor', 'widget-backgroundColor','widget-borderColor'];
                 var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
+                var aTheme = {primary:"indigo", accents:"blue", background:"grey"};
                 // tiny colour implementation
                 var colours = {
                     leastReadable: function(base, colours) {
@@ -452,7 +453,8 @@
                                 lightTheme: lightTheme,
                                 darkTheme: darkTheme,
                                 customTheme: customTheme,
-                                themeState: themeState
+                                themeState: themeState,
+                                angularTheme: aTheme
                             }
 
                             var site_name = c_("site.title");
@@ -469,6 +471,10 @@
                                         sizes: globalDashboardNode.site.sizes
                                     }
                                 }
+                                if (globalDashboardNode.theme.hasOwnProperty("angularTheme")) {
+                                    aTheme = globalDashboardNode.theme.angularTheme;
+                                }
+                                else { globalDashboardNode.theme.angularTheme = aTheme; }
                             }
 
                             if (noDashboardNode) {
@@ -504,9 +510,11 @@
                 var layout_label = c_("label.layout");
                 var site_label = c_("label.site");
                 var theme_label = c_("label.theme");
+                var angular_label = c_("label.angular");
                 var liLayoutTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Layout"><span>'+layout_label+'</span></a></li>').appendTo(ulDashboardTabs);
                 var liSiteTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Site" style="width:60px;"><span>'+site_label+'</span></a></li>').appendTo(ulDashboardTabs);
                 var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>'+theme_label+'</span></a></li>').appendTo(ulDashboardTabs);
+                var liAngularTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Angular" style="width:80px;"><span>'+angular_label+'</span></a></li>').appendTo(ulDashboardTabs);
 
                 // Link out to dashboard
                 $.getJSON('uisettings',function(data) {
@@ -533,6 +541,7 @@
                 var layoutTab = $('<div id="dashboard-layout" style="height:calc(100% - 48px)">').appendTo(form);
                 var siteTab = $('<div id="dashboard-site" style="display:none;">').appendTo(form);
                 var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
+                var angularTab = $('<div id="dashboard-angular" style="display:none;">').appendTo(form);
 
                 ulDashboardTabs.children().first().addClass("active");
 
@@ -547,11 +556,19 @@
                     if (selectedTab === 'Layout') {
                         themeTab.hide();
                         siteTab.hide();
+                        angularTab.hide();
                         layoutTab.show();
+                    }
+                    else if (selectedTab === 'Angular') {
+                        themeTab.hide();
+                        siteTab.hide();
+                        angularTab.show();
+                        layoutTab.hide();
                     }
                     else if (selectedTab === 'Theme') {
                         layoutTab.hide();
                         siteTab.hide();
+                        angularTab.hide();
                         themeTab.show();
                         if ($("#nr-db-field-theme option:selected").val() === 'theme-custom') { themeSettingsContainer.show(); }
                         else { themeSettingsContainer.hide(); }
@@ -559,6 +576,7 @@
                     else {
                         layoutTab.hide();
                         themeTab.hide();
+                        angularTab.hide();
                         siteTab.show();
                     }
                 }
@@ -622,8 +640,14 @@
                         globalDashboardNode.site.allowTempTheme = $(this).val();
                         RED.nodes.dirty(true);
                     }
-                    if ($('#nr-db-field-allowTempTheme').val() === "none") { ulDashboardTabs.children().eq(2).addClass("hidden"); }
-                    else { ulDashboardTabs.children().eq(2).removeClass("hidden");}
+                    if ($('#nr-db-field-allowTempTheme').val() === "none") {
+                        ulDashboardTabs.children().eq(2).addClass("hidden");
+                        ulDashboardTabs.children().eq(3).removeClass("hidden");
+                    }
+                    else {
+                        ulDashboardTabs.children().eq(2).removeClass("hidden");
+                        ulDashboardTabs.children().eq(3).addClass("hidden");
+                    }
                 })
                 .appendTo(divAllowTempTheme);
 
@@ -704,6 +728,68 @@
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
+
+                // Angular Theme Tab
+                var changed = function() {
+                    ensureDashboardNode(true);
+                    globalDashboardNode.theme.angularTheme = aTheme;
+                    RED.nodes.dirty(true);
+                }
+
+                var angColorList = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"];
+                var angColors = "";
+                angColorList.forEach(function(c) { angColors += '<option value="' + c + '">' + c + '</option>'; });
+
+                var divPrimStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.primary")+'</b>')
+                    .appendTo(divPrimStyle);
+                $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                    .css({opacity:1.0})
+                    .click(function(e) {
+                        $("#nr-db-field-angPrimary").val("indigo"); globalDashboardNode.theme.angularTheme.primary = "indigo";
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(divPrimStyle);
+                $('<select id="nr-db-field-angPrimary">'+angColors+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.primary)
+                    .change(function() { aTheme.primary = $(this).val(); changed(); })
+                    .appendTo(divPrimStyle);
+
+                var divAccStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.accents")+'</b>')
+                    .appendTo(divAccStyle);
+                $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                    .css({opacity:1.0})
+                    .click(function(e) {
+                        $("#nr-db-field-angAccents").val("blue"); globalDashboardNode.theme.angularTheme.accents = "blue";
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(divAccStyle);
+                $('<select id="nr-db-field-angAccents">'+angColors+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.accents)
+                    .change(function() { aTheme.accents = $(this).val(); changed(); })
+                    .appendTo(divAccStyle);
+
+                var divBackStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.background")+'</b>')
+                    .appendTo(divBackStyle);
+                $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                    .css({opacity:1.0})
+                    .click(function(e) {
+                        $("#nr-db-field-angBackground").val("grey"); globalDashboardNode.theme.angularTheme.background = "grey";
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(divBackStyle);
+                $('<select id="nr-db-field-angBackground">'+angColors+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.background)
+                    .change(function() { aTheme.background = $(this).val(); changed(); })
+                    .appendTo(divBackStyle);
 
                 // Theme Tab
                 // For all customisable styles, generate and apply the css
@@ -1579,6 +1665,13 @@
                         $("#nr-db-field-gx").val(globalDashboardNode.site.sizes.gx);
                         $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
 
+                        if (typeof globalDashboardNode.theme.angularTheme !== "object") {
+                            globalDashboardNode.theme.angularTheme = aTheme;
+                        }
+                        $("#nr-db-field-angPrimary").val(globalDashboardNode.theme.angularTheme.primary || "indigo");
+                        $("#nr-db-field-angAccents").val(globalDashboardNode.theme.angularTheme.accents || "blue");
+                        $("#nr-db-field-angBackground").val(globalDashboardNode.theme.angularTheme.background || "grey");
+
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
                         $("#ui-sidebar-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {
@@ -1589,8 +1682,14 @@
                             $("#custom-theme-library-container").hide();
                             $("#custom-theme-settings").hide();
                         }
-                        if ($('#nr-db-field-allowTempTheme').val() === "none") { ulDashboardTabs.children().eq(2).addClass("hidden"); }
-                        else { ulDashboardTabs.children().eq(2).removeClass("hidden");}
+                        if ($('#nr-db-field-allowTempTheme').val() === "none") {
+                            ulDashboardTabs.children().eq(2).addClass("hidden");
+                            ulDashboardTabs.children().eq(3).removeClass("hidden");
+                        }
+                        else {
+                            ulDashboardTabs.children().eq(2).removeClass("hidden");
+                            ulDashboardTabs.children().eq(3).addClass("hidden");
+                        }
 
                         //set colour start
                         if (typeof globalDashboardNode.theme.name !== "string") {
@@ -1604,6 +1703,7 @@
                         if (globalDashboardNode.theme.name === 'theme-light' || globalDashboardNode.theme.name === 'theme-dark') {
                             addLightAndDarkResetButton('base-color', $('#base-settings-ul').children().first());
                         }
+
 
                         if (editor === undefined) {
                             editor = RED.editor.createEditor({
@@ -1673,6 +1773,9 @@
                                     generateColours(globalDashboardNode.theme.themeState["base-color"].value);
                                     RED.nodes.dirty(true);
                                 }
+                            }
+                            if (JSON.stringify(aTheme) !== JSON.stringify(globalDashboardNode.theme.angularTheme)) {
+                                globalDashboardNode.theme.angularTheme = aTheme;
                             }
 
                             //Update site object if necessary

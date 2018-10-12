@@ -13,6 +13,7 @@
             "group-padding" : "Group Padding",
             "group-spacing" : "Group Spacing",
             "layout" : "Layout",
+            "angular": "Angular",
             "theme" : "Theme",
             "site" : "Site"
         },
@@ -52,7 +53,10 @@
         "style" : {
             "light" : "Light (default)",
             "dark" : "Dark",
-            "custom" : "Custom"
+            "custom" : "Custom",
+            "primary" : "Primary",
+            "accents" : "Accents",
+            "background" : "Background"
         },
         "base" : {
             "colour" : "Colour",

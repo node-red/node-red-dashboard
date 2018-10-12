@@ -22,6 +22,11 @@ module.exports = function(RED) {
             baseColor: defaultLightTheme.baseColor,
             baseFont: baseFontName
         }
+        var defaultAngularTheme = {
+            primary:'indigo',
+            accents:'teal',
+            background:'grey'
+        };
 
         // Setup theme name
         // First try old format (for upgrading with old flow file)
@@ -63,8 +68,8 @@ module.exports = function(RED) {
             lightTheme: config.theme.lightTheme || defaultLightTheme,
             darkTheme: config.theme.darkTheme || defaultDarkTheme,
             customTheme: config.theme.customTheme || defaultCustomTheme,
-            themeState: config.theme.themeState || defaultThemeState,
-            angularTheme: set.angular || {}
+            angularTheme: config.theme.angularTheme || defaultAngularTheme,
+            themeState: config.theme.themeState || defaultThemeState
         }
 
         this.config = {
