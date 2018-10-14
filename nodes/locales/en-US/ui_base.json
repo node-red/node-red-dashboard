@@ -78,9 +78,9 @@
             "allow-swipe" : "Allow swipe between tabs"
         },
         "temp" : {
-            "no-theme" : "No theme in ui_template",
-            "allow-theme" : "Use theme in ui_template",
-            "none" : "Use Angular theme"
+            "allow-theme" : "Node-RED theme everywhere",
+            "no-theme" : "Angular theme in ui_template",
+            "none" : "Angular theme everywhere"
         }
     }
 }
