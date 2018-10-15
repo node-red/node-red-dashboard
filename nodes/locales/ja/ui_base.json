@@ -13,6 +13,7 @@
             "group-padding" : "グループパディング",
             "group-spacing" : "グループ間隔",
             "layout" : "配置",
+            "angular": "Angular",
             "theme" : "テーマ",
             "site" : "サイト"
         },
@@ -52,7 +53,10 @@
         "style" : {
             "light" : "ライト (デフォルト)",
             "dark" : "ダーク",
-            "custom" : "カスタム"
+            "custom" : "カスタム",
+            "primary" : "プライマリ",
+            "accents" : "アクセント",
+            "background" : "背景"
         },
         "base" : {
             "colour" : "色",
@@ -75,7 +79,8 @@
         },
         "temp" : {
             "no-theme" : "ui_templateでテーマ設定を許可しない",
-            "allow-theme" : "ui_templateでテーマ設定を許可する"
+            "allow-theme" : "ui_templateでテーマ設定を許可する",
+            "none" : "Angularテーマを全ての箇所で使用"
         }
     }
 }
