@@ -56,7 +56,9 @@
             "custom" : "カスタム",
             "primary" : "プライマリ",
             "accents" : "アクセント",
-            "background" : "背景"
+            "background" : "背景",
+            "warnings" : "警告",
+            "palette": "ライト/ダーク"
         },
         "base" : {
             "colour" : "色",
