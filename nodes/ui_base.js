@@ -25,6 +25,7 @@ module.exports = function(RED) {
         var defaultAngularTheme = {
             primary:'indigo',
             accents:'teal',
+            warn: "red",
             background:'grey'
         };
 

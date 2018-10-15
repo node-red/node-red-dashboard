@@ -274,7 +274,7 @@
                 'group-textColor', 'group-borderColor', 'group-backgroundColor',
                 'widget-textColor', 'widget-backgroundColor','widget-borderColor'];
                 var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
-                var aTheme = {primary:"indigo", accents:"blue", background:"grey"};
+                var aTheme = {primary:"indigo", accents:"blue", warn:"red", background:"grey"};
                 // tiny colour implementation
                 var colours = {
                     leastReadable: function(base, colours) {
@@ -774,6 +774,23 @@
                     .change(function() { aTheme.accents = $(this).val(); changed(); })
                     .appendTo(divAccStyle);
 
+                var divWarnStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.warnings")+'</b>')
+                    .appendTo(divWarnStyle);
+                $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                    .css({opacity:1.0})
+                    .click(function(e) {
+                        $("#nr-db-field-angWarn").val("red"); globalDashboardNode.theme.angularTheme.warn = "red";
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(divWarnStyle);
+                $('<select id="nr-db-field-angWarn">'+angColors+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.warn)
+                    .change(function() { aTheme.warn = $(this).val(); changed(); })
+                    .appendTo(divWarnStyle);
+
                 var divBackStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
                 $('<span style="width:45%; display:inline-block">')
                     .html('<b>'+c_("style.background")+'</b>')
@@ -790,6 +807,18 @@
                     .val(aTheme.background)
                     .change(function() { aTheme.background = $(this).val(); changed(); })
                     .appendTo(divBackStyle);
+
+                var divPalStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.palette")+'</b>')
+                    .appendTo(divPalStyle);
+                var lightdark = '<option value="light">' +c_("style.light")+ '</option>';
+                lightdark += '<option value="dark">' +c_("style.dark")+ '</option>';
+                $('<select id="nr-db-field-angLook">'+lightdark+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.palette || "light")
+                    .change(function() { aTheme.palette = $(this).val(); changed(); })
+                    .appendTo(divPalStyle);
 
                 // Theme Tab
                 // For all customisable styles, generate and apply the css
@@ -1670,6 +1699,7 @@
                         }
                         $("#nr-db-field-angPrimary").val(globalDashboardNode.theme.angularTheme.primary || "indigo");
                         $("#nr-db-field-angAccents").val(globalDashboardNode.theme.angularTheme.accents || "blue");
+                        $("#nr-db-field-angWarn").val(globalDashboardNode.theme.angularTheme.warn || "red");
                         $("#nr-db-field-angBackground").val(globalDashboardNode.theme.angularTheme.background || "grey");
 
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);

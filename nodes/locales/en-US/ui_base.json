@@ -56,7 +56,9 @@
             "custom" : "Custom",
             "primary" : "Primary",
             "accents" : "Accents",
-            "background" : "Background"
+            "background" : "Background",
+            "warnings" : "Warnings",
+            "palette": "Light / Dark"
         },
         "base" : {
             "colour" : "Colour",

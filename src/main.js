@@ -303,8 +303,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (ui.theme && ui.theme.angularTheme) {
                 themeProvider.theme('default')
                     .primaryPalette(ui.theme.angularTheme.primary || 'indigo')
-                    .accentPalette(ui.theme.angularTheme.accent || 'blue')
+                    .accentPalette(ui.theme.angularTheme.accents || 'blue')
+                    .warnPalette(ui.theme.angularTheme.warn || 'red')
                     .backgroundPalette(ui.theme.angularTheme.background || 'grey');
+                if (ui.theme.angularTheme.palette === "dark") { themeProvider.theme('default').dark(); }
                 $mdTheming.generateTheme('default');
             }
             $document[0].theme = ui.theme;
