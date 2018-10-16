@@ -1,6 +1,11 @@
 <script type="text/javascript">
+    // convert to i18 text
+    function c_(x) {
+        return RED._("node-red-dashboard/ui_ui_control:ui_ui_control."+x);
+    }
+
     RED.nodes.registerType('ui_ui_control', {
-        category: 'dashboard',
+        category: c_("label.category"),
         color: 'rgb( 63, 173, 181)',
         defaults: {
             name: {value:""}
@@ -17,8 +22,8 @@
 
 <script type="text/x-red" data-template-name="ui_ui_control">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_ui_control.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]ui_ui_control.placeholder.name">
     </div>
 </script>
 
