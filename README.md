@@ -5,13 +5,17 @@
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard.
 
+From version 2.10.0 you can create and install widget nodes like other Node-RED nodes.
+See the <a href="https://github.com/node-red/node-red-dashboard/wiki/Creating-New-Dashboard-Widgets">Wiki</a>
+for more information.
+
 For the latest updates see the [CHANGELOG.md](https://github.com/node-red/node-red-dashboard/blob/master/CHANGELOG.md)
 
 <img src="http://nodered.org/images/dashboarde.png"/>
 
 ## Pre-requisites
 
-Node-RED-Dashboard requires Node-RED version 0.14 or more recent.
+The Node-RED-Dashboard requires <a href="https://nodered.org">Node-RED</a> to be installed.
 
 ## Install
 
@@ -19,12 +23,16 @@ To install the stable version use the `Menu - Manage palette` option and search 
 
     npm i node-red-dashboard
 
-Open your Node-RED instance and you should have UI nodes available in the palette and a new `dashboard` tab in the
+Restart your Node-RED instance and you should have UI nodes available in the palette and a new `dashboard` tab in the
 right side panel. The UI interface is available at <http://localhost:1880/ui> (if the default settings are used).
 
 If you want to try the latest version from github, you can install it by
 
     npm i node-red/node-red-dashboard
+
+## Settings
+
+The default url for the dashboard is based off your existing Node-RED httpRoot path with /ui added. This can be changed in your Node-RED settings.js file - `ui: { path: "ui" },`
 
 ## Layout
 
@@ -54,17 +62,22 @@ The widget layout is managed by a `dashboard` tab in the sidebar of the Node-RED
 
  - **Links** - to other web pages can also be added to the menu. They can optionally be opened in an iframe - if allowed by the target page.
 
-##### Theme
-
- - **Style** - the theme and font of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme. You cannot have different themes for each tab.
-
 ##### Site
 
  - **Title** - the `title` of the UI page can be set.
 
- - **Options** - optionally hide the title bar, and allow swiping sideways between tabs on a touch screen.
+ - **Options** - optionally hide the title bar, and allow swiping sideways between tabs on a touch screen. You can also set whether the template uses the selected theme or uses the underlying Angular Material theme. You can also choose to use the Angular Material theme everywhere.
+
+ - **Date Format** - sets the default date format for chart and other labels.
 
  - **Sizes** - sets the basic geometry of the grid layout in pixels. The **width** and **height** of widgets can be set, as can the width of *groups*. These are the basic definitions of the "units' used elsewhere within the dashboard.
+
+##### Theme
+
+  - **Style** - the theme and font of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme. You cannot have different themes for each tab.
+
+You can also choose to use the basic Angular Material themes instead if you like, either just within any ui_templates or for the whole Dashboard. This will only affect angular components so some of the charts and so on may need extra work.
+
 
 #### Widgets
 
@@ -115,10 +128,15 @@ This Dashboard does NOT support multiple individual users. It is a view of the s
 Node-RED flow, which itself is single user. If the state of the flow changes then all clients will get
 notified of that change.
 
+Messages coming from the dashboard **do** have a `msg.socketid`, and updates like change of tab,
+notifications, and audio alerts will be directed only to that session. Delete the `msg.sessionid` to send
+to all sessions.
+
 ## Discussions and suggestions
 
-Use the Node-RED google group: <https://groups.google.com/forum/#!forum/node-red>
-or the Dashboard-ui channel in <a href="http://nodered.org/slack/">Slack</a>
+Use the Node-RED Discourse Forum: https://discourse.nodered.org/c/dashboard
+or the Dashboard-ui channel in <a href="http://nodered.org/slack/">Slack</a> to ask
+questions or to discuss new features.
 
 The current work in progress list is shown in the
 <a href="https://github.com/node-red/node-red-dashboard/projects/1" target="_blank"> Github Project</a>.

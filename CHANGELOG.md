@@ -1,11 +1,19 @@
 
-### 2.9.9-beta: Maintenance Release
+### 2.10.0: Milestone Release
+
+**Enhancements**
+
+ - Add PR to allow pluggable widgets. PR #427
+   - see https://github.com/node-red/node-red-dashboard/wiki/Creating-New-Dashboard-Widgets
+ - Let users use 100% Angular theme if desired.
+ - Add footer div with id nr-dashboard-footer to make targeting easier.
+ - Add Japanese translations for ui_control node. PR #439
 
 **Fixes**
 
  - Add polyfill for IE11 Object.assign. Issue #402
  - Tweak colour picker to default to solid colours
- - Add PR to start to allow pluggable widgets. PR #427
+ - Fix up ng-click colours in list. Issue #433
 
 ### 2.9.8: Maintenance Release
 
