@@ -1,4 +1,15 @@
 
+### 2.10.1-beta: Maintenance Release
+
+**Enhancements**
+
+ - Let slider only send on mouse release (discrete mode)
+
+**Fixes**
+
+ - Stop background path css escape for gauge
+
+
 ### 2.10.0: Milestone Release
 
 **Enhancements**

@@ -18,6 +18,7 @@
             },
             height: {value: 0},
             passthru: {value: true},
+            outs: {value: 'all'},
             topic: {value: ''},
             min: {value: 0, required:true, validate:RED.validators.number()},
             max: {value: 10, required:true, validate:RED.validators.number()},
@@ -34,6 +35,7 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+            if (!$("#node-input-outs").val()) { $("#node-input-outs").val("all") }
         }
     });
 </script>
@@ -54,13 +56,20 @@
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-min">Range</label>
+        <label for="node-input-min"><i class="fa fa-arrows-h"></i> Range</label>
         <span for="node-input-min">min</span>
         <input type="text" id="node-input-min" style="width:60px">
         <span for="not-input-max" style="margin-left:22px;">max</span>
         <input type="text" id="node-input-max" style="width:60px">
         <span for="not-input-step" style="margin-left:22px;">step</span>
         <input type="text" id="node-input-step" style="width:60px">
+    </div>
+    <div class="form-row">
+        <label for="node-input-outs"><i class="fa fa-sign-out"></i> Output</label>
+        <select id="node-input-outs" style="width:204px">
+            <option value="all">continuously while sliding</option>
+            <option value="end">only on release</option>
+        </select>
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>

@@ -6,7 +6,22 @@
     ng-swipe-right="$event.stopPropagation();"
     ng-swipe-left="$event.stopPropagation();">
     <p ng-show="{{me.item.width >= me.item.height}}" class="label" ng-bind-html="me.item.getLabel()"></p>
-    <md-slider flex="100"
+    <md-slider
+        ng-if="me.item.outs==='all'"
+        flex="100"
+        min="{{me.item.min}}"
+        max="{{me.item.max}}"
+        step="{{me.item.step}}"
+        ng-model="me.item.value"
+        aria-label="{{me.item.label}}"
+        ng-change="me.valueChanged(10)"
+        style="z-index:1; touch-action:none; min-width:32px;"
+        ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
+    ></md-slider>
+    <md-slider
+        ng-if="me.item.outs==='end'"
+        md-discrete
+        flex="100"
         min="{{me.item.min}}"
         max="{{me.item.max}}"
         step="{{me.item.step}}"
