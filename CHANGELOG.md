@@ -8,7 +8,7 @@
 **Fixes**
 
  - Stop background path css escape for gauge
-
+ - Fix radar chart so it picks up theme - Issue #443
 
 ### 2.10.0: Milestone Release
 

@@ -267,9 +267,28 @@ function loadConfiguration(type,scope) {
         config.options.scales.xAxes = [{}];
     }
     else if (type === "radar") {
-        config.options.scale = {ticks:{}};
+        config.options = {
+            scale: {
+                ticks: {
+                    beginAtZero: true,
+                    showLabelBackdrop: false
+                }
+            }
+        };
         if (!isNaN(yMin)) { config.options.scale.ticks.min = yMin; }
         if (!isNaN(yMax)) { config.options.scale.ticks.max = yMax; }
+        if (themeState) {
+            var tc = themeState['widget-textColor'].value;
+            var gc = tinycolor(tc).toRgb();
+            var gl = "rgba("+gc.r+","+gc.g+","+gc.b+",0.1)";
+            var gl2 = "rgba("+gc.r+","+gc.g+","+gc.b+",0.3)";
+            var gl3 = "rgba("+gc.r+","+gc.g+","+gc.b+",0.6)";
+            config.options.scale.ticks.fontColor= gl3; // labels such as 10, 20, etc
+            config.options.scale.ticks.fontSize = 8;
+            config.options.scale.pointLabels = { fontColor: tc, fontSize: 14 }; // labels around the edge like 'Running'
+            config.options.scale.gridLines = { color: gl };
+            config.options.scale.angleLines = { color: gl2 }; // lines radiating from the center
+        }
     }
 
     // Configure scales
@@ -339,6 +358,5 @@ function loadConfiguration(type,scope) {
             config.options.legend.labels.fontColor = themeState['widget-textColor'].value;
         }
     }
-
     return config;
 }
