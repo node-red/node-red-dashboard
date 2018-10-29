@@ -1,5 +1,5 @@
 
-### 2.10.1-beta: Maintenance Release
+### 2.10.1: Maintenance Release
 
 **Enhancements**
 
