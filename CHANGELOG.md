@@ -1,4 +1,10 @@
 
+### 2.10.2-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix button background CSS so it can be over-riden - Issue #444
+
 ### 2.10.1: Maintenance Release
 
 **Enhancements**

@@ -415,7 +415,6 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
         color: initial !important;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button .ng-scope {
-        background: lighten(@widgetBackgroundColor, 5);
         color: white;
         // padding: 4px 8px;
     }
@@ -425,6 +424,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     	min-height: 26px;
     	min-width: unset;
     	line-height: unset;
+        background-color: lighten(@widgetBackgroundColor, 5);
 
     	&.md-fab.md-mini {
     		padding: unset;
