@@ -17,6 +17,9 @@
         width: calc(100% - 100px);
         margin-bottom:0;
     }
+    .nr-db-sb .compact {
+        margin-bottom: 8px !important;
+    }
     .nr-db-sb .red-ui-editableList-container {
         padding: 0;
         min-height: 250px;
@@ -459,12 +462,13 @@
 
                             var site_name = c_("site.title");
                             var site_date_format = c_("site.date-format");
-                            var site = { name:site_name, hideToolbar:"false", allowSwipe:"false", allowTempTheme:"true", dateFormat:site_date_format, sizes:sizes };
+                            var site = { name:site_name, hideToolbar:"false", allowSwipe:"false", lockMenu:"false", allowTempTheme:"true", dateFormat:site_date_format, sizes:sizes };
                             if (globalDashboardNode !== null) {
                                 if (typeof globalDashboardNode.site !== "undefined") {
                                     site = {
                                         name: globalDashboardNode.site.name || globalDashboardNode.name,
                                         hideToolbar: globalDashboardNode.site.hideToolbar,
+                                        lockMenu: globalDashboardNode.site.lockMenu,
                                         allowSwipe: globalDashboardNode.site.allowSwipe,
                                         allowTempTheme: globalDashboardNode.site.allowTempTheme,
                                         dateFormat: globalDashboardNode.site.dateFormat,
@@ -584,7 +588,7 @@
                 ulDashboardTabs.find("li.red-ui-tab a").on("click",onTabClick)
 
                 // Site Tab
-                var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                var divTitle = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
                 $('<div>').html('<b>'+c_("label.title")+'</b>').appendTo(divTitle);
                 $('<input type="text" id="nr-db-field-title">').val(site_name).css("width","100%")
                 .change(function() {
@@ -596,7 +600,7 @@
                 })
                 .appendTo(divTitle);
 
-                var divHideToolbar = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                var divHideToolbar = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
                 $('<div>').html('<b>'+c_("label.options")+'</b>').appendTo(divHideToolbar);
                 $('<select id="nr-db-field-hideToolbar">')
                 .css("width","100%")
@@ -612,7 +616,22 @@
                 })
                 .appendTo(divHideToolbar);
 
-                var divAllowSwipe = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                var divLockMenu = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
+                $('<select id="nr-db-field-lockMenu">')
+                .css("width","100%")
+                .append($('<option>', { value:"false", text:c_("lock.clicked"), selected:true }))
+                .append($('<option>', { value:"true", text:c_("lock.locked") }))
+                .val("false")
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.site.lockMenu !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.site.lockMenu = $(this).val();
+                        RED.nodes.dirty(true);
+                    }
+                })
+                .appendTo(divLockMenu);
+
+                var divAllowSwipe = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
                 $('<select id="nr-db-field-allowSwipe">')
                 .css("width","100%")
                 .append($('<option>', { value:"false", text:c_("swipe.no-swipe"), selected:true }))
@@ -627,7 +646,7 @@
                 })
                 .appendTo(divAllowSwipe);
 
-                var divAllowTempTheme = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                var divAllowTempTheme = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
                 $('<select id="nr-db-field-allowTempTheme">')
                 .css("width","100%")
                 .append($('<option>', { value:"true", text:c_("temp.allow-theme"), selected:true }))

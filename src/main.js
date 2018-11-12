@@ -70,6 +70,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.loaded = false;
         this.hideToolbar = false;
         this.allowSwipe = false;
+        this.lockMenu = false;
         this.allowTempTheme = true;
         var main = this;
         var audiocontext;
@@ -289,6 +290,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
+                main.lockMenu = (ui.site.lockMenu == "true");
                 if (typeof ui.site.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
                 else {
                     main.allowTempTheme = (ui.site.allowTempTheme == "true");
@@ -486,7 +488,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on('ui-control', function(msg) {
             if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
-            if (msg.hasOwnProperty("control")) {
+            if (msg.hasOwnProperty("control")) { // if it's a request to modify a control
                 //console.log("MSG",msg);
                 found = findControl(msg.id, main.menu);
                 //console.log("FOUND",found);

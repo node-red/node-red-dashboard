@@ -79,6 +79,10 @@
             "no-swipe" : "No swipe between tabs",
             "allow-swipe" : "Allow swipe between tabs"
         },
+        "lock" : {
+            "clicked" : "Show side menu on click",
+            "locked" : "Lock side menu open"
+        },
         "temp" : {
             "allow-theme" : "Node-RED theme everywhere",
             "no-theme" : "Angular theme in ui_template",

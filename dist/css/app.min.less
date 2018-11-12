@@ -28,6 +28,18 @@ md-sidenav ng-md-icon {
 md-sidenav i {
     padding-right: 4px;
 }
+
+@media(max-width: 959px) {
+    .md-sidenav-left, md-sidenav {
+        top: 56px !important;
+    }
+}
+@media(min-width: 960px) {
+    .md-sidenav-left, md-sidenav {
+        top: 64px;
+    }
+}
+
 md-toast .md-toast-content {
 	height: auto;
 }
@@ -36,6 +48,7 @@ md-toast .md-toast-error {
     font-weight: 500;
     font-size: large;
 }
+
 md-card {
     box-shadow: none;
 }
@@ -76,13 +89,13 @@ md-card {
 	height: 100%;
 }
 .ie9 img[src$=".svg"] {
-      width: 100%;
+    width: 100%;
 }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-      img[src$=".svg"] {
-          width: 100%;
-      }
+    img[src$=".svg"] {
+        width: 100%;
+    }
 }
 
 @supports (-ms-overflow-style: none) {
@@ -156,7 +169,8 @@ body.nr-dashboard-theme md-toolbar {
 */
 body.nr-dashboard-theme md-sidenav {
     color: @groupTextColor;
-    background-color: @pageSidebarBackgroundColor;
+    // background-color: @pageSidebarBackgroundColor;
+    background-color: @groupBackgroundColor;
 }
 a.md-no-style, button.md-no-style {
     background-color: transparent;

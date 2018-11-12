@@ -1,9 +1,13 @@
 
 ### 2.10.2-beta: Maintenance Release
 
+**Enhancements**
+
+ - Let side menu be locked open via site config tab - Issue #446
+
 **Fixes**
 
- - Fix button background CSS so it can be over-riden - Issue #444
+ - Fix button background CSS so it can be over-ridden - Issue #444
 
 ### 2.10.1: Maintenance Release
 
