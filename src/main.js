@@ -287,7 +287,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.nothing = false;
             var name;
             if (ui.site) {
-                name = ui.site.name;
+                name = main.name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
                 main.lockMenu = (ui.site.lockMenu == "true");

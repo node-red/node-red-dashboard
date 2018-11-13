@@ -80,8 +80,8 @@
             "allow-swipe" : "Allow swipe between tabs"
         },
         "lock" : {
-            "clicked" : "Show side menu on click",
-            "locked" : "Lock side menu open"
+            "clicked" : "Click to show side menu",
+            "locked" : "Always show side menu"
         },
         "temp" : {
             "allow-theme" : "Node-RED theme everywhere",
