@@ -79,6 +79,10 @@
             "no-swipe" : "スワイプによるタブ切り替えをしない",
             "allow-swipe" : "スワイプによるタブ切り替えをする"
         },
+        "lock" : {
+            "clicked" : "サイドメニューをクリックで表示",
+            "locked" : "サイドメニューを表示したままにする"
+        },
         "temp" : {
             "no-theme" : "ui_templateでテーマ設定を許可しない",
             "allow-theme" : "ui_templateでテーマ設定を許可する",
