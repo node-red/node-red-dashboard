@@ -73,7 +73,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.lockMenu = false;
         this.allowTempTheme = true;
         var main = this;
-        var audiocontext;
+        var audioContext;
+        var audioSource;
         var voices = [];
         var tabId = 0;
 
@@ -559,6 +560,20 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('ui-audio', function(msg) {
+            if (msg.reset) {
+                if (audioSource) {
+                    // Stop the current audio source immediately
+                    audioSource.disconnect();
+                    audioSource.stop(0);
+                    audioSource = null;
+                    events.emit('ui-audio', 'reset');
+                }
+                else if (window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel();
+                    events.emit('ui-audio', 'reset');
+                }
+                return;
+            }
             if (!msg.always) {
                 var totab;
                 for (var i in main.menu) {
@@ -577,6 +592,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         }
                     }
                     window.speechSynthesis.speak(words);
+                    words.onend = function(event) {
+                        events.emit('ui-audio', 'complete');
+                    }
+                    events.emit('ui-audio', 'playing');
                 }
                 else {
                     console.log("Your Browser does not support Text-to-Speech");
@@ -590,13 +609,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     window.AudioContext = window.AudioContext||window.webkitAudioContext||window.mozAudioContext;
                 }
                 try {
-                    audiocontext = audiocontext || new AudioContext();
-                    var source = audiocontext.createBufferSource();
+                    audioContext = audioContext || new AudioContext();
+                    audioSource = audioContext.createBufferSource();
+                    audioSource.onended = function() {
+                        events.emit('ui-audio', 'complete');
+                    }
                     var buffer = new Uint8Array(msg.audio);
-                    audiocontext.decodeAudioData(buffer.buffer, function(buffer) {
-                        source.buffer = buffer;
-                        source.connect(audiocontext.destination);
-                        source.start(0);
+                    audioContext.decodeAudioData(buffer.buffer, function(buffer) {
+                        audioSource.buffer = buffer;
+                        audioSource.connect(audioContext.destination);
+                        audioSource.start(0);
+                        events.emit('ui-audio', 'playing');
                     })
                 }
                 catch(e) { alert("Error playing audio: "+e); }
