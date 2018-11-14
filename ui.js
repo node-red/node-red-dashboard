@@ -366,6 +366,9 @@ function init(server, app, log, redSettings) {
         socket.on('disconnect', function() {
             ev.emit("endsocket", socket.client.id, socket.request.connection.remoteAddress);
         });
+        socket.on('ui-audio', function(audioStatus) {
+            ev.emit("audiostatus", audioStatus, socket.client.id, socket.request.connection.remoteAddress);
+        });
     });
 }
 
