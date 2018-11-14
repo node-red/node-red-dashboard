@@ -1,9 +1,21 @@
-md-sidenav,
-md-sidenav.md-locked-open,
-md-sidenav.md-closed.md-locked-open-add-active {
-	min-width: 200px !important;
-    width: auto;
-	max-width: 320px !important;
+
+@media(max-width: 660px) {
+    md-sidenav,
+    md-sidenav.md-locked-open,
+    md-sidenav.md-closed.md-locked-open-add-active {
+    	min-width: 160px !important;
+        width: auto;
+    	max-width: 200px !important;
+    }
+}
+@media(min-width: 661px) {
+    md-sidenav,
+    md-sidenav.md-locked-open,
+    md-sidenav.md-closed.md-locked-open-add-active {
+    	min-width: 200px !important;
+        width: auto;
+    	max-width: 320px !important;
+    }
 }
 md-sidenav ng-md-icon {
     padding-right: 4px;
