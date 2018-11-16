@@ -585,17 +585,16 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (msg.hasOwnProperty("tts")) {
                 if (voices.length > 0) {
                     var words = new SpeechSynthesisUtterance(msg.tts);
+                    words.onerror = function(err) { events.emit('ui-audio', 'error: '+err.error); }
+                    words.onend = function(event) { events.emit('ui-audio', 'complete'); }
                     for (var v=0; v<voices.length; v++) {
                         if (voices[v].lang === msg.voice) {
                             words.voice = voices[v];
                             break;
                         }
                     }
-                    window.speechSynthesis.speak(words);
-                    words.onend = function(event) {
-                        events.emit('ui-audio', 'complete');
-                    }
                     events.emit('ui-audio', 'playing');
+                    window.speechSynthesis.speak(words);
                 }
                 else {
                     console.log("Your Browser does not support Text-to-Speech");
@@ -615,14 +614,18 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         events.emit('ui-audio', 'complete');
                     }
                     var buffer = new Uint8Array(msg.audio);
-                    audioContext.decodeAudioData(buffer.buffer, function(buffer) {
-                        audioSource.buffer = buffer;
-                        audioSource.connect(audioContext.destination);
-                        audioSource.start(0);
-                        events.emit('ui-audio', 'playing');
-                    })
+                    audioContext.decodeAudioData(
+                        buffer.buffer,
+                        function(buffer) {
+                            audioSource.buffer = buffer;
+                            audioSource.connect(audioContext.destination);
+                            audioSource.start(0);
+                            events.emit('ui-audio', 'playing');
+                        },
+                        function(err) { events.emit('ui-audio', 'error'); }
+                    )
                 }
-                catch(e) { alert("Error playing audio: "+e); }
+                catch(e) { events.emit('ui-audio', 'error'); }
             }
         });
     }]);

@@ -29,6 +29,9 @@ module.exports = function(RED) {
                 // When the audio or speech has played completely, clear the node status
                 node.status({});
             }
+            else if (audioStatus.indexOf("error") === 0) {
+                node.status({shape:"ring",fill:"red",text:audioStatus});
+            }
             else {
                 node.status({shape:"dot",fill:"blue",text:audioStatus});
             }
