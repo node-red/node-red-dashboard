@@ -1,9 +1,10 @@
 
-### 2.10.2-beta: Maintenance Release
+### 2.11.0: Milestone Release
 
 **Enhancements**
 
  - Let side menu be locked open via site config tab - Issue #446
+ - Let audio playback node show status in editor for debug
 
 **Fixes**
 
