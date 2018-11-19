@@ -6,5 +6,6 @@
                >
 		<ui-icon ng-show="me.item.icon.length" icon="{{ me.item.icon }}" ng-style="{color:me.item.getColor()}"></ui-icon>
         <span ng-bind-html="me.item.getLabel()"></span>
+	    <md-tooltip md-delay="700" md-direction="bottom" ng-bind-html="me.item.getTooltip()"></md-tooltip>
     </md-button>
 </md-card>
