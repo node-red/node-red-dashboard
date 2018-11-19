@@ -40,6 +40,7 @@ module.exports = function(RED) {
             control: {
                 type: 'button',
                 label: config.label,
+                tooltip: config.tooltip,
                 color: config.color,
                 bgcolor: config.bgcolor,
                 icon: config.icon,
