@@ -17,6 +17,7 @@
             height: {value: 0},
             name: {value: ''},
             label: {value: 'text'},
+            tooltip: {value: ''},
             format: {value: '{{msg.payload}}'},
             layout: {value:'row-spread'}
         },
@@ -62,6 +63,10 @@
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> Tooltip</label>
+        <input type="text" id="node-input-tooltip" placeholder="optional tooltip">
     </div>
     <div class="form-row">
         <label for="node-input-format"><i class="fa fa-i-cursor"></i> Value format</label>
