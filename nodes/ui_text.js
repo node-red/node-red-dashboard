@@ -26,6 +26,7 @@ module.exports = function(RED) {
             control: {
                 type: 'text',
                 label: config.label,
+                tooltip: config.tooltip,
                 order: config.order,
                 format: config.format,
                 width: config.width || group.config.width || 6,
