@@ -68,6 +68,18 @@ md-card {
     box-shadow: none;
 }
 
+.md-tooltip {
+    background-color: dark-grey !important;
+    color: white !important;
+    border-radius: 3px;
+    opacity: 1 !important;
+}
+
+.md-tooltip.md-origin-bottom {
+    margin-top: -6px;
+    margin-left: -8px;
+}
+
 .node-red-ui--notabs {
     color: #888;
     font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -157,6 +169,14 @@ body.nr-dashboard-theme md-content {
 
 body.nr-dashboard-theme md-select-menu md-content {
     height: initial;
+}
+
+body.nr-dashboard-theme md-input-container.md-input-focused:not([md-no-float]) .md-select-placeholder span:first-child {
+    -webkit-transform: translateY(-28px) scale(.75);
+    transform: translateY(-28px) scale(.75);
+}
+body.nr-dashboard-theme md-input-container.md-input-focused:not(.md-input-has-value) md-select .md-select-value.md-select-placeholder {
+    color: @widgetTextColor;
 }
 
 body.nr-dashboard-theme md-content md-card {
