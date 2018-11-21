@@ -27,7 +27,6 @@ module.exports = function(RED) {
                 look: node.chartType,
                 order: config.order,
                 label: config.label,
-                tooltip: config.tooltip,
                 legend: config.legend || false,
                 interpolate: config.interpolate,
                 nodata: config.nodata,

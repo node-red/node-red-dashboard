@@ -40,6 +40,14 @@ body.nr-dashboard-theme md-select-menu md-content {
     height: initial;
 }
 
+body.nr-dashboard-theme md-input-container.md-input-focused:not([md-no-float]) .md-select-placeholder span:first-child {
+    -webkit-transform: translateY(-28px) scale(.75);
+    transform: translateY(-28px) scale(.75);
+}
+body.nr-dashboard-theme md-input-container.md-input-focused:not(.md-input-has-value) md-select .md-select-value.md-select-placeholder {
+    color: @widgetTextColor;
+}
+
 body.nr-dashboard-theme md-content md-card {
     background-color: @widgetBorderColor;
     color: @widgetTextColor;

@@ -48,7 +48,6 @@ module.exports = function (RED) {
                 type: 'gauge',
                 name: config.name,
                 label: config.title,
-                tooltip: config.tooltip,
                 units: config.label,
                 order: config.order,
                 value: config.min,
