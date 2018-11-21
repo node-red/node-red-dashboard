@@ -21,6 +21,7 @@ module.exports = function(RED) {
             control: {
                 type: 'numeric',
                 label: config.label,
+                tooltip: config.tooltip,
                 order: config.order,
                 format: config.format,
                 pre: config.format.split('{{')[0] || "",

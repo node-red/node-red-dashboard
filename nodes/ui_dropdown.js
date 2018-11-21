@@ -16,6 +16,7 @@ module.exports = function(RED) {
         var control = {
                 type: 'dropdown',
                 label: config.label,
+                tooltip: config.tooltip,
                 place: config.place || "Select option",
                 order: config.order,
                 value: config.payload || node.id,

@@ -21,6 +21,7 @@ module.exports = function(RED) {
             control: {
                 type: 'slider',
                 label: config.label,
+                tooltip: config.tooltip,
                 order: config.order,
                 value: config.min,
                 min: config.min,

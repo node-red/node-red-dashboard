@@ -5,6 +5,7 @@
         defaults: {
             name: {value: ''},
             label: {value: ''},
+            tooltip: {value: ''},
             place: {value: 'Select option'},
             group: {type: 'ui_group', required:true},
             order: {value: 0},
@@ -115,6 +116,10 @@
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
         <input type="text" id="node-input-label" placeholder="optional label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> Tooltip</label>
+        <input type="text" id="node-input-tooltip" placeholder="optional tooltip">
     </div>
     <div class="form-row">
         <label for="node-input-place"><i class="fa fa-tag"></i> Placeholder</label>

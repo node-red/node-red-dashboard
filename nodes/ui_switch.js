@@ -72,6 +72,7 @@ module.exports = function(RED) {
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),
                 label: config.label,
+                tooltip: config.tooltip,
                 order: config.order,
                 value: false,
                 onicon: config.onicon,
