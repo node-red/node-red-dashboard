@@ -1,4 +1,10 @@
 
+### 2.10.1: Maintenance Release
+
+**Fixes**
+
+ - Let ui_text node handle buffers without mangling to utf8
+
 ### 2.11.0: Milestone Release
 
 **Enhancements**
