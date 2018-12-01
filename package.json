@@ -63,7 +63,8 @@
             "ui_template": "nodes/ui_template.js",
             "ui_link": "nodes/ui_link.js",
             "ui_tab": "nodes/ui_tab.js",
-            "ui_group": "nodes/ui_group.js"
+            "ui_group": "nodes/ui_group.js",
+            "ui_spacer": "nodes/ui_spacer.js"
         }
     },
     "dependencies": {
