@@ -177,9 +177,9 @@
     <p><b>For example:</b><br>
     <pre style="font-size:smaller;">&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
   &lt;p&gt;The number is&lt;/p&gt;
-  &lt;p ng-style=&quot;{color: (msg.payload || 0) % 2 === 0 ? 'green' : 'red'}&quot;&gt;
+  &lt;font color=&quot;{{((msg.payload || 0) % 2 === 0) ? 'green' : 'red'}}&quot;&gt;
     {{(msg.payload || 0) % 2 === 0 ? 'even' : 'odd'}}
-  &lt;/p&gt;
+  &lt;/font&gt;
 &lt;/div&gt;</pre>
     Will display if the number received as <code>msg.payload</code> is even or odd. It will also
     change the color of the text to green if the number is even or red if odd.<br/>
