@@ -34,9 +34,9 @@
         label: function() {
             var tabNode = RED.nodes.node(this.tab);
             if (tabNode) {
-                return (this.name||c_("label.group"))+ " ["+(tabNode.name||c_("label.tab"))+"]"
+                return "["+(tabNode.name||c_("label.tab"))+"] " + (this.name || c_("label.group"));
             }
-            return (this.name || c_("label.group"))+" ["+c_("label.unassigned")+"]";
+            return "["+c_("label.unassigned")+"] " + (this.name || c_("label.group"));
         },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
