@@ -5,6 +5,7 @@
 
  - Let ui_text node handle buffers without mangling to utf8
  - Fix ui_template info odd/even example to work again (after theme changes)
+ - Fix missing titles (mea culpa) - Issue #453
 
 ### 2.11.0: Milestone Release
 
