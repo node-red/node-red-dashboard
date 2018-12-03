@@ -1514,7 +1514,6 @@
                     event.preventDefault();
                 });
 
-
                 var listElements = {};
                 var dashboard = [];
                 var listStates = {};
@@ -1591,6 +1590,13 @@
                             }
                             case 'ui_group': {
                                 groups[node.id] = node;
+                                break;
+                            }
+                            case 'ui_spacer': {
+                                if (groups.hasOwnProperty(node.group)) {
+                                    groupElements[node.group] = groupElements[node.group]||[];
+                                    groupElements[node.group].push(node);
+                                }
                                 break;
                             }
                         }
