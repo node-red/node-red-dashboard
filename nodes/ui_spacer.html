@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('ui_spacer', {
-        category: 'dashboard',
+        category: 'config',
         color: '#45ADB4',
         defaults: {
             name: {value: "spacer"},
@@ -21,7 +21,7 @@
         outputs:0,
         icon: "ui_spacer.png",
         paletteLabel: 'spacer',
-        label: function() { return this.name; },
+        label: function() { return this.name + " " + this.width + "x" + this.height; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

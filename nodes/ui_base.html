@@ -1290,6 +1290,29 @@
                                 var title = $('<span class="nr-db-sb-title">').html(groupNode.name||groupNode.id||"").appendTo(titleRow);
                                 listElements[groupNode.id] = container;
                                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                                var spacerButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.spacer")+'</a>').appendTo(buttonGroup);
+                                spacerButton.on('click',function(evt) {
+                                    var spaceNode = {
+                                        _def: RED.nodes.getType("ui_spacer"),
+                                        type: "ui_spacer",
+                                        users: [],
+                                        id: RED.nodes.id(),
+                                        tab: item.node.name,
+                                        group: group.node.id,
+                                        order: i+1,
+                                        name: "spacer",
+                                        width: 1,
+                                        height:1,
+                                        label: function() { return this.name + " " + this.width + "x" + this.height; }
+                                    };
+                                    RED.nodes.add(spaceNode);
+                                    RED.editor.validateNode(spaceNode);
+                                    RED.nodes.dirty(true);
+                                    RED.view.redraw();
+                                    //refresh();
+                                    evt.stopPropagation();
+                                    evt.preventDefault();
+                                });
                                 var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
                                 var content = $('<div>',{class:"nr-db-sb-widget-list-container"}).appendTo(container);
                                 if (!listStates.hasOwnProperty(groupNode.id) || !listStates[groupNode.id]) {
@@ -1323,8 +1346,8 @@
                                         var title = $('<span class="nr-db-sb-title">').html(l).appendTo(titleRow);
                                         listElements[widgetNode.id] = container;
                                         var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
-                                        container.on('mouseover',function() {
+                                            var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
+                                            container.on('mouseover',function() {
                                             widgetNode.highlighted = true;
                                             widgetNode.dirty = true;
                                             RED.view.redraw();

@@ -24,7 +24,8 @@
             "tab" : "tab",
             "link" : "link",
             "group" : "group",
-            "edit" : "edit"
+            "edit" : "edit",
+            "spacer": "spacer"
         },
         "theme" : {
             "style" : "Style",
