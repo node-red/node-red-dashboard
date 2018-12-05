@@ -4,7 +4,7 @@
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
         <h1 ng-show="main.len <= 1" style="width:30px"> </h1>
-        <h1 ng-show="!main.lock && Menumain.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
+        <h1 ng-show="!main.lock && main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
         <h1 ng-show="main.lockMenu">{{main.name}}</h1>
     </div>
 </md-toolbar>
