@@ -1945,7 +1945,8 @@
                             }
                             else {
                                 if (groupLists[node.group]) {
-                                    groupLists[node.group].editableList('addItem',node)
+                                    if (node.order === 0) { node.order = groupLists[node.group].editableList('length'); }
+                                    groupLists[node.group].editableList('addItem',node);
                                 }
                             }
                         }
