@@ -4,14 +4,14 @@
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
         <h1 ng-show="main.len <= 1" style="width:30px"> </h1>
-        <h1 ng-show="!main.lock && main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
         <h1 ng-show="main.lockMenu">{{main.name}}</h1>
+        <h1 ng-show="!main.lockMenu && main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
     </div>
 </md-toolbar>
 <section layout="row" flex>
     <md-sidenav ng-hide="main.len <= 1" class="md-sidenav-left" md-component-id="left" md-is-locked-open="main.lockMenu">
         <md-list>
-            <md-list-item ng-repeat="obj in main.menu" ng-click="main.open(obj, $index)">
+            <md-list-item ng-repeat="obj in main.menu" ng-click="main.open(obj, $index)" ng-class="{ 'nr-menu-item-active': obj.id == main.selectedTab.id }">
                 <ui-icon icon="{{obj.icon}}" style="margin:5px"></ui-icon>
                 <p>{{main.getMenuName(obj)}}</p>
             </md-list-item>

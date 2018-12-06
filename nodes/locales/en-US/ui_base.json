@@ -86,7 +86,7 @@
         },
         "temp" : {
             "allow-theme" : "Node-RED theme everywhere",
-            "no-theme" : "Angular theme in ui_template",
+            "no-theme" : "Use Angular theme in ui_template",
             "none" : "Angular theme everywhere"
         }
     }
