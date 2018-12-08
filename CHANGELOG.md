@@ -1,4 +1,10 @@
 
+### 2.12.1: Maintenance Release
+
+**Fixes**
+
+ - Ensure spacer actually gets created with no users
+
 ### 2.12.0: Milestone Release
 
 **Enhancements**
