@@ -1,4 +1,10 @@
 
+### 2.12.2: Maintenance Release
+
+**Fixes**
+
+ - Revert change to button and switch typed inputs - Issue #455
+
 ### 2.12.1: Maintenance Release
 
 **Fixes**
