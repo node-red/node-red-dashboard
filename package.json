@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.11.0",
+    "version": "2.12.1",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -63,12 +63,13 @@
             "ui_template": "nodes/ui_template.js",
             "ui_link": "nodes/ui_link.js",
             "ui_tab": "nodes/ui_tab.js",
-            "ui_group": "nodes/ui_group.js"
+            "ui_group": "nodes/ui_group.js",
+            "ui_spacer": "nodes/ui_spacer.js"
         }
     },
     "dependencies": {
         "serve-static": "~1.13.2",
-        "socket.io": "^2.1.1"
+        "socket.io": "^2.2.0"
     },
     "devDependencies": {
         "angular": "~1.5.11",
@@ -108,7 +109,7 @@
         "jquery": "^3.3.1",
         "jshint": "^2.9.6",
         "justgage": "^1.2.2",
-        "less": "~3.8.1",
+        "less": "~3.9.0",
         "moment": "~2.22.2",
         "sprintf-js": "^1.0.3",
         "streamqueue": "~1.1.2",

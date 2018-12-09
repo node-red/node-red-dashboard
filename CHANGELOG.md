@@ -1,4 +1,24 @@
 
+### 2.12.1: Maintenance Release
+
+**Fixes**
+
+ - Ensure spacer actually gets created with no users
+
+### 2.12.0: Milestone Release
+
+**Enhancements**
+
+ - Introduce concept of spacer nodes in groups to allow more widget layout options
+
+**Fixes**
+
+ - Set order value correctly for newly added ui nodes
+ - Let ui_text node handle buffers without mangling to utf8
+ - Fix ui_template info odd/even example to work again (after theme changes)
+ - Ensure colour picker retains old value on multiple reloads when in dynamic mode - Issue #452
+ - Fix missing page titles (mea culpa) - Issue #453
+
 ### 2.11.0: Milestone Release
 
 **Enhancements**

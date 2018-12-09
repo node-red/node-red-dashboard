@@ -16,6 +16,12 @@
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
 
+& when (@nrTheme = false) {
+    .nr-menu-item-active div button {
+        border-right: 4px solid #888;
+    }
+}
+
 & when (@nrTheme = true) {
 
 .nr-dashboard-disabled {
@@ -66,6 +72,7 @@ body.nr-dashboard-theme .nr-dashboard-dim { opacity: 0.5 !important; }
 */
 body.nr-dashboard-theme md-toolbar {
     background-color: @pageTitlebarBackgroundColor;
+    color: #fff;
 }
 
 /*
@@ -78,6 +85,9 @@ body.nr-dashboard-theme md-sidenav {
 }
 a.md-no-style, button.md-no-style {
     background-color: transparent;
+}
+.nr-menu-item-active div button {
+    border-right: 4px solid @groupTextColor;
 }
 
 /*

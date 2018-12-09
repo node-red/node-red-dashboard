@@ -24,7 +24,8 @@
             "tab" : "tab",
             "link" : "link",
             "group" : "group",
-            "edit" : "edit"
+            "edit" : "edit",
+            "spacer": "spacer"
         },
         "theme" : {
             "style" : "Style",
@@ -85,7 +86,7 @@
         },
         "temp" : {
             "allow-theme" : "Node-RED theme everywhere",
-            "no-theme" : "Angular theme in ui_template",
+            "no-theme" : "Use Angular theme in ui_template",
             "none" : "Angular theme everywhere"
         }
     }
