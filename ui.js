@@ -223,8 +223,8 @@ function add(opt) {
                             if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
                             if (b.indexOf("[") !== -1) { b = b.split("[")[0]; }
                             if (!toEmit.hasOwnProperty(b) && msg.hasOwnProperty(b)) {
-                                if (Buffer.isBuffer(msg[b])) { toEmit.msg[b] = msg[b].toString("binary"); }
-                                else { toEmit.msg[b] = JSON.parse(JSON.stringify(msg[b])); }
+                                if (Buffer.isBuffer(msg[b])) { toEmit[b] = msg[b].toString("binary"); }
+                                else { toEmit[b] = JSON.parse(JSON.stringify(msg[b])); }
                             }
                         }
                     }
@@ -238,7 +238,6 @@ function add(opt) {
             addField("units");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
-
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             io.emit(updateValueEventName, toEmit);
