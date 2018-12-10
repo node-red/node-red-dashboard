@@ -1,4 +1,11 @@
 
+### 2.12.2: Maintenance Release
+
+**Fixes**
+
+ - Revert change to button and switch typed inputs - Issue #455
+ - Fix handling of {{msg.property}} handling for labels
+
 ### 2.12.1: Maintenance Release
 
 **Fixes**
