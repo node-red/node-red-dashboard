@@ -46,6 +46,12 @@
     .nr-db-sb-list-header:hover {
         color: #333;
     }
+    .nr-db-sb-title-hidden {
+        color: #ccc;
+    }
+    .nr-db-sb-title-disabled {
+        text-decoration: line-through;
+    }
     .nr-db-sb-tab-list-header {
         background: #f3f3f3;
         padding:5px;
@@ -167,7 +173,7 @@
         margin-bottom: 15px;
     }
     .red-ui-tab.hidden {
-        display: none;;
+        display: none;
     }
     #dashboard-tabs-list li a:hover {
         cursor: pointer;
@@ -1213,8 +1219,11 @@
                             container.addClass("nr-db-sb-tab-list-item");
                             $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
                             var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
-                            $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
-                            var title = $('<span class="nr-db-sb-title">').html(item.node.name||"").appendTo(titleRow);
+                            var tabicon = item.node.disabled ? "fa-ban" : item.node.hidden ? "fa-eye-slash" : "fa-file-o";
+                            $('<i>',{class:"nr-db-sb-icon nr-db-sb-tab-icon fa "+tabicon}).appendTo(titleRow);
+                            var tabhide = item.node.hidden ? " nr-db-sb-title-hidden" : "";
+                            var tabable = item.node.disabled ? " nr-db-sb-title-disabled" : "";
+                            $('<span>',{class:"nr-db-sb-title"+tabhide+tabable}).html(item.node.name||"").appendTo(titleRow);
                             break;
                         }
                         case 'ui_link': {
@@ -1781,7 +1790,6 @@
                         if (globalDashboardNode.theme.name === 'theme-light' || globalDashboardNode.theme.name === 'theme-dark') {
                             addLightAndDarkResetButton('base-color', $('#base-settings-ul').children().first());
                         }
-
 
                         if (editor === undefined) {
                             editor = RED.editor.createEditor({

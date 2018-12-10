@@ -1,20 +1,48 @@
 <script type="text/javascript">
     // convert to i18 text
-    function c_(x) {
+    function c_ui_tab(x) {
         return RED._("node-red-dashboard/ui_tab:ui_tab."+x);
     }
 
     RED.nodes.registerType('ui_tab',{
         category: 'config',
         defaults: {
-            name: {value: c_("label.home")},
+            name: {value: c_ui_tab("label.home")},
             icon: {value: 'dashboard'},
-            order: {value: 0}
+            order: {value: 0},
+            disabled: {value: false},
+            hidden: {value: false}
         },
         paletteLabel: 'dashboard tab',
-        label: function() { return this.name || c_("label.tab"); },
+        label: function() { return this.name || c_ui_tab("label.tab"); },
         sort: function(A,B) {
             return A.order - B.order;
+        },
+        oneditprepare: function() {
+            $("#node-config-input-disabled").prop("checked", this.disabled);
+            $("#node-config-show-in-menu").prop("checked", !this.hidden);
+            $("#node-config-input-disabled-btn").on("click", function(e) {
+                var i = $(this).find("i");
+                if (i.hasClass('fa-toggle-off')) {
+                    i.addClass('fa-toggle-on');
+                    i.removeClass('fa-toggle-off');
+                    $("#node-config-input-disabled").prop("checked", false);
+                    $("#node-config-input-disabled-label").text(c_ui_tab("label.enabled"));
+                }
+                else {
+                    i.addClass('fa-toggle-off');
+                    i.removeClass('fa-toggle-on');
+                    $("#node-config-input-disabled").prop("checked", true);
+                    $("#node-config-input-disabled-label").text(c_ui_tab("label.disabled"));
+                }
+            });
+            if (!this.disabled) {
+                $("#node-config-input-disabled-btn").click();
+            }
+        },
+        oneditsave: function() {
+            this.disabled = $("#node-config-input-disabled").prop("checked");
+            this.hidden = !($("#node-config-show-in-menu").prop("checked"));
         }
     });
 </script>
@@ -27,6 +55,17 @@
     <div class="form-row">
         <label for="node-config-input-icon"><i class="fa fa-file-image-o"></i> <span data-i18n="ui_tab.label.icon"></span></label>
         <input type="text" id="node-config-input-icon">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-disabled-btn" data-i18n="ui_tab.label.status">Status</label>
+        <button id="node-config-input-disabled-btn" class="editor-button"><i class="fa fa-toggle-off"></i> <span id="node-config-input-disabled-label">Disabled</span></button>
+        <input type="checkbox" id="node-config-input-disabled" style="display: none;"/>
+        <input type="checkbox" id="node-config-show-in-menu" style="margin:8px 0 10px 20px; width:20px;" checked>
+        <label style="width:auto" for="node-config-show-in-menu"><span data-i18n="ui_tab.label.hidden">Shown in Nav Menu</span></label>
+    </div>
+    <div>
+        <div class="form-tips" data-i18n="[html]ui_tab.info.disabled"></div>
+        <div class="form-tips" data-i18n="[html]ui_tab.info.hidden"></div>
     </div>
     <div class="form-tips" data-i18n="[html]ui_tab.tip"></div>
 </script>
