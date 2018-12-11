@@ -85,7 +85,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 for (var i = tabId + d; i != tabId; i += d) {
                     i = i % len;
                     if (i < 0) { i += len; }
-                    if (!main.menu[i].disabled) {
+                    if (!main.menu[i].disabled && !main.menu[i].hidden) {
                         main.select(i);
                         tabId = i;
                         return;
@@ -287,8 +287,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         }
 
         events.connect(function (ui, done) {
-            // all UI tabs, excluding any hidden menu items
-            main.menu = ui.menu.filter(function(item) { return !item.hidden; });
+            main.menu = ui.menu;
             main.globals = ui.globals;
             main.nothing = false;
             var name;
