@@ -6,13 +6,15 @@
             "name" : "Name",
             "icon" : "Icon",
             "status" : "Status",
+            "navmenu" : "Nav. Menu",
             "enabled" : "Enabled",
             "disabled" : "Disabled",
-            "hidden" : "Shown in Nav Menu"
+            "visible" : "Visible",
+            "hidden" : "Hidden"
         },
         "info": {
-            "hidden": "<b>Hidden</b> pages are not listed in the Left-hand Navigation Menu. However, they are still active in the Dashboard, and can be shown by using a `ui_control` msg.",
-            "disabled": "<b>Disabled</b> pages are not included in the Dashboard app, and are therefore not functional. However, the name still appears in the Navigation Menu (unless it is also hidden)."
+            "disabled": "<i>tab is no longer active in Dashboard.</i>",
+            "hidden": "<i>tab will not appear in Navigation Menu.</i>"
         },
         "tip" : "The <b>Icon</b> field can be either a <a href=\"https://design.google.com/icons/\" target=\"_blank\">Material Design icon</a> <i>(e.g. 'check', 'close')</i> or a <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome icon</a> <i>(e.g. 'fa-fire')</i>, or a <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css/weather-icons-lite.css\" target=\"_blank\">Weather icon</a> <i>(e.g. 'wi-wu-sunny')</i>.</p>"
     }
