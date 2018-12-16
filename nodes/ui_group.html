@@ -1,18 +1,20 @@
 <script type="text/javascript">
     // convert to i18 text
-    function c_(x) {
+    function c_ui_group(x) {
         return RED._("node-red-dashboard/ui_group:ui_group."+x);
     }
 
     RED.nodes.registerType('ui_group',{
         category: 'config',
         defaults: {
-            name: {value: c_("label.default")},
+            name: {value: c_ui_group("label.default")},
             tab: {type:"ui_tab", required: true },
             order: {value: 0},
             disp: {value: true},
             width: {value: 6},
-            collapse: {value: false}
+            collapse: {value: false},
+            disabled: {value: false},
+            hidden: {value: false}
         },
         sort: function(A,B) {
             if (A.tab !== B.tab) {
@@ -34,9 +36,9 @@
         label: function() {
             var tabNode = RED.nodes.node(this.tab);
             if (tabNode) {
-                return "["+(tabNode.name||c_("label.tab"))+"] " + (this.name || c_("label.group"));
+                return "["+(tabNode.name||c_ui_group("label.tab"))+"] " + (this.name || c_ui_group("label.group"));
             }
-            return "["+c_("label.unassigned")+"] " + (this.name || c_("label.group"));
+            return "["+c_ui_group("label.unassigned")+"] " + (this.name || c_ui_group("label.group"));
         },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
