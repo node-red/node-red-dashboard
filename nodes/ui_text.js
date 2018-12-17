@@ -34,11 +34,13 @@ module.exports = function(RED) {
                 layoutAlign: angLayoutAlign
             },
             convert: function(value, oldValue, msg) {
-                if (Buffer.isBuffer(value)) {
-                    value = value.toString('binary');
-                }
-                else {
-                    value = value.toString();
+                if (value !== undefined) {
+                    if (Buffer.isBuffer(value)) {
+                        value = value.toString('binary');
+                    }
+                    else {
+                        value = value.toString();
+                    }
                 }
                 return value;
             }

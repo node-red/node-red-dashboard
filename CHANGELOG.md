@@ -1,4 +1,10 @@
 
+### 2.12.3-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix up ui_text toString mishandling error - Issue #459
+
 ### 2.12.2: Maintenance Release
 
 **Fixes**
