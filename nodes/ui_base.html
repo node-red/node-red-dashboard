@@ -1909,7 +1909,13 @@
                                     refresh();
                                 }
                                 else {
-                                    console.log("AHA",node);
+                                    console.log("HIDE",node.hidden,"DIS",node.disabled);
+                                    //console.log("ELE",listElements[node.id]);
+                                    var tabhide = node.hidden ? " nr-db-sb-title-hidden" : "";
+                                    var tabable = node.disabled ? " nr-db-sb-title-disabled" : "";
+                                    //$('<span>',{class:"nr-db-sb-title"+tabhide+tabable}).html(node.name||"").appendTo(titleRow);
+                                    console.log("TH",tabhide);
+                                    console.log("TA",tabable);
                                 }
                             }
                             else if (node.type === "ui_tab") {
