@@ -1219,7 +1219,8 @@
                             container.addClass("nr-db-sb-tab-list-item");
                             $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
                             var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
-                            var tabicon = item.node.disabled ? "fa-window-close-o" : item.node.hidden ? "fa-eye-slash" : "fa-object-group";
+                            var tabicon = "fa-object-group";
+                            //var tabicon = item.node.disabled ? "fa-window-close-o" : item.node.hidden ? "fa-eye-slash" : "fa-object-group";
                             $('<i>',{class:"nr-db-sb-icon nr-db-sb-tab-icon fa "+tabicon}).appendTo(titleRow);
                             var tabhide = item.node.hidden ? " nr-db-sb-title-hidden" : "";
                             var tabable = item.node.disabled ? " nr-db-sb-title-disabled" : "";
@@ -1909,13 +1910,10 @@
                                     refresh();
                                 }
                                 else {
-                                    console.log("HIDE",node.hidden,"DIS",node.disabled);
-                                    //console.log("ELE",listElements[node.id]);
-                                    var tabhide = node.hidden ? " nr-db-sb-title-hidden" : "";
-                                    var tabable = node.disabled ? " nr-db-sb-title-disabled" : "";
-                                    //$('<span>',{class:"nr-db-sb-title"+tabhide+tabable}).html(node.name||"").appendTo(titleRow);
-                                    console.log("TH",tabhide);
-                                    console.log("TA",tabable);
+                                    if (node.hidden === true) { listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").addClass('nr-db-sb-title-hidden'); }
+                                    else { listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").removeClass('nr-db-sb-title-hidden'); }
+                                    if (node.disabled === true) { listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").addClass('nr-db-sb-title-disabled'); }
+                                    else { listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").removeClass('nr-db-sb-title-disabled'); }
                                 }
                             }
                             else if (node.type === "ui_tab") {
