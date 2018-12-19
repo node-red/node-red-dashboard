@@ -268,7 +268,7 @@
             hasUsers: false,
             paletteLabel: 'Dashboard',
             label: function() { return this.name || 'Node-RED Dashboard'; },
-            labelStyle: function() { return this.name?"node_label_italic":""; },
+            labelStyle: function() { return this.name ? "node_label_italic" : ""; },
             onpaletteremove: function() {
                 RED.sidebar.removeTab("dashboard");
                 RED.events.off("editor:save",editSaveEventHandler);
@@ -772,7 +772,8 @@
                 $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:1.0})
                     .click(function(e) {
-                        $("#nr-db-field-angPrimary").val("indigo"); globalDashboardNode.theme.angularTheme.primary = "indigo";
+                        $("#nr-db-field-angPrimary").val("indigo");
+                        globalDashboardNode.theme.angularTheme.primary = "indigo";
                         RED.nodes.dirty(true);
                     })
                     .appendTo(divPrimStyle);
@@ -789,7 +790,8 @@
                 $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:1.0})
                     .click(function(e) {
-                        $("#nr-db-field-angAccents").val("blue"); globalDashboardNode.theme.angularTheme.accents = "blue";
+                        $("#nr-db-field-angAccents").val("blue");
+                        globalDashboardNode.theme.angularTheme.accents = "blue";
                         RED.nodes.dirty(true);
                     })
                     .appendTo(divAccStyle);
@@ -806,7 +808,8 @@
                 $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:1.0})
                     .click(function(e) {
-                        $("#nr-db-field-angWarn").val("red"); globalDashboardNode.theme.angularTheme.warn = "red";
+                        $("#nr-db-field-angWarn").val("red");
+                        globalDashboardNode.theme.angularTheme.warn = "red";
                         RED.nodes.dirty(true);
                     })
                     .appendTo(divWarnStyle);
@@ -823,7 +826,8 @@
                 $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:1.0})
                     .click(function(e) {
-                        $("#nr-db-field-angBackground").val("grey"); globalDashboardNode.theme.angularTheme.background = "grey";
+                        $("#nr-db-field-angBackground").val("grey");
+                        globalDashboardNode.theme.angularTheme.background = "grey";
                         RED.nodes.dirty(true);
                     })
                     .appendTo(divBackStyle);
@@ -1320,7 +1324,6 @@
                                     RED.editor.validateNode(spaceNode);
                                     RED.nodes.dirty(true);
                                     RED.view.redraw();
-                                    //refresh();
                                     evt.stopPropagation();
                                     evt.preventDefault();
                                 });
@@ -1577,6 +1580,7 @@
                     });
                     return currentList;
                 }
+
                 function refreshOrphanedWidgets() {
                     var unknownGroups = {};
                     var count = 0;
@@ -1900,6 +1904,7 @@
                     disableOnEdit: true,
                     onchange: function() { refresh(); }
                 });
+
                 editSaveEventHandler = function(node) {
                     if (/^ui_/.test(node.type)) {
                         if (node.type === "ui_tab" || node.type === "ui_group") {
@@ -1968,7 +1973,6 @@
                         }
                     }
                 };
-
                 RED.events.on("editor:save",editSaveEventHandler);
 
                 var pendingAdd = [];
@@ -2065,7 +2069,6 @@
                         delete listElements[node.id];
                     }
                 };
-
                 RED.events.on("nodes:remove", nodesRemoveEventHandler);
             }
         });
