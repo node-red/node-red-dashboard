@@ -39,7 +39,7 @@
     .nr-db-sb-list-header {
         cursor: pointer;
         position:relative;
-        color: #666;
+        color: #444;
         padding:3px;
         white-space: nowrap;
     }
@@ -167,7 +167,7 @@
         margin-bottom: 15px;
     }
     .red-ui-tab.hidden {
-        display: none;;
+        display: none;
     }
     #dashboard-tabs-list li a:hover {
         cursor: pointer;
@@ -262,7 +262,7 @@
             hasUsers: false,
             paletteLabel: 'Dashboard',
             label: function() { return this.name || 'Node-RED Dashboard'; },
-            labelStyle: function() { return this.name?"node_label_italic":""; },
+            labelStyle: function() { return this.name ? "node_label_italic" : ""; },
             onpaletteremove: function() {
                 RED.sidebar.removeTab("dashboard");
                 RED.events.off("editor:save",editSaveEventHandler);
@@ -766,7 +766,8 @@
                 $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:1.0})
                     .click(function(e) {
-                        $("#nr-db-field-angPrimary").val("indigo"); globalDashboardNode.theme.angularTheme.primary = "indigo";
+                        $("#nr-db-field-angPrimary").val("indigo");
+                        globalDashboardNode.theme.angularTheme.primary = "indigo";
                         RED.nodes.dirty(true);
                     })
                     .appendTo(divPrimStyle);
@@ -783,7 +784,8 @@
                 $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:1.0})
                     .click(function(e) {
-                        $("#nr-db-field-angAccents").val("blue"); globalDashboardNode.theme.angularTheme.accents = "blue";
+                        $("#nr-db-field-angAccents").val("blue");
+                        globalDashboardNode.theme.angularTheme.accents = "blue";
                         RED.nodes.dirty(true);
                     })
                     .appendTo(divAccStyle);
@@ -800,7 +802,8 @@
                 $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:1.0})
                     .click(function(e) {
-                        $("#nr-db-field-angWarn").val("red"); globalDashboardNode.theme.angularTheme.warn = "red";
+                        $("#nr-db-field-angWarn").val("red");
+                        globalDashboardNode.theme.angularTheme.warn = "red";
                         RED.nodes.dirty(true);
                     })
                     .appendTo(divWarnStyle);
@@ -817,7 +820,8 @@
                 $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:1.0})
                     .click(function(e) {
-                        $("#nr-db-field-angBackground").val("grey"); globalDashboardNode.theme.angularTheme.background = "grey";
+                        $("#nr-db-field-angBackground").val("grey");
+                        globalDashboardNode.theme.angularTheme.background = "grey";
                         RED.nodes.dirty(true);
                     })
                     .appendTo(divBackStyle);
@@ -1195,6 +1199,11 @@
                             item.groups = [];
                         }
                         RED.nodes.add(item.node);
+                        RED.history.push({
+                            t:'add',
+                            nodes:[item.node.id],
+                            dirty:RED.nodes.dirty()
+                        });
                         RED.nodes.dirty(true);
                     }
                     else if (item.type === undefined) {
@@ -1276,6 +1285,11 @@
                                     listElements[group.node.id] = container;
                                     RED.nodes.add(group.node);
                                     group.widgets = [];
+                                    RED.history.push({
+                                        t:'add',
+                                        nodes:[group.node.id],
+                                        dirty:RED.nodes.dirty()
+                                    });
                                     RED.nodes.dirty(true);
                                     if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
                                         RED.nodes.updateConfigNodeUsers(group.node);
@@ -1308,9 +1322,13 @@
                                     };
                                     RED.nodes.add(spaceNode);
                                     RED.editor.validateNode(spaceNode);
+                                    RED.history.push({
+                                        t:'add',
+                                        nodes:[spaceNode.id],
+                                        dirty:RED.nodes.dirty()
+                                    });
                                     RED.nodes.dirty(true);
                                     RED.view.redraw();
-                                    //refresh();
                                     evt.stopPropagation();
                                     evt.preventDefault();
                                 });
@@ -1365,8 +1383,20 @@
                                         });
                                     },
                                     sortItems: function(items) {
+                                        var historyEvents = [];
                                         items.each(function(i,el) {
                                             var node = el.data('data');
+                                            var hev = {
+                                                t:'edit',
+                                                node:node,
+                                                changes:{
+                                                    order:node.order,
+                                                    group:node.group
+                                                },
+                                                dirty:node.dirty,
+                                                changed:node.changed
+                                            };
+                                            historyEvents.push(hev);
                                             var changed = false;
                                             if (node.order !== i+1) {
                                                 node.order = i+1;
@@ -1387,6 +1417,10 @@
                                                 node.changed = true;
                                             }
                                         })
+                                        RED.history.push({
+                                            t:'multi',
+                                            events: historyEvents
+                                        });
                                         RED.nodes.dirty(true);
                                         RED.view.redraw();
                                     }
@@ -1406,9 +1440,21 @@
                                 })
                             },
                             sortItems: function(items) {
+                                var historyEvents = [];
                                 items.each(function(i,el) {
                                     var groupData = el.data('data');
                                     var node = groupData.node;
+                                    var hev = {
+                                        t:'edit',
+                                        node:node,
+                                        changes:{
+                                            order:node.order,
+                                            tab:node.tab
+                                        },
+                                        dirty:node.dirty,
+                                        changed:node.changed
+                                    };
+                                    historyEvents.push(hev);
                                     var changed = false;
                                     if (node.order !== i+1) {
                                         node.order = i+1;
@@ -1429,6 +1475,10 @@
                                         changed = true;
                                     }
                                 })
+                                RED.history.push({
+                                    t:'multi',
+                                    events: historyEvents
+                                });
                                 RED.nodes.dirty(true);
                                 RED.view.redraw();
                             }
@@ -1451,9 +1501,20 @@
                     addButton: false,
                     addItem: addTabOrLinkItem,
                     sortItems: function(items) {
+                        var historyEvents = [];
                         items.each(function(i,el) {
                             var itemData = el.data('data');
                             var node = itemData.node;
+                            var hev = {
+                                t:'edit',
+                                node:node,
+                                changes:{
+                                    order:node.order
+                                },
+                                dirty:node.dirty,
+                                changed:node.changed
+                            }
+                            historyEvents.push(hev);
                             var changed = false;
                             if (node.order !== i+1) {
                                 node.order = i+1;
@@ -1464,6 +1525,10 @@
                                 node.changed = true;
                             }
                         })
+                        RED.history.push({
+                            t:'multi',
+                            events: historyEvents
+                        });
                         RED.nodes.dirty(true);
                         RED.view.redraw();
                     }
@@ -1489,6 +1554,7 @@
                         tab = tabData.node;
                     });
 
+                    var hev = [];
                     if (tab === null) {
                         tab = {
                             id: RED.nodes.id(),
@@ -1500,6 +1566,7 @@
                             icon: "dashboard"
                         };
                         RED.nodes.add(tab);
+                        hev.push(tab.id);
                     }
                     for (var groupId in unknownGroups) {
                         if (unknownGroups.hasOwnProperty(groupId)) {
@@ -1514,6 +1581,7 @@
                                 width: 6,
                                 disp: true
                             };
+                            hev.push(groupNode.id);
                             RED.nodes.add(groupNode);
                             RED.editor.validateNode(groupNode);
                             if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
@@ -1531,6 +1599,11 @@
                             }
                         }
                     }
+                    RED.history.push({
+                        t:'add',
+                        nodes: hev,
+                        dirty:RED.nodes.dirty()
+                    });
                     RED.nodes.dirty(true);
                     refresh();
                     refreshOrphanedWidgets();
@@ -1567,6 +1640,7 @@
                     });
                     return currentList;
                 }
+
                 function refreshOrphanedWidgets() {
                     var unknownGroups = {};
                     var count = 0;
@@ -1782,7 +1856,6 @@
                             addLightAndDarkResetButton('base-color', $('#base-settings-ul').children().first());
                         }
 
-
                         if (editor === undefined) {
                             editor = RED.editor.createEditor({
                                 id: 'nr-db-field-format-editor',
@@ -1891,6 +1964,7 @@
                     disableOnEdit: true,
                     onchange: function() { refresh(); }
                 });
+
                 editSaveEventHandler = function(node) {
                     if (/^ui_/.test(node.type)) {
                         if (node.type === "ui_tab" || node.type === "ui_group") {
@@ -1953,7 +2027,6 @@
                         }
                     }
                 };
-
                 RED.events.on("editor:save",editSaveEventHandler);
 
                 var pendingAdd = [];
@@ -2050,7 +2123,6 @@
                         delete listElements[node.id];
                     }
                 };
-
                 RED.events.on("nodes:remove", nodesRemoveEventHandler);
             }
         });
