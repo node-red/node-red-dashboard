@@ -441,6 +441,9 @@ function addControl(tab, groupHeader, control) {
                 header: tab.config.name,
                 order: parseFloat(tab.config.order),
                 icon: tab.config.icon,
+                //icon: tab.config.hidden ? "fa-ban" : tab.config.icon,
+                disabled: tab.config.disabled,
+                hidden: tab.config.hidden,
                 items: []
             };
             menu.push(foundTab);

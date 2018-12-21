@@ -82,11 +82,15 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var len = main.menu.length;
             if (len > 1) {
                 //var i = parseInt($location.path().substr(1));
-                var i = tabId;
-                i = (i + d) % len;
-                if (i < 0) { i += len; }
-                main.open(main.menu[i], i);
-                tabId = i;
+                for (var i = tabId + d; i != tabId; i += d) {
+                    i = i % len;
+                    if (i < 0) { i += len; }
+                    if (!main.menu[i].disabled && !main.menu[i].hidden) {
+                        main.select(i);
+                        tabId = i;
+                        return;
+                    }
+                }
             }
         }
 
@@ -341,18 +345,23 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 hideGroups();
                 done();
             }
-            if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length) {
+            if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length && !main.menu[prevTabIndex].disabled) {
                 main.selectedTab = main.menu[prevTabIndex];
                 finishLoading();
             }
             else {
                 $timeout( function() {
-                    // open first menu, which is not new tab link
+                    // open first menu, which is not new tab link, and is not disabled
                     var indexToOpen = null;
                     main.menu.some(function (menu, i) {
                         if (menu.target === undefined || menu.target === 'iframe') {
-                            indexToOpen = i;
-                            return true;
+                            if (!menu.disabled) {
+                                indexToOpen = i;
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
                         }
                     })
                     if (indexToOpen !== null) {
@@ -508,12 +517,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     for (var i in main.menu) {
                         // is it the name of a tab ?
                         if (msg.tab == main.menu[i].header) {
-                            main.select(i);
+                            if (!main.menu[i].disabled) { main.select(i); }
                             return;
                         }
                         // or the name of a link ?
                         else if (msg.tab == main.menu[i].name) {
-                            main.open(main.menu[i], i);
+                            if (!main.menu[i].disabled) { main.open(main.menu[i], i); }
                             return;
                         }
                     }
@@ -521,7 +530,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 // or is it a valid index number ?
                 var index = parseInt(msg.tab);
                 if (Number.isNaN(index) || index < 0) { return; }
-                if (index < main.menu.length) { main.open(main.menu[index], index); }
+                if (index < main.menu.length) {
+                    if (!main.menu[index].disabled) { main.open(main.menu[index], index); }
+                    return;
+                }
             }
             if (msg.hasOwnProperty("group")) {  // it's to control a group item
                 if (typeof msg.group === 'object') {

@@ -1,20 +1,67 @@
 <script type="text/javascript">
     // convert to i18 text
-    function c_(x) {
+    function c_ui_tab(x) {
         return RED._("node-red-dashboard/ui_tab:ui_tab."+x);
     }
 
     RED.nodes.registerType('ui_tab',{
         category: 'config',
         defaults: {
-            name: {value: c_("label.home")},
+            name: {value: c_ui_tab("label.home")},
             icon: {value: 'dashboard'},
-            order: {value: 0}
+            order: {value: 0},
+            disabled: {value: false},
+            hidden: {value: false}
         },
         paletteLabel: 'dashboard tab',
-        label: function() { return this.name || c_("label.tab"); },
+        label: function() { return this.name || c_ui_tab("label.tab"); },
         sort: function(A,B) {
             return A.order - B.order;
+        },
+        oneditprepare: function() {
+            $("#node-config-input-disabled-btn").on("click", function(e) {
+                var i = $(this).find("i");
+                var active = i.hasClass("fa-toggle-on");
+                var newCls = "fa fa-toggle-" + (active ? "off" : "on");
+                i.attr("class", newCls);
+                $("#node-config-input-disabled").prop('checked',active);
+
+                var newTxt = c_ui_tab(active ? "label.disabled" : "label.enabled");
+                $("#node-config-input-disabled-label").text(newTxt);
+
+                var info = $("#node-config-input-disabled-info");
+                var done = active ? info.show() : info.hide();
+            });
+            if (this.disabled) {
+                $("#node-config-input-disabled-btn").click();
+            }
+            else {
+                $("#node-config-input-disabled-label").text(c_ui_tab("label.enabled"));
+            }
+
+            $("#node-config-input-hidden-btn").on("click", function(e) {
+                var i = $(this).find("i");
+                var active = i.hasClass("fa-toggle-on");
+                var newCls = "fa fa-toggle-" + (active ? "off" : "on");
+                i.attr("class", newCls);
+                $("#node-config-input-hidden").prop('checked',active);
+
+                var newTxt = c_ui_tab(active ? "label.hidden" : "label.visible");
+                $("#node-config-input-hidden-label").text(newTxt);
+
+                var info = $("#node-config-input-hidden-info");
+                var done = active ? info.show() : info.hide();
+            });
+            if (this.hidden) {
+                $("#node-config-input-hidden-btn").click();
+            }
+            else {
+                $("#node-config-input-hidden-label").text(c_ui_tab("label.visible"));
+            }
+        },
+        oneditsave: function() {
+            this.disabled = $("#node-config-input-disabled").prop("checked");
+            this.hidden = $("#node-config-input-hidden").prop("checked");
         }
     });
 </script>
@@ -28,11 +75,29 @@
         <label for="node-config-input-icon"><i class="fa fa-file-image-o"></i> <span data-i18n="ui_tab.label.icon"></span></label>
         <input type="text" id="node-config-input-icon">
     </div>
+    <div class="form-row">
+        <label for="node-config-input-disabled-btn"><i class="fa fa-ban"></i> <span data-i18n="ui_tab.label.state"></span></label>
+        <button id="node-config-input-disabled-btn" class="editor-button" style="width:100px; margin-right:6px;"><i class="fa fa-toggle-on"></i> <span id="node-config-input-disabled-label"></span></button>
+        <input type="checkbox" id="node-config-input-disabled" style="display:none;"/>
+        <span id="node-config-input-disabled-info" data-i18n="[html]ui_tab.info.disabled" style="display:none;"></span>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-hidden-btn"><i class="fa fa-eye-slash"></i> <span data-i18n="ui_tab.label.navmenu"></span></label>
+        <button id="node-config-input-hidden-btn" class="editor-button" style="width:100px; margin-right:6px;"><i class="fa fa-toggle-on"></i> <span id="node-config-input-hidden-label"></span></button>
+        <input type="checkbox" id="node-config-input-hidden" style="display:none;"/>
+        <span id="node-config-input-hidden-info" data-i18n="[html]ui_tab.info.hidden" style="display:none;"></span>
+    </div>
     <div class="form-tips" data-i18n="[html]ui_tab.tip"></div>
 </script>
 
 <script type="text/x-red" data-help-name="ui_tab">
     <p>Tab configuration for Dashboard</p>
+    <p><b>Disabled</b> pages are not included in the Dashboard app, and are therefore not functional.
+       The tab name still appears in the Navigation Menu (unless it is also hidden).
+    </p>
+    <p><b>Hidden</b> pages are not listed in the Left-hand Navigation Menu.
+       However, they are still active in the Dashboard, and can be shown by using a `ui_control` msg.
+    </p>
     <p>The <b>Icon</b> field can be either
     <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a> <i>(e.g. 'check', 'close')</i>
     or <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>,
