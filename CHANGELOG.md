@@ -1,9 +1,14 @@
 
-### 2.12.3-beta: Maintenance Release
+### 2.13.0: Maintenance Release
+
+**Enhancements**
+
+ - Add ability to hide tabs manually (PR #456)
 
 **Fixes**
 
  - Fix up ui_text toString mishandling error - Issue #459
+ - Add some undo capability to ordering of widgets - Issue #461
 
 ### 2.12.2: Maintenance Release
 
