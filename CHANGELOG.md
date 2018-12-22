@@ -3,7 +3,7 @@
 
 **Enhancements**
 
- - Add ability to hide tabs manually (PR #456)
+ - Add ability to hide and/or disable tabs manually - PR #456
 
 **Fixes**
 
