@@ -1,5 +1,11 @@
 
-### 2.13.0: Maintenance Release
+### 2.13.1: Maintenance Release
+
+**Fixes**
+
+ - Fix ui_template to return correct sessionid to each browser.
+
+### 2.13.0: Milestone Release
 
 **Enhancements**
 

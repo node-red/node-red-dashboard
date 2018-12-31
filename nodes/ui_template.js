@@ -74,7 +74,11 @@ module.exports = function(RED) {
                 return { msg:clonedMsg };
             },
             beforeSend: function (msg, original) {
-                if (original) { return original.msg; }
+                if (original) {
+                    var om = original.msg;
+                    om.socketid = original.socketid;
+                    return om;
+                }
             }
         });
         node.on("close", done);
