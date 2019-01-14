@@ -142,7 +142,14 @@ function loadConfiguration(type,scope) {
     var interpolate = scope.$eval('me.item.interpolate');
     var xFormat = scope.$eval('me.item.xformat');
     var showDot = scope.$eval('me.item.dot');
-    var baseColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
+    var bColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
+    var baseColours = bColours.concat([
+        '#7EB3C6','#BB9A61','#3F8FB9','#57A13F',
+        '#BC5879','#6DC2DF','#D7D185','#91CA96',
+        '#DEB64D','#31615A','#B46E3F','#9B2FAA',
+        '#61A240','#AA3167','#9D6D5E','#3498DB',
+        '#EC7063','#DAF7A6','#FFC300','#D98880',
+        '#48C9B0','#7FB3D5','#F9E79F','#922B21']);
     var config = scope.config || {};
     var themeState = scope.$eval('me.item.theme.themeState');
     var useOneColor = scope.$eval('me.item.useOneColor');
