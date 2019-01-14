@@ -188,7 +188,7 @@ function loadConfiguration(type,scope) {
             scaleLabel: {
                 fontColor: "#fff",
                 display: true
-            },
+            }
         }];
         if (xFormat !== "auto") {
             config.options.scales.xAxes[0].time = {
@@ -202,7 +202,7 @@ function loadConfiguration(type,scope) {
                     'week': xFormat,
                     'month': xFormat,
                     'quarter': xFormat,
-                    'year': xFormat,
+                    'year': xFormat
                 }
             };
         }
@@ -217,6 +217,7 @@ function loadConfiguration(type,scope) {
                     // Display and format the most recent time value as the title.
                     // This ensures the title reflects the xAxis time.
                     var largest = tooltip[0].xLabel;
+                    largest = new Date(largest).getTime();
                     if (isNaN(largest) || (largest < 1000000)) { return largest; }
                     for (var i=1; i<tooltip.length; i++) {
                         if (tooltip[i].xLabel > largest) {
