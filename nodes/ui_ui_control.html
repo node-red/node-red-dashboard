@@ -39,10 +39,12 @@
     where <b>focus</b> is optional and will cause the screen to scroll to show that group if required. The group
     names are the IDs of the groups and are typically formed from the <i>tab name</i> plus <i>group name</i> joined with
     underscores replacing all spaces.</p>
-    <p>When any browser client connects or loses connection this node will emit a <code>msg</code> containing:</p>
+    <p>When any browser client connects or loses connection, or changes tab, this node will emit a <code>msg</code> containing:</p>
     <ul>
-    <li><code>payload</code> - <i>connect</i> or <i>lost</i>.
+    <li><code>payload</code> - <i>connect</i>, <i>lost</i>, or <i>change</i>.
     <li><code>socketid</code> - the ID of the socket (this will change every time the browser reloads the page).
     <li><code>socketip</code> - the ip address from where the connection originated.
+    <li><code>tab</code> - the number of the tab. (Only for 'change' event).
+    <li><code>name</code> - the name of the tab. (Only for 'change' event).
     </ul>
 </script>
