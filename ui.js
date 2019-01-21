@@ -381,13 +381,21 @@ function updateUi(to) {
         to = io;
     }
     process.nextTick(function() {
-        // menu.forEach(function(o) {
-        //     o.theme = baseConfiguration.theme;
-        // });
+        var m = [];
+        menu.forEach(function(o) {
+            if (o.hasOwnProperty("items")) {
+                o.items.forEach(function(i) {
+                    if (i.hasOwnProperty("header")) {
+                        delete i.header._flow;
+                    }
+                })
+            }
+            m.push(o);
+        });
         to.emit('ui-controls', {
             site: baseConfiguration.site,
             theme: baseConfiguration.theme,
-            menu: menu,
+            menu: m,
             globals: globals
         });
         updateUiPending = false;

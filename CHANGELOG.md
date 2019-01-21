@@ -6,6 +6,7 @@
  - Fix ui_template to return correct sessionid to each browser.
  - Fix line chart xAxis hover to use same time format as main axis
  - Fix chart colours to have more than 9 colours just in case - Issue #465
+ - Remove circular ref in menu that caused problems with 0.20 beta
 
 ### 2.13.0: Milestone Release
 
