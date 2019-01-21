@@ -381,9 +381,9 @@ function updateUi(to) {
         to = io;
     }
     process.nextTick(function() {
-        menu.forEach(function(o) {
-            o.theme = baseConfiguration.theme;
-        });
+        // menu.forEach(function(o) {
+        //     o.theme = baseConfiguration.theme;
+        // });
         to.emit('ui-controls', {
             site: baseConfiguration.site,
             theme: baseConfiguration.theme,
