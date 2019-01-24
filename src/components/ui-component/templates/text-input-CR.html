@@ -5,6 +5,7 @@
         <input ng-model="me.item.value"
             ng-model-options="{'timezone':'UTC'}"
             ng-keydown="me.keyPressed($event)"
+            ng-blur="me.keyPressed($event)"
             aria-label="{{me.item.label}}"
             type="{{me.item.mode}}"
             style="z-index:1"/>

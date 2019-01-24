@@ -275,9 +275,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 typeof throttleTime === "number" ? throttleTime : 10);
         };
 
-        // will emit me.item.value when enter is pressed
+        // will emit me.item.value when enter or tab is pressed or onBlur
         me.keyPressed = function (event) {
-            if ((event.charCode === 13) || (event.which === 13) || (event.which === 9)) {
+            if ((event.charCode === 13) || (event.which === 13) || (event.which === 9) || (event.type === "blur")) {
                 events.emit({ id:me.item.id, value:me.item.value });
             }
         }
