@@ -8,7 +8,7 @@
  - Fix chart colours to have more than 9 colours just in case - Issue #465
  - Remove circular ref in menu that caused problems with 0.20 beta
  - Let ui_text node send data onBlur when in wait for key mode
- - Update Angular dependency to 1.7.6   - Issue #462
+ - Update Angular dependency to 1.7.6 - Issue #462
 
 ### 2.13.0: Milestone Release
 
