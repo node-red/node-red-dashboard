@@ -1,4 +1,10 @@
 
+### 2.13.2: Maintenance Release
+
+**Fixes**
+
+ - Revert change that broke gauge pointer colours
+
 ### 2.13.1: Maintenance Release
 
 **Fixes**
@@ -9,6 +15,8 @@
  - Remove circular ref in menu that caused problems with 0.20 beta
  - Let ui_text node send data onBlur when in wait for key mode
  - Update Angular dependency to 1.7.6 - Issue #462
+ - Add X-UA-Compatible tag to help to get IE-11 to behave
+ - Fix css to use numerics not incorrect name - Issue #469
 
 ### 2.13.0: Milestone Release
 
