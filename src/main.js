@@ -101,7 +101,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         this.select = function (index) {
             main.selectedTab = main.menu[index];
-            if (main.menu.length > 0) { $mdSidenav('left').close(); }
+            if (main.menu.length > 0) { if ($mdSidenav('left')) { $mdSidenav('left').close(); } }
             tabId = index;
             events.emit('ui-change', tabId);
             $location.path(index);
