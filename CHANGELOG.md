@@ -1,4 +1,11 @@
 
+### 2.14.0-beta: Milestone Release
+
+**Fixes**
+
+ - Finally deprecate/remove second output from ui_chart node.
+ - Don't try to close non-existent menu at start (logging issue only) - Issue #470
+
 ### 2.13.2: Maintenance Release
 
 **Fixes**
