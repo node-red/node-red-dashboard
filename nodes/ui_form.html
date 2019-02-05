@@ -88,9 +88,8 @@
                   {val : "email", text: 'E-mail'},
                   {val : "password", text: 'Password'},
                   {val : "checkbox", text: 'Checkbox'},
-                  {val : "switch", text: 'Switch'}//,
-                  //{val : "radio", text: 'Radio'}//,
-                  //{val : "date", text: 'Date'}
+                  {val : "switch", text: 'Switch'},
+                  {val : "date", text: 'Date'}
                 ];
 
                 //var sel = $('<select>').appendTo('body');
@@ -111,8 +110,8 @@
                 var reqDiv=$("<div  />",{class:"slider round"}).appendTo(reqRow);
 
                 var finalspan = $('<div/>',{style:"display:inline-block; width:5%;"}).appendTo(row);
-                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"left:45%; position:relative;"}).appendTo(finalspan);
-                $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
+                var deleteButton = $('<a/>',{href:"#",class:"editor-button", style:"font-size:1.3em; left:45%; position:relative;"}).appendTo(finalspan);
+                $('<i/>',{class:"fa fa-trash-o"}).appendTo(deleteButton);
 
                 deleteButton.click(function() {
                     container.find(".node-input-option-value").removeAttr('required')
@@ -251,8 +250,8 @@ input:checked + .slider:before {
                 <div style="width:19%; text-align:center; float:left;">Label</div>
                 <div style="width:19%; text-align:center; float:left;">Name</div>
                 <div style="margin-left:7px; width:19%; text-align:center; float:left;">Type</div>
-                <div style="width:20%; text-align:center; float:left;">Required</div>
-                <div style="width:16%; text-align:center; float:left;">Remove</div>
+                <div style="width:20%; text-align:right; float:left;">Required</div>
+                <div style="width:16%; text-align:right; float:left;">Remove</div>
               </div>
           </div>
           <div id="node-input-option-container-div" style=" height: 257px; padding: 5px; overflow-y:scroll;">
