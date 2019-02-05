@@ -11,7 +11,7 @@
 <section layout="row" flex>
     <md-sidenav ng-hide="main.len <= 1" class="md-sidenav-left" md-component-id="left" md-is-locked-open="main.lockMenu">
         <md-list>
-            <md-list-item ng-repeat="obj in main.menu" ng-disabled="obj.disabled" ng-if="!obj.hidden" ng-click="main.open(obj, $index)">
+            <md-list-item ng-repeat="obj in main.menu" ng-class="{'nr-menu-item-active':location.$$path=='/'+$index}" ng-disabled="obj.disabled" ng-if="!obj.hidden" ng-click="main.open(obj, $index)">
                 <ui-icon icon="{{obj.icon}}" style="margin:5px"></ui-icon>
                 <p>{{main.getMenuName(obj)}}</p>
             </md-list-item>

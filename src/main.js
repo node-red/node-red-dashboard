@@ -140,6 +140,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $mdSidenav('left').close();
             }
         }
+        $scope.location = $location;
 
         this.getMenuName = function (menu) {
             if (menu.link !== undefined) {
