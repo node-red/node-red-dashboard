@@ -1,13 +1,17 @@
 
 ### 2.14.0-beta: Milestone Release
 
+**Enhancements**
+
+ - Finally remove deprecated second output from ui_chart node.
+ - Allow ui_form to be submitted with empty fields (if they are not required)
+
 **Fixes**
 
- - Finally deprecate/remove second output from ui_chart node.
  - Don't try to close non-existent menu at start (logging issue only) - Issue #470
  - Add startsWith polyfill for IE11
- - Allow ui_form to be submitted with empty fields (if they are not required)
  - Ensure active sidebar menu item is highlighted - Issue #472
+ - Sanitise display of html input - Issue #473
 
 ### 2.13.2: Maintenance Release
 

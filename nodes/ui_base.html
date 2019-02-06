@@ -702,8 +702,8 @@
 
                 var divSetSizes = $('<div>',{class:"form-row"}).appendTo(siteTab);
                 $('<span style="width:45%; display:inline-block">').html('<b>'+c_("label.sizes")+'</b>').appendTo(divSetSizes);
-                $('<span style="width:25%; display:inline-block; font-size:smaller">').html(c_("label.horizontal")).appendTo(divSetSizes);
-                $('<span style="width:20%; display:inline-block; font-size:smaller">').html(c_("label.vertical")).appendTo(divSetSizes);
+                $('<span style="width:25%; display:inline-block; font-size:smaller">').text(c_("label.horizontal")).appendTo(divSetSizes);
+                $('<span style="width:20%; display:inline-block; font-size:smaller">').text(c_("label.vertical")).appendTo(divSetSizes);
                 $('<i id="sizes-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                 .css({opacity:1.0})
                 .click(function(e) {
@@ -719,7 +719,7 @@
                 })
                 .appendTo(divSetSizes);
 
-                $('<br/><span style="width:45%; display:inline-block">').html(c_("label.widget-size")).appendTo(divSetSizes);
+                $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-size")).appendTo(divSetSizes);
                 $('<input type="number" name="sx" min="24" id="nr-db-field-sx">').val(48).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
@@ -728,7 +728,7 @@
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
-                $('<br/><span style="width:45%; display:inline-block">').html(c_("label.widget-spacing")).appendTo(divSetSizes);
+                $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="cx" min="0" id="nr-db-field-cx">').val(6).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
@@ -737,7 +737,7 @@
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
-                $('<br/><span style="width:45%; display:inline-block">').html(c_("label.group-padding")).appendTo(divSetSizes);
+                $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-padding")).appendTo(divSetSizes);
                 $('<input type="number" name="px" min="0" id="nr-db-field-px">').val(0).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
@@ -746,7 +746,7 @@
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
-                $('<br/><span style="width:45%; display:inline-block">').html(c_("label.group-spacing")).appendTo(divSetSizes);
+                $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="gx" min="0" id="nr-db-field-gx">').val(6).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
@@ -878,7 +878,7 @@
                 }
 
                 var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
-                $('<label class="nr-db-theme-label">').html(c_("theme.style")).appendTo(divThemeStyle);
+                $('<label class="nr-db-theme-label">').text(c_("theme.style")).appendTo(divThemeStyle);
                 var themeSelection = $('<select id="nr-db-field-theme">'+
                     '<option value="theme-light">'+c_("style.light")+'</option>'+
                     '<option value="theme-dark">'+c_("style.dark")+'</option>'+
@@ -922,7 +922,7 @@
                 .appendTo(divThemeStyle);
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
-                $('<label class="nr-db-theme-label">').html(c_("theme.custom-profile")).appendTo(customThemeLibraryContainer);
+                $('<label class="nr-db-theme-label">').text(c_("theme.custom-profile")).appendTo(customThemeLibraryContainer);
                 $('<input type="text" id="ui-sidebar-name" placeholder="profile name (not blank)">')
                 .val(c_("theme.custom-profile-name"))
                 .change(function() {
@@ -948,7 +948,7 @@
                 var baseThemeSettingsContainer = $('<div id="base-theme-settings">').appendTo(themeTab);
 
                 var baseSettings = $('<div>',{class:"form-row"}).appendTo(baseThemeSettingsContainer);
-                $('<label class="nr-db-theme-label">').html(c_("theme.base-settings")).appendTo(baseSettings);
+                $('<label class="nr-db-theme-label">').text(c_("theme.base-settings")).appendTo(baseSettings);
                 var baseSettingsUl = $('<ul id="base-settings-ul" class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
 
                 var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>'+c_("base.colour")+'</span></li>').appendTo(baseSettingsUl);
@@ -1010,7 +1010,7 @@
                 // Markup
                 // Page styles
                 var divPageStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="nr-db-theme-label">').html(c_("theme.page-settings")).appendTo(divPageStyle);
+                $('<label class="nr-db-theme-label">').text(c_("theme.page-settings")).appendTo(divPageStyle);
                 var pageStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('page-titlebar-backgroundColor', c_("theme.page.title"), pageStyles);
                 addCustomisableStyle('page-backgroundColor', c_("theme.page.page"), pageStyles);
@@ -1018,7 +1018,7 @@
 
                 // Group styles
                 var divGroupStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="nr-db-theme-label">').html(c_("theme.group-settings")).appendTo(divGroupStyle);
+                $('<label class="nr-db-theme-label">').text(c_("theme.group-settings")).appendTo(divGroupStyle);
                 var groupStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('group-textColor', c_("theme.group.text"), groupStyles);
                 addCustomisableStyle('group-borderColor', c_("theme.group.border"), groupStyles);
@@ -1026,7 +1026,7 @@
 
                 // Widget styles
                 var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="nr-db-theme-label">').html(c_("theme.widget-settings")).appendTo(divWidgetStyle);
+                $('<label class="nr-db-theme-label">').text(c_("theme.widget-settings")).appendTo(divWidgetStyle);
                 var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
                 addCustomisableStyle('widget-textColor', c_("theme.widget.text"), widgetStyles);
                 addCustomisableStyle('widget-backgroundColor', c_("theme.widget.colour"), widgetStyles);
@@ -1235,7 +1235,7 @@
                             $('<i>',{class:"nr-db-sb-icon nr-db-sb-tab-icon fa "+tabicon}).appendTo(titleRow);
                             var tabhide = item.node.hidden ? " nr-db-sb-title-hidden" : "";
                             var tabable = item.node.disabled ? " nr-db-sb-title-disabled" : "";
-                            $('<span>',{class:"nr-db-sb-title"+tabhide+tabable}).html(item.node.name||"").appendTo(titleRow);
+                            $('<span>',{class:"nr-db-sb-title"+tabhide+tabable}).text(item.node.name||"").appendTo(titleRow);
                             break;
                         }
                         case 'ui_link': {
@@ -1243,8 +1243,8 @@
                             var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
                             var nameContainer = $('<div class="nr-db-sb-link-name-container">').appendTo(title);
                             $('<i class="fa fa-external-link"></i>').appendTo(nameContainer);
-                            $('<span class="nr-db-sb-link-name">').html(item.node.name||"untitled").appendTo(nameContainer);
-                            $('<div class="nr-db-sb-link-url">').html(item.node.link||"http://").appendTo(title);
+                            $('<span class="nr-db-sb-link-name">').text(item.node.name||"untitled").appendTo(nameContainer);
+                            $('<div class="nr-db-sb-link-url">').text(item.node.link||"http://").appendTo(title);
                             break;
                         }
                     }
@@ -1313,7 +1313,7 @@
                                 $('<i class="nr-db-sb-list-handle nr-db-sb-group-list-handle fa fa-bars"></i>').appendTo(titleRow);
                                 var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
                                 $('<i class="nr-db-sb-icon nr-db-sb-group-icon fa fa-table"></i>').appendTo(titleRow);
-                                var title = $('<span class="nr-db-sb-title">').html(groupNode.name||groupNode.id||"").appendTo(titleRow);
+                                var title = $('<span class="nr-db-sb-title">').text(groupNode.name||groupNode.id||"").appendTo(titleRow);
                                 listElements[groupNode.id] = container;
                                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
                                 var spacerButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.spacer")+'</a>').appendTo(buttonGroup);
@@ -1374,7 +1374,7 @@
                                             console.log("Definition error: "+d.type+".label",err);
                                             l = d.type;
                                         }
-                                        var title = $('<span class="nr-db-sb-title">').html(l).appendTo(titleRow);
+                                        var title = $('<span class="nr-db-sb-title">').text(l).appendTo(titleRow);
                                         listElements[widgetNode.id] = container;
                                         var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
                                             var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
@@ -1982,7 +1982,7 @@
                         if (node.type === "ui_tab" || node.type === "ui_group") {
                             if (listElements[node.id]) {
                                 // Existing element
-                                listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id);
+                                listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").text(node.name||node.id);
                                 if (node.type === "ui_group") {
                                     refresh();
                                 }
@@ -2007,8 +2007,8 @@
                         else if (node.type === "ui_link") {
                             if (listElements[node.id]) {
                                 var container = listElements[node.id];
-                                container.find(".nr-db-sb-link-name").html(node.name||"untitled");
-                                container.find(".nr-db-sb-link-url").html(node.link);
+                                container.find(".nr-db-sb-link-name").text(node.name||"untitled");
+                                container.find(".nr-db-sb-link-url").text(node.link);
                             }
                         }
                         else {
@@ -2033,7 +2033,7 @@
                                         console.log("Definition error: "+d.type+".label",err);
                                         l = d.type;
                                     }
-                                    listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(l);
+                                    listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").text(l);
                                 }
                             }
                             else {
@@ -2183,7 +2183,7 @@
                 .appendTo(box0);
             if(has_height) {
                 var pad = $('<span>')
-                    .html(" x ")
+                    .text(" x ")
                     .appendTo(box0);
                 var in1 = $('<input type="number" min="1">')
                     .css("width", "45%")
@@ -2195,7 +2195,7 @@
                 var w = in0.val();
                 var h = has_height ? in1.val() : undefined;
                 var label = that.options.label;
-                label.html(w+(has_height ? (' x '+h) : ''));
+                label.text(w+(has_height ? (' x '+h) : ''));
                 $(that.options.width).val(w).change();
                 if(has_height) {
                     $(that.options.height).val(h).change();
@@ -2236,7 +2236,7 @@
             });
             var auto_text = c_("auto");
             var sizeLabel = (width === 0 && height === 0)?auto_text:width+(this.options.hasOwnProperty('height')?" x "+height:"");
-            this.element.html(sizeLabel).on('mousedown',function(evt) {
+            this.element.text(sizeLabel).on('mousedown',function(evt) {
                 evt.stopPropagation();
                 evt.preventDefault();
 
@@ -2289,7 +2289,7 @@
                     color: '#aaa',
                     float: 'left',
                     paddingTop: '1px'
-                }).appendTo(container).html((width === 0 && height === 0)?auto_text:(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
+                }).appendTo(container).text((width === 0 && height === 0)?auto_text:(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
                 label.hover(function() {
                     $(this).css('text-decoration', 'underline');
                 }, function() {
@@ -2323,10 +2323,10 @@
 
                 if (hasAuto) {
                     var button = $('<a>',{href:"#",class:"editor-button editor-button-small",style:"margin-bottom:5px"})
-                    .html(auto_text)
+                    .text(auto_text)
                     .appendTo(buttonRow)
                     .on('mouseup',function(evt) {
-                        that.element.html(auto_text)
+                        that.element.text(auto_text)
                         $(that.options.width).val(0).change();
                         $(that.options.height).val(0).change();
                         evt.preventDefault();
@@ -2369,7 +2369,7 @@
                         cell.data("w",j);
                         cell.data("h",i);
                         cell.on("mouseup",function() {
-                            that.element.html(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
+                            that.element.text(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
                             $(that.options.width).val($(this).data("w")+1).change();
                             $(that.options.height).val($(this).data("h")+1).change();
                             container.fadeOut(200, function() { $(this).remove(); });
@@ -2377,7 +2377,7 @@
                         cell.on("mouseover",function() {
                             var w = $(this).data("w");
                             var h = $(this).data("h");
-                            label.html((w+1)+(that.options.hasOwnProperty('height')?" x "+(h+1):""));
+                            label.text((w+1)+(that.options.hasOwnProperty('height')?" x "+(h+1):""));
                             for (var y = 0; y<maxHeight; y++) {
                                 for (var x = 0; x<maxWidth; x++) {
                                     cells[y][x].css({
