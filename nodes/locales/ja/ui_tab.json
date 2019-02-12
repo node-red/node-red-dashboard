@@ -4,7 +4,17 @@
             "home" : "ホーム",
             "tab" : "タブ",
             "name" : "名前",
-            "icon" : "アイコン"
+            "icon" : "アイコン",
+            "state" : "状態",
+            "navmenu" : "メニュー",
+            "enabled" : "有効",
+            "disabled" : "無効",
+            "visible" : "表示",
+            "hidden" : "非表示"
+        },
+        "info": {
+            "disabled": " タブを無効化します",
+            "hidden": " タブを移動メニューに表示しません"
         },
 	"tip" : "<b>アイコン</b>フィールドには <a href=\"https://design.google.com/icons/\" target=\"_blank\">Material Design icon</a> <i>(例: 'check', 'close')</i>、<a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome icon</a> <i>(例: 'fa-fire')</i>、もしくは <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css/weather-icons-lite.css\" target=\"_blank\">Weather icon</a> <i>(例: 'wi-wu-sunny')</i>を指定できます。</p>"	
     }
