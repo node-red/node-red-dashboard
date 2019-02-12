@@ -2,16 +2,18 @@
 ## UI Widget configuration via msg.ui_control
 
 The following configuration properties of ui widget nodes can be set by using a `msg.ui_control` property on a msg.
-Multiple properties of the node can be set at the same time. eg `{ "min":10, "max":50 }`
+Multiple properties of the node can be set at the same time. For example you can use a change
+node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 
 **Note**: It is still recommended that nodes are configured via the editor in order to preset the default values.
 
 |widget                 |property           |type       | notes / example
 |---                    |---                |---        |---
-|ui_button              |color              |string     | not needed
+|ui_button              |color              |string     | not needed 
 |                       |bgcolor            |string     | not needed
 |                       |icon               |string     | on refresh
 |                       |format             |string     | not needed
+|                       |tooltip            |string     | on refresh
 |ui_chart               |look               |string     |"line","bar","horizontalBar","pie","polar-area","radar"
 |                       |legend             |boolean    |&nbsp;
 |                       |interpolate        |string     |"linear","step","bezier"
