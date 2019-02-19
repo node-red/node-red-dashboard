@@ -22,7 +22,8 @@ if (typeof Object.assign != 'function') {
         };
     })()
 }
-// startsWith polyfill for IE11...
+
+// String startsWith polyfill for IE11...
 if (!String.prototype.startsWith) {
     String.prototype.startsWith = function(searchString, position) {
         position = position || 0;

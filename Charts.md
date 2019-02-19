@@ -82,7 +82,8 @@ for bars of different colours
         "labels": [ "Jan" ]
     }]
 
-for bars of the same colour
+for bars of the same colour, set the flag `Use first colour for all bars` in the
+node configuration, and set labels for each column
 
     [{
         "series": [ "X" ],
