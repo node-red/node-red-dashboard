@@ -72,8 +72,11 @@ function emit(event, data) {
 }
 
 function emitSocket(event, data) {
-    if (data.hasOwnProperty("socketid") && (data.socketid !== undefined)) {
-        io.to(data.socketid).emit(event,data);
+    if (data.hasOwnProperty("msg") && data.msg.hasOwnProperty("socketid") && (data.msg.socketid !== undefined)) {
+        io.to(data.msg.socketid).emit(event, data);
+    }
+    else if (data.hasOwnProperty("socketid") && (data.socketid !== undefined)) {
+        io.to(data.socketid).emit(event, data);
     }
     else {
         io.emit(event, data);
@@ -240,7 +243,7 @@ function add(opt) {
             toEmit.id = toStore.id = opt.node.id;
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
-            io.emit(updateValueEventName, toEmit);
+            emitSocket(updateValueEventName, toEmit);
             replayMessages[opt.node.id] = toStore;
 
             // Handle the node output
@@ -272,7 +275,7 @@ function add(opt) {
                 opt.node.send(toSend);      // send to following nodes
             }
         }
-        if (opt.storeFrontEndInputAsState) {
+        if (opt.storeFrontEndInputAsState === true) {
             //fwd to all UI clients
             io.emit(updateValueEventName, msg);
         }
