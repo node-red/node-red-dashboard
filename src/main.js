@@ -90,7 +90,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var len = main.menu.length;
             if (len > 1) {
                 //var i = parseInt($location.path().substr(1));
-                for (var i = tabId + d; i != tabId; i += d) {
+                for (var i = +tabId + d; i != tabId; i += d) {
                     i = i % len;
                     if (i < 0) { i += len; }
                     if (!main.menu[i].disabled && !main.menu[i].hidden) {
@@ -420,6 +420,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             return elFound;
         }
 
+        function arrayIncludesName(strArray, strName) {
+            // if an array of names is input, use it -- else build an array of one name
+            var arrNames = strArray && Array.isArray(strArray) ? strArray : [strArray];
+            // convert all names to lower-case, and replace any spaces with '_'
+            arrNames = arrNames.map(n => n.toLowerCase().replace(/\s+/, '_'));
+            return arrNames.includes(strName.toLowerCase().replace(/\s+/, '_'));
+        }
+
         events.on(function (msg) {
             var found;
             if (msg.hasOwnProperty('msg') && msg.msg.templateScope === 'global') {
@@ -518,7 +526,36 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 }
                 //Object.assign(found,msg.control);
             }
+            if (msg.hasOwnProperty("tabs")) { // ui_control request to show/hide/enable/disable tabs
+                if (typeof msg.tabs === 'object') {
+                    for (var t in main.menu) {
+                        if (main.menu.hasOwnProperty(t)) {
+                            if (msg.tabs.hasOwnProperty("show")) {
+                                if (arrayIncludesName(msg.tabs.show, main.menu[t].header)) {
+                                    main.menu[t].hidden = false;
+                                }
+                            }
+                            if (msg.tabs.hasOwnProperty("hide")) {
+                                if (arrayIncludesName(msg.tabs.hide, main.menu[t].header)) {
+                                    main.menu[t].hidden = true;
+                                }
+                            }
+                            if (msg.tabs.hasOwnProperty("enable")) {
+                                if (arrayIncludesName(msg.tabs.enable, main.menu[t].header)) {
+                                    main.menu[t].disabled = false;
+                                }
+                            }
+                            if (msg.tabs.hasOwnProperty("disable")) {
+                                if (arrayIncludesName(msg.tabs.disable, main.menu[t].header)) {
+                                    main.menu[t].disabled = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
+                // is it a tab name or relative number?
                 if (typeof msg.tab === 'string') {
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }
                     if (msg.tab === "+1") { moveTab(1); return; }
