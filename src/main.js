@@ -199,6 +199,24 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var flag = false;
             for (var t in main.menu) {
                 if (main.menu.hasOwnProperty(t)) {
+                    if (typeof localStorage !== 'undefined') {
+                        if (localStorage.getItem("th"+t+main.menu[t].header) == "true") {
+                            main.menu[t].hidden = true;
+                            flag = true;
+                        }
+                        if (localStorage.getItem("th"+t+main.menu[t].header) == "false") {
+                            main.menu[t].hidden = false;
+                            flag = true;
+                        }
+                        if (localStorage.getItem("td"+t+main.menu[t].header) == "true") {
+                            main.menu[t].disabled = true;
+                            flag = true;
+                        }
+                        if (localStorage.getItem("td"+t+main.menu[t].header) == "false") {
+                            main.menu[t].disabled = false;
+                            flag = true;
+                        }
+                    }
                     for (var g in main.menu[t].items) {
                         if (main.menu[t].items.hasOwnProperty(g)) {
                             var c = (main.menu[t].header+" "+main.menu[t].items[g].header.name).replace(/ /g,"_");
@@ -424,7 +442,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             // if an array of names is input, use it -- else build an array of one name
             var arrNames = strArray && Array.isArray(strArray) ? strArray : [strArray];
             // convert all names to lower-case, and replace any spaces with '_'
-            arrNames = arrNames.map(n => n.toLowerCase().replace(/\s+/, '_'));
+            arrNames = arrNames.map(function (n) {
+                return n.toLowerCase().replace(/\s+/, '_');
+            });
             return arrNames.includes(strName.toLowerCase().replace(/\s+/, '_'));
         }
 
@@ -528,26 +548,30 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             if (msg.hasOwnProperty("tabs")) { // ui_control request to show/hide/enable/disable tabs
                 if (typeof msg.tabs === 'object') {
-                    for (var t in main.menu) {
-                        if (main.menu.hasOwnProperty(t)) {
+                    for (var ta in main.menu) {
+                        if (main.menu.hasOwnProperty(ta)) {
                             if (msg.tabs.hasOwnProperty("show")) {
-                                if (arrayIncludesName(msg.tabs.show, main.menu[t].header)) {
-                                    main.menu[t].hidden = false;
+                                if (arrayIncludesName(msg.tabs.show, main.menu[ta].header)) {
+                                    main.menu[ta].hidden = false;
+                                    localStorage.setItem("th"+ta+main.menu[ta].header,false);
                                 }
                             }
                             if (msg.tabs.hasOwnProperty("hide")) {
-                                if (arrayIncludesName(msg.tabs.hide, main.menu[t].header)) {
-                                    main.menu[t].hidden = true;
+                                if (arrayIncludesName(msg.tabs.hide, main.menu[ta].header)) {
+                                    main.menu[ta].hidden = true;
+                                    localStorage.setItem("th"+ta+main.menu[ta].header,true);
                                 }
                             }
                             if (msg.tabs.hasOwnProperty("enable")) {
-                                if (arrayIncludesName(msg.tabs.enable, main.menu[t].header)) {
-                                    main.menu[t].disabled = false;
+                                if (arrayIncludesName(msg.tabs.enable, main.menu[ta].header)) {
+                                    main.menu[ta].disabled = false;
+                                    localStorage.setItem("td"+ta+main.menu[ta].header,false);
                                 }
                             }
                             if (msg.tabs.hasOwnProperty("disable")) {
-                                if (arrayIncludesName(msg.tabs.disable, main.menu[t].header)) {
-                                    main.menu[t].disabled = true;
+                                if (arrayIncludesName(msg.tabs.disable, main.menu[ta].header)) {
+                                    main.menu[ta].disabled = true;
+                                    localStorage.setItem("td"+ta+main.menu[ta].header,true);
                                 }
                             }
                         }
