@@ -3,6 +3,7 @@
 
 **Enhancements**
 
+ - Allow Tabs to be hidden or disabled dynamically from a ui_control msg.
  - Finally remove deprecated second output from ui_chart node.
  - Allow ui_form to be submitted with empty fields (if they are not required)
 
@@ -12,6 +13,8 @@
  - Add startsWith polyfill for IE11
  - Ensure active sidebar menu item is highlighted - Issue #472
  - Sanitise display of html input - Issue #473
+ - Respect msg.socketid to return msg back to selected session.
+ - Allow dropdown to have 0 pre-configured values, by removing validation.
 
 ### 2.13.2: Maintenance Release
 

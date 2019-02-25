@@ -111,7 +111,8 @@ for futher details.
   - **Template** - the template node allows the user to specify and create their own widgets within the framework using HTML, Javascript. This is an Angular.js widget. You may also use this to override the built in CSS styles.
   - **Text** - A read only widget, the layout of the `label`, and `value` can be configured.
   - **Text input** - text input box, with optional label, can also support password, email and colour modes.
-  - **UI-Control** - allows some dynamic control of the dashboard. Sending a `msg.payload` of the tab number (from 0) or tab_name will switch to that tab. Groups can be hidden and made visible via a msg like `{"group":{"hide":["tab_name_group_name_with_underscores"],"show":["tab_name_another_group"],"focus":true}}`. Outputs a `msg.payload` for every browser *connect* and *loss* and every tab *change*  that can be used to trigger other actions.
+  - **UI-Control** - allows some dynamic control of the dashboard. Sending a `msg.payload` of the tab number (from 0) or tab_name will switch to that tab. Tabs can be enabled/disabled/hide/show via msg like `{"tabs":{"hide":["tab_name_with_underscores"],"show":["another_tab_name"],"disable":["unused_tab_name"]}}`.
+  Groups can be hidden and made visible via a msg like `{"group":{"hide":["tab_name_group_name_with_underscores"],"show":["tab_name_another_group"],"focus":true}}`. Outputs a `msg.payload` for every browser *connect* and *loss*, and every tab *change*. This can be used to trigger other actions like resetting the visibility of tabs and groups.
 
 **Tip:** The *Text* widget will accept html - so you can use it together with the *fa-icons* we
 already use to create indicator type widgets.
