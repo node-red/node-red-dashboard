@@ -195,25 +195,29 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        function hideGroups() {
+        function hideTabsAndGroups() {
             var flag = false;
             for (var t in main.menu) {
                 if (main.menu.hasOwnProperty(t)) {
                     if (typeof localStorage !== 'undefined') {
                         if (localStorage.getItem("th"+t+main.menu[t].header) == "true") {
-                            main.menu[t].hidden = true;
+                            if (main.menu[t].hidden === true) { localStorage.removeItem("th"+t+main.menu[t].header) }
+                            else { main.menu[t].hidden = true; }
                             flag = true;
                         }
                         if (localStorage.getItem("th"+t+main.menu[t].header) == "false") {
-                            main.menu[t].hidden = false;
+                            if (main.menu[t].hidden === false) { localStorage.removeItem("th"+t+main.menu[t].header) }
+                            else { main.menu[t].hidden = false; }
                             flag = true;
                         }
                         if (localStorage.getItem("td"+t+main.menu[t].header) == "true") {
-                            main.menu[t].disabled = true;
+                            if (main.menu[t].disabled === true) { localStorage.removeItem("td"+t+main.menu[t].header) }
+                            else { main.menu[t].disabled = true; }
                             flag = true;
                         }
                         if (localStorage.getItem("td"+t+main.menu[t].header) == "false") {
-                            main.menu[t].disabled = false;
+                            if (main.menu[t].disabled === false) { localStorage.removeItem("td"+t+main.menu[t].header) }
+                            else { main.menu[t].disabled = false; }
                             flag = true;
                         }
                     }
@@ -369,7 +373,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $mdToast.hide();
                 processGlobals();
                 events.emit('ui-change', prevTabIndex);
-                hideGroups();
+                hideTabsAndGroups();
                 done();
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length && !main.menu[prevTabIndex].disabled) {
