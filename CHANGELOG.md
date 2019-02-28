@@ -1,5 +1,5 @@
 
-### 2.14.0-beta: Milestone Release
+### 2.14.0: Milestone Release
 
 **Enhancements**
 
@@ -13,7 +13,7 @@
  - Add startsWith polyfill for IE11
  - Ensure active sidebar menu item is highlighted - Issue #472
  - Sanitise display of html input - Issue #473
- - Respect msg.socketid to return msg back to selected session.
+ - Respect msg.socketid to return msg back to selected session when using ui_template
  - Allow dropdown to have 0 pre-configured values, by removing validation.
 
 ### 2.13.2: Maintenance Release
