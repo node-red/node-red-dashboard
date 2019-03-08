@@ -5,7 +5,6 @@
 
  - Allow ui_chart to have many more options set by control message, see [config-fields.md](config-fields.md)
 
-
 ### 2.14.0: Milestone Release
 
 **Enhancements**
