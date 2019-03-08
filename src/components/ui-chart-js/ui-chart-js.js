@@ -11,7 +11,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var type = scope.$eval('me.item.look');
                     var useOneColor = scope.$eval('me.item.useOneColor');
 
-                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps'], function (newValue) {
+                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps','me.item.options'], function (newValue) {
                         scope.config = loadConfiguration(type, scope);
                     });
 
@@ -366,5 +366,8 @@ function loadConfiguration(type,scope) {
             config.options.legend.labels.fontColor = themeState['widget-textColor'].value;
         }
     }
+
+    // Allow override of any options if really required.
+    config.options = Object.assign({},config.options,scope.$eval('me.item.options'));
     return config;
 }

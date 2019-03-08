@@ -9,7 +9,7 @@ node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 
 |widget                 |property           |type       | notes / example
 |---                    |---                |---        |---
-|ui_button              |color              |string     | not needed 
+|ui_button              |color              |string     | not needed
 |                       |bgcolor            |string     | not needed
 |                       |icon               |string     | on refresh
 |                       |format             |string     | not needed
@@ -27,6 +27,7 @@ node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 |                       |useOneColor        |boolean    | n/a
 |                       |spanGaps           |boolean    | n/a
 |                       |animation          |string     | (Note 1), {duration:1000, easing:"easeInOutSine"}
+|                       |options            |object     | (Note 2), {scales: {yAxes: [{ticks: {fontSize: 20}}]}}
 |ui_colour_picker       |format             |string     | on refresh
 |                       |showPicker         |boolean    | on refresh
 |                       |showSwatch         |boolean    | on refresh
@@ -41,7 +42,7 @@ node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 |                       |seg2               |number     |segment 2 limit
 |                       |max                |number     |&nbsp;
 |                       |colors             |array      |["blue","#00ff00","#f00"]
-|                       |options            |object     |(see Note 2 below)
+|                       |options            |object     |(see Note 3 below)
 |ui_numeric             |min                |number     |&nbsp;
 |                       |max                |number     |&nbsp;
 |                       |step               |number     |&nbsp;
@@ -64,7 +65,9 @@ node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 
  1. See http://easings.net/ for examples of easings for chart animation.
 
- 2. The gauge options can accept any of the [Justgage parameters](https://github.com/toorshia/justgage/blob/master/justgage.js#L42) for example:
+ 2. The chart can take many of the angular-chartjs options for changing axes label, scales etc
+
+ 3. The gauge options can accept any of the [Justgage parameters](https://github.com/toorshia/justgage/blob/master/justgage.js#L42) for example:
 
          {"options":{"pointer":false,"gaugeWidthScale":1.5}}
          {"options":{"pointer":true,"gaugeWidthScale":0.4,"reverse":true}}
