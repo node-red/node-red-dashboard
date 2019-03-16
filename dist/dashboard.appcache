@@ -7,7 +7,6 @@ icon192x192.png
 icon64x64.png
 css/app.min.css
 css/app.min.less
-css/index.html
 js/app.min.js
 js/tinycolor-min.js
 socket.io/socket.io.js
@@ -19,4 +18,4 @@ weather-icons-lite/fonts/weather-icons-lite.woff2
 NETWORK:
 *
 
-# hash: 0573180ecd531c6fa6c9949db44ecb0dd0405cd533a90eb28c14dc8354126cff
+# hash: 062675e420a8dff6b1b39707ec793e0c0db907bf80fd6ae6c8e627cff2806a84

@@ -10,16 +10,13 @@ var
     gutil = require('gulp-util'),
     header = require("gulp-header"),
     htmlreplace = require('gulp-html-replace'),
-    insertLines = require('gulp-insert-lines'),
     jscs = require('gulp-jscs'),
     jshint = require('gulp-jshint'),
     manifest = require('gulp-manifest'),
     minifyCss = require('gulp-clean-css'),
     minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
-    removeHtml = require('gulp-remove-html'),
     replace = require('gulp-replace'),
-    resources = require('gulp-resources'),
     streamqueue = require('streamqueue'),
     templateCache = require('gulp-angular-templatecache'),
     uglify = require('gulp-uglify');
@@ -65,15 +62,8 @@ gulp.task('index', function() {
     .pipe(htmlreplace({
         'css': 'css/app.min.css',
         'js': 'js/app.min.js',
+        'less': '<link rel="stylesheet/less" href="css/app.min.less" />'
     }))
-    .pipe(insertLines({
-        'before': /<\/head>$/,
-        'lineBefore': '<link rel="stylesheet/less" href="css/app.min.less" />'
-    }))
-    // .pipe(insertLines({
-    //     'before': /<\/body>$/,
-    //     'lineBefore': '<script src="js/tinycolor-min.js"></script>'
-    // }))
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(eol('\n'))
     .pipe(gulp.dest('dist/'));
@@ -136,13 +126,11 @@ gulp.task('css', function () {
 });
 
 gulp.task('less', function() {
-    return gulp.src('src/index.html')
-    .pipe(resources({less:true, css:false, js:false}))
-    .pipe(removeHtml())
-    .pipe(gulpif('**/*.less', concat('app.min.less')))
+    return gulp.src(['src/*.less'])
+    .pipe(concat('app.min.less'))
     .pipe(header(fs.readFileSync('license.js')))
     .pipe(eol('\n'))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('./dist/css'));
 });
 
 var vendorPrefix = "vendor/";
