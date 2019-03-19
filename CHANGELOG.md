@@ -1,9 +1,13 @@
 
-### 2.14.1-beta: Maintenance Release
+### 2.15.0-beta: Milestone Release
 
 **Enhancements**
 
  - Allow ui_chart to have many more options set by control message, see [config-fields.md](config-fields.md)
+
+**Fixes**
+
+ - Remove appcache to allow use of self signed certs. to access dashboard more reliably. Issue #480
 
 ### 2.14.0: Milestone Release
 

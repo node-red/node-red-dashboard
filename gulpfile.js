@@ -12,7 +12,7 @@ var
     htmlreplace = require('gulp-html-replace'),
     jscs = require('gulp-jscs'),
     jshint = require('gulp-jshint'),
-    manifest = require('gulp-manifest'),
+    //manifest = require('gulp-manifest'),
     minifyCss = require('gulp-clean-css'),
     minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
@@ -23,25 +23,26 @@ var
 
 //gulp.task('default', ['manifest']);
 gulp.task('default', ['lint','jscs'], function() {
-    gulp.start('manifest');
+    //gulp.start('manifest');
+    gulp.start('build');
 });
 
 gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
 
-gulp.task('manifest', ['build'], function() {
-    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*','dist/weather-icons-lite/fonts/*','dist/fonts/*'], { base: 'dist/' })
-    .pipe(manifest({
-        hash: true,
-        //preferOnline: true,
-        network: ['*'],
-        filename: 'dashboard.appcache',
-        // exclude: 'dashboard.appcache'
-        exclude: ['dashboard.appcache','index.html']
-    }))
-    .pipe(replace('tinycolor-min.js', 'tinycolor-min.js\nsocket.io/socket.io.js'))
-    .pipe(eol('\n'))
-    .pipe(gulp.dest('dist/'));
-});
+// gulp.task('manifest', ['build'], function() {
+//     gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*','dist/weather-icons-lite/fonts/*','dist/fonts/*'], { base: 'dist/' })
+//     .pipe(manifest({
+//         hash: true,
+//         //preferOnline: true,
+//         network: ['*'],
+//         filename: 'dashboard.appcache',
+//         // exclude: 'dashboard.appcache'
+//         exclude: ['dashboard.appcache','index.html']
+//     }))
+//     .pipe(replace('tinycolor-min.js', 'tinycolor-min.js\nsocket.io/socket.io.js'))
+//     .pipe(eol('\n'))
+//     .pipe(gulp.dest('dist/'));
+// });
 
 gulp.task('lint', function() {
     return gulp.src('**/*.js')
