@@ -24,9 +24,10 @@ module.exports = function(RED) {
                 tooltip: config.tooltip,
                 order: config.order,
                 value: config.min,
-                min: config.min,
-                max: config.max,
-                step: config.step || 1,
+                min: (config.min < config.max) ? config.min : config.max ,
+                max: (config.min < config.max) ? config.max : config.min ,
+                invert: (config.step < 0) ? true : undefined,
+                step: Math.abs(config.step) || 1,
                 outs: config.outs || "all",
                 width: config.width || group.config.width || 6,
                 height: config.height || 1

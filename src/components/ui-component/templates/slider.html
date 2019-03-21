@@ -18,6 +18,7 @@
         ng-change="me.valueChanged(10)"
         style="z-index:1; touch-action:none; min-width:32px;"
         ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
+        ng-attr-md-invert="{{ me.item.invert || undefined}}"
     ></md-slider>
     <md-slider
         ng-if="me.item.outs==='end'"
