@@ -72,7 +72,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         }
                         // Justgage type gauges
                         else {
-                            unregtype = scope.$watchGroup(['me.item.min','me.item.max','me.item.seg1','me.item.seg2','me.item.colors','me.item.options'], function() {
+                            unregtype = scope.$watchGroup(['me.item.min','me.item.max','me.item.seg1','me.item.seg2','me.item.colors','me.item.reverse','me.item.options'], function() {
                                 if (unreg) { unreg(); }
                                 document.getElementById("gauge_"+scope.$eval('$id')).innerHTML = "";
                                 var gaugeOptions = {
@@ -80,8 +80,9 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     value: scope.$eval('me.item.value'),
                                     min: scope.$eval('me.item.min'),
                                     max: scope.$eval('me.item.max'),
+                                    reverse: scope.$eval('me.item.reverse'),
                                     hideMinMax: scope.$eval('me.item.hideMinMax'),
-                                    levelColors: scope.$eval('me.item.colors'),
+                                    levelColors: (scope.$eval('me.item.reverse')) ? scope.$eval('me.item.colors').reverse() : scope.$eval('me.item.colors'),
                                     valueMinFontSize: 12,
                                     minLabelMinFontSize: 8,
                                     labelMinFontSize: 8,
