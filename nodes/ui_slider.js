@@ -26,7 +26,7 @@ module.exports = function(RED) {
                 value: config.min,
                 min: (config.min < config.max) ? config.min : config.max ,
                 max: (config.min < config.max) ? config.max : config.min ,
-                invert: (config.step < 0) ? true : undefined,
+                invert: (config.min > config.max) ? true : undefined,
                 step: Math.abs(config.step) || 1,
                 outs: config.outs || "all",
                 width: config.width || group.config.width || 6,
