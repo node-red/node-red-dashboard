@@ -27,7 +27,7 @@ gulp.task('default', ['lint','jscs'], function() {
     //gulp.start('build');
 });
 
-gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
+gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts', 'gridstack']);
 
 gulp.task('manifest', ['build'], function() {
     gulp.src(['dist/*','dist/css/*','dist/js/*','dist/fonts/*'], { base: 'dist/' })
@@ -133,6 +133,16 @@ gulp.task('less', function() {
     .pipe(header(fs.readFileSync('license.js')))
     .pipe(eol('\n'))
     .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('gridstack', function() {
+    gulp.src('node_modules/gridstack/dist/gridstack.min.css').pipe(gulp.dest('dist/css/'));
+    gulp.src('node_modules/gridstack/dist/gridstack-extra.min.css').pipe(gulp.dest('dist/css/'));
+    gulp.src('node_modules/gridstack/dist/gridstack.jQueryUI.min.js').pipe(gulp.dest('dist/js/'));
+    gulp.src('node_modules/gridstack/dist/gridstack.min.js').pipe(gulp.dest('dist/js/'));
+    gulp.src('node_modules/gridstack/dist/gridstack.min.map').pipe(gulp.dest('dist/js/'));
+    gulp.src('node_modules/lodash/lodash.min.js').pipe(gulp.dest('dist/js/'));
+    return;
 });
 
 var vendorPrefix = "vendor/";

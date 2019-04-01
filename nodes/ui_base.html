@@ -224,6 +224,38 @@
     }
 </style>
 
+
+<!-- Dashboard layout tool -->
+<link rel="stylesheet" href="./ui_base/css/gridstack.min.css">
+<link rel="stylesheet" href="./ui_base/css/gridstack-extra.min.css">
+<style>
+.grid-stack {
+    background-color: #f5f0dc;
+    border:dashed 2px #C0C0C0;
+    margin: auto;
+    min-height: 60px;
+    display: table-cell;
+}
+.grid-stack>.grid-stack-item>.grid-stack-item-content {
+    top: 3px;
+    left: 5px;
+    right: 5px;
+    bottom: 3px;
+}
+.grid-stack-item-content {
+    color: #2c3e50;
+    text-align: center;
+    background-color: #b0dfe3;
+    border-radius: 2px;
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+.grid-stack-item {
+    cursor: move;
+}
+</style>
+
+
 <script type="text/javascript">
 (function($) {
     var editSaveEventHandler;
@@ -258,6 +290,441 @@
     // then if fails, load non dist version
     loadTinyColor('ui_base/js/tinycolor-min.js');
     //loadTinyColor('ui_base/tinycolor2/dist/tinycolor-min.js');
+
+
+    // Dashboard layout tool
+    // Load gridstack library
+    var loadGsLib = function(path, callback) {
+        $.ajax({ url: path,
+            success: function (data) {
+                var jsScript = document.createElement("script");
+                jsScript.type = "application/javascript";
+                jsScript.src = path;
+                document.body.appendChild(jsScript);
+                if (callback) {
+                    callback();
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                // TODO
+            }
+        });
+    };
+
+    loadGsLib('ui_base/js/lodash.min.js', function() {
+        loadGsLib('ui_base/js/gridstack.min.js', function() {
+            loadGsLib('ui_base/js/gridstack.jQueryUI.min.js', null)
+        });
+    });
+
+    var tabDatas; // Layout editing tab data
+    var oldSpacer; // Spacer not needed after editing
+
+    var groupWidth; // Group width change
+    var widgetMove; // Move widget event
+    var widgetResize; // Change widget event
+    var widgetDrag; // Drag wiget eevnt
+
+    // Types of widgets handled by the layout editor
+    var widgetTypes = [
+        "ui_button",
+        "ui_dropdown",
+        "ui_switch",
+        "ui_slider",
+        "ui_numeric",
+        "ui_text_input",
+        "ui_date_picker",
+        "ui_colour_picker",
+        "ui_form",
+        "ui_text",
+        "ui_gauge",
+        "ui_chart",
+        "ui_template",
+        "ui_spacer"
+    ];
+    
+    /////////////////////////////////////////////////////////
+    // Get widget under specified tab from node information
+    /////////////////////////////////////////////////////////
+    function getTabDataFromNodes(tabID) {
+        var nodes = RED.nodes.createCompleteNodeSet(false);
+        var tab = {};
+        // Tab information
+        for (var cnt = 0; cnt < nodes.length; cnt++) {
+            if (nodes[cnt].type == "ui_tab" && nodes[cnt].id == tabID) {
+                tab = {
+                    id: nodes[cnt].id,
+                    name: nodes[cnt].name,
+                    type: nodes[cnt].type,
+                    order: nodes[cnt].order,
+                    groups: []
+                };
+                break;
+            }
+        }
+        // Group information
+        for (var cnt = 0; cnt < nodes.length; cnt++) {
+            if (nodes[cnt].type == "ui_group" && nodes[cnt].tab == tabID) {
+                var group = {
+                    id: nodes[cnt].id,
+                    name: nodes[cnt].name,
+                    type: nodes[cnt].type,
+                    order: nodes[cnt].order,
+                    width: nodes[cnt].width,
+                    widgets: []
+                };
+                tab.groups.push(group);
+            }
+        }
+        // Widget information
+        var groupsIdx = {};
+        for  (var cnt = 0; cnt < tab.groups.length; cnt++) {
+            groupsIdx[tab.groups[cnt].id] = tab.groups[cnt];
+        }
+        for (var cnt = 0; cnt < nodes.length; cnt++) {
+            var group = groupsIdx[nodes[cnt].group];
+            if (widgetTypes.indexOf(nodes[cnt].type) != -1 && group != null) {
+                var widget = {
+                    id: nodes[cnt].id,
+                    type: nodes[cnt].type,
+                    label: nodes[cnt].label,
+                    name: nodes[cnt].name,
+                    order: nodes[cnt].order,
+                    width: nodes[cnt].width,
+                    height: nodes[cnt].height,
+                };
+                group.widgets.push(widget);
+            }
+        }
+        return tab;
+    }
+    
+    //////////////////////////////////////////////////
+    // Update node information in the edited widget
+    ////////////////////////////////////////////////////
+    function putTabDataToNodes() {
+        // Delete old flow spacer node
+        for (var cnt = 0; cnt < oldSpacer.length; cnt++) {
+            RED.nodes.remove(oldSpacer[cnt]);
+            RED.nodes.dirty(true);
+            RED.view.redraw(true);
+        }
+    
+        var t_groups = tabDatas.groups;
+        for (var cnt1 = 0; cnt1 < t_groups.length; cnt1++){
+            var n_group = RED.nodes.node(t_groups[cnt1].id);
+            n_group.width = t_groups[cnt1].width;
+            var t_widgets = t_groups[cnt1].widgets;
+            for (var cnt2 = 0; cnt2 < t_widgets.length; cnt2++) {
+                var n_widget = RED.nodes.node(t_widgets[cnt2].id);
+                if (n_widget != null) {
+                    n_widget.group = n_group.id;
+                    n_widget.order = t_widgets[cnt2].order;
+                    n_widget.width = t_widgets[cnt2].width;
+                    n_widget.height = t_widgets[cnt2].height;
+
+                    n_widget.changed = true;
+                    n_widget.dirty = true;
+                    RED.editor.validateNode(n_widget);
+                    RED.events.emit("editor:save",n_widget);
+                    RED.nodes.dirty(true);
+                    RED.view.redraw(true);
+                } else {
+                    // Add a spacer node
+                    if (t_widgets[cnt2].type === 'ui_spacer') {
+                        var spaceNode = {
+                            _def: RED.nodes.getType("ui_spacer"),
+                            type: "ui_spacer",
+                            hasUsers: false,
+                            users: [],
+                            id: RED.nodes.id(),
+                            tab: tabDatas.id,
+                            group: n_group.id,
+                            order: t_widgets[cnt2].order,
+                            name: "spacer",
+                            width: t_widgets[cnt2].width,
+                            height: t_widgets[cnt2].height,
+                            label: function() { return this.name + " " + this.width + "x" + this.height; }
+                        };
+                        RED.nodes.add(spaceNode);
+                        RED.nodes.dirty(true);
+                        RED.view.redraw(true);
+                    }
+                }
+            };
+        }
+        RED.sidebar.info.refresh();
+    }
+    
+    ////////////////////////////////////////
+    // Sort by order
+    ////////////////////////////////////////
+    function compareOrder(a, b) {
+        var r = 0;
+        if (a.order < b.order) { r = -1; }
+        else if (a.order > b.order) { r = 1; }
+    
+        return r;
+    }
+    
+    ////////////////////////////////////////
+    // Sort by XY
+    ////////////////////////////////////////
+    function compareXY(a, b) {
+        var r = 0;
+        if (a.y < b.y) { r = -1; }
+        else if (a.y > b.y) { r = 1; }
+        else if (a.x < b.x) { r = -1; }
+        else if (a.x > b.x) { r = 1; }
+        return r;
+    }
+    
+    ///////////////////////////////////////////////////////
+    // Placeable location search (placed in the upper left)
+    ///////////////////////////////////////////////////////
+    function search_point(width, height, maxWidth, maxHeight, tbl){
+        for (var y=0; y < maxHeight; y++) {
+            for (var x=0; x < maxWidth; x++) {
+                if (check_matrix(x, y, width, height, maxWidth, tbl)) {
+                    fill_matrix(x, y, width, height, maxWidth, tbl);
+                    return  {x:x, y:y};
+                }
+            }
+        }
+        return false;
+    }
+    // Check placement position
+    function check_matrix(px, py, width, height, maxWidth, tbl){
+        if (px+width > maxWidth) return false;
+        for (var y=py; y < py+height; y++) {
+            for (var x=px; x<px+width; x++) {
+                if (tbl[maxWidth*y+x]) return false;
+            }
+        }
+        return true;
+    }
+    // Mark the placement position
+    function fill_matrix(px, py, width, height, maxWidth, tbl){
+        for (var y=py; y < py+height; y++) {
+            for (var x=px; x < px+width; x++) {
+                tbl[maxWidth*y+x] = 1;
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////
+    // Apply edit result to tab information for editing
+    ////////////////////////////////////////////////////
+    function saveGridDatas(){
+        var groups = tabDatas.groups;
+        for (var cnt = 0; cnt < groups.length; cnt++) {
+            // Get layout editing results
+            var gridID = '#grid'+cnt;
+            var serializedData = _.map($(gridID+'.grid-stack > .grid-stack-item:visible'), function (el) {
+                el = $(el);
+                var node = el.data('_gridstack_node');
+                return {
+                    id: el[0].dataset.noderedid,
+                    type: el[0].dataset.noderedtype,
+                    group: groups[cnt].id,
+                    width: Number(node.width),
+                    height: Number(node.height),
+                    x: node.x,
+                    y: node.y
+                };
+            }, this);
+    
+            var width = Number(groups[cnt].width);
+            var height = 0;
+    
+            // Search group height
+            for (var i=0; i < serializedData.length; i++){
+                var wd = serializedData[i];
+                if (height < wd.y + wd.height) {
+                    height = wd.y + wd.height;
+                }
+            }
+    
+            // Place widget on table
+            var tbl = new Array(width * height);
+            tbl.fill(0);
+            for (var i = 0; i < serializedData.length; i++){
+                var wd = serializedData[i];
+                for (var y = wd.y; y < wd.y+wd.height; y++){
+                    for (var x = wd.x; x < wd.x+wd.width; x++){
+                        tbl[width*y+x]=1;
+                    }
+                }
+            }
+    
+            // Add Spacer to Blank
+            for (var y = 0; y < height; y++){
+                var spacerAdded = false;
+                for (var x = 0; x < width; x++){
+                    if (tbl[width*y+x]===0) {
+                        if (!spacerAdded) {
+                            // Add 1x1 spacer
+                            serializedData.push({
+                                x: x,
+                                y: y,
+                                width: 1,
+                                height: 1,
+                                name: 'spacer',
+                                type: 'ui_spacer'
+                            });
+                            spacerAdded = true;
+                        } else {
+                            // Extend the spacer width by 1
+                            serializedData[serializedData.length-1].width += 1;
+                        }
+                    } else {
+                        spacerAdded = false;
+                    }
+                }
+            }
+    
+            // Sort Gridstack objects by x, y information
+            serializedData.sort(compareXY);
+    
+            // Delete x and y elements as information for sorting, and give order
+            var order = 0;
+            for (i in serializedData) {
+                order++;
+                delete serializedData[i].x;
+                delete serializedData[i].y;
+                serializedData[i].order = order;
+            }
+    
+            // Update widget information in group with edited data
+            var group = groups[cnt];
+            delete group.widgets;
+            group.widgets = serializedData;
+        }
+    
+        // Save process call
+        putTabDataToNodes();
+    };
+
+    /////////////////////////////
+    // Grid width change
+    ////////////////////////////
+    var changeGroupWidth = function(id) {
+        var widthID = '#change-width'+id;
+        var gridID = '#grid'+id;
+        $(widthID).spinner( {
+            min: 1,
+            max: 50,
+            spin: function(event, ui){
+                // Search current maximum width
+                serializedData = _.map($(gridID+'.grid-stack > .grid-stack-item:visible'), function (el) {
+                    el = $(el);
+                    var node = el.data('_gridstack_node');
+                    return {
+                        width: Number(node.width),
+                        x: node.x
+                    };
+                }, this);
+                var maxWidth = 0;
+                for (var i=0; i < serializedData.length; i++){
+                    var wd = serializedData[i];
+                    if (maxWidth < wd.x + wd.width) {
+                        maxWidth = wd.x + wd.width;
+                    }
+                }
+                var width = ui.value;
+                if (width < maxWidth) {
+                    width = maxWidth;
+                }
+                var grid = $(gridID+'.grid-stack').data('gridstack');
+                $(gridID+'.grid-stack').css("width", width * 40);
+                grid.setGridWidth(tabDatas.groups[id].width, true);
+                grid.setGridWidth(width, true);
+                tabDatas.groups[id].width = width;
+                if (width !== ui.value) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            }
+        });
+    };
+
+    //////////////////////////////////
+    // Move between groups of widgets
+    //////////////////////////////////
+    var moveGroupWidget = function(id) {
+    
+    var toGridID = '#grid'+id;
+    var toGrid = $(toGridID+'.grid-stack').data('gridstack');
+
+    toGrid.container.droppable({
+        acccept: '.grid-stack-item',
+        tolerance: 'pointer',
+        drop: function( event, ui ) {
+        
+            var fromGridID = '#' + ui.draggable[0].offsetParent.id;
+            var toGridOffset = $(toGridID).offset();
+
+            // Reset group width before moving (Grid stack measures)
+            toGrid.setGridWidth(tabDatas.groups[id].width, true);
+
+            var x = Math.floor((ui.offset.left - toGridOffset.left)/40);
+            var y = Math.floor((ui.offset.top - toGridOffset.top)/60);
+            var node = {
+                type: ui.draggable[0].dataset.noderedtype,
+                id: ui.draggable[0].dataset.noderedid,
+                name: ui.draggable[0].dataset.noderedname,
+                x: x,
+                y: y,
+                width: ui.draggable[0].dataset.gsWidth,
+                height: ui.draggable[0].dataset.gsHeight
+            };
+       
+            // Move the widget
+            if (fromGridID !== toGridID) {
+                var label = node.name + ':' + node.type;
+                toGrid.addWidget($('<div data-noderedtype="'
+                    + node.type + '" data-noderedid="'
+                    + node.id + '" data-noderedname="'
+                    + node.name + '" '
+                    + '><div class="grid-stack-item-content" title="' + label + '">'
+                    + label +
+                    '</div></div>'),
+                    node.x, node.y, node.width, node.height, false, null, null,
+                    ui.draggable[0].dataset.gsMinHeight,
+                    ui.draggable[0].dataset.gsMaxHeight,
+                    node.id);
+                
+                var fromGrid = $(fromGridID+'.grid-stack').data('gridstack');
+                fromGrid.removeWidget(ui.draggable[0]);
+            }
+        }
+    });
+    }
+
+    //////////////////////////////////////////
+    // Widget size change (start event)
+    //////////////////////////////////////////
+    var resizeGroupWidget = function(id) {
+        var gridID = '#grid'+id;
+        var grid = $(gridID+'.grid-stack').data('gridstack');
+        $(gridID+'.grid-stack').on('resizestart', function(event, ui) {
+            // Reset group width
+            grid.setGridWidth(tabDatas.groups[id].width, true);
+        });
+    }
+
+    //////////////////////////////////////////
+    // Widget drag (start event)
+    //////////////////////////////////////////
+    var dragGroupWidget = function(id) {
+        var gridID = '#grid'+id;
+        var grid = $(gridID+'.grid-stack').data('gridstack');
+        $(gridID+'.grid-stack').on('dragstart', function(event, ui) {
+            // Reset group width
+            grid.setGridWidth(tabDatas.groups[id].width, true);
+        });
+    }
+
 
     RED.nodes.registerType('ui_base',{
             category: 'config',
@@ -1258,6 +1725,180 @@
                         evt.stopPropagation();
                         evt.preventDefault();
                     });
+
+
+                    // Dashboard layout tool 
+                    if (item.type === 'ui_tab') {
+                        var layoutButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
+                        layoutButton.on('click',function(evt) {
+                        var trayOptions = {
+                            title: c_("layout.layout-editor"),
+                            width: "Infinity",
+                            //width: "inherit",
+                            buttons: [
+                                {
+                                    id: "node-dialog-cancel",
+                                    text: RED._("common.label.cancel"),
+                                    click: function() {
+                                        // clean editor
+                                        RED.tray.close();
+                                    }
+                                },
+                                {
+                                    id: "node-dialog-ok",
+                                    text: RED._("common.label.done"),
+                                    class: "primary",
+                                    click: function() {
+                                        // Save data after editing
+                                        saveGridDatas();
+                                        RED.tray.close();
+                                    }
+                                }
+                            ],
+                            resize: function(dimensions) {
+                                // 
+                            },
+                            open: function(tray) {
+                                // Get widget of specified tab from node information
+                                tabDatas = getTabDataFromNodes(item.node.id);
+                                var groups = tabDatas.groups;
+                                groups.sort(compareOrder);
+
+                                var editor = '<div class="container-fluid">';
+                                editor += '<div class="row-fluid">';
+                                var span_num = Math.ceil(12/groups.length); // Round up bootstrap 12 splits
+                                for (var cnt=0; cnt < groups.length; cnt++) {
+                                    editor += '<div class="span'+span_num+'">';
+                                    editor += '<div>'+groups[cnt].name;
+                                    editor += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                    editor += 'width: <input id="change-width'+cnt+'" ';
+                                    editor += 'value="'+groups[cnt].width+'" ';
+                                    editor += 'style="width:30px;" readonly>';
+                                    editor += '</div>';
+                                    editor += '<div class="grid-stack" id="grid'+cnt+'">';
+                                    editor += '</div>';
+                                    editor += '</div>';
+                                }
+                                editor += '</div>';
+                                editor += '</div>';
+
+                                // Show layout editor in tray
+                                var trayBody = tray.find('.editor-tray-body');
+                                trayBody.append(editor);
+ 
+                                /////////////////////////////////////////
+                                // Gridstack.js option
+                                ////////////////////////////////////////
+                                var options = {
+                                    cellHeight: 60,
+                                    verticalMargin: 1,
+                                    float: true,
+                                    alwaysShowResizeHandle: true,
+                                    disableOneColumnMode : true
+                                };
+    
+                                /////////////////////////////////////////
+                                // Editor screen generation
+                                /////////////////////////////////////////
+                                oldSpacer = [];
+                                groupWidth = [];
+                                widgetMove = [];
+                                widgetResize = [];
+                                widgetDrag = [];
+                                for (var cnt=0; cnt < groups.length; cnt++) {
+                                    var gridID='#grid' + cnt;
+                                    // gridstack generation
+                                    $(gridID).gridstack(options);
+                                   
+                                    // Clear the contents of Grind
+                                    var grid = $(gridID+'.grid-stack').data('gridstack');
+                                    grid.removeAll();
+
+                                    // Set the width of the display area of gridstack
+                                    var width = Number(tabDatas.groups[cnt].width);
+                                    var MAX_WIDTH = width < 50 ? width : 50; // The width that can be handled by Layout is up to 50
+                                    $(gridID+'.grid-stack').css("width", MAX_WIDTH * 40);
+                                    grid.setGridWidth(MAX_WIDTH, true);
+
+                                    // Determination of placement position of widget of Grid
+                                    var widgets = tabDatas.groups[cnt].widgets;
+                                    widgets.sort(compareOrder);
+
+                                    var tbl = {};  
+                                    for (var cnt2 = 0; cnt2 < widgets.length; cnt2++) {
+                                        // Set default value when there is no width
+                                        if (widgets[cnt2].width === 0) {
+                                            widgets[cnt2].width = MAX_WIDTH;
+                                        }
+                                        // ui_form is always set to height "2"
+                                        if (widgets[cnt2].type === 'ui_form') {
+                                            widgets[cnt2].height = 2;
+                                        }
+                                        if (widgets[cnt2].height === 0) {
+                                            if (widgets[cnt2].type === 'ui_gauge' ||
+                                                widgets[cnt2].type === 'ui_chart') {
+                                                widgets[cnt2].height = Math.round(MAX_WIDTH/2)+1;
+                                            } else {
+                                                widgets[cnt2].height = 1;
+                                            }
+                                        }
+                                       
+                                        // Calculate coordinates to be placed
+                                        var point = search_point(Number(widgets[cnt2].width), Number(widgets[cnt2].height), MAX_WIDTH, 256, tbl);
+                                        if (point) {
+                                            widgets[cnt2].x = point.x;
+                                            widgets[cnt2].y = point.y;
+                                        }
+                                    }
+
+                                    var items = GridStackUI.Utils.sort(widgets);
+                                    _.each(items, function (node) {
+                                        var label = node.name + ':' + node.type;
+                                        var minHeight = null;
+                                        var maxHeight = null;
+                                        // ui_form is fixed to height 2
+                                        if (node.type === 'ui_form') {
+                                            minHeight = 2;
+                                            maxHeight = 2;
+                                        }
+                                        if (node.type !== 'ui_spacer') {
+                                            grid.addWidget($('<div data-noderedtype="'
+                                                + node.type + '" data-noderedid="'
+                                                + node.id + '" data-noderedname="'
+                                                + node.name + '" '
+                                                + '><div class="grid-stack-item-content" title="' + label + '">'
+                                                + label +
+                                                '</div></div>'),
+                                                node.x, node.y, node.width, node.height, false, null, null,
+                                                minHeight, maxHeight, node.id);
+                                        } else {
+                                            // Record the spacer node ID to be deleted
+                                            oldSpacer.push(node.id);
+                                        }
+                                    });
+
+                                    // Group width change
+                                    groupWidth.push(new changeGroupWidth(cnt));
+                                    // Move widgets between groups (drag and drop)
+                                    widgetMove.push(new moveGroupWidget(cnt));
+                                    // Resize widget in group (start event)
+                                    widgetResize.push(new resizeGroupWidget(cnt));
+                                    // Dragging widgets in a group (start event)
+                                    widgetDrag.push(new dragGroupWidget(cnt));
+                                }
+                            },
+                            close: function() {
+                                //
+                            },
+                            show: function() {}
+                        }
+
+                        RED.tray.show(trayOptions);
+                        evt.stopPropagation();
+                        evt.preventDefault();
+                    });
+                    }
+
 
                     if (item.type === 'ui_tab') {
                         var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
