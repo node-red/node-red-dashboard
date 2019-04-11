@@ -19,7 +19,7 @@ Alternatively you can use the property `series` instead of `topic` if you prefer
 It is possible to create "gaps" in line charts by sending either a null or boolean false as the payload.
 
 You can also insert extra data points by specifying the `timestamp` property. This must be in
-either epoch time (millisecs since Jan 1 1970), or ISO8601 format.
+either epoch time (in miliseconds, not seconds), or ISO8601 format.
 
     {topic:"temperature", payload:22, timestamp:1520527095000}
 
