@@ -245,7 +245,9 @@ function add(opt) {
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             emitSocket(updateValueEventName, toEmit);
-            replayMessages[opt.node.id] = toStore;
+            if (opt.storeFrontEndInputAsState === true) {
+                replayMessages[opt.node.id] = toStore;
+            }
 
             // Handle the node output
             if (opt.forwardInputMessages && opt.node._wireCount) {
@@ -265,7 +267,7 @@ function add(opt) {
         } // don't accept input if we are in read only mode
         else {
             var converted = opt.convertBack(msg.value);
-            if (opt.storeFrontEndInputAsState) {
+            if (opt.storeFrontEndInputAsState === true) {
                 currentValues[msg.id] = converted;
                 replayMessages[msg.id] = msg;
             }
