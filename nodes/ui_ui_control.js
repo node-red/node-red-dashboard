@@ -31,8 +31,8 @@ module.exports = function(RED) {
         };
         ui.ev.on('endsocket', sendlost);
 
-        var sendchange = function(index, name, id, ip) {
-            node.send({payload:"change", tab:index, name:name, socketid:id, socketip:ip});
+        var sendchange = function(index, name, id, ip, p) {
+            node.send({payload:"change", tab:index, name:name, socketid:id, socketip:ip, params:p});
         }
         ui.ev.on('changetab', sendchange);
 

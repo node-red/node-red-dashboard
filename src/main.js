@@ -318,6 +318,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         }
 
         events.connect(function (ui, done) {
+            events.emit('ui-params', $location.search());
             main.menu = ui.menu;
             main.globals = ui.globals;
             main.nothing = false;

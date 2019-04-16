@@ -39,6 +39,7 @@ var replayMessages = {};
 var removeStateTimers = {};
 var removeStateTimeout = 1000;
 var ev = new events.EventEmitter();
+var params = {};
 ev.setMaxListeners(0);
 
 // default manifest.json to be returned as required.
@@ -361,7 +362,7 @@ function init(server, app, log, redSettings) {
             var name = "";
             if ((index != null) && !isNaN(index) && (menu.length > 0) && (index < menu.length) && menu[index]) {
                 name = (menu[index].hasOwnProperty("header") && typeof menu[index].header !== 'undefined') ? menu[index].header : menu[index].name;
-                ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
+                ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress, params);
             }
         });
         socket.on('ui-refresh', function() {
@@ -372,6 +373,10 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-audio', function(audioStatus) {
             ev.emit("audiostatus", audioStatus, socket.client.id, socket.request.connection.remoteAddress);
+        });
+        socket.on('ui-params', function(p) {
+            delete p.socketid;
+            params = p;
         });
     });
 }
