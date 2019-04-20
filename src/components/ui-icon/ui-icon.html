@@ -1,5 +1,6 @@
 <ng-md-icon ng-if="iconType==='angular-material'" icon="{{icon}}"></ng-md-icon>
 <div ng-if="iconType==='fa'" style="display:inline-block; margin:auto; line-height:initial;"><i class="fa fa-fw" ng-class="icon"></i></div>
 <div ng-if="iconType==='wi'" style="display:inline-block; margin:auto; line-height:initial;"><i class="wi wi-fw" ng-class="icon"></i></div>
+<div ng-if="iconType==='mi'" style="display:inline-block; margin:auto; line-height:initial;"><i class="material-icons" ng-class="icon">{{icon.substr(3)}}</i></div>
 <div ng-if="iconType==='icofont'" style="display:inline-block; margin:auto; line-height:initial;"><i class="icofont icofont-fw" ng-class="icon"></i></div>
 <img ng-if="iconType==='image'" ng-src="{{url}}" style="width:24px; display:block; margin:auto; line-height:initial;"></img>

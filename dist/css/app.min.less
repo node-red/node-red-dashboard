@@ -116,6 +116,10 @@ md-card {
 	height: 100%;
 }
 
+.material-icons {
+    vertical-align: middle;
+}
+
 .ie9 img[src$=".svg"] {
     width: 100%;
 }
@@ -154,12 +158,12 @@ md-card {
     }
 }
 
-& when (@nrTheme = true) {
-
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
     pointer-events: none !important;
 }
+
+& when (@nrTheme = true) {
 
 body.nr-dashboard-theme {
     background-color: @pageBackgroundColor;
