@@ -22,12 +22,12 @@
     }
 }
 
-& when (@nrTheme = true) {
-
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
     pointer-events: none !important;
 }
+
+& when (@nrTheme = true) {
 
 body.nr-dashboard-theme {
     background-color: @pageBackgroundColor;
