@@ -7,7 +7,8 @@
 
 **Fixes**
 
- - Remove appcache to allow use of self signed certs. to access dashboard more reliably. Issue #480
+ - Ensure msg.enabled applies to all themes. Issue #481
+ - Ensure them applies to popup dialog alerts also.
 
 ### 2.14.0: Milestone Release
 

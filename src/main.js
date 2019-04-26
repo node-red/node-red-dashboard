@@ -503,6 +503,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .ariaLabel(msg.ok + " or " + msg.cancel)
                         .ok(msg.ok)
                         .cancel(msg.cancel);
+                    confirm._options.focusOnOpen = false;
                 }
                 else {
                     confirm = $mdDialog.alert()
@@ -510,9 +511,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .htmlContent(msg.message)
                         .ariaLabel(msg.ok)
                         .ok(msg.ok)
-                        .clickOutsideToClose(false)
                 }
-                $mdDialog.show(confirm, { panelClass:'nt-dashboard-dialog' }).then(
+                $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
                     function() {
                         msg.msg.payload = msg.ok;
                         events.emit({ id:msg.id, value:msg });
