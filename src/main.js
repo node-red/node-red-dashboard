@@ -85,6 +85,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         var audioSource;
         var voices = [];
         var tabId = 0;
+        var disc = true;
 
         function moveTab(d) {
             var len = main.menu.length;
@@ -141,6 +142,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $mdSidenav('left').close();
             }
         }
+
         $scope.location = $location;
 
         this.getMenuName = function (menu) {
@@ -372,6 +374,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
                 $mdToast.hide();
+                disc = false;
                 processGlobals();
                 events.emit('ui-change', prevTabIndex);
                 hideTabsAndGroups();
@@ -486,11 +489,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('disconnect', function(m) {
-            $mdToast.show({
-                template: '<md-toast><div class="md-toast-error">&#x2718; &nbsp; Connection lost</div></md-toast>',
-                position: 'top right',
-                hideDelay: 6000000
-            });
+            if (!disc) {
+                $mdToast.show({
+                    template: '<md-toast><div class="md-toast-error">&#x2718; &nbsp; Connection lost</div></md-toast>',
+                    position: 'top right',
+                    hideDelay: 6000000
+                });
+                disc = true;
+            }
         });
 
         events.on('show-toast', function (msg) {

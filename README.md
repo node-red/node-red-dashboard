@@ -45,6 +45,8 @@ ui: { path: 'ui', middleware: function (req, res, next) {
     },
 ```
 
+You can also set the dashboard to be read only by `ui: { readOnly: true }`. This does not stop the user interacting with the dashboard but does ignore all updates coming from the dashboard.
+
 ## Layout
 
 The dashboard layout should be considered as a grid.
