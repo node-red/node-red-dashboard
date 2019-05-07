@@ -34,6 +34,17 @@ If you want to try the latest version from github, you can install it by
 
 The default url for the dashboard is based off your existing Node-RED httpRoot path with /ui added. This can be changed in your Node-RED settings.js file - `ui: { path: "ui" },`
 
+You can also add your own express middleware to handle requests by using the `ui: { middleware: your_function }` property in settings.js. For example
+
+```
+ui: { path: 'ui', middleware: function (req, res, next) {
+            // Do something more interesting here.
+            console.log('LOGGED')
+            next()
+        }
+    },
+```
+
 ## Layout
 
 The dashboard layout should be considered as a grid.

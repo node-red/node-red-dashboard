@@ -40,7 +40,7 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
-            $("#node-input-format").change(function() {
+            $("#node-input-format").on("change", function() {
                 if ($(this).val() === "hex") {
                     $("#node-alpha-control").hide();
                 }

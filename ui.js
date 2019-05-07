@@ -336,7 +336,7 @@ function init(server, app, log, redSettings) {
         }
         else {
             log.info("[Dashboard] Dashboard using development folder");
-            app.use( join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "src")) );
+            app.use(join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "src")));
             var vendor_packages = [
                 'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material', 'angular-touch',
                 'angular-material-icons', 'svg-morpheus', 'font-awesome', 'weather-icons-lite',

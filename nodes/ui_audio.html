@@ -41,7 +41,7 @@
                 $('#voice-input-row').hide();
             }
 
-            $("#node-input-voice").change(function() {
+            $("#node-input-voice").on("change", function() {
                 myvoice = this.voice = $("#node-input-voice").val();
             });
         }

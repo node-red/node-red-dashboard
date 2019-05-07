@@ -599,7 +599,7 @@
                 var divTitle = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
                 $('<div>').html('<b>'+c_("label.title")+'</b>').appendTo(divTitle);
                 $('<input type="text" id="nr-db-field-title">').val(site_name).css("width","100%")
-                .change(function() {
+                .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.site.name = $(this).val();
@@ -615,7 +615,7 @@
                 .append($('<option>', { value:"false", text:c_("title-bar.show"), selected:true }))
                 .append($('<option>', { value:"true", text:c_("title-bar.hide") }))
                 .val("false")
-                .change(function() {
+                .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.site.hideToolbar = $(this).val();
@@ -630,7 +630,7 @@
                 .append($('<option>', { value:"false", text:c_("lock.clicked"), selected:true }))
                 .append($('<option>', { value:"true", text:c_("lock.locked") }))
                 .val("false")
-                .change(function() {
+                .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.lockMenu !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.site.lockMenu = $(this).val();
@@ -645,7 +645,7 @@
                 .append($('<option>', { value:"false", text:c_("swipe.no-swipe"), selected:true }))
                 .append($('<option>', { value:"true", text:c_("swipe.allow-swipe") }))
                 .val("false")
-                .change(function() {
+                .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowSwipe !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.site.allowSwipe = $(this).val();
@@ -661,7 +661,7 @@
                 .append($('<option>', { value:"false", text:c_("temp.no-theme") }))
                 .append($('<option>', { value:"none", text:c_("temp.none") }))
                 .val("true")
-                .change(function() {
+                .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowTempTheme !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.site.allowTempTheme = $(this).val();
@@ -691,7 +691,7 @@
                 .css("float","right")
                 .appendTo(divDateFormat);
                 $('<input type="text" id="nr-db-field-dateFormat">').val(site_date_format).css("width","100%")
-                .change(function() {
+                .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.site.dateFormat = $(this).val();
@@ -721,38 +721,38 @@
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-size")).appendTo(divSetSizes);
                 $('<input type="number" name="sx" min="24" id="nr-db-field-sx">').val(48).css("width","20%")
-                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="sy" min="24" id="nr-db-field-sy">').val(48).css("width","20%")
-                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="cx" min="0" id="nr-db-field-cx">').val(6).css("width","20%")
-                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="cy" min="0" id="nr-db-field-cy">').val(6).css("width","20%")
-                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-padding")).appendTo(divSetSizes);
                 $('<input type="number" name="px" min="0" id="nr-db-field-px">').val(0).css("width","20%")
-                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="py" min="0" id="nr-db-field-py">').val(0).css("width","20%")
-                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="gx" min="0" id="nr-db-field-gx">').val(6).css("width","20%")
-                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="gy" min="0" id="nr-db-field-gy">').val(6).css("width","20%")
-                .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
 
@@ -782,7 +782,7 @@
                 $('<select id="nr-db-field-angPrimary">'+angColors+'</select>')
                     .css("width","100%")
                     .val(aTheme.primary)
-                    .change(function() { aTheme.primary = $(this).val(); changed(); })
+                    .on("change", function() { aTheme.primary = $(this).val(); changed(); })
                     .appendTo(divPrimStyle);
 
                 var divAccStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
@@ -800,7 +800,7 @@
                 $('<select id="nr-db-field-angAccents">'+angColors+'</select>')
                     .css("width","100%")
                     .val(aTheme.accents)
-                    .change(function() { aTheme.accents = $(this).val(); changed(); })
+                    .on("change", function() { aTheme.accents = $(this).val(); changed(); })
                     .appendTo(divAccStyle);
 
                 var divWarnStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
@@ -818,7 +818,7 @@
                 $('<select id="nr-db-field-angWarn">'+angColors+'</select>')
                     .css("width","100%")
                     .val(aTheme.warn)
-                    .change(function() { aTheme.warn = $(this).val(); changed(); })
+                    .on("change", function() { aTheme.warn = $(this).val(); changed(); })
                     .appendTo(divWarnStyle);
 
                 var divBackStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
@@ -836,7 +836,7 @@
                 $('<select id="nr-db-field-angBackground">'+angColors+'</select>')
                     .css("width","100%")
                     .val(aTheme.background)
-                    .change(function() { aTheme.background = $(this).val(); changed(); })
+                    .on("change", function() { aTheme.background = $(this).val(); changed(); })
                     .appendTo(divBackStyle);
 
                 var divPalStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
@@ -848,7 +848,7 @@
                 $('<select id="nr-db-field-angLook">'+lightdark+'</select>')
                     .css("width","100%")
                     .val(aTheme.palette || "light")
-                    .change(function() { aTheme.palette = $(this).val(); changed(); })
+                    .on("change", function() { aTheme.palette = $(this).val(); changed(); })
                     .appendTo(divPalStyle);
 
                 // Theme Tab
@@ -885,7 +885,7 @@
                     '<option value="theme-custom">'+c_("style.custom")+'</option>'+
                     '</select>')
                 .css("width","100%")
-                .change(function() {
+                .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
@@ -925,7 +925,7 @@
                 $('<label class="nr-db-theme-label">').text(c_("theme.custom-profile")).appendTo(customThemeLibraryContainer);
                 $('<input type="text" id="ui-sidebar-name" placeholder="profile name (not blank)">')
                 .val(c_("theme.custom-profile-name"))
-                .change(function() {
+                .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
@@ -955,7 +955,7 @@
                 var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
 
                 $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
-                .change(function() {
+                .on("change", function() {
                     ensureDashboardNode(true);
                     var value = $(this).val();
                     var lightThemeMatch = globalDashboardNode.theme.lightTheme.baseColor === value;
@@ -996,7 +996,7 @@
                     '<option value="Trebuchet MS,Helvetica,sans-serif" style="font-family:Trebuchet MS,Helvetica,sans-serif">Trebuchet MS</option>'+
                     '<option value="Verdana,Verdana,Geneva,sans-serif" style="font-family:Verdana,Verdana,Geneva,sans-serif">Verdana</option>'+
                     '</select>')
-                    .change(function() {
+                    .on("change", function() {
                         ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         globalDashboardNode.theme[theme+'Theme'].baseFont = $(this).val();
@@ -1036,7 +1036,7 @@
                     var styleLi = $('<li class="red-ui-dashboard-theme-item"><span>'+name+'</span></li>').appendTo(parentUl);
                     var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(styleLi);
                     $('<input id="'+id+'" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
-                    .change(function() {
+                    .on("change", function() {
                         colourPickerChangeHandler($(this).attr('id'), $(this).val());
                     })
                     .appendTo(spanColorContainer);
@@ -2196,9 +2196,9 @@
                 var h = has_height ? in1.val() : undefined;
                 var label = that.options.label;
                 label.text(w+(has_height ? (' x '+h) : ''));
-                $(that.options.width).val(w).change();
+                $(that.options.width).val(w).on("change", );
                 if(has_height) {
-                    $(that.options.height).val(h).change();
+                    $(that.options.height).val(h).on("change", );
                 }
                 that.destroy();
             };
@@ -2327,8 +2327,8 @@
                     .appendTo(buttonRow)
                     .on('mouseup',function(evt) {
                         that.element.text(auto_text)
-                        $(that.options.width).val(0).change();
-                        $(that.options.height).val(0).change();
+                        $(that.options.width).val(0).on("change", );
+                        $(that.options.height).val(0).on("change", );
                         evt.preventDefault();
                         container.fadeOut(200, function() { $(this).remove(); });
                     });
@@ -2370,8 +2370,8 @@
                         cell.data("h",i);
                         cell.on("mouseup",function() {
                             that.element.text(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
-                            $(that.options.width).val($(this).data("w")+1).change();
-                            $(that.options.height).val($(this).data("h")+1).change();
+                            $(that.options.width).val($(this).data("w")+1).on("change", );
+                            $(that.options.height).val($(this).data("h")+1).on("change", );
                             container.fadeOut(200, function() { $(this).remove(); });
                         });
                         cell.on("mouseover",function() {

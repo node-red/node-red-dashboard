@@ -1,14 +1,16 @@
 
-### 2.15.0-beta: Milestone Release
+### 2.15.0: Milestone Release
 
 **Enhancements**
 
  - Allow ui_chart to have many more options set by control message, see [config-fields.md](config-fields.md)
+ - Allow `ui.middleware` in settings.js to specify middleware for use with dashboard endpoint. See [PR #209](https://github.com/node-red/node-red-dashboard/pull/209/) for example usage.
 
 **Fixes**
 
  - Ensure msg.enabled applies to all themes. Issue #481
  - Ensure them applies to popup dialog alerts also.
+ - ensure slider only sends on mouse up when in that mode. Issue #490
 
 ### 2.14.0: Milestone Release
 

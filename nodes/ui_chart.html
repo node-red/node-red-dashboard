@@ -65,7 +65,7 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
-            $("#node-input-chartType").change(function() {
+            $("#node-input-chartType").on("change", function() {
                 $("#legend-show").hide();
                 if ($(this).val() === "horizontalBar") {
                     $("#y-label-show").hide();
@@ -117,7 +117,7 @@
                 var textColor = (level >= 128) ? '#111111' : '#eeeeee';
                 $(id).css("color", textColor);
             }
-            $(".series-color").change(function() {
+            $(".series-color").on("change", function() {
                 setColour("#"+$(this).attr("id"), $(this).val());
             });
             var oval = $("#node-input-xformat").val();
