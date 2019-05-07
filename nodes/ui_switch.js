@@ -13,13 +13,18 @@ module.exports = function(RED) {
                 payload = node.id;
                 payloadType = 'str';
             }
-        } else {
+        }
+        else {
             payload = payload || node.id;
         }
     }
     function SwitchNode(config) {
         RED.nodes.createNode(this, config);
+        this.pt = config.passthru;
+        this.state = ["off"," "];
+        this.decouple = (config.decouple === "true") ? false : true;
         var node = this;
+        node.status({});
 
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
@@ -32,7 +37,6 @@ module.exports = function(RED) {
         if (onvalueType === 'flow' || onvalueType === 'global') {
             try {
                 parts = RED.util.normalisePropertyExpression(onvalue);
-                //console.log(parts);
                 if (parts.length === 0) {
                     throw new Error();
                 }
@@ -61,11 +65,14 @@ module.exports = function(RED) {
             node: node,
             tab: tab,
             group: group,
+            emitOnlyNewValues: false,
             forwardInputMessages: config.passthru,
             storeFrontEndInputAsState: (config.decouple === "true") ? false : true,
+            state: false,
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),
                 label: config.label,
+                tooltip: config.tooltip,
                 order: config.order,
                 value: false,
                 onicon: config.onicon,
@@ -75,32 +82,50 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
-            convert: function (payload,oldval) {
-                var myOnValue,myOffvalue;
+            convert: function (payload, oldval, msg) {
+                var myOnValue,myOffValue;
+
                 if (onvalueType === "date") { myOnValue = Date.now(); }
                 else { myOnValue = RED.util.evaluateNodeProperty(onvalue,onvalueType,node); }
 
-                if (offvalueType === "date") { myOffvalue = Date.now(); }
-                else { myOffvalue = RED.util.evaluateNodeProperty(offvalue,offvalueType,node); }
+                if (offvalueType === "date") { myOffValue = Date.now(); }
+                else { myOffValue = RED.util.evaluateNodeProperty(offvalue,offvalueType,node); }
 
-                if (RED.util.compareObjects(myOnValue,payload)) { return true; }
-                else if (RED.util.compareObjects(myOffvalue,payload)) { return false; }
+                if (RED.util.compareObjects(myOnValue,msg.payload)) { node.state[0] = "on"; return true; }
+                else if (RED.util.compareObjects(myOffValue,msg.payload)) { node.state[0] = "off"; return false; }
                 else { return oldval; }
             },
             convertBack: function (value) {
+                node.state[1] = value?"on":"off";
+                if (node.pt) {
+                    node.status({fill:(value?"green":"red"),shape:(value?"dot":"ring"),text:value?"on":"off"});
+                }
+                else {
+                    var col = (node.decouple) ? ((node.state[1]=="on")?"green":"red") : ((node.state[0]=="on")?"green":"red");
+                    var shp = (node.decouple) ? ((node.state[1]=="on")?"dot":"ring") : ((node.state[0]=="on")?"dot":"ring");
+                    var txt = (node.decouple) ? (node.state[0] +" | "+node.state[1].toUpperCase()) : (node.state[0].toUpperCase() +" | "+node.state[1])
+                    node.status({fill:col, shape:shp, text:txt});
+                }
                 var payload = value ? onvalue : offvalue;
                 var payloadType = value ? onvalueType : offvalueType;
+
                 if (payloadType === "date") { value = Date.now(); }
                 else { value = RED.util.evaluateNodeProperty(payload,payloadType,node); }
                 return value;
             },
             beforeSend: function (msg) {
                 msg.topic = config.topic || msg.topic;
-            },
-            beforeEmit: function(msg, value) {
-                return { msg:msg, value:value };
             }
         });
+
+        if (!node.pt) {
+            node.on("input", function(msg) {
+                var col = (node.state[0]=="on") ? "green" : "red";
+                var shp = (node.state[0]=="on") ? "dot" : "ring";
+                var txt = (node.decouple) ? (node.state[0] +" | "+node.state[1].toUpperCase()) : (node.state[0].toUpperCase() +" | "+node.state[1])
+                node.status({fill:col, shape:shp, text:txt});
+            });
+        }
         node.on("close", done);
     }
     RED.nodes.registerType("ui_switch", SwitchNode);

@@ -1,0 +1,13 @@
+{
+    "ui_link" : {
+        "label" : {
+            "name" : "Name",
+            "link" : "Link",
+            "icon" : "Icon",
+            "open-in" : "Open in",
+            "new-tab" : "New Tab",
+            "this-tab" : "This Tab",
+            "iframe" : "iframe"
+        }
+    }
+}

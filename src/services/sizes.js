@@ -16,7 +16,7 @@ if (window.innerWidth < 350) {
 
 sizes.setSizes = function(s) {
     sizes.sx = s.sx;
-    sizes.sy = s.sx;
+    sizes.sy = s.sy;
     sizes.gx = s.gx;
     sizes.gy = s.gy;
     sizes.cx = s.cx;

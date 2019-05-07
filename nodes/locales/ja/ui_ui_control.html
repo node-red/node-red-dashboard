@@ -1,0 +1,15 @@
+<script type="text/x-red" data-help-name="ui_ui_control">
+    <p>ダッシュボードの動的制御を行います</p>
+    <p>表示されているタブの切り替えが可能です。<code>msg.payload</code>に
+The default function is to change the currently displayed tab. <code>msg.payload</code>に表示対象のタブもしくはリンクの<code>{tab:"タブ名"}</code>、<b>タブ名</b>、もしくは、<b>添字</b> (0起点)を指定します。</p>
+    <p>空のタブ名("")を送信すると、表示されているページを更新します。また、"+1"を送ると次のタブ、"-1"を送ると前のタブに切り替えられます。</p>
+    <p>widgetグループを表示を次のようなペイロードで制御できます。<br/>
+<code>{group:{hide:["タブ名_グループ名"], show:["他_グループ_表示"], focus:true}}</code><br/>
+    <b>focus</b>は、グループが表示されるよう必要に応じて画面をスクロールするためのパラメータで、省略可能です。グループの指定は<i>タブ名</i>と<i>グループ名</i>を下線(_)で結合したものを用います。空白は下線で置き換えます。</p>
+    <p>クライアントのブラウザが接続もしくは切断した場合、次のプロパティを持つメッセージを送信します:</p>
+    <ul>
+    <li><code>payload</code> - <i>connect</i>もしくは<i>lost</i>,
+    <li><code>socketid</code> - ソケットID(ブラウザがページを再ロードする毎に変化します),
+    <li><code>socketip</code> - 接続元のIPアドレス。
+    </ul>
+</script>

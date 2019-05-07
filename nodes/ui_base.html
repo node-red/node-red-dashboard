@@ -1,4 +1,9 @@
 <style>
+    :root {
+        --nr-db-dark-text: #444;
+        --nr-db-light-text: #eeeeee;
+        --nr-db-disabled-text: #999;
+    }
     .nr-db-sb {
         position: absolute;
         top: 1px;
@@ -17,32 +22,48 @@
         width: calc(100% - 100px);
         margin-bottom:0;
     }
+    .nr-db-sb .compact {
+        margin-bottom: 8px !important;
+    }
     .nr-db-sb .red-ui-editableList-container {
-        padding:0;
+        padding: 0;
+        min-height: 250px;
+        height: auto;
+    }
+    .nr-db-sb-tab-list {
+        min-height: 250px;
+        height: auto;
     }
     .nr-db-sb-tab-list li {
         padding: 0;
     }
     .nr-db-sb-tab-list-item {
         border-radius: 4px;
-        color: #333;
+        color: var(--nr-db-dark-text);
     }
     .nr-db-sb-list-header {
         cursor: pointer;
         position:relative;
-        color: #666;
+        color: var(--nr-db-dark-text);
         padding:3px;
         white-space: nowrap;
     }
     .nr-db-sb-list-header:hover {
-        color: #333;
+        color: var(--nr-db-dark-text);
+    }
+    .nr-db-sb-title-hidden {
+        text-decoration: line-through;
+    }
+    .nr-db-sb-title-disabled {
+        color: var(--nr-db-disabled-text);
     }
     .nr-db-sb-tab-list-header {
-        background: #f3f3f3;
+        background: var(--nr-db-light-text);
         padding:5px;
     }
-    .nr-db-sb-group-list-header:hover, .nr-db-sb-widget-list-header:hover {
-        background: #f9f9f9;
+    .nr-db-sb-group-list-header:hover,
+    .nr-db-sb-widget-list-header:hover {
+        background: var(--nr-db-light-text);
     }
     .nr-db-sb-list-chevron {
         width: 15px;
@@ -52,6 +73,8 @@
     .nr-db-sb-tab-list-item .red-ui-editableList-container {
         border-radius: 0;
         border: none;
+        height: auto !important;
+        min-height: unset;
     }
     .nr-db-sb-list-handle {
         vertical-align: top;
@@ -66,20 +89,25 @@
         opacity: 0;
     }
     .nr-db-sb-list-handle  {
-        color: #bbb;
+        color: var(--nr-db-light-text);
         padding:5px;
     }
     .nr-db-sb-tab-list-header>.nr-db-sb-list-chevron  {
         margin-left: 0px;
+        transition: transform 0.2s ease-in-out;
     }
     .nr-db-sb-group-list-header>.nr-db-sb-list-chevron {
-        margin-left: 20px
+        margin-left: 20px;
+        transition: transform 0.2s ease-in-out;
+    }
+    .nr-db-sb-group-list {
+        min-height: 10px;
     }
     .nr-db-sb-group-list li {
-        border-bottom-color: #eee;
+        border-bottom-color: var(--nr-db-light-text);
     }
     .nr-db-sb-group-list>li.ui-sortable-helper {
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--nr-db-light-text);
     }
     .nr-db-sb-group-list>li:last-child {
         border-bottom: none;
@@ -115,14 +143,14 @@
     }
     .nr-db-sb-link {
         display: inline-block;
-        padding-left: 3px;
+        padding-left: 20px;
     }
-    .nr-db-sb-link-title {
-
+    .nr-db-sb-link-name-container .fa-external-link {
+      margin-right: 10px;
     }
     .nr-db-sb-link-url {
         font-size: 0.8em;
-        color: #999;
+        color: var(--nr-db-mid-grey);
     }
     span.nr-db-color-pick-container {
         max-width: 50px;
@@ -149,6 +177,9 @@
     .red-ui-tabs {
         margin-bottom: 15px;
     }
+    .red-ui-tab.hidden {
+        display: none;
+    }
     #dashboard-tabs-list li a:hover {
         cursor: pointer;
     }
@@ -166,30 +197,27 @@
         position: relative;
         padding: 0px 7px 0px 7px;
     }
-    /*#dash-link-button:hover {
-        background-color: #eee;
-    }*/
     ul.red-ui-dashboard-theme-styles {
         list-style: none;
     }
     ul.red-ui-dashboard-theme-styles li {
         margin-bottom: 10px;
     }
-    .resetIcon {
+    .nr-db-resetIcon {
         margin: 3px 6px 0px 6px;
         float: right;
-        color: grey;
+        color: var(--nr-db-mid-grey);
         opacity: 0.8;
         display: block;
     }
-    .resetIcon:hover {
+    .nr-db-resetIcon:hover {
         cursor: pointer;
     }
     #nr-db-field-font {
         margin-left: 2em;
-        width: 150px;
+        width: calc(100% - 81px);
     }
-    label.theme-label {
+    .nr-db-theme-label {
         font-weight: bold;
     }
     #custom-theme-library-container .btn-group {
@@ -213,18 +241,24 @@
                 document.body.appendChild(jsScript);
                 //console.log('Tiny Color Loaded:',path);
             },
-            error:function (xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 404 && !attemptedVendorLoad) {
-                    loadTinyColor(uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
+                    loadTinyColor('/'+uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
                     attemptedVendorLoad = true;
                 }
             }
         });
     }
 
+    // convert to i18 text
+    function c_(x) {
+        return RED._("node-red-dashboard/ui_base:ui_base."+x);
+    }
+
     // Try to load dist version first
     // then if fails, load non dist version
     loadTinyColor('ui_base/js/tinycolor-min.js');
+    //loadTinyColor('ui_base/tinycolor2/dist/tinycolor-min.js');
 
     RED.nodes.registerType('ui_base',{
             category: 'config',
@@ -236,6 +270,7 @@
             hasUsers: false,
             paletteLabel: 'Dashboard',
             label: function() { return this.name || 'Node-RED Dashboard'; },
+            labelStyle: function() { return this.name ? "node_label_italic" : ""; },
             onpaletteremove: function() {
                 RED.sidebar.removeTab("dashboard");
                 RED.events.off("editor:save",editSaveEventHandler);
@@ -249,6 +284,8 @@
                 var configurableStyles = ['page-titlebar-backgroundColor', 'page-backgroundColor', 'page-sidebar-backgroundColor',
                 'group-textColor', 'group-borderColor', 'group-backgroundColor',
                 'widget-textColor', 'widget-backgroundColor','widget-borderColor'];
+                var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
+                var aTheme = {primary:"indigo", accents:"blue", warn:"red", background:"grey"};
                 // tiny colour implementation
                 var colours = {
                     leastReadable: function(base, colours) {
@@ -275,7 +312,7 @@
                     calculate_page_backgroundColor: function(base) {
                         var pageBackground = "#fafafa";
                         var theme = "light";
-                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme")) {
+                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
                             theme = globalDashboardNode.theme.name.split('-')[1];
                         }
                         if (theme === "dark") {
@@ -301,7 +338,7 @@
                     calculate_group_backgroundColor: function(base) {
                         var groupBackground = "#ffffff";
                         var theme = "light";
-                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme")) {
+                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
                             theme = globalDashboardNode.theme.name.split('-')[1];
                         }
                         if (theme === "dark") {
@@ -329,7 +366,7 @@
                     calculate_widget_borderColor: function(base) {
                         var widgetBorder = "#ffffff";
                         var theme = "light";
-                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme")) {
+                        if (globalDashboardNode && globalDashboardNode.hasOwnProperty("theme") && globalDashboardNode.theme.hasOwnProperty("name")) {
                             theme = globalDashboardNode.theme.name.split('-')[1];
                         }
                         if (theme === "dark") {
@@ -340,6 +377,9 @@
                             if (whiteOrBlack === "#000000") { widgetBorder = "#333333"; }
                         }
                         return widgetBorder;
+                    },
+                    calculate_base_font: function(base) {
+                        return baseFontName;
                     }
                 }
                 var sizes = {
@@ -362,12 +402,21 @@
 
                     // Find the old dashboard node
                     if (globalDashboardNode === null) {
-                        var oldId;
+                        var bases = [];
                         RED.nodes.eachConfig(function(n) {
-                            if (globalDashboardNode === null && n.type === 'ui_base') {
-                                globalDashboardNode = n;
-                            }
+                            if (n.type === 'ui_base') { bases.push(n); }
                         });
+
+                        // make sure we only have one ui_base node
+                        // at the moment this will just use our existing one - deleting any new base node and theme
+                        // at some point we may want to make this an option to select one or the other.
+                        while (bases.length > 1) {
+                            var n = bases.pop();
+                            RED.nodes.remove(n.id);
+                            RED.nodes.dirty(true);
+                        }
+
+                        if (bases.length === 1) { globalDashboardNode = bases[0]; }
 
                         // If there is no dashboard node, ensure we create it after
                         // initialising
@@ -375,36 +424,37 @@
 
                         // set up theme state
                         var themeState = {};
-                        var base = "#0094CE"
+                        var baseColor = "#0094CE"
                         for (var i=0; i<baseStyles.length; i++) {
-                            themeState[baseStyles[i]] = { default:base, value:base, edited:false };
+                            themeState[baseStyles[i]] = { default:baseColor, value:baseColor, edited:false };
                         }
                         for (var j = 0; j < configurableStyles.length; j++) {
                             var underscore = configurableStyles[j].split("-").join("_");
-                            var colour = colours['calculate_'+underscore](base);
+                            var colour = colours['calculate_'+underscore](baseColor);
                             themeState[configurableStyles[j]] = {value:colour, edited:false};
                         }
+                        themeState["base-font"] = {value:baseFontName};
 
                         var missingFields = (!globalDashboardNode || !globalDashboardNode.theme || !globalDashboardNode.site || !globalDashboardNode.site.sizes );
 
                         if (missingFields && createMissing) {
                             var lightTheme = {
-                                default: "#0094CE",
-                                baseColor: "#0094CE",
-                                baseFont: "Helvetica Neue",
+                                default: baseColor,
+                                baseColor: baseColor,
+                                baseFont: baseFontName,
                                 edited: false
                             }
                             var darkTheme = {
                                 default: "#097479",
                                 baseColor: "#097479",
-                                baseFont: "Helvetica Neue",
+                                baseFont: baseFontName,
                                 edited: false
                             }
                             var customTheme = {
                                 name: 'Untitled Theme 1',
                                 default: "#4B7930",
                                 baseColor: "#4B7930",
-                                baseFont: "Helvetica Neue"
+                                baseFont: baseFontName
                             }
                             var oldThemeName;
                             if (globalDashboardNode && typeof(globalDashboardNode.theme === 'string')) { oldThemeName = globalDashboardNode.theme; }
@@ -414,20 +464,29 @@
                                 lightTheme: lightTheme,
                                 darkTheme: darkTheme,
                                 customTheme: customTheme,
-                                themeState: themeState
+                                themeState: themeState,
+                                angularTheme: aTheme
                             }
 
-                            var site = { name:"Node-RED Dashboard", hideToolbar:"false", allowSwipe:"false", dateFormat:"DD/MM/YYYY", sizes:sizes }
+                            var site_name = c_("site.title");
+                            var site_date_format = c_("site.date-format");
+                            var site = { name:site_name, hideToolbar:"false", allowSwipe:"false", lockMenu:"false", allowTempTheme:"true", dateFormat:site_date_format, sizes:sizes };
                             if (globalDashboardNode !== null) {
                                 if (typeof globalDashboardNode.site !== "undefined") {
                                     site = {
                                         name: globalDashboardNode.site.name || globalDashboardNode.name,
                                         hideToolbar: globalDashboardNode.site.hideToolbar,
+                                        lockMenu: globalDashboardNode.site.lockMenu,
                                         allowSwipe: globalDashboardNode.site.allowSwipe,
+                                        allowTempTheme: globalDashboardNode.site.allowTempTheme,
                                         dateFormat: globalDashboardNode.site.dateFormat,
                                         sizes: globalDashboardNode.site.sizes
                                     }
                                 }
+                                if (globalDashboardNode.theme.hasOwnProperty("angularTheme")) {
+                                    aTheme = globalDashboardNode.theme.angularTheme;
+                                }
+                                else { globalDashboardNode.theme.angularTheme = aTheme; }
                             }
 
                             if (noDashboardNode) {
@@ -447,6 +506,7 @@
                                 globalDashboardNode.theme = theme;
                                 delete globalDashboardNode.name;
                             }
+                            $("#nr-db-field-font").val(baseFontName);
                             RED.nodes.dirty(true);
                         }
                     }
@@ -459,22 +519,27 @@
                 // Dashboard Tabs markup
                 var divTab = $('<div class="red-ui-tabs">').appendTo(form);
                 var ulDashboardTabs = $('<ul id="dashboard-tabs-list"></ul>').appendTo(divTab);
-                var liLayoutTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Layout"><span>Layout</span></a></li>').appendTo(ulDashboardTabs);
-                var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>Theme</span></a></li>').appendTo(ulDashboardTabs);
-                var liSiteTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Site" style="width:60px;"><span>Site</span></a></li>').appendTo(ulDashboardTabs);
+                var layout_label = c_("label.layout");
+                var site_label = c_("label.site");
+                var theme_label = c_("label.theme");
+                var angular_label = c_("label.angular");
+                var liLayoutTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Layout"><span>'+layout_label+'</span></a></li>').appendTo(ulDashboardTabs);
+                var liSiteTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Site" style="width:60px;"><span>'+site_label+'</span></a></li>').appendTo(ulDashboardTabs);
+                var liThemeTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Theme" style="width:80px;"><span>'+theme_label+'</span></a></li>').appendTo(ulDashboardTabs);
+                var liAngularTab = $('<li class="red-ui-tab" style="width:70px;"><a class="red-ui-tab-label" title="Angular" style="width:80px;"><span>'+angular_label+'</span></a></li>').appendTo(ulDashboardTabs);
 
                 // Link out to dashboard
                 $.getJSON('uisettings',function(data) {
                     if (data.hasOwnProperty("path")) { uip = data.path; }
-                    var lnk = document.location.host+RED.settings.httpNodeRoot+uip;
+                    var lnk = document.location.host+RED.settings.httpNodeRoot+"/"+uip;
                     var re = new RegExp('\/{1,}','g');
                     lnk = lnk.replace(re,'/');
                     if (!RED.hasOwnProperty("actions")) {
                         RED.keyboard.add("*",/* d */ 68,{ctrl:true, shift:true},function() { window.open(document.location.protocol+"//"+lnk) });
                     }
                     else {
-                        RED.keyboard.add("*","ctrl-shift-d","Show Dashboard");
-                        RED.actions.add("Show Dashboard",function() { window.open(document.location.protocol+"//"+lnk) });
+                        RED.keyboard.add("*","ctrl-shift-d","dashboard:show-dashboard");
+                        RED.actions.add("dashboard:show-dashboard",function() { window.open(document.location.protocol+"//"+lnk) });
                     }
                     $('<span id="dash-link-button" class="editor-button" style="position:absolute; right:0px;"><i class="fa fa-external-link"></i></span>')
                     .click(function(evt) {
@@ -485,9 +550,10 @@
                 });
 
                 // Dashboard Tab containers
-                var layoutTab = $('<div id="dashboard-layout">').appendTo(form);
-                var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
+                var layoutTab = $('<div id="dashboard-layout" style="height:calc(100% - 48px)">').appendTo(form);
                 var siteTab = $('<div id="dashboard-site" style="display:none;">').appendTo(form);
+                var themeTab = $('<div id="dashboard-theme" style="display:none;">').appendTo(form);
+                var angularTab = $('<div id="dashboard-angular" style="display:none;">').appendTo(form);
 
                 ulDashboardTabs.children().first().addClass("active");
 
@@ -502,11 +568,19 @@
                     if (selectedTab === 'Layout') {
                         themeTab.hide();
                         siteTab.hide();
+                        angularTab.hide();
                         layoutTab.show();
+                    }
+                    else if (selectedTab === 'Angular') {
+                        themeTab.hide();
+                        siteTab.hide();
+                        angularTab.show();
+                        layoutTab.hide();
                     }
                     else if (selectedTab === 'Theme') {
                         layoutTab.hide();
                         siteTab.hide();
+                        angularTab.hide();
                         themeTab.show();
                         if ($("#nr-db-field-theme option:selected").val() === 'theme-custom') { themeSettingsContainer.show(); }
                         else { themeSettingsContainer.hide(); }
@@ -514,6 +588,7 @@
                     else {
                         layoutTab.hide();
                         themeTab.hide();
+                        angularTab.hide();
                         siteTab.show();
                     }
                 }
@@ -521,9 +596,9 @@
                 ulDashboardTabs.find("li.red-ui-tab a").on("click",onTabClick)
 
                 // Site Tab
-                var divTitle = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<div>').html('<b>Title</b>').appendTo(divTitle);
-                $('<input type="text" id="nr-db-field-title">').val("Node-RED Dashboard").css("width","100%")
+                var divTitle = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
+                $('<div>').html('<b>'+c_("label.title")+'</b>').appendTo(divTitle);
+                $('<input type="text" id="nr-db-field-title">').val(site_name).css("width","100%")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -533,12 +608,12 @@
                 })
                 .appendTo(divTitle);
 
-                var divHideToolbar = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<div>').html('<b>Options</b>').appendTo(divHideToolbar);
+                var divHideToolbar = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
+                $('<div>').html('<b>'+c_("label.options")+'</b>').appendTo(divHideToolbar);
                 $('<select id="nr-db-field-hideToolbar">')
                 .css("width","100%")
-                .append($('<option>', { value:"false", text:'Show the title bar', selected:true }))
-                .append($('<option>', { value:"true", text:'Hide the title bar' }))
+                .append($('<option>', { value:"false", text:c_("title-bar.show"), selected:true }))
+                .append($('<option>', { value:"true", text:c_("title-bar.hide") }))
                 .val("false")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
@@ -549,11 +624,26 @@
                 })
                 .appendTo(divHideToolbar);
 
-                var divAllowSwipe = $('<div>',{class:"form-row"}).appendTo(siteTab);
+                var divLockMenu = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
+                $('<select id="nr-db-field-lockMenu">')
+                .css("width","100%")
+                .append($('<option>', { value:"false", text:c_("lock.clicked"), selected:true }))
+                .append($('<option>', { value:"true", text:c_("lock.locked") }))
+                .val("false")
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.site.lockMenu !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.site.lockMenu = $(this).val();
+                        RED.nodes.dirty(true);
+                    }
+                })
+                .appendTo(divLockMenu);
+
+                var divAllowSwipe = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
                 $('<select id="nr-db-field-allowSwipe">')
                 .css("width","100%")
-                .append($('<option>', { value:"false", text:'No swipe between tabs', selected:true }))
-                .append($('<option>', { value:"true", text:'Allow swipe between tabs' }))
+                .append($('<option>', { value:"false", text:c_("swipe.no-swipe"), selected:true }))
+                .append($('<option>', { value:"true", text:c_("swipe.allow-swipe") }))
                 .val("false")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowSwipe !== $(this).val()) {
@@ -564,17 +654,43 @@
                 })
                 .appendTo(divAllowSwipe);
 
+                var divAllowTempTheme = $('<div>',{class:"form-row compact"}).appendTo(siteTab);
+                $('<select id="nr-db-field-allowTempTheme">')
+                .css("width","100%")
+                .append($('<option>', { value:"true", text:c_("temp.allow-theme"), selected:true }))
+                .append($('<option>', { value:"false", text:c_("temp.no-theme") }))
+                .append($('<option>', { value:"none", text:c_("temp.none") }))
+                .val("true")
+                .change(function() {
+                    if (!globalDashboardNode || globalDashboardNode.site.allowTempTheme !== $(this).val()) {
+                        ensureDashboardNode(true);
+                        globalDashboardNode.site.allowTempTheme = $(this).val();
+                        RED.nodes.dirty(true);
+                    }
+                    if ($('#nr-db-field-allowTempTheme').val() === "none") {
+                        ulDashboardTabs.children().eq(2).addClass("hidden");
+                        ulDashboardTabs.children().eq(3).removeClass("hidden");
+                    }
+                    else {
+                        ulDashboardTabs.children().eq(2).removeClass("hidden");
+                        ulDashboardTabs.children().eq(3).addClass("hidden");
+                    }
+                })
+                .appendTo(divAllowTempTheme);
+
+                var site_name = c_("site.title");
+                var site_date_format = c_("site.date-format");
                 var divDateFormat = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<div">').html('<b>Date Format</b>')
+                $('<div>').html('<b>'+c_("label.date-format")+'</b>')
                 .css("width","80%")
                 .css("display","inline-block")
                 .appendTo(divDateFormat);
-                $('<div>').html("<a href='http://momentjs.com/docs/#/displaying/format/' target='_new'><i class='fa fa-info-circle' style='color:grey;'></i></a>")
+                $('<div>').html("<a href='https://momentjs.com/docs/#/displaying/format/' target='_new'><i class='fa fa-info-circle' style='color:grey;'></i></a>")
                 .css("display","inline-block")
                 .css("margin-right","6px")
                 .css("float","right")
                 .appendTo(divDateFormat);
-                $('<input type="text" id="nr-db-field-dateFormat">').val("DD/MM/YYYY").css("width","100%")
+                $('<input type="text" id="nr-db-field-dateFormat">').val(site_date_format).css("width","100%")
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
                         ensureDashboardNode(true);
@@ -585,10 +701,10 @@
                 .appendTo(divDateFormat);
 
                 var divSetSizes = $('<div>',{class:"form-row"}).appendTo(siteTab);
-                $('<span style="width:45%; display:inline-block">').html('<b>Sizes</b>').appendTo(divSetSizes);
-                $('<span style="width:25%; display:inline-block; font-size:smaller">').html('Horizontal').appendTo(divSetSizes);
-                $('<span style="width:20%; display:inline-block; font-size:smaller">').html('Vertical').appendTo(divSetSizes);
-                $('<i id="sizes-reset" class="fa fa-undo resetIcon"></i>')
+                $('<span style="width:45%; display:inline-block">').html('<b>'+c_("label.sizes")+'</b>').appendTo(divSetSizes);
+                $('<span style="width:25%; display:inline-block; font-size:smaller">').text(c_("label.horizontal")).appendTo(divSetSizes);
+                $('<span style="width:20%; display:inline-block; font-size:smaller">').text(c_("label.vertical")).appendTo(divSetSizes);
+                $('<i id="sizes-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                 .css({opacity:1.0})
                 .click(function(e) {
                     $("#nr-db-field-sx").val(sizes.sx); globalDashboardNode.site.sizes.sx = sizes.sx;
@@ -603,7 +719,7 @@
                 })
                 .appendTo(divSetSizes);
 
-                $('<br/><span style="width:45%; display:inline-block">').html('1x1 Widget Size').appendTo(divSetSizes);
+                $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-size")).appendTo(divSetSizes);
                 $('<input type="number" name="sx" min="24" id="nr-db-field-sx">').val(48).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
@@ -612,7 +728,7 @@
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
-                $('<br/><span style="width:45%; display:inline-block">').html('Widget Spacing').appendTo(divSetSizes);
+                $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="cx" min="0" id="nr-db-field-cx">').val(6).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
@@ -621,7 +737,7 @@
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
-                $('<br/><span style="width:45%; display:inline-block">').html('Group Padding').appendTo(divSetSizes);
+                $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-padding")).appendTo(divSetSizes);
                 $('<input type="number" name="px" min="0" id="nr-db-field-px">').val(0).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
@@ -630,7 +746,7 @@
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
-                $('<br/><span style="width:45%; display:inline-block">').html('Group Spacing').appendTo(divSetSizes);
+                $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="gx" min="0" id="nr-db-field-gx">').val(6).css("width","20%")
                 .change(function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
@@ -640,10 +756,112 @@
                 .appendTo(divSetSizes);
 
 
+                // Angular Theme Tab
+                var changed = function() {
+                    ensureDashboardNode(true);
+                    globalDashboardNode.theme.angularTheme = aTheme;
+                    RED.nodes.dirty(true);
+                }
+
+                var angColorList = ["red", "pink", "purple", "deep-purple", "indigo", "blue", "light-blue", "cyan", "teal", "green", "light-green", "lime", "yellow", "amber", "orange", "deep-orange", "brown", "grey", "blue-grey"];
+                var angColors = "";
+                angColorList.forEach(function(c) { angColors += '<option value="' + c + '">' + c + '</option>'; });
+
+                var divPrimStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.primary")+'</b>')
+                    .appendTo(divPrimStyle);
+                $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                    .css({opacity:1.0})
+                    .click(function(e) {
+                        $("#nr-db-field-angPrimary").val("indigo");
+                        globalDashboardNode.theme.angularTheme.primary = "indigo";
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(divPrimStyle);
+                $('<select id="nr-db-field-angPrimary">'+angColors+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.primary)
+                    .change(function() { aTheme.primary = $(this).val(); changed(); })
+                    .appendTo(divPrimStyle);
+
+                var divAccStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.accents")+'</b>')
+                    .appendTo(divAccStyle);
+                $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                    .css({opacity:1.0})
+                    .click(function(e) {
+                        $("#nr-db-field-angAccents").val("blue");
+                        globalDashboardNode.theme.angularTheme.accents = "blue";
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(divAccStyle);
+                $('<select id="nr-db-field-angAccents">'+angColors+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.accents)
+                    .change(function() { aTheme.accents = $(this).val(); changed(); })
+                    .appendTo(divAccStyle);
+
+                var divWarnStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.warnings")+'</b>')
+                    .appendTo(divWarnStyle);
+                $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                    .css({opacity:1.0})
+                    .click(function(e) {
+                        $("#nr-db-field-angWarn").val("red");
+                        globalDashboardNode.theme.angularTheme.warn = "red";
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(divWarnStyle);
+                $('<select id="nr-db-field-angWarn">'+angColors+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.warn)
+                    .change(function() { aTheme.warn = $(this).val(); changed(); })
+                    .appendTo(divWarnStyle);
+
+                var divBackStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.background")+'</b>')
+                    .appendTo(divBackStyle);
+                $('<i id="ang-reset" class="fa fa-undo nr-db-resetIcon"></i>')
+                    .css({opacity:1.0})
+                    .click(function(e) {
+                        $("#nr-db-field-angBackground").val("grey");
+                        globalDashboardNode.theme.angularTheme.background = "grey";
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(divBackStyle);
+                $('<select id="nr-db-field-angBackground">'+angColors+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.background)
+                    .change(function() { aTheme.background = $(this).val(); changed(); })
+                    .appendTo(divBackStyle);
+
+                var divPalStyle = $('<div>',{class:"form-row"}).appendTo(angularTab);
+                $('<span style="width:45%; display:inline-block">')
+                    .html('<b>'+c_("style.palette")+'</b>')
+                    .appendTo(divPalStyle);
+                var lightdark = '<option value="light">' +c_("style.light")+ '</option>';
+                lightdark += '<option value="dark">' +c_("style.dark")+ '</option>';
+                $('<select id="nr-db-field-angLook">'+lightdark+'</select>')
+                    .css("width","100%")
+                    .val(aTheme.palette || "light")
+                    .change(function() { aTheme.palette = $(this).val(); changed(); })
+                    .appendTo(divPalStyle);
+
                 // Theme Tab
                 // For all customisable styles, generate and apply the css
                 var generateColours = function(base) {
                     var theme = globalDashboardNode.theme.name.split('-')[1];
+                    if (!globalDashboardNode.theme.themeState.hasOwnProperty["base-font"]) {
+                        if (globalDashboardNode.theme[theme+"Theme"].baseFont === "Helvetica Neue") {
+                            globalDashboardNode.theme[theme+"Theme"].baseFont = baseFontName;
+                        }
+                        globalDashboardNode.theme.themeState["base-font"] = {value:globalDashboardNode.theme[theme+"Theme"].baseFont};
+                        $("#nr-db-field-font").val(globalDashboardNode.theme[theme+"Theme"].baseFont);
+                    }
                     for (var i=0; i<configurableStyles.length; i++) {
                         var styleID = configurableStyles[i];
                         var underscore = styleID.split("-").join("_");
@@ -660,11 +878,11 @@
                 }
 
                 var divThemeStyle = $('<div>',{class:"form-row"}).appendTo(themeTab);
-                $('<label class="theme-label">').html('Style').appendTo(divThemeStyle);
+                $('<label class="nr-db-theme-label">').text(c_("theme.style")).appendTo(divThemeStyle);
                 var themeSelection = $('<select id="nr-db-field-theme">'+
-                    '<option value="theme-light">Light (default)</option>'+
-                    '<option value="theme-dark">Dark</option>'+
-                    '<option value="theme-custom">Custom</option>'+
+                    '<option value="theme-light">'+c_("style.light")+'</option>'+
+                    '<option value="theme-dark">'+c_("style.dark")+'</option>'+
+                    '<option value="theme-custom">'+c_("style.custom")+'</option>'+
                     '</select>')
                 .css("width","100%")
                 .change(function() {
@@ -672,14 +890,18 @@
                         ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
+                        var baseFont = globalDashboardNode.theme[theme+'Theme'].baseFont;
                         globalDashboardNode.theme.name = $(this).val();
                         theme = globalDashboardNode.theme.name.split('-')[1];
                         if (theme !== "custom") {
                             baseColour = globalDashboardNode.theme[theme+'Theme'].default;
                         }
+                        else { baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor; }
                         setColourPickerColour("base-color", baseColour);
                         globalDashboardNode.theme.themeState['base-color'].value = baseColour;
                         globalDashboardNode.theme.themeState['base-color'].default = baseColour;
+                        globalDashboardNode.theme.themeState['base-font'] = {value:baseFont};
+                        $("#nr-db-field-font").val(baseFont);
                         globalDashboardNode.theme[theme+'Theme'].reset = true;
                         //generate colours for all colour settings from base colour
                         generateColours(baseColour);
@@ -694,21 +916,23 @@
                     else {
                         $("#custom-theme-library-container").hide();
                         $("#custom-theme-settings").hide();
-                        addLightAndDarkResetButton('base-color', baseSettingsUl.children());
+                        addLightAndDarkResetButton('base-color', baseSettingsUl.children().first());
                     }
                 })
                 .appendTo(divThemeStyle);
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
-                $('<label class="theme-label">').html('Custom Profile').appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="node-input-name" placeholder="profile name (not blank)">')
-                .val("Untitled Theme 1")
+                $('<label class="nr-db-theme-label">').text(c_("theme.custom-profile")).appendTo(customThemeLibraryContainer);
+                $('<input type="text" id="ui-sidebar-name" placeholder="profile name (not blank)">')
+                .val(c_("theme.custom-profile-name"))
                 .change(function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
                         ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
-                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
-                        RED.nodes.dirty(true);
+                        if (editor) {
+                            editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
+                            RED.nodes.dirty(true);
+                        }
                     }
                 })
                 .keyup(function() {
@@ -718,23 +942,17 @@
                     else { $("#custom-theme-library-container div").css("pointer-events","inherit"); }
                 })
                 .appendTo(customThemeLibraryContainer);
-                $('<input type="hidden" id="node-input-format">').appendTo(customThemeLibraryContainer);
-                $('<div style="display:none;" class="node-text-editor" id="node-input-format-editor"></div>').appendTo(customThemeLibraryContainer);
+                $('<input type="hidden" id="nr-db-field-format">').appendTo(customThemeLibraryContainer);
+                $('<div style="display:none;" class="node-text-editor" id="nr-db-field-format-editor"></div>').appendTo(customThemeLibraryContainer);
 
                 var baseThemeSettingsContainer = $('<div id="base-theme-settings">').appendTo(themeTab);
 
                 var baseSettings = $('<div>',{class:"form-row"}).appendTo(baseThemeSettingsContainer);
-                $('<label class="theme-label">').html('Base Settings').appendTo(baseSettings);
+                $('<label class="nr-db-theme-label">').text(c_("theme.base-settings")).appendTo(baseSettings);
                 var baseSettingsUl = $('<ul id="base-settings-ul" class="red-ui-dashboard-theme-styles"></ul>').appendTo(baseSettings);
 
-                var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>Colour</span></li>').appendTo(baseSettingsUl);
+                var baseColourItem = $('<li class="red-ui-dashboard-theme-item"><span>'+c_("base.colour")+'</span></li>').appendTo(baseSettingsUl);
                 var spanColorContainer = $('<span class="nr-db-color-pick-container"></span>').appendTo(baseColourItem);
-
-                // var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>Font</span></li>').appendTo(baseSettingsUl);
-                // var fontSelector = $('<select id="nr-db-field-font">'+
-                //     '<option value="arial">Arial (default)</option>'+
-                //     '<option value="helvetica">Helvetica</option>'+
-                //     '</select>').appendTo(baseFontItem);
 
                 $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
                 .change(function() {
@@ -757,32 +975,62 @@
                 })
                 .appendTo(spanColorContainer);
 
+                var baseFontItem = $('<li class="red-ui-dashboard-theme-item"><span>'+c_("base.font")+'</span></li>').appendTo(baseSettingsUl);
+                var fontSelector = $('<select id="nr-db-field-font">'+
+                    '<option value="'+baseFontName+'" style="font-family:'+baseFontName+'">'+c_("font.system")+'</option>'+
+                    '<option value="Arial,Arial,Helvetica,sans-serif" style="font-family:Arial,Arial,Helvetica,sans-serif">Arial</option>'+
+                    '<option value="Arial Black,Arial Black,Gadget,sans-serif" style="font-family:Arial Black,Arial Black,Gadget,sans-serif">Arial Black</option>'+
+                    '<option value="Arial Narrow,Nimbus Sans L,sans-serif" style="font-family:Arial Narrow,Nimbus Sans L,sans-serif">Arial Narrow</option>'+
+                    '<option value="Century Gothic,CenturyGothic,AppleGothic,sans-serif" style="font-family:Century Gothic,CenturyGothic,AppleGothic,sans-serif">Century Gothic</option>'+
+                    '<option value="Copperplate,Copperplate Gothic Light,fantasy" style="font-family:Copperplate,Copperplate Gothic Light,fantasy;">Copperplate</option>'+
+                    '<option value="Courier,monospace" style="font-family:Courier,monospace;">Courier</option>'+
+                    '<option value="Georgia,Georgia,serif" style="font-family:Georgia,Georgia,serif">Georgia</option>'+
+                    '<option value="Gill Sans,Geneva,sans-serif" style="font-family:Gill Sans,Geneva,sans-serif;">Gill Sans</option>'+
+                    //'<option value="Helvetica Neue,Helvetica,sans-serif" style="font-family:Helvetica Neue,Helvetica,sans-serif">Helvetica Neue</option>'+
+                    '<option value="Impact,Impact,Charcoal,sans-serif" style="font-family:Impact,Impact,Charcoal,sans-serif">Impact</option>'+
+                    '<option value="Lucida Sans Typewriter,Lucida Console,Monaco,monospace" style="font-family:Lucida Console,Monaco,monospace">Lucida Console</option>'+
+                    '<option value="Lucida Sans Unicode,Lucida Grande,sans-serif" style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif">Lucida Sans</option>'+
+                    '<option value="Palatino Linotype,Palatino,Book Antiqua,serif" style="font-family:Palatino Linotype,Palatino,Book Antiqua,serif">Palatino Linotype</option>'+
+                    '<option value="Tahoma,Geneva,sans-serif" style="font-family:Tahoma,Geneva,sans-serif">Tahoma</optionstyle="font-family:>'+
+                    '<option value="Times New Roman,Times,serif" style="font-family:Times New Roman,Times,serif">Times New Roman</option>'+
+                    '<option value="Trebuchet MS,Helvetica,sans-serif" style="font-family:Trebuchet MS,Helvetica,sans-serif">Trebuchet MS</option>'+
+                    '<option value="Verdana,Verdana,Geneva,sans-serif" style="font-family:Verdana,Verdana,Geneva,sans-serif">Verdana</option>'+
+                    '</select>')
+                    .change(function() {
+                        ensureDashboardNode(true);
+                        var theme = globalDashboardNode.theme.name.split('-')[1];
+                        globalDashboardNode.theme[theme+'Theme'].baseFont = $(this).val();
+                        globalDashboardNode.theme.themeState['base-font'] = {value:$(this).val()};
+                        RED.nodes.dirty(true);
+                    })
+                    .appendTo(baseFontItem);
+
                 var themeSettingsContainer = $('<div id="custom-theme-settings">').appendTo(themeTab);
 
                 // Markup
                 // Page styles
                 var divPageStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="theme-label">').html('Page Settings').appendTo(divPageStyle);
+                $('<label class="nr-db-theme-label">').text(c_("theme.page-settings")).appendTo(divPageStyle);
                 var pageStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-                addCustomisableStyle('page-titlebar-backgroundColor', 'Title Bar Background', pageStyles);
-                addCustomisableStyle('page-backgroundColor', 'Page Background', pageStyles);
-                addCustomisableStyle('page-sidebar-backgroundColor', 'Side Bar Background', pageStyles);
+                addCustomisableStyle('page-titlebar-backgroundColor', c_("theme.page.title"), pageStyles);
+                addCustomisableStyle('page-backgroundColor', c_("theme.page.page"), pageStyles);
+                addCustomisableStyle('page-sidebar-backgroundColor', c_("theme.page.side"), pageStyles);
 
                 // Group styles
                 var divGroupStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="theme-label">').html('Group Settings').appendTo(divGroupStyle);
+                $('<label class="nr-db-theme-label">').text(c_("theme.group-settings")).appendTo(divGroupStyle);
                 var groupStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-                addCustomisableStyle('group-textColor', 'Group Text', groupStyles);
-                addCustomisableStyle('group-borderColor', 'Group Border', groupStyles);
-                addCustomisableStyle('group-backgroundColor', 'Group Background', groupStyles);
+                addCustomisableStyle('group-textColor', c_("theme.group.text"), groupStyles);
+                addCustomisableStyle('group-borderColor', c_("theme.group.border"), groupStyles);
+                addCustomisableStyle('group-backgroundColor', c_("theme.group.background"), groupStyles);
 
                 // Widget styles
                 var divWidgetStyle = $('<div>',{class:"form-row"}).appendTo(themeSettingsContainer);
-                $('<label class="theme-label">').html('Widget Settings').appendTo(divWidgetStyle);
+                $('<label class="nr-db-theme-label">').text(c_("theme.widget-settings")).appendTo(divWidgetStyle);
                 var widgetStyles = $('<ul class="red-ui-dashboard-theme-styles"></ul>').appendTo(themeSettingsContainer);
-                addCustomisableStyle('widget-textColor', 'Widget Text', widgetStyles);
-                addCustomisableStyle('widget-backgroundColor', 'Widget Colour', widgetStyles);
-                addCustomisableStyle('widget-borderColor', 'Widget Background', widgetStyles);
+                addCustomisableStyle('widget-textColor', c_("theme.widget.text"), widgetStyles);
+                addCustomisableStyle('widget-backgroundColor', c_("theme.widget.colour"), widgetStyles);
+                addCustomisableStyle('widget-borderColor', c_("theme.widget.background"), widgetStyles);
 
                 function addCustomisableStyle(id, name, parentUl) {
                     var styleLi = $('<li class="red-ui-dashboard-theme-item"><span>'+name+'</span></li>').appendTo(parentUl);
@@ -800,11 +1048,14 @@
                     $("#"+id+"-reset").css({opacity:1});
                     globalDashboardNode.theme.themeState[id].edited = true;
                     globalDashboardNode.theme.themeState[id].value = value;
+                    if (editor) {
+                        editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
+                    }
                     RED.nodes.dirty(true);
                 }
 
                 function addResetButton(id, parent) {
-                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo resetIcon"></i>')
+                    var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                     .css({opacity:0.2})
                     .click(function(e) { resetClick(e); })
                     .appendTo(parent);
@@ -812,7 +1063,7 @@
 
                 function addLightAndDarkResetButton(id, parent) {
                     if ($("#" + id + "-reset").length === 0) {
-                        var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo resetIcon"></i>')
+                        var resetToDefault = $('<i id="'+id+'-reset" class="fa fa-undo nr-db-resetIcon"></i>')
                         .css({opacity:1})
                         .click(function(e) { lightAndDarkResetClick(e); })
                         .appendTo(parent);
@@ -841,7 +1092,7 @@
                     //take off -reset
                     var elementID = e.target.id.split('-reset')[0];
                     if (globalDashboardNode.theme.themeState[elementID].edited) {
-                        var defaultColor = globalDashboardNode.theme.themeState['base-color'].default;
+                        var defaultColor = globalDashboardNode.theme.themeState['base-color'].value;
                         var colour;
                         //set colour
                         if (elementID === 'base-color') {
@@ -872,9 +1123,11 @@
 
                 //Layout Tab
                 var divTabs = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
-                $('<label>').html('Tabs').appendTo(divTabs);
+                $('<label>').html('<b>'+c_("layout.tab-and-link")+'</b>').appendTo(divTabs);
 
                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divTabs);
+
+                //Toggle expand buttons
                 $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-angle-double-up"></i></a>')
                 .click(function(evt) {
                     tabContainer.find(".nr-db-sb-group-list-container").slideUp().addClass('nr-db-sb-collapsed');
@@ -889,18 +1142,26 @@
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
-                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> tab</a>')
+
+                //Add item button
+                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.tab")+'</a>')
                 .click(function(evt) {
-                    tabContainer.editableList('addItem',{});
+                    tabContainer.editableList('addItem',{type: 'ui_tab'});
+                    evt.preventDefault();
+                })
+                .appendTo(buttonGroup);
+                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.link")+'</a>')
+                .click(function(evt) {
+                    tabContainer.editableList('addItem',{type: 'ui_link'});
                     evt.preventDefault();
                 })
                 .appendTo(buttonGroup);
 
                 var tabLists = {};
                 var groupLists = {};
-                var linkNodes = {};
 
-                function titleToggle(id,content,chevron) {
+                // toggle slide tab group content
+                var titleToggle = function (id,content,chevron) {
                     return function(evt) {
                         if (content.is(":visible")) {
                             content.slideUp();
@@ -917,54 +1178,104 @@
                     };
                 }
 
-                var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css({"min-height":"200px","height":"350px"}).appendTo(divTabs).editableList({
-                    sortable:".nr-db-sb-tab-list-header",
-                    addButton: false,
-                    addItem: function(container,i,tab) {
-                        var newTab = false;
-                        if (!tab.node) {
-                            tab.node = {
-                                id: RED.nodes.id(),
-                                _def: RED.nodes.getType("ui_tab"),
-                                type: "ui_tab",
+                var addTabOrLinkItem = function(container,i,item) {
+                    // create node if needed
+                    if (!item.node) {
+                        var defaultItem = {
+                            'ui_tab': {
+                                _def: RED.nodes.getType('ui_tab'),
+                                type: 'ui_tab',
                                 users: [],
-                                order: i+1,
-                                name: "Tab "+(i+1),
-                                icon: "dashboard"
-                            };
-                            listElements[tab.node.id] = container;
-                            RED.nodes.add(tab.node);
-                            tab.groups = [];
-                            RED.nodes.dirty(true);
-                            newTab = true;
+                                icon: 'dashboard',
+                                name: 'Tab'
+                            },
+                            'ui_link': {
+                                _def: RED.nodes.getType('ui_link'),
+                                type: 'ui_link',
+                                users: [],
+                                icon: 'open_in_browser',
+                                name: 'Link',
+                                target: 'newtab'
+                            }
                         }
-                        if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
-                            RED.nodes.updateConfigNodeUsers(tab.node);
+                        item.node = defaultItem[item.type]
+                        item.node.id = RED.nodes.id()
+                        item.node.order = i+1
+                        item.node.name += ' '+item.node.order
+                        listElements[item.node.id] = container;
+                        if (item.type === 'ui_tab') {
+                            item.groups = [];
                         }
-                        var tabNode = tab.node;
-                        container.addClass("nr-db-sb-tab-list-item");
-                        var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
-                        $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                        var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
-                        $('<i class="nr-db-sb-icon nr-db-sb-tab-icon fa fa-file-o"></i>').appendTo(titleRow);
-                        var title = $('<span class="nr-db-sb-title">').html(tabNode.name||"").appendTo(titleRow);
-                        listElements[tabNode.id] = container;
-                        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                        var addGroupButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> group</a>').appendTo(buttonGroup);
-                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                        RED.nodes.add(item.node);
+                        RED.history.push({
+                            t:'add',
+                            nodes:[item.node.id],
+                            dirty:RED.nodes.dirty()
+                        });
+                        RED.nodes.dirty(true);
+                    }
+                    else if (item.type === undefined) {
+                        item.type = item.node.type
+                    }
+
+                    listElements[item.node.id] = container;
+                    if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
+                        RED.nodes.updateConfigNodeUsers(item.node);
+                    }
+
+                    // title
+                    var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-tab-list-header"}).appendTo(container);
+                    switch (item.type) {
+                        case 'ui_tab': {
+                            container.addClass("nr-db-sb-tab-list-item");
+                            $('<i class="nr-db-sb-list-handle nr-db-sb-tab-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                            var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
+                            var tabicon = "fa-object-group";
+                            //var tabicon = item.node.disabled ? "fa-window-close-o" : item.node.hidden ? "fa-eye-slash" : "fa-object-group";
+                            $('<i>',{class:"nr-db-sb-icon nr-db-sb-tab-icon fa "+tabicon}).appendTo(titleRow);
+                            var tabhide = item.node.hidden ? " nr-db-sb-title-hidden" : "";
+                            var tabable = item.node.disabled ? " nr-db-sb-title-disabled" : "";
+                            $('<span>',{class:"nr-db-sb-title"+tabhide+tabable}).text(item.node.name||"").appendTo(titleRow);
+                            break;
+                        }
+                        case 'ui_link': {
+                            $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
+                            var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
+                            var nameContainer = $('<div class="nr-db-sb-link-name-container">').appendTo(title);
+                            $('<i class="fa fa-external-link"></i>').appendTo(nameContainer);
+                            $('<span class="nr-db-sb-link-name">').text(item.node.name||"untitled").appendTo(nameContainer);
+                            $('<div class="nr-db-sb-link-url">').text(item.node.link||"http://").appendTo(title);
+                            break;
+                        }
+                    }
+                    // buttons
+                    var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                    if (item.type === 'ui_tab') {
+                        var addGroupButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.group")+'</a>').appendTo(buttonGroup);
+                    }
+                    var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
+                    editButton.on('click',function(evt) {
+                        RED.editor.editConfig("", item.type, item.node.id);
+                        evt.stopPropagation();
+                        evt.preventDefault();
+                    });
+
+                    if (item.type === 'ui_tab') {
                         var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
-                        if (listStates.hasOwnProperty(tabNode.id) && !listStates[tabNode.id]) {
+
+                        // ui_tab group chevron
+                        if (listStates.hasOwnProperty(item.node.id) && !listStates[item.node.id]) {
                             content.hide();
                             chevron.css({"transform":"rotate(-90deg)"});
                             content.addClass('nr-db-sb-collapsed');
-                            listStates[tabNode.id] = false;
+                            listStates[item.node.id] = false;
                         }
                         else {
-                            listStates[tabNode.id] = true;
+                            listStates[item.node.id] = true;
                         }
-                        setTimeout(function() {
-                            chevron.css({"transition":"transform 0.2s ease-in-out"});
-                        },0);
+                        titleRow.click(titleToggle(item.node.id,content,chevron));
+
+                        // ui_tab group list
                         var ol = $('<ol>',{class:"nr-db-sb-group-list"}).appendTo(content).editableList({
                             sortable:".nr-db-sb-group-list-header",
                             addButton: false,
@@ -977,7 +1288,7 @@
                                         _def: RED.nodes.getType("ui_group"),
                                         type: "ui_group",
                                         users: [],
-                                        tab: tabNode.id,
+                                        tab: item.node.id,
                                         order: i+1,
                                         name: "Group "+(i+1),
                                         width: 6,
@@ -986,21 +1297,54 @@
                                     listElements[group.node.id] = container;
                                     RED.nodes.add(group.node);
                                     group.widgets = [];
+                                    RED.history.push({
+                                        t:'add',
+                                        nodes:[group.node.id],
+                                        dirty:RED.nodes.dirty()
+                                    });
                                     RED.nodes.dirty(true);
                                     if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
                                         RED.nodes.updateConfigNodeUsers(group.node);
                                     }
                                 }
                                 var groupNode = group.node;
-                                elementParents[groupNode] = tabNode.id;
+                                elementParents[groupNode] = item.node.id;
                                 var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-group-list-header"}).appendTo(container);
                                 $('<i class="nr-db-sb-list-handle nr-db-sb-group-list-handle fa fa-bars"></i>').appendTo(titleRow);
                                 var chevron = $('<i class="fa fa-angle-down nr-db-sb-list-chevron">',{style:"width:10px;"}).appendTo(titleRow);
                                 $('<i class="nr-db-sb-icon nr-db-sb-group-icon fa fa-table"></i>').appendTo(titleRow);
-                                var title = $('<span class="nr-db-sb-title">').html(groupNode.name||groupNode.id||"").appendTo(titleRow);
+                                var title = $('<span class="nr-db-sb-title">').text(groupNode.name||groupNode.id||"").appendTo(titleRow);
                                 listElements[groupNode.id] = container;
                                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                                var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
+                                var spacerButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.spacer")+'</a>').appendTo(buttonGroup);
+                                spacerButton.on('click',function(evt) {
+                                    var spaceNode = {
+                                        _def: RED.nodes.getType("ui_spacer"),
+                                        type: "ui_spacer",
+                                        hasUsers: false,
+                                        users: [],
+                                        id: RED.nodes.id(),
+                                        tab: item.node.name,
+                                        group: group.node.id,
+                                        order: i+1,
+                                        name: "spacer",
+                                        width: 1,
+                                        height:1,
+                                        label: function() { return "spacer " + this.width + "x" + this.height; }
+                                    };
+                                    RED.nodes.add(spaceNode);
+                                    RED.editor.validateNode(spaceNode);
+                                    RED.history.push({
+                                        t:'add',
+                                        nodes:[spaceNode.id],
+                                        dirty:RED.nodes.dirty()
+                                    });
+                                    RED.nodes.dirty(true);
+                                    RED.view.redraw();
+                                    evt.stopPropagation();
+                                    evt.preventDefault();
+                                });
+                                var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
                                 var content = $('<div>',{class:"nr-db-sb-widget-list-container"}).appendTo(container);
                                 if (!listStates.hasOwnProperty(groupNode.id) || !listStates[groupNode.id]) {
                                     content.hide();
@@ -1011,9 +1355,6 @@
                                 else {
                                     listStates[groupNode.id] = true;
                                 }
-                                setTimeout(function() {
-                                    chevron.css({"transition":"transform 0.2s ease-in-out"});
-                                },0);
 
                                 var ol = $('<ol>',{class:"nr-db-sb-widget-list"}).appendTo(content).editableList({
                                     sortable:".nr-db-sb-widget-list-header",
@@ -1024,7 +1365,7 @@
                                         elementParents[widgetNode.id] = groupNode.id;
                                         var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-widget-list-header"}).appendTo(container);
                                         $('<i class="nr-db-sb-list-handle nr-db-sb-widget-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                                        $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa-picture-o"></i>').appendTo(titleRow);
+                                        $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa-picture-o"></i>').click(function(e) { e.preventDefault(); RED.search.show(widgetNode.id); }).appendTo(titleRow);
                                         var l = widgetNode._def.label;
                                         try {
                                             l = (typeof l === "function" ? l.call(widgetNode) : l)||"";
@@ -1033,11 +1374,11 @@
                                             console.log("Definition error: "+d.type+".label",err);
                                             l = d.type;
                                         }
-                                        var title = $('<span class="nr-db-sb-title">').html(l).appendTo(titleRow);
+                                        var title = $('<span class="nr-db-sb-title">').text(l).appendTo(titleRow);
                                         listElements[widgetNode.id] = container;
                                         var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
-                                        container.on('mouseover',function() {
+                                            var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
+                                            container.on('mouseover',function() {
                                             widgetNode.highlighted = true;
                                             widgetNode.dirty = true;
                                             RED.view.redraw();
@@ -1054,8 +1395,20 @@
                                         });
                                     },
                                     sortItems: function(items) {
+                                        var historyEvents = [];
                                         items.each(function(i,el) {
                                             var node = el.data('data');
+                                            var hev = {
+                                                t:'edit',
+                                                node:node,
+                                                changes:{
+                                                    order:node.order,
+                                                    group:node.group
+                                                },
+                                                dirty:node.dirty,
+                                                changed:node.changed
+                                            };
+                                            historyEvents.push(hev);
                                             var changed = false;
                                             if (node.order !== i+1) {
                                                 node.order = i+1;
@@ -1076,6 +1429,10 @@
                                                 node.changed = true;
                                             }
                                         })
+                                        RED.history.push({
+                                            t:'multi',
+                                            events: historyEvents
+                                        });
                                         RED.nodes.dirty(true);
                                         RED.view.redraw();
                                     }
@@ -1095,9 +1452,21 @@
                                 })
                             },
                             sortItems: function(items) {
+                                var historyEvents = [];
                                 items.each(function(i,el) {
                                     var groupData = el.data('data');
                                     var node = groupData.node;
+                                    var hev = {
+                                        t:'edit',
+                                        node:node,
+                                        changes:{
+                                            order:node.order,
+                                            tab:node.tab
+                                        },
+                                        dirty:node.dirty,
+                                        changed:node.changed
+                                    };
+                                    historyEvents.push(hev);
                                     var changed = false;
                                     if (node.order !== i+1) {
                                         node.order = i+1;
@@ -1107,44 +1476,57 @@
                                         node.dirty = true;
                                         node.changed = true;
                                     }
-                                    if (node.tab !== tabNode.id) {
+                                    if (node.tab !== item.node.id) {
                                         var oldTabNode = RED.nodes.node(node.tab);
                                         if (oldTabNode) {
                                             var index = oldTabNode.users.indexOf(node);
                                             oldTabNode.users.splice(index,1);
                                         }
-                                        node.tab = tabNode.id;
-                                        tabNode.users.push(node);
+                                        node.tab = item.node.id;
+                                        item.node.users.push(node);
                                         changed = true;
                                     }
                                 })
+                                RED.history.push({
+                                    t:'multi',
+                                    events: historyEvents
+                                });
                                 RED.nodes.dirty(true);
                                 RED.view.redraw();
                             }
-                        });
-                        ol.css("min-height","10px");
-                        if (tabNode.id) {
-                            tabLists[tabNode.id] = ol;
-                        }
-                        titleRow.click(titleToggle(tabNode.id,content,chevron));
-                        editButton.on('click',function(evt) {
-                            RED.editor.editConfig("", tabNode.type, tabNode.id);
-                            evt.stopPropagation();
-                            evt.preventDefault();
-                        });
+                        })
+                        tabLists[item.node.id] = ol;
+
                         addGroupButton.click(function(evt) {
                             ol.editableList('addItem',{});
                             evt.stopPropagation();
                             evt.preventDefault();
                         });
-                        tab.groups.forEach(function(group) {
+                        item.groups.forEach(function(group) {
                             ol.editableList('addItem',group);
                         });
-                    },
+                    }
+                }
+
+                var tabContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).appendTo(divTabs).editableList({
+                    sortable:".nr-db-sb-tab-list-header",
+                    addButton: false,
+                    addItem: addTabOrLinkItem,
                     sortItems: function(items) {
+                        var historyEvents = [];
                         items.each(function(i,el) {
-                            var tabData = el.data('data');
-                            var node = tabData.node;
+                            var itemData = el.data('data');
+                            var node = itemData.node;
+                            var hev = {
+                                t:'edit',
+                                node:node,
+                                changes:{
+                                    order:node.order
+                                },
+                                dirty:node.dirty,
+                                changed:node.changed
+                            }
+                            historyEvents.push(hev);
                             var changed = false;
                             if (node.order !== i+1) {
                                 node.order = i+1;
@@ -1155,6 +1537,10 @@
                                 node.changed = true;
                             }
                         })
+                        RED.history.push({
+                            t:'multi',
+                            events: historyEvents
+                        });
                         RED.nodes.dirty(true);
                         RED.view.redraw();
                     }
@@ -1180,6 +1566,7 @@
                         tab = tabData.node;
                     });
 
+                    var hev = [];
                     if (tab === null) {
                         tab = {
                             id: RED.nodes.id(),
@@ -1191,6 +1578,7 @@
                             icon: "dashboard"
                         };
                         RED.nodes.add(tab);
+                        hev.push(tab.id);
                     }
                     for (var groupId in unknownGroups) {
                         if (unknownGroups.hasOwnProperty(groupId)) {
@@ -1205,6 +1593,7 @@
                                 width: 6,
                                 disp: true
                             };
+                            hev.push(groupNode.id);
                             RED.nodes.add(groupNode);
                             RED.editor.validateNode(groupNode);
                             if (RED.nodes.hasOwnProperty('updateConfigNodeUsers')) {
@@ -1222,72 +1611,16 @@
                             }
                         }
                     }
+                    RED.history.push({
+                        t:'add',
+                        nodes: hev,
+                        dirty:RED.nodes.dirty()
+                    });
                     RED.nodes.dirty(true);
                     refresh();
                     refreshOrphanedWidgets();
                     RED.view.redraw();
                     event.preventDefault();
-                });
-
-                var divLinks = $('<div>',{class:"form-row",style:"position:relative"}).appendTo(layoutTab);
-                $('<label>').html('Menu links').appendTo(divLinks);
-
-                buttonGroup = $('<div>',{class:"nr-db-sb-list-button-group"}).appendTo(divLinks);
-                $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> link</a>')
-                .click(function(evt) {
-                    linksContainer.editableList('addItem',{});
-                    evt.preventDefault();
-                })
-                .appendTo(buttonGroup);
-
-                var linksContainer = $('<ol>',{class:"nr-db-sb-tab-list"}).css("height","150px").appendTo(divLinks).editableList({
-                    sortable: ".nr-db-sb-list-header",
-                    addButton: false,
-                    addItem: function(container,i,link) {
-                        if (!link.node) {
-                            link.node = {
-                                id: RED.nodes.id(),
-                                _def: RED.nodes.getType("ui_link"),
-                                type: "ui_link",
-                                users: [],
-                                order: i+1,
-                                icon: 'open_in_browser',
-                                target: 'newtab'
-                            }
-                            RED.nodes.add(link.node);
-                            RED.nodes.dirty(true);
-                        }
-                        var linkNode = link.node;
-                        linkNodes[linkNode.id] = container;
-                        var titleRow = $('<div>',{class:"nr-db-sb-list-header"}).appendTo(container);
-                        $('<i class="nr-db-sb-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                        var title = $('<div class="nr-db-sb-link">').appendTo(titleRow);
-                        $('<div class="nr-db-sb-link-name">').html(link.node.name||"untitled").appendTo(title);
-                        $('<div class="nr-db-sb-link-url">').html(link.node.link||"http://").appendTo(title);
-                        var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
-                        var editButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> edit</a>').appendTo(buttonGroup);
-                        editButton.on('click',function(evt) {
-                            RED.editor.editConfig("", "ui_link", link.node.id);
-                            evt.stopPropagation();
-                            evt.preventDefault();
-                        });
-                    },
-                    sortItems: function(items) {
-                        items.each(function(i,el) {
-                            var node = el.data('data');
-                            var changed = false;
-                            if (node.node.order !== i+1) {
-                                node.node.order = i+1;
-                                changed = true;
-                            }
-                            if (changed) {
-                                node.node.dirty = true;
-                                node.node.changed = true;
-                            }
-                        })
-                        RED.nodes.dirty(true);
-                        RED.view.redraw();
-                    }
                 });
 
                 var listElements = {};
@@ -1319,11 +1652,12 @@
                     });
                     return currentList;
                 }
+
                 function refreshOrphanedWidgets() {
                     var unknownGroups = {};
                     var count = 0;
                     RED.nodes.eachNode(function(node) {
-                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control') {
+                        if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && (node.type === 'ui_template' && node.templateScope !== 'global')) {
                             if (!RED.nodes.node(node.group)) {
                                 var g = node.group || "_BLANK_";
                                 unknownGroups[g] = unknownGroups[g] || [];
@@ -1354,19 +1688,27 @@
                     var group;
                     var tabId;
                     var tab;
-                    var links = [];
                     var unknownGroups = 0;
                     // Find all the tabs and groups
                     RED.nodes.eachConfig(function(node) {
-                        if (node.type === 'ui_tab') {
-                            tabs[node.id] = node;
-                            //tabContainer.editableList('addItem',node);
-                        }
-                        else if (node.type === 'ui_group') {
-                            groups[node.id] = node;
-                        }
-                        else if (node.type === 'ui_link') {
-                            links.push(node);
+                        switch (node.type) {
+                            case 'ui_tab':
+                            case 'ui_link': {
+                                tabs[node.id] = node;
+                                //tabContainer.editableList('addItem',node);
+                                break;
+                            }
+                            case 'ui_group': {
+                                groups[node.id] = node;
+                                break;
+                            }
+                            case 'ui_spacer': {
+                                if (groups.hasOwnProperty(node.group)) {
+                                    groupElements[node.group] = groupElements[node.group]||[];
+                                    groupElements[node.group].push(node);
+                                }
+                                break;
+                            }
                         }
                     });
                     for (groupId in groups) {
@@ -1389,10 +1731,7 @@
                                 groupElements[node.group] = groupElements[node.group]||[];
                                 groupElements[node.group].push(node);
                             }
-                            else if (node.type === 'ui_link') {
-                                links.push(node);
-                            }
-                            else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')) {
+                            else if ((node.type !== 'ui_toast')&&(node.type !== 'ui_ui_control')&&(node.type === 'ui_template' && node.templateScope !== 'global')) {
                                 unknownGroups++;
                             }
                         }
@@ -1469,24 +1808,12 @@
                             tabContainer.editableList('addItem',tab);
                         });
                     }
-                    links.sort(function(A,B) {
-                        return A.order - B.order;
-                    });
-                    links.forEach(function(link) {
-                        if (linkNodes[link.id]) {
-                            var container = linkNodes[link.id];
-                            container.find(".nr-db-sb-link-name").html(link.name||"untitled");
-                            container.find(".nr-db-sb-link-url").html(link.link||"http://");
-                        }
-                        else {
-                            linksContainer.editableList('addItem',{node:link});
-                        }
-                    });
                     ensureDashboardNode(true);
                     if (globalDashboardNode) {
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
-                        $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || false);
-                        $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar || false);
+                        $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || "false");
+                        $("#nr-db-field-allowTempTheme").val(globalDashboardNode.site.allowTempTheme || "true");
+                        $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar || "false");
                         $("#nr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
 
                         if (typeof globalDashboardNode.site.sizes !== "object") {
@@ -1501,8 +1828,16 @@
                         $("#nr-db-field-gx").val(globalDashboardNode.site.sizes.gx);
                         $("#nr-db-field-gy").val(globalDashboardNode.site.sizes.gy);
 
+                        if (typeof globalDashboardNode.theme.angularTheme !== "object") {
+                            globalDashboardNode.theme.angularTheme = aTheme;
+                        }
+                        $("#nr-db-field-angPrimary").val(globalDashboardNode.theme.angularTheme.primary || "indigo");
+                        $("#nr-db-field-angAccents").val(globalDashboardNode.theme.angularTheme.accents || "blue");
+                        $("#nr-db-field-angWarn").val(globalDashboardNode.theme.angularTheme.warn || "red");
+                        $("#nr-db-field-angBackground").val(globalDashboardNode.theme.angularTheme.background || "grey");
+
                         $("#nr-db-field-theme").val(globalDashboardNode.theme.name);
-                        $("#node-input-name").val(globalDashboardNode.theme.customTheme.name);
+                        $("#ui-sidebar-name").val(globalDashboardNode.theme.customTheme.name);
                         if (globalDashboardNode.theme.name === 'theme-custom') {
                             $("#custom-theme-library-container").show();
                             $("#custom-theme-settings").show();
@@ -1510,6 +1845,14 @@
                         else {
                             $("#custom-theme-library-container").hide();
                             $("#custom-theme-settings").hide();
+                        }
+                        if ($('#nr-db-field-allowTempTheme').val() === "none") {
+                            ulDashboardTabs.children().eq(2).addClass("hidden");
+                            ulDashboardTabs.children().eq(3).removeClass("hidden");
+                        }
+                        else {
+                            ulDashboardTabs.children().eq(2).removeClass("hidden");
+                            ulDashboardTabs.children().eq(3).addClass("hidden");
                         }
 
                         //set colour start
@@ -1519,14 +1862,15 @@
                         var currentTheme = globalDashboardNode.theme.name.split("-")[1];
                         var startingValue = globalDashboardNode.theme[currentTheme+"Theme"].baseColor;
                         setColourPickerColour("base-color", startingValue);
+                        $("#nr-db-field-font").val(globalDashboardNode.theme[currentTheme+"Theme"].baseFont);
                         generateColours(startingValue);
                         if (globalDashboardNode.theme.name === 'theme-light' || globalDashboardNode.theme.name === 'theme-dark') {
-                            addLightAndDarkResetButton('base-color', $('#base-settings-ul').children());
+                            addLightAndDarkResetButton('base-color', $('#base-settings-ul').children().first());
                         }
 
                         if (editor === undefined) {
                             editor = RED.editor.createEditor({
-                                id: 'node-input-format-editor',
+                                id: 'nr-db-field-format-editor',
                                 mode: 'ace/mode/javascript',
                                 value: JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site})
                             });
@@ -1536,7 +1880,8 @@
                                 type:"theme", // the type of object the library is for
                                 editor: editor, // the field name the main text body goes to
                                 mode:"ace/mode/javascript",
-                                fields:['name']
+                                fields:['name'],
+                                elementPrefix:"ui-sidebar-"
                             });
                         }
 
@@ -1584,13 +1929,16 @@
                             //Update theme object if necessary
                             if (JSON.stringify(editorObject.theme) !== JSON.stringify(globalDashboardNode.theme.themeState)) {
                                 globalDashboardNode.theme.themeState = editorObject.theme;
-                                if ($("#node-input-name").val() !== globalDashboardNode.theme.customTheme.name) {
-                                    globalDashboardNode.theme.customTheme.name = $("#node-input-name").val();
+                                if ($("#ui-sidebar-name").val() !== globalDashboardNode.theme.customTheme.name) {
+                                    globalDashboardNode.theme.customTheme.name = $("#ui-sidebar-name").val();
                                     globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState["base-color"].value;
                                     setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
                                     generateColours(globalDashboardNode.theme.themeState["base-color"].value);
                                     RED.nodes.dirty(true);
                                 }
+                            }
+                            if (JSON.stringify(aTheme) !== JSON.stringify(globalDashboardNode.theme.angularTheme)) {
+                                globalDashboardNode.theme.angularTheme = aTheme;
                             }
 
                             //Update site object if necessary
@@ -1599,6 +1947,7 @@
                                 $("#nr-db-field-title").val(globalDashboardNode.site.name);
                                 $("#nr-db-field-hideToolbar").val(globalDashboardNode.site.hideToolbar);
                                 $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe);
+                                $("#nr-db-field-allowTempTheme").val(globalDashboardNode.site.allowTempTheme);
                                 $("#nr-db-field-dateFormat").val(globalDashboardNode.site.dateFormat);
                                 $("#nr-db-field-sx").val(globalDashboardNode.site.sizes.sx);
                                 $("#nr-db-field-sy").val(globalDashboardNode.site.sizes.sy);
@@ -1611,7 +1960,6 @@
                                 RED.nodes.dirty(true);
                             }
                         });
-
                     }
                     awaitingGroups = {};
                     awaitingTabs = {};
@@ -1619,21 +1967,30 @@
 
                 RED.sidebar.addTab({
                     id: "dashboard",
-                    label: "dashboard",
+                    label: c_("label.dashboard"),
                     name: "Dashboard",
                     content: content,
                     closeable: true,
+                    pinned: true,
+                    iconClass: "fa fa-bar-chart",
                     disableOnEdit: true,
                     onchange: function() { refresh(); }
                 });
+
                 editSaveEventHandler = function(node) {
                     if (/^ui_/.test(node.type)) {
                         if (node.type === "ui_tab" || node.type === "ui_group") {
                             if (listElements[node.id]) {
                                 // Existing element
-                                listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(node.name||node.id);
+                                listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").text(node.name||node.id);
                                 if (node.type === "ui_group") {
                                     refresh();
+                                }
+                                else {
+                                    if (node.hidden === true) { listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").addClass('nr-db-sb-title-hidden'); }
+                                    else { listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").removeClass('nr-db-sb-title-hidden'); }
+                                    if (node.disabled === true) { listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").addClass('nr-db-sb-title-disabled'); }
+                                    else { listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").removeClass('nr-db-sb-title-disabled'); }
                                 }
                             }
                             else if (node.type === "ui_tab") {
@@ -1648,10 +2005,10 @@
                             }
                         }
                         else if (node.type === "ui_link") {
-                            if (linkNodes[node.id]) {
-                                var container = linkNodes[node.id];
-                                container.find(".nr-db-sb-link-name").html(node.name||"untitled");
-                                container.find(".nr-db-sb-link-url").html(node.link||"http://");
+                            if (listElements[node.id]) {
+                                var container = listElements[node.id];
+                                container.find(".nr-db-sb-link-name").text(node.name||"untitled");
+                                container.find(".nr-db-sb-link-url").text(node.link);
                             }
                         }
                         else {
@@ -1663,6 +2020,7 @@
                                         groupLists[elementParents[node.id]].editableList('removeItem',listElements[node.id].data('data'))
                                     }
                                     if (groupLists[node.group]) {
+                                        groupLists[node.group].editableList('removeItem',node)
                                         groupLists[node.group].editableList('addItem',node);
                                     }
                                 }
@@ -1675,18 +2033,18 @@
                                         console.log("Definition error: "+d.type+".label",err);
                                         l = d.type;
                                     }
-                                    listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").html(l);
+                                    listElements[node.id].children(".nr-db-sb-list-header").find(".nr-db-sb-title").text(l);
                                 }
                             }
                             else {
                                 if (groupLists[node.group]) {
-                                    groupLists[node.group].editableList('addItem',node)
+                                    if (node.order === 0) { node.order = groupLists[node.group].editableList('length'); }
+                                    groupLists[node.group].editableList('addItem',node);
                                 }
                             }
                         }
                     }
                 };
-
                 RED.events.on("editor:save",editSaveEventHandler);
 
                 var pendingAdd = [];
@@ -1762,7 +2120,7 @@
 
                 nodesRemoveEventHandler = function(node) {
                     if (/^ui_/.test(node.type)) {
-                        if (node.type === "ui_tab") {
+                        if (node.type === "ui_tab" || node.type === "ui_link") {
                             if (listElements[node.id]) {
                                 tabContainer.editableList('removeItem',listElements[node.id].data('data'));
                                 delete tabLists[node.id];
@@ -1774,12 +2132,6 @@
                             }
                             delete groupLists[node.id];
                         }
-                        else if (node.type === 'ui_link') {
-                            if (linkNodes[node.id]) {
-                                linksContainer.editableList('removeItem',linkNodes[node.id].data('data'));
-                                delete linkNodes[node.id];
-                            }
-                        }
                         else {
                             if (groupLists[node.group]) {
                                 groupLists[node.group].editableList('removeItem',node)
@@ -1789,10 +2141,87 @@
                         delete listElements[node.id];
                     }
                 };
-
                 RED.events.on("nodes:remove", nodesRemoveEventHandler);
             }
         });
+
+    $.widget("nodereddashboard.elementSizerByNum", {
+        _create: function() {
+            var that = this;
+            var has_height = this.options.has_height;
+            var pos = this.options.pos;
+            var c_width = has_height ? '15%' : '6%';
+            var container = $('<div>').css({
+                position: 'absolute',
+                background: 'white',
+                padding: '10px 10px 10px 10px',
+                border: '1px solid grey',
+                zIndex: '20',
+                borderRadius: "4px",
+                display:"none",
+                width: c_width
+            }).appendTo(document.body);
+            var box0 = $("<div>").css({
+                fontSize: '13px',
+                color: '#aaa',
+                float: 'left',
+                paddingTop: '1px'
+            }).appendTo(container);
+
+            var width = $(this.options.width).val();
+            var height = has_height ? $(this.options.height).val() : undefined;
+            var max_w = '';
+            var groupNode = this.options.groupNode;
+            if(groupNode) {
+                max_w = 'max="'+groupNode.width+'"';
+            }
+            width = (width > 0) ? width : 1;
+            height = (height > 0) ? height : 1;
+            var in0 = $('<input type="number" min="1" '+max_w+'>')
+                .css("width", has_height ? "45%" : "100%")
+                .val(width)
+                .appendTo(box0);
+            if(has_height) {
+                var pad = $('<span>')
+                    .text(" x ")
+                    .appendTo(box0);
+                var in1 = $('<input type="number" min="1">')
+                    .css("width", "45%")
+                    .val(height)
+                    .appendTo(box0);
+            }
+            var closeTimer;
+            var closeFunc = function() {
+                var w = in0.val();
+                var h = has_height ? in1.val() : undefined;
+                var label = that.options.label;
+                label.text(w+(has_height ? (' x '+h) : ''));
+                $(that.options.width).val(w).change();
+                if(has_height) {
+                    $(that.options.height).val(h).change();
+                }
+                that.destroy();
+            };
+            container.keypress(function(e) {
+                if(e.which === 13) { // pressed ENTER
+                    container.fadeOut(100, closeFunc);
+                }
+            });
+            container.on('mouseleave', function(e) {
+                closeTimer = setTimeout(function() {
+                    container.fadeOut(200, closeFunc);
+                }, 100);
+            });
+            container.on('mouseenter', function(e) {
+                clearTimeout(closeTimer);
+            });
+            container.css({
+                top: (pos.top -10)+"px",
+                left: (pos.left +10)+"px"
+            });
+            container.fadeIn(200);
+        }
+    });
 
     $.widget( "nodereddashboard.elementSizer", {
         _create: function() {
@@ -1805,8 +2234,9 @@
             this.element.css({
                 minWidth: this.element.height()+4
             });
-            var sizeLabel = (width === 0 && height === 0)?"auto":width+(this.options.hasOwnProperty('height')?" x "+height:"");
-            this.element.html(sizeLabel).on('mousedown',function(evt) {
+            var auto_text = c_("auto");
+            var sizeLabel = (width === 0 && height === 0)?auto_text:width+(this.options.hasOwnProperty('height')?" x "+height:"");
+            this.element.text(sizeLabel).on('mousedown',function(evt) {
                 evt.stopPropagation();
                 evt.preventDefault();
 
@@ -1859,16 +2289,44 @@
                     color: '#aaa',
                     float: 'left',
                     paddingTop: '1px'
-                }).appendTo(container).html((width === 0 && height === 0)?"auto":(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
+                }).appendTo(container).text((width === 0 && height === 0)?auto_text:(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
+                label.hover(function() {
+                    $(this).css('text-decoration', 'underline');
+                }, function() {
+                    $(this).css('text-decoration', 'none');
+                });
+                label.click(function(e) {
+                    var group = $(that.options.group).val();
+                    var groupNode = null;
+                    if(group) {
+                        groupNode = RED.nodes.node(group);
+                        if(groupNode === null) {
+                            return;
+                        }
+                    }
+                    $(that).elementSizerByNum({
+                        width: that.options.width,
+                        height: that.options.height,
+                        groupNode: groupNode,
+                        pos: pos,
+                        label: that.element,
+                        has_height: that.options.hasOwnProperty('height')
+                    });
+                    closeTimer = setTimeout(function() {
+                        container.fadeOut(200, function() {
+                            $(this).remove();
+                        });
+                    },100)
+               });
 
                 var buttonRow = $('<div>',{style:"text-align:right; height:25px;"}).appendTo(container);
 
                 if (hasAuto) {
                     var button = $('<a>',{href:"#",class:"editor-button editor-button-small",style:"margin-bottom:5px"})
-                    .html("auto")
+                    .text(auto_text)
                     .appendTo(buttonRow)
                     .on('mouseup',function(evt) {
-                        that.element.html("auto")
+                        that.element.text(auto_text)
                         $(that.options.width).val(0).change();
                         $(that.options.height).val(0).change();
                         evt.preventDefault();
@@ -1911,7 +2369,7 @@
                         cell.data("w",j);
                         cell.data("h",i);
                         cell.on("mouseup",function() {
-                            that.element.html(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
+                            that.element.text(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
                             $(that.options.width).val($(this).data("w")+1).change();
                             $(that.options.height).val($(this).data("h")+1).change();
                             container.fadeOut(200, function() { $(this).remove(); });
@@ -1919,7 +2377,7 @@
                         cell.on("mouseover",function() {
                             var w = $(this).data("w");
                             var h = $(this).data("h");
-                            label.html((w+1)+(that.options.hasOwnProperty('height')?" x "+(h+1):""));
+                            label.text((w+1)+(that.options.hasOwnProperty('height')?" x "+(h+1):""));
                             for (var y = 0; y<maxHeight; y++) {
                                 for (var x = 0; x<maxWidth; x++) {
                                     cells[y][x].css({
@@ -1961,7 +2419,10 @@
 
 <script type="text/x-red" data-template-name="ui_base">
     <div class='form-row'>
-        <a href="#" onclick="RED.sidebar.show('dashboard'); $('#node-config-dialog-cancel').click(); return false" class="editor-button">Open dashboard sidebar</a>
+        This <i>ui_base</i> node is the main node that all<br/>other dashboard widget nodes communicate to.<br/>
+        <br/>One instance is required to support the dashboard.<br/>
+        <br/>If you have no dashboard you can delete this node.<br/>
+        It will be re-created automatically if required.<br/>
     </div>
 </script>
 

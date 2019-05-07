@@ -2,7 +2,23 @@
     padding: 0 12px;
 }
 
+.nr-dashboard-slider-v {
+    flex-direction: column;
+    padding: 0;
+    font-size: small;
+}
+
 .nr-dashboard-slider p.label {
     margin-right: 15px;
     white-space: nowrap;
+}
+
+.nr-dashboard-slider p.label-v {
+    margin-top: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+md-slider[md-vertical] .md-slider-wrapper {
+    width: unset !important;
 }

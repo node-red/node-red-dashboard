@@ -1,14 +1,9 @@
 module.exports = function(RED) {
-
     var ui = require('../ui')(RED);
 
     function ButtonNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
-
-        this.on('input', function(msg) {
-            delete msg.payload;
-        });
 
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
@@ -24,12 +19,14 @@ module.exports = function(RED) {
                 if (parts.length === 0) {
                     throw new Error();
                 }
-            } catch(err) {
+            }
+            catch(err) {
                 node.warn("Invalid payload property expression - defaulting to node id")
                 payload = node.id;
                 payloadType = 'str';
             }
-        } else {
+        }
+        else {
             payload = payload || node.id;
         }
 
@@ -38,29 +35,33 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             emitOnlyNewValues: false,
+            forwardInputMessages: config.passthru || false,
+            storeFrontEndInputAsState: false,
             control: {
                 type: 'button',
                 label: config.label,
+                tooltip: config.tooltip,
                 color: config.color,
                 bgcolor: config.bgcolor,
                 icon: config.icon,
                 order: config.order,
                 value: payload,
+                format: config.bgcolor,
                 width: config.width || group.config.width || 3,
                 height: config.height || 1
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic;
+                msg.topic = config.topic || msg.topic;
             },
             convertBack: function (value) {
                 if (payloadType === "date") {
                     value = Date.now();
-                } else {
+                }
+                else {
                     value = RED.util.evaluateNodeProperty(payload,payloadType,node);
                 }
                 return value;
-            },
-            storeFrontEndInputAsState: false
+            }
         });
         node.on("close", done);
     }

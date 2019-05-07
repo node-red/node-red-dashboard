@@ -2,16 +2,37 @@
     flex layout="row"
     layout-align="space-between center"
     class="nr-dashboard-slider"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="{'nr-dashboard-disabled':me.item.disabled, 'nr-dashboard-slider-v':(me.item.width < me.item.height) }"
     ng-swipe-right="$event.stopPropagation();"
     ng-swipe-left="$event.stopPropagation();">
-    <p class="label" ng-bind-html="me.item.getLabel()"></p>
-    <md-slider flex="100"
+    <p ng-show="{{me.item.width >= me.item.height}}" class="label" ng-bind-html="me.item.getLabel()"></p>
+    <md-tooltip ng-if="me.item.getTooltip().length" md-delay="700" md-direction="bottom" ng-bind-html="me.item.getTooltip()"></md-tooltip>
+    <md-slider
+        ng-if="me.item.outs==='all'"
+        flex="100"
         min="{{me.item.min}}"
         max="{{me.item.max}}"
         step="{{me.item.step}}"
         ng-model="me.item.value"
         aria-label="{{me.item.label}}"
-        ng-change="me.valueChanged(20)"
-        style="z-index:1; touch-action:none; min-width:32px;"/>
+        ng-change="me.valueChanged(10)"
+        style="z-index:1; touch-action:none; min-width:32px;"
+        ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
+        ng-attr-md-invert="{{ me.item.invert || undefined}}"
+    ></md-slider>
+    <md-slider
+        ng-if="me.item.outs==='end'"
+        md-discrete
+        flex="100"
+        min="{{me.item.min}}"
+        max="{{me.item.max}}"
+        step="{{me.item.step}}"
+        ng-model="me.item.value"
+        aria-label="{{me.item.label}}"
+        ng-change="me.valueChanged(10)"
+        style="z-index:1; touch-action:none; min-width:32px;"
+        ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
+        ng-attr-md-invert="{{ me.item.invert || undefined}}"
+    ></md-slider>
+    <p ng-hide="{{me.item.width >= me.item.height}}" class="label-v" ng-bind-html="me.item.getLabel()"></p>
 </md-card>

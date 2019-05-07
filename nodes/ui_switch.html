@@ -5,6 +5,7 @@
         defaults: {
             name: {value: ''},
             label: {value: 'switch'},
+            tooltip: {value: ''},
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -34,7 +35,7 @@
         outputs:1,
         icon: "ui_switch.png",
         paletteLabel: 'switch',
-        label: function() { return this.name || this.label || 'switch'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'switch'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -45,33 +46,36 @@
                 var v = $(this).val();
                 if (v === "default") {
                     $(".form-row-custom-icons").hide();
-                } else {
+                }
+                else {
                     $(".form-row-custom-icons").show();
                 }
             });
 
             if (this.onicon !== "" || this.oncolor !== "" || this.officon !=="" || this.offcolor !== "") {
                 $('#node-input-custom-icons').val('custom');
-            } else {
+            }
+            else {
                 $('#node-input-custom-icons').change();
             }
 
             $('#node-input-onvalue').typedInput({
                 default: 'str',
                 typeField: $("#node-input-onvalueType"),
-                types: ['flow','global','str','num','bool','json','date']
+                types: ['str','num','bool','json','bin','date','flow','global']
             });
             $('#node-input-offvalue').typedInput({
                 default: 'str',
                 typeField: $("#node-input-offvalueType"),
-                types: ['flow','global','str','num','bool','json','date']
+                types: ['str','num','bool','json','bin','date','flow','global']
             });
 
             $('#node-input-passthru').change(function() {
                 if (this.checked) {
                     $('.form-row-decouple').hide();
                     $('#node-input-decouple').val("false");
-                } else {
+                }
+                else {
                     $('.form-row-decouple').show();
                 }
             });
@@ -102,6 +106,10 @@
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> Tooltip</label>
+        <input type="text" id="node-input-tooltip" placeholder="optional tooltip">
     </div>
     <div class="form-row">
         <label for="node-input-custom-icons"><i class="fa fa-picture-o"></i> Icon</label>
@@ -163,9 +171,11 @@
     <p>The <b>On/Off Color</b> and <b>On/Off Icon</b> are optional fields. If they are all present, the default
     toggle switch will be replaced with the relevant icons and their respective colors.</p>
     <p>The <b>On/Off Icon</b> field can be either <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a>
-    <i>(e.g. 'check', 'close')</i> or <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
+    <i>(e.g. 'check', 'close')</i> or <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
     <p>The widget can be updated by an incoming <code>msg.payload</code> with the specified values,
     that must also match the type of the input (number, string, etc).</p>
-    <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
-    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>If a <b>Topic</b> is specified, it will be added to the output as <code>msg.topic</code>.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the switch widget.</p>
 </script>

@@ -1,15 +1,41 @@
-md-sidenav,
-md-sidenav.md-locked-open,
-md-sidenav.md-closed.md-locked-open-add-active {
-	min-width: 200px !important;
-	width: 200px !important;
-	max-width: 200px !important;
+
+@media(max-width: 660px) {
+    md-sidenav,
+    md-sidenav.md-locked-open,
+    md-sidenav.md-closed.md-locked-open-add-active {
+    	min-width: 160px !important;
+        width: auto;
+    	max-width: 200px !important;
+    }
+}
+@media(min-width: 661px) {
+    md-sidenav,
+    md-sidenav.md-locked-open,
+    md-sidenav.md-closed.md-locked-open-add-active {
+    	min-width: 200px !important;
+        width: auto;
+    	max-width: 320px !important;
+    }
 }
 md-sidenav ng-md-icon {
     padding-right: 4px;
 }
 md-sidenav i {
     padding-right: 4px;
+}
+md-sidenav md-list-item .md-list-item-inner>p {
+    line-height: 20px;
+}
+
+@media(max-width: 959px) {
+    .md-sidenav-left, md-sidenav {
+        top: 56px !important;
+    }
+}
+@media(min-width: 960px) {
+    .md-sidenav-left, md-sidenav {
+        top: 64px;
+    }
 }
 
 md-toast .md-toast-content {
@@ -25,6 +51,44 @@ md-card {
     box-shadow: none;
 }
 
+.md-tooltip {
+    background-color: #888 !important;
+    color: #fff !important;
+    border-radius: 3px;
+    opacity: 1 !important;
+}
+
+.md-tooltip.md-origin-bottom {
+    margin-top: -6px;
+    margin-left: -8px;
+}
+
+.node-red-ui--notabs {
+    color: #888;
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2.5s;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+		opacity: 0;
+	}
+    30% {
+        opacity: 0;
+    }
+	100% {
+		opacity: 1;
+	}
+}
+
 .node-red-ui--inline-link {
 	width: 100%;
 	height: 100%;
@@ -35,12 +99,20 @@ md-card {
 	height: 100%;
 }
 
+.material-icons {
+    vertical-align: middle;
+}
+
 .ie9 img[src$=".svg"] {
-      width: 100%;
+    width: 100%;
 }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-      img[src$=".svg"] {
-          width: 100%;
-      }
+    img[src$=".svg"] {
+        width: 100%;
+    }
+}
+
+@supports (-ms-overflow-style: none) {
+    overflow: auto !important;
 }

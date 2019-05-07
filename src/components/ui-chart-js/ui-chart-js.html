@@ -35,4 +35,22 @@
 	chart-options="config.options"
 	chart-colors="config.colours">
 </canvas>
+<canvas
+	ng-if="me.item.look==='polar-area'"
+	class="chart chart-polar-area"
+	chart-data="config.data"
+	chart-series="config.series"
+	chart-labels="config.labels"
+	chart-options="config.options"
+	chart-colors="config.colours">
+</canvas>
+<canvas
+	ng-if="me.item.look==='radar'"
+	class="chart chart-radar"
+	chart-data="config.data"
+	chart-series="config.series"
+	chart-labels="config.labels"
+	chart-options="config.options"
+	chart-colors="config.colours">
+</canvas>
 </div>

@@ -2,22 +2,20 @@ CACHE MANIFEST
 
 CACHE:
 i18n.js
+icon120x120.png
 icon192x192.png
 icon64x64.png
-index.html
 css/app.min.css
 css/app.min.less
-css/index.html
 js/app.min.js
 js/tinycolor-min.js
-fonts/FontAwesome.otf
-fonts/fontawesome-webfont.eot
-fonts/fontawesome-webfont.svg
-fonts/fontawesome-webfont.ttf
-fonts/fontawesome-webfont.woff
-fonts/fontawesome-webfont.woff2
+socket.io/socket.io.js
+font-awesome/fonts/fontawesome-webfont.woff
+font-awesome/fonts/fontawesome-webfont.woff2
+weather-icons-lite/fonts/weather-icons-lite.woff
+weather-icons-lite/fonts/weather-icons-lite.woff2
 
 NETWORK:
 *
 
-# hash: 9919e5bdd247c914db3c37b32fbc492b3dc5838561d3a52a3304d36ab57814ad
+# hash: ed004712048fcf291ecf5f0a32fa21788746b5769b1f2f36b16408a264810fe6

@@ -1,22 +1,33 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
     var path= require('path');
+    var node;
+    var set = RED.settings.ui || "{}";
 
     function BaseNode(config) {
         RED.nodes.createNode(this, config);
+        node = this;
+        var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
+
         var defaultLightTheme = {
             baseColor: '#0094CE',
-            baseFont: 'Helvetica Neue'
+            baseFont: baseFontName
         }
         var defaultDarkTheme = {
             baseColor: '#097479',
-            baseFont: 'Helvetica Neue'
+            baseFont: baseFontName
         }
         var defaultCustomTheme = {
             name: 'Untitled Theme 1',
             baseColor: defaultLightTheme.baseColor,
-            baseFont: defaultLightTheme.baseFont
+            baseFont: baseFontName
         }
+        var defaultAngularTheme = {
+            primary:'indigo',
+            accents:'teal',
+            warn: "red",
+            background:'grey'
+        };
 
         // Setup theme name
         // First try old format (for upgrading with old flow file)
@@ -29,6 +40,7 @@ module.exports = function(RED) {
         // Setup other styles
         var defaultThemeState = {}
         if (themeName === 'theme-light') {
+            defaultThemeState["base-font"] = {value: baseFontName};
             defaultThemeState["base-color"] = {value: "#0094CE"};
             defaultThemeState["page-backgroundColor"] = {value: "#fafafa"};
             defaultThemeState["page-titlebar-backgroundColor"] = {value: "#0094CE"};
@@ -40,6 +52,7 @@ module.exports = function(RED) {
             defaultThemeState["widget-backgroundColor"] = {value: "#0094CE"};
         }
         else {
+            defaultThemeState["base-font"] = {value: baseFontName};
             defaultThemeState["base-color"] = {value: "#097479"};
             defaultThemeState["page-backgroundColor"] = {value: "#111111"};
             defaultThemeState["page-titlebar-backgroundColor"] = {value: "#097479"};
@@ -56,15 +69,9 @@ module.exports = function(RED) {
             lightTheme: config.theme.lightTheme || defaultLightTheme,
             darkTheme: config.theme.darkTheme || defaultDarkTheme,
             customTheme: config.theme.customTheme || defaultCustomTheme,
+            angularTheme: config.theme.angularTheme || defaultAngularTheme,
             themeState: config.theme.themeState || defaultThemeState
         }
-
-        // var siteName = "Node-RED Dashboard";
-        // if (config.name) { siteName = config.name }
-        // if (config.site) { siteName = config.site.name }
-        // var defaultSiteObject = {
-        //     name: siteName
-        // }
 
         this.config = {
             theme: defaultThemeObject,
@@ -73,16 +80,17 @@ module.exports = function(RED) {
         ui.addBaseConfig(this.config);
     }
     RED.nodes.registerType("ui_base", BaseNode);
+
     RED.library.register("themes");
 
     RED.httpAdmin.get('/uisettings', function(req, res) {
-        var ret = RED.settings.ui || "{}";
-        res.json(ret);
+        res.json(set);
     });
 
     RED.httpAdmin.get('/ui_base/js/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/js', req.params[0]);
-        res.sendFile(filename);
+        res.sendFile(filename, function (err) {
+            if (err) { node.warn(filename + " not found. Maybe running in dev mode."); }
+        });
     });
-
 };

@@ -1,6 +1,7 @@
 .masonry-container {
 	position: relative;
 	width: 100%;
+    margin: 0 auto;
 }
 
 .masonry-container > * {
@@ -22,8 +23,18 @@
     margin-left: 12px;
 	margin-top: 10px;
 	margin-bottom: 8px;
-    font-size: 1.2em;
     font-weight: 500;
+    font-size: larger;
+}
+
+.nr-dashboard-cardcarat:focus {
+    outline: 0;
+}
+
+.nr-dashboard-cardcarat {
+    float: right;
+    vertical-align: baseline;
+    margin-right: 12px;
 }
 
 .nr-dashboard-cardcontainer {

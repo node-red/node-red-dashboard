@@ -32,13 +32,6 @@ module.exports = function (RED) {
         gageoptions.pointerOptions = {'theme-dark':{color:'#8e8e93'}, 'theme-custom':theme["group-textColor"].value};
         gageoptions.backgroundColor = {'theme-dark':'#515151', 'theme-custom':theme["widget-textColor"].value };
         gageoptions.compassColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be', 'theme-custom':theme["widget-backgroundColor"].value};
-        if ((config.seg1 && config.seg1 !== "") && (config.seg2 && config.seg2 !== "")) {
-            gageoptions.customrange = [
-                { color : node.colors[0], lo : config.min, hi : config.seg1 },
-                { color : node.colors[1], lo : config.seg1, hi : config.seg2 },
-                { color : node.colors[2], lo : config.seg2, hi : config.max }
-            ];
-        }
 
         var waveoptions = {};
         waveoptions.circleColor = {'theme-dark':'#097479', 'theme-light':'#0094ce', 'theme-custom':theme["widget-backgroundColor"].value};
@@ -50,6 +43,7 @@ module.exports = function (RED) {
             node: node,
             tab: tab,
             group: group,
+            emitOnlyNewValues: false,
             control: {
                 type: 'gauge',
                 name: config.name,
@@ -59,20 +53,31 @@ module.exports = function (RED) {
                 value: config.min,
                 format: config.format,
                 gtype: config.gtype || 'gage',
-                min: config.min,
-                max: config.max,
+                min: (parseFloat(config.min) < parseFloat(config.max)) ? parseFloat(config.min) : parseFloat(config.max),
+                seg1: (parseFloat(config.seg1) < parseFloat(config.seg2)) ? parseFloat(config.seg1) : parseFloat(config.seg2),
+                seg2: (parseFloat(config.seg1) < parseFloat(config.seg2)) ? parseFloat(config.seg2) : parseFloat(config.seg1),
+                max: (parseFloat(config.min) < parseFloat(config.max)) ? parseFloat(config.max) : parseFloat(config.min),
+                reverse: (parseFloat(config.max) < parseFloat(config.min)) ? true : false,
                 sizes: sizes,
                 hideMinMax: config.hideMinMax,
                 width: config.width || group.config.width || 6,
                 height: config.height || node.autoheight,
                 colors: node.colors,
                 gageoptions: gageoptions,
-                waveoptions: waveoptions
+                waveoptions: waveoptions,
+                options: null
             },
-            beforeSend: function (msg) {
-                //msg.topic = config.topic;
-            },
-            convert: ui.toFloat.bind(this, config)
+            convert: function(p,o,m) {
+                var form = config.format.replace(/{{/g,"").replace(/}}/g,"").replace(/\s/g,"") || "_zzz_zzz_zzz_";
+                var value = RED.util.getMessageProperty(m,form);
+                if (value !== undefined) {
+                    if (!isNaN(parseFloat(value))) { value = parseFloat(value); }
+                    return value;
+                }
+                if (!isNaN(parseFloat(p))) { p = parseFloat(p); }
+                return p;
+                //return ui.toFloat.bind(this, config);
+            }
         });
         node.on("close", done);
     }

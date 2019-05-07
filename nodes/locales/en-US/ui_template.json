@@ -1,0 +1,16 @@
+{
+    "ui_template" : {
+	"label" : {
+	    "category" : "dashboard",
+	    "type" : "Template type",
+	    "local" : "Widget in group",
+	    "global" : "Added to site <head> section",
+	    "group" : "Group",
+	    "size" : "Size",
+	    "name" : "Name",
+	    "pass-through" : "Pass through messages from input.",
+	    "store-state" : "Add output messages to stored state.",
+	    "template" : "Template"
+	}
+    }
+}

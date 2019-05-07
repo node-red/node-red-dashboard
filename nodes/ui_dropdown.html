@@ -5,6 +5,7 @@
         defaults: {
             name: {value: ''},
             label: {value: ''},
+            tooltip: {value: ''},
             place: {value: 'Select option'},
             group: {type: 'ui_group', required:true},
             order: {value: 0},
@@ -19,7 +20,7 @@
             },
             height: {value: 0},
             passthru: {value: true},
-            options: {value:[{value: '', label : ''}], validate:function(value) { return value.length > 0; }},
+            options: {value:[{value: '', label : ''}]},
             payload: {value: ''},
             topic: {value: ''}
         },
@@ -27,7 +28,7 @@
         outputs:1,
         icon: "ui_dropdown.png",
         paletteLabel: 'dropdown',
-        label: function() { return this.name || this.label || 'dropdown'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'dropdown'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -35,24 +36,19 @@
                 group: "#node-input-group"
             });
 
-            this.resizeRule = function(option,newWidth) {
-                option.find(".node-input-option-label").width(newWidth);
-                option.find(".node-input-option-value").width(newWidth);
-            }
-
             function generateOption(i, option) {
                 var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
                 var row = $('<div/>').appendTo(container);
-                var row2 = $('<div/>',{style:"padding-top: 5px; padding-left: 175px;"}).appendTo(container);
-                var row3 = $('<div/>',{style:"padding-top: 5px; padding-left: 120px;"}).appendTo(container);
+                var row2 = $('<div/>',{style:"padding-top:5px; padding-left:175px;"}).appendTo(container);
+                var row3 = $('<div/>',{style:"padding-top:5px; padding-left:120px;"}).appendTo(container);
 
-                $('<i style="color: #eee; cursor: move; margin-left: 3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
+                $('<i style="color:#eee; cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
-                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:option.type||'str',types:['str','num','bool']});
-                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left: 7px; width: 135px;", placeholder: 'Label', value:option.label}).appendTo(row);
+                var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left:7px; width:calc(50% - 32px);", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:option.type||'str',types:['str','num','bool']});
+                var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left:7px; width:calc(50% - 32px);", placeholder: 'Label', value:option.label}).appendTo(row);
 
-                var finalspan = $('<span/>',{style:"float: right;margin-right: 10px;"}).appendTo(row);
-                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"margin-top: 7px; margin-left: 5px;"}).appendTo(finalspan);
+                var finalspan = $('<span/>',{style:"float:right; margin-right:8px;"}).appendTo(row);
+                var deleteButton = $('<a/>',{href:"#",class:"editor-button editor-button-small", style:"margin-top:7px; margin-left:5px;"}).appendTo(finalspan);
                 $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
 
                 deleteButton.click(function() {
@@ -102,12 +98,6 @@
             });
         },
         oneditresize: function() {
-            var options = $("#node-input-option-container").children();
-            var newWidth = ($("#node-input-option-container").width() - 175)/2;
-            var node = this;
-            options.each(function(i) {
-                node.resizeRule($(this),newWidth);
-            });
         }
     });
 </script>
@@ -126,6 +116,10 @@
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
         <input type="text" id="node-input-label" placeholder="optional label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> Tooltip</label>
+        <input type="text" id="node-input-tooltip" placeholder="optional tooltip">
     </div>
     <div class="form-row">
         <label for="node-input-place"><i class="fa fa-tag"></i> Placeholder</label>
@@ -156,9 +150,10 @@
 
 <script type="text/x-red" data-help-name="ui_dropdown">
     <p>Adds a dropdown select box to the user interface.</p>
-    <p>Multiple value / label pairs can be added as required.</p>
+    <p>Multiple value / label pairs can be added as required. If the label is not specified the
+    value will be used for both.</p>
     <p>The configured value of the selected item will be returned as <code>msg.payload</code>.</p>
-    <p>Setting <code>msg.payload</code> will set the pre-selected choice in the dropdown.</p>
+    <p>Setting <code>msg.payload</code> to the value will set the pre-selected choice in the dropdown.</p>
     <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
     <p>The Options may be configured by inputting <code>msg.options</code> containing an array.
     If just text then the value will be the same as the label, otherwise you can specify both by

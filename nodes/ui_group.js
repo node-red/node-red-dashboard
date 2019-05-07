@@ -7,10 +7,12 @@ module.exports = function(RED) {
             disp: config.disp,
             width: config.width,
             order: config.order,
-            tab: config.tab
+            tab: config.tab,
+            collapse: config.collapse || false
         };
         if (!this.config.hasOwnProperty("disp")) { this.config.disp = true; }
         if (this.config.disp !== false) { this.config.disp = true; }
+        if (!this.config.hasOwnProperty("collapse")) { this.config.collapse = false; }
     }
 
     RED.nodes.registerType("ui_group", GroupNode);

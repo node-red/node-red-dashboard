@@ -16,7 +16,9 @@
                 }
             },
             height: {value: 0},
+            passthru: {value: false},
             label: {value: 'button'},
+            tooltip: {value: ''},
             color: {value: ''},
             bgcolor: {value: ''},
             icon: {value: ''},
@@ -28,7 +30,7 @@
         outputs:1,
         icon: "ui_button.png",
         paletteLabel: 'button',
-        label: function() { return this.name || this.label || 'button'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'button'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -38,7 +40,7 @@
             $('#node-input-payload').typedInput({
                 default: 'str',
                 typeField: $("#node-input-payloadType"),
-                types:['flow','global','str','num','bool','json','date']
+                types: ['str','num','bool','json','bin','date','flow','global']
             })
         }
     });
@@ -64,6 +66,10 @@
         <input type="text" id="node-input-label" placeholder="optional label">
     </div>
     <div class="form-row">
+        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> Tooltip</label>
+        <input type="text" id="node-input-tooltip" placeholder="optional tooltip">
+    </div>
+    <div class="form-row">
         <label for="node-input-color"><i class="fa fa-tint"></i>  Colour</label>
         <input type="text" id="node-input-color" placeholder="optional text/icon color">
     </div>
@@ -84,6 +90,10 @@
         <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
+        <input type="checkbox" id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
     </div>
@@ -95,9 +105,14 @@
     If no payload is specified, the node id is used.</p>
 	<p>The <b>Size</b> defaults to  3 by 1.</p>
 	<p>The <b>Icon</b> can be defined, as either a <a href="https://design.google.com/icons/" target="_blank">Material Design icon</a>
-    <i>(e.g. 'check', 'close')</i> or a <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icon</a>
-    <i>(e.g. 'fa-fire')</i>.</p>
-    <p>If the <b>Colour</b> is defined, the colour of the buttons content changes accordingly.</p>
-    <p>The <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+    <i>(e.g. 'check', 'close')</i> or a <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icon</a>
+    <i>(e.g. 'fa-fire')</i>, or a <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css/weather-icons-lite.css">Weather icon</a>.</p>
+    <p>The colours of the text and background may be set. They can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.background}}</code>.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>If set to pass through mode a message arriving on the input will act like pressing the button.
+    The output payload will be as defined in the node configuration.</p>
+    <p>The <b>Topic</b> field can be used to set the <code>msg.topic</code> property that is output.</p>
     <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the button.</p>
 </script>

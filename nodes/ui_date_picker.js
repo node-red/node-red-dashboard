@@ -23,12 +23,13 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
-            convert: function (payload) {
-                var d = new Date(payload);
+            convert: function (p,o,m) {
+                var d = new Date(m.payload);
                 this.control.ddd = d;
-                return payload;
+                return m.payload;
             },
             beforeEmit: function (msg, value) {
+                if (value === undefined) { return; }
                 value = new Date(value);
                 return { msg:msg, value:value };
             },

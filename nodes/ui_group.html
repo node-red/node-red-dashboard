@@ -1,12 +1,20 @@
 <script type="text/javascript">
+    // convert to i18 text
+    function c_ui_group(x) {
+        return RED._("node-red-dashboard/ui_group:ui_group."+x);
+    }
+
     RED.nodes.registerType('ui_group',{
         category: 'config',
         defaults: {
-            name: {value: 'Default'},
-            tab: {type:"ui_tab",required: true },
+            name: {value: c_ui_group("label.default")},
+            tab: {type:"ui_tab", required: true },
             order: {value: 0},
             disp: {value: true},
-            width: {value: 6}
+            width: {value: 6},
+            collapse: {value: false},
+            disabled: {value: false},
+            hidden: {value: false}
         },
         sort: function(A,B) {
             if (A.tab !== B.tab) {
@@ -14,9 +22,11 @@
                 var tabB = RED.nodes.node(B.tab);
                 if (!tabA && tabB) {
                     return -1;
-                } else if (tabA && !tabB) {
+                }
+                else if (tabA && !tabB) {
                     return 1;
-                } else {
+                }
+                else {
                     return tabA.order - tabB.order;
                 }
             }
@@ -26,14 +36,23 @@
         label: function() {
             var tabNode = RED.nodes.node(this.tab);
             if (tabNode) {
-                return (this.name||"Group")+ " ["+(tabNode.name||"Tab")+"]"
+                return "["+(tabNode.name||c_ui_group("label.tab"))+"] " + (this.name || c_ui_group("label.group"));
             }
-            return (this.name || 'Group')+" [unassigned]";
+            return "["+c_ui_group("label.unassigned")+"] " + (this.name || c_ui_group("label.group"));
         },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-config-input-width",
                 auto: false
+            });
+            $("#node-config-input-disp").change(function() {
+                if ($("#node-config-input-disp").is(":checked")) {
+                    $("#group-collapse-flag").show();
+                }
+                else {
+                    $("#group-collapse-flag").hide();
+                    $("#node-config-input-collapse").prop("checked",false);
+                }
             });
         }
     });
@@ -41,20 +60,23 @@
 
 <script type="text/x-red" data-template-name="ui_group">
     <div class="form-row">
-        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_group.label.name"></span></label>
         <input type="text" id="node-config-input-name">
     </div>
     <div class="form-row">
-        <label for="node-config-input-tab"><i class="fa fa-table"></i> Tab</label>
+        <label for="node-config-input-tab"><i class="fa fa-table"></i> <span data-i18n="ui_group.label.tab"></span></label>
         <input type="text" id="node-config-input-tab">
     </div>
     <div class="form-row">
-        <label for="node-config-input-width"><i class="fa fa-arrows-h"></i> Width</label>
+        <label for="node-config-input-width"><i class="fa fa-arrows-h"></i> <span data-i18n="ui_group.label.width"></span></label>
         <input type="hidden" id="node-config-input-width">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <input style="margin:8px 0 10px 102px; width:20px;" type="checkbox" checked id="node-config-input-disp"> <label style="width:auto" for="node-config-input-disp">Display group name</label>
+        <input style="margin:8px 0 10px 102px; width:20px;" type="checkbox" checked id="node-config-input-disp"> <label style="width:auto" for="node-config-input-disp"><span data-i18n="ui_group.display-name"></span></label>
+    </div>
+    <div class="form-row" id="group-collapse-flag">
+        <input style="margin:8px 0 10px 102px; width:20px;" type="checkbox" id="node-config-input-collapse"> <label style="width:auto" for="node-config-input-collapse"><span data-i18n="ui_group.collapse-name"></span></label>
     </div>
 </script>
 

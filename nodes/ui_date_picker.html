@@ -4,7 +4,7 @@
         color: 'rgb(176, 223, 227)',
         defaults: {
             name: {value: ''},
-            label: {value: 'pick date'},
+            label: {value: 'date'},
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -24,7 +24,7 @@
         outputs:1,
         icon: "ui_date_picker.png",
         paletteLabel: 'date picker',
-        label: function() { return this.name || this.label || 'date-picker'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'date picker'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -73,7 +73,7 @@
 
 <script type="text/x-red" data-help-name="ui_date_picker">
     <p>Adds a date picker widget to the user interface.</p>
-    <p>The date display can be formatted in the Dashboard - Site tab using <a href="http://momentjs.com/docs/#/displaying/">
+    <p>The date display can be formatted in the Dashboard - Site tab using <a href="https://momentjs.com/docs/#/displaying/">
     moment.js</a> formatting. For example <code>MM/DD/YYYY</code>, <code>Do MMM YYYY</code> or <code>YYYY-MM-DD</code>.</p>
     <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
 </script>

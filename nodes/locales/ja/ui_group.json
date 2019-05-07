@@ -1,0 +1,14 @@
+{
+    "ui_group" : {
+        "label" : {
+            "name" : "名前",
+            "tab" : "タブ",
+            "width" : "幅",
+            "default" : "デフォルト",
+            "group" : "グループ",
+            "unassigned" : "未設定"
+        },
+        "display-name" : "グループ名を表示する",
+        "collapse-name" : "グループの折りたたみを有効にする"
+    }
+}

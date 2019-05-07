@@ -1,4 +1,438 @@
 
+### 2.15.0-beta: Milestone Release
+
+**Enhancements**
+
+ - Allow ui_chart to have many more options set by control message, see [config-fields.md](config-fields.md)
+
+**Fixes**
+
+ - Ensure msg.enabled applies to all themes. Issue #481
+ - Ensure them applies to popup dialog alerts also.
+
+### 2.14.0: Milestone Release
+
+**Enhancements**
+
+ - Allow Tabs to be hidden or disabled dynamically from a ui_control msg.
+ - Finally remove deprecated second output from ui_chart node.
+ - Allow ui_form to be submitted with empty fields (if they are not required)
+
+**Fixes**
+
+ - Don't try to close non-existent menu at start (logging issue only) - Issue #470
+ - Add startsWith polyfill for IE11
+ - Ensure active sidebar menu item is highlighted - Issue #472
+ - Sanitise display of html input - Issue #473
+ - Respect msg.socketid to return msg back to selected session when using ui_template
+ - Allow dropdown to have 0 pre-configured values, by removing validation.
+
+### 2.13.2: Maintenance Release
+
+**Fixes**
+
+ - Revert change that broke gauge pointer colours
+
+### 2.13.1: Maintenance Release
+
+**Fixes**
+
+ - Fix ui_template to return correct sessionid to each browser.
+ - Fix line chart xAxis hover to use same time format as main axis
+ - Fix chart colours to have more than 9 colours just in case - Issue #465
+ - Remove circular ref in menu that caused problems with 0.20 beta
+ - Let ui_text node send data onBlur when in wait for key mode
+ - Update Angular dependency to 1.7.6 - Issue #462
+ - Add X-UA-Compatible tag to help to get IE-11 to behave
+ - Fix css to use numerics not incorrect name - Issue #469
+
+### 2.13.0: Milestone Release
+
+**Enhancements**
+
+ - Add ability to hide and/or disable tabs manually - PR #456
+
+**Fixes**
+
+ - Fix up ui_text toString mishandling error - Issue #459
+ - Add some undo capability to ordering of widgets - Issue #461
+
+### 2.12.2: Maintenance Release
+
+**Fixes**
+
+ - Revert change to button and switch typed inputs - Issue #455
+ - Fix handling of {{msg.property}} handling for labels
+
+### 2.12.1: Maintenance Release
+
+**Fixes**
+
+ - Ensure spacer actually gets created with no users
+
+### 2.12.0: Milestone Release
+
+**Enhancements**
+
+ - Introduce concept of spacer nodes in groups to allow more widget layout options
+
+**Fixes**
+
+ - Set order value correctly for newly added ui nodes
+ - Let ui_text node handle buffers without mangling to utf8
+ - Fix ui_template info odd/even example to work again (after theme changes)
+ - Ensure colour picker retains old value on multiple reloads when in dynamic mode - Issue #452
+ - Fix missing page titles (mea culpa) - Issue #453
+
+### 2.11.0: Milestone Release
+
+**Enhancements**
+
+ - Let side menu be locked open via site config tab - Issue #446
+ - Let audio playback node show status in editor for debug
+
+**Fixes**
+
+ - Fix button background CSS so it can be over-ridden - Issue #444
+
+### 2.10.1: Maintenance Release
+
+**Enhancements**
+
+ - Let slider only send on mouse release (discrete mode)
+
+**Fixes**
+
+ - Stop background path css escape for gauge
+ - Fix radar chart so it picks up theme - Issue #443
+
+### 2.10.0: Milestone Release
+
+**Enhancements**
+
+ - Add PR to allow pluggable widgets. PR #427
+   - see https://github.com/node-red/node-red-dashboard/wiki/Creating-New-Dashboard-Widgets
+ - Let users use 100% Angular theme if desired.
+ - Add footer div with id nr-dashboard-footer to make targeting easier.
+ - Add Japanese translations for ui_control node. PR #439
+
+**Fixes**
+
+ - Add polyfill for IE11 Object.assign. Issue #402
+ - Tweak colour picker to default to solid colours
+ - Fix up ng-click colours in list. Issue #433
+
+### 2.9.8: Maintenance Release
+
+**Fixes**
+
+ - Tidy up dashboard widget list if widget moved then renamed. Issue #426
+ - Let numeric widget handle angular filters again for value. Issue #428
+
+### 2.9.7: Maintenance Release
+
+**Enhancements**
+
+ - Let link specify existing tab. Issue #420
+ - Let bar charts specify legend if required. Issue #423
+ - Add more links to lists of icons available.
+
+**Fixes**
+
+ - Ensure old forms Submit/Cancel buttons still display a value.
+ - Let internal form elements scale more appropriately with grid size. Issue #416
+ - Adjust slider timing to try to better smooth output
+
+### 2.9.6: Maintenance Release
+
+**Fixes**
+
+ - Update socket.io to remove audit vulnerability. Issue #411
+
+### 2.9.5: Maintenance Release
+
+**Fixes**
+
+ - Remove colour from button when in template in no style mode. Issue #400
+ - Fix format support for numeric widget. Issue #401
+ - Fix min-width of dropdown label field. Issue #405
+ - Let blank value field in gauge NOT display the value text (default to payload). Issue #406
+ - Let form buttons have changeable text. Issue #408
+
+### 2.9.4: Maintenance Release
+
+**Fixes**
+
+ - Let text input node handle floating point input when in numeric mode. Issue #391
+ - Fix incorrect scoping of colour palettes in charts. Issue #396
+ - Docs updates re some of the ui_control to make groups show/hide.
+
+### 2.9.3: Maintenance Release
+
+**Fixes**
+
+ - Revert change to sessionStorage - better fix for Issue #386, unfix Issue #384
+
+### 2.9.2: Maintenance Release
+
+**Fixes**
+
+ - Let dropdown edit config, scale more sensibly on slide out.
+ - Change to sessionStorage to mitigate httpAuth issue. Issue #384
+ - Ensure groups are restored rather than completely disappeared on refresh. Issue #386
+ - Let bar charts also auto scale negative values. Issue #387
+ - Use rounded line joins on charts to reduce spiky-ness.
+ - Ensure numeric input matches theme (now that it is editable)
+ - Fix Gauge so {{ format }} works again.
+
+### 2.9.1: Maintenance Release
+
+**Fixes**
+
+- Let dashboard work if localstorage not available. PR #383
+- Let numeric field also be editable
+- Clean up gauge value (to be more as previously). Issue #385
+
+### 2.9.0: Milestone Release
+
+**Enhancements**
+
+ - Allow groups to be hidden and made visible via ui_control {group:{hide:["tab_name_group_name_with_underscores"],show:["another_group"],focus:true}}
+ - Allow `readOnly:true` in settings.js `ui` section to disable all input to dashboard.
+ You can still click/type but nothing gets sent to backend.
+ - Add "No theme in ui_template" option to site options to allow regular angular theme through. Issue #379
+ - Add option to remove hue slider from color-picker
+
+ **Fixes**
+
+ - Monkeypatch fix for Justgage negative numbers. Issue #113
+ - Ensure toast is a string.
+ - Clean up require of tinycolor2. Issue #367
+ - Allow numeric input in form to accept floating point numbers. Issue #368
+ - Fix small wrinkle in reset of head elements on reload
+ - Fix Use of object assign for IE11. Issue #372
+ - Fix button background colour for IE11. Issue #373
+ - Let Gauge display invalid value as text, and set pointer to minimum value rather than 0
+ - Fix date picker width to stop css overrides. Issue #378
+ - Try to resolve blurred charts. Issues #302 and #380
+
+### 2.8.2: Maintenance Release
+
+**Enhancements**
+
+  - Let Gauge units be specified by msg {{property}}
+
+**Fixes**
+
+ - Better fix for numeric field widths. Issue #344
+ - Fix some theme <-> library consistency issues
+ - Clean up old line chart data from other topics after 60s. Issue #342 and #360
+
+### 2.8.1: Maintenance Release
+
+**Enhancements**
+
+ - Let Gauge widget accept {{payload.foo.bar}} style property input
+
+**Fixes**
+
+ - Fix references to FontAwesome to pin to version 4.7.0 icons
+ - Give numeric field a width so buttons don't wobble (so much). Issue #344
+ - Let gauge change labels more dynamically
+ - ensure dateFormat defaults to something valid
+
+### 2.8.0: Milestone Release
+
+**Enhancements**
+
+ - Allow groups to be collapsed (extra option in group config) - PR #333 Issue #73 and #177
+ - Add a bit more status to switch, slider, numeric and dropdown - Issue #335
+ - Add vertical slider capability if height > width
+ - Add scope.theme to ui_template scope to allow users to pick up default colours
+ - Add scope watch example to ui_template info panel
+
+**Fixes**
+
+ - Fix text time input format to report in milliseconds from local midnight
+ - Fix change tab event to report correctly when switching to tab 0
+ - Fix template editor minimum height so always visible
+ - Fix sanitise notification html input, but allow basic markup.
+
+### 2.7.0: Milestone Release
+
+**Enhancements**
+
+ - Add initial manifest.json capability for Android add to home screen
+ - Add weather-icons-lite font - may finally close #165
+ - Let boolean false values also create gaps in charts (as well as null)
+ - Add status to switch widget (and slider, numeric and dropdown) - Issue #314
+ - Add "welcome" page to blank dashboard - Issue #318
+ - Add i18n for base pages (thanks Nishiyama-san)- PR #315
+
+**Fixes**
+
+ - Fix tab to send data from text entry field - Issue #307
+ - Fix colour picker hex output/passthrough - Issue #308
+ - Ensure there is a base tab to switch to at start - Issue #310
+ - Constrain changetab event when starting up with blank dashboard
+ - Update ui-masonry to fix layouts - PR #312
+ - Fix path join for icon link to dashboard - Issue #319
+
+### 2.6.2: Maintenance Release
+
+**Fixes**
+
+ - Fix problem with partial deploy - Issue #279
+ - Remove `msg.` option from Button as makes no sense without node context - Issue #301
+ - Better handling of empty data series in chart data
+
+**Enhancements**
+
+ - Add time option to text input widget.
+ - Let colour picker optionally send outputs as they change - Issue #299
+
+### 2.6.1: Maintenance Release
+
+**Fixes**
+
+ - Fix "connection lost" on initial load - Issue #298
+
+### 2.6.0: Milestone Release
+
+**Enhancements**
+
+ - Let widgets have properties set by `msg.ui_control` object - see config-fields.md - Issue #235
+ - Let charts lines have gaps by sending null as payload.
+
+ **Fixes**
+
+ - Fix TTS to pick correct voice at start  - Issue #291
+ - Fix TTS to try to select similar voice across different browsers - Issue #292
+ - Fix chart colours to re-initialise correctly on refresh - Issue #296
+
+### 2.5.1: Maintenance Release
+
+**Fixes**
+
+ - Fix chart reference to 0.2.5 to the correct 2.5.0 - Issue #281
+ - Fix line chart legend back to top and shrink colour swatch size - Issue #283
+ - Fix bar chart colours to be like previous style
+ - Fix blank array to clear out old and new style charts
+ - Slight chart positioning adjustment
+
+### 2.5.0: Milestone Release
+
+**Enhancements**
+
+ - Let ui_chart use chart.js style data array - faster, better data import/export, allow insert of data with `msg.timestamp`, bar chart supports multiple series using `msg.series` - Issues #261, #224, #144
+ - Let chart accept non-timeseries array of data (just y values)
+ - Let chart set x-axis labelling to automatic to try to best guess time units
+ - Let widget size be specified by typed input as well as drag PR #270
+ - Allow button to set colour and background colour via msg properties #275
+ - Add browser side locale support for charts and datepicker number and date formatting.
+
+**Fixes**
+
+ - Fix ui_template msg.template lost on reload - Issue #266
+ - Fix notification popup displays incorrect topic - Issue #269
+ - Let switch label be set my message even if payload same as previously -Issue #274
+ - Clean up any extra ui_base nodes that get imported - Issue #273
+ - Make sure dropdown doesn't pass through when set not to pass-through - Issue #276
+
+### 2.4.3: Maintenance Release
+
+**Enhancements**
+
+ - Add links to web pages of icons to Tab info
+ - Let alerts contain html content - Issue #253
+ - Let bar charts use same colour for all bars
+
+ **Fixes**s
+
+ - Set y-Axis scale if max and min set to stop overlapping labels
+ - Make input field and justgage font match theme font choice
+ - Fix icon position for min fab buttons - PR #255
+ - Redo update logic on tab change - Issue #256
+
+### 2.4.2: Maintenance Release
+
+**Enhancements**
+
+ - Let ui_chart enlarge points so they are visible dots
+
+**Fixes**
+
+ - Revert version of socket.io to keep working on node.js v0.10....
+
+### 2.4.1: Maintenance Release
+
+**Fixes**
+
+ - Fix location for fa-icons
+ - Make Tabs/Links window correctly expandable on Firefox
+
+### 2.4.0: Milestone Release
+
+**Enhancements**
+
+ - Add ability to specify basefont style. (NOTE the Cross Platform font uses a
+     system font stack approach that should look good across as many platforms as possible)
+ - Merge tabs and links so all can be re-ordered - PR #234
+ - Let labels handle multiple properties (like payload and colour)
+ - Add possibility to use a template node to add or replace content inside <head> tag. PR #239
+ - Adjust Form widget spacing to line up with other widgets
+
+ **Fixes**
+
+  - Simpler, better date injection to preset date-picker
+  - Let switch resize after being set to 1x1
+
+### 2.3.11: Maintenance Release
+
+**Enhancements**
+
+- Add name of tab to ui_control node tab change msg
+- Let dropdown use value as label if not otherwise specified
+- Add label field to date-picker
+- Adjust labels spacing on gauges to look better at small sizes
+
+**Fixes**
+
+ - Make sure chart display is fully refreshed on tab change - Issue #226
+ - Catch another possible missing theme escape path.
+ - Fix msg. label regression for ui_text node - Issue #230
+ - Retain enable/disable state of widgets (broken in 2.3.10)
+ - Fix name-spacing of base node inputs
+ - Fix custom theme to default back to previous setting
+
+### 2.3.10: Maintenance Release
+
+**Enhancements**
+
+ - Make fixup of Font Awesome fonts easier for developers
+ - Let the Wave gauge display units if you wish
+ - Add *change* tab event to ui_control output and also accept +1 and -1 to move to next/prev tab - Issue #194
+ - Let label field be set by a {{msg.property}} (for all widgets with label field) - Issue #220
+
+**Fixes**
+
+ - Unbreak change made in 2.3.9 that dropped all msg with no payload.
+   - add passthru flag to button (as per other nodes) - Issue #211
+   - fix bad number conversion for slider (and other nodes), if payload not set - Issue #212
+     - now returns undefined which leaves UI unchanged, but passes through msg
+ - Fix bar charts not being cleared properly by [] - Issue #217
+ - Fix Node-RED crashing on chart bad data input conversion - Issue #218
+
+### 2.3.9: Maintenance Release
+
+**Fixes**
+
+ - Dashboard Tab - still occasionally empty (for old dashboard migrations)
+ - Add CSS to try to help fix scroll of Edge Mobile devices - Issue #207
+ - Fix Apple Touch Icon - Issue #208
+ - Fix widget sy height (was picking up sx by mistake) - Issue #210
+ - Don't let widget bother handle msg with no payload (only handle enabled) - Issue #211, #212
+
 ### 2.3.8: Maintenance Release
 
 **Enhancements**
@@ -13,18 +447,18 @@
 
 **Enhancements**
 
- - Stop rendering datapoints out of range on line charts - Issue#198
- - Let dropdown placeholder text be editable - Issue#202
+ - Stop rendering datapoints out of range on line charts - Issue #198
+ - Let dropdown placeholder text be editable - Issue #202
 
 **Fixes**
 
- - Let date-picker survive changes of tabs - Issue#189
- - Change text input box to detect tab to send data (rather than loss of focus) - Issue#196
- - Update Site properties in UI when theme loaded from library - Issue#197
- - Fix audiocontext to reuse existing - Issue#199
- - Better align text input and dropdown text inputs - Issue#201
+ - Let date-picker survive changes of tabs - Issue #189
+ - Change text input box to detect tab to send data (rather than loss of focus) - Issue #196
+ - Update Site properties in UI when theme loaded from library - Issue #197
+ - Fix audiocontext to reuse existing - Issue #199
+ - Better align text input and dropdown text inputs - Issue #201
  - Let ui be hosted at / if required - Issue204
- - Let bar and pie charts be reloaded correctly from saved data - Issue#205
+ - Let bar and pie charts be reloaded correctly from saved data - Issue #205
  - Let base colour theme edits work again (rather than resetting all the time)
 
 ### 2.3.6: Maintenance Release
@@ -37,19 +471,19 @@
  - enhance gulp, jshint and jscs checks
  - Hide page *title* tag until actually set
  - add optional i18n.js file to dist
- - optionally let switch status be set by input/feedback rather than press - PR#188
+ - optionally let switch status be set by input/feedback rather than press - PR #188
 
 **Fixes**
 
 - stop numeric widget emitting on accidental mouseover
 - text input will now send it's payload on losing focus as well as enter (if in enter mode)
-- fix form colours to be more dynamic to match theme, Issue#186
+- fix form colours to be more dynamic to match theme, Issue #186
 
 ### 2.3.5: Maintenance Release
 
 **Fixes**
 
- - let numeric (and slider) widget accept floating point presets if step set appropriately Issue#185
+ - let numeric (and slider) widget accept floating point presets if step set appropriately Issue #185
  - initialises OK if absolutely no theme present from old flow
  - knock the corners off homescreen icon
 
@@ -57,16 +491,16 @@
 
 **Enhancements**
 
- - Add IOS homescreen icon link - PR#176
+ - Add IOS homescreen icon link - PR #176
  - Let datepicker accept timestamp input to preset date.
  - Don't react to swipe in charts, or slider
 
 **Fixes**
 
- - move to ngTouch rather than mdTouch to fix swipe/scroll Issue#164
- - correct data output format from bar chart type chart - fixes Issue#181
- - prevent button forwarding input messages as it makes no sense. - PR#170
- - correct select box example - PR#182
+ - move to ngTouch rather than mdTouch to fix swipe/scroll Issue #164
+ - correct data output format from bar chart type chart - fixes Issue #181
+ - prevent button forwarding input messages as it makes no sense. - PR #170
+ - correct select box example - PR #182
  - fix compass colour to be set by custom widget colour
  - centre icon in button widget
 
@@ -97,25 +531,25 @@
 
 **Enhancements**
 
- - Add Themes to Dashboard Tab - includes colour and sizes and other options - Issue137
- - Colour-picker - add configurable lightness slider - PR123
- - Configurable colour for Notification toasts - Issue145
- - Remove whitespace from above gauge with no label  - Issue159
- - Let gauge widgets scall larger when basic unit size increased - Issue162
+ - Add Themes to Dashboard Tab - includes colour and sizes and other options - Issue #137
+ - Colour-picker - add configurable lightness slider - PR #123
+ - Configurable colour for Notification toasts - Issue #145
+ - Remove whitespace from above gauge with no label  - Issue #159
+ - Let gauge widgets scall larger when basic unit size increased - Issue #162
  - Let most labels show icons if required (via html <i syntax)
- - Add date-picker widget - Issue14
- - Give audio node option to play when not in focus - Issue167
+ - Add date-picker widget - Issue #14
+ - Give audio node option to play when not in focus - Issue #167
 
 **Fixes**
 
  - also check template for existence of sole <link tag : if so set height to 0
- - ensure ui_base node has a user to prevent node appearing in "unused" config nodes tab - Issue110 - actually fixed in core for 0.16.1
+ - ensure ui_base node has a user to prevent node appearing in "unused" config nodes tab - Issue #110 - actually fixed in core for 0.16.1
  - chart no longer emits a blank array on start (which was wiping out file storage of data)
- - link tabs were stuck at light theme - now follow overall theme correctly - Issue149
- - fixed numeric widget to not have rounding error, and also occasional stall/hang - Issue150
- - fixed numeric widget not starting at min value - Issue163
+ - link tabs were stuck at light theme - now follow overall theme correctly - Issue #149
+ - fixed numeric widget to not have rounding error, and also occasional stall/hang - Issue #150
+ - fixed numeric widget not starting at min value - Issue #163
  - dashboard root path re-write from UI now working
- - remove .res and .req properties of msg in case they have circular refs - Issue153
+ - remove .res and .req properties of msg in case they have circular refs - Issue #153
  - make dropdown widget arrow, chart gridlines, match theme
  - remove .req and .res properties to remove problems with circular references
 

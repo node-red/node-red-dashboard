@@ -4,6 +4,8 @@
 
 .nr-dashboard-numeric .value {
     font-weight: bold;
+    text-align: center;
+    border: 0px;
 }
 
 .nr-dashboard-numeric .md-button {

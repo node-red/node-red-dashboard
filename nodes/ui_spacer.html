@@ -1,0 +1,50 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_spacer', {
+        category: 'config',
+        color: '#45ADB4',
+        defaults: {
+            name: {value: "spacer"},
+            group: {type: 'ui_group', required:true},
+            order: {value: 0},
+            width: {value: 0, validate: function(v) {
+                    var width = v||0;
+                    var currentGroup = $('#node-input-group').val()||this.group;
+                    var groupNode = RED.nodes.node(currentGroup);
+                    var valid = !groupNode || +width <= +groupNode.width;
+                    $("#node-input-size").toggleClass("input-error",!valid);
+                    return valid;
+                }
+            },
+            height: {value: 0}
+        },
+        inputs:0,
+        outputs:0,
+        hasUsers: false,
+        icon: "ui_spacer.png",
+        paletteLabel: 'spacer',
+        label: function() { return this.name + " " + this.width + "x" + this.height; },
+        oneditprepare: function() {
+            $("#node-input-size").elementSizer({
+                width: "#node-input-width",
+                height: "#node-input-height",
+                group: "#node-input-group"
+            });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ui_spacer">
+    <div class="form-row">
+        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <input type="text" id="node-input-group">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-input-width">
+        <input type="hidden" id="node-input-height">
+        <button class="editor-button" id="node-input-size"></button>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ui_spacer">
+</script>

@@ -3,6 +3,7 @@ p.nr-dashboard-chart-title {
     margin: 0px 0px 0px 0px;
     text-align: center;
     z-index: 1;
+    min-height: 10px;
 }
 
 p.blank-label {

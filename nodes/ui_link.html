@@ -4,7 +4,7 @@
         color: 'rgb( 63, 173, 181)',
         defaults: {
             name: {value: 'Google'},
-            link: {value: 'http://www.google.com'},
+            link: {value: 'https://www.google.com'},
             icon: {value: 'open_in_browser'},
             target: {value: 'newtab', validate :function() { return true; }},
             order: {value: 0}
@@ -19,9 +19,13 @@
         oneditprepare: function() {
             document.getElementById('node-config-input-target-opentab').checked = (this.target === 'newtab');
             document.getElementById('node-config-input-target-openiframe').checked = (this.target === 'iframe');
+            document.getElementById('node-config-input-target-openthis').checked = (this.target === 'thistab');
         },
         oneditsave : function () {
-            this.target = document.getElementById('node-config-input-target-opentab').checked ? 'newtab' : 'iframe';
+            var t = 'iframe';
+            if (document.getElementById('node-config-input-target-opentab').checked) { t = 'newtab'; }
+            if (document.getElementById('node-config-input-target-openthis').checked) { t = 'thistab'; }
+            this.target = t;
         },
         onadd: function() {
             //console.log("PING");
@@ -31,28 +35,30 @@
 
 <script type="text/x-red" data-template-name="ui_link">
     <div class="form-row">
-        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_link.label.name"></span></label>
         <input type="text" id="node-config-input-name">
     </div>
     <div class="form-row">
-        <label for="node-config-input-link"><i class="fa fa-link"></i> Link</label>
+        <label for="node-config-input-link"><i class="fa fa-link"></i> <span data-i18n="ui_link.label.link"></span></label>
         <input type="text" id="node-config-input-link">
     </div>
     <div class="form-row">
-        <label for="node-config-input-icon"><i class="fa fa-image"></i> Icon</label>
+        <label for="node-config-input-icon"><i class="fa fa-image"></i> <span data-i18n="ui_link.label.icon"></span></label>
         <input type="text" id="node-config-input-icon">
     </div>
     <div class="form-row">
-        <label><i class="fa fa-link"></i> Open in</label>
-        <input type="radio" id="node-config-input-target-opentab" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px" checked>
-        <label for="node-config-input-target-opentab">New Tab</label>
-        <input type="radio" id="node-config-input-target-openiframe" name="open-link-method" style="width: 20px;margin-top: 0px; margin-bottom: 5px">
-        <label for="node-config-input-target-openiframe">iframe</label>
+        <label><i class="fa fa-link"></i> <span data-i18n="ui_link.label.open-in"></span></label>
+        <input type="radio" id="node-config-input-target-opentab" name="open-link-method" style="width:20px; margin-top:0px; margin-bottom:5px" checked>
+        <label for="node-config-input-target-opentab" data-i18n="ui_link.label.new-tab"></label><br/>
+        <input type="radio" id="node-config-input-target-openthis" name="open-link-method" style="width:20px; margin-left:104px; margin-top:0px; margin-bottom:5px">
+        <label for="node-config-input-target-openthis" data-i18n="ui_link.label.this-tab"></label><br/>
+        <input type="radio" id="node-config-input-target-openiframe" name="open-link-method" style="width:20px; margin-left:104px; margin-top:0px; margin-bottom:5px">
+        <label for="node-config-input-target-openiframe" data-i18n="ui_link.label.iframe"></label>
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="ui_link">
     <p>Adds a web link to the left side menu of the user interface.</p>
-    <p>The <b>Icon</b> field can be either <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a> <i>(e.g. 'check', 'close')</i> or <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
+    <p>The <b>Icon</b> field can be either <a href="https://design.google.com/icons/" target="_blank">Material Design icons</a> <i>(e.g. 'check', 'close')</i> or <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.</p>
     <p>The <b>Open in</b> field controls whether the link opens in a <i>New Tab</i>, or if the link is opened within an <i>iframe</i> on the same page. Some sites, including Google, do not allow the rendering of their page inside an iframe. If you select the <i>iframe</i> option and the site does not show, this is simply because that site forbids the use of it inside an iframe.</p>
 </script>

@@ -8,24 +8,37 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-wrapper {
-    padding-right: 6px;
+    padding-right: 8px;
 }
 
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open {
     width: 32px;
+    border-width: 0px;
 }
 
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline {
-    right: 122px;
+    right: 121px;
 }
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-lightness {
-    right: 142px;
+    right: 141px;
 }
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-alpha {
-    right: 142px;
+    right: 141px;
+}
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-hue {
+    right: 141px;
+}
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-hue.color-picker-show-alpha {
+    right: 161px;
+}
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-hue.color-picker-show-lightness {
+    right: 161px;
 }
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-alpha.color-picker-show-lightness {
-    right: 162px;
+    right: 161px;
+}
+.color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline.color-picker-show-hue.color-picker-show-alpha.color-picker-show-lightness {
+    right: 181px;
 }
 
 .color-picker-wrapper .input-group .input-group-addon {
@@ -38,17 +51,22 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-wrapper.color-picker-swatch-only .input-group .input-group-addon:last-child {
+    border-left-width: 0px;
+}
+
+.color-picker-wrapper .input-group .input-group-addon:last-child {
     border-width: 0px;
     width: 1px;
 }
 
 .color-picker-wrapper .input-group .color-picker-input {
     position: relative;
-    width: 160px;
-    height: 22px;
+    width: 123px;
+    height: 20px;
     text-indent: 6px;
+    text-align: center;
     font-size: smaller;
-    border-width: 0px;
+    padding-right: 4px;
 }
 
 .color-picker-wrapper .color-picker-swatch:not(.input-group-addon).color-picker-swatch-right {
@@ -68,5 +86,5 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-show-inline {
-    z-index: 99998 !important;
+    z-index: 77 !important;
 }

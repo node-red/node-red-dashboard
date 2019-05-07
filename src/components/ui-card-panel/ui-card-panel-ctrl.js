@@ -22,7 +22,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                 refreshSizes();
                 refreshInProgress = false;
                 if (done) { done(); }
-            }, 10);
+            }, 25);
         };
 
         var rows;

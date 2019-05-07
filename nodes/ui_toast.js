@@ -13,24 +13,35 @@ module.exports = function(RED) {
         this.highlight = config.highlight;
         this.ok = config.ok;
         this.cancel = config.cancel;
+        this.topic = config.topic;
         var node = this;
+
+        var noscript = function (content) {
+            if (typeof content === "object") { return null; }
+            content = '' + content;
+            content = content.replace(/<.*cript.*\/scrip.*>/ig, '');
+            content = content.replace(/ on\w+=".*"/g, '');
+            content = content.replace(/ on\w+=\'.*\'/g, '');
+            return content;
+        }
 
         var done = ui.add({
             node: node,
             control: {},
             storeFrontEndInputAsState: false,
             forwardInputMessages: false,
-            beforeSend: function (toSend,msg) {
-                var m = msg.value.msg;
-                m.topic = config.topic || m.topic;
+            beforeSend: function (msg) {
+                var m = msg.payload.msg;
+                m.topic = node.topic || m.topic;
                 return m;
             }
         });
 
         node.on('input', function(msg) {
             if (node.position !== "dialog") { delete msg.socketid; }
+            msg.payload = noscript(msg.payload);
             ui.emitSocket('show-toast', {
-                title: msg.topic,
+                title: node.topic || msg.topic,
                 message: msg.payload,
                 highlight: node.highlight || msg.highlight,
                 displayTime: node.displayTime,

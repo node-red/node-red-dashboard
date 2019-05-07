@@ -1,86 +1,107 @@
 # node-red-dashboard
 
+![NPM version](https://badge.fury.io/js/node-red-dashboard.svg)
+
 This module provides a set of nodes in Node-RED to quickly create a live data
 dashboard.
 
-<img src="http://nodered.org/images/dashboarde.png"/>
+From version 2.10.0 you can create and install widget nodes like other Node-RED nodes.
+See the <a href="https://github.com/node-red/node-red-dashboard/wiki/Creating-New-Dashboard-Widgets">Wiki</a>
+for more information.
 
-It is a continuation of the [node-red-contrib-ui](https://www.npmjs.com/package/node-red-contrib-ui)
-module created by Andrei Tatar.
+For the latest updates see the [CHANGELOG.md](https://github.com/node-red/node-red-dashboard/blob/master/CHANGELOG.md)
+
+<img src="http://nodered.org/images/dashboarde.png"/>
 
 ## Pre-requisites
 
-Node-RED-Dashboard requires Node-RED version 0.14 or more recent.
+The Node-RED-Dashboard requires <a href="https://nodered.org">Node-RED</a> to be installed.
 
 ## Install
 
-To install the stable version run the following command in your Node-RED user directory (typically `~/.node-red`):
+To install the stable version use the `Menu - Manage palette` option and search for `node-red-dashboard`, or run the following command in your Node-RED user directory (typically `~/.node-red`):
 
     npm i node-red-dashboard
 
-Open your Node-RED instance and you should have UI nodes available in the palette and a new `dashboard` tab in the
+Restart your Node-RED instance and you should have UI nodes available in the palette and a new `dashboard` tab in the
 right side panel. The UI interface is available at <http://localhost:1880/ui> (if the default settings are used).
 
 If you want to try the latest version from github, you can install it by
 
     npm i node-red/node-red-dashboard
 
-#### Migration from node-red-contrib-ui
+## Settings
 
-These nodes will replace the contrib-ui versions. node-red-contrib-ui
-**MUST** be uninstalled before installing node-red-dashboard.
+The default url for the dashboard is based off your existing Node-RED httpRoot path with /ui added. This can be changed in your Node-RED settings.js file - `ui: { path: "ui" },`
 
-    cd ~/.node-red
-    npm uninstall node-red-contrib-ui
+## Layout
 
-In addition - some functionality is not exactly equivalent. There are breaking changes that will require some re-configuration.
+The dashboard layout should be considered as a grid.
+
+Each **group** element has a width - by default 6 'units' (a unit is 48px wide by default with a 6px gap).
+
+Each **widget** in the group also has a width - by default, 'auto' which means it will fill the width of the group it is in, but you can set it to a fixed number of units.
+
+The layout algorithm of the dashboard always tries to place items as high and to the left as they can within their container - this applies to how groups are positioned on the page, as well as how widgets are positioned in a group.
+
+Given a group with width 6, if you add six widgets, each with a width of 2, then they will be laid out in two rows - three widgets in each.
+
+If you add two groups of width 6, as long as your browser window is wide enough, they will sit alongside each other. If you shrink the browser, at some point the second group will shift to be below the first, in a column.
+
+It is advisable to use multiple groups if possible, rather than one big group, so that the page can dynamically resize on smaller screens.
 
 ## Features
 
 #### Dashboard sidebar
 
-The widget layout is now managed by a `dashboard` tab in the sidebar of the Node-RED editor.
+The widget layout is managed by a `dashboard` tab in the sidebar of the Node-RED editor.
 
 ##### Layout
 
  - **Tabs** - From here you can re-order the tabs, groups and widgets, and add and edit their properties.
 
- - **Links** - are no longer added as nodes in the workspace - they are managed in the
-dashboard sidebar. They can also be opened in an iframe - if allowed by the target page.
-
-##### Theme
-
- - **Style** - the theme of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme. You
-cannot have different themes for each tab.
+ - **Links** - to other web pages can also be added to the menu. They can optionally be opened in an iframe - if allowed by the target page.
 
 ##### Site
 
  - **Title** - the `title` of the UI page can be set.
 
- - **Options** - lets you optionally hide the title bar, and allow swiping sideways between tabs on a touch screen.
+ - **Options** - optionally hide the title bar, and allow swiping sideways between tabs on a touch screen. You can also set whether the template uses the selected theme or uses the underlying Angular Material theme. You can also choose to use the Angular Material theme everywhere.
 
- - **Sizes** - you can set the basic geometry of the grid layout in pixels. The **width** and **height** of widgets can be set, as can the width of *groups*. These are all specified in units of approximately 50 pixels.
+ - **Date Format** - sets the default date format for chart and other labels.
+
+ - **Sizes** - sets the basic geometry of the grid layout in pixels. The **width** and **height** of widgets can be set, as can the width of *groups*. These are the basic definitions of the "units' used elsewhere within the dashboard.
+
+##### Theme
+
+  - **Style** - the theme and font of the UI is set in the dashboard sidebar. You can select a default Light, Dark or Custom Theme. You cannot have different themes for each tab.
+
+You can also choose to use the basic Angular Material themes instead if you like, either just within any ui_templates or for the whole Dashboard. This will only affect angular components so some of the charts and so on may need extra work.
 
 
 #### Widgets
 
-The default width of a group is 6 units as it was in contrib-ui ( &approx;300 pixels ). Setting a widget to `auto` will fill the available
-width of the group. It is still advisable to use multiple groups if you can, rather than one big group, so that the page can dynamically resize on smaller screens.
-
 Group labels are optional.
+
+Most widgets can have a label and value - both of these can be specified by properties of the incoming msg if required, and modified by angular filters. For example the label can be set to `{{msg.topic}}`, or the value could be set to `{{value | number:1}}%` to round the value to one decimal place and append a % sign.
+
+Each node may parse the `msg.payload` to make it suitable for display. This converted version is exposed as the variable called `value`, (see example above).  
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
+Most ui widgets can also be configured by using a `msg.ui_control` message - see **[config-fields.md](https://github.com/node-red/node-red-dashboard/blob/master/config-fields.md)**
+for futher details.
+
   - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.
   - **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.
-  - **Chart** - has both line, bar and pie chart modes. Also the X-Axis labels can be customised using a date formatter string. Uses the **Chart.js** library.
+  - **Chart** - has both line, bar and pie chart modes. Also the X-Axis labels can be customised using a date formatter string. See **[this document](https://github.com/node-red/node-red-dashboard/blob/master/Charts.md)** for more information on the chart data formats accepted.
   - **Colour Picker** - a colour picker widget.
   - **Date Picker** - a date picker widget. The displayed Date format can be specified in the Site tab using moment.js formatting.
   - **Dropdown** - a dropdown select widget has been added. Multiple label, value pairs can be specified. The choices can also be set via `msg.options` containing an array of objects. If just text then the value will be the same as the label, otherwise you can specify both by using an object of "label":"value" pairs :
 
         [ "Choice 1", "Choice 2", {"Choice 3": 3} ]
 
-  Setting `msg.payload` will pre-select the value in the dropdown.
+     Setting `msg.payload` will pre-select the value in the dropdown.
   - **Form** - a widget that can be composed of several sub-widgets. When submitted all values are submitted as a single message.
   - **Gauge** - has 4 modes - *standard* (simple gauge), *donut* (complete 360&deg;), *compass*, and *wave*. You can also specify the colour range of the standard and donut gauges.
   - **Notification** - creates alerts to the user - can either be a toast popup, or a dismissable alert box. The alert may be targeted to a single user.
@@ -90,7 +111,8 @@ Any widget can be disabled by passing in a `msg.enabled` property set to `false;
   - **Template** - the template node allows the user to specify and create their own widgets within the framework using HTML, Javascript. This is an Angular.js widget. You may also use this to override the built in CSS styles.
   - **Text** - A read only widget, the layout of the `label`, and `value` can be configured.
   - **Text input** - text input box, with optional label, can also support password, email and colour modes.
-  - **UI-Control** - allows some dynamic control of the dashboard. Sending a `msg.payload` of the tab number (from 0) or name will switch to that tab. Outputs a `msg.payload` for every browser *connection* and *loss*, that can be used to trigger other actions.
+  - **UI-Control** - allows some dynamic control of the dashboard. Sending a `msg.payload` of the tab number (from 0) or tab_name will switch to that tab. Tabs can be enabled/disabled/hide/show via msg like `{"tabs":{"hide":["tab_name_with_underscores"],"show":["another_tab_name"],"disable":["unused_tab_name"]}}`.
+  Groups can be hidden and made visible via a msg like `{"group":{"hide":["tab_name_group_name_with_underscores"],"show":["tab_name_another_group"],"focus":true}}`. Outputs a `msg.payload` for every browser *connect* and *loss*, and every tab *change*. This can be used to trigger other actions like resetting the visibility of tabs and groups.
 
 **Tip:** The *Text* widget will accept html - so you can use it together with the *fa-icons* we
 already use to create indicator type widgets.
@@ -107,10 +129,15 @@ This Dashboard does NOT support multiple individual users. It is a view of the s
 Node-RED flow, which itself is single user. If the state of the flow changes then all clients will get
 notified of that change.
 
+Messages coming from the dashboard **do** have a `msg.socketid`, and updates like change of tab,
+notifications, and audio alerts will be directed only to that session. Delete the `msg.sessionid` to send
+to all sessions.
+
 ## Discussions and suggestions
 
-Use the Node-RED google group: <https://groups.google.com/forum/#!forum/node-red>
-or the Dashboard-ui channel in <a href="http://nodered.org/slack/">Slack</a>
+Use the Node-RED Discourse Forum: https://discourse.nodered.org/c/dashboard
+or the Dashboard-ui channel in <a href="http://nodered.org/slack/">Slack</a> to ask
+questions or to discuss new features.
 
 The current work in progress list is shown in the
 <a href="https://github.com/node-red/node-red-dashboard/projects/1" target="_blank"> Github Project</a>.
@@ -132,8 +159,8 @@ git clone https://github.com/node-red/node-red-dashboard.git
 cd node-red-dashboard
 npm install
 ```
-The plugin uses the ```dist``` folder if it exists and contains an ```index.html``` file. Make sure to delete it if you want to use the non-minified version.
-After changing the front-end code in the src folder, use ```gulp``` to update the minified files and update the *appcache* manifest.
+The plugin uses the ```dist``` folder if it exists. Make sure it has been deleted if you want to use the non-minified version while developing.
+After finishing changes to the front-end code in the src folder, you can use ```gulp``` to update and rebuild the minified files and update the *appcache* manifest.
 
     gulp
 

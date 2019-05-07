@@ -5,6 +5,7 @@
         defaults: {
             name: {value: ''},
             label: {value: 'slider'},
+            tooltip: {value: ''},
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -18,6 +19,7 @@
             },
             height: {value: 0},
             passthru: {value: true},
+            outs: {value: 'all'},
             topic: {value: ''},
             min: {value: 0, required:true, validate:RED.validators.number()},
             max: {value: 10, required:true, validate:RED.validators.number()},
@@ -27,13 +29,14 @@
         outputs:1,
         icon: "ui_slider.png",
         paletteLabel: 'slider',
-        label: function() { return this.name || this.label || 'slider'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'slider'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+            if (!$("#node-input-outs").val()) { $("#node-input-outs").val("all") }
         }
     });
 </script>
@@ -54,13 +57,24 @@
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
-        <label for="node-input-min">Range</label>
-        <label for="node-input-min" style="width:auto">min</label>
+        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> Tooltip</label>
+        <input type="text" id="node-input-tooltip" placeholder="optional tooltip">
+    </div>
+    <div class="form-row">
+        <label for="node-input-min"><i class="fa fa-arrows-h"></i> Range</label>
+        <span for="node-input-min">min</span>
         <input type="text" id="node-input-min" style="width:60px">
-        <label for="not-input-max" style="width:auto; margin-left:22px;">max</label>
+        <span for="not-input-max" style="margin-left:22px;">max</span>
         <input type="text" id="node-input-max" style="width:60px">
-        <label for="not-input-step" style="width:auto; margin-left:22px;">step</label>
+        <span for="not-input-step" style="margin-left:22px;">step</span>
         <input type="text" id="node-input-step" style="width:60px">
+    </div>
+    <div class="form-row">
+        <label for="node-input-outs"><i class="fa fa-sign-out"></i> Output</label>
+        <select id="node-input-outs" style="width:204px">
+            <option value="all">continuously while sliding</option>
+            <option value="end">only on release</option>
+        </select>
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
@@ -87,8 +101,14 @@
     <p>Adds a slider widget to the user interface.</p>
 	<p>The user can change its value between the limits (<b>min</b> and <b>max</b>). Each value change
     will generate a message with the value set as <b>payload</b>.</p>
+    <p>A vertical slider can be created by setting the size so that the height is greater than the width.</p>
+    <p>The slider can be reversed by setting the min value larger than the max value. e.g. min 100, max 0.</p>
     <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
-    <p>Any input messages will be converted to a number. The <b>min</b> value will be used if conversion fails,
+    <p>Input messages will be converted to a number. The <b>min</b> value will be used if conversion fails,
     and it will update the user interface. If the value changes, it will also be passed to the output.</p>
-    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the slider output.</p>
+    <p>Note: An input msg to the slider node will not change the status information displayed unless the slider
+    node output is connected to another node.</p>
 </script>

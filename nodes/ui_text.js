@@ -33,14 +33,16 @@ module.exports = function(RED) {
                 layout: angLayout,
                 layoutAlign: angLayoutAlign
             },
-            beforeEmit: function(msg, value) {
-                var properties = Object.getOwnPropertyNames(msg).filter(function (p) {return p[0] != '_';});
-                var clonedMsg = { };
-                for (var i=0; i<properties.length; i++) {
-                    var property = properties[i];
-                    clonedMsg[property] = msg[property];
+            convert: function(value, oldValue, msg) {
+                if (value !== undefined) {
+                    if (Buffer.isBuffer(value)) {
+                        value = value.toString('binary');
+                    }
+                    else {
+                        value = value.toString();
+                    }
                 }
-                return { msg: clonedMsg };
+                return value;
             }
         });
         node.on("close", done);

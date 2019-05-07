@@ -31,7 +31,7 @@ angular.module('ui').service('UiEvents', ['$timeout',
             };
 
             socket.on('ui-controls', function (data) {
-                $timeout(onuiloaded(data, function() {
+                $timeout( onuiloaded(data, function() {
                     socket.emit('ui-replay-state');
                 }), 0);
             });

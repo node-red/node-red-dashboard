@@ -5,6 +5,7 @@
         defaults: {
             name: {value: ''},
             label: {value: 'numeric'},
+            tooltip: {value: ''},
             group: {type: 'ui_group', required: true},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -28,7 +29,7 @@
         outputs:1,
         icon: "ui_numeric.png",
         paletteLabel: 'numeric',
-        label: function() { return this.name || this.label || 'numeric'; },
+        label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'numeric'; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -55,16 +56,20 @@
         <input type="text" id="node-input-label">
     </div>
     <div class="form-row">
+        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> Tooltip</label>
+        <input type="text" id="node-input-tooltip" placeholder="optional tooltip">
+    </div>
+    <div class="form-row">
         <label for="node-input-format"><i class="fa fa-i-cursor"></i> Value Format</label>
         <input type="text" id="node-input-format" placeholder="{{value}}">
     </div>
     <div class="form-row">
         <label for="node-input-min">Range</label>
-        <label for="node-input-min" style="width:auto">min</label>
+        <span for="node-input-min">min</span>
         <input type="text" id="node-input-min" style="width:60px">
-        <label for="not-input-max" style="width:auto; margin-left:22px;">max</label>
+        <span for="not-input-max" style="margin-left:22px;">max</span>
         <input type="text" id="node-input-max" style="width:60px">
-        <label for="not-input-step" style="width:auto; margin-left:22px;">step</label>
+        <span for="not-input-step" style="margin-left:22px;">step</span>
         <input type="text" id="node-input-step" style="width:60px">
     </div>
     <div class="form-row">
@@ -99,5 +104,7 @@
     of <code>{{value}} %</code>
     with a value of <b>23</b> will show <b>23 %</b> on the user interface. The <b>Value Format</b> field can contain
     HTML or Angular filters to format the output (eg: <code>&amp;deg;</code> will show the degree symbol).</p>
-    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the widget output.</p>
 </script>
