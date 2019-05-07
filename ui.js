@@ -321,14 +321,22 @@ function init(server, app, log, redSettings) {
 
     io = socketio(server, {path: socketIoPath});
 
+    var dashboardMiddleware = function(req, res, next) { next(); }
+
+    if (uiSettings.dashboardMiddleware) {
+        if (typeof uiSettings.dashboardMiddleware === "function") {
+            dashboardMiddleware = uiSettings.dashboardMiddleware;
+        }
+    }
+
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
-        if (!err) {
+        if (!err) {     
             app.use( join(settings.path, "manifest.json"), function(req, res) { res.send(mani); });
-            app.use( join(settings.path), serveStatic(path.join(__dirname, "dist")) );
+            app.use( join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "dist")) );
         }
         else {
             log.info("[Dashboard] Dashboard using development folder");
-            app.use(join(settings.path), serveStatic(path.join(__dirname, "src")));
+            app.use( join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "src")) );
             var vendor_packages = [
                 'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material', 'angular-touch',
                 'angular-material-icons', 'svg-morpheus', 'font-awesome', 'weather-icons-lite',
