@@ -323,14 +323,14 @@ function init(server, app, log, redSettings) {
 
     var dashboardMiddleware = function(req, res, next) { next(); }
 
-    if (uiSettings.dashboardMiddleware) {
-        if (typeof uiSettings.dashboardMiddleware === "function") {
-            dashboardMiddleware = uiSettings.dashboardMiddleware;
+    if (uiSettings.middleware) {
+        if (typeof uiSettings.middleware === "function") {
+            dashboardMiddleware = uiSettings.middleware;
         }
     }
 
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
-        if (!err) {     
+        if (!err) {
             app.use( join(settings.path, "manifest.json"), function(req, res) { res.send(mani); });
             app.use( join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "dist")) );
         }
