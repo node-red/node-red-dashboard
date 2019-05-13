@@ -9,7 +9,7 @@
 **Fixes**
 
  - Ensure msg.enabled applies to all themes. Issue #481
- - Ensure them applies to popup dialog alerts also.
+ - Ensure theme applies to popup dialog alerts also.
  - ensure slider only sends on mouse up when in that mode. Issue #490
 
 ### 2.14.0: Milestone Release
