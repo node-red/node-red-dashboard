@@ -31,6 +31,11 @@ if (!String.prototype.startsWith) {
     };
 }
 
+var doVisualUpdates = true;
+document.addEventListener('visibilitychange', function() {
+    doVisualUpdates = !document.hidden;
+});
+
 var app = angular.module('ui',['ngMaterial', 'ngMdIcons', 'ngSanitize', 'ngTouch', 'sprintf', 'chart.js', 'color.picker']);
 
 var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
@@ -489,7 +494,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('disconnect', function(m) {
-            if (!disc) {
+            if (!disc && doVisualUpdates) {
                 $mdToast.show({
                     template: '<md-toast><div class="md-toast-error">&#x2718; &nbsp; Connection lost</div></md-toast>',
                     position: 'top right',
