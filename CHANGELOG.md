@@ -1,3 +1,8 @@
+### 2.15.1: Maintenance Release
+
+**Fixes**
+
+ - Fix built in fa-icons font paths
 
 ### 2.15.0: Milestone Release
 
@@ -8,9 +13,9 @@
 
 **Fixes**
 
- - Ensure msg.enabled applies to all themes. Issue #481
+ - Ensure `msg.enabled` applies to all themes. Issue #481
  - Ensure theme applies to popup dialog alerts also.
- - ensure slider only sends on mouse up when in that mode. Issue #490
+ - Ensure slider only sends on mouse up when in that mode. Issue #490
 
 ### 2.14.0: Milestone Release
 
