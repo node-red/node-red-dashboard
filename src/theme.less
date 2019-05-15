@@ -372,6 +372,19 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
         margin-left: 6px;
     }
 
+    .nr-dashboard-theme .nr-dashboard-template md-switch .md-thumb {
+        background-color: rgb(148, 148, 148);
+    }
+    .nr-dashboard-theme .nr-dashboard-template  md-switch .md-bar {
+        background-color: rgba(111, 111, 111, 0.5);
+    }
+    .nr-dashboard-theme .nr-dashboard-template md-switch.md-checked:not([disabled]) .md-thumb {
+        background-color: lighten(@widgetBackgroundColor, 5);
+    }
+    .nr-dashboard-theme .nr-dashboard-template md-switch.md-checked:not([disabled]) .md-bar {
+        background-color: rgba(red(@widgetBackgroundColor), green(@widgetBackgroundColor), blue(@widgetBackgroundColor), 0.5);
+    }
+
     md-radio-button {
         min-height: @nrUnitHeight * 2;
         margin-left: 6px;
