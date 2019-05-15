@@ -351,7 +351,7 @@ function loadConfiguration(type,scope) {
 
     // Configure legend
     //if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
-    if (legend) {
+    if (legend == "true") {
         config.options.legend = {
             display:true,
             position:'top',
