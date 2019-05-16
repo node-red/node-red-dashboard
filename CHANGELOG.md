@@ -3,6 +3,7 @@
 **Fixes**
 
  - Fix slider css so numbers stay visible when in "on release only" mode
+ - Fix switch to show correct state for late connecting clients. Issue #497
 
 ### 2.15.2: Maintenance Release
 
