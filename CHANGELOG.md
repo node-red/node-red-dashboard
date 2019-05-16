@@ -1,3 +1,9 @@
+### 2.15.3: Maintenance Release
+
+**Fixes**
+
+ - Fix slider css so numbers stay visible when in "on release only" mode
+
 ### 2.15.2: Maintenance Release
 
 **Fixes**

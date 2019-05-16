@@ -279,11 +279,17 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-slider .md-sign {
     background-color: @widgetBackgroundColor;
 }
-.md-sign:after {
+.nr-dashboard-theme .nr-dashboard-slider .md-sign:after {
     border-top-color: @widgetBackgroundColor !important;
 }
-.nr-dashboard-theme .nr-dashboard-slider .md-track-ticks {
-    color: rgba(0,0,0,0);
+.nr-dashboard-theme .nr-dashboard-slider .md-min[md-discrete] .md-sign {
+    background-color: @widgetBackgroundColor;
+}
+.nr-dashboard-theme .nr-dashboard-slider  md-slider[md-discrete] .md-sign,
+.nr-dashboard-theme .nr-dashboard-slider  md-slider[md-discrete] .md-sign:after {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
 }
 
 /* Switch */
