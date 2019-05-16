@@ -2,7 +2,8 @@
 ## UI Widget configuration via msg.ui_control
 
 The following configuration properties of ui widget nodes can be set by using a `msg.ui_control` property on a msg.
-Multiple properties of the node can be set at the same time. eg `{ "min":10, "max":50 }`
+Multiple properties of the node can be set at the same time. For example you can use a change
+node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 
 **Note**: It is still recommended that nodes are configured via the editor in order to preset the default values.
 
@@ -12,6 +13,7 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 |                       |bgcolor            |string     | not needed
 |                       |icon               |string     | on refresh
 |                       |format             |string     | not needed
+|                       |tooltip            |string     | on refresh
 |ui_chart               |look               |string     |"line","bar","horizontalBar","pie","polar-area","radar"
 |                       |legend             |boolean    |&nbsp;
 |                       |interpolate        |string     |"linear","step","bezier"
@@ -25,6 +27,7 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 |                       |useOneColor        |boolean    | n/a
 |                       |spanGaps           |boolean    | n/a
 |                       |animation          |string     | (Note 1), {duration:1000, easing:"easeInOutSine"}
+|                       |options            |object     | (Note 2), {scales: {yAxes: [{ticks: {fontSize: 20}}]}}
 |ui_colour_picker       |format             |string     | on refresh
 |                       |showPicker         |boolean    | on refresh
 |                       |showSwatch         |boolean    | on refresh
@@ -39,7 +42,7 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 |                       |seg2               |number     |segment 2 limit
 |                       |max                |number     |&nbsp;
 |                       |colors             |array      |["blue","#00ff00","#f00"]
-|                       |options            |object     |(see Note 2 below)
+|                       |options            |object     |(see Note 3 below)
 |ui_numeric             |min                |number     |&nbsp;
 |                       |max                |number     |&nbsp;
 |                       |step               |number     |&nbsp;
@@ -62,7 +65,9 @@ Multiple properties of the node can be set at the same time. eg `{ "min":10, "ma
 
  1. See http://easings.net/ for examples of easings for chart animation.
 
- 2. The gauge options can accept any of the [Justgage parameters](https://github.com/toorshia/justgage/blob/master/justgage.js#L42) for example:
+ 2. The chart can take many of the angular-chartjs options for changing axes label, scales etc
+
+ 3. The gauge options can accept any of the [Justgage parameters](https://github.com/toorshia/justgage/blob/master/justgage.js#L42) for example:
 
          {"options":{"pointer":false,"gaugeWidthScale":1.5}}
          {"options":{"pointer":true,"gaugeWidthScale":0.4,"reverse":true}}

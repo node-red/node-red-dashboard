@@ -1,8 +1,27 @@
+### 2.15.1: Maintenance Release
 
-### 2.14.0-beta: Milestone Release
+**Fixes**
+
+ - Fix built in fa-icons font paths
+
+### 2.15.0: Milestone Release
 
 **Enhancements**
 
+ - Allow ui_chart to have many more options set by control message, see [config-fields.md](config-fields.md)
+ - Allow `ui.middleware` in settings.js to specify middleware for use with dashboard endpoint. See [PR #209](https://github.com/node-red/node-red-dashboard/pull/209/) for example usage.
+
+**Fixes**
+
+ - Ensure `msg.enabled` applies to all themes. Issue #481
+ - Ensure theme applies to popup dialog alerts also.
+ - Ensure slider only sends on mouse up when in that mode. Issue #490
+
+### 2.14.0: Milestone Release
+
+**Enhancements**
+
+ - Allow Tabs to be hidden or disabled dynamically from a ui_control msg.
  - Finally remove deprecated second output from ui_chart node.
  - Allow ui_form to be submitted with empty fields (if they are not required)
 
@@ -12,6 +31,8 @@
  - Add startsWith polyfill for IE11
  - Ensure active sidebar menu item is highlighted - Issue #472
  - Sanitise display of html input - Issue #473
+ - Respect msg.socketid to return msg back to selected session when using ui_template
+ - Allow dropdown to have 0 pre-configured values, by removing validation.
 
 ### 2.13.2: Maintenance Release
 

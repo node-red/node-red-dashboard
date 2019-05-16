@@ -19,7 +19,7 @@
         paletteLabel: 'notification',
         label: function() { return this.name || (this.position==="dialog" ? "show dialog" : "show notification"); },
         oneditprepare: function() {
-            $("#node-input-position").change(function() {
+            $("#node-input-position").on("change", function() {
                 if ($("#node-input-position option:selected").val() === 'dialog') {
                     $("#node-toast-displaytime").hide();
                     $("#node-toast-highlightcolor").hide();

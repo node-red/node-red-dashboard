@@ -22,13 +22,19 @@ if (typeof Object.assign != 'function') {
         };
     })()
 }
-// startsWith polyfill for IE11...
+
+// String startsWith polyfill for IE11...
 if (!String.prototype.startsWith) {
     String.prototype.startsWith = function(searchString, position) {
         position = position || 0;
         return this.indexOf(searchString, position) === position;
     };
 }
+
+var doVisualUpdates = true;
+document.addEventListener('visibilitychange', function() {
+    doVisualUpdates = !document.hidden;
+});
 
 var app = angular.module('ui',['ngMaterial', 'ngMdIcons', 'ngSanitize', 'ngTouch', 'sprintf', 'chart.js', 'color.picker']);
 
@@ -84,12 +90,13 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         var audioSource;
         var voices = [];
         var tabId = 0;
+        var disc = true;
 
         function moveTab(d) {
             var len = main.menu.length;
             if (len > 1) {
                 //var i = parseInt($location.path().substr(1));
-                for (var i = tabId + d; i != tabId; i += d) {
+                for (var i = +tabId + d; i != tabId; i += d) {
                     i = i % len;
                     if (i < 0) { i += len; }
                     if (!main.menu[i].disabled && !main.menu[i].hidden) {
@@ -140,6 +147,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $mdSidenav('left').close();
             }
         }
+
         $scope.location = $location;
 
         this.getMenuName = function (menu) {
@@ -194,10 +202,32 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        function hideGroups() {
+        function hideTabsAndGroups() {
             var flag = false;
             for (var t in main.menu) {
                 if (main.menu.hasOwnProperty(t)) {
+                    if (typeof localStorage !== 'undefined') {
+                        if (localStorage.getItem("th"+t+main.menu[t].header) == "true") {
+                            if (main.menu[t].hidden === true) { localStorage.removeItem("th"+t+main.menu[t].header) }
+                            else { main.menu[t].hidden = true; }
+                            flag = true;
+                        }
+                        if (localStorage.getItem("th"+t+main.menu[t].header) == "false") {
+                            if (main.menu[t].hidden === false) { localStorage.removeItem("th"+t+main.menu[t].header) }
+                            else { main.menu[t].hidden = false; }
+                            flag = true;
+                        }
+                        if (localStorage.getItem("td"+t+main.menu[t].header) == "true") {
+                            if (main.menu[t].disabled === true) { localStorage.removeItem("td"+t+main.menu[t].header) }
+                            else { main.menu[t].disabled = true; }
+                            flag = true;
+                        }
+                        if (localStorage.getItem("td"+t+main.menu[t].header) == "false") {
+                            if (main.menu[t].disabled === false) { localStorage.removeItem("td"+t+main.menu[t].header) }
+                            else { main.menu[t].disabled = false; }
+                            flag = true;
+                        }
+                    }
                     for (var g in main.menu[t].items) {
                         if (main.menu[t].items.hasOwnProperty(g)) {
                             var c = (main.menu[t].header+" "+main.menu[t].items[g].header.name).replace(/ /g,"_");
@@ -295,6 +325,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         }
 
         events.connect(function (ui, done) {
+            events.emit('ui-params', $location.search());
             main.menu = ui.menu;
             main.globals = ui.globals;
             main.nothing = false;
@@ -348,9 +379,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
                 $mdToast.hide();
+                disc = false;
                 processGlobals();
                 events.emit('ui-change', prevTabIndex);
-                hideGroups();
+                hideTabsAndGroups();
                 done();
             }
             if (!isNaN(prevTabIndex) && prevTabIndex < main.menu.length && !main.menu[prevTabIndex].disabled) {
@@ -419,6 +451,16 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             return elFound;
         }
 
+        function arrayIncludesName(strArray, strName) {
+            // if an array of names is input, use it -- else build an array of one name
+            var arrNames = strArray && Array.isArray(strArray) ? strArray : [strArray];
+            // convert all names to lower-case, and replace any spaces with '_'
+            arrNames = arrNames.map(function (n) {
+                return n.toLowerCase().replace(/\s+/, '_');
+            });
+            return arrNames.includes(strName.toLowerCase().replace(/\s+/, '_'));
+        }
+
         events.on(function (msg) {
             var found;
             if (msg.hasOwnProperty('msg') && msg.msg.templateScope === 'global') {
@@ -452,11 +494,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('disconnect', function(m) {
-            $mdToast.show({
-                template: '<md-toast><div class="md-toast-error">&#x2718; &nbsp; Connection lost</div></md-toast>',
-                position: 'top right',
-                hideDelay: 6000000
-            });
+            if (!disc && doVisualUpdates) {
+                $mdToast.show({
+                    template: '<md-toast><div class="md-toast-error">&#x2718; &nbsp; Connection lost</div></md-toast>',
+                    position: 'top right',
+                    hideDelay: 6000000
+                });
+                disc = true;
+            }
         });
 
         events.on('show-toast', function (msg) {
@@ -469,6 +514,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .ariaLabel(msg.ok + " or " + msg.cancel)
                         .ok(msg.ok)
                         .cancel(msg.cancel);
+                    confirm._options.focusOnOpen = false;
                 }
                 else {
                     confirm = $mdDialog.alert()
@@ -476,9 +522,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .htmlContent(msg.message)
                         .ariaLabel(msg.ok)
                         .ok(msg.ok)
-                        .clickOutsideToClose(false)
                 }
-                $mdDialog.show(confirm, { panelClass:'nt-dashboard-dialog' }).then(
+                $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
                     function() {
                         msg.msg.payload = msg.ok;
                         events.emit({ id:msg.id, value:msg });
@@ -517,7 +562,40 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 }
                 //Object.assign(found,msg.control);
             }
+            if (msg.hasOwnProperty("tabs")) { // ui_control request to show/hide/enable/disable tabs
+                if (typeof msg.tabs === 'object') {
+                    for (var ta in main.menu) {
+                        if (main.menu.hasOwnProperty(ta)) {
+                            if (msg.tabs.hasOwnProperty("show")) {
+                                if (arrayIncludesName(msg.tabs.show, main.menu[ta].header)) {
+                                    main.menu[ta].hidden = false;
+                                    localStorage.setItem("th"+ta+main.menu[ta].header,false);
+                                }
+                            }
+                            if (msg.tabs.hasOwnProperty("hide")) {
+                                if (arrayIncludesName(msg.tabs.hide, main.menu[ta].header)) {
+                                    main.menu[ta].hidden = true;
+                                    localStorage.setItem("th"+ta+main.menu[ta].header,true);
+                                }
+                            }
+                            if (msg.tabs.hasOwnProperty("enable")) {
+                                if (arrayIncludesName(msg.tabs.enable, main.menu[ta].header)) {
+                                    main.menu[ta].disabled = false;
+                                    localStorage.setItem("td"+ta+main.menu[ta].header,false);
+                                }
+                            }
+                            if (msg.tabs.hasOwnProperty("disable")) {
+                                if (arrayIncludesName(msg.tabs.disable, main.menu[ta].header)) {
+                                    main.menu[ta].disabled = true;
+                                    localStorage.setItem("td"+ta+main.menu[ta].header,true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             if (msg.hasOwnProperty("tab")) { // if it's a request to change tabs
+                // is it a tab name or relative number?
                 if (typeof msg.tab === 'string') {
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }
                     if (msg.tab === "+1") { moveTab(1); return; }

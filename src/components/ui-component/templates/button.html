@@ -4,7 +4,7 @@
                aria-label="{{'button' + me.item.label}}"
 			   ng-style="{'background-color':me.item.getText(), 'color':me.item.getColor(), 'z-index':1, 'padding':'0px'}"
                >
-		<ui-icon ng-show="me.item.icon.length" icon="{{ me.item.icon }}" ng-style="{color:me.item.getColor()}"></ui-icon>
+		<ui-icon ng-show="me.item.icon.length" icon="{{me.item.icon}}" ng-style="{color:me.item.getColor()}"></ui-icon>
         <span ng-bind-html="me.item.getLabel()"></span>
 	    <md-tooltip ng-if="me.item.getTooltip().length" md-delay="700" md-direction="bottom" ng-bind-html="me.item.getTooltip()"></md-tooltip>
     </md-button>

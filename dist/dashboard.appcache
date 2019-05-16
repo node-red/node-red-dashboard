@@ -7,16 +7,15 @@ icon192x192.png
 icon64x64.png
 css/app.min.css
 css/app.min.less
-css/index.html
 js/app.min.js
 js/tinycolor-min.js
 socket.io/socket.io.js
-font-awesome/fonts/fontawesome-webfont.woff
-font-awesome/fonts/fontawesome-webfont.woff2
-weather-icons-lite/fonts/weather-icons-lite.woff
-weather-icons-lite/fonts/weather-icons-lite.woff2
+fonts/fontawesome-webfont.woff
+fonts/fontawesome-webfont.woff2
+fonts/weather-icons-lite.woff
+fonts/weather-icons-lite.woff2
 
 NETWORK:
 *
 
-# hash: 3c30e80129b2e72172bb0cfc0f8def5aa1591edf1dfc939a84b661ee1065f782
+# hash: 7bb6182af4ac862115134879c1329a2f12a0c13db352437f54e5d2436c121a97

@@ -39,6 +39,7 @@ var replayMessages = {};
 var removeStateTimers = {};
 var removeStateTimeout = 1000;
 var ev = new events.EventEmitter();
+var params = {};
 ev.setMaxListeners(0);
 
 // default manifest.json to be returned as required.
@@ -72,8 +73,11 @@ function emit(event, data) {
 }
 
 function emitSocket(event, data) {
-    if (data.hasOwnProperty("socketid") && (data.socketid !== undefined)) {
-        io.to(data.socketid).emit(event,data);
+    if (data.hasOwnProperty("msg") && data.msg.hasOwnProperty("socketid") && (data.msg.socketid !== undefined)) {
+        io.to(data.msg.socketid).emit(event, data);
+    }
+    else if (data.hasOwnProperty("socketid") && (data.socketid !== undefined)) {
+        io.to(data.socketid).emit(event, data);
     }
     else {
         io.emit(event, data);
@@ -240,8 +244,10 @@ function add(opt) {
             toEmit.id = toStore.id = opt.node.id;
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
-            io.emit(updateValueEventName, toEmit);
-            replayMessages[opt.node.id] = toStore;
+            emitSocket(updateValueEventName, toEmit);
+            if (opt.storeFrontEndInputAsState === true) {
+                replayMessages[opt.node.id] = toStore;
+            }
 
             // Handle the node output
             if (opt.forwardInputMessages && opt.node._wireCount) {
@@ -261,7 +267,7 @@ function add(opt) {
         } // don't accept input if we are in read only mode
         else {
             var converted = opt.convertBack(msg.value);
-            if (opt.storeFrontEndInputAsState) {
+            if (opt.storeFrontEndInputAsState === true) {
                 currentValues[msg.id] = converted;
                 replayMessages[msg.id] = msg;
             }
@@ -272,7 +278,7 @@ function add(opt) {
                 opt.node.send(toSend);      // send to following nodes
             }
         }
-        if (opt.storeFrontEndInputAsState) {
+        if (opt.storeFrontEndInputAsState === true) {
             //fwd to all UI clients
             io.emit(updateValueEventName, msg);
         }
@@ -315,14 +321,22 @@ function init(server, app, log, redSettings) {
 
     io = socketio(server, {path: socketIoPath});
 
+    var dashboardMiddleware = function(req, res, next) { next(); }
+
+    if (uiSettings.middleware) {
+        if (typeof uiSettings.middleware === "function") {
+            dashboardMiddleware = uiSettings.middleware;
+        }
+    }
+
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
         if (!err) {
             app.use( join(settings.path, "manifest.json"), function(req, res) { res.send(mani); });
-            app.use( join(settings.path), serveStatic(path.join(__dirname, "dist")) );
+            app.use( join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "dist")) );
         }
         else {
             log.info("[Dashboard] Dashboard using development folder");
-            app.use(join(settings.path), serveStatic(path.join(__dirname, "src")));
+            app.use(join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "src")));
             var vendor_packages = [
                 'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material', 'angular-touch',
                 'angular-material-icons', 'svg-morpheus', 'font-awesome', 'weather-icons-lite',
@@ -358,7 +372,7 @@ function init(server, app, log, redSettings) {
             var name = "";
             if ((index != null) && !isNaN(index) && (menu.length > 0) && (index < menu.length) && menu[index]) {
                 name = (menu[index].hasOwnProperty("header") && typeof menu[index].header !== 'undefined') ? menu[index].header : menu[index].name;
-                ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress);
+                ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress, params);
             }
         });
         socket.on('ui-refresh', function() {
@@ -369,6 +383,10 @@ function init(server, app, log, redSettings) {
         });
         socket.on('ui-audio', function(audioStatus) {
             ev.emit("audiostatus", audioStatus, socket.client.id, socket.request.connection.remoteAddress);
+        });
+        socket.on('ui-params', function(p) {
+            delete p.socketid;
+            params = p;
         });
     });
 }

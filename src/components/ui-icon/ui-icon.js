@@ -4,6 +4,7 @@ angular.module('ui').directive('uiIcon',
         var url = /^https?:\/\//i;
         var fa = /^fa-/i;
         var wi = /^wi-/i;
+        var mi = /^mi-/i;
         var ic = /^icofont-/i;
         return {
             restrict: 'E',
@@ -20,6 +21,7 @@ angular.module('ui').directive('uiIcon',
                     }
                     else if (fa.test(newValue)) { scope.iconType = 'fa'; }
                     else if (wi.test(newValue)) { scope.iconType = 'wi'; }
+                    else if (mi.test(newValue)) { scope.iconType = 'mi'; }
                     else if (ic.test(newValue)) { scope.iconType = 'icofont'; }
                     else { scope.iconType = 'angular-material'; }
                 });

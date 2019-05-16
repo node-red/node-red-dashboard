@@ -108,11 +108,19 @@ function addWidget(RED, options) {
     return ui.add(ui_options);
 }
 
+/* getSizes:
+    returns the grid size in pixels
+    default - { sx: 48, sy: 48, gx: 6, gy: 6, cx: 6, cy: 6, px: 0, py: 0 }
+*/
+
+/* getTheme:
+    returns the current theme object
+*/
 
 module.exports = function (RED) {
     return {
-        addWidget: function (options) {
-            return addWidget(RED, options);
-        }
+        addWidget: function (options) { return addWidget(RED, options); },
+        getSizes: function() { return require("./ui")(RED).getSizes(); },
+        getTheme: function() { return require("./ui")(RED).getTheme(); }
     };
 };

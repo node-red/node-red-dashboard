@@ -50,7 +50,7 @@
                 var textColor = (level >= 128) ? '#111111' : '#eeeeee';
                 $(id).css("color", textColor);
             }
-            $(".gauge-color").change(function() {
+            $(".gauge-color").on("change", function() {
                 setColour("#"+$(this).attr("id"), $(this).val());
             });
 
@@ -76,7 +76,7 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
-            $("#node-input-gtype").change(function() {
+            $("#node-input-gtype").on("change", function() {
                 if ($(this).val() === "wave") {
                     $("#ui-gauge-format").hide();
                 }
@@ -92,10 +92,10 @@
                     $("#ui-gauge-segments").show();
                 }
             });
-            $("#node-input-min").change(function() {
+            $("#node-input-min").on("change", function() {
                 $("#seg-min").text($(this).val());
             });
-            $("#node-input-max").change(function() {
+            $("#node-input-max").on("change", function() {
                 $("#seg-max").text($(this).val());
             });
         },

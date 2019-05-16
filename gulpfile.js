@@ -10,16 +10,13 @@ var
     gutil = require('gulp-util'),
     header = require("gulp-header"),
     htmlreplace = require('gulp-html-replace'),
-    insertLines = require('gulp-insert-lines'),
     jscs = require('gulp-jscs'),
     jshint = require('gulp-jshint'),
     manifest = require('gulp-manifest'),
     minifyCss = require('gulp-clean-css'),
     minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
-    removeHtml = require('gulp-remove-html'),
     replace = require('gulp-replace'),
-    resources = require('gulp-resources'),
     streamqueue = require('streamqueue'),
     templateCache = require('gulp-angular-templatecache'),
     uglify = require('gulp-uglify');
@@ -27,12 +24,13 @@ var
 //gulp.task('default', ['manifest']);
 gulp.task('default', ['lint','jscs'], function() {
     gulp.start('manifest');
+    //gulp.start('build');
 });
 
 gulp.task('build', ['icon', 'js', 'css', 'less', 'index', 'fonts']);
 
 gulp.task('manifest', ['build'], function() {
-    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/font-awesome/fonts/*','dist/weather-icons-lite/fonts/*','dist/fonts/*'], { base: 'dist/' })
+    gulp.src(['dist/*','dist/css/*','dist/js/*','dist/fonts/*'], { base: 'dist/' })
     .pipe(manifest({
         hash: true,
         //preferOnline: true,
@@ -65,15 +63,8 @@ gulp.task('index', function() {
     .pipe(htmlreplace({
         'css': 'css/app.min.css',
         'js': 'js/app.min.js',
+        'less': '<link rel="stylesheet/less" href="css/app.min.less" />'
     }))
-    .pipe(insertLines({
-        'before': /<\/head>$/,
-        'lineBefore': '<link rel="stylesheet/less" href="css/app.min.less" />'
-    }))
-    // .pipe(insertLines({
-    //     'before': /<\/body>$/,
-    //     'lineBefore': '<script src="js/tinycolor-min.js"></script>'
-    // }))
     .pipe(minifyHTML({collapseWhitespace:true, conservativeCollapse:true}))
     .pipe(eol('\n'))
     .pipe(gulp.dest('dist/'));
@@ -87,10 +78,10 @@ gulp.task('icon', function() {
 
 gulp.task('fonts', function() {
     //return gulp.src('node_modules/font-awesome/fonts/*').pipe(gulp.dest('dist/fonts/'));
-    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff').pipe(gulp.dest('dist/font-awesome/fonts/'));
-    gulp.src('node_modules/weather-icons-lite/fonts/weather-icons-lite.woff').pipe(gulp.dest('dist/weather-icons-lite/fonts/'));
-    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff2').pipe(gulp.dest('dist/font-awesome/fonts/'));
-    gulp.src('node_modules/weather-icons-lite/fonts/weather-icons-lite.woff2').pipe(gulp.dest('dist/weather-icons-lite/fonts/'));
+    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff').pipe(gulp.dest('dist/fonts/'));
+    gulp.src('node_modules/weather-icons-lite/fonts/weather-icons-lite.woff').pipe(gulp.dest('dist/fonts/'));
+    gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff2').pipe(gulp.dest('dist/fonts/'));
+    gulp.src('node_modules/weather-icons-lite/fonts/weather-icons-lite.woff2').pipe(gulp.dest('dist/fonts/'));
     return;
 });
 
@@ -136,13 +127,11 @@ gulp.task('css', function () {
 });
 
 gulp.task('less', function() {
-    return gulp.src('src/index.html')
-    .pipe(resources({less:true, css:false, js:false}))
-    .pipe(removeHtml())
-    .pipe(gulpif('**/*.less', concat('app.min.less')))
+    return gulp.src(['src/*.less'])
+    .pipe(concat('app.min.less'))
     .pipe(header(fs.readFileSync('license.js')))
     .pipe(eol('\n'))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('./dist/css'));
 });
 
 var vendorPrefix = "vendor/";

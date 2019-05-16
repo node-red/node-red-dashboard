@@ -45,7 +45,7 @@
                 width: "#node-config-input-width",
                 auto: false
             });
-            $("#node-config-input-disp").change(function() {
+            $("#node-config-input-disp").on("change", function() {
                 if ($("#node-config-input-disp").is(":checked")) {
                     $("#group-collapse-flag").show();
                 }

@@ -1,7 +1,6 @@
-<!--</Deject>-->
 <!DOCTYPE html>
 <!--
-  Copyright 2016 JS Foundation and other contributors, https://js.foundation/
+  Copyright 2016,2019 JS Foundation and other contributors, https://js.foundation/
   Copyright 2016 IBM Corp.
   Copyright 2015 Andrei Tatar
 
@@ -17,6 +16,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+<!--  <html> -->
 <html lang="en" manifest="dashboard.appcache">
 <head>
     <meta charset="utf-8">
@@ -30,14 +30,13 @@
     <link rel="icon" sizes="192x192" href="icon192x192.png">
     <link rel="shortcut icon" type="image/png" href="icon64x64.png">
     <link rel="apple-touch-icon" href="icon120x120.png">
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- build:css -->
     <link rel="stylesheet" href="vendor/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="vendor/angular-material-icons/angular-material-icons.css">
     <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="vendor/weather-icons-lite/css/weather-icons-lite.css">
     <link rel="stylesheet" href="vendor/angularjs-color-picker/dist/angularjs-color-picker.min.css">
-
     <link rel="stylesheet" href="components/ui-component/templates/button.css">
     <link rel="stylesheet" href="components/ui-component/templates/chart.css">
     <link rel="stylesheet" href="components/ui-component/templates/colour-picker.css">
@@ -53,12 +52,11 @@
     <link rel="stylesheet" href="components/ui-component/templates/template.css">
     <link rel="stylesheet" href="components/ui-component/templates/form.css">
     <link rel="stylesheet" href="components/ui-card-panel/ui-card-panel.css">
-
+    <!-- endbuild -->
+    <!-- build:less -->
     <link rel="stylesheet/less" href="main.less">
     <link rel="stylesheet/less" href="theme.less">
-
     <!-- endbuild -->
-
     <title></title>
 </head>
 <body ng-app="ui"
@@ -68,16 +66,14 @@
     class="nr-dashboard-theme"
     ng-swipe-right="onSwipeRight();"
     ng-swipe-left="onSwipeLeft();">
-
 <md-content ng-if="main.loaded" ng-include="'partials/main.html'" layout="column" flex></md-content>
 <div ng-if="main.nothing" class="node-red-ui--notabs">
     <table><tr><td><center><img src="icon120x120.png"/></center></td></tr>
     <tr><td><center><h2>Welcome to the Node-RED Dashboard</h2></center></td></tr>
     <tr><td><center>Please add some UI nodes to your flow and redeploy.</center></td></tr></table>
-</div><!-- <i class="fa fa-spinner fa-spin fa-4x fa-fw"></i> -->
-
+</div>
+<!-- <i class="fa fa-spinner fa-spin fa-4x fa-fw"></i> -->
 <script src="socket.io/socket.io.js"></script>
-
 <!-- build:js -->
 <script src="vendor/jquery/dist/jquery.min.js"></script>
 <script src="vendor/angular/angular.min.js"></script>
@@ -86,27 +82,24 @@
 <script src="vendor/angular-animate/angular-animate.min.js"></script>
 <script src="vendor/angular-material/angular-material.min.js"></script>
 <script src="vendor/angular-aria/angular-aria.min.js"></script>
+<script src="vendor/angular-route/angular-route.min.js"></script>
 <script src="vendor/angular-material-icons/angular-material-icons.min.js"></script>
 <script src="vendor/sprintf-js/dist/sprintf.min.js"></script>
 <script src="vendor/sprintf-js/dist/angular-sprintf.min.js"></script>
 <script src="vendor/svg-morpheus/compile/unminified/svg-morpheus.js"></script>
 <script src="vendor/less/dist/less.min.js"></script>
-
 <!-- for new charts -->
 <script src="vendor/moment/min/moment-with-locales.min.js"></script>
 <script src="vendor/chart.js/dist/Chart.min.js"></script>
 <script src="vendor/angular-chart.js/dist/angular-chart.min.js"></script>
-
 <!--gauge-->
 <script src="vendor/d3/d3.min.js"></script>
 <script src="vendor/justgage/raphael-2.1.4.min.js"></script>
 <script src="vendor/justgage/justgage.js"></script>
 <script src="components/ui-gauge/liquidFillGauge.js"></script>
-
 <!--colour picker-->
 <script src="vendor/tinycolor2/dist/tinycolor-min.js"></script>
 <script src="vendor/angularjs-color-picker/dist/angularjs-color-picker.js"></script>
-
 <script src="main.js"></script>
 <script src="services/events.js"></script>
 <script src="services/sizes.js"></script>
@@ -122,13 +115,10 @@
 <script src="components/ui-card-panel/ui-card-size.js"></script>
 <script src="components/ui-card-panel/ui-masonry.js"></script>
 <script src="components/ui-icon/ui-icon.js"></script>
-
 <script src="filters/chartGetRange.js"></script>
 <script src="filters/trusted.js"></script>
 <script src="filters/spaceToUnderscore.js"></script>
 <!-- endbuild -->
-
 <script src="i18n.js"></script>
 </body>
 </html>
-<!--</Deject>-->

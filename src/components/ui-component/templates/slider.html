@@ -18,6 +18,7 @@
         ng-change="me.valueChanged(10)"
         style="z-index:1; touch-action:none; min-width:32px;"
         ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
+        ng-attr-md-invert="{{ me.item.invert || undefined}}"
     ></md-slider>
     <md-slider
         ng-if="me.item.outs==='end'"
@@ -28,9 +29,10 @@
         step="{{me.item.step}}"
         ng-model="me.item.value"
         aria-label="{{me.item.label}}"
-        ng-change="me.valueChanged(10)"
+        ng-mouseup="me.valueChanged(10)"
         style="z-index:1; touch-action:none; min-width:32px;"
         ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
+        ng-attr-md-invert="{{ me.item.invert || undefined}}"
     ></md-slider>
     <p ng-hide="{{me.item.width >= me.item.height}}" class="label-v" ng-bind-html="me.item.getLabel()"></p>
 </md-card>

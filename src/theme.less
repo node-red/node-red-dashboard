@@ -16,6 +16,11 @@
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
 
+.nr-dashboard-disabled {
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+}
+
 & when (@nrTheme = false) {
     .nr-menu-item-active div button {
         border-right: 4px solid #888;
@@ -23,11 +28,6 @@
 }
 
 & when (@nrTheme = true) {
-
-.nr-dashboard-disabled {
-    opacity: 0.4 !important;
-    pointer-events: none !important;
-}
 
 body.nr-dashboard-theme {
     background-color: @pageBackgroundColor;
@@ -104,6 +104,16 @@ a.md-no-style, button.md-no-style {
 /*
     COMPONENT-SPECIFIC
 */
+
+.md-button.md-default-theme.md-primary, .md-button.md-primary {
+    background-color: @widgetBackgroundColor;
+    color: white;
+}
+
+.md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
+    background-color: lighten(@widgetBackgroundColor,8);
+    color: white;
+}
 
 .nr-dashboard-theme .md-button.md-primary {
     // color: lighten(@widgetBackgroundColor, 8);
@@ -499,6 +509,10 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 
 /* Form */
+.nr-dashboard-theme .nr-dashboard-form md-input-container {
+    display: inherit;
+}
+
 .nr-dashboard-theme .nr-dashboard-form-button {
     background-color: @widgetBackgroundColor;
     color: white;
