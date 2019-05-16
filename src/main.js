@@ -33,7 +33,7 @@ if (!String.prototype.startsWith) {
 
 var doVisualUpdates = true;
 document.addEventListener('visibilitychange', function() {
-    doVisualUpdates = !document.hidden;
+    setTimeout(function() { doVisualUpdates = !document.hidden; }, 1000);
 });
 
 var app = angular.module('ui',['ngMaterial', 'ngMdIcons', 'ngSanitize', 'ngTouch', 'sprintf', 'chart.js', 'color.picker']);
@@ -325,6 +325,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         }
 
         events.connect(function (ui, done) {
+            disc = false;
             events.emit('ui-params', $location.search());
             main.menu = ui.menu;
             main.globals = ui.globals;
@@ -379,7 +380,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
                 $mdToast.hide();
-                disc = false;
                 processGlobals();
                 events.emit('ui-change', prevTabIndex);
                 hideTabsAndGroups();
@@ -552,9 +552,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         events.on('ui-control', function(msg) {
             if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
             if (msg.hasOwnProperty("control")) { // if it's a request to modify a control
-                //console.log("MSG",msg);
                 found = findControl(msg.id, main.menu);
-                //console.log("FOUND",found);
                 for (var property in msg.control) {
                     if (msg.control.hasOwnProperty(property) && found.hasOwnProperty(property)) {
                         found[property] = msg.control[property];
@@ -695,7 +693,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     window.speechSynthesis.speak(words);
                 }
                 else {
-                    console.log("Your Browser does not support Text-to-Speech");
+                    console.log("This Browser does not support Text-to-Speech");
                     var toastScope = $rootScope.$new();
                     toastScope.toast = {message:msg.tts, title:"Computer says..."};
                     $mdToast.show({ scope:toastScope, position:'top right', templateUrl:'partials/toast.html' });

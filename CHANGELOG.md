@@ -1,8 +1,16 @@
-### 2.15.1: Maintenance Release
+### 2.15.2: Maintenance Release
 
 **Fixes**
 
- - Fix built in fa-icons font paths
+ - Fix legend being visible when it should not be. Issue #494
+ - Fix ui_text_input time mode to accept and passthrough input correctly. Issue #495
+ - Fix theme to better handle new ui_list node switch styles.
+
+### 2.15.1: Maintenance Release
+
+ **Fixes**
+
+  - Fix built in fa-icons font paths
 
 ### 2.15.0: Milestone Release
 
