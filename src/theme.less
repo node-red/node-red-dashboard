@@ -5,7 +5,6 @@
 @baseColor: #fff;
 @pageBackgroundColor: #eee;
 @pageTitlebarBackgroundColor: #0094CE;
-@pageSidebarBackgroundColor: #fff;
 @groupBackgroundColor: #fff;
 @groupTextColor: #00A4DE;
 @groupBorderColor: #fff;
@@ -80,7 +79,6 @@ body.nr-dashboard-theme md-toolbar {
 */
 body.nr-dashboard-theme md-sidenav {
     color: @groupTextColor;
-    // background-color: @pageSidebarBackgroundColor;
     background-color: @groupBackgroundColor;
 }
 a.md-no-style, button.md-no-style {
@@ -111,8 +109,7 @@ a.md-no-style, button.md-no-style {
 }
 
 .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
-    background-color: lighten(@widgetBackgroundColor,8);
-    color: white;
+    filter: grayscale(75%);
 }
 
 .nr-dashboard-theme .md-button.md-primary {
