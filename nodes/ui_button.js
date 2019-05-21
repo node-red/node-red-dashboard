@@ -36,7 +36,7 @@ module.exports = function(RED) {
             group: group,
             emitOnlyNewValues: false,
             forwardInputMessages: config.passthru || false,
-            storeFrontEndInputAsState: true,
+            storeFrontEndInputAsState: false,
             control: {
                 type: 'button',
                 label: config.label,

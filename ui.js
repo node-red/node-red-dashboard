@@ -245,9 +245,7 @@ function add(opt) {
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             emitSocket(updateValueEventName, toEmit);
-            if (opt.storeFrontEndInputAsState === true) {
-                replayMessages[opt.node.id] = toStore;
-            }
+            replayMessages[opt.node.id] = toStore;
 
             // Handle the node output
             if (opt.forwardInputMessages && opt.node._wireCount) {
