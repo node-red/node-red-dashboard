@@ -1,12 +1,21 @@
 
 @media(max-width: 959px) {
     .md-sidenav-left, md-sidenav {
-        top: 56px !important;
+        top: 48px !important;
+        z-index: 99;
+    }
+}
+@media (max-width: 959px) and (min-width: 0) and (orientation: portrait) {
+    md-toolbar {
+        min-height: 48px;
+        height: 48px;
+        max-height: 48px;
     }
 }
 @media(min-width: 960px) {
     .md-sidenav-left, md-sidenav {
         top: 64px;
+        z-index: 99;
     }
 }
 @media(max-width: 660px) {
