@@ -19,7 +19,9 @@ var
     replace = require('gulp-replace'),
     streamqueue = require('streamqueue'),
     templateCache = require('gulp-angular-templatecache'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    sass = require('gulp-sass'),
+    rename = require('gulp-rename');
 
 //gulp.task('default', ['manifest']);
 gulp.task('default', ['lint','jscs'], function() {
@@ -137,11 +139,15 @@ gulp.task('less', function() {
 
 gulp.task('gridstack', function() {
     gulp.src('node_modules/gridstack/dist/gridstack.min.css').pipe(gulp.dest('dist/css/'));
-    gulp.src('node_modules/gridstack/dist/gridstack-extra.min.css').pipe(gulp.dest('dist/css/'));
     gulp.src('node_modules/gridstack/dist/gridstack.jQueryUI.min.js').pipe(gulp.dest('dist/js/'));
     gulp.src('node_modules/gridstack/dist/gridstack.min.js').pipe(gulp.dest('dist/js/'));
     gulp.src('node_modules/gridstack/dist/gridstack.min.map').pipe(gulp.dest('dist/js/'));
     gulp.src('node_modules/lodash/lodash.min.js').pipe(gulp.dest('dist/js/'));
+    gulp.src('node_modules/gridstack/src/gridstack-extra.scss')
+    .pipe(replace('$gridstack-columns: 12 !default;','$gridstack-columns: 30;'))
+    .pipe(sass({outputStyle: 'compressed'}))
+    .pipe(rename({extname: '.min.css'}))
+    .pipe(gulp.dest('dist/css'))
     return;
 });
 

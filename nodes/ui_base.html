@@ -231,10 +231,13 @@
 <style>
 .grid-stack {
     background-color: #f5f0dc;
-    border:dashed 2px #C0C0C0;
+    border: solid 2px #C0C0C0;
     margin: auto;
-    min-height: 60px;
+    min-height: 46px;
     display: table-cell;
+    background-image: linear-gradient(#C0C0C0 1px, transparent 0),
+                      linear-gradient(90deg, #C0C0C0 1px, transparent 0);
+    background-size: 40px 47px;
 }
 .grid-stack>.grid-stack-item>.grid-stack-item-content {
     top: 3px;
@@ -248,7 +251,9 @@
     background-color: #b0dfe3;
     border-radius: 2px;
     font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    white-space: nowrap;
     font-size: 12px;
+    opacity: 0.7;
 }
 .grid-stack-item {
     cursor: move;
@@ -320,29 +325,13 @@
     var tabDatas; // Layout editing tab data
     var oldSpacer; // Spacer not needed after editing
 
-    var groupWidth; // Group width change
+    var widthChange; // Group width change
     var widgetMove; // Move widget event
     var widgetResize; // Change widget event
     var widgetDrag; // Drag wiget eevnt
 
-    // Types of widgets handled by the layout editor
-    var widgetTypes = [
-        "ui_button",
-        "ui_dropdown",
-        "ui_switch",
-        "ui_slider",
-        "ui_numeric",
-        "ui_text_input",
-        "ui_date_picker",
-        "ui_colour_picker",
-        "ui_form",
-        "ui_text",
-        "ui_gauge",
-        "ui_chart",
-        "ui_template",
-        "ui_spacer"
-    ];
-    
+    var MAX_GROUP_WIDTH = 30; // The maximum width is 30
+
     /////////////////////////////////////////////////////////
     // Get widget under specified tab from node information
     /////////////////////////////////////////////////////////
@@ -383,7 +372,7 @@
         }
         for (var cnt = 0; cnt < nodes.length; cnt++) {
             var group = groupsIdx[nodes[cnt].group];
-            if (widgetTypes.indexOf(nodes[cnt].type) != -1 && group != null) {
+            if (group != null && (/^ui_/.test(nodes[cnt].type) && nodes[cnt].type !== 'ui_link' && nodes[cnt].type !== 'ui_toast' && nodes[cnt].type !== 'ui_ui_control' && nodes[cnt].type !== 'ui_audio' && nodes[cnt].type !== 'ui_base' && nodes[cnt].type !== 'ui_group' && nodes[cnt].type !== 'ui_tab')) {
                 var widget = {
                     id: nodes[cnt].id,
                     type: nodes[cnt].type,
@@ -613,7 +602,7 @@
         var gridID = '#grid'+id;
         $(widthID).spinner( {
             min: 1,
-            max: 50,
+            max: MAX_GROUP_WIDTH,
             spin: function(event, ui){
                 // Search current maximum width
                 serializedData = _.map($(gridID+'.grid-stack > .grid-stack-item:visible'), function (el) {
@@ -637,6 +626,7 @@
                 }
                 var grid = $(gridID+'.grid-stack').data('gridstack');
                 $(gridID+'.grid-stack').css("width", width * 40);
+                $(gridID+'.grid-stack').css("background-size", 100/width+"% 47px");
                 grid.setGridWidth(tabDatas.groups[id].width, true);
                 grid.setGridWidth(width, true);
                 tabDatas.groups[id].width = width;
@@ -660,35 +650,51 @@
         acccept: '.grid-stack-item',
         tolerance: 'pointer',
         drop: function( event, ui ) {
-        
+
             var fromGridID = '#' + ui.draggable[0].offsetParent.id;
-            var toGridOffset = $(toGridID).offset();
 
-            // Reset group width before moving (Grid stack measures)
-            toGrid.setGridWidth(tabDatas.groups[id].width, true);
-
-            var x = Math.floor((ui.offset.left - toGridOffset.left)/40);
-            var y = Math.floor((ui.offset.top - toGridOffset.top)/60);
-            var node = {
-                type: ui.draggable[0].dataset.noderedtype,
-                id: ui.draggable[0].dataset.noderedid,
-                name: ui.draggable[0].dataset.noderedname,
-                x: x,
-                y: y,
-                width: ui.draggable[0].dataset.gsWidth,
-                height: ui.draggable[0].dataset.gsHeight
-            };
-       
             // Move the widget
             if (fromGridID !== toGridID) {
-                var label = node.name + ':' + node.type;
-                toGrid.addWidget($('<div data-noderedtype="'
-                    + node.type + '" data-noderedid="'
-                    + node.id + '" data-noderedname="'
-                    + node.name + '" '
-                    + '><div class="grid-stack-item-content" title="' + label + '">'
-                    + label +
-                    '</div></div>'),
+
+                var toGridOffset = $(toGridID).offset();
+                var groupWidth = tabDatas.groups[id].width;
+
+                // Reset group width before moving (Grid stack measures)
+                toGrid.setGridWidth(groupWidth, true);
+
+                // Current widget width factor for x position
+                var curWidth = ($('#grid1').offset().left - $('#grid0').offset().left) * 0.9;
+                var xfactor = curWidth / (groupWidth * 40);
+                xfactor = xfactor > 1.0 ? 1.0 : xfactor;
+                var x = Math.floor((ui.offset.left - toGridOffset.left)/(40 * xfactor));
+                var y = Math.floor((ui.offset.top - toGridOffset.top)/47);
+                var node = {
+                    type: ui.draggable[0].dataset.noderedtype,
+                    id: ui.draggable[0].dataset.noderedid,
+                    x: x,
+                    y: y,
+                    width: ui.draggable[0].dataset.gsWidth,
+                    height: ui.draggable[0].dataset.gsHeight
+                };
+
+                var dispType = ui.draggable[0].dataset.nodereddisptype;
+                var dispLabel = ui.draggable[0].dataset.nodereddisplabel;
+    
+                var item = $('<div></div>', {
+                    'data-noderedtype': node.type, 
+                    'data-noderedid': node.id,
+                    'data-nodereddisptype': dispType,
+                    'data-nodereddisplabel': dispLabel
+                });
+
+                var itemContent = $('<div></div>', {
+                    addClass: 'grid-stack-item-content',
+                    title: dispLabel + ':' + dispType
+                });
+                itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
+                itemContent.appendTo(item);
+                toGrid.addWidget(
+                    item,
                     node.x, node.y, node.width, node.height, false, null, null,
                     ui.draggable[0].dataset.gsMinHeight,
                     ui.draggable[0].dataset.gsMaxHeight,
@@ -1731,8 +1737,9 @@
                     if (item.type === 'ui_tab') {
                         var layoutButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
                         layoutButton.on('click',function(evt) {
+                        var editTabName = item.node.name ? item.node.name : item.node.id;
                         var trayOptions = {
-                            title: c_("layout.layout-editor"),
+                            title: c_("layout.layout-editor") + " : " + editTabName,
                             width: "Infinity",
                             //width: "inherit",
                             buttons: [
@@ -1761,36 +1768,62 @@
                             open: function(tray) {
                                 // Get widget of specified tab from node information
                                 tabDatas = getTabDataFromNodes(item.node.id);
-                                var groups = tabDatas.groups;
-                                groups.sort(compareOrder);
-
-                                var editor = '<div class="container-fluid">';
-                                editor += '<div class="row-fluid">';
-                                var span_num = Math.ceil(12/groups.length); // Round up bootstrap 12 splits
-                                for (var cnt=0; cnt < groups.length; cnt++) {
-                                    editor += '<div class="span'+span_num+'">';
-                                    editor += '<div>'+groups[cnt].name;
-                                    editor += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                                    editor += 'width: <input id="change-width'+cnt+'" ';
-                                    editor += 'value="'+groups[cnt].width+'" ';
-                                    editor += 'style="width:30px;" readonly>';
-                                    editor += '</div>';
-                                    editor += '<div class="grid-stack" id="grid'+cnt+'">';
-                                    editor += '</div>';
-                                    editor += '</div>';
+                                // The width that can be handled by Layout is up to MAX_GROUP_WIDTH
+                                // Groups exceeding the maximum width are not supported.
+                                var tmpGroups = tabDatas.groups;
+                                tmpGroups.sort(compareOrder);
+                                var groups = [];
+                                for (var cnt = 0; cnt < tmpGroups.length; cnt++) {
+                                    if (tmpGroups[cnt].width <= MAX_GROUP_WIDTH) {
+                                        groups.push(tmpGroups[cnt]);
+                                    }
                                 }
-                                editor += '</div>';
-                                editor += '</div>';
+                                tabDatas.groups = groups;
+
+                                var editor = $('<div></div>',{addClass: 'container-fluid'});
+                                var row =  $('<div></div>',{addClass: 'row-fluid'});
+                                var span_num = Math.floor(12 / groups.length); // bootstrap grid 12 splits
+                                span_num = span_num < 2 ? 2 : span_num; // max 6 groups per row
+                                for (var cnt = 0; cnt < groups.length; cnt++) {
+                                    if (cnt !=0 && (cnt % 6) == 0) {
+                                        editor.append(row);
+                                        editor.append('<div><br></div>');
+                                        row = $('<div></div>',{addClass: 'row-fluid'});
+                                    }
+                                    var span = $('<div></div>',{addClass: 'span' + span_num});
+                                    var title = $('<div></div>',{title: groups[cnt].name});
+                                    title.append('<b>'+groups[cnt].name+'</b><br/>Width:');
+                                    var changeWidth = $('<input>', {
+                                        id: 'change-width' + cnt,
+                                        value: groups[cnt].width,
+                                        style: 'width:30px;',
+                                        readonly: true
+                                    });
+                                    title.append(changeWidth);
+                                    title.css('white-space','nowrap');
+                                    title.css('overflow','hidden');
+                                    var gridstack = $('<div></div>', {
+                                        id: 'grid'+cnt,
+                                        addClass: 'grid-stack'
+                                    });
+                                    span.append(title);
+                                    span.append(gridstack);
+                                    row.append(span);
+                                }
+                                if (groups.length != 0) {
+                                    editor.append(row);
+                                }
 
                                 // Show layout editor in tray
                                 var trayBody = tray.find('.editor-tray-body');
+                                trayBody.css('overflow','scroll');
                                 trayBody.append(editor);
  
                                 /////////////////////////////////////////
                                 // Gridstack.js option
                                 ////////////////////////////////////////
                                 var options = {
-                                    cellHeight: 60,
+                                    cellHeight: 46,
                                     verticalMargin: 1,
                                     float: true,
                                     alwaysShowResizeHandle: true,
@@ -1801,7 +1834,7 @@
                                 // Editor screen generation
                                 /////////////////////////////////////////
                                 oldSpacer = [];
-                                groupWidth = [];
+                                widthChange = [];
                                 widgetMove = [];
                                 widgetResize = [];
                                 widgetDrag = [];
@@ -1815,36 +1848,45 @@
                                     grid.removeAll();
 
                                     // Set the width of the display area of gridstack
-                                    var width = Number(tabDatas.groups[cnt].width);
-                                    var MAX_WIDTH = width < 50 ? width : 50; // The width that can be handled by Layout is up to 50
-                                    $(gridID+'.grid-stack').css("width", MAX_WIDTH * 40);
-                                    grid.setGridWidth(MAX_WIDTH, true);
+                                    var groupWidth = Number(groups[cnt].width);
+                                    $(gridID+'.grid-stack').css("width", groupWidth * 40);
+                                    $(gridID+'.grid-stack').css("background-size", 100/groupWidth+"% 47px");
+                                    grid.setGridWidth(groupWidth, true);
 
                                     // Determination of placement position of widget of Grid
-                                    var widgets = tabDatas.groups[cnt].widgets;
+                                    var widgets = groups[cnt].widgets;
                                     widgets.sort(compareOrder);
 
                                     var tbl = {};  
                                     for (var cnt2 = 0; cnt2 < widgets.length; cnt2++) {
-                                        // Set default value when there is no width
-                                        if (widgets[cnt2].width === 0) {
-                                            widgets[cnt2].width = MAX_WIDTH;
+                                        // Set default value when there is auto width
+                                        if (widgets[cnt2].width == 0) {
+                                            widgets[cnt2].width = groupWidth;
+                                        // Adjust to the group width
+                                        } else if (widgets[cnt2].width > groupWidth) {
+                                            widgets[cnt2].width = groupWidth;
                                         }
-                                        // ui_form is always set to height "2"
+                                        // Set ui_form height (Fixed value)
                                         if (widgets[cnt2].type === 'ui_form') {
-                                            widgets[cnt2].height = 2;
+                                            var optNum = RED.nodes.node(widgets[cnt2].id).options.length; // Sub widget number
+                                            if (widgets[cnt2].label) {
+                                                widgets[cnt2].height = optNum + 2; // Label and Button
+                                            } else {
+                                                widgets[cnt2].height = optNum + 1; // Button only
+                                            }
                                         }
-                                        if (widgets[cnt2].height === 0) {
+                                        // Set default value when there is auto height
+                                        if (widgets[cnt2].height == 0) {
                                             if (widgets[cnt2].type === 'ui_gauge' ||
                                                 widgets[cnt2].type === 'ui_chart') {
-                                                widgets[cnt2].height = Math.round(MAX_WIDTH/2)+1;
+                                                widgets[cnt2].height = Math.round(groupWidth/2)+1;
                                             } else {
                                                 widgets[cnt2].height = 1;
                                             }
                                         }
                                        
                                         // Calculate coordinates to be placed
-                                        var point = search_point(Number(widgets[cnt2].width), Number(widgets[cnt2].height), MAX_WIDTH, 256, tbl);
+                                        var point = search_point(Number(widgets[cnt2].width), Number(widgets[cnt2].height), groupWidth, 256, tbl);
                                         if (point) {
                                             widgets[cnt2].x = point.x;
                                             widgets[cnt2].y = point.y;
@@ -1853,22 +1895,39 @@
 
                                     var items = GridStackUI.Utils.sort(widgets);
                                     _.each(items, function (node) {
-                                        var label = node.name + ':' + node.type;
                                         var minHeight = null;
                                         var maxHeight = null;
                                         // ui_form is fixed to height 2
                                         if (node.type === 'ui_form') {
-                                            minHeight = 2;
-                                            maxHeight = 2;
+                                            minHeight = node.height;
+                                            maxHeight = node.height;
                                         }
                                         if (node.type !== 'ui_spacer') {
-                                            grid.addWidget($('<div data-noderedtype="'
-                                                + node.type + '" data-noderedid="'
-                                                + node.id + '" data-noderedname="'
-                                                + node.name + '" '
-                                                + '><div class="grid-stack-item-content" title="' + label + '">'
-                                                + label +
-                                                '</div></div>'),
+                                            var dispNode = RED.nodes.node(node.id);
+                                            var dispType = dispNode._def.paletteLabel;
+                                            var dispLabel = dispNode._def.label;
+                                            try {
+                                                dispLabel = (typeof dispLabel === "function" ? dispLabel.call(dispNode) : dispLabel)||"";
+                                            }
+                                            catch(err) {
+                                                console.log("Definition error: " + node.type + ".label",err);
+                                                dispLabel = dispType;
+                                            }
+
+                                            var item = $('<div></div>', {
+                                                'data-noderedtype': node.type, 
+                                                'data-noderedid': node.id,
+                                                'data-nodereddisptype': dispType,
+                                                'data-nodereddisplabel': dispLabel
+                                            });
+                                            var itemContent = $('<div></div>', {
+                                                addClass: 'grid-stack-item-content',
+                                                title: dispLabel + ':' + dispType
+                                            });
+                                            itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
+                                            item.append(itemContent);
+                                            grid.addWidget(
+                                                item,
                                                 node.x, node.y, node.width, node.height, false, null, null,
                                                 minHeight, maxHeight, node.id);
                                         } else {
@@ -1878,7 +1937,7 @@
                                     });
 
                                     // Group width change
-                                    groupWidth.push(new changeGroupWidth(cnt));
+                                    widthChange.push(new changeGroupWidth(cnt));
                                     // Move widgets between groups (drag and drop)
                                     widgetMove.push(new moveGroupWidget(cnt));
                                     // Resize widget in group (start event)

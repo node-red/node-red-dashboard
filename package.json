@@ -117,6 +117,8 @@
         "tinycolor2": "^1.4.1",
         "weather-icons-lite": "^1.1.0",
         "gridstack": "^0.4.0",
-        "lodash": "^4.17.11"
+        "lodash": "^4.17.11",
+        "gulp-sass": "^4.0.2",
+        "gulp-rename": "^1.4.0"
     }
 }
