@@ -298,6 +298,10 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-slider md-slider .md-track-ticks {
     color: @widgetBackgroundColor;
 }
+.nr-dashboard-theme .nr-dashboard-slider md-slider[md-discrete]:not([disabled]) .md-slider-wrapper.md-focused .md-focus-ring {
+    transform: scale(0.4);
+    animation: unset;
+}
 
 /* Switch */
 .nr-dashboard-theme .nr-dashboard-switch {}
