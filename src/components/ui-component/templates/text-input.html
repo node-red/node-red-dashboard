@@ -8,6 +8,7 @@
             aria-label="{{me.item.label}}"
             type="{{me.item.mode}}"
             style="z-index:1"
+            ng-style="(me.item.mode==='color') && {'padding-left':'25%'}"
             step="any"/>
     </md-input-container>
 </md-card>

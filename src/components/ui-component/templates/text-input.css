@@ -4,7 +4,7 @@ reason: https://github.com/angular/material/issues/6214
 */
 
 .nr-dashboard-textinput md-input-container {
-	padding: 0px 9px;
+	padding: 0px 12px;
 	margin: 15px 0px;
 	transition: 0.3s margin;
 	-webkit-transition: 0.3s margin;
@@ -20,7 +20,7 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-textinput md-input-container .md-placeholder,
 .nr-dashboard-textinput md-input-container label:not(.md-no-float):not(.md-container-ignore) {
-	padding-left: 10px;
+	padding-left: 12px;
     margin-bottom: 3px;
 }
 

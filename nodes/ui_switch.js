@@ -67,7 +67,7 @@ module.exports = function(RED) {
             group: group,
             emitOnlyNewValues: false,
             forwardInputMessages: config.passthru,
-            storeFrontEndInputAsState: (config.decouple === "true") ? false : true,
+            storeFrontEndInputAsState: true,
             state: false,
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),

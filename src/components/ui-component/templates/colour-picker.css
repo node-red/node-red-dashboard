@@ -8,7 +8,7 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-wrapper {
-    padding-right: 8px;
+    padding-right: 12px;
 }
 
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open {
