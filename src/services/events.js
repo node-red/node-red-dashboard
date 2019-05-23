@@ -22,7 +22,7 @@ angular.module('ui').service('UiEvents', ['$timeout',
                 }
 
                 var socketHandler = function(data) {
-                    $timeout(function() { handler(data); }, 0);
+                    handler(data);
                 };
 
                 socket.on(event, socketHandler);
