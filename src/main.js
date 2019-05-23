@@ -491,6 +491,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     found.me.processInput(msg);
                 }
             }
+            $scope.$apply();
         });
 
         events.on('disconnect', function(m) {
