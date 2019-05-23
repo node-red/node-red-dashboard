@@ -6,7 +6,10 @@
  - Fix switch to show correct state for late connecting clients. Issue #497
  - Fix button to show correct state for late connecting clients. Issue #499
  - Fix sidenav to ensure colour picker is behind it. Part of issue #492
- - Better contrast for sidebar menu buttons to work across themes. Issue 500
+ - Better contrast for sidebar menu buttons to work across themes. Issue #500
+ - Change colour picker so we have colours and black white on same wheel, add square option, and fix cursor. Issue #502
+ - Fix slider discrete mode to align better, blend theme better and not hide thumb. Issue #503
+ - Fix button to return to original colour on loss of focus. Issue #504
 
 ### 2.15.2: Maintenance Release
 

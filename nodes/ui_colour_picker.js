@@ -28,6 +28,7 @@ module.exports = function(RED) {
                 showHue: config.showHue,
                 showAlpha: config.showAlpha,
                 showLightness: config.showLightness,
+                square: (config.square == 'true') || false,
                 dynOutput: config.dynOutput,
                 allowEmpty: true,
                 order: config.order,

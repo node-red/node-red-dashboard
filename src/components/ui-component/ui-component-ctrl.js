@@ -145,7 +145,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             swatchPos: "right",
                             pos: "bottom right",
                             case: "lower",
-                            round: true,
+                            round: !me.item.square,
                             pickerOnly: me.item.showPicker && !(me.item.showSwatch || me.item.showValue)
                         };
                         me.item.key = function (event) {
