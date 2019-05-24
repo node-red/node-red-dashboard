@@ -71,7 +71,7 @@ gulp.task('index', function() {
 });
 
 gulp.task('icon', function() {
-    gulp.src('src/wheel.png').pipe(gulp.dest('dist/css/'));
+    // gulp.src('src/wheel.png').pipe(gulp.dest('dist/css/'));
     gulp.src('src/icon192x192.png').pipe(gulp.dest('dist/'));
     gulp.src('src/icon120x120.png').pipe(gulp.dest('dist/'));
     return gulp.src('src/icon64x64.png').pipe(gulp.dest('dist/'));
