@@ -34,6 +34,12 @@
         paletteLabel: 'template',
         label: function() { return this.name || 'template'; },
         oneditprepare: function() {
+            if (RED.editor.hasOwnProperty("editText") && typeof RED.editor.editText === "function") {
+                $("#node-template-expand-editor").show();
+            }
+            else {
+                $("#node-template-expand-editor").hide();
+            }
             var that = this;
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
@@ -93,6 +99,22 @@
             });
 
             this.editor.focus();
+
+            $("#node-template-expand-editor").on("click", function(e) {
+                e.preventDefault();
+                var value = that.editor.getValue();
+                RED.editor.editText({
+                    mode: 'html',
+                    value: value,
+                    width: "Infinity",
+                    cursor: that.editor.getCursorPosition(),
+                    complete: function(v,cursor) {
+                        that.editor.setValue(v, -1);
+                        that.editor.gotoLine(cursor.row+1,cursor.column,false);
+                        setTimeout(function() { that.editor.focus(); },300);
+                    }
+                })
+            })
         },
         oneditsave: function() {
             var annot = this.editor.getSession().getAnnotations();
@@ -128,13 +150,13 @@
 </script>
 
 <script type="text/x-red" data-template-name="ui_template">
-  <div class="form-row">
-      <label for="node-input-format"><span data-i18n="ui_template.label.type"></span></label>
-      <select style="width:76%" id="node-input-templateScope">
-          <option value="local" data-i18n="ui_template.label.local"></option>
-          <option value="global" data-i18n="ui_template.label.global"></option>
-      </select>
-  </div>
+    <div class="form-row">
+        <label for="node-input-format"><span data-i18n="ui_template.label.type"></span></label>
+        <select style="width:76%" id="node-input-templateScope">
+            <option value="local" data-i18n="ui_template.label.local"></option>
+            <option value="global" data-i18n="ui_template.label.global"></option>
+        </select>
+    </div>
 	<div class="form-row" id="template-row-group">
         <label for="node-input-group"><i class="fa fa-table"></i> <span data-i18n="ui_template.label.group"></span></label>
         <input type="text" id="node-input-group">
@@ -150,20 +172,21 @@
         <input type="text" id="node-input-name">
     </div>
     <div id="template-pass-store">
-    <div class="form-row" style="margin-bottom:0px;">
-        <label>&nbsp;</label>
-        <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; width:auto; vertical-align:top;">
-        <label for="node-input-fwdInMessages" style="width:70%;"> <span data-i18n="ui_template.label.pass-through"></span></label>
-    </div>
-    <div class="form-row" style="margin-bottom:0px;">
-        <label>&nbsp;</label>
-        <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; width:auto; vertical-align:top;">
-        <label for="node-input-storeOutMessages" style="width:70%;"> <span data-i18n="ui_template.label.store-state"></span></label>
-    </div>
+        <div class="form-row" style="margin-bottom:0px;">
+            <label>&nbsp;</label>
+            <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; width:auto; vertical-align:top;">
+            <label for="node-input-fwdInMessages" style="width:70%;"> <span data-i18n="ui_template.label.pass-through"></span></label>
+        </div>
+        <div class="form-row" style="margin-bottom:0px;">
+            <label>&nbsp;</label>
+            <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; width:auto; vertical-align:top;">
+            <label for="node-input-storeOutMessages" style="width:70%;"> <span data-i18n="ui_template.label.store-state"></span></label>
+        </div>
     </div>
     <div class="form-row" style="margin-bottom:0px;">
         <label for="node-input-format"><i class="fa fa-copy"></i> <span data-i18n="ui_template.label.template"></span></label>
         <input type="hidden" id="node-input-format">
+        <button id="node-template-expand-editor" class="red-ui-button red-ui-button-small" style="float:right"><i class="fa fa-expand"></i></button>
     </div>
     <div class="form-row node-text-editor-row">
         <div style="height:250px; min-height:100px" class="node-text-editor" id="node-input-format-editor" ></div>
