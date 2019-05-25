@@ -169,18 +169,8 @@
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_template.label.name"></span></label>
-        <input type="text" id="node-input-name">
-    </div>
-    <div id="template-pass-store">
-        <div class="form-row" style="margin-bottom:0px;">
-            <label>&nbsp;</label>
-            <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; width:auto; vertical-align:top;">
-            <label for="node-input-fwdInMessages" style="width:70%;"> <span data-i18n="ui_template.label.pass-through"></span></label>
-        </div>
-        <div class="form-row" style="margin-bottom:0px;">
-            <label>&nbsp;</label>
-            <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; width:auto; vertical-align:top;">
-            <label for="node-input-storeOutMessages" style="width:70%;"> <span data-i18n="ui_template.label.store-state"></span></label>
+        <div style="display:inline-block; width:calc(100% - 105px)">
+            <input type="text" id="node-input-name">
         </div>
     </div>
     <div class="form-row" style="margin-bottom:0px;">
@@ -190,6 +180,16 @@
     </div>
     <div class="form-row node-text-editor-row">
         <div style="height:250px; min-height:100px" class="node-text-editor" id="node-input-format-editor" ></div>
+    </div>
+    <div id="template-pass-store">
+        <div class="form-row" style="margin-bottom:0px;">
+            <input type="checkbox" id="node-input-fwdInMessages" style="display:inline-block; margin-left:8px; width:auto; vertical-align:top;">
+            <label for="node-input-fwdInMessages" style="width:70%;"> <span data-i18n="ui_template.label.pass-through"></span></label>
+        </div>
+        <div class="form-row" style="margin-bottom:0px;">
+            <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; margin-left:8px; width:auto; vertical-align:top;">
+            <label for="node-input-storeOutMessages" style="width:70%;"> <span data-i18n="ui_template.label.store-state"></span></label>
+        </div>
     </div>
 </script>
 
