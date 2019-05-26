@@ -1,3 +1,10 @@
+### 2.15.4: Maintenance Release
+
+**Fixes**
+
+ - Re-fix switch to not visibly switch when set to show input not output. Issue #506
+ - Fix colour swatch widths in ui_chart and ui_gauge.
+
 ### 2.15.3: Maintenance Release
 
 **Enhancements**
@@ -11,7 +18,7 @@
  - Fix button to show correct state for late connecting clients. Issue #499
  - Fix sidenav to ensure colour picker is behind it. Part of issue #492
  - Better contrast for sidebar menu buttons to work across themes. Issue #500
- - Revert colour picker to it's default design with colour + lightness, add square option, and fix cursor. Issue #502
+ - Revert colour picker to its default design with colour + lightness, add square option, and fix cursor. Issue #502
  - Fix slider discrete mode to align better, blend theme better and not hide thumb. Issue #503
  - Fix button to return to original colour on loss of focus. Issue #504
 

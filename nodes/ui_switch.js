@@ -67,7 +67,7 @@ module.exports = function(RED) {
             group: group,
             emitOnlyNewValues: false,
             forwardInputMessages: config.passthru,
-            storeFrontEndInputAsState: true,
+            storeFrontEndInputAsState: config.passthru,
             state: false,
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),

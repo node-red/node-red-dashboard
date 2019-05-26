@@ -100,6 +100,8 @@
 
             this.editor.focus();
 
+            RED.popover.tooltip($("#node-template-expand-editor"),c_("label.expand"));
+
             $("#node-template-expand-editor").on("click", function(e) {
                 e.preventDefault();
                 var value = that.editor.getValue();
