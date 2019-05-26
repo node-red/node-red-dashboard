@@ -18,12 +18,21 @@
 
 @media(max-width: 959px) {
     .md-sidenav-left, md-sidenav {
-        top: 56px !important;
+        top: 48px !important;
+        z-index: 99;
+    }
+}
+@media (max-width: 959px) and (min-width: 0) and (orientation: portrait) {
+    md-toolbar {
+        min-height: 48px;
+        height: 48px;
+        max-height: 48px;
     }
 }
 @media(min-width: 960px) {
     .md-sidenav-left, md-sidenav {
         top: 64px;
+        z-index: 99;
     }
 }
 @media(max-width: 660px) {
@@ -140,7 +149,6 @@ md-card {
 @baseColor: #fff;
 @pageBackgroundColor: #eee;
 @pageTitlebarBackgroundColor: #0094CE;
-@pageSidebarBackgroundColor: #fff;
 @groupBackgroundColor: #fff;
 @groupTextColor: #00A4DE;
 @groupBorderColor: #fff;
@@ -215,7 +223,6 @@ body.nr-dashboard-theme md-toolbar {
 */
 body.nr-dashboard-theme md-sidenav {
     color: @groupTextColor;
-    // background-color: @pageSidebarBackgroundColor;
     background-color: @groupBackgroundColor;
 }
 a.md-no-style, button.md-no-style {
@@ -246,8 +253,10 @@ a.md-no-style, button.md-no-style {
 }
 
 .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
-    background-color: lighten(@widgetBackgroundColor,8);
-    color: white;
+    // background-color: lighten(@widgetBackgroundColor,8);
+    // color: white;
+    filter: grayscale(75%);
+    //background-color:  contrast(@widgetBackgroundColor, lighten(@widgetBackgroundColor,10), darken(@widgetBackgroundColor,10));
 }
 
 .nr-dashboard-theme .md-button.md-primary {
