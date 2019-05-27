@@ -43,8 +43,7 @@
                 group: "#node-input-group"
             });
             $('#node-input-custom-icons').on("change", function() {
-                var v = $(this).val();
-                if (v === "default") {
+                if ($('#node-input-custom-icons').val() === "default") {
                     $(".form-row-custom-icons").hide();
                 }
                 else {
@@ -56,6 +55,7 @@
                 $('#node-input-custom-icons').val('custom');
             }
             else {
+                $(".form-row-custom-icons").hide();
                 $('#node-input-custom-icons').on("change", );
             }
 
@@ -64,6 +64,7 @@
                 typeField: $("#node-input-onvalueType"),
                 types: ['str','num','bool','json','bin','date','flow','global']
             });
+
             $('#node-input-offvalue').typedInput({
                 default: 'str',
                 typeField: $("#node-input-offvalueType"),
@@ -79,7 +80,6 @@
                     $('.form-row-decouple').show();
                 }
             });
-
         },
         oneditsave: function() {
             if ($('#node-input-custom-icons').val() === 'default') {
