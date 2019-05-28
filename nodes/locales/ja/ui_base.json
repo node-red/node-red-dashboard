@@ -27,7 +27,8 @@
             "edit" : "編集",
             "spacer": "スペーサ",
             "layout" : "レイアウト",
-            "layout-editor" : "ダッシュボードレイアウトエディタ"
+            "layout-editor" : "ダッシュボードレイアウトエディタ",
+            "width" : "幅"
         },
         "theme" : {
             "style" : "スタイル",

@@ -27,7 +27,8 @@
             "edit" : "edit",
             "spacer": "spacer",
             "layout" : "layout",
-            "layout-editor" : "Dashboard layout editor"
+            "layout-editor" : "Dashboard layout editor",
+            "width" : "Width"
         },
         "theme" : {
             "style" : "Style",

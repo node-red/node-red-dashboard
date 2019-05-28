@@ -1792,7 +1792,7 @@
                                     }
                                     var span = $('<div></div>',{addClass: 'span' + span_num});
                                     var title = $('<div></div>',{title: groups[cnt].name});
-                                    title.append('<b>'+groups[cnt].name+'</b><br/>Width:');
+                                    title.append('<b>'+groups[cnt].name+'</b><br/>'+c_("layout.width")+':');
                                     var changeWidth = $('<input>', {
                                         id: 'change-width' + cnt,
                                         value: groups[cnt].width,
