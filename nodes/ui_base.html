@@ -266,6 +266,7 @@
     var editSaveEventHandler;
     var nodesAddEventHandler;
     var nodesRemoveEventHandler;
+    var layoutUpdateEventHandler; // Dashboard layout tool
     var uip = 'ui';
     var attemptedVendorLoad = false;
     var loadTinyColor = function(path) {
@@ -415,7 +416,7 @@
                     n_widget.changed = true;
                     n_widget.dirty = true;
                     RED.editor.validateNode(n_widget);
-                    RED.events.emit("editor:save",n_widget);
+                    RED.events.emit("layout:update",n_widget);
                     RED.nodes.dirty(true);
                     RED.view.redraw(true);
                 } else {
@@ -748,6 +749,7 @@
                 RED.events.off("editor:save",editSaveEventHandler);
                 RED.events.off("nodes:add",nodesAddEventHandler);
                 RED.events.off("nodes:remove",nodesRemoveEventHandler);
+                RED.events.off("layout:update",layoutUpdateEventHandler); // Dashboard layout tool
             },
             onpaletteadd: function() {
                 var globalDashboardNode = null;
@@ -2745,6 +2747,30 @@
                     }
                 };
                 RED.events.on("editor:save",editSaveEventHandler);
+
+                // Dashboard layout tool
+                layoutUpdateEventHandler = function(node) {
+                    if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && node.type !== 'ui_audio' && node.type !== 'ui_base' && node.type !== 'ui_group' && node.type !== 'ui_tab') {
+                        if (listElements[node.id]) {
+                            if (node.group != elementParents[node.id]) {
+                                // Moved to a different group
+                                if (groupLists[elementParents[node.id]]) {
+                                    groupLists[elementParents[node.id]].editableList('removeItem',listElements[node.id].data('data'))
+                                }
+                                if (groupLists[node.group]) {
+                                    groupLists[node.group].editableList('removeItem',node)
+                                    groupLists[node.group].editableList('addItem',node);
+                                    groupLists[node.group].editableList('sort',function(a,b){return a.order-b.order;});
+                                }
+                            }
+                            else {
+                                groupLists[node.group].editableList('sort',function(a,b){return a.order-b.order;});
+                            }
+                        }
+                    }
+                };
+                RED.events.on("layout:update",layoutUpdateEventHandler);
+
 
                 var pendingAdd = [];
                 var pendingAddTimer = null;
