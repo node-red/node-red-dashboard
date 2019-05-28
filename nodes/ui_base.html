@@ -408,7 +408,15 @@
             for (var cnt2 = 0; cnt2 < t_widgets.length; cnt2++) {
                 var n_widget = RED.nodes.node(t_widgets[cnt2].id);
                 if (n_widget != null) {
-                    n_widget.group = n_group.id;
+                    if (n_widget.group !== n_group.id) {
+                        var oldGroupNode = RED.nodes.node(n_widget.group);
+                        if (oldGroupNode) {
+                            var index = oldGroupNode.users.indexOf(n_widget);
+                            oldGroupNode.users.splice(index,1);
+                        }
+                        n_widget.group = n_group.id;
+                        n_group.users.push(n_widget);
+                    }
                     n_widget.order = t_widgets[cnt2].order;
                     n_widget.width = t_widgets[cnt2].width;
                     n_widget.height = t_widgets[cnt2].height;
