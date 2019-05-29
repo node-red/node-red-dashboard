@@ -91,6 +91,17 @@ The widget layout is managed by a `dashboard` tab in the sidebar of the Node-RED
 
 You can also choose to use the basic Angular Material themes instead if you like, either just within any ui_templates or for the whole Dashboard. This will only affect angular components so some of the charts and so on may need extra work.
 
+**Note**: For users creating their own templates the following CSS variable names are available
+to help pick up the theme colours.
+
+ - --nr-dashboard-pageBackgroundColor
+ - --nr-dashboard-pageTitlebarBackgroundColor
+ - --nr-dashboard-groupBackgroundColor
+ - --nr-dashboard-groupTextColor
+ - --nr-dashboard-groupBorderColor
+ - --nr-dashboard-widgetBackgroundColor
+ - --nr-dashboard-widgetTextColor
+ - --nr-dashboard-widgetBorderColor
 
 #### Widgets
 

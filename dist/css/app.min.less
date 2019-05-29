@@ -159,6 +159,18 @@ md-card {
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
 
+// define some CSS variables for user usage
+:root {
+    --nr-dashboard-pageBackgroundColor: @pageBackgroundColor;
+    --nr-dashboard-pageTitlebarBackgroundColor: @pageTitlebarBackgroundColor;
+    --nr-dashboard-groupTextColor: @groupTextColor;
+    --nr-dashboard-groupBackgroundColor: @groupBackgroundColor;
+    --nr-dashboard-groupBorderColor: @groupBorderColor;
+    --nr-dashboard-widgetTextColor: @widgetTextColor;
+    --nr-dashboard-widgetBackgroundColor: @widgetBackgroundColor;
+    --nr-dashboard-widgetBorderColor: @widgetBorderColor;
+}
+
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
     pointer-events: none !important;

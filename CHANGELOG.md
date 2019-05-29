@@ -1,5 +1,9 @@
 ### 2.15.4: Maintenance Release
 
+**Enhancements**
+
+ - Add CSS variable names for main theme colours to make user customisations easier
+
 **Fixes**
 
  - Re-fix switch to not visibly switch when set to show input not output. Issue #506
