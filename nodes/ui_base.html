@@ -258,6 +258,47 @@
 .grid-stack-item {
     cursor: move;
 }
+.nr-dashboard-layout-container-fluid {
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.nr-dashboard-layout-row {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.nr-dashboard-layout-span12 {
+  width: 98.4%;
+  margin-right: 0px;
+  margin-left: 3px;
+}
+.nr-dashboard-layout-span6 {
+  width: 49.2%;
+  margin-right: 0px;
+  margin-left: 3px;
+}
+.nr-dashboard-layout-span4 {
+  width: 32.8%;
+  margin-right: 0px;
+  margin-left: 3px;
+}
+.nr-dashboard-layout-span3 {
+  width: 24.6%;
+  margin-right: 0px;
+  margin-left: 3px;
+}
+.nr-dashboard-layout-span2 {
+  width: 16.3%;
+  margin-right: 0px;
+  margin-left: 3px;
+}
 </style>
 
 
@@ -1790,17 +1831,17 @@
                                 }
                                 tabDatas.groups = groups;
 
-                                var editor = $('<div></div>',{addClass: 'container-fluid'});
-                                var row =  $('<div></div>',{addClass: 'row-fluid'});
+                                var editor = $('<div></div>',{addClass: 'nr-dashboard-layout-container-fluid'});
+                                var row =  $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
                                 var span_num = Math.floor(12 / groups.length); // bootstrap grid 12 splits
                                 span_num = span_num < 2 ? 2 : span_num; // max 6 groups per row
                                 for (var cnt = 0; cnt < groups.length; cnt++) {
                                     if (cnt !=0 && (cnt % 6) == 0) {
                                         editor.append(row);
                                         editor.append('<div><br></div>');
-                                        row = $('<div></div>',{addClass: 'row-fluid'});
+                                        row = $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
                                     }
-                                    var span = $('<div></div>',{addClass: 'span' + span_num});
+                                    var span = $('<div></div>',{addClass: 'nr-dashboard-layout-span' + span_num});
                                     var title = $('<div></div>',{title: groups[cnt].name});
                                     title.append('<b>'+groups[cnt].name+'</b><br/>'+c_("layout.width")+':');
                                     var changeWidth = $('<input>', {
