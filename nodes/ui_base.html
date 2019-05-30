@@ -586,7 +586,9 @@
     
             // Place widget on table
             var tbl = new Array(width * height);
-            tbl.fill(0);
+            for (var i = 0; i< tbl.length; i++){
+                tbl[i]=0;
+            }
             for (var i = 0; i < serializedData.length; i++){
                 var wd = serializedData[i];
                 for (var y = wd.y; y < wd.y+wd.height; y++){
