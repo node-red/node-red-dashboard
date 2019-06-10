@@ -416,6 +416,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.len = main.menu.length;
         }, function () {
             main.loaded = true;
+            $scope.$apply();
         });
 
         function findControl(id, items) {
@@ -597,17 +598,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 // is it a tab name or relative number?
                 if (typeof msg.tab === 'string') {
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }
-                    if (msg.tab === "+1") { moveTab(1); return; }
-                    if (msg.tab === "-1") { moveTab(-1); return; }
+                    if (msg.tab === "+1") { moveTab(1); $scope.$apply(); return; }
+                    if (msg.tab === "-1") { moveTab(-1); $scope.$apply(); return; }
                     for (var i in main.menu) {
                         // is it the name of a tab ?
                         if (msg.tab == main.menu[i].header) {
                             if (!main.menu[i].disabled) { main.select(i); }
+                            $scope.$apply();
                             return;
                         }
                         // or the name of a link ?
                         else if (msg.tab == main.menu[i].name) {
                             if (!main.menu[i].disabled) { main.open(main.menu[i], i); }
+                            $scope.$apply();
                             return;
                         }
                     }
@@ -617,6 +620,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (Number.isNaN(index) || index < 0) { return; }
                 if (index < main.menu.length) {
                     if (!main.menu[index].disabled) { main.open(main.menu[index], index); }
+                    $scope.$apply();
                     return;
                 }
             }
@@ -654,6 +658,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     }
                 }
             }
+            $scope.$apply();
         });
 
         events.on('ui-audio', function(msg) {
