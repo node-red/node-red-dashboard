@@ -15,6 +15,18 @@
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
 
+// define some CSS variables for user usage
+:root {
+    --nr-dashboard-pageBackgroundColor: @pageBackgroundColor;
+    --nr-dashboard-pageTitlebarBackgroundColor: @pageTitlebarBackgroundColor;
+    --nr-dashboard-groupTextColor: @groupTextColor;
+    --nr-dashboard-groupBackgroundColor: @groupBackgroundColor;
+    --nr-dashboard-groupBorderColor: @groupBorderColor;
+    --nr-dashboard-widgetTextColor: @widgetTextColor;
+    --nr-dashboard-widgetBackgroundColor: @widgetBackgroundColor;
+    --nr-dashboard-widgetBorderColor: @widgetBorderColor;
+}
+
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
     pointer-events: none !important;
@@ -136,7 +148,7 @@ a.md-no-style, button.md-no-style {
     background-color: lighten(@widgetBackgroundColor, 4);
 }
 .nr-dashboard-theme .nr-dashboard-button .md-button.md-raised:not([disabled]).md-focused  {
-    background-color: lighten(@widgetBackgroundColor, 4);
+    background-color: @widgetBackgroundColor;
 }
 
 /* Date picker */
@@ -199,6 +211,10 @@ a.md-no-style, button.md-no-style {
 .nr-dashboard-theme .color-picker-wrapper.color-picker-open {
     border-width:0;
 }
+// .nr-dashboard-theme .color-picker-wrapper .color-picker-panel.color-picker-panel-round .color-picker-grid-wrapper .color-picker-row .color-picker-grid .color-picker-overlay {
+//     background-image: url("./wheel.png");
+//     border-radius: 50%;
+// }
 
 /* Dropdown */
 .nr-dashboard-theme .nr-dashboard-dropdown p.label {
@@ -299,7 +315,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     border-color: transparent;
 }
 .nr-dashboard-theme .nr-dashboard-slider md-slider .md-track-ticks {
-    color: @widgetBackgroundColor;
+    color: transparent;
 }
 .nr-dashboard-theme .nr-dashboard-slider md-slider[md-discrete]:not([disabled]) .md-slider-wrapper.md-focused .md-focus-ring {
     transform: scale(0.4);

@@ -35,10 +35,10 @@
     <p>Sending a blank tab name "" will refresh the current page.
     You can also send "+1" for next tab and "-1" for previous tab.</p>
     <p>Dashboard pages (i.e. "tabs") can be controlled by sending a <code>msg.payload</code> object with the format
-    <code>{"tabs": {"hide": "tab_name_to_hide", "disable": ["secret_tab", "unused_stuff"]}}</code>.
+    <pre>{"tabs": {"hide": "tab_name_to_hide", "disable": ["secret_tab", "unused_stuff"]}}</pre>.
     <i>(there are 2 toggle states available: <b>show</b>/<b>hide</b> and <b>enable</b>/<b>disable</b>)</i></p>
     <p>Visibility of individual groups of widgets can controlled by a payload like
-    <code>{"group": {"hide": ["tab_name_group_name_with_underscores"], "show": ["reveal_another_group"], "focus": true}}</code>
+    <pre>{"group": {"hide": ["tab_name_group_name_with_underscores"], "show": ["reveal_another_group"], "focus": true}}</pre>
     where <b>focus</b> is optional and will cause the screen to scroll to show that group if required. The group
     names are the IDs of the groups and are typically formed from the <i>tab name</i> plus <i>group name</i> joined with
     underscores replacing all spaces.</p>

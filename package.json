@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.15.2",
+    "version": "2.15.5",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -79,7 +79,7 @@
         "angular-animate": "~1.7.8",
         "angular-aria": "~1.7.8",
         "angular-chart.js": "^1.1.1",
-        "angular-material": "~1.1.13",
+        "angular-material": "~1.1.19",
         "angular-material-icons": "^0.7.1",
         "angular-messages": "~1.7.8",
         "angular-mocks": "~1.7.8",

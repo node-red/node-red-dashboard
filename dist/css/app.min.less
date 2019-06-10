@@ -159,6 +159,18 @@ md-card {
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
 
+// define some CSS variables for user usage
+:root {
+    --nr-dashboard-pageBackgroundColor: @pageBackgroundColor;
+    --nr-dashboard-pageTitlebarBackgroundColor: @pageTitlebarBackgroundColor;
+    --nr-dashboard-groupTextColor: @groupTextColor;
+    --nr-dashboard-groupBackgroundColor: @groupBackgroundColor;
+    --nr-dashboard-groupBorderColor: @groupBorderColor;
+    --nr-dashboard-widgetTextColor: @widgetTextColor;
+    --nr-dashboard-widgetBackgroundColor: @widgetBackgroundColor;
+    --nr-dashboard-widgetBorderColor: @widgetBorderColor;
+}
+
 .nr-dashboard-disabled {
     opacity: 0.4 !important;
     pointer-events: none !important;
@@ -253,10 +265,7 @@ a.md-no-style, button.md-no-style {
 }
 
 .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
-    // background-color: lighten(@widgetBackgroundColor,8);
-    // color: white;
     filter: grayscale(75%);
-    //background-color:  contrast(@widgetBackgroundColor, lighten(@widgetBackgroundColor,10), darken(@widgetBackgroundColor,10));
 }
 
 .nr-dashboard-theme .md-button.md-primary {
@@ -281,6 +290,9 @@ a.md-no-style, button.md-no-style {
 .nr-dashboard-theme .nr-dashboard-button .md-button.md-primary {
     color: white;
     background-color: lighten(@widgetBackgroundColor, 4);
+}
+.nr-dashboard-theme .nr-dashboard-button .md-button.md-raised:not([disabled]).md-focused  {
+    background-color: @widgetBackgroundColor;
 }
 
 /* Date picker */
@@ -343,6 +355,10 @@ a.md-no-style, button.md-no-style {
 .nr-dashboard-theme .color-picker-wrapper.color-picker-open {
     border-width:0;
 }
+// .nr-dashboard-theme .color-picker-wrapper .color-picker-panel.color-picker-panel-round .color-picker-grid-wrapper .color-picker-row .color-picker-grid .color-picker-overlay {
+//     background-image: url("./wheel.png");
+//     border-radius: 50%;
+// }
 
 /* Dropdown */
 .nr-dashboard-theme .nr-dashboard-dropdown p.label {
@@ -441,6 +457,13 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-slider md-slider.md-default-theme.md-min[md-discrete] .md-thumb:after, md-slider.md-min[md-discrete] .md-thumb:after {
     background-color: @widgetBackgroundColor;
     border-color: transparent;
+}
+.nr-dashboard-theme .nr-dashboard-slider md-slider .md-track-ticks {
+    color: transparent;
+}
+.nr-dashboard-theme .nr-dashboard-slider md-slider[md-discrete]:not([disabled]) .md-slider-wrapper.md-focused .md-focus-ring {
+    transform: scale(0.4);
+    animation: unset;
 }
 
 /* Switch */
