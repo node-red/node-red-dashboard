@@ -524,6 +524,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .ariaLabel(msg.ok)
                         .ok(msg.ok)
                 }
+                confirm._options.template = '<md-dialog md-theme="{{ dialog.theme || dialog.defaultTheme }}" aria-label="{{ dialog.ariaLabel }}" ng-class="dialog.css">' +
+                    '<md-dialog-content class="md-dialog-content" role="document" tabIndex="-1">' +
+                        '<h2 class="md-title">{{ dialog.title }}</h2>' +
+                        '<div ng-if="::dialog.mdHtmlContent" class="md-dialog-content-body"ng-bind-html="::dialog.mdHtmlContent | trusted"></div>' +
+                        '<div ng-if="::!dialog.mdHtmlContent" class="md-dialog-content-body"><p>{{::dialog.mdTextContent}}</p></div>' +
+                        '<md-input-container md-no-float ng-if="::dialog.$type == \'prompt\'" class="md-prompt-input-container"><input ng-keypress="dialog.keypress($event)" md-autofocus ng-model="dialog.result"placeholder="{{::dialog.placeholder}}" ng-required="dialog.required">' +
+                        '</md-input-container>' +
+                    '</md-dialog-content>' +
+                    '<md-dialog-actions>' +
+                        '<md-button ng-if="dialog.$type === \'confirm\' || dialog.$type === \'prompt\'"ng-click="dialog.abort()" class="md-primary md-cancel-button">{{ dialog.cancel }}</md-button>' +
+                        '<md-button ng-click="dialog.hide()" class="md-primary md-confirm-button" md-autofocus="dialog.$type===\'alert\'" ng-disabled="dialog.required && !dialog.result">{{ dialog.ok }}</md-button>' +
+                    '</md-dialog-actions>' +
+                '</md-dialog>';
                 $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
                     function() {
                         msg.msg.payload = msg.ok;
