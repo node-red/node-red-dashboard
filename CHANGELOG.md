@@ -4,6 +4,9 @@
 
  - Fix legend to keep items hidden when new data arrives. Issue #507
  - Re-re-fix switch to not show correct icon despite passthru, and toggle output correctly. Issue #506
+ - Make Dialog and Toast be more consistent
+ - Fix odd gauge behaviour when in donut mode
+ - Fix UI redraw (not redrawing when changing tabs). PR #508
 
 ### 2.15.4: Maintenance Release
 

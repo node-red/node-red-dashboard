@@ -1,4 +1,4 @@
-angular.module('ui').service('UiEvents', 
+angular.module('ui').service('UiEvents',
     function () {
         var updateValueEventName = 'update-value';
         var that = this;
