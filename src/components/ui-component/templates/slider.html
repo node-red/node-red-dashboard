@@ -30,7 +30,8 @@
         ng-model="me.item.value"
         aria-label="{{me.item.label}}"
         ng-mouseup="me.valueChanged(10)"
-        style="z-index:1; touch-action:none; min-width:32px; margin-top:20px;"
+        style="z-index:1; touch-action:none; min-width:32px;"
+        ng-style="(me.item.width >= me.item.height) && {'margin-top':'20px'};"
         ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
         ng-attr-md-invert="{{ me.item.invert || undefined}}"
     ></md-slider>

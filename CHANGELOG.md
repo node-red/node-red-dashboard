@@ -7,6 +7,7 @@
  - Make Dialog and Toast be more consistent
  - Fix odd gauge behaviour when in donut mode
  - Fix UI redraw (not redrawing when changing tabs). PR #508
+ - Fix vertical slider in only on release mode
 
 ### 2.15.4: Maintenance Release
 
