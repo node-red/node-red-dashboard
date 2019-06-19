@@ -416,6 +416,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.len = main.menu.length;
         }, function () {
             main.loaded = true;
+            $scope.$apply();
         });
 
         function findControl(id, items) {
@@ -491,6 +492,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     found.me.processInput(msg);
                 }
             }
+            $scope.$apply();
         });
 
         events.on('disconnect', function(m) {
@@ -523,6 +525,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .ariaLabel(msg.ok)
                         .ok(msg.ok)
                 }
+                confirm._options.template = '<md-dialog md-theme="{{ dialog.theme || dialog.defaultTheme }}" aria-label="{{ dialog.ariaLabel }}" ng-class="dialog.css">' +
+                    '<md-dialog-content class="md-dialog-content" role="document" tabIndex="-1">' +
+                        '<h2 class="md-title">{{ dialog.title }}</h2>' +
+                        '<div ng-if="::dialog.mdHtmlContent" class="md-dialog-content-body"ng-bind-html="::dialog.mdHtmlContent | trusted"></div>' +
+                        '<div ng-if="::!dialog.mdHtmlContent" class="md-dialog-content-body"><p>{{::dialog.mdTextContent}}</p></div>' +
+                        '<md-input-container md-no-float ng-if="::dialog.$type == \'prompt\'" class="md-prompt-input-container"><input ng-keypress="dialog.keypress($event)" md-autofocus ng-model="dialog.result"placeholder="{{::dialog.placeholder}}" ng-required="dialog.required">' +
+                        '</md-input-container>' +
+                    '</md-dialog-content>' +
+                    '<md-dialog-actions>' +
+                        '<md-button ng-if="dialog.$type === \'confirm\' || dialog.$type === \'prompt\'"ng-click="dialog.abort()" class="md-primary md-cancel-button">{{ dialog.cancel }}</md-button>' +
+                        '<md-button ng-click="dialog.hide()" class="md-primary md-confirm-button" md-autofocus="dialog.$type===\'alert\'" ng-disabled="dialog.required && !dialog.result">{{ dialog.ok }}</md-button>' +
+                    '</md-dialog-actions>' +
+                '</md-dialog>';
                 $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
                     function() {
                         msg.msg.payload = msg.ok;
@@ -596,17 +611,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 // is it a tab name or relative number?
                 if (typeof msg.tab === 'string') {
                     if (msg.tab === "") { events.emit('ui-refresh', {}); }
-                    if (msg.tab === "+1") { moveTab(1); return; }
-                    if (msg.tab === "-1") { moveTab(-1); return; }
+                    if (msg.tab === "+1") { moveTab(1); $scope.$apply(); return; }
+                    if (msg.tab === "-1") { moveTab(-1); $scope.$apply(); return; }
                     for (var i in main.menu) {
                         // is it the name of a tab ?
                         if (msg.tab == main.menu[i].header) {
                             if (!main.menu[i].disabled) { main.select(i); }
+                            $scope.$apply();
                             return;
                         }
                         // or the name of a link ?
                         else if (msg.tab == main.menu[i].name) {
                             if (!main.menu[i].disabled) { main.open(main.menu[i], i); }
+                            $scope.$apply();
                             return;
                         }
                     }
@@ -616,6 +633,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (Number.isNaN(index) || index < 0) { return; }
                 if (index < main.menu.length) {
                     if (!main.menu[index].disabled) { main.open(main.menu[index], index); }
+                    $scope.$apply();
                     return;
                 }
             }
@@ -653,6 +671,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     }
                 }
             }
+            $scope.$apply();
         });
 
         events.on('ui-audio', function(msg) {

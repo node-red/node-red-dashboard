@@ -14,6 +14,7 @@
             showHue: {value: false},
             showAlpha: {value: false},
             showLightness: {value: true},
+            square: {value: "false"},
             dynOutput: {value: "false"},
             order: {value: 0},
             width: {value: 0, validate: function(v) {
@@ -35,6 +36,10 @@
         paletteLabel: 'colour picker',
         label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'colour picker'; },
         oneditprepare: function() {
+            if (this.square === undefined) {
+                this.square = "false";
+                $("#node-input-square").val("false");
+            }
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
@@ -81,6 +86,10 @@
             <option value="hsl">hsl</option>
             <option value="hsv">hsv</option>
             <option value="rgb">rgb</option>
+        </select>
+        <select id="node-input-square" style="width:130px; margin-left:30px">
+            <option value="false">round</option>
+            <option value="true">square</option>
         </select>
     </div>
     <div class="form-row">

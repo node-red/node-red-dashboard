@@ -1,4 +1,30 @@
+### 2.15.5: Maintenance Release
+
+**Fixes**
+
+ - Fix legend to keep items hidden when new data arrives. Issue #507
+ - Re-re-fix switch to not show correct icon despite passthru, and toggle output correctly. Issue #506
+ - Make Dialog and Toast be more consistent
+ - Fix odd gauge behaviour when in donut mode
+ - Fix UI redraw (not redrawing when changing tabs). PR #508
+ - Fix vertical slider in only on release mode
+
+### 2.15.4: Maintenance Release
+
+**Enhancements**
+
+ - Add CSS variable names for main theme colours to make user customisations easier
+
+**Fixes**
+
+ - Re-fix switch to not visibly switch when set to show input not output. Issue #506
+ - Fix colour swatch widths in ui_chart and ui_gauge.
+
 ### 2.15.3: Maintenance Release
+
+**Enhancements**
+
+ - Let ui_template use full screen editor (when used with NR 1.0)
 
 **Fixes**
 
@@ -6,7 +32,10 @@
  - Fix switch to show correct state for late connecting clients. Issue #497
  - Fix button to show correct state for late connecting clients. Issue #499
  - Fix sidenav to ensure colour picker is behind it. Part of issue #492
- - Better contrast for sidebar menu buttons to work across themes. Issue 500
+ - Better contrast for sidebar menu buttons to work across themes. Issue #500
+ - Revert colour picker to its default design with colour + lightness, add square option, and fix cursor. Issue #502
+ - Fix slider discrete mode to align better, blend theme better and not hide thumb. Issue #503
+ - Fix button to return to original colour on loss of focus. Issue #504
 
 ### 2.15.2: Maintenance Release
 

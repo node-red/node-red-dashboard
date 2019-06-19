@@ -67,7 +67,7 @@ module.exports = function(RED) {
             group: group,
             emitOnlyNewValues: false,
             forwardInputMessages: config.passthru,
-            storeFrontEndInputAsState: true,
+            storeFrontEndInputAsState: (config.decouple === "true") ? false : true, //config.passthru,
             state: false,
             control: {
                 type: 'switch' + (config.style ? '-' + config.style : ''),
@@ -83,6 +83,7 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             convert: function (payload, oldval, msg) {
+                if (!this.forwardInputMessages && this.storeFrontEndInputAsState) { return oldval; }
                 var myOnValue,myOffValue;
 
                 if (onvalueType === "date") { myOnValue = Date.now(); }

@@ -1,16 +1,17 @@
 {
     "ui_template" : {
-	"label" : {
-	    "category" : "dashboard",
-	    "type" : "コード種別",
-	    "local" : "グループ内のWidget",
-	    "global" : "<head>ヘッドセクションへ追加",
-	    "group" : "グループ",
-	    "size" : "サイズ",
-	    "name" : "名前",
-	    "pass-through" : "入力メッセージをそのまま渡す",
-	    "store-state" : "出力メッセージを状態として保存",
-	    "template" : "HTMLコード"
-	}
+    	"label" : {
+    	    "category" : "dashboard",
+    	    "type" : "コード種別",
+    	    "local" : "グループ内のWidget",
+    	    "global" : "<head>ヘッドセクションへ追加",
+    	    "group" : "グループ",
+    	    "size" : "サイズ",
+    	    "name" : "名前",
+    	    "pass-through" : "入力メッセージをそのまま渡す",
+    	    "store-state" : "出力メッセージを状態として保存",
+    	    "template" : "HTMLコード",
+            "expand": "展開する"
+    	}
     }
 }

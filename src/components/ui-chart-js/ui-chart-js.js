@@ -129,7 +129,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                 }, 0);
                 $timeout(function() {
                     scope.$broadcast("$resize");
-                }, 100);
+                }, 50);
             }
         }
     }
@@ -352,10 +352,19 @@ function loadConfiguration(type,scope) {
     // Configure legend
     //if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
     if (legend == "true") {
+        config.overrides = [];
         config.options.legend = {
             display:true,
             position:'top',
-            labels: { boxWidth:10, fontSize:12, padding:8 }
+            labels: { boxWidth:10, fontSize:12, padding:8 },
+            onClick: function(e, legendItem) {
+                var index = legendItem.datasetIndex;
+                var ci = this.chart;
+                var meta = ci.getDatasetMeta(index);
+                meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                config.overrides[index] = {hidden:meta.hidden};
+                ci.update();
+            }
         };
         if ((type === "pie") || (type === "polar-area") || (type === "radar")) {
             config.options.legend.position = 'left';
