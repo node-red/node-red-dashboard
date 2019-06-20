@@ -1,5 +1,5 @@
 
-// Object.assign polyfill for IE11....
+// Object.assign polyfill for IE11...
 if (typeof Object.assign != 'function') {
     (function() {
         Object.assign = function(target) {
@@ -30,6 +30,9 @@ if (!String.prototype.startsWith) {
         return this.indexOf(searchString, position) === position;
     };
 }
+
+// Start to do async load of google webfont
+WebFont.load({ google: { families: ['Material Icons'] } });
 
 var doVisualUpdates = true;
 document.addEventListener('visibilitychange', function() {

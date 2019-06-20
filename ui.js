@@ -338,11 +338,8 @@ function init(server, app, log, redSettings) {
             var vendor_packages = [
                 'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material', 'angular-touch',
                 'angular-material-icons', 'svg-morpheus', 'font-awesome', 'weather-icons-lite',
-                'sprintf-js',
-                'jquery', 'jquery-ui',
-                'd3', 'raphael', 'justgage',
-                'angular-chart.js', 'chart.js', 'moment',
-                'angularjs-color-picker', 'tinycolor2', 'less'
+                'sprintf-js', 'jquery', 'jquery-ui', 'd3', 'raphael', 'justgage', 'angular-chart.js', 'chart.js',
+                'moment', 'angularjs-color-picker', 'tinycolor2', 'less', 'webfontloader'
             ];
             vendor_packages.forEach(function (packageName) {
                 app.use(join(settings.path, 'vendor', packageName), serveStatic(path.join(__dirname, 'node_modules', packageName)));
