@@ -26,6 +26,7 @@ var path = require('path');
 var events = require('events');
 var socketio = require('socket.io');
 var serveStatic = require('serve-static');
+var compression = require('compression')
 var dashboardVersion = require('./package.json').version;
 
 var baseConfiguration = {};
@@ -328,6 +329,7 @@ function init(server, app, log, redSettings) {
     }
 
     fs.stat(path.join(__dirname, 'dist/index.html'), function(err, stat) {
+        app.use(compression());
         if (!err) {
             app.use( join(settings.path, "manifest.json"), function(req, res) { res.send(mani); });
             app.use( join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "dist")) );
