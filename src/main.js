@@ -44,6 +44,7 @@ var app = angular.module('ui',['ngMaterial', 'ngMdIcons', 'ngSanitize', 'ngTouch
 var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
 moment.locale(locale);
 
+var dateFormat;
 app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider', '$provide',
     function ($mdThemingProvider, $compileProvider, $mdDateLocaleProvider, $provide) {
         // base theme can be default, dark, light or none
@@ -62,11 +63,11 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider', '
         $mdDateLocaleProvider.shortDays = moment.localeData().weekdaysMin();
 
         $mdDateLocaleProvider.formatDate = function(date) {
-            return date ? moment(date).format("DD MMM YYYY") : null;
+            return date ? moment(date).format(dateFormat || "DD MMM YYYY") : null;
         };
 
         $mdDateLocaleProvider.parseDate = function(dateString) {
-            var m = moment(dateString, "DD MMM YYYY", true);
+            var m = moment(dateString, dateFormat || "DD MMM YYYY", true);
             return m.isValid() ? m.toDate() : new Date(NaN);
         };
 

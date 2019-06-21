@@ -1,5 +1,9 @@
 ### 2.15.5: Maintenance Release
 
+**Enhancements**
+
+ - Add compression middleware by default to speed up loading
+
 **Fixes**
 
  - Fix legend to keep items hidden when new data arrives. Issue #507
@@ -8,6 +12,8 @@
  - Fix odd gauge behaviour when in donut mode
  - Fix UI redraw (not redrawing when changing tabs). PR #508
  - Fix vertical slider in only on release mode
+ - Let webfont loader be async to not delay page load when offline, and fail silently.
+ - Fix Datepicker to honour Site date fomat
 
 ### 2.15.4: Maintenance Release
 
