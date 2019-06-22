@@ -2,7 +2,7 @@
 
 **Enhancements**
 
- - Add compression middleware by default to speed up loading
+ - Add compression middleware by default to speed up loading. Thanks @zyrorl
 
 **Fixes**
 
@@ -14,6 +14,8 @@
  - Fix vertical slider in only on release mode
  - Let webfont loader be async to not delay page load when offline, and fail silently
  - Fix Datepicker to honour Site date format
+ - Tweak passthrough option wording to try to match what actually happens
+ - Fix text-input to only send one message when using tab key to move fields
 
 ### 2.15.4: Maintenance Release
 
