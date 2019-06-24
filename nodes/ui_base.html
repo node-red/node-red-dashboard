@@ -285,12 +285,12 @@
   margin-left: 3px;
 }
 .nr-dashboard-layout-span4 {
-  width: 32.8%;
+  width: 32.7%;
   margin-right: 0px;
   margin-left: 3px;
 }
 .nr-dashboard-layout-span3 {
-  width: 24.6%;
+  width: 24.5%;
   margin-right: 0px;
   margin-left: 3px;
 }
@@ -298,6 +298,16 @@
   width: 16.3%;
   margin-right: 0px;
   margin-left: 3px;
+}
+.nr-dashboard-layout-resize-disable {
+    cursor: pointer;  
+}
+.nr-dashboard-layout-resize-enable {
+    cursor: pointer;   
+}
+.grid-stack>.ui-state-disabled {
+    opacity: 1;
+    background-image: none;
 }
 </style>
 
@@ -418,13 +428,16 @@
                 var widget = {
                     id: nodes[cnt].id,
                     type: nodes[cnt].type,
-                    label: nodes[cnt].label,
-                    name: nodes[cnt].name,
                     order: nodes[cnt].order,
                     width: nodes[cnt].width,
                     height: nodes[cnt].height,
+                    auto: nodes[cnt].width == 0 ? true : false
                 };
                 group.widgets.push(widget);
+
+                if (!isLayoutToolSupported(nodes[cnt].type)){
+                    console.log("LayoutTool warning: Unsupported widget. Widget="+JSON.stringify(widget));
+                }
             }
         }
         return tab;
@@ -459,8 +472,13 @@
                         n_group.users.push(n_widget);
                     }
                     n_widget.order = t_widgets[cnt2].order;
-                    n_widget.width = t_widgets[cnt2].width;
-                    n_widget.height = t_widgets[cnt2].height;
+                    if (t_widgets[cnt2].auto === true ) {
+                        n_widget.width = 0;
+                        n_widget.height = 0;
+                    } else {
+                        n_widget.width = t_widgets[cnt2].width;
+                        n_widget.height = t_widgets[cnt2].height;
+                    }
 
                     n_widget.changed = true;
                     n_widget.dirty = true;
@@ -569,7 +587,8 @@
                     width: Number(node.width),
                     height: Number(node.height),
                     x: node.x,
-                    y: node.y
+                    y: node.y,
+                    auto: (el[0].dataset.noderedsizeauto == 'true') ? true : false
                 };
             }, this);
     
@@ -646,6 +665,54 @@
         putTabDataToNodes();
     };
 
+    ////////////////////////////////////////////////////
+    // Get default height for automatic settings
+    ////////////////////////////////////////////////////
+    function getDefaultHeight(nodeID, groupWidth) {
+        var redNode = RED.nodes.node(nodeID);
+        var height = 1;
+
+        if (redNode.type === 'ui_gauge') {
+            if (redNode.gtype === 'gage') {
+                height = Math.round(groupWidth/2)+1;
+            } else if (redNode.gtype === 'wave') {
+                if (groupWidth < 3) {
+                    height = 1;
+                } else {
+                    height = Math.round(groupWidth*0.75);
+                }
+            } else { // donut or compass
+                if (groupWidth < 3) {
+                    height = 1;
+                } else if (groupWidth < 11) {
+                    height = groupWidth - 1;
+                } else {
+                    height = Math.round(groupWidth*0.95);
+                }
+            }
+        } else if (redNode.type === 'ui_chart') {
+            height = Math.floor(groupWidth/2)+1;
+        } else if (redNode.type === 'ui_form') {
+            var optNum = redNode.options.length; // Sub widget number
+            if (redNode.label) {
+                height = optNum + 2; // Label and Button
+            } else {
+                height = optNum + 1; // Button only
+            }
+        } else if (redNode.type === 'ui_lineargauge') {
+            if (redNode.unit && redNode.name) {
+                height = 5;
+            } else {
+                height = 4;
+            }
+        } else if (redNode.type === 'ui_list') {
+            height = 5;
+        } else if (redNode.type === 'ui_vega') {
+            height = 5;
+        }
+        return height;
+    }
+
     /////////////////////////////
     // Grid width change
     ////////////////////////////
@@ -662,26 +729,42 @@
                     var node = el.data('_gridstack_node');
                     return {
                         width: Number(node.width),
-                        x: node.x
+                        x: node.x,
+                        auto: (el[0].dataset.noderedsizeauto == 'true') ? true : false
                     };
                 }, this);
                 var maxWidth = 0;
                 for (var i=0; i < serializedData.length; i++){
                     var wd = serializedData[i];
-                    if (maxWidth < wd.x + wd.width) {
-                        maxWidth = wd.x + wd.width;
+                    if (wd.auto == false) {
+                        if (maxWidth < wd.x + wd.width) {
+                            maxWidth = wd.x + wd.width;
+                        }
                     }
                 }
                 var width = ui.value;
                 if (width < maxWidth) {
                     width = maxWidth;
                 }
+
                 var grid = $(gridID+'.grid-stack').data('gridstack');
                 $(gridID+'.grid-stack').css("width", width * 40);
                 $(gridID+'.grid-stack').css("background-size", 100/width+"% 47px");
                 grid.setGridWidth(tabDatas.groups[id].width, true);
                 grid.setGridWidth(width, true);
                 tabDatas.groups[id].width = width;
+
+                $(gridID+'.grid-stack > .grid-stack-item:visible').each( function(idx, el) {
+                    el = $(el);
+                    var node = el.data('_gridstack_node');
+                    var auto = (el[0].dataset.noderedsizeauto == 'true') ? true : false;
+                    var type = el[0].dataset.noderedtype;
+                    grid.resizable(el, !auto);
+                    if (auto === true) {
+                        grid.resize(el, width, getDefaultHeight(node.id, width));
+                    }
+                });
+
                 if (width !== ui.value) {
                     event.stopPropagation();
                     event.preventDefault();
@@ -726,34 +809,58 @@
                     x: x,
                     y: y,
                     width: ui.draggable[0].dataset.gsWidth,
-                    height: ui.draggable[0].dataset.gsHeight
+                    height: ui.draggable[0].dataset.gsHeight,
+                    auto: (ui.draggable[0].dataset.noderedsizeauto == 'true') ? true : false
                 };
 
                 var dispType = ui.draggable[0].dataset.nodereddisptype;
                 var dispLabel = ui.draggable[0].dataset.nodereddisplabel;
-    
+
                 var item = $('<div></div>', {
                     'data-noderedtype': node.type, 
                     'data-noderedid': node.id,
                     'data-nodereddisptype': dispType,
-                    'data-nodereddisplabel': dispLabel
+                    'data-nodereddisplabel': dispLabel,
+                    'data-noderedsizeauto': node.auto
                 });
+
+                if (node.auto === true) {
+                    node.x = 0;
+                    node.width = groupWidth;
+                    node.height = getDefaultHeight(node.id, groupWidth);
+                }
 
                 var itemContent = $('<div></div>', {
                     addClass: 'grid-stack-item-content',
                     title: dispLabel + ':' + dispType
                 });
+
+                if (node.auto === true) {
+                    itemContent.append('<i class="fa fa-toggle-off nr-dashboard-layout-resize-enable" style="float: right; margin-right: 1px;"></i>');
+                    itemContent.find('.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
+                } else {
+                    itemContent.append('<i class="fa fa-toggle-on nr-dashboard-layout-resize-disable" style="float: right; margin-right: 1px;"></i>');
+                    itemContent.find('.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
+                }
+
                 itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
                 itemContent.appendTo(item);
-                toGrid.addWidget(
+                var newWidget = toGrid.addWidget(
                     item,
                     node.x, node.y, node.width, node.height, false, null, null,
                     ui.draggable[0].dataset.gsMinHeight,
                     ui.draggable[0].dataset.gsMaxHeight,
                     node.id);
                 
+                var fromWidget = ui.draggable[0];
+                if (node.auto === true) {
+                    $(fromWidget).find('.nr-dashboard-layout-resize-enable').off('click');
+                } else {
+                    $(fromWidget).find('.nr-dashboard-layout-resize-disable').off('click');
+                }
                 var fromGrid = $(fromGridID+'.grid-stack').data('gridstack');
-                fromGrid.removeWidget(ui.draggable[0]);
+                fromGrid.removeWidget(fromWidget);
+                toGrid.resizable(newWidget, !node.auto);
             }
         }
     });
@@ -781,6 +888,74 @@
             // Reset group width
             grid.setGridWidth(tabDatas.groups[id].width, true);
         });
+    }
+
+    //////////////////////////////////////////
+    // Layout resize Disable (Auto:false)
+    //////////////////////////////////////////
+    var layoutResizeDisable = function(e) {
+        var target = $(e.target);
+        var el = target.parents('.grid-stack-item:visible');
+        var grid = target.parents('.grid-stack').data('gridstack');
+        var node = el.data('_gridstack_node');
+
+        var id = Number(target.parents('.grid-stack').attr('id').slice(4));
+        var width = Number(tabDatas.groups[id].width);
+
+        var nodeID = el[0].dataset.noderedid;
+        var height = getDefaultHeight(nodeID, width);
+        grid.move(el, 0, node.y);
+        grid.resize(el, width, height);
+
+        grid.resizable(el, false);
+        el.find('.nr-dashboard-layout-resize-disable').off('click');
+        el.attr({'data-noderedsizeauto':'true'});
+        target.removeClass().addClass('fa fa-toggle-off nr-dashboard-layout-resize-enable');
+        el.find('.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
+    }
+
+    //////////////////////////////////////////
+    // Layout resize Enable (Auto:true)
+    //////////////////////////////////////////
+    var layoutResizeEnable = function(e){
+        var target = $(e.target);
+        var el = target.parents('.grid-stack-item:visible');
+        var grid = target.parents('.grid-stack').data('gridstack');
+
+        grid.resizable(el, true);
+        el.find('.nr-dashboard-layout-resize-enable').off('click');
+        el.attr({'data-noderedsizeauto':'false'});
+        target.removeClass().addClass('fa fa-toggle-on nr-dashboard-layout-resize-disable');
+        el.find('.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
+    }
+
+    //////////////////////////////////////////
+    // Check dashboard layout tool supported
+    //////////////////////////////////////////
+    function isLayoutToolSupported(nodeType){
+        if (nodeType !== "ui_spacer" &&
+            nodeType !== "ui_button" &&
+            nodeType !== "ui_dropdown" &&
+            nodeType !== "ui_switch" &&
+            nodeType !== "ui_slider" &&
+            nodeType !== "ui_numeric" &&
+            nodeType !== "ui_text_input" &&
+            nodeType !== "ui_date_picker" &&
+            nodeType !== "ui_colour_picker" &&
+            nodeType !== "ui_form" &&
+            nodeType !== "ui_text" &&
+            nodeType !== "ui_gauge" &&
+            nodeType !== "ui_chart" &&
+            nodeType !== "ui_template" &&
+            nodeType !== "ui_list" &&
+            nodeType !== "ui_table" &&
+            nodeType !== "ui_lineargauge" &&
+            nodeType !== "ui_my-little-ui-node" &&
+            nodeType !== "ui_vega") {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
@@ -1844,15 +2019,29 @@
                                         row = $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
                                     }
                                     var span = $('<div></div>',{addClass: 'nr-dashboard-layout-span' + span_num});
-                                    var title = $('<div></div>',{title: groups[cnt].name});
-                                    title.append('<b>'+groups[cnt].name+'</b><br/>'+c_("layout.width")+':');
+                                    var groupName = groups[cnt].name ? groups[cnt].name : groups[cnt].id;
+                                    var title = $('<div></div>', { 
+                                        style: "margin-top: 4px; margin-bottom: 4px;"
+                                    });
+                                    var title_group = $('<div></div>', { 
+                                        title: groupName,
+                                        style: "margin-left: 5px; margin-right: 8px; overflow: hidden;"
+                                    }).appendTo(title);
+                                    $("<b/>").text(groupName).appendTo(title_group);
+                                    var title_width = $('<div></div>', {
+                                        style: "text-align: right; margin-right: 8px;"
+                                    }).appendTo(title);
+                                    $("<span/>", {
+                                        style: "margin_right: 8px;"
+                                    }).text(c_("layout.width")+': ').appendTo(title_width);
                                     var changeWidth = $('<input>', {
                                         id: 'change-width' + cnt,
                                         value: groups[cnt].width,
                                         style: 'width:30px;',
                                         readonly: true
                                     });
-                                    title.append(changeWidth);
+                                    title_width.append(changeWidth);
+
                                     title.css('white-space','nowrap');
                                     title.css('overflow','hidden');
                                     var gridstack = $('<div></div>', {
@@ -1913,31 +2102,16 @@
                                     var tbl = {};  
                                     for (var cnt2 = 0; cnt2 < widgets.length; cnt2++) {
                                         // Set default value when there is auto width
-                                        if (widgets[cnt2].width == 0) {
+                                        if (widgets[cnt2].auto == true) {
                                             widgets[cnt2].width = groupWidth;
                                         // Adjust to the group width
                                         } else if (widgets[cnt2].width > groupWidth) {
                                             widgets[cnt2].width = groupWidth;
                                         }
-                                        // Set ui_form height (Fixed value)
-                                        if (widgets[cnt2].type === 'ui_form') {
-                                            var optNum = RED.nodes.node(widgets[cnt2].id).options.length; // Sub widget number
-                                            if (widgets[cnt2].label) {
-                                                widgets[cnt2].height = optNum + 2; // Label and Button
-                                            } else {
-                                                widgets[cnt2].height = optNum + 1; // Button only
-                                            }
+                                        // Auto support
+                                        if (widgets[cnt2].auto === true || widgets[cnt2].type === 'ui_form') {
+                                            widgets[cnt2].height = getDefaultHeight(widgets[cnt2].id, groupWidth);
                                         }
-                                        // Set default value when there is auto height
-                                        if (widgets[cnt2].height == 0) {
-                                            if (widgets[cnt2].type === 'ui_gauge' ||
-                                                widgets[cnt2].type === 'ui_chart') {
-                                                widgets[cnt2].height = Math.round(groupWidth/2)+1;
-                                            } else {
-                                                widgets[cnt2].height = 1;
-                                            }
-                                        }
-                                       
                                         // Calculate coordinates to be placed
                                         var point = search_point(Number(widgets[cnt2].width), Number(widgets[cnt2].height), groupWidth, 256, tbl);
                                         if (point) {
@@ -1971,12 +2145,19 @@
                                                 'data-noderedtype': node.type, 
                                                 'data-noderedid': node.id,
                                                 'data-nodereddisptype': dispType,
-                                                'data-nodereddisplabel': dispLabel
+                                                'data-nodereddisplabel': dispLabel,
+                                                'data-noderedsizeauto': node.auto
                                             });
                                             var itemContent = $('<div></div>', {
                                                 addClass: 'grid-stack-item-content',
                                                 title: dispLabel + ':' + dispType
                                             });
+
+                                            if (node.auto === true) {
+                                                itemContent.append('<i class="fa fa-toggle-off nr-dashboard-layout-resize-enable" style="float: right; margin-right: 1px;"></i>');
+                                            } else {
+                                                itemContent.append('<i class="fa fa-toggle-on nr-dashboard-layout-resize-disable" style="float: right; margin-right: 1px;"></i>');
+                                            }
                                             itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
                                             item.append(itemContent);
                                             grid.addWidget(
@@ -1989,6 +2170,13 @@
                                         }
                                     });
 
+                                    $(gridID+'.grid-stack > .grid-stack-item:visible').each( function(idx, el) {
+                                        el = $(el);
+                                        var node = el.data('_gridstack_node');
+                                        var auto = (el[0].dataset.noderedsizeauto == 'true') ? true : false;
+                                        grid.resizable(el, !auto);
+                                    });
+
                                     // Group width change
                                     widthChange.push(new changeGroupWidth(cnt));
                                     // Move widgets between groups (drag and drop)
@@ -1998,6 +2186,8 @@
                                     // Dragging widgets in a group (start event)
                                     widgetDrag.push(new dragGroupWidget(cnt));
                                 }
+                                $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
+                                $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
                             },
                             close: function() {
                                 //
