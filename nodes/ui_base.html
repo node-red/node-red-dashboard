@@ -230,7 +230,7 @@
 <link rel="stylesheet" href="./ui_base/css/gridstack-extra.min.css">
 <style>
 .grid-stack {
-    background-color: #f5f0dc;
+    background-color: #f8f8f8;
     border: solid 2px #C0C0C0;
     margin: auto;
     min-height: 46px;
@@ -300,14 +300,26 @@
   margin-left: 3px;
 }
 .nr-dashboard-layout-resize-disable {
-    cursor: pointer;  
+    cursor: pointer;
+    float: right;
+    position: relative;
+    z-index: 90;
+    margin-right: 4px;
 }
 .nr-dashboard-layout-resize-enable {
-    cursor: pointer;   
+    cursor: pointer;
+    float: right;
+    position: relative;
+    z-index: 90;
+    margin-right: 1px;
 }
 .grid-stack>.ui-state-disabled {
     opacity: 1;
     background-image: none;
+}
+.grid-stack>.grid-stack-item>.ui-resizable-handle {
+    z-index: 90;
+    margin-right: -7px;
 }
 </style>
 
@@ -836,10 +848,10 @@
                 });
 
                 if (node.auto === true) {
-                    itemContent.append('<i class="fa fa-toggle-off nr-dashboard-layout-resize-enable" style="float: right; margin-right: 1px;"></i>');
+                    itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
                     itemContent.find('.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
                 } else {
-                    itemContent.append('<i class="fa fa-toggle-on nr-dashboard-layout-resize-disable" style="float: right; margin-right: 1px;"></i>');
+                    itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"</i>');
                     itemContent.find('.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
                 }
 
@@ -910,7 +922,7 @@
         grid.resizable(el, false);
         el.find('.nr-dashboard-layout-resize-disable').off('click');
         el.attr({'data-noderedsizeauto':'true'});
-        target.removeClass().addClass('fa fa-toggle-off nr-dashboard-layout-resize-enable');
+        target.removeClass().addClass('fa fa-unlock nr-dashboard-layout-resize-enable');
         el.find('.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
     }
 
@@ -925,7 +937,7 @@
         grid.resizable(el, true);
         el.find('.nr-dashboard-layout-resize-enable').off('click');
         el.attr({'data-noderedsizeauto':'false'});
-        target.removeClass().addClass('fa fa-toggle-on nr-dashboard-layout-resize-disable');
+        target.removeClass().addClass('fa fa-lock nr-dashboard-layout-resize-disable');
         el.find('.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
     }
 
@@ -2021,15 +2033,15 @@
                                     var span = $('<div></div>',{addClass: 'nr-dashboard-layout-span' + span_num});
                                     var groupName = groups[cnt].name ? groups[cnt].name : groups[cnt].id;
                                     var title = $('<div></div>', { 
-                                        style: "margin-top: 4px; margin-bottom: 4px;"
+                                        style: "margin-top: 2px; margin-bottom: 2px;"
                                     });
                                     var title_group = $('<div></div>', { 
                                         title: groupName,
-                                        style: "margin-left: 5px; margin-right: 8px; overflow: hidden;"
+                                        style: "margin-left: 2px; margin-right: 10px; overflow: hidden;"
                                     }).appendTo(title);
                                     $("<b/>").text(groupName).appendTo(title_group);
                                     var title_width = $('<div></div>', {
-                                        style: "text-align: right; margin-right: 8px;"
+                                        style: "text-align: right; margin-right: 1px;"
                                     }).appendTo(title);
                                     $("<span/>", {
                                         style: "margin_right: 8px;"
@@ -2154,9 +2166,9 @@
                                             });
 
                                             if (node.auto === true) {
-                                                itemContent.append('<i class="fa fa-toggle-off nr-dashboard-layout-resize-enable" style="float: right; margin-right: 1px;"></i>');
+                                                itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
                                             } else {
-                                                itemContent.append('<i class="fa fa-toggle-on nr-dashboard-layout-resize-disable" style="float: right; margin-right: 1px;"></i>');
+                                                itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"></i>');
                                             }
                                             itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
                                             item.append(itemContent);
