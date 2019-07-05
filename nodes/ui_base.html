@@ -277,27 +277,27 @@
 .nr-dashboard-layout-span12 {
   width: 98.4%;
   margin-right: 0px;
-  margin-left: 3px;
+  margin-left: 4px;
 }
 .nr-dashboard-layout-span6 {
   width: 49.2%;
   margin-right: 0px;
-  margin-left: 3px;
+  margin-left: 4px;
 }
 .nr-dashboard-layout-span4 {
   width: 32.7%;
   margin-right: 0px;
-  margin-left: 3px;
+  margin-left: 4px;
 }
 .nr-dashboard-layout-span3 {
   width: 24.5%;
   margin-right: 0px;
-  margin-left: 3px;
+  margin-left: 4px;
 }
 .nr-dashboard-layout-span2 {
   width: 16.3%;
   margin-right: 0px;
-  margin-left: 3px;
+  margin-left: 4px;
 }
 .nr-dashboard-layout-resize-disable {
     cursor: pointer;
@@ -454,7 +454,7 @@
         }
         return tab;
     }
-    
+
     //////////////////////////////////////////////////
     // Update node information in the edited widget
     ////////////////////////////////////////////////////
@@ -465,7 +465,7 @@
             RED.nodes.dirty(true);
             RED.view.redraw(true);
         }
-    
+
         var t_groups = tabDatas.groups;
         for (var cnt1 = 0; cnt1 < t_groups.length; cnt1++){
             var n_group = RED.nodes.node(t_groups[cnt1].id);
@@ -524,7 +524,7 @@
         }
         RED.sidebar.info.refresh();
     }
-    
+
     ////////////////////////////////////////
     // Sort by order
     ////////////////////////////////////////
@@ -532,10 +532,10 @@
         var r = 0;
         if (a.order < b.order) { r = -1; }
         else if (a.order > b.order) { r = 1; }
-    
+
         return r;
     }
-    
+
     ////////////////////////////////////////
     // Sort by XY
     ////////////////////////////////////////
@@ -547,7 +547,7 @@
         else if (a.x > b.x) { r = 1; }
         return r;
     }
-    
+
     ///////////////////////////////////////////////////////
     // Placeable location search (placed in the upper left)
     ///////////////////////////////////////////////////////
@@ -603,10 +603,10 @@
                     auto: (el[0].dataset.noderedsizeauto == 'true') ? true : false
                 };
             }, this);
-    
+
             var width = Number(groups[cnt].width);
             var height = 0;
-    
+
             // Search group height
             for (var i=0; i < serializedData.length; i++){
                 var wd = serializedData[i];
@@ -614,7 +614,7 @@
                     height = wd.y + wd.height;
                 }
             }
-    
+
             // Place widget on table
             var tbl = new Array(width * height);
             for (var i = 0; i< tbl.length; i++){
@@ -628,7 +628,7 @@
                     }
                 }
             }
-    
+
             // Add Spacer to Blank
             for (var y = 0; y < height; y++){
                 var spacerAdded = false;
@@ -654,10 +654,10 @@
                     }
                 }
             }
-    
+
             // Sort Gridstack objects by x, y information
             serializedData.sort(compareXY);
-    
+
             // Delete x and y elements as information for sorting, and give order
             var order = 0;
             for (i in serializedData) {
@@ -666,13 +666,13 @@
                 delete serializedData[i].y;
                 serializedData[i].order = order;
             }
-    
+
             // Update widget information in group with edited data
             var group = groups[cnt];
             delete group.widgets;
             group.widgets = serializedData;
         }
-    
+
         // Save process call
         putTabDataToNodes();
     };
@@ -789,7 +789,7 @@
     // Move between groups of widgets
     //////////////////////////////////
     var moveGroupWidget = function(id) {
-    
+
     var toGridID = '#grid'+id;
     var toGrid = $(toGridID+'.grid-stack').data('gridstack');
 
@@ -829,7 +829,7 @@
                 var dispLabel = ui.draggable[0].dataset.nodereddisplabel;
 
                 var item = $('<div></div>', {
-                    'data-noderedtype': node.type, 
+                    'data-noderedtype': node.type,
                     'data-noderedid': node.id,
                     'data-nodereddisptype': dispType,
                     'data-nodereddisplabel': dispLabel,
@@ -863,7 +863,7 @@
                     ui.draggable[0].dataset.gsMinHeight,
                     ui.draggable[0].dataset.gsMaxHeight,
                     node.id);
-                
+
                 var fromWidget = ui.draggable[0];
                 if (node.auto === true) {
                     $(fromWidget).find('.nr-dashboard-layout-resize-enable').off('click');
@@ -1973,7 +1973,7 @@
                     });
 
 
-                    // Dashboard layout tool 
+                    // Dashboard layout tool
                     if (item.type === 'ui_tab') {
                         var layoutButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
                         layoutButton.on('click',function(evt) {
@@ -2003,7 +2003,7 @@
                                 }
                             ],
                             resize: function(dimensions) {
-                                // 
+                                //
                             },
                             open: function(tray) {
                                 // Get widget of specified tab from node information
@@ -2032,16 +2032,16 @@
                                     }
                                     var span = $('<div></div>',{addClass: 'nr-dashboard-layout-span' + span_num});
                                     var groupName = groups[cnt].name ? groups[cnt].name : groups[cnt].id;
-                                    var title = $('<div></div>', { 
-                                        style: "margin-top: 2px; margin-bottom: 2px;"
+                                    var title = $('<div></div>', {
+                                        style: "margin-top:2px; margin-bottom:2px;"
                                     });
-                                    var title_group = $('<div></div>', { 
+                                    var title_group = $('<div></div>', {
                                         title: groupName,
-                                        style: "margin-left: 2px; margin-right: 10px; overflow: hidden;"
+                                        style: "margin-left:4px; margin-right:8px; overflow:hidden;"
                                     }).appendTo(title);
                                     $("<b/>").text(groupName).appendTo(title_group);
                                     var title_width = $('<div></div>', {
-                                        style: "text-align: right; margin-right: 1px;"
+                                        style: "text-align:right; margin-right:8px;"
                                     }).appendTo(title);
                                     $("<span/>", {
                                         style: "margin_right: 8px;"
@@ -2072,7 +2072,7 @@
                                 var trayBody = tray.find('.red-ui-tray-body, .editor-tray-body');
                                 trayBody.css('overflow','auto');
                                 trayBody.append(editor);
- 
+
                                 /////////////////////////////////////////
                                 // Gridstack.js option
                                 ////////////////////////////////////////
@@ -2083,7 +2083,7 @@
                                     alwaysShowResizeHandle: true,
                                     disableOneColumnMode : true
                                 };
-    
+
                                 /////////////////////////////////////////
                                 // Editor screen generation
                                 /////////////////////////////////////////
@@ -2096,7 +2096,7 @@
                                     var gridID='#grid' + cnt;
                                     // gridstack generation
                                     $(gridID).gridstack(options);
-                                   
+
                                     // Clear the contents of Grind
                                     var grid = $(gridID+'.grid-stack').data('gridstack');
                                     grid.removeAll();
@@ -2111,7 +2111,7 @@
                                     var widgets = groups[cnt].widgets;
                                     widgets.sort(compareOrder);
 
-                                    var tbl = {};  
+                                    var tbl = {};
                                     for (var cnt2 = 0; cnt2 < widgets.length; cnt2++) {
                                         // Set default value when there is auto width
                                         if (widgets[cnt2].auto == true) {
@@ -2154,7 +2154,7 @@
                                             }
 
                                             var item = $('<div></div>', {
-                                                'data-noderedtype': node.type, 
+                                                'data-noderedtype': node.type,
                                                 'data-noderedid': node.id,
                                                 'data-nodereddisptype': dispType,
                                                 'data-nodereddisplabel': dispLabel,
