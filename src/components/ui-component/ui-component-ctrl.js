@@ -283,7 +283,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
             // will emit me.item.value when enter or tab is pressed or onBlur
             me.keyPressed = function (event) {
-                if ((event.charCode === 13) || (event.which === 13) || (event.which === 9) || (event.type === "blur")) {
+                if ((event.charCode === 13) || (event.which === 13) || (event.type === "blur")) {
+                    console.log("DING",event);
                     events.emit({ id:me.item.id, value:me.item.value });
                 }
             }
