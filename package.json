@@ -37,6 +37,9 @@
         },
         {
             "name": "Steve Rickus"
+        },
+        {
+            "name": "Kazuhiro Ito"
         }
     ],
     "license": "Apache-2.0",
@@ -117,6 +120,10 @@
         "svg-morpheus": "^0.3.0",
         "tinycolor2": "^1.4.1",
         "weather-icons-lite": "^1.1.0",
+        "gridstack": "^0.4.0",
+        "lodash": "^4.17.11",
+        "gulp-sass": "^4.0.2",
+        "gulp-rename": "^1.4.0"
         "webfontloader": "^1.6.28"
     }
 }

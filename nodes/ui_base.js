@@ -93,4 +93,11 @@ module.exports = function(RED) {
             if (err) { node.warn(filename + " not found. Maybe running in dev mode."); }
         });
     });
+
+    RED.httpAdmin.get('/ui_base/css/*', function(req, res) {
+        var filename = path.join(__dirname , '../dist/css', req.params[0]);
+        res.sendFile(filename, function (err) {
+            if (err) { node.warn(filename + " not found. Maybe running in dev mode."); }
+        });
+    });
 };
