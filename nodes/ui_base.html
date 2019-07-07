@@ -1972,247 +1972,245 @@
                         evt.preventDefault();
                     });
 
-
                     // Dashboard layout tool
                     if (item.type === 'ui_tab') {
                         var layoutButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
                         layoutButton.on('click',function(evt) {
-                        var editTabName = item.node.name ? item.node.name : item.node.id;
-                        var trayOptions = {
-                            title: c_("layout.layout-editor") + " : " + editTabName,
-                            width: "Infinity",
-                            //width: "inherit",
-                            buttons: [
-                                {
-                                    id: "node-dialog-cancel",
-                                    text: RED._("common.label.cancel"),
-                                    click: function() {
-                                        // clean editor
-                                        RED.tray.close();
+                            var editTabName = item.node.name ? item.node.name : item.node.id;
+                            var trayOptions = {
+                                title: c_("layout.layout-editor") + " : " + editTabName,
+                                width: "Infinity",
+                                //width: "inherit",
+                                buttons: [
+                                    {
+                                        id: "node-dialog-cancel",
+                                        text: RED._("common.label.cancel"),
+                                        click: function() {
+                                            // clean editor
+                                            RED.tray.close();
+                                        }
+                                    },
+                                    {
+                                        id: "node-dialog-ok",
+                                        text: RED._("common.label.done"),
+                                        class: "primary",
+                                        click: function() {
+                                            // Save data after editing
+                                            saveGridDatas();
+                                            RED.tray.close();
+                                        }
                                     }
+                                ],
+                                resize: function(dimensions) {
+                                    //
                                 },
-                                {
-                                    id: "node-dialog-ok",
-                                    text: RED._("common.label.done"),
-                                    class: "primary",
-                                    click: function() {
-                                        // Save data after editing
-                                        saveGridDatas();
-                                        RED.tray.close();
+                                open: function(tray) {
+                                    // Get widget of specified tab from node information
+                                    tabDatas = getTabDataFromNodes(item.node.id);
+                                    // The width that can be handled by Layout is up to MAX_GROUP_WIDTH
+                                    // Groups exceeding the maximum width are not supported.
+                                    var tmpGroups = tabDatas.groups;
+                                    tmpGroups.sort(compareOrder);
+                                    var groups = [];
+                                    for (var cnt = 0; cnt < tmpGroups.length; cnt++) {
+                                        if (tmpGroups[cnt].width <= MAX_GROUP_WIDTH) {
+                                            groups.push(tmpGroups[cnt]);
+                                        }
                                     }
-                                }
-                            ],
-                            resize: function(dimensions) {
-                                //
-                            },
-                            open: function(tray) {
-                                // Get widget of specified tab from node information
-                                tabDatas = getTabDataFromNodes(item.node.id);
-                                // The width that can be handled by Layout is up to MAX_GROUP_WIDTH
-                                // Groups exceeding the maximum width are not supported.
-                                var tmpGroups = tabDatas.groups;
-                                tmpGroups.sort(compareOrder);
-                                var groups = [];
-                                for (var cnt = 0; cnt < tmpGroups.length; cnt++) {
-                                    if (tmpGroups[cnt].width <= MAX_GROUP_WIDTH) {
-                                        groups.push(tmpGroups[cnt]);
-                                    }
-                                }
-                                tabDatas.groups = groups;
+                                    tabDatas.groups = groups;
 
-                                var editor = $('<div></div>',{addClass: 'nr-dashboard-layout-container-fluid'});
-                                var row =  $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
-                                var span_num = Math.floor(12 / groups.length); // bootstrap grid 12 splits
-                                span_num = span_num < 2 ? 2 : span_num; // max 6 groups per row
-                                for (var cnt = 0; cnt < groups.length; cnt++) {
-                                    if (cnt !=0 && (cnt % 6) == 0) {
+                                    var editor = $('<div></div>',{addClass: 'nr-dashboard-layout-container-fluid'});
+                                    var row =  $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
+                                    var span_num = Math.floor(12 / groups.length); // bootstrap grid 12 splits
+                                    span_num = span_num < 2 ? 2 : span_num; // max 6 groups per row
+                                    for (var cnt = 0; cnt < groups.length; cnt++) {
+                                        if (cnt !=0 && (cnt % 6) == 0) {
+                                            editor.append(row);
+                                            editor.append('<div><br></div>');
+                                            row = $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
+                                        }
+                                        var span = $('<div></div>',{addClass: 'nr-dashboard-layout-span' + span_num});
+                                        var groupName = groups[cnt].name ? groups[cnt].name : groups[cnt].id;
+                                        var title = $('<div></div>', {
+                                            style: "margin-top:2px; margin-bottom:2px;"
+                                        });
+                                        var title_group = $('<div></div>', {
+                                            title: groupName,
+                                            style: "margin-left:4px; margin-right:8px; overflow:hidden;"
+                                        }).appendTo(title);
+                                        $("<b/>").text(groupName).appendTo(title_group);
+                                        var title_width = $('<div></div>', {
+                                            style: "text-align:right; margin-right:8px;"
+                                        }).appendTo(title);
+                                        $("<span/>", {
+                                            style: "margin_right: 8px;"
+                                        }).text(c_("layout.width")+': ').appendTo(title_width);
+                                        var changeWidth = $('<input>', {
+                                            id: 'change-width' + cnt,
+                                            value: groups[cnt].width,
+                                            style: 'width:30px;',
+                                            readonly: true
+                                        });
+                                        title_width.append(changeWidth);
+
+                                        title.css('white-space','nowrap');
+                                        title.css('overflow','hidden');
+                                        var gridstack = $('<div></div>', {
+                                            id: 'grid'+cnt,
+                                            addClass: 'grid-stack'
+                                        });
+                                        span.append(title);
+                                        span.append(gridstack);
+                                        row.append(span);
+                                    }
+                                    if (groups.length != 0) {
                                         editor.append(row);
-                                        editor.append('<div><br></div>');
-                                        row = $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
-                                    }
-                                    var span = $('<div></div>',{addClass: 'nr-dashboard-layout-span' + span_num});
-                                    var groupName = groups[cnt].name ? groups[cnt].name : groups[cnt].id;
-                                    var title = $('<div></div>', {
-                                        style: "margin-top:2px; margin-bottom:2px;"
-                                    });
-                                    var title_group = $('<div></div>', {
-                                        title: groupName,
-                                        style: "margin-left:4px; margin-right:8px; overflow:hidden;"
-                                    }).appendTo(title);
-                                    $("<b/>").text(groupName).appendTo(title_group);
-                                    var title_width = $('<div></div>', {
-                                        style: "text-align:right; margin-right:8px;"
-                                    }).appendTo(title);
-                                    $("<span/>", {
-                                        style: "margin_right: 8px;"
-                                    }).text(c_("layout.width")+': ').appendTo(title_width);
-                                    var changeWidth = $('<input>', {
-                                        id: 'change-width' + cnt,
-                                        value: groups[cnt].width,
-                                        style: 'width:30px;',
-                                        readonly: true
-                                    });
-                                    title_width.append(changeWidth);
-
-                                    title.css('white-space','nowrap');
-                                    title.css('overflow','hidden');
-                                    var gridstack = $('<div></div>', {
-                                        id: 'grid'+cnt,
-                                        addClass: 'grid-stack'
-                                    });
-                                    span.append(title);
-                                    span.append(gridstack);
-                                    row.append(span);
-                                }
-                                if (groups.length != 0) {
-                                    editor.append(row);
-                                }
-
-                                // Show layout editor in tray
-                                var trayBody = tray.find('.red-ui-tray-body, .editor-tray-body');
-                                trayBody.css('overflow','auto');
-                                trayBody.append(editor);
-
-                                /////////////////////////////////////////
-                                // Gridstack.js option
-                                ////////////////////////////////////////
-                                var options = {
-                                    cellHeight: 46,
-                                    verticalMargin: 1,
-                                    float: true,
-                                    alwaysShowResizeHandle: true,
-                                    disableOneColumnMode : true
-                                };
-
-                                /////////////////////////////////////////
-                                // Editor screen generation
-                                /////////////////////////////////////////
-                                oldSpacer = [];
-                                widthChange = [];
-                                widgetMove = [];
-                                widgetResize = [];
-                                widgetDrag = [];
-                                for (var cnt=0; cnt < groups.length; cnt++) {
-                                    var gridID='#grid' + cnt;
-                                    // gridstack generation
-                                    $(gridID).gridstack(options);
-
-                                    // Clear the contents of Grind
-                                    var grid = $(gridID+'.grid-stack').data('gridstack');
-                                    grid.removeAll();
-
-                                    // Set the width of the display area of gridstack
-                                    var groupWidth = Number(groups[cnt].width);
-                                    $(gridID+'.grid-stack').css("width", groupWidth * 40);
-                                    $(gridID+'.grid-stack').css("background-size", 100/groupWidth+"% 47px");
-                                    grid.setGridWidth(groupWidth, true);
-
-                                    // Determination of placement position of widget of Grid
-                                    var widgets = groups[cnt].widgets;
-                                    widgets.sort(compareOrder);
-
-                                    var tbl = {};
-                                    for (var cnt2 = 0; cnt2 < widgets.length; cnt2++) {
-                                        // Set default value when there is auto width
-                                        if (widgets[cnt2].auto == true) {
-                                            widgets[cnt2].width = groupWidth;
-                                        // Adjust to the group width
-                                        } else if (widgets[cnt2].width > groupWidth) {
-                                            widgets[cnt2].width = groupWidth;
-                                        }
-                                        // Auto support
-                                        if (widgets[cnt2].auto === true || widgets[cnt2].type === 'ui_form') {
-                                            widgets[cnt2].height = getDefaultHeight(widgets[cnt2].id, groupWidth);
-                                        }
-                                        // Calculate coordinates to be placed
-                                        var point = search_point(Number(widgets[cnt2].width), Number(widgets[cnt2].height), groupWidth, 256, tbl);
-                                        if (point) {
-                                            widgets[cnt2].x = point.x;
-                                            widgets[cnt2].y = point.y;
-                                        }
                                     }
 
-                                    var items = GridStackUI.Utils.sort(widgets);
-                                    _.each(items, function (node) {
-                                        var minHeight = null;
-                                        var maxHeight = null;
-                                        // ui_form is fixed to height 2
-                                        if (node.type === 'ui_form') {
-                                            minHeight = node.height;
-                                            maxHeight = node.height;
+                                    // Show layout editor in tray
+                                    var trayBody = tray.find('.red-ui-tray-body, .editor-tray-body');
+                                    trayBody.css('overflow','auto');
+                                    trayBody.append(editor);
+
+                                    /////////////////////////////////////////
+                                    // Gridstack.js option
+                                    ////////////////////////////////////////
+                                    var options = {
+                                        cellHeight: 46,
+                                        verticalMargin: 1,
+                                        float: true,
+                                        alwaysShowResizeHandle: true,
+                                        disableOneColumnMode : true
+                                    };
+
+                                    /////////////////////////////////////////
+                                    // Editor screen generation
+                                    /////////////////////////////////////////
+                                    oldSpacer = [];
+                                    widthChange = [];
+                                    widgetMove = [];
+                                    widgetResize = [];
+                                    widgetDrag = [];
+                                    for (var cnt=0; cnt < groups.length; cnt++) {
+                                        var gridID='#grid' + cnt;
+                                        // gridstack generation
+                                        $(gridID).gridstack(options);
+
+                                        // Clear the contents of Grind
+                                        var grid = $(gridID+'.grid-stack').data('gridstack');
+                                        grid.removeAll();
+
+                                        // Set the width of the display area of gridstack
+                                        var groupWidth = Number(groups[cnt].width);
+                                        $(gridID+'.grid-stack').css("width", groupWidth * 40);
+                                        $(gridID+'.grid-stack').css("background-size", 100/groupWidth+"% 47px");
+                                        grid.setGridWidth(groupWidth, true);
+
+                                        // Determination of placement position of widget of Grid
+                                        var widgets = groups[cnt].widgets;
+                                        widgets.sort(compareOrder);
+
+                                        var tbl = {};
+                                        for (var cnt2 = 0; cnt2 < widgets.length; cnt2++) {
+                                            // Set default value when there is auto width
+                                            if (widgets[cnt2].auto == true) {
+                                                widgets[cnt2].width = groupWidth;
+                                            // Adjust to the group width
+                                            } else if (widgets[cnt2].width > groupWidth) {
+                                                widgets[cnt2].width = groupWidth;
+                                            }
+                                            // Auto support
+                                            if (widgets[cnt2].auto === true || widgets[cnt2].type === 'ui_form') {
+                                                widgets[cnt2].height = getDefaultHeight(widgets[cnt2].id, groupWidth);
+                                            }
+                                            // Calculate coordinates to be placed
+                                            var point = search_point(Number(widgets[cnt2].width), Number(widgets[cnt2].height), groupWidth, 256, tbl);
+                                            if (point) {
+                                                widgets[cnt2].x = point.x;
+                                                widgets[cnt2].y = point.y;
+                                            }
                                         }
-                                        if (node.type !== 'ui_spacer') {
-                                            var dispNode = RED.nodes.node(node.id);
-                                            var dispType = dispNode._def.paletteLabel;
-                                            var dispLabel = dispNode._def.label;
-                                            try {
-                                                dispLabel = (typeof dispLabel === "function" ? dispLabel.call(dispNode) : dispLabel)||"";
-                                            }
-                                            catch(err) {
-                                                console.log("Definition error: " + node.type + ".label",err);
-                                                dispLabel = dispType;
-                                            }
 
-                                            var item = $('<div></div>', {
-                                                'data-noderedtype': node.type,
-                                                'data-noderedid': node.id,
-                                                'data-nodereddisptype': dispType,
-                                                'data-nodereddisplabel': dispLabel,
-                                                'data-noderedsizeauto': node.auto
-                                            });
-                                            var itemContent = $('<div></div>', {
-                                                addClass: 'grid-stack-item-content',
-                                                title: dispLabel + ':' + dispType
-                                            });
+                                        var items = GridStackUI.Utils.sort(widgets);
+                                        _.each(items, function (node) {
+                                            var minHeight = null;
+                                            var maxHeight = null;
+                                            // ui_form is fixed to height 2
+                                            if (node.type === 'ui_form') {
+                                                minHeight = node.height;
+                                                maxHeight = node.height;
+                                            }
+                                            if (node.type !== 'ui_spacer') {
+                                                var dispNode = RED.nodes.node(node.id);
+                                                var dispType = dispNode._def.paletteLabel;
+                                                var dispLabel = dispNode._def.label;
+                                                try {
+                                                    dispLabel = (typeof dispLabel === "function" ? dispLabel.call(dispNode) : dispLabel)||"";
+                                                }
+                                                catch(err) {
+                                                    console.log("Definition error: " + node.type + ".label",err);
+                                                    dispLabel = dispType;
+                                                }
 
-                                            if (node.auto === true) {
-                                                itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
+                                                var item = $('<div></div>', {
+                                                    'data-noderedtype': node.type,
+                                                    'data-noderedid': node.id,
+                                                    'data-nodereddisptype': dispType,
+                                                    'data-nodereddisplabel': dispLabel,
+                                                    'data-noderedsizeauto': node.auto
+                                                });
+                                                var itemContent = $('<div></div>', {
+                                                    addClass: 'grid-stack-item-content',
+                                                    title: dispLabel + ':' + dispType
+                                                });
+
+                                                if (node.auto === true) {
+                                                    itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
+                                                } else {
+                                                    itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"></i>');
+                                                }
+                                                itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
+                                                item.append(itemContent);
+                                                grid.addWidget(
+                                                    item,
+                                                    node.x, node.y, node.width, node.height, false, null, null,
+                                                    minHeight, maxHeight, node.id);
                                             } else {
-                                                itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"></i>');
+                                                // Record the spacer node ID to be deleted
+                                                oldSpacer.push(node.id);
                                             }
-                                            itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
-                                            item.append(itemContent);
-                                            grid.addWidget(
-                                                item,
-                                                node.x, node.y, node.width, node.height, false, null, null,
-                                                minHeight, maxHeight, node.id);
-                                        } else {
-                                            // Record the spacer node ID to be deleted
-                                            oldSpacer.push(node.id);
-                                        }
-                                    });
+                                        });
 
-                                    $(gridID+'.grid-stack > .grid-stack-item:visible').each( function(idx, el) {
-                                        el = $(el);
-                                        var node = el.data('_gridstack_node');
-                                        var auto = (el[0].dataset.noderedsizeauto == 'true') ? true : false;
-                                        grid.resizable(el, !auto);
-                                    });
+                                        $(gridID+'.grid-stack > .grid-stack-item:visible').each( function(idx, el) {
+                                            el = $(el);
+                                            var node = el.data('_gridstack_node');
+                                            var auto = (el[0].dataset.noderedsizeauto == 'true') ? true : false;
+                                            grid.resizable(el, !auto);
+                                        });
 
-                                    // Group width change
-                                    widthChange.push(new changeGroupWidth(cnt));
-                                    // Move widgets between groups (drag and drop)
-                                    widgetMove.push(new moveGroupWidget(cnt));
-                                    // Resize widget in group (start event)
-                                    widgetResize.push(new resizeGroupWidget(cnt));
-                                    // Dragging widgets in a group (start event)
-                                    widgetDrag.push(new dragGroupWidget(cnt));
-                                }
-                                $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
-                                $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
-                            },
-                            close: function() {
-                                //
-                            },
-                            show: function() {}
-                        }
+                                        // Group width change
+                                        widthChange.push(new changeGroupWidth(cnt));
+                                        // Move widgets between groups (drag and drop)
+                                        widgetMove.push(new moveGroupWidget(cnt));
+                                        // Resize widget in group (start event)
+                                        widgetResize.push(new resizeGroupWidget(cnt));
+                                        // Dragging widgets in a group (start event)
+                                        widgetDrag.push(new dragGroupWidget(cnt));
+                                    }
+                                    $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
+                                    $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
+                                },
+                                close: function() {
+                                    //
+                                },
+                                show: function() {}
+                            }
 
-                        RED.tray.show(trayOptions);
-                        evt.stopPropagation();
-                        evt.preventDefault();
-                    });
+                            RED.tray.show(trayOptions);
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        });
                     }
-
 
                     if (item.type === 'ui_tab') {
                         var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
