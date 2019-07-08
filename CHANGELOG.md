@@ -1,8 +1,19 @@
-### 2.15.5: Maintenance Release
+### 2.16.0-beta: Milestome Release
 
 **Enhancements**
 
- - Add compression middleware by default to speed up loading. Thanks @zyrorl
+ - Add Dashboard Layout tool - Major contribution - Thanks @KazuhiroItoh - PR #482
+
+ **Fixes**
+
+  - Make spacer transparent so background is really the background.
+  - Fix text_input to only send duplicates if enter key hit multiple times and not on loss of focus. Issue #513
+
+ ### 2.15.5: Maintenance Release
+
+ **Enhancements**
+
+  - Add compression middleware by default to speed up loading. Thanks @zyrorl
 
 **Fixes**
 
