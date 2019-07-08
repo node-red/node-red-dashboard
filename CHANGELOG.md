@@ -8,6 +8,7 @@
 
   - Make spacer transparent so background is really the background.
   - Fix text_input to only send duplicates if enter key hit multiple times and not on loss of focus. Issue #513
+  - Fix color-picker to not emit on tab change, and fix background overlay. Issue #514
 
  ### 2.15.5: Maintenance Release
 

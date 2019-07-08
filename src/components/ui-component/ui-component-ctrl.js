@@ -164,7 +164,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             }
                         }
                         $scope.$watch('me.item.value', function() {
-                            if ((me.item.dynOutput === "true") && (me.item.value !== "")) {
+                            if ((me.item.dynOutput === "true") && (me.item.value !== me.item.oldValue)) {
+                                me.item.oldValue = me.item.value;
                                 me.valueChanged(20);
                             }
                         });
