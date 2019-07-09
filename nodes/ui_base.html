@@ -276,28 +276,23 @@
 }
 .nr-dashboard-layout-span12 {
   width: 98.4%;
-  margin-right: 0px;
-  margin-left: 4px;
+  padding: 2px;
 }
 .nr-dashboard-layout-span6 {
   width: 49.2%;
-  margin-right: 0px;
-  margin-left: 4px;
+  padding: 2px;
 }
 .nr-dashboard-layout-span4 {
   width: 32.7%;
-  margin-right: 0px;
-  margin-left: 4px;
+  padding: 2px;
 }
 .nr-dashboard-layout-span3 {
   width: 24.5%;
-  margin-right: 0px;
-  margin-left: 4px;
+  padding: 2px;
 }
 .nr-dashboard-layout-span2 {
   width: 16.3%;
-  margin-right: 0px;
-  margin-left: 4px;
+  padding: 2px;
 }
 .nr-dashboard-layout-resize-disable {
     cursor: pointer;
@@ -1979,8 +1974,7 @@
                             var editTabName = item.node.name ? item.node.name : item.node.id;
                             var trayOptions = {
                                 title: c_("layout.layout-editor") + " : " + editTabName,
-                                width: "Infinity",
-                                //width: "inherit",
+                                width: Infinity,
                                 buttons: [
                                     {
                                         id: "node-dialog-cancel",
