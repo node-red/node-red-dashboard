@@ -3166,9 +3166,9 @@
                 var h = has_height ? in1.val() : undefined;
                 var label = that.options.label;
                 label.text(w+(has_height ? (' x '+h) : ''));
-                $(that.options.width).val(w).on("change", );
+                $(that.options.width).val(w).change();
                 if(has_height) {
-                    $(that.options.height).val(h).on("change", );
+                    $(that.options.height).val(h).change();
                 }
                 that.destroy();
             };
@@ -3297,8 +3297,8 @@
                     .appendTo(buttonRow)
                     .on('mouseup',function(evt) {
                         that.element.text(auto_text)
-                        $(that.options.width).val(0).on("change", );
-                        $(that.options.height).val(0).on("change", );
+                        $(that.options.width).val(0).change();
+                        $(that.options.height).val(0).change();
                         evt.preventDefault();
                         container.fadeOut(200, function() { $(this).remove(); });
                     });
@@ -3340,8 +3340,8 @@
                         cell.data("h",i);
                         cell.on("mouseup",function() {
                             that.element.text(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
-                            $(that.options.width).val($(this).data("w")+1).on("change", );
-                            $(that.options.height).val($(this).data("h")+1).on("change", );
+                            $(that.options.width).val($(this).data("w")+1).change();
+                            $(that.options.height).val($(this).data("h")+1).change();
                             container.fadeOut(200, function() { $(this).remove(); });
                         });
                         cell.on("mouseover",function() {
