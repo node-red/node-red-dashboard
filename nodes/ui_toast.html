@@ -6,6 +6,7 @@
             position: {value: 'top right'},
             displayTime: {value: '3'},
             highlight: {value: ''},
+            sendall: {value: true},
             outputs: {value: 0},
             ok: {value: 'OK', required: true},
             cancel: {value: ''},
@@ -23,6 +24,7 @@
                 if ($("#node-input-position option:selected").val() === 'dialog') {
                     $("#node-toast-displaytime").hide();
                     $("#node-toast-highlightcolor").hide();
+                    $("#node-toast-sendall").hide();
                     $("#node-dialog-displayok").show();
                     $("#node-dialog-displaycancel").show();
                     $("#node-dialog-topic").show();
@@ -30,6 +32,7 @@
                 else {
                     $("#node-toast-displaytime").show();
                     $("#node-toast-highlightcolor").show();
+                    $("#node-toast-sendall").show();
                     $("#node-dialog-displayok").hide();
                     $("#node-dialog-displaycancel").hide();
                     $("#node-dialog-topic").show();
@@ -46,7 +49,7 @@
 <script type="text/x-red" data-template-name="ui_toast">
     <div class="form-row">
         <label for="node-input-position"><i class="fa fa-th-large"></i> Layout</label>
-        <select type="text" id="node-input-position" style="display:inline-block; width:70%; vertical-align:top;">
+        <select type="text" id="node-input-position" style="display:inline-block; width:70%; vertical-align:baseline;">
             <option value="top right">Top Right</option>
             <option value="bottom right">Bottom Right</option>
             <option value="top left">Top Left</option>
@@ -61,6 +64,10 @@
     <div class="form-row" id="node-toast-highlightcolor">
         <label for="node-input-highlight"><i class="fa fa-square-o"></i> Border</label>
         <input type="text" id="node-input-highlight" placeholder="(optional) border highlight colour">
+    </div>
+    <div class="form-row" id="node-toast-sendtoall">
+        <label style="width:auto" for="node-input-sendall"><i class="fa fa-arrow-right"></i> Send to all browser sessions.</label>
+        <input type="checkbox" checked id="node-input-sendall" style="display:inline-block; width:auto; vertical-align:baseline;">
     </div>
     <div class="form-row" id="node-dialog-displayok">
         <label for="node-input-ok"><i class="fa fa-check"></i> Default action label</label>

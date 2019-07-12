@@ -14,6 +14,8 @@ module.exports = function(RED) {
         this.ok = config.ok;
         this.cancel = config.cancel;
         this.topic = config.topic;
+        if (config.sendall === undefined) { this.sendall = true; }
+        else { this.sendall = config.sendall; }
         var node = this;
 
         var noscript = function (content) {
@@ -38,7 +40,7 @@ module.exports = function(RED) {
         });
 
         node.on('input', function(msg) {
-            if (node.position !== "dialog") { delete msg.socketid; }
+            if (node.position !== "dialog" && node.sendall === true) { delete msg.socketid; }
             msg.payload = noscript(msg.payload);
             ui.emitSocket('show-toast', {
                 title: node.topic || msg.topic,
