@@ -27,9 +27,11 @@
         },
         inputs:1,
         outputs:1,
+        outputLabels: function() { return this.min+" - "+this.max; },
         icon: "ui_slider.png",
         paletteLabel: 'slider',
         label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'slider'; },
+        labelStyle: function() { return this.name?"node_label_italic":""; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

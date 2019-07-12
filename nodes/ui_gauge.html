@@ -37,10 +37,12 @@
         },
         inputs:1,
         outputs:0,
+        inputLabels: function() { return this.min+" - "+this.max; },
         align: "right",
         icon: "ui_gauge.png",
         paletteLabel: 'gauge',
         label: function() { return this.name || (~this.title.indexOf("{{") ? null : this.title) || ((this.gtype === "gage") ? "gauge" : this.gtype) || 'gauge'; },
+        labelStyle: function() { return this.name?"node_label_italic":""; },
         oneditprepare: function() {
             var setColour = function(id, value) {
                 $(id).val(value);

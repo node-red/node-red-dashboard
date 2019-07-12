@@ -22,9 +22,11 @@
         },
         inputs:1,
         outputs:1,
+        outputLabels: ["epoch mS"],
         icon: "ui_date_picker.png",
         paletteLabel: 'date picker',
         label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'date picker'; },
+        labelStyle: function() { return this.name?"node_label_italic":""; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
