@@ -164,7 +164,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             }
                         }
                         $scope.$watch('me.item.value', function() {
-                            if ((me.item.dynOutput === "true") && (me.item.value !== "")) {
+                            if ((me.item.dynOutput === "true") && (me.item.value !== me.item.oldValue)) {
+                                me.item.oldValue = me.item.value;
                                 me.valueChanged(20);
                             }
                         });
@@ -283,8 +284,13 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
             // will emit me.item.value when enter or tab is pressed or onBlur
             me.keyPressed = function (event) {
-                if ((event.charCode === 13) || (event.which === 13) || (event.which === 9) || (event.type === "blur")) {
+                if ((event.charCode === 13) || (event.which === 13)) {
                     events.emit({ id:me.item.id, value:me.item.value });
+                    me.lastItemSent = me.item.value;
+                }
+                else if ((event.type === "blur") && (me.item.value !== me.lastItemSent)) {
+                    events.emit({ id:me.item.id, value:me.item.value });
+                    me.lastItemSent = me.item.value;
                 }
             }
 

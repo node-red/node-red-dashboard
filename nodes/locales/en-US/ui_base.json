@@ -25,7 +25,10 @@
             "link" : "link",
             "group" : "group",
             "edit" : "edit",
-            "spacer": "spacer"
+            "spacer": "spacer",
+            "layout" : "layout",
+            "layout-editor" : "Dashboard layout editor",
+            "width" : "Width"
         },
         "theme" : {
             "style" : "Style",

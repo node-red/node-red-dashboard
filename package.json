@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.15.5",
+    "version": "2.16.0-beta",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -37,6 +37,9 @@
         },
         {
             "name": "Steve Rickus"
+        },
+        {
+            "name": "Kazuhiro Ito"
         }
     ],
     "license": "Apache-2.0",
@@ -71,7 +74,8 @@
         }
     },
     "dependencies": {
-        "serve-static": "~1.14.1",
+        "compression": "^1.7.4",
+        "serve-static": "^1.14.1",
         "socket.io": "^2.2.0"
     },
     "devDependencies": {
@@ -90,6 +94,7 @@
         "chart.js": "~2.3.0",
         "d3": "^3.5.17",
         "font-awesome": "^4.7.0",
+        "gridstack": "^0.4.0",
         "gulp": "^3.9.1",
         "gulp-angular-templatecache": "~3.0.0",
         "gulp-clean-css": "^4.0.0",
@@ -103,18 +108,22 @@
         "gulp-jscs": "^4.1.0",
         "gulp-jshint": "^2.1.0",
         "gulp-manifest": "^0.1.1",
+        "gulp-rename": "^1.4.0",
         "gulp-replace": "^1.0.0",
+        "gulp-sass": "^4.0.2",
         "gulp-uglify": "~3.0.2",
         "gulp-util": "^3.0.8",
         "jquery": "^3.4.1",
         "jshint": "^2.10.1",
         "justgage": "^1.2.2",
         "less": "~3.9.0",
+        "lodash": "^4.17.11",
         "moment": "~2.24.0",
         "sprintf-js": "^1.1.2",
         "streamqueue": "~1.1.2",
         "svg-morpheus": "^0.3.0",
         "tinycolor2": "^1.4.1",
-        "weather-icons-lite": "^1.1.0"
+        "weather-icons-lite": "^1.1.0",
+        "webfontloader": "^1.6.28"
     }
 }

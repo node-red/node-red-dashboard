@@ -224,11 +224,107 @@
     }
 </style>
 
+
+<!-- Dashboard layout tool -->
+<link rel="stylesheet" href="./ui_base/css/gridstack.min.css">
+<link rel="stylesheet" href="./ui_base/css/gridstack-extra.min.css">
+<style>
+.grid-stack {
+    background-color: #f8f8f8;
+    border: solid 2px #C0C0C0;
+    margin: auto;
+    min-height: 46px;
+    display: table-cell;
+    background-image: linear-gradient(#C0C0C0 1px, transparent 0),
+                      linear-gradient(90deg, #C0C0C0 1px, transparent 0);
+    background-size: 40px 47px;
+}
+.grid-stack>.grid-stack-item>.grid-stack-item-content {
+    top: 3px;
+    left: 5px;
+    right: 5px;
+    bottom: 3px;
+}
+.grid-stack-item-content {
+    color: #2c3e50;
+    text-align: center;
+    background-color: #b0dfe3;
+    border-radius: 2px;
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+    font-size: 12px;
+    opacity: 0.7;
+}
+.grid-stack-item {
+    cursor: move;
+}
+.nr-dashboard-layout-container-fluid {
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.nr-dashboard-layout-row {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.nr-dashboard-layout-span12 {
+  width: 98.4%;
+  padding: 2px;
+}
+.nr-dashboard-layout-span6 {
+  width: 49.2%;
+  padding: 2px;
+}
+.nr-dashboard-layout-span4 {
+  width: 32.7%;
+  padding: 2px;
+}
+.nr-dashboard-layout-span3 {
+  width: 24.5%;
+  padding: 2px;
+}
+.nr-dashboard-layout-span2 {
+  width: 16.3%;
+  padding: 2px;
+}
+.nr-dashboard-layout-resize-disable {
+    cursor: pointer;
+    float: right;
+    position: relative;
+    z-index: 90;
+    margin-right: 4px;
+}
+.nr-dashboard-layout-resize-enable {
+    cursor: pointer;
+    float: right;
+    position: relative;
+    z-index: 90;
+    margin-right: 1px;
+}
+.grid-stack>.ui-state-disabled {
+    opacity: 1;
+    background-image: none;
+}
+.grid-stack>.grid-stack-item>.ui-resizable-handle {
+    z-index: 90;
+    margin-right: -7px;
+}
+</style>
+
+
 <script type="text/javascript">
 (function($) {
     var editSaveEventHandler;
     var nodesAddEventHandler;
     var nodesRemoveEventHandler;
+    var layoutUpdateEventHandler; // Dashboard layout tool
     var uip = 'ui';
     var attemptedVendorLoad = false;
     var loadTinyColor = function(path) {
@@ -259,6 +355,617 @@
     loadTinyColor('ui_base/js/tinycolor-min.js');
     //loadTinyColor('ui_base/tinycolor2/dist/tinycolor-min.js');
 
+
+    // Dashboard layout tool
+    // Load gridstack library
+    var loadGsLib = function(path, callback) {
+        $.ajax({ url: path,
+            success: function (data) {
+                var jsScript = document.createElement("script");
+                jsScript.type = "application/javascript";
+                jsScript.src = path;
+                document.body.appendChild(jsScript);
+                if (callback) {
+                    callback();
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                // TODO
+            }
+        });
+    };
+
+    loadGsLib('ui_base/js/lodash.min.js', function() {
+        loadGsLib('ui_base/js/gridstack.min.js', function() {
+            loadGsLib('ui_base/js/gridstack.jQueryUI.min.js', null)
+        });
+    });
+
+    var tabDatas; // Layout editing tab data
+    var oldSpacer; // Spacer not needed after editing
+
+    var widthChange; // Group width change
+    var widgetMove; // Move widget event
+    var widgetResize; // Change widget event
+    var widgetDrag; // Drag wiget eevnt
+
+    var MAX_GROUP_WIDTH = 30; // The maximum width is 30
+
+    /////////////////////////////////////////////////////////
+    // Get widget under specified tab from node information
+    /////////////////////////////////////////////////////////
+    function getTabDataFromNodes(tabID) {
+        var nodes = RED.nodes.createCompleteNodeSet(false);
+        var tab = {};
+        // Tab information
+        for (var cnt = 0; cnt < nodes.length; cnt++) {
+            if (nodes[cnt].type == "ui_tab" && nodes[cnt].id == tabID) {
+                tab = {
+                    id: nodes[cnt].id,
+                    name: nodes[cnt].name,
+                    type: nodes[cnt].type,
+                    order: nodes[cnt].order,
+                    groups: []
+                };
+                break;
+            }
+        }
+        // Group information
+        for (var cnt = 0; cnt < nodes.length; cnt++) {
+            if (nodes[cnt].type == "ui_group" && nodes[cnt].tab == tabID) {
+                var group = {
+                    id: nodes[cnt].id,
+                    name: nodes[cnt].name,
+                    type: nodes[cnt].type,
+                    order: nodes[cnt].order,
+                    width: nodes[cnt].width,
+                    widgets: []
+                };
+                tab.groups.push(group);
+            }
+        }
+        // Widget information
+        var groupsIdx = {};
+        for  (var cnt = 0; cnt < tab.groups.length; cnt++) {
+            groupsIdx[tab.groups[cnt].id] = tab.groups[cnt];
+        }
+        for (var cnt = 0; cnt < nodes.length; cnt++) {
+            var group = groupsIdx[nodes[cnt].group];
+            if (group != null && (/^ui_/.test(nodes[cnt].type) && nodes[cnt].type !== 'ui_link' && nodes[cnt].type !== 'ui_toast' && nodes[cnt].type !== 'ui_ui_control' && nodes[cnt].type !== 'ui_audio' && nodes[cnt].type !== 'ui_base' && nodes[cnt].type !== 'ui_group' && nodes[cnt].type !== 'ui_tab')) {
+                var widget = {
+                    id: nodes[cnt].id,
+                    type: nodes[cnt].type,
+                    order: nodes[cnt].order,
+                    width: nodes[cnt].width,
+                    height: nodes[cnt].height,
+                    auto: nodes[cnt].width == 0 ? true : false
+                };
+                group.widgets.push(widget);
+
+                if (!isLayoutToolSupported(nodes[cnt].type)){
+                    console.log("LayoutTool warning: Unsupported widget. Widget="+JSON.stringify(widget));
+                }
+            }
+        }
+        return tab;
+    }
+
+    //////////////////////////////////////////////////
+    // Update node information in the edited widget
+    ////////////////////////////////////////////////////
+    function putTabDataToNodes() {
+        // Delete old flow spacer node
+        for (var cnt = 0; cnt < oldSpacer.length; cnt++) {
+            RED.nodes.remove(oldSpacer[cnt]);
+            RED.nodes.dirty(true);
+            RED.view.redraw(true);
+        }
+
+        var t_groups = tabDatas.groups;
+        for (var cnt1 = 0; cnt1 < t_groups.length; cnt1++){
+            var n_group = RED.nodes.node(t_groups[cnt1].id);
+            n_group.width = t_groups[cnt1].width;
+            var t_widgets = t_groups[cnt1].widgets;
+            for (var cnt2 = 0; cnt2 < t_widgets.length; cnt2++) {
+                var n_widget = RED.nodes.node(t_widgets[cnt2].id);
+                if (n_widget != null) {
+                    if (n_widget.group !== n_group.id) {
+                        var oldGroupNode = RED.nodes.node(n_widget.group);
+                        if (oldGroupNode) {
+                            var index = oldGroupNode.users.indexOf(n_widget);
+                            oldGroupNode.users.splice(index,1);
+                        }
+                        n_widget.group = n_group.id;
+                        n_group.users.push(n_widget);
+                    }
+                    n_widget.order = t_widgets[cnt2].order;
+                    if (t_widgets[cnt2].auto === true ) {
+                        n_widget.width = 0;
+                        n_widget.height = 0;
+                    } else {
+                        n_widget.width = t_widgets[cnt2].width;
+                        n_widget.height = t_widgets[cnt2].height;
+                    }
+
+                    n_widget.changed = true;
+                    n_widget.dirty = true;
+                    RED.editor.validateNode(n_widget);
+                    RED.events.emit("layout:update",n_widget);
+                    RED.nodes.dirty(true);
+                    RED.view.redraw(true);
+                } else {
+                    // Add a spacer node
+                    if (t_widgets[cnt2].type === 'ui_spacer') {
+                        var spaceNode = {
+                            _def: RED.nodes.getType("ui_spacer"),
+                            type: "ui_spacer",
+                            hasUsers: false,
+                            users: [],
+                            id: RED.nodes.id(),
+                            tab: tabDatas.id,
+                            group: n_group.id,
+                            order: t_widgets[cnt2].order,
+                            name: "spacer",
+                            width: t_widgets[cnt2].width,
+                            height: t_widgets[cnt2].height,
+                            label: function() { return this.name + " " + this.width + "x" + this.height; }
+                        };
+                        RED.nodes.add(spaceNode);
+                        RED.nodes.dirty(true);
+                        RED.view.redraw(true);
+                    }
+                }
+            };
+        }
+        RED.sidebar.info.refresh();
+    }
+
+    ////////////////////////////////////////
+    // Sort by order
+    ////////////////////////////////////////
+    function compareOrder(a, b) {
+        var r = 0;
+        if (a.order < b.order) { r = -1; }
+        else if (a.order > b.order) { r = 1; }
+
+        return r;
+    }
+
+    ////////////////////////////////////////
+    // Sort by XY
+    ////////////////////////////////////////
+    function compareXY(a, b) {
+        var r = 0;
+        if (a.y < b.y) { r = -1; }
+        else if (a.y > b.y) { r = 1; }
+        else if (a.x < b.x) { r = -1; }
+        else if (a.x > b.x) { r = 1; }
+        return r;
+    }
+
+    ///////////////////////////////////////////////////////
+    // Placeable location search (placed in the upper left)
+    ///////////////////////////////////////////////////////
+    function search_point(width, height, maxWidth, maxHeight, tbl){
+        for (var y=0; y < maxHeight; y++) {
+            for (var x=0; x < maxWidth; x++) {
+                if (check_matrix(x, y, width, height, maxWidth, tbl)) {
+                    fill_matrix(x, y, width, height, maxWidth, tbl);
+                    return  {x:x, y:y};
+                }
+            }
+        }
+        return false;
+    }
+    // Check placement position
+    function check_matrix(px, py, width, height, maxWidth, tbl){
+        if (px+width > maxWidth) return false;
+        for (var y=py; y < py+height; y++) {
+            for (var x=px; x<px+width; x++) {
+                if (tbl[maxWidth*y+x]) return false;
+            }
+        }
+        return true;
+    }
+    // Mark the placement position
+    function fill_matrix(px, py, width, height, maxWidth, tbl){
+        for (var y=py; y < py+height; y++) {
+            for (var x=px; x < px+width; x++) {
+                tbl[maxWidth*y+x] = 1;
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////
+    // Apply edit result to tab information for editing
+    ////////////////////////////////////////////////////
+    function saveGridDatas(){
+        var groups = tabDatas.groups;
+        for (var cnt = 0; cnt < groups.length; cnt++) {
+            // Get layout editing results
+            var gridID = '#grid'+cnt;
+            var serializedData = _.map($(gridID+'.grid-stack > .grid-stack-item:visible'), function (el) {
+                el = $(el);
+                var node = el.data('_gridstack_node');
+                return {
+                    id: el[0].dataset.noderedid,
+                    type: el[0].dataset.noderedtype,
+                    group: groups[cnt].id,
+                    width: Number(node.width),
+                    height: Number(node.height),
+                    x: node.x,
+                    y: node.y,
+                    auto: (el[0].dataset.noderedsizeauto == 'true') ? true : false
+                };
+            }, this);
+
+            var width = Number(groups[cnt].width);
+            var height = 0;
+
+            // Search group height
+            for (var i=0; i < serializedData.length; i++){
+                var wd = serializedData[i];
+                if (height < wd.y + wd.height) {
+                    height = wd.y + wd.height;
+                }
+            }
+
+            // Place widget on table
+            var tbl = new Array(width * height);
+            for (var i = 0; i< tbl.length; i++){
+                tbl[i]=0;
+            }
+            for (var i = 0; i < serializedData.length; i++){
+                var wd = serializedData[i];
+                for (var y = wd.y; y < wd.y+wd.height; y++){
+                    for (var x = wd.x; x < wd.x+wd.width; x++){
+                        tbl[width*y+x]=1;
+                    }
+                }
+            }
+
+            // Add Spacer to Blank
+            for (var y = 0; y < height; y++){
+                var spacerAdded = false;
+                for (var x = 0; x < width; x++){
+                    if (tbl[width*y+x]===0) {
+                        if (!spacerAdded) {
+                            // Add 1x1 spacer
+                            serializedData.push({
+                                x: x,
+                                y: y,
+                                width: 1,
+                                height: 1,
+                                name: 'spacer',
+                                type: 'ui_spacer'
+                            });
+                            spacerAdded = true;
+                        } else {
+                            // Extend the spacer width by 1
+                            serializedData[serializedData.length-1].width += 1;
+                        }
+                    } else {
+                        spacerAdded = false;
+                    }
+                }
+            }
+
+            // Sort Gridstack objects by x, y information
+            serializedData.sort(compareXY);
+
+            // Delete x and y elements as information for sorting, and give order
+            var order = 0;
+            for (i in serializedData) {
+                order++;
+                delete serializedData[i].x;
+                delete serializedData[i].y;
+                serializedData[i].order = order;
+            }
+
+            // Update widget information in group with edited data
+            var group = groups[cnt];
+            delete group.widgets;
+            group.widgets = serializedData;
+        }
+
+        // Save process call
+        putTabDataToNodes();
+    };
+
+    ////////////////////////////////////////////////////
+    // Get default height for automatic settings
+    ////////////////////////////////////////////////////
+    function getDefaultHeight(nodeID, groupWidth) {
+        var redNode = RED.nodes.node(nodeID);
+        var height = 1;
+
+        if (redNode.type === 'ui_gauge') {
+            if (redNode.gtype === 'gage') {
+                height = Math.round(groupWidth/2)+1;
+            } else if (redNode.gtype === 'wave') {
+                if (groupWidth < 3) {
+                    height = 1;
+                } else {
+                    height = Math.round(groupWidth*0.75);
+                }
+            } else { // donut or compass
+                if (groupWidth < 3) {
+                    height = 1;
+                } else if (groupWidth < 11) {
+                    height = groupWidth - 1;
+                } else {
+                    height = Math.round(groupWidth*0.95);
+                }
+            }
+        } else if (redNode.type === 'ui_chart') {
+            height = Math.floor(groupWidth/2)+1;
+        } else if (redNode.type === 'ui_form') {
+            var optNum = redNode.options.length; // Sub widget number
+            if (redNode.label) {
+                height = optNum + 2; // Label and Button
+            } else {
+                height = optNum + 1; // Button only
+            }
+        } else if (redNode.type === 'ui_lineargauge') {
+            if (redNode.unit && redNode.name) {
+                height = 5;
+            } else {
+                height = 4;
+            }
+        } else if (redNode.type === 'ui_list') {
+            height = 5;
+        } else if (redNode.type === 'ui_vega') {
+            height = 5;
+        }
+        return height;
+    }
+
+    /////////////////////////////
+    // Grid width change
+    ////////////////////////////
+    var changeGroupWidth = function(id) {
+        var widthID = '#change-width'+id;
+        var gridID = '#grid'+id;
+        $(widthID).spinner( {
+            min: 1,
+            max: MAX_GROUP_WIDTH,
+            spin: function(event, ui){
+                // Search current maximum width
+                serializedData = _.map($(gridID+'.grid-stack > .grid-stack-item:visible'), function (el) {
+                    el = $(el);
+                    var node = el.data('_gridstack_node');
+                    return {
+                        width: Number(node.width),
+                        x: node.x,
+                        auto: (el[0].dataset.noderedsizeauto == 'true') ? true : false
+                    };
+                }, this);
+                var maxWidth = 0;
+                for (var i=0; i < serializedData.length; i++){
+                    var wd = serializedData[i];
+                    if (wd.auto == false) {
+                        if (maxWidth < wd.x + wd.width) {
+                            maxWidth = wd.x + wd.width;
+                        }
+                    }
+                }
+                var width = ui.value;
+                if (width < maxWidth) {
+                    width = maxWidth;
+                }
+
+                var grid = $(gridID+'.grid-stack').data('gridstack');
+                $(gridID+'.grid-stack').css("width", width * 40);
+                $(gridID+'.grid-stack').css("background-size", 100/width+"% 47px");
+                grid.setGridWidth(tabDatas.groups[id].width, true);
+                grid.setGridWidth(width, true);
+                tabDatas.groups[id].width = width;
+
+                $(gridID+'.grid-stack > .grid-stack-item:visible').each( function(idx, el) {
+                    el = $(el);
+                    var node = el.data('_gridstack_node');
+                    var auto = (el[0].dataset.noderedsizeauto == 'true') ? true : false;
+                    var type = el[0].dataset.noderedtype;
+                    grid.resizable(el, !auto);
+                    if (auto === true) {
+                        grid.resize(el, width, getDefaultHeight(node.id, width));
+                    }
+                });
+
+                if (width !== ui.value) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            }
+        });
+    };
+
+    //////////////////////////////////
+    // Move between groups of widgets
+    //////////////////////////////////
+    var moveGroupWidget = function(id) {
+
+    var toGridID = '#grid'+id;
+    var toGrid = $(toGridID+'.grid-stack').data('gridstack');
+
+    toGrid.container.droppable({
+        acccept: '.grid-stack-item',
+        tolerance: 'pointer',
+        drop: function( event, ui ) {
+
+            var fromGridID = '#' + ui.draggable[0].offsetParent.id;
+
+            // Move the widget
+            if (fromGridID !== toGridID) {
+
+                var toGridOffset = $(toGridID).offset();
+                var groupWidth = tabDatas.groups[id].width;
+
+                // Reset group width before moving (Grid stack measures)
+                toGrid.setGridWidth(groupWidth, true);
+
+                // Current widget width factor for x position
+                var curWidth = ($('#grid1').offset().left - $('#grid0').offset().left) * 0.9;
+                var xfactor = curWidth / (groupWidth * 40);
+                xfactor = xfactor > 1.0 ? 1.0 : xfactor;
+                var x = Math.floor((ui.offset.left - toGridOffset.left)/(40 * xfactor));
+                var y = Math.floor((ui.offset.top - toGridOffset.top)/47);
+                var node = {
+                    type: ui.draggable[0].dataset.noderedtype,
+                    id: ui.draggable[0].dataset.noderedid,
+                    x: x,
+                    y: y,
+                    width: ui.draggable[0].dataset.gsWidth,
+                    height: ui.draggable[0].dataset.gsHeight,
+                    auto: (ui.draggable[0].dataset.noderedsizeauto == 'true') ? true : false
+                };
+
+                var dispType = ui.draggable[0].dataset.nodereddisptype;
+                var dispLabel = ui.draggable[0].dataset.nodereddisplabel;
+
+                var item = $('<div></div>', {
+                    'data-noderedtype': node.type,
+                    'data-noderedid': node.id,
+                    'data-nodereddisptype': dispType,
+                    'data-nodereddisplabel': dispLabel,
+                    'data-noderedsizeauto': node.auto
+                });
+
+                if (node.auto === true) {
+                    node.x = 0;
+                    node.width = groupWidth;
+                    node.height = getDefaultHeight(node.id, groupWidth);
+                }
+
+                var itemContent = $('<div></div>', {
+                    addClass: 'grid-stack-item-content',
+                    title: dispLabel + ':' + dispType
+                });
+
+                if (node.auto === true) {
+                    itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
+                    itemContent.find('.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
+                } else {
+                    itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"</i>');
+                    itemContent.find('.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
+                }
+
+                itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
+                itemContent.appendTo(item);
+                var newWidget = toGrid.addWidget(
+                    item,
+                    node.x, node.y, node.width, node.height, false, null, null,
+                    ui.draggable[0].dataset.gsMinHeight,
+                    ui.draggable[0].dataset.gsMaxHeight,
+                    node.id);
+
+                var fromWidget = ui.draggable[0];
+                if (node.auto === true) {
+                    $(fromWidget).find('.nr-dashboard-layout-resize-enable').off('click');
+                } else {
+                    $(fromWidget).find('.nr-dashboard-layout-resize-disable').off('click');
+                }
+                var fromGrid = $(fromGridID+'.grid-stack').data('gridstack');
+                fromGrid.removeWidget(fromWidget);
+                toGrid.resizable(newWidget, !node.auto);
+            }
+        }
+    });
+    }
+
+    //////////////////////////////////////////
+    // Widget size change (start event)
+    //////////////////////////////////////////
+    var resizeGroupWidget = function(id) {
+        var gridID = '#grid'+id;
+        var grid = $(gridID+'.grid-stack').data('gridstack');
+        $(gridID+'.grid-stack').on('resizestart', function(event, ui) {
+            // Reset group width
+            grid.setGridWidth(tabDatas.groups[id].width, true);
+        });
+    }
+
+    //////////////////////////////////////////
+    // Widget drag (start event)
+    //////////////////////////////////////////
+    var dragGroupWidget = function(id) {
+        var gridID = '#grid'+id;
+        var grid = $(gridID+'.grid-stack').data('gridstack');
+        $(gridID+'.grid-stack').on('dragstart', function(event, ui) {
+            // Reset group width
+            grid.setGridWidth(tabDatas.groups[id].width, true);
+        });
+    }
+
+    //////////////////////////////////////////
+    // Layout resize Disable (Auto:false)
+    //////////////////////////////////////////
+    var layoutResizeDisable = function(e) {
+        var target = $(e.target);
+        var el = target.parents('.grid-stack-item:visible');
+        var grid = target.parents('.grid-stack').data('gridstack');
+        var node = el.data('_gridstack_node');
+
+        var id = Number(target.parents('.grid-stack').attr('id').slice(4));
+        var width = Number(tabDatas.groups[id].width);
+
+        var nodeID = el[0].dataset.noderedid;
+        var height = getDefaultHeight(nodeID, width);
+        grid.move(el, 0, node.y);
+        grid.resize(el, width, height);
+
+        grid.resizable(el, false);
+        el.find('.nr-dashboard-layout-resize-disable').off('click');
+        el.attr({'data-noderedsizeauto':'true'});
+        target.removeClass().addClass('fa fa-unlock nr-dashboard-layout-resize-enable');
+        el.find('.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
+    }
+
+    //////////////////////////////////////////
+    // Layout resize Enable (Auto:true)
+    //////////////////////////////////////////
+    var layoutResizeEnable = function(e){
+        var target = $(e.target);
+        var el = target.parents('.grid-stack-item:visible');
+        var grid = target.parents('.grid-stack').data('gridstack');
+
+        grid.resizable(el, true);
+        el.find('.nr-dashboard-layout-resize-enable').off('click');
+        el.attr({'data-noderedsizeauto':'false'});
+        target.removeClass().addClass('fa fa-lock nr-dashboard-layout-resize-disable');
+        el.find('.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
+    }
+
+    //////////////////////////////////////////
+    // Check dashboard layout tool supported
+    //////////////////////////////////////////
+    function isLayoutToolSupported(nodeType){
+        if (nodeType !== "ui_spacer" &&
+            nodeType !== "ui_button" &&
+            nodeType !== "ui_dropdown" &&
+            nodeType !== "ui_switch" &&
+            nodeType !== "ui_slider" &&
+            nodeType !== "ui_numeric" &&
+            nodeType !== "ui_text_input" &&
+            nodeType !== "ui_date_picker" &&
+            nodeType !== "ui_colour_picker" &&
+            nodeType !== "ui_form" &&
+            nodeType !== "ui_text" &&
+            nodeType !== "ui_gauge" &&
+            nodeType !== "ui_chart" &&
+            nodeType !== "ui_template" &&
+            nodeType !== "ui_list" &&
+            nodeType !== "ui_table" &&
+            nodeType !== "ui_lineargauge" &&
+            nodeType !== "ui_my-little-ui-node" &&
+            nodeType !== "ui_vega") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     RED.nodes.registerType('ui_base',{
             category: 'config',
             defaults: {
@@ -275,6 +982,7 @@
                 RED.events.off("editor:save",editSaveEventHandler);
                 RED.events.off("nodes:add",nodesAddEventHandler);
                 RED.events.off("nodes:remove",nodesRemoveEventHandler);
+                RED.events.off("layout:update",layoutUpdateEventHandler); // Dashboard layout tool
             },
             onpaletteadd: function() {
                 var globalDashboardNode = null;
@@ -1259,6 +1967,245 @@
                         evt.preventDefault();
                     });
 
+                    // Dashboard layout tool
+                    if (item.type === 'ui_tab') {
+                        var layoutButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
+                        layoutButton.on('click',function(evt) {
+                            var editTabName = item.node.name ? item.node.name : item.node.id;
+                            var trayOptions = {
+                                title: c_("layout.layout-editor") + " : " + editTabName,
+                                width: Infinity,
+                                buttons: [
+                                    {
+                                        id: "node-dialog-cancel",
+                                        text: RED._("common.label.cancel"),
+                                        click: function() {
+                                            // clean editor
+                                            RED.tray.close();
+                                        }
+                                    },
+                                    {
+                                        id: "node-dialog-ok",
+                                        text: RED._("common.label.done"),
+                                        class: "primary",
+                                        click: function() {
+                                            // Save data after editing
+                                            saveGridDatas();
+                                            RED.tray.close();
+                                        }
+                                    }
+                                ],
+                                resize: function(dimensions) {
+                                    //
+                                },
+                                open: function(tray) {
+                                    // Get widget of specified tab from node information
+                                    tabDatas = getTabDataFromNodes(item.node.id);
+                                    // The width that can be handled by Layout is up to MAX_GROUP_WIDTH
+                                    // Groups exceeding the maximum width are not supported.
+                                    var tmpGroups = tabDatas.groups;
+                                    tmpGroups.sort(compareOrder);
+                                    var groups = [];
+                                    for (var cnt = 0; cnt < tmpGroups.length; cnt++) {
+                                        if (tmpGroups[cnt].width <= MAX_GROUP_WIDTH) {
+                                            groups.push(tmpGroups[cnt]);
+                                        }
+                                    }
+                                    tabDatas.groups = groups;
+
+                                    var editor = $('<div></div>',{addClass: 'nr-dashboard-layout-container-fluid'});
+                                    var row =  $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
+                                    var span_num = Math.floor(12 / groups.length); // bootstrap grid 12 splits
+                                    span_num = span_num < 2 ? 2 : span_num; // max 6 groups per row
+                                    for (var cnt = 0; cnt < groups.length; cnt++) {
+                                        if (cnt !=0 && (cnt % 6) == 0) {
+                                            editor.append(row);
+                                            editor.append('<div><br></div>');
+                                            row = $('<div></div>',{addClass: 'nr-dashboard-layout-row'});
+                                        }
+                                        var span = $('<div></div>',{addClass: 'nr-dashboard-layout-span' + span_num});
+                                        var groupName = groups[cnt].name ? groups[cnt].name : groups[cnt].id;
+                                        var title = $('<div></div>', {
+                                            style: "margin-top:2px; margin-bottom:2px;"
+                                        });
+                                        var title_group = $('<div></div>', {
+                                            title: groupName,
+                                            style: "margin-left:4px; margin-right:8px; overflow:hidden;"
+                                        }).appendTo(title);
+                                        $("<b/>").text(groupName).appendTo(title_group);
+                                        var title_width = $('<div></div>', {
+                                            style: "text-align:right; margin-right:8px;"
+                                        }).appendTo(title);
+                                        $("<span/>", {
+                                            style: "margin_right: 8px;"
+                                        }).text(c_("layout.width")+': ').appendTo(title_width);
+                                        var changeWidth = $('<input>', {
+                                            id: 'change-width' + cnt,
+                                            value: groups[cnt].width,
+                                            style: 'width:30px;',
+                                            readonly: true
+                                        });
+                                        title_width.append(changeWidth);
+
+                                        title.css('white-space','nowrap');
+                                        title.css('overflow','hidden');
+                                        var gridstack = $('<div></div>', {
+                                            id: 'grid'+cnt,
+                                            addClass: 'grid-stack'
+                                        });
+                                        span.append(title);
+                                        span.append(gridstack);
+                                        row.append(span);
+                                    }
+                                    if (groups.length != 0) {
+                                        editor.append(row);
+                                    }
+
+                                    // Show layout editor in tray
+                                    var trayBody = tray.find('.red-ui-tray-body, .editor-tray-body');
+                                    trayBody.css('overflow','auto');
+                                    trayBody.append(editor);
+
+                                    /////////////////////////////////////////
+                                    // Gridstack.js option
+                                    ////////////////////////////////////////
+                                    var options = {
+                                        cellHeight: 46,
+                                        verticalMargin: 1,
+                                        float: true,
+                                        alwaysShowResizeHandle: true,
+                                        disableOneColumnMode : true
+                                    };
+
+                                    /////////////////////////////////////////
+                                    // Editor screen generation
+                                    /////////////////////////////////////////
+                                    oldSpacer = [];
+                                    widthChange = [];
+                                    widgetMove = [];
+                                    widgetResize = [];
+                                    widgetDrag = [];
+                                    for (var cnt=0; cnt < groups.length; cnt++) {
+                                        var gridID='#grid' + cnt;
+                                        // gridstack generation
+                                        $(gridID).gridstack(options);
+
+                                        // Clear the contents of Grind
+                                        var grid = $(gridID+'.grid-stack').data('gridstack');
+                                        grid.removeAll();
+
+                                        // Set the width of the display area of gridstack
+                                        var groupWidth = Number(groups[cnt].width);
+                                        $(gridID+'.grid-stack').css("width", groupWidth * 40);
+                                        $(gridID+'.grid-stack').css("background-size", 100/groupWidth+"% 47px");
+                                        grid.setGridWidth(groupWidth, true);
+
+                                        // Determination of placement position of widget of Grid
+                                        var widgets = groups[cnt].widgets;
+                                        widgets.sort(compareOrder);
+
+                                        var tbl = {};
+                                        for (var cnt2 = 0; cnt2 < widgets.length; cnt2++) {
+                                            // Set default value when there is auto width
+                                            if (widgets[cnt2].auto == true) {
+                                                widgets[cnt2].width = groupWidth;
+                                            // Adjust to the group width
+                                            } else if (widgets[cnt2].width > groupWidth) {
+                                                widgets[cnt2].width = groupWidth;
+                                            }
+                                            // Auto support
+                                            if (widgets[cnt2].auto === true || widgets[cnt2].type === 'ui_form') {
+                                                widgets[cnt2].height = getDefaultHeight(widgets[cnt2].id, groupWidth);
+                                            }
+                                            // Calculate coordinates to be placed
+                                            var point = search_point(Number(widgets[cnt2].width), Number(widgets[cnt2].height), groupWidth, 256, tbl);
+                                            if (point) {
+                                                widgets[cnt2].x = point.x;
+                                                widgets[cnt2].y = point.y;
+                                            }
+                                        }
+
+                                        var items = GridStackUI.Utils.sort(widgets);
+                                        _.each(items, function (node) {
+                                            var minHeight = null;
+                                            var maxHeight = null;
+                                            // ui_form is fixed to height 2
+                                            if (node.type === 'ui_form') {
+                                                minHeight = node.height;
+                                                maxHeight = node.height;
+                                            }
+                                            if (node.type !== 'ui_spacer') {
+                                                var dispNode = RED.nodes.node(node.id);
+                                                var dispType = dispNode._def.paletteLabel;
+                                                var dispLabel = dispNode._def.label;
+                                                try {
+                                                    dispLabel = (typeof dispLabel === "function" ? dispLabel.call(dispNode) : dispLabel)||"";
+                                                }
+                                                catch(err) {
+                                                    console.log("Definition error: " + node.type + ".label",err);
+                                                    dispLabel = dispType;
+                                                }
+
+                                                var item = $('<div></div>', {
+                                                    'data-noderedtype': node.type,
+                                                    'data-noderedid': node.id,
+                                                    'data-nodereddisptype': dispType,
+                                                    'data-nodereddisplabel': dispLabel,
+                                                    'data-noderedsizeauto': node.auto
+                                                });
+                                                var itemContent = $('<div></div>', {
+                                                    addClass: 'grid-stack-item-content',
+                                                    title: dispLabel + ':' + dispType
+                                                });
+
+                                                if (node.auto === true) {
+                                                    itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
+                                                } else {
+                                                    itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"></i>');
+                                                }
+                                                itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
+                                                item.append(itemContent);
+                                                grid.addWidget(
+                                                    item,
+                                                    node.x, node.y, node.width, node.height, false, null, null,
+                                                    minHeight, maxHeight, node.id);
+                                            } else {
+                                                // Record the spacer node ID to be deleted
+                                                oldSpacer.push(node.id);
+                                            }
+                                        });
+
+                                        $(gridID+'.grid-stack > .grid-stack-item:visible').each( function(idx, el) {
+                                            el = $(el);
+                                            var node = el.data('_gridstack_node');
+                                            var auto = (el[0].dataset.noderedsizeauto == 'true') ? true : false;
+                                            grid.resizable(el, !auto);
+                                        });
+
+                                        // Group width change
+                                        widthChange.push(new changeGroupWidth(cnt));
+                                        // Move widgets between groups (drag and drop)
+                                        widgetMove.push(new moveGroupWidget(cnt));
+                                        // Resize widget in group (start event)
+                                        widgetResize.push(new resizeGroupWidget(cnt));
+                                        // Dragging widgets in a group (start event)
+                                        widgetDrag.push(new dragGroupWidget(cnt));
+                                    }
+                                    $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
+                                    $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
+                                },
+                                close: function() {
+                                    //
+                                },
+                                show: function() {}
+                            }
+
+                            RED.tray.show(trayOptions);
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                        });
+                    }
+
                     if (item.type === 'ui_tab') {
                         var content = $('<div>',{class:"nr-db-sb-group-list-container"}).appendTo(container);
 
@@ -2046,6 +2993,30 @@
                 };
                 RED.events.on("editor:save",editSaveEventHandler);
 
+                // Dashboard layout tool
+                layoutUpdateEventHandler = function(node) {
+                    if (/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && node.type !== 'ui_audio' && node.type !== 'ui_base' && node.type !== 'ui_group' && node.type !== 'ui_tab') {
+                        if (listElements[node.id]) {
+                            if (node.group != elementParents[node.id]) {
+                                // Moved to a different group
+                                if (groupLists[elementParents[node.id]]) {
+                                    groupLists[elementParents[node.id]].editableList('removeItem',listElements[node.id].data('data'))
+                                }
+                                if (groupLists[node.group]) {
+                                    groupLists[node.group].editableList('removeItem',node)
+                                    groupLists[node.group].editableList('addItem',node);
+                                    groupLists[node.group].editableList('sort',function(a,b){return a.order-b.order;});
+                                }
+                            }
+                            else {
+                                groupLists[node.group].editableList('sort',function(a,b){return a.order-b.order;});
+                            }
+                        }
+                    }
+                };
+                RED.events.on("layout:update",layoutUpdateEventHandler);
+
+
                 var pendingAdd = [];
                 var pendingAddTimer = null;
 
@@ -2195,9 +3166,9 @@
                 var h = has_height ? in1.val() : undefined;
                 var label = that.options.label;
                 label.text(w+(has_height ? (' x '+h) : ''));
-                $(that.options.width).val(w).on("change", );
+                $(that.options.width).val(w).change();
                 if(has_height) {
-                    $(that.options.height).val(h).on("change", );
+                    $(that.options.height).val(h).change();
                 }
                 that.destroy();
             };
@@ -2326,8 +3297,8 @@
                     .appendTo(buttonRow)
                     .on('mouseup',function(evt) {
                         that.element.text(auto_text)
-                        $(that.options.width).val(0).on("change", );
-                        $(that.options.height).val(0).on("change", );
+                        $(that.options.width).val(0).change();
+                        $(that.options.height).val(0).change();
                         evt.preventDefault();
                         container.fadeOut(200, function() { $(this).remove(); });
                     });
@@ -2369,8 +3340,8 @@
                         cell.data("h",i);
                         cell.on("mouseup",function() {
                             that.element.text(($(this).data("w")+1)+(that.options.hasOwnProperty('height')?" x "+($(this).data("h")+1):""))
-                            $(that.options.width).val($(this).data("w")+1).on("change", );
-                            $(that.options.height).val($(this).data("h")+1).on("change", );
+                            $(that.options.width).val($(this).data("w")+1).change();
+                            $(that.options.height).val($(this).data("h")+1).change();
                             container.fadeOut(200, function() { $(this).remove(); });
                         });
                         cell.on("mouseover",function() {

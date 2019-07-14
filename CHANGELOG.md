@@ -1,4 +1,20 @@
-### 2.15.5: Maintenance Release
+### 2.16.0-beta: Milestome Release
+
+**Enhancements**
+
+ - Add Dashboard Layout tool - Major contribution - Thanks @KazuhiroItoh - PR #482
+
+ **Fixes**
+
+  - Make spacer transparent so background is really the background.
+  - Fix text_input to only send duplicates if enter key hit multiple times and not on loss of focus. Issue #513
+  - Fix color-picker to not emit on tab change, and fix background overlay. Issue #514
+
+ ### 2.15.5: Maintenance Release
+
+ **Enhancements**
+
+  - Add compression middleware by default to speed up loading. Thanks @zyrorl
 
 **Fixes**
 
@@ -8,6 +24,10 @@
  - Fix odd gauge behaviour when in donut mode
  - Fix UI redraw (not redrawing when changing tabs). PR #508
  - Fix vertical slider in only on release mode
+ - Let webfont loader be async to not delay page load when offline, and fail silently
+ - Fix Datepicker to honour Site date format
+ - Tweak passthrough option wording to try to match what actually happens
+ - Fix text-input to only send one message when using tab key to move fields
 
 ### 2.15.4: Maintenance Release
 
