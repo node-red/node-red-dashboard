@@ -299,7 +299,9 @@ function add(opt) {
 function join() {
     var trimRegex = new RegExp('^\\/|\\/$','g'),
     paths = Array.prototype.slice.call(arguments);
-    return '/'+paths.map(function(e) {return e.replace(trimRegex,"");}).filter(function(e) {return e;}).join('/');
+    return '/'+paths.map(function(e) {
+        if(e) return e.replace(trimRegex,"");
+    }).filter(function(e) {return e;}).join('/');
 }
 
 function init(server, app, log, redSettings) {
