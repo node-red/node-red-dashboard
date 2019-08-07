@@ -204,7 +204,7 @@ function add(opt) {
             else { toEmit = toStore; }
 
             var addField = function(m) {
-                if (opt.control.hasOwnProperty(m) && opt.control[m].indexOf("{{") !== -1) {
+                if (opt.control.hasOwnProperty(m) && opt.control[m] && opt.control[m].indexOf("{{") !== -1) {
                     var a = opt.control[m].split("{{");
                     a.shift();
                     for (var i = 0; i < a.length; i++) {
