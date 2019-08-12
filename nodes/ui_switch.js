@@ -83,7 +83,6 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             convert: function (payload, oldval, msg) {
-                if (!this.forwardInputMessages && this.storeFrontEndInputAsState) { return oldval; }
                 var myOnValue,myOffValue;
 
                 if (onvalueType === "date") { myOnValue = Date.now(); }
@@ -91,6 +90,12 @@ module.exports = function(RED) {
 
                 if (offvalueType === "date") { myOffValue = Date.now(); }
                 else { myOffValue = RED.util.evaluateNodeProperty(offvalue,offvalueType,node); }
+
+                if (!this.forwardInputMessages && this.storeFrontEndInputAsState) {
+                    if (myOnValue === oldval) { return true; }
+                    if (oldval === true) { return true; }
+                    else { return false; }
+                }
 
                 if (RED.util.compareObjects(myOnValue,msg.payload)) { node.state[0] = "on"; return true; }
                 else if (RED.util.compareObjects(myOffValue,msg.payload)) { node.state[0] = "off"; return false; }

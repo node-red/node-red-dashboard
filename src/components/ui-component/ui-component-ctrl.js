@@ -21,6 +21,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
             if (typeof me.item.tooltip === "string") {
                 me.item.getTooltip = $interpolate(me.item.tooltip).bind(null, me.item);
             }
+
             if (typeof me.item.color === "string") {
                 me.item.getColor = $interpolate(me.item.color).bind(null, me.item);
             }
