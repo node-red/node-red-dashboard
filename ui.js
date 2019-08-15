@@ -17,7 +17,8 @@ module.exports = function(RED) {
         updateUi: updateUi,
         ev: ev,
         getTheme: getTheme,
-        getSizes: getSizes
+        getSizes: getSizes,
+        isDark: isDark
     };
 };
 
@@ -556,4 +557,14 @@ function getSizes() {
     else {
         return { sx:48, sy:48, gx:6, gy:6, cx:6, cy:6, px:0, py:0 };
     }
+}
+
+function isDark() {
+    if (baseConfiguration && baseConfiguration.hasOwnProperty("theme")) {
+        var rgb = parseInt(baseConfiguration.theme.themeState["page-sidebar-backgroundColor"].value.substring(1), 16);
+        var luma = 0.2126 * ((rgb >> 16) & 0xff) + 0.7152 * ((rgb >> 8) & 0xff) + 0.0722 * ((rgb >> 0) & 0xff); // per ITU-R BT.709
+        if (luma > 128) { return false; }
+        else { return true; }
+    }
+    else { return undefined; }
 }
