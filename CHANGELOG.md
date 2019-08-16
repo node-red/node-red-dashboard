@@ -1,4 +1,4 @@
-### 2.16.0-beta: Milestone Release
+### 2.16.0: Milestone Release
 
 **Enhancements**
 
