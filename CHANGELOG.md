@@ -1,3 +1,9 @@
+### 2.16.1-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix toast to show border correctly and better timing. Issue #525
+
 ### 2.16.0: Milestone Release
 
 **Enhancements**
@@ -15,7 +21,7 @@
   - Improve embedded node-red dashboard full path resolve - Issue #517
   - Let ui-form input be full width on IE11 - Issue #524
 
- ### 2.15.5: Maintenance Release
+### 2.15.5: Maintenance Release
 
  **Enhancements**
 
