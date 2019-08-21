@@ -18,9 +18,8 @@
         outputs:0,
         icon: "feed.png",
         align: "right",
-        label: function() {
-            return this.name||"audio out";
-        },
+        label: function() { return this.name||"audio out"; },
+        labelStyle: function() { return this.name?"node_label_italic":""; },
         onpaletteadd: function() {
             if ('speechSynthesis' in window) { voices = window.speechSynthesis.getVoices(); }
         },

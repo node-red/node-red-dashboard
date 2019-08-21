@@ -270,12 +270,12 @@ a.md-no-style, button.md-no-style {
     background-color: @widgetBackgroundColor !important;
     color: white;
 }
-.md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
-    filter: grayscale(75%);
-}
-.nr-dashboard-theme .md-button.md-primary {
-    // color: lighten(@widgetBackgroundColor, 8);
-}
+// .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
+//     filter: grayscale(75%);
+// }
+// .nr-dashboard-theme .md-button.md-primary {
+//     color: lighten(@widgetBackgroundColor, 8);
+// }
 .nr-dashboard-theme .md-button[disabled] {
     color: rgba(0,0,0,0.38);
     cursor: default;
@@ -333,6 +333,7 @@ a.md-no-style, button.md-no-style {
 }
 .md-datepicker-calendar-pane.md-pane-open {
     width: 345px;
+    background-color: @groupBackgroundColor;
 }
 
 /* Chart */
@@ -399,7 +400,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     background-color: @groupBackgroundColor;
 }
 .nr-dashboard-theme md-select-menu md-option:hover {
-    background-color: lighten(@widgetBackgroundColor, 5) !important;
+    background-color: lighten(@widgetBackgroundColor, 4) !important;
 }
 
 /* Gauge */
@@ -643,16 +644,16 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     	}
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button:not([disabled]):hover {
-    	background-color: lighten(@widgetBackgroundColor, 8);
+    	background-color: lighten(@widgetBackgroundColor, 4);
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button.md-primary:not([disabled]):hover {
-        background-color: lighten(@widgetBackgroundColor, 8);
+        background-color: lighten(@widgetBackgroundColor, 4);
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button.md-primary.md-raised:not([disabled]) {
-        background-color: lighten(@widgetBackgroundColor, 5);
+        background-color: lighten(@widgetBackgroundColor, 2);
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button.md-primary.md-raised:not([disabled]):hover {
-        background-color: lighten(@widgetBackgroundColor, 8);
+        background-color: lighten(@widgetBackgroundColor, 4);
     }
 
     // .md-button:disabled {
@@ -718,7 +719,7 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 
 /* Form */
 .nr-dashboard-theme .nr-dashboard-form md-input-container {
-    display: inherit;
+    display: block;
 }
 
 .nr-dashboard-theme .nr-dashboard-form-button {

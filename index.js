@@ -121,6 +121,7 @@ module.exports = function (RED) {
     return {
         addWidget: function (options) { return addWidget(RED, options); },
         getSizes: function() { return require("./ui")(RED).getSizes(); },
-        getTheme: function() { return require("./ui")(RED).getTheme(); }
+        getTheme: function() { return require("./ui")(RED).getTheme(); },
+        isDark: function() { return require("./ui")(RED).isDark(); }
     };
 };

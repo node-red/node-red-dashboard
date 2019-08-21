@@ -17,7 +17,8 @@ module.exports = function(RED) {
         updateUi: updateUi,
         ev: ev,
         getTheme: getTheme,
-        getSizes: getSizes
+        getSizes: getSizes,
+        isDark: isDark
     };
 };
 
@@ -204,7 +205,7 @@ function add(opt) {
             else { toEmit = toStore; }
 
             var addField = function(m) {
-                if (opt.control.hasOwnProperty(m) && opt.control[m].indexOf("{{") !== -1) {
+                if (opt.control.hasOwnProperty(m) && opt.control[m] && opt.control[m].indexOf("{{") !== -1) {
                     var a = opt.control[m].split("{{");
                     a.shift();
                     for (var i = 0; i < a.length; i++) {
@@ -299,7 +300,9 @@ function add(opt) {
 function join() {
     var trimRegex = new RegExp('^\\/|\\/$','g'),
     paths = Array.prototype.slice.call(arguments);
-    return '/'+paths.map(function(e) {return e.replace(trimRegex,"");}).filter(function(e) {return e;}).join('/');
+    return '/'+paths.map(function(e) {
+        if (e) { return e.replace(trimRegex,""); }
+    }).filter(function(e) {return e;}).join('/');
 }
 
 function init(server, app, log, redSettings) {
@@ -554,4 +557,14 @@ function getSizes() {
     else {
         return { sx:48, sy:48, gx:6, gy:6, cx:6, cy:6, px:0, py:0 };
     }
+}
+
+function isDark() {
+    if (baseConfiguration && baseConfiguration.hasOwnProperty("theme") && baseConfiguration.theme.hasOwnProperty("themeState")) {
+        var rgb = parseInt(baseConfiguration.theme.themeState["page-sidebar-backgroundColor"].value.substring(1), 16);
+        var luma = 0.2126 * ((rgb >> 16) & 0xff) + 0.7152 * ((rgb >> 8) & 0xff) + 0.0722 * ((rgb >> 0) & 0xff); // per ITU-R BT.709
+        if (luma > 128) { return false; }
+        else { return true; }
+    }
+    else { return false; } // if in doubt - let's say it's light.
 }

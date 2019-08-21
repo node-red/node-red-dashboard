@@ -1,16 +1,27 @@
-### 2.16.0-beta: Milestome Release
+### 2.16.1-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix toast to show border correctly and better timing. Issue #525
+
+### 2.16.0: Milestone Release
 
 **Enhancements**
 
  - Add Dashboard Layout tool - Major contribution - Thanks @KazuhiroItoh - PR #482
+ - Add ui.isDark() returns true/false if overall theme is dark or light, so the widget could switch appropriately. (can already use getTheme() to get actual colors if needs be.)
+
 
  **Fixes**
 
   - Make spacer transparent so background is really the background.
   - Fix text_input to only send duplicates if enter key hit multiple times and not on loss of focus. Issue #513
   - Fix color-picker to not emit on tab change, and fix background overlay. Issue #514
+  - Fix IE11 loading issue #515 (reversion)
+  - Improve embedded node-red dashboard full path resolve - Issue #517
+  - Let ui-form input be full width on IE11 - Issue #524
 
- ### 2.15.5: Maintenance Release
+### 2.15.5: Maintenance Release
 
  **Enhancements**
 

@@ -26,6 +26,7 @@
         icon: "ui_text.png",
         paletteLabel: 'text',
         label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'text'; },
+        labelStyle: function() { return this.name?"node_label_italic":""; },
         oneditprepare: function() {
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",

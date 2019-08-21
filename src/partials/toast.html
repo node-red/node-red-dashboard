@@ -1,4 +1,4 @@
-<md-toast layout="column" style="background-color:{{::toast.highlight}};">
+<md-toast layout="column" style="border:4px solid {{::toast.highlight}}; padding:0px; transition-duration:0.175s">
     <div>
         <h3 ng-if="toast.title">{{::toast.title}}</h3>
         <h4 flex ng-bind-html="::toast.message | trusted"></h4>
