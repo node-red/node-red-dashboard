@@ -3,6 +3,7 @@
 **Fixes**
 
  - Fix toast to show border correctly and better timing. Issue #525
+ - Stop colour picker sending on page refresh. Issue #514
 
 ### 2.16.0: Milestone Release
 

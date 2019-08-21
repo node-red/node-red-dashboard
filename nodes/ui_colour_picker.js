@@ -36,7 +36,7 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
-            beforeSend: function (msg) {
+            beforeSend: function (msg, orig) {
                 if (node.outformat === 'object') {
                     var pay = tc(msg.payload);
                     if (node.format === 'rgb') { msg.payload = pay.toRgb(); }
