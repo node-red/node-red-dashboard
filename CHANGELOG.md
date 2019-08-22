@@ -1,9 +1,11 @@
-### 2.16.1-beta: Maintenance Release
+### 2.16.1: Maintenance Release
 
 **Fixes**
 
  - Fix toast to show border correctly and better timing. Issue #525
  - Stop colour picker sending on page refresh. Issue #514
+ - Fix layout tool group locations. PR #526
+ - Fix slider not sending if past end of widget.
 
 ### 2.16.0: Milestone Release
 
@@ -11,7 +13,6 @@
 
  - Add Dashboard Layout tool - Major contribution - Thanks @KazuhiroItoh - PR #482
  - Add ui.isDark() returns true/false if overall theme is dark or light, so the widget could switch appropriately. (can already use getTheme() to get actual colors if needs be.)
-
 
  **Fixes**
 

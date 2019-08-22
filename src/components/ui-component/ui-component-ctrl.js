@@ -276,12 +276,20 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         }
                         break;
                     }
+
+                    case 'slider': {
+                        me.active = false;
+                        me.mdown = function() { me.active = true; };
+                        me.mleave = function() { me.active = false; };
+                        me.mchange = function() { events.emit({ id:me.item.id, value:me.item.value });}
+                        break;
+                    }
                 }
             }
 
             me.valueChanged = function (throttleTime) {
                 throttle({ id:me.item.id, value:me.item.value },
-                    typeof throttleTime === "number" ? throttleTime : 10);
+                     typeof throttleTime === "number" ? throttleTime : 10);
             };
 
             // will emit me.item.value when enter or tab is pressed or onBlur
