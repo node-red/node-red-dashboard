@@ -1,3 +1,9 @@
+### 2.16.2: Maintenance Release
+
+**Fixes**
+
+ - Stop slider sending twice (after fixing endstop issue below). Issue #527
+
 ### 2.16.1: Maintenance Release
 
 **Fixes**
