@@ -3,6 +3,7 @@
 **Fixes**
 
  - Stop slider sending twice (after fixing endstop issue below). Issue #527
+ - Fix Theme colour swatch size.
 
 ### 2.16.1: Maintenance Release
 

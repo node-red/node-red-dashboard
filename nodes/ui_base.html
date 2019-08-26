@@ -157,7 +157,7 @@
         border-radius: 3px;
         margin-left: 15px;
     }
-    input.nr-db-field-themeColor {
+    input.nr-db-field-themeColor[type="color"] {
         width: 60px !important;
         padding: 0px;
         height: 20px;
@@ -200,7 +200,7 @@
         list-style: none;
     }
     ul.red-ui-dashboard-theme-styles li {
-        margin-bottom: 10px;
+        margin-bottom: 6px;
     }
     .nr-db-resetIcon {
         margin: 3px 6px 0px 6px;
@@ -1635,7 +1635,7 @@
 
                 var customThemeLibraryContainer = $('<div id="custom-theme-library-container">').appendTo(themeTab);
                 $('<label class="nr-db-theme-label">').text(c_("theme.custom-profile")).appendTo(customThemeLibraryContainer);
-                $('<input type="text" id="ui-sidebar-name" placeholder="profile name (not blank)">')
+                $('<input type="text" id="ui-sidebar-name" style="vertical-align:top;" placeholder="profile name (not blank)">')
                 .val(c_("theme.custom-profile-name"))
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
