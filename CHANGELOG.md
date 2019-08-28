@@ -1,5 +1,9 @@
 ### 2.16.2: Maintenance Release
 
+**Enhancements**
+
+ - Ui-control can be set to only report connect events.
+
 **Fixes**
 
  - Stop slider sending twice (after fixing endstop issue below). Issue #527

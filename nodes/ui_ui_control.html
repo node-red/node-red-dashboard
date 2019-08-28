@@ -8,7 +8,8 @@
         category: c_("label.category"),
         color: 'rgb( 63, 173, 181)',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            events: {value:"all"}
         },
         inputs:1,
         outputs:1,
@@ -16,11 +17,19 @@
         icon: "ui_link.png",
         paletteLabel: 'ui control',
         label: function() { return this.name || "ui control"; },
-        labelStyle: function() { return this.name?"node_label_italic":""; }
+        labelStyle: function() { return this.name?"node_label_italic":""; },
+        outputLabels: function() { return this.events; },
     });
 </script>
 
 <script type="text/x-red" data-template-name="ui_ui_control">
+    <div class="form-row">
+        <label for="node-input-events"><i class="fa fa-sign-out"></i> Output</label>
+        <select id="node-input-events" style="width:70%;">
+            <option value="all">Connect, lost, change events</option>
+            <option value="connect">Connect event only</option>
+        </select>
+    </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_ui_control.label.name"></span></label>
         <input type="text" id="node-input-name" data-i18n="[placeholder]ui_ui_control.placeholder.name">
@@ -50,4 +59,5 @@
     <li><code>tab</code> - the number of the tab. (Only for 'change' event).
     <li><code>name</code> - the name of the tab. (Only for 'change' event).
     </ul>
+    <p>Optional - report only connect events - useful to use to trigger a resend of data to a new client without needing to filter out other events.</p>
 </script>
