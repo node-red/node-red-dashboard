@@ -1,3 +1,9 @@
+### 2.16.3-beta: Maintenance Release
+
+**Enhancements**
+
+ - If template has height -1 then set it to 0 height (test).
+
 ### 2.16.2: Maintenance Release
 
 **Enhancements**

@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.16.2",
+    "version": "2.16.3",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"

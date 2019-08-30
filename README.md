@@ -99,9 +99,9 @@ to help pick up the theme colours.
  - --nr-dashboard-groupBackgroundColor
  - --nr-dashboard-groupTextColor
  - --nr-dashboard-groupBorderColor
- - --nr-dashboard-widgetBackgroundColor
+ - --nr-dashboard-widgetColor
  - --nr-dashboard-widgetTextColor
- - --nr-dashboard-widgetBorderColor
+ - --nr-dashboard-widgetBackColor
 
 #### Widgets
 
