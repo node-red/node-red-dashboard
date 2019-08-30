@@ -2,7 +2,7 @@
 
 **Enhancements**
 
- - Ui-control can be set to only report connect events.
+ - Ui-control can be set to only report connect events, or change tab events.
 
 **Fixes**
 
