@@ -34,17 +34,29 @@ module.exports = function(RED) {
             node.send({payload:"change", tab:index, name:name, socketid:id, socketip:ip, params:p});
         }
 
-        ui.ev.on('newsocket', sendconnect);
-        if (node.events === "all") {
-            ui.ev.on('endsocket', sendlost);
+        if (node.events === "connect") {
+            ui.ev.on('newsocket', sendconnect);
+        }
+        else if (node.events === "change") {
             ui.ev.on('changetab', sendchange);
+        }
+        else {
+            ui.ev.on('newsocket', sendconnect);
+            ui.ev.on('changetab', sendchange);
+            ui.ev.on('endsocket', sendlost);
         }
 
         this.on('close', function() {
-            ui.ev.removeListener('newsocket', sendconnect);
-            if (node.events === "all") {
-                ui.ev.removeListener('endsocket', sendlost);
+            if (node.events === "connect") {
+                ui.ev.removeListener('newsocket', sendconnect);
+            }
+            else if (node.events === "change") {
                 ui.ev.removeListener('changetab', sendchange);
+            }
+            else {
+                ui.ev.removeListener('newsocket', sendconnect);
+                ui.ev.removeListener('changetab', sendchange);
+                ui.ev.removeListener('endsocket', sendlost);
             }
         })
     }
