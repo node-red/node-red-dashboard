@@ -101,7 +101,7 @@ to help pick up the theme colours.
  - --nr-dashboard-groupBorderColor
  - --nr-dashboard-widgetColor
  - --nr-dashboard-widgetTextColor
- - --nr-dashboard-widgetBackColor
+ - --nr-dashboard-widgetBgndColor
 
 #### Widgets
 

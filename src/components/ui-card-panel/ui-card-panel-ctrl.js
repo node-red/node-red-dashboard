@@ -50,7 +50,7 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                     }
                     height = Math.ceil(ch / (sizes.cy + sizes.sy));
                 }
-                if ((parseInt(result[1]) == -1) && (child.attr('ui-template') !== undefined)) {
+                if ((parseInt(result[1]) < 0) && (child.attr('ui-template') !== undefined)) {
                     height = 0;
                 }
 
