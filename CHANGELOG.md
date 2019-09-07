@@ -4,6 +4,10 @@
 
  - If template has height -1 then set it to 0 height (test).
 
+ **Fixes**
+
+  - Ensure widgets handle undefined msg parts for labels etc.
+
 ### 2.16.2: Maintenance Release
 
 **Enhancements**
