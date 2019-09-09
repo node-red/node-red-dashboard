@@ -519,12 +519,14 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
         ::-webkit-scrollbar {
             height: 12px;
             width: 12px;
-            background: @widgetBackgroundColor;
         }
         ::-webkit-scrollbar-thumb {
-            background: @baseColor;
+            background-color: @baseColor;
             -webkit-border-radius: 1ex;
             -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+        }
+        ::-webkit-scrollbar-track {
+            background-color: @pageBackgroundColor;
         }
     }
 }
