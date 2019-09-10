@@ -36,7 +36,7 @@ module.exports = function(RED) {
             },
             beforeSend: function (msg) {
                 msg.payload = parseFloat(msg.payload);
-                msg.topic = config.topic || msg.topic;
+                msg.topic = config.topic || msg.topic || "";
                 if (node.pt) {
                     node.status({shape:"dot",fill:"grey",text:msg.payload});
                 }
