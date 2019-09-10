@@ -43,7 +43,7 @@ module.exports = function(RED) {
                     if (node.format === 'hsl') { msg.payload = pay.toHsl(); }
                     if (node.format === 'hsv') { msg.payload = pay.toHsv(); }
                 }
-                msg.topic = config.topic || msg.topic;
+                msg.topic = config.topic || msg.topic || "";
             },
             convert: function(p,o,m) {
                 if (m.payload === undefined) { return; }
