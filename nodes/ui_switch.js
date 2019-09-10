@@ -120,7 +120,7 @@ module.exports = function(RED) {
                 return value;
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic || msg.topic;
+                msg.topic = config.topic || msg.topic || "";
             }
         });
 
