@@ -51,7 +51,7 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic || msg.topic;
+                msg.topic = config.topic || msg.topic || "";
             },
             convertBack: function (value) {
                 if (payloadType === "date") {
