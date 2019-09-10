@@ -38,7 +38,7 @@ module.exports = function(RED) {
                 return d;
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic || msg.topic;
+                msg.topic = config.topic || msg.topic || "";
             }
         });
         node.on("close", done);
