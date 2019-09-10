@@ -124,7 +124,7 @@ module.exports = function(RED) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
                 }
-                msg.topic = config.topic || msg.topic;
+                msg.topic = config.topic || msg.topic || "";
                 if (node.pt) {
                     node.status({shape:"dot",fill:"grey",text:msg.payload});
                 }
