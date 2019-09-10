@@ -274,6 +274,7 @@ function add(opt) {
             var toSend = {payload:converted};
             toSend = opt.beforeSend(toSend, msg) || toSend;
             toSend.socketid = toSend.socketid || msg.socketid;
+            if (toSend.hasOwnProperty("topic") && (toSend.topic === undefined)) { delete toSend.topic; }
             if (!msg.hasOwnProperty("_fromInput")) {   // TODO: too specific
                 opt.node.send(toSend);      // send to following nodes
             }

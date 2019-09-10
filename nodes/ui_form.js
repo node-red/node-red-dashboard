@@ -28,7 +28,7 @@ module.exports = function(RED) {
                 sy: ui.getSizes().sy
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic;
+                msg.topic = config.topic || undefined;
             }
         });
         node.on("close", done);
