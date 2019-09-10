@@ -34,7 +34,7 @@ module.exports = function(RED) {
                 }
                 // if (config.mode === "week") { msg.payload = Date.parse(msg.payload); }
                 // if (config.mode === "month") { msg.payload = Date.parse(msg.payload); }
-                msg.topic = config.topic || msg.topic;
+                msg.topic = config.topic || msg.topic || "";
             }
         });
         node.on("close", done);
