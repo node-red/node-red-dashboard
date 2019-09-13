@@ -7,7 +7,9 @@
  **Fixes**
 
   - Ensure widgets handle undefined msg parts for labels etc.
+  - Fix scrollbar theming inside template.
   - Ensure msg.topic really doesn't exist if not specified, for all ui nodes. Was PR #531
+  - Backlevel less package to fix IE11 loading, Issue 530
 
 ### 2.16.2: Maintenance Release
 
