@@ -3,6 +3,7 @@
 **Enhancements**
 
  - If template has height -1 then set it to 0 height (test).
+ - Add wrap value feature to numeric node.
 
  **Fixes**
 

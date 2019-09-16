@@ -30,6 +30,7 @@ module.exports = function(RED) {
                 min: Number(config.min),
                 max: Number(config.max),
                 step: Number(config.step || 1),
+                wrap: config.wrap || false,
                 width: config.width || group.config.width || 6,
                 height: config.height || 1,
                 ed: (config.format.includes("value") ? false : true)

@@ -66,7 +66,10 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             me.item.value = parseFloat(me.item.value);
                             if (isNaN(me.item.value)) { me.item.value = me.item.min; }
                             if (delta > 0) {
-                                if (me.item.value < me.item.max) {
+                                if ((me.item.value == me.item.max) && (me.item.wrap == true)) {
+                                     me.item.value = me.item.min;
+                                }
+                                else if (me.item.value < me.item.max) {
                                     me.item.value = Math.round(Math.min(me.item.value + delta, me.item.max)*10000)/10000;
                                 }
                                 if (me.item.value < me.item.min) {
@@ -74,7 +77,10 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                                 }
                             }
                             else if (delta < 0) {
-                                if (me.item.value > me.item.min) {
+                                if ((me.item.value == me.item.min) && (me.item.wrap == true)) {
+                                    me.item.value = me.item.max;
+                                }
+                                else if (me.item.value > me.item.min) {
                                     me.item.value = Math.round(Math.max(me.item.value + delta, me.item.min)*10000)/10000;
                                 }
                                 if (me.item.value > me.item.max) {

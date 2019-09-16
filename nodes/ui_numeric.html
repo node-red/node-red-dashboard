@@ -18,6 +18,7 @@
                 }
             },
             height: {value: 0},
+            wrap: {value: false},
             passthru: {value: true},
             topic: {value: ''},
             format: {value: '{{value}}'},
@@ -66,13 +67,17 @@
         <input type="text" id="node-input-format" placeholder="{{value}}">
     </div>
     <div class="form-row">
-        <label for="node-input-min">Range</label>
+        <label for="node-input-min"><i class="fa fa-arrows-h"></i> Range</label>
         <span for="node-input-min">min</span>
         <input type="text" id="node-input-min" style="width:60px">
         <span for="not-input-max" style="margin-left:22px;">max</span>
         <input type="text" id="node-input-max" style="width:60px">
         <span for="not-input-step" style="margin-left:22px;">step</span>
         <input type="text" id="node-input-step" style="width:60px">
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-wrap"><i class="fa fa-refresh"></i> Wrap value from max to min and min to max.</label>
+        <input type="checkbox" id="node-input-wrap" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
