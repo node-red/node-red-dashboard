@@ -67,7 +67,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             if (isNaN(me.item.value)) { me.item.value = me.item.min; }
                             if (delta > 0) {
                                 if ((me.item.value == me.item.max) && (me.item.wrap == true)) {
-                                     me.item.value = me.item.min;
+                                    me.item.value = me.item.min;
                                 }
                                 else if (me.item.value < me.item.max) {
                                     me.item.value = Math.round(Math.min(me.item.value + delta, me.item.max)*10000)/10000;
