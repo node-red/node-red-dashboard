@@ -1,11 +1,19 @@
-### 2.16.3: Maintenance Release
+### 2.16.4-beta: Maintenance Release
 
 **Enhancements**
 
- - If template has height -1 then set it to 0 height (test).
- - Add wrap value feature to numeric node.
-
  **Fixes**
+
+  - Better vertical align larger button icons if supplied via label text
+
+### 2.16.3: Maintenance Release
+
+ **Enhancements**
+
+  - If template has height -1 then set it to 0 height (test).
+  - Add wrap value feature to numeric node.
+
+  **Fixes**
 
   - Ensure widgets handle undefined msg parts for labels etc.
   - Fix scrollbar theming inside template.
