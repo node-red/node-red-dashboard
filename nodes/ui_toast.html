@@ -10,6 +10,7 @@
             outputs: {value: 0},
             ok: {value: 'OK', required: true},
             cancel: {value: ''},
+            raw: {value: false},
             topic: {value: ''},
             name: {value: ''}
         },
@@ -67,7 +68,7 @@
         <input type="text" id="node-input-highlight" placeholder="(optional) border highlight colour">
     </div>
     <div class="form-row" id="node-toast-sendtoall">
-        <label style="width:auto" for="node-input-sendall"><i class="fa fa-arrow-right"></i> Send to all browser sessions.</label>
+        <label style="width:auto" for="node-input-sendall"><i class="fa fa-arrow-right"></i> Send to all browser sessions. </label>
         <input type="checkbox" checked id="node-input-sendall" style="display:inline-block; width:auto; vertical-align:baseline;">
     </div>
     <div class="form-row" id="node-dialog-displayok">
@@ -78,6 +79,10 @@
         <label for="node-input-cancel"><i class="fa fa-times"></i> Secondary action label</label>
         <input type="text" id="node-input-cancel" placeholder="(optional label for Cancel button)">
     </div>
+    <div class="form-row" id="node-toast-raw">
+        <label style="width:auto" for="node-input-raw"><i class="fa fa-exclamation-triangle"></i> Accept raw HTML/JavaScript input. </label>
+        <input type="checkbox" id="node-input-raw" style="display:inline-block; width:auto; vertical-align:baseline;">
+    </div>
     <div class="form-row" id="node-dialog-topic">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic" placeholder="(optional msg.topic)">
@@ -86,6 +91,8 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-tips"><b>Note</b>: checking <i>Accept raw HTML/JavaScript</i> can allow injection of code.
+    Ensure the input comes from trusted sources.</span></div>
 </script>
 
 <script type="text/x-red" data-help-name="ui_toast">

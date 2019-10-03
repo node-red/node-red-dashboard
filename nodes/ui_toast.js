@@ -16,14 +16,15 @@ module.exports = function(RED) {
         this.topic = config.topic;
         if (config.sendall === undefined) { this.sendall = true; }
         else { this.sendall = config.sendall; }
+        this.raw = config.raw || false;
         var node = this;
 
         var noscript = function (content) {
             if (typeof content === "object") { return null; }
             content = '' + content;
-            content = content.replace(/<.*cript.*\/scrip.*>/ig, '');
-            content = content.replace(/ on\w+=".*"/g, '');
-            content = content.replace(/ on\w+=\'.*\'/g, '');
+            content = content.replace(/<.*cript.*/ig, '');
+            content = content.replace(/.on\w+=.*".*"/g, '');
+            content = content.replace(/.on\w+=.*\'.*\'/g, '');
             return content;
         }
 
@@ -41,7 +42,7 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
             if (node.position !== "dialog" && node.sendall === true) { delete msg.socketid; }
-            msg.payload = noscript(msg.payload);
+            //msg.payload = noscript(msg.payload);
             ui.emitSocket('show-toast', {
                 title: node.topic || msg.topic,
                 message: msg.payload,
@@ -53,6 +54,7 @@ module.exports = function(RED) {
                 ok: node.ok,
                 cancel: node.cancel,
                 socketid: msg.socketid,
+                raw: node.raw,
                 msg: msg
             });
         });

@@ -511,6 +511,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('show-toast', function (msg) {
+            if (msg.raw !== true) {
+                var temp = document.createElement('div');
+                temp.textContent = str;
+                msg.message = temp.innerHTML;
+            }
             if (msg.dialog === true) {
                 var confirm;
                 if (msg.cancel) {

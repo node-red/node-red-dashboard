@@ -1,10 +1,9 @@
-### 2.16.4-beta: Maintenance Release
-
-**Enhancements**
+### 2.17.0: Maintenance Release
 
  **Fixes**
 
   - Better vertical align larger button icons if supplied via label text
+  - Fix ui_notification node to not accept raw HTML by default, add option to allow.
 
 ### 2.16.3: Maintenance Release
 
