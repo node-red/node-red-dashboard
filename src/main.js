@@ -513,7 +513,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         events.on('show-toast', function (msg) {
             if (msg.raw !== true) {
                 var temp = document.createElement('div');
-                temp.textContent = str;
+                temp.textContent = msg.message;
                 msg.message = temp.innerHTML;
             }
             if (msg.dialog === true) {

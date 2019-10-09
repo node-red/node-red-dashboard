@@ -9,6 +9,8 @@ From version 2.10.0 you can create and install widget nodes like other Node-RED 
 See the <a href="https://github.com/node-red/node-red-dashboard/wiki/Creating-New-Dashboard-Widgets">Wiki</a>
 for more information.
 
+This node requires node.js version 8. The last version to support v6 was 2.8.
+
 For the latest updates see the [CHANGELOG.md](https://github.com/node-red/node-red-dashboard/blob/master/CHANGELOG.md)
 
 <img src="http://nodered.org/images/dashboarde.png"/>

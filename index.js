@@ -31,6 +31,7 @@ function init(RED) {
        * [group] - group name (optional if templateScope = 'global')
        * [width] - width of widget (default automatic)
        * [height] - height of widget (default automatic)
+       * [order] - property to hold the placement order of the widget (default 0)
        * [templateScope] - scope of widhget/global or local (default local)
        * [emitOnlyNewValues] - boolean (default true).
              If true, it checks if the payload changed before sending it
@@ -57,12 +58,17 @@ function addWidget(RED, options) {
         order: options.order,
         format: options.format
     };
+
     var node = options.node;
+
+    if (isNaN(options.order)) {
+        node.warn("*** Order property not set. Please contact developer. ***");
+    }
+
     if (is_local) {
         group = RED.nodes.getNode(options.group);
         tab = RED.nodes.getNode(group.config.tab);
-        ui_control.width =
-            options.hasOwnProperty("width") ? options.width : group.config.width;
+        ui_control.width = options.hasOwnProperty("width") ? options.width : group.config.width;
         ui_control.height = options.hasOwnProperty("height") ? options.height : 0;
     }
     else {
@@ -71,8 +77,7 @@ function addWidget(RED, options) {
             on: function() {}
         };
     }
-    ui_control.templateScope =
-        options.hasOwnProperty("templateScope") ? options.templateScope : "local";
+    ui_control.templateScope = options.hasOwnProperty("templateScope") ? options.templateScope : "local";
     var ui_options = {
         node: node,
         control: ui_control
@@ -115,6 +120,10 @@ function addWidget(RED, options) {
 
 /* getTheme:
     returns the current theme object
+*/
+
+/* isDark:
+    returns true or false if the dahsboard theme background is dark or light.
 */
 
 module.exports = function (RED) {
