@@ -125,7 +125,7 @@ module.exports = function(RED) {
         });
 
         if (!node.pt) {
-            node.on("input", function(msg) {
+            node.on("input", function() {
                 var col = (node.state[0]=="on") ? "green" : "red";
                 var shp = (node.state[0]=="on") ? "dot" : "ring";
                 var txt = (node.decouple) ? (node.state[0] +" | "+node.state[1].toUpperCase()) : (node.state[0].toUpperCase() +" | "+node.state[1])

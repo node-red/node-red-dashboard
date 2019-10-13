@@ -1,3 +1,4 @@
+/* global angular io */
 angular.module('ui').service('UiEvents',
     function () {
         var updateValueEventName = 'update-value';

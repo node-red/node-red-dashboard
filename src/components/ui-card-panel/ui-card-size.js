@@ -1,6 +1,6 @@
 /* global angular */
 angular.module('ui').directive('uiCardSize', ['uiSizes',
-    function(sizes) {
+    function() {
         return {
             restrict: 'A',
             require: ['^uiCardPanel', '^?uiMasonry'],

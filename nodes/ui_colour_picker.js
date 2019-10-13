@@ -36,7 +36,7 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
-            beforeSend: function (msg, orig) {
+            beforeSend: function (msg) {
                 if (node.outformat === 'object') {
                     var pay = tc(msg.payload);
                     if (node.format === 'rgb') { msg.payload = pay.toRgb(); }
@@ -47,7 +47,7 @@ module.exports = function(RED) {
             },
             convert: function(p,o,m) {
                 if (m.payload === undefined) { return; }
-                colour = tc(m.payload);
+                var colour = tc(m.payload);
                 return colour.toString(config.format);
             }
         });

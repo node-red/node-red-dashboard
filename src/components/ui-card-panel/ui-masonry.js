@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular $ */
 angular.module('ui').directive('uiMasonry', ['$window',
     function ($window) {
         return {
@@ -66,7 +66,7 @@ function MasonryController(sizes, $timeout) {
         var blockCache = {};
         blockCache["0:"+(sizes.gy)] = blocks[0];
         var blockCacheKey;
-        children.each(function(c) {
+        children.each(function() {
             var child = $(this);
             var cw = child.width();
             var ch = child.height();
@@ -204,7 +204,7 @@ function MasonryController(sizes, $timeout) {
     // calculate the next available x-coordinate in the x-axis for a given y for <child>
     function getPxXOffset(children, maxindex, maxx, y) {
         var x = 0;
-        var child = $(children[maxindex]);
+        // var child = $(children[maxindex]);
         // index === the number of children before current child
         for (var i = 0; i < maxindex; i++) {
             var c = $(children[i]);

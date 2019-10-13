@@ -41,7 +41,7 @@ module.exports = function(RED) {
                 templateScope: config.templateScope,
                 theme: colortheme
             },
-            beforeEmit: function(msg, value) {
+            beforeEmit: function(msg) {
                 var properties = Object.getOwnPropertyNames(msg).filter(function (p) { return p[0] != '_'; });
                 var clonedMsg = {
                     templateScope: config.templateScope

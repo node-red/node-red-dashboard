@@ -19,14 +19,14 @@ module.exports = function(RED) {
         this.raw = config.raw || false;
         var node = this;
 
-        var noscript = function (content) {
-            if (typeof content === "object") { return null; }
-            content = '' + content;
-            content = content.replace(/<.*cript.*/ig, '');
-            content = content.replace(/.on\w+=.*".*"/g, '');
-            content = content.replace(/.on\w+=.*\'.*\'/g, '');
-            return content;
-        }
+        // var noscript = function (content) {
+        //     if (typeof content === "object") { return null; }
+        //     content = '' + content;
+        //     content = content.replace(/<.*cript.*/ig, '');
+        //     content = content.replace(/.on\w+=.*".*"/g, '');
+        //     content = content.replace(/.on\w+=.*\'.*\'/g, '');
+        //     return content;
+        // }
 
         var done = ui.add({
             node: node,

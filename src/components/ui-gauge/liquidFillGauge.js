@@ -5,6 +5,7 @@
  *
  * Liquid Fill Gauge v1.1
  */
+/* global d3 */
 function liquidFillGaugeDefaultSettings() {
     return {
         minValue: 0, // The gauge minimum value.

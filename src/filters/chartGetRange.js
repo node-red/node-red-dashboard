@@ -1,3 +1,4 @@
+/* global angular d3 */
 angular.module('ui').filter('chartGetRange', function() {
     return function(value, range) {
         range = [parseFloat(range[0]), parseFloat(range[1])];

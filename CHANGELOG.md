@@ -1,6 +1,13 @@
+### 2.18.0-beta: Maintenance Release
+
+**Fixes**
+
+ - Enforce node8 engine
+ - Update justgauge to latest (now maintained) version and drop monkeypatch. Issue #535.
+
 ### 2.17.1: Maintenance Release
 
- **Fixes**
+**Fixes**
 
  - Add warning re missing order property in custom widget nodes
  - Fix notifications. Issue #537.

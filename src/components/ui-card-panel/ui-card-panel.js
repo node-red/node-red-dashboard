@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular $ */
 
 angular.module('ui').directive('uiCardPanel', ['$timeout',
     function($timeout) {

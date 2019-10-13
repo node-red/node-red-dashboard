@@ -1,3 +1,4 @@
+/* global angular */
 angular.module('ui').directive('uiTemplate', ['$compile', '$rootScope', 'UiEvents',
     function ($compile, $rootScope, events) {
         function createInnerScope(id) {

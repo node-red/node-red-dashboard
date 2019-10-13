@@ -1,3 +1,4 @@
+/* global angular */
 var sizes = {
     sx: 48, // width of <1> grid square
     sy: 48, // height of <1> grid square

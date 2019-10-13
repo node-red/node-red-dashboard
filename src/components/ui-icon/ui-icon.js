@@ -13,7 +13,7 @@ angular.module('ui').directive('uiIcon',
                 icon: '@'
             },
             //replace: true,
-            link: function (scope, element, attributes, ctrl) {
+            link: function (scope) {
                 scope.$watch('icon', function (newValue) {
                     if (url.test(newValue)) {
                         scope.iconType = 'image';
