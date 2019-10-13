@@ -1,14 +1,13 @@
-/* global JustGage */
-/* global angular */
+/* global angular JustGage loadLiquidFillGauge liquidFillGaugeDefaultSettings */
 angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
-    function ($timeout, $interpolate) {
+    function ($timeout) {
         return {
             restrict: 'E',
             replace: true,
             templateUrl: 'components/ui-gauge/ui-gauge.html',
-            link: function(scope, element, attrs) {
+            link: function(scope) {
                 $timeout(function() {
-                    var gauge, bgnd, fgnd, unreg, unregtype;
+                    var gauge, bgnd, fgnd, tgnd, unreg, unregtype;
                     var theme = scope.$eval('main.selectedTab.theme.name') || "theme-light";
                     var themeState = scope.$eval('main.selectedTab.theme.themeState');
                     if (themeState) {
@@ -91,8 +90,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     //title: scope.$eval('me.item.title'),
                                     label: scope.$eval('me.item.units'),
                                     pointer: true,
-                                    relativeGaugeSize: true,
-                                    textRenderer: function(v) {
+                                    relativeGaugeSize: false,
+                                    textRenderer: function() {
                                         return scope.$eval('me.item.getText()') || "";
                                     }
                                 }
