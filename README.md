@@ -2,22 +2,20 @@
 
 ![NPM version](https://badge.fury.io/js/node-red-dashboard.svg)
 
-This module provides a set of nodes in Node-RED to quickly create a live data
-dashboard.
+This module provides a set of nodes in Node-RED to quickly create a live data dashboard.
+
+These nodes require node.js version 8. The last version to support node v6 was 2.9.5.
 
 From version 2.10.0 you can create and install widget nodes like other Node-RED nodes.
-See the <a href="https://github.com/node-red/node-red-dashboard/wiki/Creating-New-Dashboard-Widgets">Wiki</a>
-for more information.
-
-This node requires node.js version 8. The last version to support v6 was 2.8.
+See the [Wiki](https://github.com/node-red/node-red-dashboard/wiki/Creating-New-Dashboard-Widgets) for more information.
 
 For the latest updates see the [CHANGELOG.md](https://github.com/node-red/node-red-dashboard/blob/master/CHANGELOG.md)
 
-<img src="http://nodered.org/images/dashboarde.png"/>
+![Dashboard example](http://nodered.org/images/dashboarde.png)
 
 ## Pre-requisites
 
-The Node-RED-Dashboard requires <a href="https://nodered.org">Node-RED</a> to be installed.
+The Node-RED-Dashboard requires [Node-RED](https://nodered.org) to be installed.
 
 ## Install
 
