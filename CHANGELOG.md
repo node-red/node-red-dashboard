@@ -1,10 +1,14 @@
 ### 2.18.0-beta: Maintenance Release
 
+**Enhancements**
+ 
+ - Update justgauge to latest (now maintained) version and drop monkeypatch. Issue #535.
+ - Add engines node8 to package.json
+
 **Fixes**
 
- - Add engines node8 to package.json
- - Update justgauge to latest (now maintained) version and drop monkeypatch. Issue #535.
  - Handle tab names with multiple spaces in for hide/show - Issue #541
+ - Update gulpfile.js to gulp 4 - Issue #542
 
 ### 2.17.1: Maintenance Release
 
