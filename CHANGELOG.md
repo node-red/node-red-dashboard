@@ -4,6 +4,7 @@
 
  - Add engines node8 to package.json
  - Update justgauge to latest (now maintained) version and drop monkeypatch. Issue #535.
+ - Handle tab names with multiple spaces in for hide/show - Issue #541
 
 ### 2.17.1: Maintenance Release
 

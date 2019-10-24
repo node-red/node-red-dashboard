@@ -257,18 +257,18 @@ function loadConfiguration(type,scope) {
                 hoverRadius: 4 }
         }
         switch (interpolate) {
-        case 'linear': {
-            config.options.elements.line.tension = 0;
-            break;
-        }
-        case 'bezier': {
-            config.options.elements.line.tension = 0.4;
-            break;
-        }
-        case 'step': {
-            config.options.elements.line.stepped = true;
-            break;
-        }
+            case 'linear': {
+                config.options.elements.line.tension = 0;
+                break;
+            }
+            case 'bezier': {
+                config.options.elements.line.tension = 0.4;
+                break;
+            }
+            case 'step': {
+                config.options.elements.line.stepped = true;
+                break;
+            }
         }
     }
     else if ((type === 'bar') || (type === 'horizontalBar')) {

@@ -461,9 +461,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var arrNames = strArray && Array.isArray(strArray) ? strArray : [strArray];
             // convert all names to lower-case, and replace any spaces with '_'
             arrNames = arrNames.map(function (n) {
-                return n.toLowerCase().replace(/\s+/, '_');
+                return n.toLowerCase().replace(/\s+/g, '_');
             });
-            return arrNames.includes(strName.toLowerCase().replace(/\s+/, '_'));
+            return arrNames.includes(strName.toLowerCase().replace(/\s+/g, '_'));
         }
 
         events.on(function (msg) {
