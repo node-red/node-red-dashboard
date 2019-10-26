@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Sat Oct 26 2019 16:28:25 GMT+0100 (British Summer Time)
+# Time: Sat Oct 26 2019 20:02:55 GMT+0100 (British Summer Time)
 
 CACHE:
 i18n.js
@@ -25,4 +25,4 @@ fonts/weather-icons-lite.woff2
 NETWORK:
 *
 
-# hash: c918e029ce5eb5a8f92da7aac46f83528d36f2aa216923e5aebc8b3e6bc105c0
+# hash: c833df5872a7e4dc9e8b99b03199a94859675d4a870ceddf534b14632290819e
