@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Thu Oct 24 2019 23:00:42 GMT+0100 (British Summer Time)
+# Time: Sat Oct 26 2019 16:05:02 GMT+0100 (British Summer Time)
 
 CACHE:
 i18n.js
@@ -13,6 +13,7 @@ css/gridstack.min.css
 js/app.min.js
 js/gridstack.jQueryUI.min.js
 js/gridstack.min.js
+js/gridstack.min.map
 js/lodash.min.js
 js/tinycolor-min.js
 socket.io/socket.io.js
@@ -24,4 +25,4 @@ fonts/weather-icons-lite.woff2
 NETWORK:
 *
 
-# hash: 5e7400107bfee7424c3a35713ee4149f4bf3cc0bd448a7055e7ab938402d5c75
+# hash: 38c509094d7b08e0bbbee241f699ef35d92ec041999ed45f8c26b08ac0c2db1b

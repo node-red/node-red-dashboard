@@ -12,7 +12,7 @@ var
     htmlreplace = require('gulp-html-replace'),
     jscs = require('gulp-jscs'),
     jshint = require('gulp-jshint'),
-    manifest = require('gulp-manifest3'),
+    manifest = require('gulp-manifest'),
     minifyCss = require('gulp-clean-css'),
     minifyHTML = require('gulp-htmlmin'),
     path = require('path'),
