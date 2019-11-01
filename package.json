@@ -95,7 +95,7 @@
         "d3": "^3.5.17",
         "font-awesome": "^4.7.0",
         "gridstack": "^0.4.0",
-        "gulp": "3.*",
+        "gulp": "~4.0.2",
         "gulp-angular-templatecache": "~3.0.0",
         "gulp-clean-css": "^4.0.0",
         "gulp-concat": "^2.6.1",
