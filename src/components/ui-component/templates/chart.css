@@ -34,3 +34,7 @@ canvas.chart.chart-line {
     width: calc(100% - 10px);
     padding: 5px;
 }
+.nr-dashboard-chart-nolabel {
+    /* full height - label_padding - nr-dashboard-chart_padding */
+    height: calc(100% - 40px);
+}

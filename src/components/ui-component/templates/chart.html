@@ -7,6 +7,7 @@
         </p>
         <ui-chart-js
             class="nr-dashboard-chart"
+            ng-class="{'nr-dashboard-chart-nolabel':me.item.getLabel() == ''}"
             ng-swipe-right="$event.stopPropagation();"
             ng-swipe-left="$event.stopPropagation();"
             >
