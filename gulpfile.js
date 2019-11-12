@@ -89,9 +89,15 @@ function js() {
 }
 
 function css() {
+    exec('node fixfa.js', function (err, stdout, stderr) {
+        if (err) {
+            console.log(stdout);
+            console.log(stderr);
+        }
+    });
     return gulp.src('src/index.html')
         .pipe(ghtmlSrc({getFileName:getFileName.bind(this, 'href'), presets:'css'}))
-        .pipe(concatCss('app.min.css'))
+        .pipe(concatCss('app.min.css',{rebaseUrls:false}))
         .pipe(header(fs.readFileSync('license.js')))
         .pipe(eol('\n'))
         .pipe(gulp.dest('dist/css/'));

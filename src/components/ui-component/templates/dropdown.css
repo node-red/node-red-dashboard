@@ -7,9 +7,13 @@
     margin-right: 9px;
 }
 
+.nr-dashboard-dropdown md-input-container>md-select {
+    overflow: hidden;
+}
+
 .nr-dashboard-dropdown p.label {
 	margin: 0px;
 	line-height: 34px;
-    margin-right: 20px;
+    margin-right: 16px;
     white-space: nowrap;
 }
