@@ -60,13 +60,13 @@ var mani = {
     ]
 }
 
-function toNumber(keepDecimals, config, input) {
+function toNumber(keepDecimals, config, input, old, m, s) {
     if (input === undefined) { return; }
     if (typeof input !== "number") {
         var inputString = input.toString();
         input = keepDecimals ? parseFloat(inputString) : parseInt(inputString);
     }
-    if (config.step) { input = Math.round(Math.round(input/config.step)*config.step*10000)/10000; }
+    if (s) { input = Math.round(Math.round(input/s)*s*10000)/10000; }
     return isNaN(input) ? config.min : input;
 }
 
@@ -172,7 +172,7 @@ function add(opt) {
 
         // Call the convert function in the node to get the new value
         // as well as the full dataset.
-        var conversion = opt.convert(msg.payload, oldValue, msg);
+        var conversion = opt.convert(msg.payload, oldValue, msg, opt.control.step);
 
         // If the update flag is set, emit the newPoint, and store the full dataset
         var fullDataset;

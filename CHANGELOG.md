@@ -10,6 +10,7 @@
  - Stop propagation of swipe when using color picker - Issue #539
  - Handle tab names with multiple spaces in for hide/show - Issue #541
  - Update gulpfile.js to gulp 4 - Issue #542
+ - Fix numeric step rounding when changed by ui_control
 
 ### 2.17.1: Maintenance Release
 
