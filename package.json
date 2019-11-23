@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.18.0-beta",
+    "version": "2.18.0",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -79,17 +79,17 @@
         "socket.io": "^2.3.0"
     },
     "devDependencies": {
-        "angular": "~1.7.8",
-        "angular-animate": "~1.7.8",
-        "angular-aria": "~1.7.8",
+        "angular": "~1.7.9",
+        "angular-animate": "~1.7.9",
+        "angular-aria": "~1.7.9",
         "angular-chart.js": "^1.1.1",
         "angular-material": "~1.1.20",
         "angular-material-icons": "^0.7.1",
-        "angular-messages": "~1.7.8",
-        "angular-mocks": "~1.7.8",
-        "angular-route": "~1.7.8",
-        "angular-sanitize": "~1.7.8",
-        "angular-touch": "~1.7.8",
+        "angular-messages": "~1.7.9",
+        "angular-mocks": "~1.7.9",
+        "angular-route": "~1.7.9",
+        "angular-sanitize": "~1.7.9",
+        "angular-touch": "~1.7.9",
         "angularjs-color-picker": "^3.4.8",
         "chart.js": "~2.3.0",
         "d3": "^3.5.17",

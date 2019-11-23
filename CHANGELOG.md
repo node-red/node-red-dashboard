@@ -1,4 +1,4 @@
-### 2.18.0-beta: Maintenance Release
+### 2.18.0: Milestone Release
 
 **Enhancements**
  
@@ -19,7 +19,7 @@
  - Add warning re missing order property in custom widget nodes
  - Fix notifications. Issue #537.
 
-### 2.17.0: Maintenance Release
+### 2.17.0: Milestone Release
 
  **Fixes**
 
