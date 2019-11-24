@@ -13,6 +13,9 @@
                  ng-required="opt.required"
                  ng-keydown="me.stop($event)"
                  step="any">
+               <textarea ng-if="opt.type=='multiline'" 
+                 ng-model="me.item.formValue[opt.value]"
+                 rows="10"></textarea>
                <md-switch ng-if="opt.type=='switch'" md-no-ink ng-model="me.item.formValue[opt.value]">{{opt.label}}</md-switch>
                <md-checkbox ng-if="opt.type=='checkbox'" md-no-ink aria-label="Checkbox No Ink" ng-model="me.item.formValue[opt.value]"> {{opt.label}}</md-checkbox>
            </md-input-container>
