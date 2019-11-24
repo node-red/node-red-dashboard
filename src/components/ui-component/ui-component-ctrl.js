@@ -245,6 +245,19 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     }
 
                     case 'form': {
+                        me.processInput = function(msg) {
+                            if (typeof(msg.value) != 'object') { return }
+                            for ( var key in msg.value ) {
+                                if (!me.item.formValue.hasOwnProperty(key)) { continue; }
+                                me.item.formValue[key] = msg.value[key]
+                            }
+                        }
+                        me.item.extraRows = 0;
+                        me.item.options.map(function(item) {
+                            if (item.type == 'multiline' && item.rows > 1) {
+                                me.item.extraRows += item.rows - 1;
+                            }
+                        })
                         me.stop = function(event) {
                             if ((event.charCode === 13) || (event.which === 13)) {
                                 event.preventDefault();
@@ -268,6 +281,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             $scope.$$childTail.form.$setUntouched();
                             $scope.$$childTail.form.$setPristine();
                         };
+                        me.item.me = me;
                         break;
                     }
 
