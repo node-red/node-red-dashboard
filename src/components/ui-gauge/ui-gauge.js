@@ -127,7 +127,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                             { color : colors[1], lo : seg1, hi : seg2 },
                                             { color : colors[2], lo : seg2, hi : gaugeOptions.max }
                                         ]
-                                        gaugeOptions.levelColorsGradient = false;
+                                        gaugeOptions.noGradient = true;
                                     }
                                 }
                                 if (scope.$eval('me.item.options') !== null) {

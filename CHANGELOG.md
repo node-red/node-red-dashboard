@@ -1,3 +1,9 @@
+### 2.18.1: Maintenance Release
+
+**Fixes**
+
+ - Fix undocumented change to justgage sector fill api. Issue #547
+
 ### 2.18.0: Milestone Release
 
 **Enhancements**
