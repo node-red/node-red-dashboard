@@ -3,7 +3,7 @@
        <p class="formlabel" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
            <md-input-container class="md-block" style="height:{{me.item.sy}}px !important" flex>
-               <label ng-if="(opt.type=='text' || opt.type=='number' || opt.type=='email' || opt.type=='password' || opt.type=='date') && opt.label">{{opt.label}}</label>
+               <label ng-if="(opt.type=='text' || opt.type=='number' || opt.type=='email' || opt.type=='multiline' || opt.type=='password' || opt.type=='date') && opt.label">{{opt.label}}</label>
                <input ng-if="opt.type=='text' || opt.type=='email' || opt.type=='password' || opt.type=='date'" type="{{opt.type}}"
                 ng-model="me.item.formValue[opt.value]"
                 ng-required="opt.required"
