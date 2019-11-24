@@ -2,7 +2,7 @@
 
 **Fixes**
 
- - Fix undocumented change to justgage sector fill api. Issue #547
+ - Fix undocumented change to justgage custom sectors api. Issue #547
 
 ### 2.18.0: Milestone Release
 

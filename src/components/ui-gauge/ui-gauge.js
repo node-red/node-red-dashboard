@@ -122,11 +122,11 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     var seg2 = scope.$eval('me.item.seg2');
                                     if ((!isNaN(parseFloat(seg1))) && (!isNaN(parseFloat(seg2)))) {
                                         var colors = scope.$eval('me.item.colors');
-                                        gaugeOptions.customSectors = [
+                                        gaugeOptions.customSectors = {percents:false, ranges:[
                                             { color : colors[0], lo : gaugeOptions.min, hi : seg1 },
                                             { color : colors[1], lo : seg1, hi : seg2 },
                                             { color : colors[2], lo : seg2, hi : gaugeOptions.max }
-                                        ]
+                                        ]}
                                         gaugeOptions.noGradient = true;
                                     }
                                 }
