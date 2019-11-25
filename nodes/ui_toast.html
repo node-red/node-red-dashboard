@@ -48,7 +48,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_toast">
+<script type="text/html" data-template-name="ui_toast">
     <div class="form-row">
         <label for="node-input-position"><i class="fa fa-th-large"></i> Layout</label>
         <select type="text" id="node-input-position" style="display:inline-block; width:70%; vertical-align:baseline;">
@@ -95,7 +95,7 @@
     Ensure the input comes from trusted sources.</span></div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_toast">
+<script type="text/html" data-help-name="ui_toast">
     <p>Shows <code>msg.payload</code> as a popup notification or OK / Cancel dialog
     message on the user interface.</p>
     <p>If a <code>msg.topic</code> is available it will be used as the title.</p>
@@ -104,4 +104,5 @@
     <p>The dialog returns a <code>msg.payload</code> string of whatever you configure
     the button label(s) to be. The second (cancel) button is optional, as is the return
     value of <code>msg.topic</code>.</p>
+    <p>Sending a blank payload will remove any active dialog without sending any data.</p>
 </script>

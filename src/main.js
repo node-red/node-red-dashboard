@@ -518,6 +518,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             if (msg.dialog === true) {
                 var confirm;
+                if (msg.message == "") { $mdDialog.hide(); return; }
                 if (msg.cancel) {
                     confirm = $mdDialog.confirm()
                         .title(msg.title)
@@ -562,6 +563,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (msg.hasOwnProperty("message") || msg.hasOwnProperty("title")) {
                     var toastScope = $rootScope.$new();
                     toastScope.toast = msg;
+                    if (msg.hasOwnProperty("message") && msg.message == "") { msg.displayTime = 1; }
                     var opts = {
                         scope: toastScope,
                         templateUrl: 'partials/toast.html',
@@ -576,7 +578,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         events.on('ui-control', function(msg) {
             if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
             if (msg.hasOwnProperty("control")) { // if it's a request to modify a control
-                found = findControl(msg.id, main.menu);
+                var found = findControl(msg.id, main.menu);
                 for (var property in msg.control) {
                     if (msg.control.hasOwnProperty(property) && found.hasOwnProperty(property)) {
                         found[property] = msg.control[property];
@@ -710,7 +712,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (voices.length > 0) {
                     var words = new SpeechSynthesisUtterance(msg.tts);
                     words.onerror = function(err) { events.emit('ui-audio', 'error: '+err.error); }
-                    words.onend = function(event) { events.emit('ui-audio', 'complete'); }
+                    words.onend = function() { events.emit('ui-audio', 'complete'); }
                     for (var v=0; v<voices.length; v++) {
                         if (voices[v].lang === msg.voice) {
                             words.voice = voices[v];
@@ -746,7 +748,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                             audioSource.start(0);
                             events.emit('ui-audio', 'playing');
                         },
-                        function(err) { events.emit('ui-audio', 'error'); }
+                        function() { events.emit('ui-audio', 'error'); }
                     )
                 }
                 catch(e) { events.emit('ui-audio', 'error'); }
