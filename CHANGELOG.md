@@ -1,5 +1,11 @@
 ### 2.18.1: Maintenance Release
 
+**Enhancements**
+
+ - Let dialog be removed by blank message.
+ - Let ui_form node accept input to prefill, and add multiline text
+
+
 **Fixes**
 
  - Fix undocumented change to justgage custom sectors api. Issue #547
