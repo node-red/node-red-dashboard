@@ -1,9 +1,9 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length)+(me.item.label? 2 : 1)) }}" layout="row" layout-align="space-between center" class="nr-dashboard-form">
-    <form name ="form" ng-submit="me.submit(form)">
+<md-card ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length)+(me.item.label? 2 : 1)) + me.item.extraRows }}" layout="row" layout-align="space-between center" class="nr-dashboard-form">
+  <form name ="form" ng-submit="me.submit(form)" style="margin-top: 10px">
        <p class="formlabel" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
-           <md-input-container class="md-block" style="height:{{me.item.sy}}px !important" flex>
-               <label ng-if="(opt.type=='text' || opt.type=='number' || opt.type=='email' || opt.type=='password' || opt.type=='date') && opt.label">{{opt.label}}</label>
+           <md-input-container class="md-block" style="height:{{me.item.sy * (opt.type=='multiline' ? opt.rows : 1) }}px !important" flex>
+               <label ng-if="(opt.type=='text' || opt.type=='number' || opt.type=='email' || opt.type=='multiline' || opt.type=='password' || opt.type=='date') && opt.label">{{opt.label}}</label>
                <input ng-if="opt.type=='text' || opt.type=='email' || opt.type=='password' || opt.type=='date'" type="{{opt.type}}"
                 ng-model="me.item.formValue[opt.value]"
                 ng-required="opt.required"
@@ -13,6 +13,11 @@
                  ng-required="opt.required"
                  ng-keydown="me.stop($event)"
                  step="any">
+               <textarea ng-if="opt.type=='multiline'"
+                 md-no-autogrow
+                 ng-required="opt.required"
+                 ng-model="me.item.formValue[opt.value]"
+                 style="height:{{opt.rows * me.item.sy}}px"></textarea>
                <md-switch ng-if="opt.type=='switch'" md-no-ink ng-model="me.item.formValue[opt.value]">{{opt.label}}</md-switch>
                <md-checkbox ng-if="opt.type=='checkbox'" md-no-ink aria-label="Checkbox No Ink" ng-model="me.item.formValue[opt.value]"> {{opt.label}}</md-checkbox>
            </md-input-container>
