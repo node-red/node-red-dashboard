@@ -25,7 +25,7 @@
        </div>
        <div layout-gt-sm="row" style="margin-top:0px">
            <md-button class="md-raised nr-dashboard-form-button" type="submit">{{me.item.submit}}</md-button>
-           <md-button class="md-raised nr-dashboard-form-button" ng-click="me.reset()">{{me.item.cancel}}</md-button>
+           <md-button  ng-if="me.item.cancel != ''" class="md-raised nr-dashboard-form-button" ng-click="me.reset()">{{me.item.cancel}}</md-button>
        </div>
    </form>
 </md-card>

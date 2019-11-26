@@ -110,8 +110,6 @@
                 //var required = $('<input/>',{class:"node-input-option-required",style:"margin: 5px;width:19%",type:"checkbox", checked:option.required}).appendTo(row);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
                 var required = $('<input/>',{class:"node-input-option-required", type:"checkbox", checked:option.required, style:"vertical-align:top;"}).appendTo(reqRow);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
                 var reqDiv=$("<div />",{class:"slider round"}).appendTo(reqRow);
-                // if (option.rows == null) { var noRows = $('<div/>',{style:"width:10%; display:inline-block;"}).appendTo(row); }
-                // else { var rowsField = $('<input/>',{class:"node-input-option-rows",type:"number", style:"width:10%;", placeholder:'Rows', value:option.rows }).appendTo(row); }
                 var vis = option.rows ? 'visible' : 'hidden';
                 var rowsField = $('<input/>',{class:"node-input-option-rows", type:"number", style:"width:10%;", placeholder:'Rows', value:option.rows }).css('visibility',vis).appendTo(row);
                
@@ -308,8 +306,9 @@ input:checked + .slider:before {
         <li> <b>Name</b> : Represents the key (variable name) in the <code>msg.payload</code> in which the value of the corresponding element present</li>
         <li> <b>Type</b> : Drop drown option to select the type of input element</li>
         <li> <b>Required</b> : On switching on the user has to supply the value before submitting</li>
-        <li> <b>Rows</b> : number of UI rows for multiline</li>
+        <li> <b>Rows</b> : number of UI rows for multiline text input</li>
         <li> <b>Delete</b> : To remove the current element form the form</li>
     </ul>
     <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+    <p>The Cancel button can be hidden by setting it's value to be blank "".</p>
 </script>
