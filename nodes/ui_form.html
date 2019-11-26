@@ -110,8 +110,11 @@
                 //var required = $('<input/>',{class:"node-input-option-required",style:"margin: 5px;width:19%",type:"checkbox", checked:option.required}).appendTo(row);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
                 var required = $('<input/>',{class:"node-input-option-required", type:"checkbox", checked:option.required, style:"vertical-align:top;"}).appendTo(reqRow);//labelForRequried);//.typedInput({default:'str',types:['str', 'num']});
                 var reqDiv=$("<div />",{class:"slider round"}).appendTo(reqRow);
-                if (option.rows == null) { var noRows = $('<div/>',{style:"width:10%; display:inline-block;"}).appendTo(row); }
-                else { var rowsField = $('<input/>',{class:"node-input-option-rows",type:"number", style:"width:10%;", placeholder:'Rows', value:option.rows }).appendTo(row); }
+                // if (option.rows == null) { var noRows = $('<div/>',{style:"width:10%; display:inline-block;"}).appendTo(row); }
+                // else { var rowsField = $('<input/>',{class:"node-input-option-rows",type:"number", style:"width:10%;", placeholder:'Rows', value:option.rows }).appendTo(row); }
+                var vis = option.rows ? 'visible' : 'hidden';
+                var rowsField = $('<input/>',{class:"node-input-option-rows", type:"number", style:"width:10%;", placeholder:'Rows', value:option.rows }).css('visibility',vis).appendTo(row);
+               
                 var finalspan = $('<div/>',{style:"display:inline-block; width:5%;"}).appendTo(row);
                 var deleteButton = $('<a/>',{href:"#",class:"editor-button", style:"font-size:1.3em; left:45%; position:relative;"}).appendTo(finalspan);
                 $('<i/>',{class:"fa fa-trash-o"}).appendTo(deleteButton);
@@ -119,9 +122,10 @@
                 typeField.change(function(e){
                     if (e.target.value != 'multiline') { 
                         rowsField.val(undefined)
-                        rowsField.prop('disabled',true)
+                        option.rows = null;
+                        rowsField.css('visibility','hidden')
                     } else {
-                        rowsField.prop('disabled',false)
+                        rowsField.css('visibility','visible')
                         if (!rowsField[0].value) rowsField[0].value = 3;
                     }
                     
