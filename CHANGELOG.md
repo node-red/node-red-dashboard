@@ -1,10 +1,9 @@
-### 2.18.1: Maintenance Release
+### 2.19.0: Milestone Release
 
 **Enhancements**
 
- - Let dialog be removed by blank message.
  - Let ui_form node accept input to prefill, and add multiline text
-
+ - Let dialog be removed by blank message.
 
 **Fixes**
 
