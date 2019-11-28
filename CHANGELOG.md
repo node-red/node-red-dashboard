@@ -1,3 +1,9 @@
+### 2.19.1-beta: Maintenance Release
+
+**Fixes**
+
+ - Adjust Gauge title spacing.
+
 ### 2.19.0: Milestone Release
 
 **Enhancements**
