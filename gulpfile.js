@@ -126,8 +126,10 @@ function index() {
 function fonts() {
     //return gulp.src('node_modules/font-awesome/fonts/*').pipe(gulp.dest('dist/fonts/'));
     gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff').pipe(gulp.dest('dist/fonts/'));
+    gulp.src('node_modules/material-design-icons-iconfont/dist/fonts/MaterialIcons-Regular.woff').pipe(gulp.dest('dist/fonts/'));
     gulp.src('node_modules/weather-icons-lite/fonts/weather-icons-lite.woff').pipe(gulp.dest('dist/fonts/'));
     gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.woff2').pipe(gulp.dest('dist/fonts/'));
+    gulp.src('node_modules/material-design-icons-iconfont/dist/fonts/MaterialIcons-Regular.woff2').pipe(gulp.dest('dist/fonts/'));
     return gulp.src('node_modules/weather-icons-lite/fonts/weather-icons-lite.woff2').pipe(gulp.dest('dist/fonts/'));
 }
 
