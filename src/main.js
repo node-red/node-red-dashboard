@@ -32,7 +32,7 @@ if (!String.prototype.startsWith) {
 }
 
 // Start to do async load of google webfont
-WebFont.load({ google: { families: ['Material Icons'] } });
+//WebFont.load({ google: { families: ['Material Icons'] } });
 
 var doVisualUpdates = true;
 document.addEventListener('visibilitychange', function() {
