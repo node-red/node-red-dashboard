@@ -5,7 +5,11 @@
     <p  class="label nr-dashboard-gauge-title"
         ng-class="{'nr-dashboard-gauge-titlel':(me.item.width > 3)}"
         ng-bind-html="me.item.getLabel()"
-        ng-hide="(me.item.height == 1)">
+        ng-hide="(me.item.height <= 2)">
+    </p>
+    <p  ng-show="(me.item.height == 2)"
+        ng-bind-html="me.item.getLabel()"
+        ng-class="{'nr-dashboard-gauge-titlem':(me.item.height == 2)}">
     </p>
     <p  ng-show="(me.item.height == 1)"
         ng-bind-html="me.item.getLabel()"
