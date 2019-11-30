@@ -1,6 +1,6 @@
 <div id="gauge_{{$id}}" style="
-    width:{{me.item.width * me.item.sizes.sx - (20 * (me.item.gtype === 'compass')) }}px;
-    height:{{(me.item.height * me.item.sizes.sy)+((me.item.title.length == 0) * me.item.sizes.sy) - (20 * (me.item.gtype === 'compass')) }}px;
+    width:{{0.95 * me.item.width * me.item.sizes.sx - (20 * (me.item.gtype === 'compass')) }}px;
+    height:{{0.95 * (me.item.height * me.item.sizes.sy)+((me.item.title.length == 0) * me.item.sizes.sy) - (20 * (me.item.gtype === 'compass')) }}px;
     margin-top:-20px;
     padding-bottom:{{(me.item.gtype === 'wave') * 6}}px;
     ">
