@@ -90,7 +90,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     //title: scope.$eval('me.item.title'),
                                     label: scope.$eval('me.item.units'),
                                     pointer: true,
-                                    relativeGaugeSize: false,
+                                    relativeGaugeSize: true,
                                     textRenderer: function() {
                                         return scope.$eval('me.item.getText()') || "";
                                     }
@@ -107,11 +107,11 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
 
                                 if (scope.$eval('me.item.gtype') === 'compass') {
                                     gaugeOptions.donut = true;
-                                    gaugeOptions.gaugeWidthScale = 0.2;
+                                    gaugeOptions.gaugeWidthScale = 0.3;
                                     gaugeOptions.pointer = true;
                                     gaugeOptions.refreshAnimationTime = 5;
                                     // gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:scope.$eval('me.item.gageoptions.compassColor')};
-                                    gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:undefined};
+                                    gaugeOptions.pointerOptions = {toplength:12, bottomlength:16, bottomwidth:8, color:undefined};
                                     gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor[theme]');
                                     gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor[theme]')];
                                     if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = fgnd; }
