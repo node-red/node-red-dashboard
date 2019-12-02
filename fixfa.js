@@ -36,7 +36,7 @@ fs.readFile('node_modules/material-design-icons-iconfont/dist/material-design-ic
             if (err) {
                 console.log('Failed to re-write file.');
             } else {
-                console.log('Fixed up Google-Material-Font css');
+                console.log('Fixed  up Google-Material-Font css');
             }
         });
     }

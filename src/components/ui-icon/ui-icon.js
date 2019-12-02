@@ -23,7 +23,7 @@ angular.module('ui').directive('uiIcon',
                     else if (wi.test(newValue)) { scope.iconType = 'wi'; }
                     else if (mi.test(newValue)) { scope.iconType = 'mi'; }
                     else if (ic.test(newValue)) { scope.iconType = 'icofont'; }
-                    else { scope.iconType = 'angular-material'; }
+                    else { scope.iconType = 'ma'; }
                 });
             }
         };

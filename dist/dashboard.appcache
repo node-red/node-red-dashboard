@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Sat Nov 30 2019 14:47:28 GMT+0000 (Greenwich Mean Time)
+# Time: Mon Dec 02 2019 22:58:16 GMT+0000 (Greenwich Mean Time)
 
 CACHE:
 i18n.js
@@ -16,6 +16,8 @@ js/gridstack.min.js
 js/lodash.min.js
 js/tinycolor-min.js
 socket.io/socket.io.js
+fonts/MaterialIcons-Regular.woff
+fonts/MaterialIcons-Regular.woff2
 fonts/fontawesome-webfont.woff
 fonts/fontawesome-webfont.woff2
 fonts/weather-icons-lite.woff
@@ -24,4 +26,4 @@ fonts/weather-icons-lite.woff2
 NETWORK:
 *
 
-# hash: 9fbb6e640a9d7400a17f06f6c062f24210cb81d1b8a9b7737c7d2f0a7ef5bec1
+# hash: d3b203b0341fae238af94ece4fa195d940487c62fa9f1f10ffb2a4ebfd3e2792

@@ -1,4 +1,8 @@
-### 2.19.1-beta: Maintenance Release
+### 2.20.0: Milestone Release
+
+**Enhancements**
+
+ - Self host Material Icons Font - PR #550
 
 **Fixes**
 
