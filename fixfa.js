@@ -23,6 +23,25 @@ fs.readFile("node_modules/font-awesome/css/font-awesome.css", 'utf8', function (
     }
 });
 
+// Google-Material-Font
+// Fix relative path of fonts from `./fonts/` to `../fonts/` in css file.
+fs.readFile('node_modules/material-design-icons-iconfont/dist/material-design-icons.css', 'utf8', function (err, file) {
+    if (err) { return; }
+    else {
+        console.log('Fixing up Google-Material-Font css');
+        const res1 = file
+            .replace(/"\.\/fonts\//g, '"../fonts/')
+            .replace(/'\.\/fonts\//g, '\'../fonts/');
+        fs.writeFile('node_modules/material-design-icons-iconfont/dist/material-design-icons.css', res1, 'utf8', function (err) {
+            if (err) {
+                console.log('Failed to re-write file.');
+            } else {
+                console.log('Fixed up Google-Material-Font css');
+            }
+        });
+    }
+});
+
 // Monkeypatch for justgage negative numbers...
 // fs.readFile("node_modules/justgage/justgage.js", 'utf8', function (err, file) {
 //     if (err) { return; }
