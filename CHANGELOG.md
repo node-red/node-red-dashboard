@@ -1,3 +1,9 @@
+### 2.19.2: Maintenance Release
+
+**Fixes**
+
+ - Revert dropping of angular material icons with animation. Issue #552
+
 ### 2.19.1: Maintenance Release
 
 **Enhancements**
