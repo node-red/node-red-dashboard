@@ -8,6 +8,7 @@
             "new-tab" : "新規タブ",
             "this-tab" : "このタブ",
             "iframe" : "iframe"
-        }
+        },
+        "tip" : "<b>アイコン</b>フィールドには <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material Design icon</a> <i>(例: 'check', 'close')</i>、<a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome icon</a> <i>(例: 'fa-fire')</i>、もしくは <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Weather icon</a> <i>(例: 'wi-wu-sunny')</i>を指定できます。</p>"
     }
 }
