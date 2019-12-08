@@ -16,6 +16,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
             if (typeof me.item.label === "string") {
                 me.item.getLabel = $interpolate(me.item.label).bind(null, me.item);
+                me.item.safeLabel = "nr-dashboard-widget-" + (me.item.label).replace(/\W/g,'_');
             }
 
             if (typeof me.item.tooltip === "string") {

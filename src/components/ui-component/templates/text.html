@@ -1,4 +1,9 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout="{{ me.item.layout }}" layout-align="{{ me.item.layoutAlign }}" class="nr-dashboard-text" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+<md-card 
+    ui-card-size="{{ me.item.width }}x{{ me.item.height }}" 
+    layout="{{ me.item.layout }}" 
+    layout-align="{{ me.item.layoutAlign }}" 
+    class="nr-dashboard-text" 
+    ng-class="[ me.item.safeLabel, {'nr-dashboard-disabled':me.item.disabled}]">
     <p class="label" ng-bind-html="me.item.getLabel()"></p>
-	<p class="value" ng-bind-html="me.item.getText()"></p>
+    <p class="value" ng-bind-html="me.item.getText()"></p>
 </md-card>
