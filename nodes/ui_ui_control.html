@@ -22,7 +22,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_ui_control">
+<script type="text/html" data-template-name="ui_ui_control">
     <div class="form-row">
         <label for="node-input-events"><i class="fa fa-sign-out"></i> Output</label>
         <select id="node-input-events" style="width:70%;">
@@ -37,7 +37,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_ui_control">
+<script type="text/html" data-help-name="ui_ui_control">
     <p>Allows dynamic control of the Dashboard.</p>
     <p>The default function is to change the currently displayed tab. <code>msg.payload</code>
     should either be an object of the form <code>{"tab":"my_tab_name"}</code>, or just be the <b>tab name</b>
@@ -46,7 +46,7 @@
     You can also send "+1" for next tab and "-1" for previous tab.</p>
     <p>Dashboard pages (i.e. "tabs") can be controlled by sending a <code>msg.payload</code> object with the format
     <pre>{"tabs": {"hide": "tab_name_to_hide", "disable": ["secret_tab", "unused_stuff"]}}</pre>.
-    <i>(there are 2 toggle states available: <b>show</b>/<b>hide</b> and <b>enable</b>/<b>disable</b>)</i></p>
+    There are 2 toggle states available: <b>show</b>/<b>hide</b> and <b>enable</b>/<b>disable</b></p>
     <p>Visibility of individual groups of widgets can controlled by a payload like
     <pre>{"group": {"hide": ["tab_name_group_name_with_underscores"], "show": ["reveal_another_group"], "focus": true}}</pre>
     where <b>focus</b> is optional and will cause the screen to scroll to show that group if required. The group

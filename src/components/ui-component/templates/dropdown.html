@@ -1,9 +1,29 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout="row" layout-align="space-between center" class="nr-dashboard-dropdown" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+<md-card 
+    ui-card-size="{{ me.item.width }}x{{ me.item.height }}" 
+    layout="row" 
+    layout-align="space-between center" 
+    class="nr-dashboard-dropdown" 
+    ng-class="{'nr-dashboard-disabled':me.item.disabled}">
 	<md-input-container flex layout="row">
-		<p class="label" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
-		<md-tooltip ng-if="me.item.getTooltip().length" md-delay="700" md-direction="bottom" ng-bind-html="me.item.getTooltip()"></md-tooltip>
-		<md-select ng-change="me.itemChanged()" ng-model="me.item.value" placeholder="{{ me.item.place }}" flex="100">
-			<md-option ng-value="opt.value" ng-repeat="opt in me.item.options">{{ opt.label }}</md-option>
+        <p  class="label" 
+            ng-if="me.item.label" 
+            ng-bind-html="me.item.getLabel()">
+        </p>
+        <md-tooltip 
+            ng-if="me.item.getTooltip().length" 
+            md-delay="700" 
+            md-direction="bottom" 
+            ng-bind-html="me.item.getTooltip()">
+        </md-tooltip>
+        <md-select 
+            ng-change="me.itemChanged()" 
+            ng-model="me.item.value" 
+            placeholder="{{ me.item.place }}" 
+            flex="100">
+            <md-option 
+                ng-value="opt.value" 
+                ng-repeat="opt in me.item.options">{{ opt.label }}
+            </md-option>
 		</md-select>
 	</md-input-container>
 </md-card>

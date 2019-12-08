@@ -1,13 +1,21 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" flex layout="row" layout-align="space-between center" class="nr-dashboard-date-picker" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+<md-card 
+    ui-card-size="{{ me.item.width }}x{{ me.item.height }}" 
+    flex 
+    layout="row" 
+    layout-align="space-between center" 
+    class="nr-dashboard-date-picker" 
+    ng-class="{'nr-dashboard-disabled':me.item.disabled}">
     <md-input-container flex layout="row">
-        <p class="nr-dashboard-date-picker-label" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
+        <p  class="nr-dashboard-date-picker-label" 
+            ng-if="me.item.label" 
+            ng-bind-html="me.item.getLabel()">
+        </p>
         <md-datepicker
             class="nr-dashboard-date-picker"
             md-placeholder="{{me.item.getLabel()}}"
             md-open-on-focus
             ng-model="me.item.ddd"
-            ng-change="me.setDate()"
-            >
+            ng-change="me.setDate()">
         </md-datepicker>
     </md-input-container>
 </md-card>

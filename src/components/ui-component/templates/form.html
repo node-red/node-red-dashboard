@@ -1,4 +1,8 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length)+(me.item.label? 2 : 1)) + me.item.extraRows }}" layout="row" layout-align="space-between center" class="nr-dashboard-form">
+<md-card 
+    ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length)+(me.item.label? 2 : 1)) + me.item.extraRows }}" 
+    layout="row" 
+    layout-align="space-between center" 
+    class="nr-dashboard-form">
   <form name ="form" ng-submit="me.submit(form)" style="margin-top: 10px">
        <p class="formlabel" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
        <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">

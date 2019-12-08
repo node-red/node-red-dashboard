@@ -1,8 +1,22 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout="row" layout-align="space-between center"
-        class="nr-dashboard-switch" ng-click="me.switchClick()" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
-        <p ng-if="me.item.label && (me.item.width !== 1)" class="label" ng-bind-html="me.item.getLabel()"></p>
-	<md-tooltip ng-if="me.item.getTooltip().length" md-delay="700" md-direction="bottom" ng-bind-html="me.item.getTooltip()"></md-tooltip>
-    <md-switch ng-model="me.item.value"
+<md-card 
+    ui-card-size="{{ me.item.width }}x{{ me.item.height }}" 
+    layout="row" 
+    layout-align="space-between center"
+    class="nr-dashboard-switch" 
+    ng-click="me.switchClick()" 
+    ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+    <p  ng-if="me.item.label && (me.item.width !== 1)" 
+        class="label" 
+        ng-bind-html="me.item.getLabel()">
+    </p>
+    <md-tooltip 
+        ng-if="me.item.getTooltip().length" 
+        md-delay="700" 
+        md-direction="bottom" 
+        ng-bind-html="me.item.getTooltip()">
+    </md-tooltip>
+    <md-switch 
+        ng-model="me.item.value"
         ng-change="me.item.value = !me.item.value"
         ng-swipe-right="$event.stopPropagation();"
         ng-swipe-left="$event.stopPropagation();"
@@ -11,7 +25,8 @@
         ng-if="!me.item.oncolor || !me.item.onicon || !me.item.offcolor || !me.item.officon"
         style="z-index:1">
 	</md-switch>
-	<ui-icon icon="{{me.item.value ? me.item.onicon : me.item.officon}}"
+    <ui-icon 
+        icon="{{me.item.value ? me.item.onicon : me.item.officon}}"
         ng-style="{color: me.item.value ?  me.item.oncolor : me.item.offcolor}"
         ng-class="{'center' : !me.item.label}"
         ng-if="me.item.oncolor && me.item.onicon && me.item.offcolor && me.item.officon"

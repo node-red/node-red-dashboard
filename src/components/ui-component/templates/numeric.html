@@ -1,8 +1,22 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" flex layout="row" layout-align="space-between center" class="nr-dashboard-numeric" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
-    <p class="label" ng-bind-html="me.item.getLabel()"></p>
-    <md-tooltip ng-if="me.item.getTooltip().length" md-delay="700" md-direction="bottom" ng-bind-html="me.item.getTooltip()"></md-tooltip>
+<md-card 
+    ui-card-size="{{ me.item.width }}x{{ me.item.height }}" 
+    flex 
+    layout="row" 
+    layout-align="space-between center" 
+    class="nr-dashboard-numeric" 
+    ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+    <p  class="label" 
+        ng-bind-html="me.item.getLabel()">
+    </p>
+    <md-tooltip 
+        ng-if="me.item.getTooltip().length" 
+        md-delay="700" 
+        md-direction="bottom" 
+        ng-bind-html="me.item.getTooltip()">
+    </md-tooltip>
     <div layout="row" layout-align="center center">
-        <md-button class="md-icon-button down-button"
+        <md-button 
+            class="md-icon-button down-button"
             aria-label="{{me.item.label}}"
             ng-mousedown="me.periodicChange(-me.item.step)"
             ng-mouseup="me.stopPeriodic()"
@@ -11,14 +25,19 @@
             <ui-icon icon="expand_more"></ui-icon>
         </md-button>
         <center>
-        <p ng-if="(me.item.ed === false)" class="value" style="min-width:{{me.item.minWidth}}px;" ng-bind-html="me.item.getText()"></p>
+        <p  ng-if="(me.item.ed === false)" 
+            class="value" 
+            style="min-width:{{me.item.minWidth}}px;" 
+            ng-bind-html="me.item.getText()">
+        </p>
         <span ng-if="(me.item.ed === true)">
             <span class="value" ng-bind-html="me.item.pre"></span>
             <input ng-model="me.item.value" ng-change="me.newValue()" class="value" style="max-width:{{me.item.minWidth}}px;">
             <span class="value" ng-bind-html="me.item.post"></span>
         </span>
         </center>
-        <md-button class="md-icon-button up-button"
+        <md-button 
+            class="md-icon-button up-button"
             aria-label="{{me.item.label}}"
             ng-mousedown="me.periodicChange(me.item.step)"
             ng-mouseup="me.stopPeriodic()"

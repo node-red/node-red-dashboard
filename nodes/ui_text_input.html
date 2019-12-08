@@ -40,7 +40,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_text_input">
+<script type="text/html" data-template-name="ui_text_input">
 	<div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -97,7 +97,7 @@
     <div class="form-tips">Setting <b>Delay</b> to 0 waits for Enter or Tab key, to send input.</span></div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_text_input">
+<script type="text/html" data-help-name="ui_text_input">
   <p>Adds a text input field to the user interface. Mode can be regular text, email or color picker.</p>
   <p>Any input is sent as <code>msg.payload</code>. If set to ‘pass through mode’ an arriving <code>msg.payload</code>
       will be used if it is different from the existing text in the input field. This allows you to preset
