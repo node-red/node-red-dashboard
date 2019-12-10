@@ -515,7 +515,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             if (msg.dialog === true) {
                 var confirm;
-                if (msg.message == "") { $mdDialog.hide(); return; }
+                if (msg.message == "") { $mdDialog.cancel(); return; }
                 if (msg.cancel) {
                     confirm = $mdDialog.confirm()
                         .title(msg.title)
