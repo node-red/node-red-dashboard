@@ -3,6 +3,8 @@
 **Fixes**
 
  - Revert dropping of angular material icons with animation. Issue #552
+ - Fix notification to send cancel instead of OK when dismissed by blank message.
+ - Fix Angular theme reverting to light in menu. Issue #554
 
 ### 2.19.1: Maintenance Release
 
