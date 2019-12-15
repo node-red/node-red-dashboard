@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* global angular */
 /* global d3 */
 

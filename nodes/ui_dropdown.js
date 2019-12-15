@@ -120,16 +120,20 @@ module.exports = function(RED) {
             },
 
             beforeSend: function (msg) {
+                var val = "";
+                for (var i=0; i<control.options.length; i++) {
+                    if (control.options[i].value === msg.payload) { val = control.options[i].label; }
+                }
                 if (msg._fromInput) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
                 }
                 msg.topic = config.topic || msg.topic;
                 if (node.pt) {
-                    node.status({shape:"dot",fill:"grey",text:msg.payload});
+                    node.status({shape:"dot",fill:"grey",text:val});
                 }
                 else {
-                    node.state[1] = msg.payload;
+                    node.state[1] = val;
                     node.status({shape:"dot",fill:"grey",text:node.state[1] + " | " + node.state[1]});
                 }
             }
