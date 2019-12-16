@@ -121,12 +121,12 @@ module.exports = function(RED) {
 
             beforeSend: function (msg) {
                 var val = "";
-                for (var i=0; i<control.options.length; i++) {
-                    if (control.options[i].value === msg.payload) { val = control.options[i].label; }
-                }
                 if (msg._fromInput) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
+                }
+                for (var i=0; i<control.options.length; i++) {
+                    if (control.options[i].value === msg.payload) { val = control.options[i].label; }
                 }
                 msg.topic = config.topic || msg.topic;
                 if (node.pt) {
