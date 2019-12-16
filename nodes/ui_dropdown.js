@@ -14,15 +14,15 @@ module.exports = function(RED) {
         if (!tab) { return; }
 
         var control = {
-                type: 'dropdown',
-                label: config.label,
-                tooltip: config.tooltip,
-                place: config.place || "Select option",
-                order: config.order,
-                value: config.payload || node.id,
-                width: config.width || group.config.width || 6,
-                height: config.height || 1
-            };
+            type: 'dropdown',
+            label: config.label,
+            tooltip: config.tooltip,
+            place: config.place || "Select option",
+            order: config.order,
+            value: config.payload || node.id,
+            width: config.width || group.config.width || 6,
+            height: config.height || 1
+        };
 
         for (var o=0; o<config.options.length; o++) {
             config.options[o].label = config.options[o].label || config.options[o].value;
