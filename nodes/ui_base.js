@@ -90,14 +90,28 @@ module.exports = function(RED) {
     RED.httpAdmin.get('/ui_base/js/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/js', req.params[0]);
         res.sendFile(filename, function (err) {
-            if (err) { node.warn(filename + " not found. Maybe running in dev mode."); }
+            if (err) { 
+                if (node) {
+                    node.warn(filename + " not found. Maybe running in dev mode."); 
+                }
+                else {
+                    console.log("ui_base - error:",err);
+                }
+            }
         });
     });
 
     RED.httpAdmin.get('/ui_base/css/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/css', req.params[0]);
         res.sendFile(filename, function (err) {
-            if (err) { node.warn(filename + " not found. Maybe running in dev mode."); }
+            if (err) { 
+                if (node) {
+                    node.warn(filename + " not found. Maybe running in dev mode."); 
+                }
+                else {
+                    console.log("ui_base - error:",err);
+                }
+            }
         });
     });
 };
