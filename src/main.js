@@ -516,7 +516,17 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (msg.dialog === true) {
                 var confirm;
                 if (msg.message == "") { $mdDialog.cancel(); return; }
-                if (msg.cancel) {
+                if (msg.cancel && msg.prompt) {
+                    confirm = $mdDialog.prompt()
+                        .title(msg.title)
+                        .htmlContent(msg.message)
+                        .initialValue("")
+                        .ariaLabel(msg.ok + " or " + msg.cancel)
+                        .ok(msg.ok)
+                        .cancel(msg.cancel);
+                    confirm._options.focusOnOpen = false;
+                }
+                else if (msg.cancel) {
                     confirm = $mdDialog.confirm()
                         .title(msg.title)
                         .htmlContent(msg.message)
@@ -546,8 +556,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     '</md-dialog-actions>' +
                 '</md-dialog>';
                 $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
-                    function() {
+                    function(res) {
+                        console.log("RES",typeof res,res,"::",msg.ok,"::");
                         msg.msg.payload = msg.ok;
+                        if (res != true) { msg.msg.payload = res; }
+                        if (res == undefined) { msg.msg.payload = ""; }
+                        console.log("MSG",msg);
                         events.emit({ id:msg.id, value:msg });
                     },
                     function() {
