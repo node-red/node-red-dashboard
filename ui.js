@@ -143,7 +143,7 @@ function add(opt) {
             var state = replayMessages[opt.node.id];
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.disabled = !msg.enabled;
-            io.emit(updateValueEventName, state);
+            io.emit(updateValueEventName, state); // dcj mu
         }
 
         // remove res and req as they are often circular
@@ -244,6 +244,7 @@ function add(opt) {
             addField("units");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
+            //toEmit.socketid = msg.socketid; // dcj mu
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             emitSocket(updateValueEventName, toEmit);
