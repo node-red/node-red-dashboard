@@ -111,6 +111,8 @@ options:
         If true, forwards input messages to the output
     [storeFrontEndInputAsState] - boolean (default true).
         If true, any message received from front-end is stored as state
+    [persistantFrontEndValue] - boolean (default true).
+        If true, last received message is send again when front end reconnect.
 
     [convert] - callback to convert the value before sending it to the front-end
     [beforeEmit] - callback to prepare the message that is emitted to the front-end
@@ -130,6 +132,9 @@ function add(opt) {
     }
     if (typeof opt.storeFrontEndInputAsState === 'undefined') {
         opt.storeFrontEndInputAsState = true;
+    }
+    if (typeof opt.persistantFrontEndValue  === 'undefined') {
+        opt.persistantFrontEndValue  = true;
     }
     opt.convert = opt.convert || noConvert;
     opt.beforeEmit = opt.beforeEmit || beforeEmit;
@@ -248,7 +253,9 @@ function add(opt) {
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             emitSocket(updateValueEventName, toEmit);
-            replayMessages[opt.node.id] = toStore;
+            if (opt.persistantFrontEndValue) {
+                replayMessages[opt.node.id] = toStore;
+            }
 
             // Handle the node output
             if (opt.forwardInputMessages && opt.node._wireCount) {
@@ -270,7 +277,9 @@ function add(opt) {
             var converted = opt.convertBack(msg.value);
             if (opt.storeFrontEndInputAsState === true) {
                 currentValues[msg.id] = converted;
-                replayMessages[msg.id] = msg;
+                if (opt.persistantFrontEndValue) {
+                    replayMessages[msg.id] = msg;
+                }
             }
             var toSend = {payload:converted};
             toSend = opt.beforeSend(toSend, msg) || toSend;
