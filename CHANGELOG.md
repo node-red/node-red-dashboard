@@ -1,3 +1,9 @@
+### 2.19.4-beta: Maintenance Release
+
+**Enhancements**
+
+ - add feedback option to dialog widget.
+
 ### 2.19.3: Maintenance Release
 
 **Enhancements**

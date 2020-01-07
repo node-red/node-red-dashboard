@@ -19,11 +19,19 @@
         align: "right",
         icon: "ui_toast.png",
         paletteLabel: 'notification',
-        label: function() { return this.name || (this.position==="dialog" ? "show dialog" : "show notification"); },
+        label: function() { return this.name || (this.position==="prompt" ? "show dialog" : (this.position==="dialog" ? "show dialog" : "show notification")); },
         labelStyle: function() { return this.name?"node_label_italic":""; },
         oneditprepare: function() {
             $("#node-input-position").on("change", function() {
                 if ($("#node-input-position option:selected").val() === 'dialog') {
+                    $("#node-toast-displaytime").hide();
+                    $("#node-toast-highlightcolor").hide();
+                    $("#node-toast-sendall").hide();
+                    $("#node-dialog-displayok").show();
+                    $("#node-dialog-displaycancel").show();
+                    $("#node-dialog-topic").show();
+                }
+                else if ($("#node-input-position option:selected").val() === 'prompt') {
                     $("#node-toast-displaytime").hide();
                     $("#node-toast-highlightcolor").hide();
                     $("#node-toast-sendall").hide();
@@ -43,6 +51,7 @@
         },
         oneditsave: function() {
             if ($("#node-input-position option:selected").val() === 'dialog') { this.outputs = 1; }
+            else if ($("#node-input-position option:selected").val() === 'prompt') { this.outputs = 1; }
             else { this.outputs = 0; }
         }
     });
@@ -57,6 +66,7 @@
             <option value="top left">Top Left</option>
             <option value="bottom left">Bottom Left</option>
             <option value="dialog">OK / Cancel Dialog</option>
+            <option value="prompt">OK / Cancel Dialog with Input</option>
         </select>
     </div>
     <div class="form-row" id="node-toast-displaytime">
@@ -80,7 +90,7 @@
         <input type="text" id="node-input-cancel" placeholder="(optional label for Cancel button)">
     </div>
     <div class="form-row" id="node-toast-raw">
-        <label style="width:auto" for="node-input-raw"><i class="fa fa-exclamation-triangle"></i> Accept raw HTML/JavaScript input. </label>
+        <label style="width:auto" for="node-input-raw"><i class="fa fa-exclamation-triangle"></i> Accept raw HTML/JavaScript input to format popup. </label>
         <input type="checkbox" id="node-input-raw" style="display:inline-block; width:auto; vertical-align:baseline;">
     </div>
     <div class="form-row" id="node-dialog-topic">
@@ -104,5 +114,7 @@
     <p>The dialog returns a <code>msg.payload</code> string of whatever you configure
     the button label(s) to be. The second (cancel) button is optional, as is the return
     value of <code>msg.topic</code>.</p>
+    <p>If you select 'OK, Cancel and Input' mode then <code>msg.payload</code> will contain
+    any text input by the user, rather than the OK button text.</p>
     <p>Sending a blank payload will remove any active dialog without sending any data.</p>
 </script>

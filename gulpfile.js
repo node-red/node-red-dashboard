@@ -137,7 +137,7 @@ function gridstack() {
     gulp.src('node_modules/gridstack/dist/gridstack.min.css').pipe(gulp.dest('dist/css/'));
     gulp.src('node_modules/gridstack/dist/gridstack.jQueryUI.min.js').pipe(gulp.dest('dist/js/'));
     gulp.src('node_modules/gridstack/dist/gridstack.min.js').pipe(gulp.dest('dist/js/'));
-    //gulp.src('node_modules/gridstack/dist/gridstack.min.map').pipe(gulp.dest('dist/js/'));
+    gulp.src('node_modules/gridstack/dist/gridstack.min.map').pipe(gulp.dest('dist/js/'));
     gulp.src('node_modules/lodash/lodash.min.js').pipe(gulp.dest('dist/js/'));
     return gulp.src('node_modules/gridstack/src/gridstack-extra.scss')
         .pipe(replace('$gridstack-columns: 12 !default;','$gridstack-columns: 30;'))
