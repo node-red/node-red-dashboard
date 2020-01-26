@@ -133,8 +133,8 @@ function add(opt) {
     if (typeof opt.storeFrontEndInputAsState === 'undefined') {
         opt.storeFrontEndInputAsState = true;
     }
-    if (typeof opt.persistantFrontEndValue  === 'undefined') {
-        opt.persistantFrontEndValue  = true;
+    if (typeof opt.persistantFrontEndValue === 'undefined') {
+        opt.persistantFrontEndValue = true;
     }
     opt.convert = opt.convert || noConvert;
     opt.beforeEmit = opt.beforeEmit || beforeEmit;

@@ -2,7 +2,13 @@
 
 **Enhancements**
 
- - add feedback option to dialog widget.
+ - Add feedback option to dialog widget.
+ - Add persistantFrontEndValue property to addWidget options so it possbile to avoid replay message to be sent when front end reconnect. PR #558
+
+ **Fixes**
+
+ - Re-add gridstack min map to reduces warnings
+ - Added crossorigin attribute to manifest link. PR #560
 
 ### 2.19.3: Maintenance Release
 

@@ -98,7 +98,7 @@ function addWidget(RED, options) {
         ui_options.storeFrontEndInputAsState = options.storeFrontEndInputAsState;
     }
     if (options.hasOwnProperty("persistantFrontEndValue")) {
-        ui_options.persistantFrontEndValue  = options.persistantFrontEndValue;
+        ui_options.persistantFrontEndValue = options.persistantFrontEndValue;
     }
     if (options.hasOwnProperty("convert")) {
         ui_options.convert = options.convert;
