@@ -1,4 +1,4 @@
-### 2.19.4-beta: Maintenance Release
+### 2.19.4: Maintenance Release
 
 **Enhancements**
 
