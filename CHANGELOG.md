@@ -1,9 +1,15 @@
+### 2.19.5-beta: Maintenance Release
+
+ **Fixes**
+
+ - Add placeholder to form date type to give a clue that yyyy-mm-dd works for Safari.
+ 
 ### 2.19.4: Maintenance Release
 
 **Enhancements**
 
  - Add feedback option to dialog widget.
- - Add persistantFrontEndValue property to addWidget options so it possbile to avoid replay message to be sent when front end reconnect. PR #558
+ - Add persistantFrontEndValue property to addWidget options so it possible to avoid replay message to be sent when front end reconnect. PR #558
 
  **Fixes**
 
