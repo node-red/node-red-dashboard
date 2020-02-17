@@ -46,7 +46,7 @@ module.exports = function(RED) {
                 msg.topic = config.topic || msg.topic;
             },
             convert: function(p,o,m) {
-                if (m.payload === undefined) { return; }
+                if (m.payload === undefined || m.payload === null) { return; }
                 var colour = tc(m.payload);
                 return colour.toString(config.format);
             }

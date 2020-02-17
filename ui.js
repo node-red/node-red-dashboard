@@ -182,7 +182,7 @@ function add(opt) {
         // If the update flag is set, emit the newPoint, and store the full dataset
         var fullDataset;
         var newPoint;
-        if ((typeof(conversion) === 'object') && (conversion.update !== undefined)) {
+        if ((typeof(conversion) === 'object') && (conversion !== null) && (conversion.update !== undefined)) {
             newPoint = conversion.newPoint;
             fullDataset = conversion.updatedValues;
         }

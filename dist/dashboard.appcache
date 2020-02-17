@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Tue Feb 11 2020 12:19:59 GMT-0500 (Eastern Standard Time)
+# Time: Mon Feb 17 2020 12:51:32 GMT+0000 (Greenwich Mean Time)
 
 CACHE:
 i18n.js
@@ -27,4 +27,4 @@ fonts/weather-icons-lite.woff2
 NETWORK:
 *
 
-# hash: ced26d6c32606b26fbc69cfe504d435b9172a1227d925761832c0203cb3d7ebb
+# hash: 8267a71b852fd7cdb6581bdb7be052b16e362b71220bcaa75c0337f2576fe774
