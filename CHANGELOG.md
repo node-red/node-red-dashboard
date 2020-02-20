@@ -1,5 +1,9 @@
 ### 2.19.5-beta: Maintenance Release
 
+**Enhancements**
+
+ - Add open and close options for groups to ui_control.
+
  **Fixes**
 
  - Add placeholder to form date type to give a clue that yyyy-mm-dd works for Safari.

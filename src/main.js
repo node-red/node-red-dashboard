@@ -680,6 +680,20 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                                             localStorage.setItem("g"+c,true);
                                         }
                                     }
+                                    if (msg.group.hasOwnProperty("close")) {
+                                        if (msg.group.close.indexOf(c) > -1) {
+                                            if (typeof localStorage !== 'undefined' && localStorage.getItem(c) == "false") {
+                                                $("#"+c+" > div > p > span > i").trigger("click");
+                                            }
+                                        }
+                                    }
+                                    if (msg.group.hasOwnProperty("open")) {
+                                        if (msg.group.open.indexOf(c) > -1) {
+                                            if (typeof localStorage !== 'undefined' && localStorage.getItem(c) == "true") {
+                                                $("#"+c+" > div > p > span > i").trigger("click");
+                                            }
+                                        }
+                                    }
                                     $(window).trigger('resize');
                                 }
                             }

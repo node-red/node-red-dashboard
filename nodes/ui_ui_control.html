@@ -49,7 +49,8 @@
     There are 2 toggle states available: <b>show</b>/<b>hide</b> and <b>enable</b>/<b>disable</b></p>
     <p>Visibility of individual groups of widgets can controlled by a payload like
     <pre>{"group": {"hide": ["tab_name_group_name_with_underscores"], "show": ["reveal_another_group"], "focus": true}}</pre>
-    where <b>focus</b> is optional and will cause the screen to scroll to show that group if required. The group
+    where <b>focus</b> is optional and will cause the screen to scroll to show that group if required. 
+    You can also use properties `open` and `close` to set the state of a group that can be controlled by the user. The group
     names are the IDs of the groups and are typically formed from the <i>tab name</i> plus <i>group name</i> joined with
     underscores replacing all spaces.</p>
     <p>When any browser client connects or loses connection, or changes tab, this node will emit a <code>msg</code> containing:</p>
