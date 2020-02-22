@@ -258,10 +258,11 @@ function loadConfiguration(type,scope) {
         }
         switch (interpolate) {
             case 'cubic': {
-                config.options.elements.line.cubicInterpolationMode = "default";                break;
+                config.options.elements.line.cubicInterpolationMode = "default";
+                break;
             }
             case 'monotone': {
-                config.options.elements.line.cubicInterpolationMode = "monotone"; 
+                config.options.elements.line.cubicInterpolationMode = "monotone";
                 break;
             }
             case 'linear': {
