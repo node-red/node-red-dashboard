@@ -3,6 +3,7 @@
 **Enhancements**
 
  - Add open and close options for groups to ui_control.
+ - Add cubic and cubic-monotone to chart interpolation options.
 
  **Fixes**
 

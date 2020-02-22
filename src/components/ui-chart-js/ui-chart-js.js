@@ -257,6 +257,13 @@ function loadConfiguration(type,scope) {
                 hoverRadius: 4 }
         }
         switch (interpolate) {
+            case 'cubic': {
+                config.options.elements.line.cubicInterpolationMode = "default";                break;
+            }
+            case 'monotone': {
+                config.options.elements.line.cubicInterpolationMode = "monotone"; 
+                break;
+            }
             case 'linear': {
                 config.options.elements.line.tension = 0;
                 break;
