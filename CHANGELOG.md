@@ -2,12 +2,13 @@
 
 **Enhancements**
 
- - Add open and close options for groups to ui_control.
+ - Add open and close options for groups to ui_control node.
  - Add cubic and cubic-monotone to chart interpolation options.
+ - Allow ui_control msg to widgets also set .label property
 
  **Fixes**
 
- - Add placeholder to form date type to give a clue that yyyy-mm-dd works for Safari.
+ - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
  
 ### 2.19.4: Maintenance Release
 
