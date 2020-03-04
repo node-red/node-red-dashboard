@@ -143,6 +143,14 @@ for futher details.
 **Tip:** The *Text* widget will accept html - so you can use it together with the *fa-icons* we
 already use to create indicator type widgets.
 
+## Loading the Dashboard
+
+Due to the size of the dashboard libraries it can take a long time to load if you are running on wireless network. It is possible add a custom loading page if you wish. To do so add a file called `loading.html` to the `node_modules/node-red-dashboard/dist/` folder. A simple example could be
+
+```
+ <div><i class="fa fa-spin fa-5x fa-spinner"></i></div>
+ ```
+
 ## Securing the Dashboard
 
 You can use the `httpNodeAuth` property in your Node-RED settings.js file to secure the Dashboard as it is
