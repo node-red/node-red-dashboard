@@ -68,12 +68,12 @@
     ng-swipe-right="onSwipeRight();"
     ng-swipe-left="onSwipeLeft();">
 <md-content ng-if="main.loaded" ng-include="'partials/main.html'" layout="column" flex></md-content>
+<div ng-if="!main.loaded && !main.nothing" ng-include="'loading.html'" class="node-red-ui--loading"></div>
 <div ng-if="main.nothing" class="node-red-ui--notabs">
     <table><tr><td><center><img src="icon120x120.png"/></center></td></tr>
     <tr><td><center><h2>Welcome to the Node-RED Dashboard</h2></center></td></tr>
     <tr><td><center>Please add some UI nodes to your flow and redeploy.</center></td></tr></table>
 </div>
-<!-- <i class="fa fa-spinner fa-spin fa-4x fa-fw"></i> -->
 <script src="socket.io/socket.io.js"></script>
 <!-- build:js -->
 <script src="vendor/jquery/dist/jquery.min.js"></script>
