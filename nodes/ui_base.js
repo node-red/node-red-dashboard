@@ -1,6 +1,7 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
     var path= require('path');
+    var gsp = require.resolve('gridstack');
     var node;
     var set = RED.settings.ui || "{}";
 
@@ -89,6 +90,19 @@ module.exports = function(RED) {
 
     RED.httpAdmin.get('/ui_base/js/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/js', req.params[0]);
+        res.sendFile(filename, function (err) {
+            if (err) {
+                if (node) {
+                    node.warn(filename + " not found. Maybe running in dev mode.");
+                }
+                else {
+                    console.log("ui_base - error:",err);
+                }
+            }
+        });
+    });
+    RED.httpAdmin.get('/ui_base/gs/*', function(req, res) {
+        var filename = path.join(path.dirname(gsp), req.params[0]);
         res.sendFile(filename, function (err) {
             if (err) {
                 if (node) {

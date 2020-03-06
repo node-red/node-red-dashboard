@@ -226,7 +226,7 @@
 
 
 <!-- Dashboard layout tool -->
-<link rel="stylesheet" href="./ui_base/css/gridstack.min.css">
+<link rel="stylesheet" href="./ui_base/gs/gridstack.min.css">
 <link rel="stylesheet" href="./ui_base/css/gridstack-extra.min.css">
 <style>
 .grid-stack {
@@ -381,8 +381,8 @@
     };
 
     loadGsLib('ui_base/js/lodash.min.js', function() {
-        loadGsLib('ui_base/js/gridstack.min.js', function() {
-            loadGsLib('ui_base/js/gridstack.jQueryUI.min.js', null)
+        loadGsLib('ui_base/gs/gridstack.min.js', function() {
+            loadGsLib('ui_base/gs/gridstack.jQueryUI.min.js', null)
         });
     });
 
@@ -918,7 +918,6 @@
         var height = getDefaultHeight(nodeID, width);
         grid.move(el, 0, node.y);
         grid.resize(el, width, height);
-
         grid.resizable(el, false);
         el.find('.nr-dashboard-layout-resize-disable').off('click');
         el.attr({'data-noderedsizeauto':'true'});
@@ -945,25 +944,27 @@
     // Check dashboard layout tool supported
     //////////////////////////////////////////
     function isLayoutToolSupported(nodeType){
-        if (nodeType !== "ui_spacer" &&
-            nodeType !== "ui_button" &&
-            nodeType !== "ui_dropdown" &&
-            nodeType !== "ui_switch" &&
-            nodeType !== "ui_slider" &&
-            nodeType !== "ui_numeric" &&
-            nodeType !== "ui_text_input" &&
-            nodeType !== "ui_date_picker" &&
-            nodeType !== "ui_colour_picker" &&
-            nodeType !== "ui_form" &&
-            nodeType !== "ui_text" &&
-            nodeType !== "ui_gauge" &&
-            nodeType !== "ui_chart" &&
-            nodeType !== "ui_template" &&
-            nodeType !== "ui_list" &&
-            nodeType !== "ui_table" &&
-            nodeType !== "ui_lineargauge" &&
-            nodeType !== "ui_my-little-ui-node" &&
-            nodeType !== "ui_vega") {
+        // if (nodeType !== "ui_spacer" &&
+        //     nodeType !== "ui_button" &&
+        //     nodeType !== "ui_dropdown" &&
+        //     nodeType !== "ui_switch" &&
+        //     nodeType !== "ui_slider" &&
+        //     nodeType !== "ui_numeric" &&
+        //     nodeType !== "ui_text_input" &&
+        //     nodeType !== "ui_date_picker" &&
+        //     nodeType !== "ui_colour_picker" &&
+        //     nodeType !== "ui_form" &&
+        //     nodeType !== "ui_text" &&
+        //     nodeType !== "ui_gauge" &&
+        //     nodeType !== "ui_chart" &&
+        //     nodeType !== "ui_template" &&
+        //     nodeType !== "ui_list" &&
+        //     nodeType !== "ui_table" &&
+        //     nodeType !== "ui_lineargauge" &&
+        //     nodeType !== "ui_my-little-ui-node" &&
+        //     nodeType !== "ui_artlessgauge" &&
+        //     nodeType !== "ui_vega") {
+        if (nodeType.indexOf("ui_") !== 0) {
             return false;
         } else {
             return true;
@@ -2095,7 +2096,7 @@
                                         // gridstack generation
                                         $(gridID).gridstack(options);
 
-                                        // Clear the contents of Grind
+                                        // Clear the contents of Grid
                                         var grid = $(gridID+'.grid-stack').data('gridstack');
                                         grid.removeAll();
 

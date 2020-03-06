@@ -19,7 +19,7 @@
  * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.20
+ * v1.1.21
  */
 
 body,
@@ -479,7 +479,7 @@ md-autocomplete md-autocomplete-wrap.md-menu-showing {
 
 md-autocomplete md-autocomplete-wrap input,
 md-autocomplete md-autocomplete-wrap md-input-container {
-  flex: 1 1 0%;
+  flex: 1 1 0;
   box-sizing: border-box;
   min-width: 0;
 }
@@ -624,7 +624,7 @@ md-autocomplete .md-show-clear-button button.ng-leave.ng-leave-active {
     border: 1px solid #fff;
   }
 
-  md-autocomplete li:focus {
+  md-autocomplete .md-autocomplete-suggestion:focus {
     color: #fff;
   }
 }
@@ -662,7 +662,7 @@ md-autocomplete .md-show-clear-button button.ng-leave.ng-leave-active {
   padding: 0;
 }
 
-.md-autocomplete-suggestions li {
+.md-autocomplete-suggestions .md-autocomplete-suggestion {
   font-size: 14px;
   overflow: hidden;
   padding: 0 15px;
@@ -674,11 +674,11 @@ md-autocomplete .md-show-clear-button button.ng-leave.ng-leave-active {
   text-overflow: ellipsis;
 }
 
-.md-autocomplete-suggestions li:focus {
+.md-autocomplete-suggestions .md-autocomplete-suggestion:focus {
   outline: none;
 }
 
-.md-autocomplete-suggestions li:not(.md-not-found-wrapper) {
+.md-autocomplete-suggestions .md-autocomplete-suggestion:not(.md-not-found-wrapper) {
   cursor: pointer;
 }
 
