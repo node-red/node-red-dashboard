@@ -380,10 +380,8 @@
         });
     };
 
-    loadGsLib('ui_base/js/lodash.min.js', function() {
-        loadGsLib('ui_base/gs/gridstack.min.js', function() {
-            loadGsLib('ui_base/gs/gridstack.jQueryUI.min.js', null)
-        });
+    loadGsLib('ui_base/gs/gridstack.min.js', function() {
+        loadGsLib('ui_base/gs/gridstack.jQueryUI.min.js', null)
     });
 
     var tabDatas; // Layout editing tab data
@@ -589,10 +587,11 @@
         for (var cnt = 0; cnt < groups.length; cnt++) {
             // Get layout editing results
             var gridID = '#grid'+cnt;
-            var serializedData = _.map($(gridID+'.grid-stack > .grid-stack-item:visible'), function (el) {
-                el = $(el);
+            var serializedData = [];
+            $(gridID+'.grid-stack > .grid-stack-item:visible').each( function (index) {
+                el = $(this);
                 var node = el.data('_gridstack_node');
-                return {
+                serializedData.push({
                     id: el[0].dataset.noderedid,
                     type: el[0].dataset.noderedtype,
                     group: groups[cnt].id,
@@ -601,8 +600,8 @@
                     x: node.x,
                     y: node.y,
                     auto: (el[0].dataset.noderedsizeauto == 'true') ? true : false
-                };
-            }, this);
+                });
+            });
 
             var width = Number(groups[cnt].width);
             var height = 0;
@@ -736,15 +735,16 @@
             max: MAX_GROUP_WIDTH,
             spin: function(event, ui){
                 // Search current maximum width
-                serializedData = _.map($(gridID+'.grid-stack > .grid-stack-item:visible'), function (el) {
-                    el = $(el);
+                var serializedData = [];
+                $(gridID+'.grid-stack > .grid-stack-item:visible').each( function (index) {
+                    el = $(this);
                     var node = el.data('_gridstack_node');
-                    return {
+                    serializedData.push({
                         width: Number(node.width),
                         x: node.x,
                         auto: (el[0].dataset.noderedsizeauto == 'true') ? true : false
-                    };
-                }, this);
+                    });
+                });
                 var maxWidth = 0;
                 for (var i=0; i < serializedData.length; i++){
                     var wd = serializedData[i];
@@ -2132,7 +2132,7 @@
                                         }
 
                                         var items = GridStackUI.Utils.sort(widgets);
-                                        _.each(items, function (node) {
+                                        items.forEach(function (node) {
                                             var minHeight = null;
                                             var maxHeight = null;
                                             // ui_form is fixed to height 2

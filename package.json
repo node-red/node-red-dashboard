@@ -119,7 +119,6 @@
         "jshint": "^2.11.0",
         "justgage": "~1.3.5",
         "less": "~3.9.0",
-        "lodash": "^4.17.15",
         "material-design-icons-iconfont": "^5.0.1",
         "moment": "~2.24.0",
         "sprintf-js": "^1.1.2",

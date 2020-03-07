@@ -156,7 +156,9 @@ function manifest() {
             // exclude: 'dashboard.appcache'
             exclude: ['dashboard.appcache','index.html']
         }))
+        // Manually add gridstack items
         .pipe(replace('js/app.min.js', 'gs/gridstack.jQueryUI.min.js\ngs/gridstack.min.css\ngs/gridstack.min.js\njs/app.min.js'))
+        // Manually add socketio
         .pipe(replace('tinycolor-min.js', 'tinycolor-min.js\nsocket.io/socket.io.js'))
         .pipe(eol('\n'))
         .pipe(gulp.dest('dist/'));

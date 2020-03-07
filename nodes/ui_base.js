@@ -101,6 +101,7 @@ module.exports = function(RED) {
             }
         });
     });
+
     RED.httpAdmin.get('/ui_base/gs/*', function(req, res) {
         var filename = path.join(path.dirname(gsp), req.params[0]);
         res.sendFile(filename, function (err) {

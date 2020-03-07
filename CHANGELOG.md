@@ -10,6 +10,7 @@
  **Fixes**
 
  - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
+ - Make Gridstack a normal dep so they can count installs. Bump to v0.5.5
  
 ### 2.19.4: Maintenance Release
 
