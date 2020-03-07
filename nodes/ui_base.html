@@ -762,8 +762,8 @@
                 var grid = $(gridID+'.grid-stack').data('gridstack');
                 $(gridID+'.grid-stack').css("width", width * 40);
                 $(gridID+'.grid-stack').css("background-size", 100/width+"% 47px");
-                grid.setGridWidth(tabDatas.groups[id].width, true);
-                grid.setGridWidth(width, true);
+                grid.setColumn(tabDatas.groups[id].width, true);
+                grid.setColumn(width, true);
                 tabDatas.groups[id].width = width;
 
                 $(gridID+'.grid-stack > .grid-stack-item:visible').each( function(idx, el) {
@@ -807,7 +807,7 @@
                 var groupWidth = tabDatas.groups[id].width;
 
                 // Reset group width before moving (Grid stack measures)
-                toGrid.setGridWidth(groupWidth, true);
+                toGrid.setColumn(groupWidth, true);
 
                 // Current widget width factor for x position
                 var curWidth = ($('#grid1').offset().left - $('#grid0').offset().left) * 0.9;
@@ -886,7 +886,7 @@
         var grid = $(gridID+'.grid-stack').data('gridstack');
         $(gridID+'.grid-stack').on('resizestart', function(event, ui) {
             // Reset group width
-            grid.setGridWidth(tabDatas.groups[id].width, true);
+            grid.setColumn(tabDatas.groups[id].width, true);
         });
     }
 
@@ -898,7 +898,7 @@
         var grid = $(gridID+'.grid-stack').data('gridstack');
         $(gridID+'.grid-stack').on('dragstart', function(event, ui) {
             // Reset group width
-            grid.setGridWidth(tabDatas.groups[id].width, true);
+            grid.setColumn(tabDatas.groups[id].width, true);
         });
     }
 
@@ -2104,7 +2104,7 @@
                                         var groupWidth = Number(groups[cnt].width);
                                         $(gridID+'.grid-stack').css("width", groupWidth * 40);
                                         $(gridID+'.grid-stack').css("background-size", 100/groupWidth+"% 47px");
-                                        grid.setGridWidth(groupWidth, true);
+                                        grid.setColumn(groupWidth, true);
 
                                         // Determination of placement position of widget of Grid
                                         var widgets = groups[cnt].widgets;
