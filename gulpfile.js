@@ -156,6 +156,8 @@ function manifest() {
             // exclude: 'dashboard.appcache'
             exclude: ['dashboard.appcache','index.html']
         }))
+        // Manually add loading.html (in case it exists)
+        .pipe(replace('icon64x64.png', 'icon64x64.png\nloading.html'))
         // Manually add gridstack items
         .pipe(replace('js/app.min.js', 'gs/gridstack.jQueryUI.min.js\ngs/gridstack.min.css\ngs/gridstack.min.js\njs/app.min.js'))
         // Manually add socketio
