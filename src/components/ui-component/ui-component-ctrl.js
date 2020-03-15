@@ -35,8 +35,22 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
             me.init = function () {
                 switch (me.item.type) {
                     case 'button': {
-                        me.buttonClick = function () {
-                            me.valueChanged(0);
+                        me.buttonClick = function (e) {
+                            throttle({
+                                id:me.item.id,
+                                value:me.item.value,
+                                event: {
+                                    clientX:e.originalEvent.clientX,
+                                    clientY:e.originalEvent.clientY,
+                                    bbox:[
+                                        e.originalEvent.clientX - e.originalEvent.offsetX,
+                                        e.originalEvent.clientY - e.originalEvent.offsetY + e.currentTarget.clientHeight,
+                                        e.originalEvent.clientX - e.originalEvent.offsetX + e.currentTarget.clientWidth,
+                                        e.originalEvent.clientY - e.originalEvent.offsetY
+                                    ]
+                                }
+                            },0);
+                            //me.valueChanged(0);
                         };
                         break;
                     }

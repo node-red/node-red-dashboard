@@ -50,8 +50,9 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 3,
                 height: config.height || 1
             },
-            beforeSend: function (msg) {
+            beforeSend: function (msg,m2) {
                 msg.topic = config.topic || msg.topic;
+                if (m2 !== undefined) { msg.event = m2.event; }
             },
             convertBack: function (value) {
                 if (payloadType === "date") {

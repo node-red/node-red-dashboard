@@ -1,11 +1,12 @@
 CACHE MANIFEST
-# Time: Sat Mar 07 2020 10:33:00 GMT+0000 (Greenwich Mean Time)
+# Time: Sun Mar 15 2020 16:57:43 GMT+0000 (Greenwich Mean Time)
 
 CACHE:
 i18n.js
 icon120x120.png
 icon192x192.png
 icon64x64.png
+loading.html
 css/app.min.css
 css/app.min.less
 css/gridstack-extra.min.css
@@ -26,4 +27,4 @@ fonts/weather-icons-lite.woff2
 NETWORK:
 *
 
-# hash: 0f11a2d51645bf781023d896540adaa066c3338bcfd76a6405ecf8f43fcfbc9c
+# hash: 635710b94dc751ec2fbb5f421653debe8857c91bae01a38a32a8367e751b91e8

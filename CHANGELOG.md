@@ -4,8 +4,9 @@
 
  - Add open and close options for groups to ui_control node.
  - Add cubic and cubic-monotone to chart interpolation options.
- - Allow ui_control msg to widgets also set .label property
- - Add option to try to load dist/loading,html for those that want it
+ - Allow ui_control msg to widgets also set .label property.
+ - Add option to try to load dist/loading,html for those that want it.
+ - Add msg.event for button clicks.
 
  **Fixes**
 

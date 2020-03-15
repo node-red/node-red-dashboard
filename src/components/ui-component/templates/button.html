@@ -4,7 +4,7 @@
     ng-class="{'nr-dashboard-disabled':me.item.disabled}">
     <md-button 
         class="md-raised"
-        ng-click="me.buttonClick()"
+        ng-click="me.buttonClick($event)"
         aria-label="{{'button' + me.item.label}}"
         ng-style="{'background-color':me.item.getText(), 'color':me.item.getColor(), 'z-index':1, 'padding':'0px'}">
         <ui-icon 
