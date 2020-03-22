@@ -30,6 +30,7 @@ module.exports = function(RED) {
         control.options = config.options;
 
         var emitOptions;
+        var savedtopic;
 
         var done = ui.add({
             node: node,
@@ -103,7 +104,7 @@ module.exports = function(RED) {
                         node.error("ERR: Invalid Options", msg);
                     }
                 }
-
+                if (msg.hasOwnProperty("topic")) { savedtopic = msg.topic; }
                 if (msg.hasOwnProperty("payload")) {
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
@@ -128,7 +129,7 @@ module.exports = function(RED) {
                 for (var i=0; i<control.options.length; i++) {
                     if (control.options[i].value === msg.payload) { val = control.options[i].label; }
                 }
-                msg.topic = config.topic || msg.topic;
+                msg.topic = config.topic || msg.topic || savedtopic;
                 if (node.pt) {
                     node.status({shape:"dot",fill:"grey",text:val});
                 }

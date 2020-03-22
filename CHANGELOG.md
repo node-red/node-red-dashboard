@@ -7,11 +7,12 @@
  - Allow ui_control msg to widgets also set .label property.
  - Add option to try to load dist/loading,html for those that want it.
  - Add msg.event for button clicks.
+ - Make Gridstack a normal dep so they can count installs. Bump to v0.5.5
 
  **Fixes**
 
  - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
- - Make Gridstack a normal dep so they can count installs. Bump to v0.5.5
+ - Fix dropdown to save topic fro input for subsequent selections. Issue #570
  
 ### 2.19.4: Maintenance Release
 
