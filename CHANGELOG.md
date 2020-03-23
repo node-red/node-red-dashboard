@@ -13,6 +13,7 @@
 
  - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
  - Fix dropdown to save topic fro input for subsequent selections. Issue #570
+ - Fix colour picker to show appropriate controls by default. Issue #572.
  
 ### 2.19.4: Maintenance Release
 

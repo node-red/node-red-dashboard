@@ -42,6 +42,16 @@
                 this.square = "false";
                 $("#node-input-square").val("false");
             }
+            $("#node-input-square").on("change", function() {
+                if ($("#node-input-square").val() === "false") {
+                    $("#node-input-showLightness").prop('checked', true);
+                    $("#node-input-showHue").prop('checked', false);
+                }
+                else {
+                    $("#node-input-showLightness").prop('checked', false);
+                    $("#node-input-showHue").prop('checked', true);
+                }
+            });
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
