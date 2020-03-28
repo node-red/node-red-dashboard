@@ -43,10 +43,10 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                                     clientX:e.originalEvent.clientX,
                                     clientY:e.originalEvent.clientY,
                                     bbox:[
-                                        e.originalEvent.clientX - e.originalEvent.offsetX,
-                                        e.originalEvent.clientY - e.originalEvent.offsetY + e.currentTarget.clientHeight,
-                                        e.originalEvent.clientX - e.originalEvent.offsetX + e.currentTarget.clientWidth,
-                                        e.originalEvent.clientY - e.originalEvent.offsetY
+                                        e.originalEvent.clientX - e.originalEvent.layerX,
+                                        e.originalEvent.clientY - e.originalEvent.layerY + e.currentTarget.clientHeight,
+                                        e.originalEvent.clientX - e.originalEvent.layerX + e.currentTarget.clientWidth,
+                                        e.originalEvent.clientY - e.originalEvent.layerY
                                     ]
                                 }
                             },0);
