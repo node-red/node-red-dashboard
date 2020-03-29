@@ -314,6 +314,18 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     }
 
                     case 'slider': {
+                        me.wheel = function (e) {
+                            e.preventDefault();
+                            if (e.originalEvent.deltaY > 0) {
+                                me.item.value += me.item.step;
+                                if (me.item.value > me.item.max) { me.item.value = me.item.max; }
+                            }
+                            if (e.originalEvent.deltaY < 0) {
+                                me.item.value -= me.item.step;
+                                if (me.item.value < me.item.min) { me.item.value = me.item.min; }
+                            }
+                            me.valueChanged(0);
+                        }
                         me.active = false;
                         me.mdown = function() { me.active = true; };
                         me.mleave = function() { me.active = false; };

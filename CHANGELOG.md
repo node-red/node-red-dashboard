@@ -8,6 +8,7 @@
  - Add option to try to load dist/loading,html for those that want it.
  - Add msg.event for button clicks.
  - Make Gridstack a normal dep so they can count installs. Bump to v0.5.5
+ - Let mousewheel change slider. Issue #575.
 
  **Fixes**
 
