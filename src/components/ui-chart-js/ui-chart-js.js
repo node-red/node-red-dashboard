@@ -153,6 +153,7 @@ function loadConfiguration(type,scope) {
     var config = scope.config || {};
     var themeState = scope.$eval('me.item.theme.themeState');
     var useOneColor = scope.$eval('me.item.useOneColor');
+    var useUTC = scope.$eval('me.item.useUTC') || false;
     if (!scope.config) {
         config.data = [];
         config.series = [];
@@ -211,7 +212,12 @@ function loadConfiguration(type,scope) {
                     'quarter': xFormat,
                     'year': xFormat
                 }
-            };
+            }
+        }
+        if (useUTC === true) { 
+            config.options.scales.xAxes[0].time.parser = function (m) {
+                return moment.utc(m); 
+            }
         }
 
         config.options.tooltips = {
@@ -231,9 +237,11 @@ function loadConfiguration(type,scope) {
                             largest = tooltip[i].xLabel;
                         }
                     }
-                    if (xFormat !== "auto") { return moment(largest).format(xFormat); }
+                    var mo = moment(largest);
+                    if (useUTC === true) { mo = moment.utc(largest); }
+                    if (xFormat !== "auto") { return mo.format(xFormat); }
                     else {
-                        return moment(largest).calendar(null, {
+                        return mo.calendar(null, {
                             sameDay: 'HH:mm:ss',
                             nextDay: 'HH:mm',
                             lastDay: 'HH:mm',

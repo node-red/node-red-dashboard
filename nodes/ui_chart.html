@@ -38,6 +38,7 @@
             removeOlderUnit: {value: '3600', required:true},
             cutout: {value: 0},
             useOneColor: {value: false},
+            useUTC: {value: false},
             colors: {value: ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5']},
             useOldStyle: {value: false},
             outputs: {value: 1}
@@ -215,6 +216,7 @@
     <div class="form-row" id="x-axis-label-show">
         <label for="node-input-xformat">X-axis Label</label>
         <input type="text" id="node-input-xformat" style="width:268px;">
+        <input type="checkbox" id="node-input-useUTC" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:8px; margin-right:4px;"> as UTC
     </div>
     <div class="form-row" id="y-axis-show">
         <label id="y-label-show" for="node-input-ymin">Y-axis</label>
@@ -266,9 +268,9 @@
         <label for="node-input-nodata">Blank label</label>
         <input type="text" id="node-input-nodata" placeholder="display this text before valid data arrives">
     </div>
-    <div class="form-row">
+    <!-- <div class="form-row">
         <input type="checkbox" id="node-input-useOldStyle" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:105px; margin-right:5px;">Use deprecated (pre 2.5.0) data format.
-    </div>
+    </div> -->
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">

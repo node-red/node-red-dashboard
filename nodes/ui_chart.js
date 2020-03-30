@@ -39,6 +39,7 @@ module.exports = function(RED) {
                 cutout: parseInt(config.cutout || 0),
                 colors: config.colors,
                 useOneColor: config.useOneColor || false,
+                useUTC: config.useUTC || false,
                 animation: false,
                 spanGaps: false,
                 options: {},
