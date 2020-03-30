@@ -214,9 +214,9 @@ function loadConfiguration(type,scope) {
                 }
             }
         }
-        if (useUTC === true) { 
+        if (useUTC === true) {
             config.options.scales.xAxes[0].time.parser = function (m) {
-                return moment.utc(m); 
+                return moment.utc(m);
             }
         }
 

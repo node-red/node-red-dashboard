@@ -253,7 +253,7 @@ function add(opt) {
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             emitSocket(updateValueEventName, toEmit);
-            if (opt.persistantFrontEndValue) {
+            if (opt.persistantFrontEndValue === true) {
                 replayMessages[opt.node.id] = toStore;
             }
 
@@ -277,7 +277,7 @@ function add(opt) {
             var converted = opt.convertBack(msg.value);
             if (opt.storeFrontEndInputAsState === true) {
                 currentValues[msg.id] = converted;
-                if (opt.persistantFrontEndValue) {
+                if (opt.persistantFrontEndValue === true) {
                     replayMessages[msg.id] = msg;
                 }
             }

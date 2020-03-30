@@ -11,7 +11,8 @@
     	    "pass-through" : "Pass through messages from input.",
     	    "store-state" : "Add output messages to stored state.",
     	    "template" : "Template",
-            "expand": "Expand"
+            "expand": "Expand",
+            "resend": "Reload last value on refresh."
     	}
     }
 }
