@@ -141,7 +141,7 @@
         oneditresize: function(size) {
             var rows = $("#dialog-form>div:not(.node-text-editor-row)");
             var height = $("#dialog-form").height();
-            for (var i=0; i<rows.size()-1; i++) {
+            for (var i=0; i<rows.size(); i++) {
                 height = height - $(rows[i]).outerHeight(true);
             }
             if ($('#node-input-templateScope').val() === "global") { height += 232; }
