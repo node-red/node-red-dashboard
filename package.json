@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.19.5-beta",
+    "version": "2.20.0",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -97,7 +97,7 @@
         "font-awesome": "^4.7.0",
         "gulp": "~4.0.2",
         "gulp-angular-templatecache": "~3.0.0",
-        "gulp-clean-css": "^4.0.0",
+        "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
         "gulp-concat-css": "^3.1.0",
         "gulp-debug": "^4.0.0",

@@ -1,4 +1,4 @@
-### 2.19.5-beta: Maintenance Release
+### 2.20.0: Milestone Release
 
 **Enhancements**
 
@@ -10,12 +10,12 @@
  - Make Gridstack a normal dep so they can count installs. Bump to v0.5.5
  - Let mousewheel change slider. Issue #575.
  - Add UTC option to Chart node X-Axis
- - Add no resend on refresh option to template node
+ - Add no resend on refresh option to template node.
 
  **Fixes**
 
  - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
- - Fix dropdown to save topic fro input for subsequent selections. Issue #570
+ - Fix dropdown to save topic fro input for subsequent selections. Issue #570.
  - Fix colour picker to show appropriate controls by default. Issue #572.
  
 ### 2.19.4: Maintenance Release
