@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Wed Apr 01 2020 16:03:01 GMT+0100 (British Summer Time)
+# Time: Tue Apr 07 2020 23:22:35 GMT+0100 (British Summer Time)
 
 CACHE:
 i18n.js
@@ -27,4 +27,4 @@ fonts/weather-icons-lite.woff2
 NETWORK:
 *
 
-# hash: efb4e0cb2526fe74efb4fcf4f0c7c09c89a6c6a37585bf71148c6e7a70f2951b
+# hash: 5ecda70bfe794876a19d593ede20d963abe44d75b7bd8a250b051828f993555c

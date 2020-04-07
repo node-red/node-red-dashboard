@@ -265,7 +265,12 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             if (typeof(msg.value) != 'object') { return }
                             for ( var key in msg.value ) {
                                 if (!me.item.formValue.hasOwnProperty(key)) { continue; }
-                                me.item.formValue[key] = msg.value[key]
+                                for (var x in me.item.options) {
+                                    if (me.item.options[x].type === "date" && me.item.options[x].value === key) {
+                                        msg.value[key] = new Date(msg.value[key]);
+                                    }
+                                    me.item.formValue[key] = msg.value[key];
+                                }
                             }
                         }
                         me.item.extraRows = 0;
@@ -286,12 +291,12 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             me.reset();
                         };
                         me.reset = function () {
-                            for (var x in me.item.formValue) {
-                                if (typeof (me.item.formValue[x]) === "boolean") {
-                                    me.item.formValue[x] = false;
+                            for (var x in me.item.options) {
+                                if (me.item.options[x].type === "boolean") {
+                                    me.item.formValue[me.item.options[x].value] = false;
                                 }
                                 else {
-                                    me.item.formValue[x] = "";
+                                    me.item.formValue[me.item.options[x].value] = "";
                                 }
                             }
                             $scope.$$childTail.form.$setUntouched();

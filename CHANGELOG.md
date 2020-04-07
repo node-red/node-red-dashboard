@@ -1,3 +1,9 @@
+### 2.20.1: Maintenance Release
+
+**Fixes**
+
+ - Fix Form Date input to accept inject of date correctly.
+
 ### 2.20.0: Milestone Release
 
 **Enhancements**
@@ -15,7 +21,7 @@
  **Fixes**
 
  - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
- - Fix dropdown to save topic fro input for subsequent selections. Issue #570.
+ - Fix dropdown to save topic for input for subsequent selections. Issue #570.
  - Fix colour picker to show appropriate controls by default. Issue #572.
  
 ### 2.19.4: Maintenance Release
