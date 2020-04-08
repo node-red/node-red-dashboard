@@ -156,12 +156,10 @@ function manifest() {
             // exclude: 'dashboard.appcache'
             exclude: ['dashboard.appcache','index.html']
         }))
-        // Manually add loading.html (in case it exists)
-        .pipe(replace('icon64x64.png', 'icon64x64.png\nloading.html'))
-        // Manually add gridstack items
-        .pipe(replace('js/app.min.js', 'gs/gridstack.jQueryUI.min.js\ngs/gridstack.min.css\ngs/gridstack.min.js\njs/app.min.js'))
         // Manually add socketio
         .pipe(replace('tinycolor-min.js', 'tinycolor-min.js\nsocket.io/socket.io.js'))
+        // Manually add gridstack items add loading.html (in case it exists)
+        .pipe(replace('fonts/weather-icons-lite.woff2', 'fonts/weather-icons-lite.woff2\ngs/gridstack.jQueryUI.min.js\ngs/gridstack.min.css\ngs/gridstack.min.js\nloading.html'))
         .pipe(eol('\n'))
         .pipe(gulp.dest('dist/'));
 }

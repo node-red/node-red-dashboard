@@ -262,7 +262,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                     case 'form': {
                         me.processInput = function(msg) {
-                            if (typeof(msg.value) != 'object') { return }
+                            if (typeof(msg.value) != 'object') { return; }
                             for ( var key in msg.value ) {
                                 if (!me.item.formValue.hasOwnProperty(key)) { continue; }
                                 for (var x in me.item.options) {
