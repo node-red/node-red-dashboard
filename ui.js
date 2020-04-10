@@ -247,6 +247,7 @@ function add(opt) {
             addField("format");
             addField("color");
             addField("units");
+            addField("tooltip");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
             //toEmit.socketid = msg.socketid; // dcj mu
