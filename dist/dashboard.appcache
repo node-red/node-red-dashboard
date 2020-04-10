@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Wed Apr 08 2020 13:11:24 GMT+0100 (British Summer Time)
+# Time: Fri Apr 10 2020 16:12:38 GMT+0100 (British Summer Time)
 
 CACHE:
 i18n.js
@@ -10,7 +10,6 @@ css/app.min.css
 css/app.min.less
 css/gridstack-extra.min.css
 js/app.min.js
-js/lodash.min.js
 js/tinycolor-min.js
 socket.io/socket.io.js
 fonts/MaterialIcons-Regular.woff
@@ -27,4 +26,4 @@ loading.html
 NETWORK:
 *
 
-# hash: 33b62e123c4e0ad7fc1c80653ca02d33fe8943f0a2b497c9061453cf3fde890a
+# hash: d389a6d4d0655112e0ab0efe47ccfd325a0b6bcf7a9ccd625ee3650d782b88c6
