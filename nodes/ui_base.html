@@ -388,7 +388,6 @@
     var oldSpacer; // Spacer not needed after editing
 
     var widthChange; // Group width change
-    var widgetMove; // Move widget event
     var widgetResize; // Change widget event
     var widgetDrag; // Drag wiget eevnt
 
@@ -788,95 +787,29 @@
     //////////////////////////////////
     // Move between groups of widgets
     //////////////////////////////////
-    var moveGroupWidget = function(id) {
+    function handleMove(grid) {
+        return function(ev, prevWidget, newWidget) {
+            var elem = newWidget.el[0];
+            if (elem.getAttribute("data-noderedsizeauto") === "true") {
+                var id = elem.getAttribute("data-noderedid");
+                var width = grid.grid.column;
+                var height = getDefaultHeight(id, width);
+                grid.move(elem, 0, newWidget.y);
+                grid.resize(elem, width, height);
 
-    var toGridID = '#grid'+id;
-    var toGrid = $(toGridID+'.grid-stack').data('gridstack');
-
-    toGrid.container.droppable({
-        acccept: '.grid-stack-item',
-        tolerance: 'pointer',
-        drop: function( event, ui ) {
-
-            var fromGridID = '#' + ui.draggable[0].offsetParent.id;
-
-            // Move the widget
-            if (fromGridID !== toGridID) {
-
-                var toGridOffset = $(toGridID).offset();
-                var groupWidth = tabDatas.groups[id].width;
-
-                // Reset group width before moving (Grid stack measures)
-                toGrid.setColumn(groupWidth, true);
-
-                // Current widget width factor for x position
-                var curWidth = ($('#grid1').offset().left - $('#grid0').offset().left) * 0.9;
-                var xfactor = curWidth / (groupWidth * 40);
-                xfactor = xfactor > 1.0 ? 1.0 : xfactor;
-                var x = Math.floor((ui.offset.left - toGridOffset.left)/(40 * xfactor));
-                var y = Math.floor((ui.offset.top - toGridOffset.top)/47);
-                var node = {
-                    type: ui.draggable[0].dataset.noderedtype,
-                    id: ui.draggable[0].dataset.noderedid,
-                    x: x,
-                    y: y,
-                    width: ui.draggable[0].dataset.gsWidth,
-                    height: ui.draggable[0].dataset.gsHeight,
-                    auto: (ui.draggable[0].dataset.noderedsizeauto == 'true') ? true : false
-                };
-
-                var dispType = ui.draggable[0].dataset.nodereddisptype;
-                var dispLabel = ui.draggable[0].dataset.nodereddisplabel;
-
-                var item = $('<div></div>', {
-                    'data-noderedtype': node.type,
-                    'data-noderedid': node.id,
-                    'data-nodereddisptype': dispType,
-                    'data-nodereddisplabel': dispLabel,
-                    'data-noderedsizeauto': node.auto
-                });
-
-                if (node.auto === true) {
-                    node.x = 0;
-                    node.width = groupWidth;
-                    node.height = getDefaultHeight(node.id, groupWidth);
-                }
-
-                var itemContent = $('<div></div>', {
-                    addClass: 'grid-stack-item-content',
-                    title: dispLabel + ':' + dispType
-                });
-
-                if (node.auto === true) {
-                    itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
-                    itemContent.find('.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
-                } else {
-                    itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"</i>');
-                    itemContent.find('.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
-                }
-
-                itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
-                itemContent.appendTo(item);
-                var newWidget = toGrid.addWidget(
-                    item,
-                    node.x, node.y, node.width, node.height, false, null, null,
-                    ui.draggable[0].dataset.gsMinHeight,
-                    ui.draggable[0].dataset.gsMaxHeight,
-                    node.id);
-
-                var fromWidget = ui.draggable[0];
-                if (node.auto === true) {
-                    $(fromWidget).find('.nr-dashboard-layout-resize-enable').off('click');
-                } else {
-                    $(fromWidget).find('.nr-dashboard-layout-resize-disable').off('click');
-                }
-                var fromGrid = $(fromGridID+'.grid-stack').data('gridstack');
-                fromGrid.removeWidget(fromWidget);
-                toGrid.resizable(newWidget, !node.auto);
+                var en = $(elem).find('.nr-dashboard-layout-resize-enable');
+                en.off('click');
+                en.on('click',layoutResizeEnable);                
             }
-        }
-    });
+            else {
+                var ds = $(elem).find('.nr-dashboard-layout-resize-disable');
+                ds.off('click');
+                ds.on('click',layoutResizeDisable);
+            }
+        };
     }
+
+
 
     //////////////////////////////////////////
     // Widget size change (start event)
@@ -2080,7 +2013,8 @@
                                         verticalMargin: 1,
                                         float: true,
                                         alwaysShowResizeHandle: true,
-                                        disableOneColumnMode : true
+                                        disableOneColumnMode : true,
+                                        acceptWidgets: true
                                     };
 
                                     /////////////////////////////////////////
@@ -2088,7 +2022,6 @@
                                     /////////////////////////////////////////
                                     oldSpacer = [];
                                     widthChange = [];
-                                    widgetMove = [];
                                     widgetResize = [];
                                     widgetDrag = [];
                                     for (var cnt=0; cnt < groups.length; cnt++) {
@@ -2099,6 +2032,7 @@
                                         // Clear the contents of Grid
                                         var grid = $(gridID+'.grid-stack').data('gridstack');
                                         grid.removeAll();
+                                        $(gridID).on("dropped", handleMove(grid));
 
                                         // Set the width of the display area of gridstack
                                         var groupWidth = Number(groups[cnt].width);
@@ -2190,8 +2124,7 @@
 
                                         // Group width change
                                         widthChange.push(new changeGroupWidth(cnt));
-                                        // Move widgets between groups (drag and drop)
-                                        widgetMove.push(new moveGroupWidget(cnt));
+
                                         // Resize widget in group (start event)
                                         widgetResize.push(new resizeGroupWidget(cnt));
                                         // Dragging widgets in a group (start event)
