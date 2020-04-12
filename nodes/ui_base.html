@@ -2073,17 +2073,6 @@
                                     trayBody.append(editor);
 
                                     /////////////////////////////////////////
-                                    // Gridstack.js option
-                                    ////////////////////////////////////////
-                                    var options = {
-                                        cellHeight: 46,
-                                        verticalMargin: 1,
-                                        float: true,
-                                        alwaysShowResizeHandle: true,
-                                        disableOneColumnMode : true
-                                    };
-
-                                    /////////////////////////////////////////
                                     // Editor screen generation
                                     /////////////////////////////////////////
                                     oldSpacer = [];
@@ -2092,6 +2081,14 @@
                                     widgetResize = [];
                                     widgetDrag = [];
                                     for (var cnt=0; cnt < groups.length; cnt++) {
+                                        // Gridstack.js option
+                                        var options = {
+                                            cellHeight: 46,
+                                            verticalMargin: 1,
+                                            float: true,
+                                            alwaysShowResizeHandle: true,
+                                            disableOneColumnMode : true
+                                        };
                                         var gridID='#grid' + cnt;
                                         // gridstack generation
                                         $(gridID).gridstack(options);
