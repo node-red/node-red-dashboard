@@ -2259,6 +2259,11 @@
                                         RED.nodes.updateConfigNodeUsers(group.node);
                                     }
                                 }
+                                else {
+                                    if (group.node.order === undefined) {
+                                        group.node.order = i+1;
+                                    }
+                                }
                                 var groupNode = group.node;
                                 elementParents[groupNode] = item.node.id;
                                 var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-group-list-header"}).appendTo(container);
