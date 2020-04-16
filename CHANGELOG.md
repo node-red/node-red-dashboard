@@ -1,5 +1,10 @@
 ### 2.20.1: Maintenance Release
 
+**Enhancements**
+
+ - Let tooltip words be settable via {{msg.something}}. Issue #578.
+ - Move Gridstack to v0.6.4
+
 **Fixes**
 
  - Fix Form Date input to accept inject of date correctly.
@@ -23,7 +28,7 @@
  - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
  - Fix dropdown to save topic for input for subsequent selections. Issue #570.
  - Fix colour picker to show appropriate controls by default. Issue #572.
- 
+
 ### 2.19.4: Maintenance Release
 
 **Enhancements**
@@ -52,7 +57,7 @@
 **Fixes**
 
  - Revert dropping of angular material icons with animation. Issue #552
- 
+
  ### 2.19.1: Maintenance Release
 
 **Enhancements**
@@ -77,7 +82,7 @@
 ### 2.18.0: Milestone Release
 
 **Enhancements**
- 
+
  - Update justgauge to latest (now maintained) version and drop monkeypatch. Issue #535.
  - Add engines node8 to package.json
 
