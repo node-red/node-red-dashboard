@@ -1,9 +1,9 @@
-### 2.20.1: Maintenance Release
+### 2.21.0: Milestone Release
 
 **Enhancements**
 
  - Let tooltip words be settable via {{msg.something}}. Issue #578.
- - Move Gridstack to v0.6.4
+ - Move Gridstack to v0.6.4 - thanks HiroyasuNishiyama. PR #581,580
 
 **Fixes**
 
