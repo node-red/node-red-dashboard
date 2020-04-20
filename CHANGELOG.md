@@ -1,3 +1,10 @@
+### 2.21.1-beta: Maintenance Release
+
+**Fixes**
+
+ - Document _dontSend option for beforeSend callback.
+
+
 ### 2.21.0: Milestone Release
 
 **Enhancements**

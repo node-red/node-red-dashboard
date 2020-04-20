@@ -94,7 +94,7 @@ module.exports = function(RED) {
                     emitOptions.isOptionsValid = true;
                 } while (false);
                 // finally adjust msg to reflect the input
-                msg._fromInput = true;
+                msg._dontSend = true;
                 if (emitOptions.isOptionsValid) {
                     control.options = emitOptions.newOptions;
                     control.value = emitOptions.value;
@@ -108,7 +108,7 @@ module.exports = function(RED) {
                 if (msg.hasOwnProperty("payload")) {
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
-                    emitOptions._fromInput = true;
+                    emitOptions._dontSend = true;
                     return emitOptions;
                 }
                 // we do not overide payload here due to 'opt.emitOnlyNewValues' in ui.js
@@ -122,7 +122,7 @@ module.exports = function(RED) {
 
             beforeSend: function (msg) {
                 var val = "";
-                if (msg._fromInput) {
+                if (msg._dontSend) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
                 }

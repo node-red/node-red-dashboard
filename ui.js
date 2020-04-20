@@ -118,7 +118,8 @@ options:
     [beforeEmit] - callback to prepare the message that is emitted to the front-end
 
     [convertBack] - callback to convert the message from front-end before sending it to the next connected node
-    [beforeSend] - callback to prepare the message that is sent to the output
+    [beforeSend] - callback to prepare the message that is sent to the output,
+        if the returned msg has a property _dontSend, then it won't get sent.
 */
 function add(opt) {
     clearTimeout(removeStateTimers[opt.node.id]);
@@ -286,7 +287,7 @@ function add(opt) {
             toSend = opt.beforeSend(toSend, msg) || toSend;
             toSend.socketid = toSend.socketid || msg.socketid;
             if (toSend.hasOwnProperty("topic") && (toSend.topic === undefined)) { delete toSend.topic; }
-            if (!msg.hasOwnProperty("_fromInput")) {   // TODO: too specific
+            if (!msg.hasOwnProperty("_dontSend") && !msg.hasOwnProperty("_fromInput")) {   // TODO: deprecate _fromInput
                 opt.node.send(toSend);      // send to following nodes
             }
         }
