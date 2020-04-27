@@ -333,8 +333,10 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         }
                         me.active = false;
                         me.mdown = function() { me.active = true; };
+                        me.menter = function() { me.active = true; };
                         me.mleave = function() { me.active = false; };
-                        me.mchange = function() { events.emit({ id:me.item.id, value:me.item.value });}
+                        me.mchange = function() { if (!me.active) { me.valueChanged(0); } }
+                        me.mup = function() { me.active = false; me.valueChanged(0); }
                         break;
                     }
                 }

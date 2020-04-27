@@ -3,6 +3,7 @@
 **Fixes**
 
  - Document _dontSend option for beforeSend callback.
+ - Let slider repeat click work in "send at end" mode.
 
 
 ### 2.21.0: Milestone Release

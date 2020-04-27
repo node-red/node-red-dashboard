@@ -1,8 +1,8 @@
 # node-red-dashboard
 
+[![platform](https://img.shields.io/badge/platform-Node--RED-red)](https://nodered.org)
 ![NPM version](https://badge.fury.io/js/node-red-dashboard.svg)
-[![GitHub version](https://badge.fury.io/gh/dceejay%2Felectron-node-red.svg)](https://badge.fury.io/gh/node-red%2Fnode-red-dashboard)
-[![GitHub license](https://github.com/node-red/node-red-dashboard/blob/master/LICENSE)](https://img.shields.io/github/license/node-red/node-red-dashboard.svg)
+[![GitHub license](https://img.shields.io/github/license/node-red/node-red-dashboard)](https://github.com/node-red/node-red-dashboard/blob/master/LICENSE)
 
 This module provides a set of nodes in Node-RED to quickly create a live data dashboard.
 
