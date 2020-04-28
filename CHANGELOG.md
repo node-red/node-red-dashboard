@@ -1,5 +1,9 @@
 ### 2.21.1-beta: Maintenance Release
 
+**Enhancements**
+
+ - Add group (open/closed) event to ui_control output.
+
 **Fixes**
 
  - Document _dontSend option for beforeSend callback.

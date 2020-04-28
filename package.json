@@ -112,7 +112,7 @@
         "gulp-manifest3": "^0.1.2",
         "gulp-rename": "^1.4.0",
         "gulp-replace": "^1.0.0",
-        "gulp-sass": "^4.0.2",
+        "gulp-sass": "^4.1.0",
         "gulp-uglify": "~3.0.2",
         "gulp-util": "^3.0.8",
         "jquery": "^3.4.1",

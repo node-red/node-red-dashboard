@@ -388,6 +388,9 @@ function init(server, app, log, redSettings) {
                 ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress, params);
             }
         });
+        socket.on('ui-collapse', function(d) {
+            ev.emit("collapse", d.group, d.state, socket.client.id, socket.request.connection.remoteAddress);
+        });
         socket.on('ui-refresh', function() {
             updateUi();
         });

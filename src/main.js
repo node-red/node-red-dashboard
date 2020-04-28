@@ -112,6 +112,10 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         $scope.onSwipeLeft = function() { if (main.allowSwipe) { moveTab(-1); } }
         $scope.onSwipeRight = function() { if (main.allowSwipe) { moveTab(1); } }
 
+        $rootScope.$on("collapse", function(e,d,d2) {
+            events.emit('ui-collapse', {group:d, state:d2});
+        });
+
         this.toggleSidenav = function () { $mdSidenav('left').toggle(); }
 
         this.select = function (index) {

@@ -1,7 +1,7 @@
 /* global angular $ */
 
-angular.module('ui').directive('uiCardPanel', ['$timeout',
-    function($timeout) {
+angular.module('ui').directive('uiCardPanel', ['$timeout', '$rootScope',
+    function($timeout, $rootScope) {
         return {
             restrict: 'E',
             transclude: true,
@@ -19,6 +19,7 @@ angular.module('ui').directive('uiCardPanel', ['$timeout',
                     root.slideToggle(slideDuration);
                     $timeout(function() { $(window).trigger('resize'); }, slideDuration);
                     slideDuration = parseInt(attrs.slideToggleDuration, 10) || 150;
+                    $rootScope.$emit("collapse", attrs.id, !scope.collapsed);
                 }
                 if (scope.collapsed === true) {
                     scope.collapsed = false;
