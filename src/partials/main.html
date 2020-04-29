@@ -18,7 +18,7 @@
         </md-list>
     </md-sidenav>
     <md-content flex>
-        <div ui-masonry ng-show="main.selectedTab.header" id="{{main.selectedTab.header}}">
+        <div ui-masonry ng-show="main.selectedTab.header" id="{{main.selectedTab.header | spaceToUnderscore}}">
             <ui-card-panel ng-repeat="group in main.selectedTab.items" id="{{main.selectedTab.header+'_'+group.header.name | spaceToUnderscore}}"  ng-if="group.header && group.header.config && !group.header.config.hidden">
                 <ui-component ng-repeat="control in group.items" item="control"></ui-component>
             </ui-card-panel>
