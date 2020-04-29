@@ -384,6 +384,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
+                $('meta[name=theme-color]').attr('content', ui.theme.themeState["page-titlebar-backgroundColor"].value || "#097479");
                 $mdToast.hide();
                 processGlobals();
                 events.emit('ui-change', prevTabIndex);

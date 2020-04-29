@@ -8,6 +8,7 @@
 
  - Document _dontSend option for beforeSend callback.
  - Let slider repeat click work in "send at end" mode.
+ - Let browser bar theme copy dashboard theme (for Android)
 
 
 ### 2.21.0: Milestone Release

@@ -100,6 +100,7 @@ function css() {
         .pipe(concatCss('app.min.css',{rebaseUrls:false}))
         .pipe(header(fs.readFileSync('license.js')))
         .pipe(eol('\n'))
+        //.pipe(minifyCss())
         .pipe(gulp.dest('dist/css/'));
 }
 

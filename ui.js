@@ -27,7 +27,7 @@ var path = require('path');
 var events = require('events');
 var socketio = require('socket.io');
 var serveStatic = require('serve-static');
-var compression = require('compression')
+var compression = require('compression');
 var dashboardVersion = require('./package.json').version;
 
 var baseConfiguration = {};
