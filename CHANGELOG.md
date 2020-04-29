@@ -3,13 +3,13 @@
 **Enhancements**
 
  - Add group (open/closed) event to ui_control output.
+ - Let browser bar theme copy dashboard theme (for Android).
+ - Add id to Tab div tag so css can be targetted.
 
 **Fixes**
 
  - Document _dontSend option for beforeSend callback.
  - Let slider repeat click work in "send at end" mode.
- - Let browser bar theme copy dashboard theme (for Android)
-
 
 ### 2.21.0: Milestone Release
 
