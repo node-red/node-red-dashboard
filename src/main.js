@@ -157,10 +157,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     if (typeof main.menu[index].link === "string") {
                         main.menu[index].link = $sce.trustAsResourceUrl(main.menu[index].link);
                     }
-                    main.selectedTab = main.menu[index];
-                    tabId = index;
-                    events.emit('ui-change', tabId);
-                    $location.path(index);
+                    main.select(index);
                 }
                 $mdSidenav('left').close();
             }
