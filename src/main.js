@@ -112,6 +112,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         $scope.onSwipeLeft = function() { if (main.allowSwipe) { moveTab(-1); } }
         $scope.onSwipeRight = function() { if (main.allowSwipe) { moveTab(1); } }
 
+        $scope.$on('$locationChangeSuccess', function ($event, newUrl, oldUrl, newState, oldState) {
+            if ($location.path() === '/' + tabId) {
+                return;
+            }
+            var tabIdFromUrlPath = parseInt($location.path().split('/')[1], 10);
+            if (!isNaN(tabIdFromUrlPath)) {
+                var menu = main.menu[tabIdFromUrlPath];
+                if (menu) {
+                    main.open(menu, tabIdFromUrlPath);
+                }
+            }
+        });
+
         $rootScope.$on("collapse", function(e,d,d2) {
             events.emit('ui-collapse', {group:d, state:d2});
         });
