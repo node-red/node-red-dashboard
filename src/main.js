@@ -112,10 +112,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         $scope.onSwipeLeft = function() { if (main.allowSwipe) { moveTab(-1); } }
         $scope.onSwipeRight = function() { if (main.allowSwipe) { moveTab(1); } }
 
+        // Added as PR#587 to fix navigation history so back/forwards works ok from browser
         $scope.$on('$locationChangeSuccess', function ($event, newUrl, oldUrl, newState, oldState) {
-            if ($location.path() === '/' + tabId) {
-                return;
-            }
+            if ($location.path() === '/' + tabId) { return; }
             var tabIdFromUrlPath = parseInt($location.path().split('/')[1], 10);
             if (!isNaN(tabIdFromUrlPath)) {
                 var menu = main.menu[tabIdFromUrlPath];
@@ -522,6 +521,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         });
 
+        // Added as PR #586 - to help cache bust aged out socket connections and force re-authentication
         events.on('connect_error', function (error) {
             var getRandomFromUrl = function () {
                 var matches = window.location.search.match(/[?&]random=([^&]*)/);
@@ -529,16 +529,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             };
             var forceReload = function () {
                 // avoid reload loop
-                if ((new Date()).getTime() - getRandomFromUrl() < 60000) {
-                    return;
-                }
+                if ((new Date()).getTime() - getRandomFromUrl() < 60000) { return; }
 
                 // remove existing 'random' and add new one
                 var search = window.location.search;
                 search = search.replace(/[?&]random=([^&]*)/, '');
-                if (!search.startsWith('?')) {
-                    search = '?' + search;
-                }
+                if (!search.startsWith('?')) { search = '?' + search; }
                 search += '&random=' + (new Date()).getTime();
 
                 // restore new url with updated search params

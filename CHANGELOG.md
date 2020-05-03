@@ -10,6 +10,8 @@
 
  - Document _dontSend option for beforeSend callback.
  - Let slider repeat click work in "send at end" mode.
+ - Force client reauth when old socket connection times out and 401s. PR #586
+ - Fix navigation history, so back/formward browser buttons work. PR #587 
 
 ### 2.21.0: Milestone Release
 
