@@ -522,6 +522,39 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         });
 
+        events.on('connect_error', function (error) {
+            var getRandomFromUrl = function () {
+                var matches = window.location.search.match(/[?&]random=([^&]*)/);
+                return (matches && matches[1] || 0) * 1;
+            };
+            var forceReload = function () {
+                // avoid reload loop
+                if ((new Date()).getTime() - getRandomFromUrl() < 60000) {
+                    return;
+                }
+
+                // remove existing 'random' and add new one
+                var search = window.location.search;
+                search = search.replace(/[?&]random=([^&]*)/, '');
+                if (!search.startsWith('?')) {
+                    search = '?' + search;
+                }
+                search += '&random=' + (new Date()).getTime();
+
+                // restore new url with updated search params
+                var url = window.location.origin;
+                url += window.location.pathname;
+                url += search;
+                url += window.location.hash;
+                window.location = url;
+            };
+
+            // force reload on Unauthorized response
+            if (error.type === 'TransportError' && error.description === 401) {
+                forceReload();
+            }
+        });
+
         events.on('show-toast', function (msg) {
             if (msg.raw !== true) {
                 var temp = document.createElement('div');
