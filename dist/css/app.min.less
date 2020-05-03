@@ -213,9 +213,9 @@ body.nr-dashboard-theme md-content {
     }
 }
 
-body.nr-dashboard-theme md-select-menu md-content {
-    height: initial;
-}
+// body.nr-dashboard-theme md-select-menu md-content {
+//     max-height: 80%;
+// }
 
 body.nr-dashboard-theme md-input-container.md-input-focused:not([md-no-float]) .md-select-placeholder span:first-child {
     -webkit-transform: translateY(-28px) scale(.75);
@@ -393,12 +393,18 @@ a.md-no-style, button.md-no-style {
 .nr-dashboard-theme .nr-dashboard-dropdown .md-select-icon {
     color: @widgetTextColor;
 }
+.nr-dashboard-theme .md-select-menu-container {
+    max-height: 85%;
+    overflow-y: auto;
+}
 .nr-dashboard-theme md-select-menu {
     margin-left: -2px;
+    max-height: 85%;
 }
 .nr-dashboard-theme md-select-menu md-content {
-    border: 1px solid #4F4F4F;
+    border: 2px solid #4F4F4F;
     padding: 0px;
+    max-height: 85%;
 }
 .nr-dashboard-theme md-select-menu, .nr-dashboard-theme md-select-menu md-option {
     background-color: @groupBackgroundColor;

@@ -5,7 +5,13 @@ angular.module('ui').service('UiEvents',
         var that = this;
 
         this.connect = function(onuiloaded, replaydone) {
-            var socket = io({path:location.pathname + 'socket.io'});
+            var socket;
+            if (location.protocol === "https:") {
+                socket = io({path:location.pathname + 'socket.io', secure:true});
+            }
+            else {
+                socket = io({path:location.pathname + 'socket.io'});
+            }
 
             this.emit = function(event, msg) {
                 if (typeof msg === 'undefined') {

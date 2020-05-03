@@ -11,13 +11,14 @@
  - Document _dontSend option for beforeSend callback.
  - Let slider repeat click work in "send at end" mode.
  - Force client reauth when old socket connection times out and 401s. PR #586
- - Fix navigation history, so back/formward browser buttons work. PR #587 
+ - Fix navigation history, so back/formward browser buttons work. PR #587
+ - Force socket.io to use secure link when using https.
 
 ### 2.21.0: Milestone Release
 
 **Enhancements**
 
- - Let tooltip words be settable via {{msg.something}}. Issue #578.
+ - Let tooltip words be settable via {{msg.something}}. Issue #578
  - Move Gridstack to v0.6.4 - thanks HiroyasuNishiyama. PR #581,580
 
 **Fixes**
@@ -34,15 +35,15 @@
  - Add option to try to load dist/loading,html for those that want it.
  - Add msg.event for button clicks.
  - Make Gridstack a normal dep so they can count installs. Bump to v0.5.5
- - Let mousewheel change slider. Issue #575.
- - Add UTC option to Chart node X-Axis
+ - Let mousewheel change slider. Issue #575
+ - Add UTC option to Chart node X-Axis.
  - Add no resend on refresh option to template node.
 
  **Fixes**
 
  - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
- - Fix dropdown to save topic for input for subsequent selections. Issue #570.
- - Fix colour picker to show appropriate controls by default. Issue #572.
+ - Fix dropdown to save topic for input for subsequent selections. Issue #570
+ - Fix colour picker to show appropriate controls by default. Issue #572
 
 ### 2.19.4: Maintenance Release
 
@@ -53,7 +54,7 @@
 
  **Fixes**
 
- - Re-add gridstack min map to reduces warnings
+ - Re-add gridstack min map to reduces warnings.
  - Added crossorigin attribute to manifest link. PR #560
 
 ### 2.19.3: Maintenance Release
