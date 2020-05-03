@@ -17,3 +17,24 @@
     margin-right: 16px;
     white-space: nowrap;
 }
+
+.nr-dashboard-dropdown-header {
+    padding-top: 15px;
+    padding-left: 10.667px;
+    padding-right: 10.667px;
+    height: 48px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: auto;
+}
+
+.nr-dashboard-dropdown-header input {
+    padding-left: 8px;
+}
+
+.nr-dashboard-dropdown-header ng-md-icon {
+    right: 0px;
+    left: inherit;
+}

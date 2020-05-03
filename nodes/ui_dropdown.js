@@ -15,6 +15,7 @@ module.exports = function(RED) {
 
         var control = {
             type: 'dropdown',
+            multiple: config.multiple,
             label: config.label,
             tooltip: config.tooltip,
             place: config.place || "Select option",
@@ -121,20 +122,25 @@ module.exports = function(RED) {
             },
 
             beforeSend: function (msg) {
-                var val = "";
+                var val = node.multiple ? [] : "";
                 if (msg._dontSend) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
                 }
                 for (var i=0; i<control.options.length; i++) {
-                    if (control.options[i].value === msg.payload) { val = control.options[i].label; }
+                    if (!node.multiple && control.options[i].value === msg.payload) { 
+                        val = control.options[i].label; 
+                        break;
+                    } else if (node.multiple && msg.payload.includes(control.options[i].value)){
+                        val.push(control.options[i].label);
+                    }
                 }
                 msg.topic = config.topic || msg.topic || savedtopic;
                 if (node.pt) {
-                    node.status({shape:"dot",fill:"grey",text:val});
+                    node.status({shape:"dot",fill:"grey",text:val.toString()});
                 }
                 else {
-                    node.state[1] = val;
+                    node.state[1] = val.toString();
                     node.status({shape:"dot",fill:"grey",text:node.state[1] + " | " + node.state[1]});
                 }
             }

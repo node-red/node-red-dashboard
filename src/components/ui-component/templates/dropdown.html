@@ -16,13 +16,38 @@
             ng-bind-html="me.item.getTooltip()">
         </md-tooltip>
         <md-select 
-            ng-change="me.itemChanged()" 
+            ng-change="me.itemChanged()"
+            ng-if="!me.item.multiple"
             ng-model="me.item.value" 
             placeholder="{{ me.item.place }}" 
             flex="100">
             <md-option 
                 ng-value="opt.value" 
                 ng-repeat="opt in me.item.options">{{ opt.label }}
+            </md-option>
+		</md-select>
+        <md-select 
+            md-on-close="me.itemChanged()"
+            multiple
+            ng-if="me.item.multiple"
+            ng-model="me.item.value" 
+            placeholder="{{ me.item.place }}" 
+            flex="100">
+            <md-select-header class="nr-dashboard-dropdown-header">
+                <md-input-container
+                    class="md-block"
+                    flex>
+                    <input
+                        ng-model="me.searchTerm"
+                        ng-keydown="$event.stopPropagation()"
+                        type="search"
+                        aria-label="Filter"/>
+                    <ng-md-icon icon="search"></ng-md-icon>
+                </md-input-container>
+            </md-select-header>
+            <md-option 
+                ng-value="opt.value" 
+                ng-repeat="opt in me.item.options | filter: { label: me.searchTerm }">{{ opt.label }}
             </md-option>
 		</md-select>
 	</md-input-container>

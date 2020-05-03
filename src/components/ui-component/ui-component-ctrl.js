@@ -63,7 +63,9 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     }
 
                     case 'dropdown': {
+                        me.searchTerm = '';
                         me.itemChanged = function () {
+                            me.searchTerm = '';
                             me.valueChanged(0);
                         };
 
