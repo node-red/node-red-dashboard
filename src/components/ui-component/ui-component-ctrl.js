@@ -64,10 +64,22 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                     case 'dropdown': {
                         me.searchTerm = '';
+                        me.changed = false;
                         me.itemChanged = function () {
                             me.searchTerm = '';
-                            me.valueChanged(0);
+                            if (!me.item.multiple){
+                                me.valueChanged(0);
+                            } else {
+                                me.changed = true;
+                            }
                         };
+
+                        me.closed = function(){
+                            if (me.changed){
+                                me.changed = false;
+                                me.valueChanged(0);
+                            }
+                        }
 
                         // PL dropdown
                         // processInput will be called from main.js

@@ -4,6 +4,7 @@ module.exports = function(RED) {
     function DropdownNode(config) {
         RED.nodes.createNode(this, config);
         this.pt = config.passthru;
+        this.multiple = config.multiple;
         this.state = [" "," "];
         var node = this;
         node.status({});
