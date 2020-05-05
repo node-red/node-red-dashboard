@@ -14,6 +14,7 @@
  - Force client reauth when old socket connection times out and 401s. PR #586
  - Fix navigation history, so back/formward browser buttons work. PR #587
  - Force socket.io to use secure link when using https.
+ - Allow dropdowns to take up more space on screen for longer lists.
 
 ### 2.21.0: Milestone Release
 

@@ -90,7 +90,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     //title: scope.$eval('me.item.title'),
                                     label: scope.$eval('me.item.units'),
                                     pointer: true,
-                                    relativeGaugeSize: true,
+                                    relativeGaugeSize: false,
                                     textRenderer: function() {
                                         return scope.$eval('me.item.getText()') || "";
                                     }
