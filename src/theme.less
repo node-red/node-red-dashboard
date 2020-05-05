@@ -256,6 +256,13 @@ a.md-no-style, button.md-no-style {
     color: @groupTextColor !important;
     background-color: @groupBackgroundColor !important;
 }
+.nr-dashboard-theme md-select-menu[multiple] md-option.md-checkbox-enabled[selected] .md-icon {
+    background-color: lighten(@widgetBackgroundColor, 10) !important;
+    border-color: transparent !important;
+}
+.nr-dashboard-theme md-select-menu[multiple] md-option.md-checkbox-enabled .md-icon {
+    border-color: @widgetBackgroundColor !important;
+}
 .nr-dashboard-theme md-select-menu.md-default-theme md-option:focus:not([disabled]):not([selected]),
 md-select-menu md-option:focus:not([disabled]):not([selected]) {
     background-color: @groupBackgroundColor;
