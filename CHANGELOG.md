@@ -1,10 +1,11 @@
-### 2.21.1-beta: Maintenance Release
+### 2.22.0-beta: Maintenance Release
 
 **Enhancements**
 
  - Add group (open/closed) event to ui_control output.
  - Let browser bar theme copy dashboard theme (for Android).
  - Add id to Tab div tag so css can be targetted.
+ - Add option for multi-selects in dropdown. PR #588
 
 **Fixes**
 

@@ -29437,6 +29437,27 @@ reason: https://github.com/angular/material/issues/6214
   margin-right: 16px;
   white-space: nowrap;
 }
+
+.nr-dashboard-dropdown-header {
+  padding-top: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  height: 34px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: auto;
+}
+
+.nr-dashboard-dropdown-header input {
+  padding-left: 8px;
+}
+
+.nr-dashboard-dropdown-header ng-md-icon {
+  right: 0px;
+  left: inherit;
+}
 .nr-dashboard-gauge text {
   /* font-weight: 500 !important; */
 }

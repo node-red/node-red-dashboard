@@ -129,10 +129,11 @@ module.exports = function(RED) {
                     msg.payload = emitOptions.value;
                 }
                 for (var i=0; i<control.options.length; i++) {
-                    if (!node.multiple && control.options[i].value === msg.payload) { 
-                        val = control.options[i].label; 
+                    if (!node.multiple && control.options[i].value === msg.payload) {
+                        val = control.options[i].label;
                         break;
-                    } else if (node.multiple && msg.payload.includes(control.options[i].value)){
+                    }
+                    else if (node.multiple && msg.payload.includes(control.options[i].value)) {
                         val.push(control.options[i].label);
                     }
                 }

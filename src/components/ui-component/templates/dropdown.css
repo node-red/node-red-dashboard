@@ -19,10 +19,10 @@
 }
 
 .nr-dashboard-dropdown-header {
-    padding-top: 15px;
-    padding-left: 10.667px;
-    padding-right: 10.667px;
-    height: 48px;
+    padding-top: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 34px;
     cursor: pointer;
     position: relative;
     display: flex;

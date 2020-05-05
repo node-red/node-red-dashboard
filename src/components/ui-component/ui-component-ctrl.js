@@ -67,15 +67,15 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         me.changed = false;
                         me.itemChanged = function () {
                             me.searchTerm = '';
-                            if (!me.item.multiple){
+                            if (!me.item.multiple) {
                                 me.valueChanged(0);
                             } else {
                                 me.changed = true;
                             }
                         };
 
-                        me.closed = function(){
-                            if (me.changed){
+                        me.closed = function() {
+                            if (me.changed) {
                                 me.changed = false;
                                 me.valueChanged(0);
                             }
