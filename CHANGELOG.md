@@ -1,4 +1,4 @@
-### 2.22.0-beta: Maintenance Release
+### 2.22.0: Milestone Release
 
 **Enhancements**
 
