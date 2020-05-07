@@ -285,10 +285,12 @@ function add(opt) {
             }
             var toSend = {payload:converted};
             toSend = opt.beforeSend(toSend, msg) || toSend;
-            toSend.socketid = toSend.socketid || msg.socketid;
-            if (toSend.hasOwnProperty("topic") && (toSend.topic === undefined)) { delete toSend.topic; }
-            if (!msg.hasOwnProperty("_dontSend") && !msg.hasOwnProperty("_fromInput")) {   // TODO: deprecate _fromInput
-                opt.node.send(toSend);      // send to following nodes
+            if (toSend !== undefined) {
+                toSend.socketid = toSend.socketid || msg.socketid;
+                if (toSend.hasOwnProperty("topic") && (toSend.topic === undefined)) { delete toSend.topic; }
+                if (!msg.hasOwnProperty("_dontSend") && !msg.hasOwnProperty("_fromInput")) {   // TODO: deprecate _fromInput
+                    opt.node.send(toSend);      // send to following nodes
+                }
             }
         }
         if (opt.storeFrontEndInputAsState === true) {

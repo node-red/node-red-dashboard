@@ -15,6 +15,7 @@
  - Fix navigation history, so back/formward browser buttons work. PR #587
  - Force socket.io to use secure link when using https.
  - Allow dropdowns to take up more space on screen for longer lists.
+ - Make sure we don't fail on a null msg from a template.
 
 ### 2.21.0: Milestone Release
 
