@@ -1,3 +1,10 @@
+### 2.22.1: Maintenance Release
+
+**Fixes**
+
+ - Re-insert missing weather icons fonts.
+ - Fix slider logic for touch devices. Issue #589
+
 ### 2.22.0: Milestone Release
 
 **Enhancements**

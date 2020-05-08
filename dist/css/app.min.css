@@ -28523,6 +28523,12 @@ md-tabs-wrapper md-next-button ng-md-icon {
   width: 1.4em;
 }
 
+.wi-rotate-23 {
+  -webkit-transform: rotate(23deg);
+  -ms-transform: rotate(23deg);
+  transform: rotate(23deg);
+}
+
 .wi-rotate-90 {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   -webkit-transform: rotate(90deg);
@@ -28728,7 +28734,7 @@ mirror=1);
 }
 
 .wi-wu-mostlysunny:before {
-  content: "\f00d";
+  content: "\f00c";
 }
 
 .wi-wu-partlycloudy:before {
@@ -28736,7 +28742,7 @@ mirror=1);
 }
 
 .wi-wu-partlysunny:before {
-  content: "\f00d";
+  content: "\f002";
 }
 
 .wi-wu-rain:before {
@@ -28833,6 +28839,70 @@ mirror=1);
 
 .wi-wu-nt_cloudy:before {
   content: "\f031";
+}
+
+.wi-moon-wax-cres-dark:before {
+  content: "\f0de";
+}
+
+.wi-moon-first-quart-dark:before {
+  content: "\f0df";
+}
+
+.wi-moon-wax-gibb-dark:before {
+  content: "\f0e0";
+}
+
+.wi-moon-full-dark:before {
+  content: "\f0e1";
+}
+
+.wi-moon-wan-gibb-dark:before {
+  content: "\f0da";
+}
+
+.wi-moon-third-quart-dark:before {
+  content: "\f0db";
+}
+
+.wi-moon-wan-cres-dark:before {
+  content: "\f0dc";
+}
+
+.wi-moon-new-dark:before {
+  content: "\f0dd";
+}
+
+.wi-moon-wax-cres:before {
+  content: "\f0da";
+}
+
+.wi-moon-first-quart:before {
+  content: "\f0db";
+}
+
+.wi-moon-wax-gibb:before {
+  content: "\f0dc";
+}
+
+.wi-moon-full:before {
+  content: "\f0dd";
+}
+
+.wi-moon-wan-gibb:before {
+  content: "\f0de";
+}
+
+.wi-moon-third-quart:before {
+  content: "\f0df";
+}
+
+.wi-moon-wan-cres:before {
+  content: "\f0e0";
+}
+
+.wi-moon-new:before {
+  content: "\f0e1";
 }
 /*!
  * angularjs-color-picker v3.4.8

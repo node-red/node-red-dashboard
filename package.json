@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.22.0",
+    "version": "2.22.1",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -118,7 +118,7 @@
         "gulp-sass": "^4.1.0",
         "gulp-uglify": "~3.0.2",
         "gulp-util": "^3.0.8",
-        "jquery": "^3.4.1",
+        "jquery": "~3.5.1",
         "jshint": "^2.11.0",
         "justgage": "~1.3.5",
         "less": "~3.9.0",
