@@ -349,8 +349,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         me.mdown = function() { me.active = true; };
                         me.menter = function() { me.active = true; };
                         me.mleave = function() { me.active = false; };
-                        me.mchange = function() { if (!me.active) { me.valueChanged(0); } }
-                        me.mup = function() { me.active = false; me.valueChanged(0); }
+                        me.mchange = function() { me.active = false; me.valueChanged(0); }
+                        me.mup = function() { if (me.active) { me.active = false; me.valueChanged(0); } }
                         break;
                     }
                 }
