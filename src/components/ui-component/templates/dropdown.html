@@ -52,6 +52,7 @@
             <md-select-header 
                 ng-if="me.item.options.length > 7"
                 class="nr-dashboard-dropdown-header">
+                <md-checkbox md-no-ink aria-label="Select all" ng-model="me.selectAll" ng-change="me.checkAll()"></md-checkbox>
                 <md-input-container
                     class="md-block"
                     style="height:32px;"

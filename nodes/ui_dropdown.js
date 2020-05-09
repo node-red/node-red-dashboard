@@ -132,8 +132,7 @@ module.exports = function(RED) {
                     if (!node.multiple && control.options[i].value === msg.payload) {
                         val = control.options[i].label;
                         break;
-                    }
-                    else if (node.multiple && msg.payload.includes(control.options[i].value)) {
+                    } else if (node.multiple && Array.isArray(msg.payload) && msg.payload.includes(control.options[i].value)){
                         val.push(control.options[i].label);
                     }
                 }
