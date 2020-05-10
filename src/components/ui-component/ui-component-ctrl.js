@@ -64,6 +64,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                     case 'dropdown': {
                         me.searchTerm = '';
+                        me.selectAll = false;
                         me.changed = false;
                         me.itemChanged = function () {
                             me.searchTerm = '';
@@ -73,6 +74,11 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                                 me.changed = true;
                             }
                         };
+
+                        me.checkAll = function () {
+                            me.item.value = me.selectAll ? me.item.options.map(function(o){return o.value}) : []
+                            me.valueChanged(0);
+                        }
 
                         me.closed = function() {
                             if (me.changed) {
