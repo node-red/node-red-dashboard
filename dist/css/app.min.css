@@ -29510,7 +29510,7 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-dropdown-header {
   padding-top: 6px;
-  padding-left: 8px;
+  padding-left: 6px;
   padding-right: 8px;
   height: 34px;
   cursor: pointer;

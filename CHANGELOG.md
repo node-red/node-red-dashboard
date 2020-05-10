@@ -1,3 +1,10 @@
+### 2.22.2-beta: Maintenance Release
+
+**Enhancements**
+
+ - Dropdown multiselect now allows select/deselect all. PR #590 
+
+
 ### 2.22.1: Maintenance Release
 
 **Fixes**
