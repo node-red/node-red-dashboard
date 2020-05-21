@@ -47,7 +47,7 @@ module.exports = function(RED) {
                 title: node.topic || msg.topic,
                 message: msg.payload,
                 highlight: node.highlight || msg.highlight,
-                displayTime: node.displayTime,
+                displayTime: node.displayTime || msg.time,
                 position: node.position,
                 id: node.id,
                 dialog: (node.position === "dialog" || node.position === "prompt") || false,
