@@ -369,7 +369,18 @@ function init(server, app, log, redSettings) {
 
     log.info("Dashboard version " + dashboardVersion + " started at " + fullPath);
 
+    io.use(function(socket, next) {
+        if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
+            // Reject direct websocket requests
+            //console.log("CONN",socket.client.conn.reuest.url);
+            socket.client.conn.close();
+            return;
+        }
+        next();
+    });
+
     io.on('connection', function(socket) {
+
         ev.emit("newsocket", socket.client.id, socket.request.connection.remoteAddress);
         updateUi(socket);
 

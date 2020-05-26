@@ -3,7 +3,11 @@
 **Enhancements**
 
  - Dropdown multiselect now allows select/deselect all. PR #590 
+ - Add iconify- keyword to icon handling (still need to add js via template)
 
+**Fixes**
+ 
+ - Block direct websocket connection attempsts - only allow upgrades.
 
 ### 2.22.1: Maintenance Release
 
