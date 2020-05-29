@@ -372,11 +372,11 @@ function init(server, app, log, redSettings) {
     io.use(function(socket, next) {
         if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
             // Reject direct websocket requests
-            //console.log("CONN",socket.client.conn.reuest.url);
             socket.client.conn.close();
             return;
         }
-        next();
+        if (socket.handshake.xdomain === false) { return next(); } 
+        else { socket.disconnect(true); }
     });
 
     io.on('connection', function(socket) {
