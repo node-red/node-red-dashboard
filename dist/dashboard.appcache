@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Tue May 26 2020 13:52:08 GMT+0100 (British Summer Time)
+# Time: Wed Jun 03 2020 11:38:08 GMT+0100 (British Summer Time)
 
 CACHE:
 i18n.js
@@ -26,4 +26,4 @@ loading.html
 NETWORK:
 *
 
-# hash: 2de28783449e524cfc301cdb8daad2de6fa798833e15f8f7863449624f995dad
+# hash: a5e6cd7ea2c7a9c7ca315b0539361152630c21b357f3c310624cc1f2f32e35fb

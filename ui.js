@@ -61,7 +61,7 @@ var mani = {
 }
 
 function toNumber(keepDecimals, config, input, old, m, s) {
-    if (input === undefined) { return; }
+    if (input === undefined || input === null) { return; }
     if (typeof input !== "number") {
         var inputString = input.toString();
         input = keepDecimals ? parseFloat(inputString) : parseInt(inputString);
@@ -375,7 +375,7 @@ function init(server, app, log, redSettings) {
             socket.client.conn.close();
             return;
         }
-        if (socket.handshake.xdomain === false) { return next(); } 
+        if (socket.handshake.xdomain === false) { return next(); }
         else { socket.disconnect(true); }
     });
 
