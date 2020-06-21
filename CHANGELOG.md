@@ -8,6 +8,7 @@
 **Fixes**
  
  - Block direct websocket connection attempsts - only allow upgrades.
+ - Bump angular libs to 1.8.0
 
 ### 2.22.1: Maintenance Release
 

@@ -393,7 +393,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
                 }
-                $('meta[name=theme-color]').attr('content', ui.theme.themeState["page-titlebar-backgroundColor"].value || "#097479");
+                if (ui.hasOwnProperty("theme")) {
+                    $('meta[name=theme-color]').attr('content', ui.theme.themeState["page-titlebar-backgroundColor"].value || "#097479");
+                } else {
+                    $('meta[name=theme-color]').attr('content','#097479');
+                }
                 $mdToast.hide();
                 processGlobals();
                 events.emit('ui-change', prevTabIndex);
