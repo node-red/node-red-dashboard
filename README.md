@@ -98,6 +98,7 @@ to help pick up the theme colours.
 
  - --nr-dashboard-pageBackgroundColor
  - --nr-dashboard-pageTitlebarBackgroundColor
+ - --nr-dashboard-pageSidebarBackgroundColor
  - --nr-dashboard-groupBackgroundColor
  - --nr-dashboard-groupTextColor
  - --nr-dashboard-groupBorderColor

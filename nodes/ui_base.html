@@ -971,7 +971,8 @@
                         return pageBackground;
                     },
                     calculate_page_sidebar_backgroundColor: function(base) {
-                        return this.whiteBlackLeastReadable(base);
+                        if (this.whiteBlackLeastReadable(base) === "#000000") { return "#333333"; }
+                        else { return "#ffffff"; }
                     },
                     calculate_page_titlebar_backgroundColor: function(base) {
                         return base;

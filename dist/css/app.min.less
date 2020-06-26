@@ -162,6 +162,7 @@ md-card {
 @baseFont: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
 @baseColor: #fff;
 @pageBackgroundColor: #eee;
+@pageSidebarBackgroundColor: #eee;
 @pageTitlebarBackgroundColor: #0094CE;
 @groupBackgroundColor: #fff;
 @groupTextColor: #00A4DE;
@@ -177,6 +178,7 @@ md-card {
 :root {
     --nr-dashboard-pageBackgroundColor: @pageBackgroundColor;
     --nr-dashboard-pageTitlebarBackgroundColor: @pageTitlebarBackgroundColor;
+    --nr-dashboard-pageSidebarBackgroundColor: @pageSidebarBackgroundColor;
     --nr-dashboard-groupTextColor: @groupTextColor;
     --nr-dashboard-groupBackgroundColor: @groupBackgroundColor;
     --nr-dashboard-groupBorderColor: @groupBorderColor;
@@ -251,7 +253,14 @@ body.nr-dashboard-theme md-toolbar {
 */
 body.nr-dashboard-theme md-sidenav {
     color: @groupTextColor;
-    background-color: @groupBackgroundColor;
+    background-color: @pageSidebarBackgroundColor;
+}
+body.nr-dashboard-theme md-sidenav md-list-item._md-button-wrap > div.md-button:first-child {
+    background-color: transparent;
+}
+body.nr-dashboard-theme md-sidenav div.md-list-item-inner {
+    color: @groupTextColor;
+    background-color: transparent;
 }
 a.md-no-style, button.md-no-style {
     background-color: transparent;
@@ -259,6 +268,7 @@ a.md-no-style, button.md-no-style {
 .nr-menu-item-active div button {
     border-right: 4px solid @groupTextColor;
 }
+
 
 /*
     GROUP SPECIFIC

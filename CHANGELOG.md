@@ -2,6 +2,7 @@
 
 **Enhancements**
 
+ - Fix custom colour sidebar choice to actually work.
  - Dropdown multiselect now allows select/deselect all. PR #590 
  - Add iconify- keyword to icon handling (still need to add js via template)
 
