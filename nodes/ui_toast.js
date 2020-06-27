@@ -7,8 +7,6 @@ module.exports = function(RED) {
             try { this.displayTime = parseFloat(config.displayTime) * 1000; }
             catch(e) { this.displayTime = 3000; }
         }
-        else { this.displayTime = 3000; }
-        if (this.displayTime <= 0) { this.displayTime = 1; }
         this.position = config.position || "top right";
         this.highlight = config.highlight;
         this.ok = config.ok;
@@ -42,12 +40,14 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
             if (node.sendall === true) { delete msg.socketid; }
+            var dt = node.displayTime || msg.timeout * 1000 || 3000;
+            if (dt <= 0) { dt = 1; }
             //msg.payload = noscript(msg.payload);
             ui.emitSocket('show-toast', {
                 title: node.topic || msg.topic,
                 message: msg.payload,
                 highlight: node.highlight || msg.highlight,
-                displayTime: node.displayTime,
+                displayTime: dt,
                 position: node.position,
                 id: node.id,
                 dialog: (node.position === "dialog" || node.position === "prompt") || false,
