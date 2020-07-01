@@ -260,7 +260,7 @@ function add(opt) {
             }
 
             // Handle the node output
-            if (opt.forwardInputMessages && opt.node._wireCount) {
+            if (opt.forwardInputMessages && opt.node._wireCount && fullDataset !== undefined) {
                 msg.payload = opt.convertBack(fullDataset);
                 msg = opt.beforeSend(msg) || msg;
                 //if (settings.verbose) { console.log("UI-SEND",JSON.stringify(msg)); }
