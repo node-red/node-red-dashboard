@@ -91,7 +91,7 @@ function noConvert(value) {
 }
 
 function beforeEmit(msg, value) {
-    return { value:value };
+    return { msg: msg };
 }
 
 function beforeSend(msg) {
