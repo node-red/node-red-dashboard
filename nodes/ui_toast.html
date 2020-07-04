@@ -38,6 +38,9 @@
                     $("#node-dialog-displayok").show();
                     $("#node-dialog-displaycancel").show();
                     $("#node-dialog-topic").show();
+                    if (typeof $("#node-input-cancel").val() !== "string" || $("#node-input-cancel").val() === "" ) {
+                        $("#node-input-cancel").val("Cancel");
+                    }
                 }
                 else {
                     $("#node-toast-displaytime").show();
