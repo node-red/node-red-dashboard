@@ -1,15 +1,19 @@
-### 2.22.2-beta: Maintenance Release
+### 2.23.0: Milestone Release
 
 **Enhancements**
 
  - Fix custom colour sidebar choice to actually work.
- - Dropdown multiselect now allows select/deselect all. PR #590 
- - Add iconify- keyword to icon handling (still need to add js via template)
+ - Dropdown multiselect now allows select/deselect all. PR #590
+ - Add iconify- keyword to icon handling (still need to add js via template).
+ - Let notification node set timeout via msg.timeout property.
 
 **Fixes**
  
- - Block direct websocket connection attempsts - only allow upgrades.
- - Bump angular libs to 1.8.0
+ - Block direct websocket connection attempts - only allow upgrades.
+ - Bump angular libs to 1.8.0 for security patch.
+ - Stop chart sending blank data payload on deploy.
+ - Ensure toast dialog cancel button defaults to on when in prompt with input mode. Issue #596
+ - Remove some hardcoded CSS to help themeing support of editor.
 
 ### 2.22.1: Maintenance Release
 
