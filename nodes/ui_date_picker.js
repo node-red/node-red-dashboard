@@ -19,7 +19,7 @@ module.exports = function(RED) {
                 type: 'date-picker',
                 label: config.label,
                 order: config.order,
-                ddd : new Date(),
+                ddd : new Date().setUTCHours(0,0,0,0),
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
