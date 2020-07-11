@@ -1494,7 +1494,7 @@
                 lightdark += '<option value="dark">' +c_("style.dark")+ '</option>';
                 $('<select id="nr-db-field-angLook">'+lightdark+'</select>')
                     .css("width","100%")
-                    .val(aTheme.palette || "light")
+                    .val(aTheme.palette || "dark")
                     .on("change", function() { aTheme.palette = $(this).val(); changed(); })
                     .appendTo(divPalStyle);
 
