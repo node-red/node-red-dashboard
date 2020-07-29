@@ -590,7 +590,7 @@ function getSizes() {
 
 function isDark() {
     if (baseConfiguration && baseConfiguration.hasOwnProperty("theme") && baseConfiguration.theme.hasOwnProperty("themeState")) {
-        var rgb = parseInt(baseConfiguration.theme.themeState["page-sidebar-backgroundColor"].value.substring(1), 16);
+        var rgb = parseInt(baseConfiguration.theme.themeState["page-backgroundColor"].value.substring(1), 16);
         var luma = 0.2126 * ((rgb >> 16) & 0xff) + 0.7152 * ((rgb >> 8) & 0xff) + 0.0722 * ((rgb >> 0) & 0xff); // per ITU-R BT.709
         if (luma > 128) { return false; }
         else { return true; }
