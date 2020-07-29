@@ -21,7 +21,11 @@
             height: {value: 0},
             passthru: {value: true},
             multiple: {value: false},
-            options: {value:[{value: '', label : ''}]},
+            options: {value:[{value: '', label : ''}],
+                validate:function(v) {
+                    var unique = new Set(v.map(function(o) {return o.value;}));
+                    return v.length == unique.size;
+                }},
             payload: {value: ''},
             topic: {value: ''}
         },
@@ -37,6 +41,9 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+            var un = new Set(this.options.map(function(o) {return o.value}));
+            if (this.options.length == un.size) { $("#valWarning").hide(); }
+            else { $("#valWarning").show(); }
 
             function generateOption(i, option) {
                 var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
@@ -129,12 +136,13 @@
     </div>
     <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%">
         <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Options</label>
-        <div id="node-input-option-container-div" style="box-sizing: border-box; border-radius: 5px; height: 257px; padding: 5px; border: 1px solid #ccc; overflow-y:scroll;display: inline-block; width: calc(70% + 15px);">
-            <ol id="node-input-option-container" style=" list-style-type:none; margin: 0;"></ol>
+        <div id="node-input-option-container-div" style="box-sizing:border-box; border-radius:5px; height:257px; padding:5px; border:1px solid #ccc; overflow-y:scroll; display:inline-block; width:calc(70% + 15px);">
+            <span id="valWarning" style="color:#910000"><b>All Values must be unique.</b></span>
+            <ol id="node-input-option-container" style="list-style-type:none; margin:0;"></ol>
         </div>
     </div>
     <div class="form-row">
-        <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top: 4px; margin-left: 103px;"><i class="fa fa-plus"></i> <span>option</span></a>
+        <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top:4px; margin-left:103px;"><i class="fa fa-plus"></i> <span>option</span></a>
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-multiple"><i class="fa fa-th-list"></i> Allow multiple selections from list: </label>
