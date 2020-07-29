@@ -1,3 +1,11 @@
+### 2.23.1: Maintenance Release
+
+**Fixes**
+
+ - Fix date picker to return midnight on picked day. PR #600
+ - Add some validation to dropdown widget values to flag duplicates.
+ - Fix group spacings to align better.
+
 ### 2.23.0: Milestone Release
 
 **Enhancements**
