@@ -122,26 +122,31 @@ module.exports = function(RED) {
                 return emitOptions;
             },
 
-            beforeSend: function (msg) {
+            convertBack: function (msg) {
                 var val = node.multiple ? [] : "";
+                for (var i=0; i<control.options.length; i++) {
+                    if (!node.multiple && control.options[i].value === msg) {
+                        val = control.options[i].label;
+                        break;
+                    } else if (node.multiple && Array.isArray(msg) && msg.indexOf(control.options[i].value) !== -1) {
+                        val.push(control.options[i].label);
+                    }
+                }
+                return val;
+            },
+
+            beforeSend: function (msg) {
+                msg.payload = msg.payload || [];
                 if (msg._dontSend) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
                 }
-                for (var i=0; i<control.options.length; i++) {
-                    if (!node.multiple && control.options[i].value === msg.payload) {
-                        val = control.options[i].label;
-                        break;
-                    } else if (node.multiple && Array.isArray(msg.payload) && msg.payload.indexOf(control.options[i].value) !== -1) {
-                        val.push(control.options[i].label);
-                    }
-                }
                 msg.topic = config.topic || msg.topic || savedtopic;
                 if (node.pt) {
-                    node.status({shape:"dot",fill:"grey",text:val.toString()});
+                    node.status({shape:"dot",fill:"grey",text:msg.payload.toString()});
                 }
                 else {
-                    node.state[1] = val.toString();
+                    node.state[1] = msg.payload.toString();
                     node.status({shape:"dot",fill:"grey",text:node.state[1] + " | " + node.state[1]});
                 }
             }
