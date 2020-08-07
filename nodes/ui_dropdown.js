@@ -126,10 +126,10 @@ module.exports = function(RED) {
                 var val = node.multiple ? [] : "";
                 for (var i=0; i<control.options.length; i++) {
                     if (!node.multiple && control.options[i].value === msg) {
-                        val = control.options[i].label;
+                        val = control.options[i].value;
                         break;
                     } else if (node.multiple && Array.isArray(msg) && msg.indexOf(control.options[i].value) !== -1) {
-                        val.push(control.options[i].label);
+                        val.push(control.options[i].value);
                     }
                 }
                 return val;

@@ -1,4 +1,10 @@
-### 2.23.1: Maintenance Release
+### 2.23.2: Maintenance Release
+
+**Fixes**
+
+ - Fix dropdown to correct return values not labels
+
+ ### 2.23.1: Maintenance Release
 
 **Fixes**
 
