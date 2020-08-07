@@ -65,6 +65,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                 }
                                 gauge = loadLiquidFillGauge("gauge"+scope.$eval('$id'), scope.$eval('me.item.value'), gaugeConfig);
                                 unreg = scope.$watch('me.item.value', function(newValue) {
+                                    newValue = scope.$eval('me.item.getText()');
+                                    if (isNaN(newValue) || newValue === "") { newValue = gaugeConfig.minValue; }
                                     gauge.update(newValue);
                                 });
                             });

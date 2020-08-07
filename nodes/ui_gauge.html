@@ -79,12 +79,6 @@
                 group: "#node-input-group"
             });
             $("#node-input-gtype").on("change", function() {
-                if ($(this).val() === "wave") {
-                    $("#ui-gauge-format").hide();
-                }
-                else {
-                    $("#ui-gauge-format").show();
-                }
                 if (($(this).val() === "compass") || ($(this).val() === "wave")) {
                     $("#ui-gauge-colours").hide();
                     $("#ui-gauge-segments").hide();
