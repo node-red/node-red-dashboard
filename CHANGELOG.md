@@ -6,7 +6,7 @@
  - Add some validation to dropdown widget values to flag duplicates.
  - Fix dropdown to only return valid options if options changed dynamically.
  - Fix group spacings to align better.
- - Fix wave gauge to also allo using random msg properties. Issue #607
+ - Fix wave gauge to also allow using random msg properties. Issue #607
 
 ### 2.23.0: Milestone Release
 
