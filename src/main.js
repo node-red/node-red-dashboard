@@ -787,7 +787,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     words.onerror = function(err) { events.emit('ui-audio', 'error: '+err.error); }
                     words.onend = function() { events.emit('ui-audio', 'complete'); }
                     for (var v=0; v<voices.length; v++) {
-                        if (voices[v].lang === msg.voice) {
+                        if (voices[v].voiceURI === msg.voice) {
                             words.voice = voices[v];
                             break;
                         }
