@@ -136,7 +136,7 @@ module.exports = function(RED) {
             },
 
             beforeSend: function (msg) {
-                msg.payload = msg.payload || [];
+                if (msg.payload === undefined) { msg.payload = []; }
                 if (msg._dontSend) {
                     delete msg.options;
                     msg.payload = emitOptions.value;

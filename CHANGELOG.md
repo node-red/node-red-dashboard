@@ -1,4 +1,11 @@
-### 2.23.2: Maintenance Release
+### 2.23.3: Maintenance Release
+
+**Fixes**
+
+ - Fix regression in dropdown returning 0 value. Issue #614 
+ - Fix ui_textinput-CR to allow any step so floats validate ok. Issue #609
+
+ ### 2.23.2: Maintenance Release
 
 **Fixes**
 
