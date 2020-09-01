@@ -105,7 +105,7 @@
 	<p>The user can set the value between
     the limits (<b>min</b> and <b>max</b>). Each value change will generate a <code>msg.payload</code>.</p>
     <p>If <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.<p>
-    <p>Any input messages will be converted to a number, the <b>min</b> value will be used if conversion fails,
+    <p>Any input <code>msg.payload</code> will be converted to a number, the <b>min</b> value will be used if conversion fails,
     and it will update the user interface. If the value changes, it will also be passed to the output.</p>
     <p>The <b>Value Format</b> field can be used to change the displayed format. For example, a <b>Value Format</b>
     of <code>{{value}} %</code>
