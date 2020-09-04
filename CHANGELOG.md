@@ -5,7 +5,7 @@
  - Fix regression in dropdown returning 0 value. Issue #614 
  - Fix ui_textinput-CR to allow any step so floats validate ok. Issue #609
  - Ensure voice option picks a unique selector. Issue #613
- - Update libraries to fix misiing weather/moon icons
+ - Update libraries to fix missing weather/moon icons
 
  ### 2.23.2: Maintenance Release
 
