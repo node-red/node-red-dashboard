@@ -1,3 +1,9 @@
+### 2.23.4-beta: Maintenance Release
+
+**Fixes**
+
+ - Truncate input data array if larger than number of points required. Issue #617
+
 ### 2.23.3: Maintenance Release
 
 **Fixes**

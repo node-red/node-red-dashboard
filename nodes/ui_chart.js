@@ -96,6 +96,13 @@ module.exports = function(RED) {
                             }
                             if (node.chartType === "line") {
                                 if (flag) { delete value[0].labels; }
+                                if (config.removeOlderPoints) {
+                                    for (var dl=0; dl < value[0].data.length; dl++ ) {
+                                        if (value[0].data[dl].length > config.removeOlderPoints) {
+                                            value[0].data[dl] = value[0].data[dl].slice(-config.removeOlderPoints);
+                                        }
+                                    }
+                                }
                             }
                             else if (node.chartType === "bar" || node.chartType === "horizontalBar") {
                                 if (flag) {
