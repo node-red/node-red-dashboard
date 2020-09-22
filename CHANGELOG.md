@@ -4,6 +4,7 @@
 
  - Truncate input data array if larger than number of points required. Issue #617
  - Fix dropdown regression to handle objects
+ - PR to report correct IP address when using Nginx or proxy. PR #620
 
 ### 2.23.3: Maintenance Release
 
