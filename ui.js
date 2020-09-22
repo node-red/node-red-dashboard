@@ -381,7 +381,7 @@ function init(server, app, log, redSettings) {
 
     io.on('connection', function(socket) {
 
-        ev.emit("newsocket", socket.client.id, socket.request.connection.remoteAddress);
+        ev.emit("newsocket", socket.client.id, socket.request.headers['x-real-ip'] || socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress);
         updateUi(socket);
 
         socket.on(updateValueEventName, ev.emit.bind(ev, updateValueEventName));
@@ -398,20 +398,20 @@ function init(server, app, log, redSettings) {
             var name = "";
             if ((index != null) && !isNaN(index) && (menu.length > 0) && (index < menu.length) && menu[index]) {
                 name = (menu[index].hasOwnProperty("header") && typeof menu[index].header !== 'undefined') ? menu[index].header : menu[index].name;
-                ev.emit("changetab", index, name, socket.client.id, socket.request.connection.remoteAddress, params);
+                ev.emit("changetab", index, name, socket.client.id, socket.request.headers['x-real-ip'] || socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress, params);
             }
         });
         socket.on('ui-collapse', function(d) {
-            ev.emit("collapse", d.group, d.state, socket.client.id, socket.request.connection.remoteAddress);
+            ev.emit("collapse", d.group, d.state, socket.client.id, socket.request.headers['x-real-ip'] || socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress);
         });
         socket.on('ui-refresh', function() {
             updateUi();
         });
         socket.on('disconnect', function() {
-            ev.emit("endsocket", socket.client.id, socket.request.connection.remoteAddress);
+            ev.emit("endsocket", socket.client.id, socket.request.headers['x-real-ip'] || socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress);
         });
         socket.on('ui-audio', function(audioStatus) {
-            ev.emit("audiostatus", audioStatus, socket.client.id, socket.request.connection.remoteAddress);
+            ev.emit("audiostatus", audioStatus, socket.client.id, socket.request.headers['x-real-ip'] || socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress);
         });
         socket.on('ui-params', function(p) {
             delete p.socketid;
