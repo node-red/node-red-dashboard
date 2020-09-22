@@ -3,6 +3,7 @@
 **Fixes**
 
  - Truncate input data array if larger than number of points required. Issue #617
+ - Fix dropdown regression to handle objects
 
 ### 2.23.3: Maintenance Release
 
