@@ -126,15 +126,15 @@ module.exports = function(RED) {
                 var val = node.multiple ? [] : "";
                 for (var i=0; i<control.options.length; i++) {
                     if (!node.multiple && control.options[i].value === msg) {
-                        if (typeof control.options[i].value === "string") { 
-                            try { control.options[i].value = JSON.parse(control.options[i].value); } 
+                        if (typeof control.options[i].value === "string") {
+                            try { control.options[i].value = JSON.parse(control.options[i].value); }
                             catch(e) {}
                         }
                         val = control.options[i].value;
                         break;
                     } else if (node.multiple && Array.isArray(msg) && msg.indexOf(control.options[i].value) !== -1) {
-                        if (typeof control.options[i].value === "string") { 
-                            try { control.options[i].value = JSON.parse(control.options[i].value); } 
+                        if (typeof control.options[i].value === "string") {
+                            try { control.options[i].value = JSON.parse(control.options[i].value); }
                             catch(e) {}
                         }
                         val.push(control.options[i].value);
@@ -159,7 +159,7 @@ module.exports = function(RED) {
                     else {
                         if (typeof msg.payload === "object") { stat = JSON.stringify(msg.payload); }
                         else { stat = msg.payload.toString(); }
-                        if (stat.length > 32) { stat = stat.substr(0,31)+"..."; } 
+                        if (stat.length > 32) { stat = stat.substr(0,31)+"..."; }
                     }
                     if (node.pt) {
                         node.status({shape:"dot",fill:"grey",text:stat});
@@ -169,7 +169,7 @@ module.exports = function(RED) {
                         node.status({shape:"dot",fill:"grey",text:node.state[1] + " | " + node.state[1]});
                     }
                 }
-                
+
             }
         });
         if (!node.pt) {

@@ -19,7 +19,7 @@
  * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.22
+ * v1.1.26
  */
 
 body,
@@ -360,21 +360,16 @@ textarea {
   width: 100%;
 }
 
-._md-panel-hidden {
-  display: none;
+.md-panel-inner-wrapper {
+  position: fixed;
 }
 
 ._md-panel-offscreen {
   left: -9999px;
 }
 
-._md-panel-fullscreen {
-  border-radius: 0;
-  left: 0;
-  min-height: 100%;
-  min-width: 100%;
-  position: fixed;
-  top: 0;
+._md-panel-hidden {
+  display: none;
 }
 
 ._md-panel-shown .md-panel {
@@ -385,7 +380,7 @@ textarea {
 
 .md-panel {
   opacity: 0;
-  position: fixed;
+  position: relative;
 }
 
 .md-panel._md-panel-shown {
@@ -413,7 +408,7 @@ textarea {
 
 .md-panel._md-panel-backdrop {
   height: 100%;
-  position: absolute;
+  position: fixed;
   width: 100%;
 }
 
@@ -426,6 +421,15 @@ textarea {
 .md-panel._md-opaque-leave {
   -webkit-transition: opacity .3s cubic-bezier(.4,0,1,1);
   transition: opacity .3s cubic-bezier(.4,0,1,1);
+}
+
+._md-panel-fullscreen {
+  border-radius: 0;
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: fixed;
+  top: 0;
 }
 
 md-autocomplete {
@@ -3199,6 +3203,8 @@ md-input-container .md-input {
   -ms-flex-preferred-size: 26px;
   border-radius: 0;
   border-style: solid;
+  -webkit-transition: border-color .4s cubic-bezier(.25,.8,.25,1);
+  transition: border-color .4s cubic-bezier(.25,.8,.25,1);
   width: 100%;
   box-sizing: border-box;
   float: left;
@@ -4384,22 +4390,19 @@ md-menu-content.md-menu-bar-menu.md-dense .md-menu>.md-button:after {
 }
 
 md-nav-ink-bar {
-  bottom: 0;
-  height: 2px;
-  left: auto;
-  position: absolute;
-  right: auto;
   background-color: #000;
-}
-
-md-nav-ink-bar._md-left {
-  -webkit-transition: left .125s cubic-bezier(.35,0,.25,1),right .25s cubic-bezier(.35,0,.25,1);
-  transition: left .125s cubic-bezier(.35,0,.25,1),right .25s cubic-bezier(.35,0,.25,1);
-}
-
-md-nav-ink-bar._md-right {
-  -webkit-transition: left .25s cubic-bezier(.35,0,.25,1),right .125s cubic-bezier(.35,0,.25,1);
-  transition: left .25s cubic-bezier(.35,0,.25,1),right .125s cubic-bezier(.35,0,.25,1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  -webkit-transform-origin: left top;
+  transform-origin: left top;
+  will-change: transform;
+  -webkit-transition: -webkit-transform .125s cubic-bezier(.35,0,.25,1);
+  transition: -webkit-transform .125s cubic-bezier(.35,0,.25,1);
+  transition: transform .125s cubic-bezier(.35,0,.25,1);
+  transition: transform .125s cubic-bezier(.35,0,.25,1),-webkit-transform .125s cubic-bezier(.35,0,.25,1);
 }
 
 md-nav-ink-bar.ng-animate {
@@ -4439,6 +4442,13 @@ md-nav-extra-content {
 md-progress-circular {
   position: relative;
   display: block;
+  -webkit-transform: scale(1,1);
+  transform: scale(1,1);
+}
+
+[dir=rtl] md-progress-circular {
+  -webkit-transform: scale(-1,1);
+  transform: scale(-1,1);
 }
 
 md-progress-circular._md-progress-circular-disabled {
@@ -4464,6 +4474,13 @@ md-progress-linear {
   height: 5px;
   padding-top: 0!important;
   margin-bottom: 0!important;
+  -webkit-transform: scale(1,1);
+  transform: scale(1,1);
+}
+
+[dir=rtl] md-progress-linear {
+  -webkit-transform: scale(-1,1);
+  transform: scale(-1,1);
 }
 
 md-progress-linear._md-progress-linear-disabled {
@@ -5130,10 +5147,9 @@ md-select[required].ng-empty.ng-invalid:not(.md-no-asterisk) .md-select-value sp
 }
 
 md-select[disabled] .md-select-value {
-  background-position: 0 bottom;
+  background-position: bottom -1px left 0;
   background-size: 4px 1px;
   background-repeat: repeat-x;
-  margin-bottom: -1px;
 }
 
 md-select:focus {
@@ -5163,9 +5179,18 @@ md-select:not([disabled]):focus.ng-invalid.ng-touched .md-select-value {
   padding-bottom: 0;
 }
 
-md-input-container.md-input-has-value .md-select-value>span:not(.md-select-icon) {
-  -webkit-transform: translate3d(0,1px,0);
-  transform: translate3d(0,1px,0);
+md-input-container md-select:not([disabled]):focus .md-select-value {
+  border-bottom-width: 2px;
+}
+
+md-input-container md-select[disabled] .md-select-value {
+  background-position: bottom -1px left 0;
+}
+
+md-input-container md-select .md-select-value {
+  min-height: 26px;
+  padding-bottom: 1px;
+  border-bottom-width: 1px;
 }
 
 .md-select-value {
@@ -7333,6 +7358,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
 }
 
 .md-tooltip {
+  display: inline-block;
   pointer-events: none;
   border-radius: 4px;
   overflow: hidden;
