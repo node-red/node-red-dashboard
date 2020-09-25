@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_subgroup_t',{
+        category: 'config',
+        defaults: {
+            name: {value: "subgroup"},
+            widgetOrder: {value: []},
+            width: {value: 1},
+            height: {value: 1},
+            subflow: {value: ""}
+        },
+        paletteLabel: 'dashboard subgroup template',
+        inputs:0,
+        outputs:0,
+        hasUsers: false,
+        label: function() { return this.name; },
+        labelStyle: function() { return this.name?"node_label_italic":""; },
+        oneditprepare: function() {
+            $("#node-config-input-size").elementSizer({
+                width: "#node-config-input-width",
+                height: "#node-config-input-height",
+                subflow: "#node-config-input-subflow",
+                auto: false
+            });
+
+            $("#edit-config-layout").click(function(evt) {
+                alert('TODO Subgroup layout editor is not implemented.');
+                evt.stopPropagation();
+                evt.preventDefault();
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="ui_subgroup_t">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label><i class="fa fa-object-group"></i> Size</label>
+        <input type="hidden" id="node-config-input-width">
+        <input type="hidden" id="node-config-input-height">
+        <input type="hidden" id="node-config-input-subflow">
+        <button class="editor-button" id="node-config-input-size"></button>
+    </div>
+    <div class="form-row" style="text-align: center;">
+        <a href="#" class="editor-button editor-button" id="edit-config-layout">Edit Subgroup Layout</a>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="ui_subgroup_t">
+    <p>SubGroupTemplate</p>
+</script>

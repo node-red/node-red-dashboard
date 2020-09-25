@@ -442,6 +442,18 @@
                     height: nodes[cnt].height,
                     auto: nodes[cnt].width == 0 ? true : false
                 };
+
+
+                // UI-MODULE PROTO
+                if (RED.nodes.subflow(nodes[cnt].z)) { continue; }
+
+                if (widget.type === 'ui_subgroup_i') {
+                    widget.width = RED.nodes.node(nodes[cnt].subgroup).width;
+                    widget.height = RED.nodes.node(nodes[cnt].subgroup).height;
+                    widget.auto = false;
+                }
+                // UI-MODULE PROTO
+
                 group.widgets.push(widget);
 
                 if (!isLayoutToolSupported(nodes[cnt].type)){
@@ -770,7 +782,11 @@
                     var node = el.data('_gridstack_node');
                     var auto = (el[0].dataset.noderedsizeauto == 'true') ? true : false;
                     var type = el[0].dataset.noderedtype;
-                    grid.resizable(el, !auto);
+                    if (el[0].dataset.noderedtype != 'ui_subgroup_i') { // UI-MODULE PROTO
+                        grid.resizable(el, !auto);
+                    } else {                                            // UI-MODULE PROTO
+                        grid.resizable(el, false);                      // UI-MODULE PROTO
+                    }
                     if (auto === true) {
                         grid.resize(el, width, getDefaultHeight(node.id, width));
                     }
@@ -1157,6 +1173,169 @@
                             RED.nodes.dirty(true);
                         }
                     }
+
+
+                    // UI-MODULE PROTO
+                    
+                    // Subgroups are automatically generated based on subflows.
+                    var allNodes = RED.nodes.createCompleteNodeSet(false);
+
+                    // Add subgroup template
+                    var sftmpls = [];
+                    RED.nodes.eachSubflow(function(n) {
+                        sftmpls.push(n);
+                        var exist = false;
+                        for (var cnt = 0; cnt < allNodes.length; cnt++) {
+                            if (allNodes[cnt].subflow == n.id) {
+                                exist = true;
+                                break;
+                            }
+                        }
+
+                        if (!exist) {
+                            // add ui_subgroup_t node
+                            var sgtmplNode = {
+                                _def: RED.nodes.getType("ui_subgroup_t"),
+                                type: "ui_subgroup_t",
+                                z: n.id,
+                                hasUsers: false,
+                                users: [],
+                                id: RED.nodes.id(),
+                                widgetOrder: [],
+                                name: "["+n.name+"]ui subgroup template",
+                                width: 6,
+                                height: 6,
+                                subflow: n.id,
+                                label: function() { return this.name ; }
+                            };
+                            RED.nodes.add(sgtmplNode);
+                            RED.nodes.dirty(true);
+                            RED.view.redraw(true);
+                        }
+                    });
+
+                    // Remove subgroup template
+                    RED.nodes.eachConfig(function(n) {
+                        if (n.type === 'ui_subgroup_t') {
+                            var exist = false;
+                            for (var cnt = 0; cnt < sftmpls.length; cnt++) {
+                                if (sftmpls[cnt].id == n.subflow) {
+                                    exist = true;
+                                    break;
+                                }
+                            }
+
+                            if (!exist) {
+                                RED.nodes.remove(n.id);
+                                RED.nodes.dirty(true);
+                                RED.view.redraw(true);
+                            }
+                        }
+                    });
+
+                    // Add subgroup instance
+                    var sfinsts = [];
+                    for (var cnt = 0; cnt < allNodes.length; cnt++) {
+                        if (allNodes[cnt].type.substring(0,8) == "subflow:") {
+                            sfinsts.push(allNodes[cnt]);
+                            var subflowId = allNodes[cnt].type.substring(8);
+                            var exist = false;
+                            for (var cnt2 = 0; cnt2 < allNodes.length; cnt2++) {
+                                if (allNodes[cnt2].subflow == allNodes[cnt].id) {
+                                    exist = true;
+                                    break;
+                                }
+                            }
+
+                            if (!exist) {
+                                // get subgroup template
+                                var sgId = "";
+                                RED.nodes.eachConfig(function(n) {
+                                    if (n.type == 'ui_subgroup_t' && n.subflow == subflowId) {
+                                        sgId = n.id;
+                                    }
+                                });
+                                // belongs to subflow
+                                var zId = "";
+                                RED.nodes.eachSubflow(function(n) {
+                                    if (n.id === allNodes[cnt].z) {
+                                        zId = n.id;
+                                    }
+                                });
+
+                                // add ui_subgroup_i node
+                                var sginstlNode = {
+                                    _def: RED.nodes.getType("ui_subgroup_i"),
+                                    type: "ui_subgroup_i",
+                                    z: zId,
+                                    hasUsers: false,
+                                    users: [],
+                                    id: RED.nodes.id(),
+                                    group: "",
+                                    order: 0,
+                                    name: "["+ RED.nodes.subflow(subflowId).name +"]ui subgroup instance",
+                                    subflow: allNodes[cnt].id,
+                                    subgroup: sgId,
+                                    label: function() { return this.name; }
+                                };
+                                RED.nodes.add(sginstlNode);
+                                RED.nodes.dirty(true);
+                                RED.view.redraw(true);
+                            }
+                        }
+                    }
+
+                    // ui_subgroup_i (ui_subgroup_i)
+                    RED.nodes.eachConfig(function(n) {
+                        if (n.type === 'ui_subgroup_i') {
+                            var exist = false;
+                            for (var cnt = 0; cnt < sfinsts.length; cnt++) {
+                                if (sfinsts[cnt].id == n.subflow) {
+                                    exist = true;
+                                    break;
+                                }
+                            }
+
+                            if (!exist) {
+                                RED.nodes.remove(n.id);
+                                RED.nodes.dirty(true);
+                                RED.view.redraw(true);
+                            }
+                        }
+                    });
+
+                    // Add widget node to widgetOrder
+                    allNodes = RED.nodes.createCompleteNodeSet(false);
+                    RED.nodes.eachConfig(function(n) {
+                        if (n.type === 'ui_subgroup_t') {
+
+                            // Remove widget node from widgetOrder
+                            var wLen = n.widgetOrder.length;
+                            for (var cnt = 0; cnt < wLen; cnt++) {
+                                var wId = n.widgetOrder.shift();
+                                var wNode = RED.nodes.node(wId)
+                                if (wNode && (wNode.z === n.subflow)) {
+                                    n.widgetOrder.push(wId);
+                                }
+                            }
+
+                            // Add new widget node
+                            for (var cnt = 0; cnt < allNodes.length; cnt++) {
+                                var node = allNodes[cnt];
+                                if ((n.subflow === node.z)&&(/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && node.type !== 'ui_audio' && node.type !== 'ui_base' && node.type !== 'ui_group' && node.type !== 'ui_tab' && node.type !== 'ui_subgroup_t')){
+                                    if (n.widgetOrder.indexOf(node.id) === -1) {
+                                        n.widgetOrder.push(node.id);
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // Side bar refresh
+                    RED.sidebar.info.refresh();
+
+                    // UI-MODULE PROTO
+
                 }
 
                 var content = $("<div>").css({"position":"relative","height":"100%"});
@@ -2106,12 +2285,17 @@
                                                     addClass: 'grid-stack-item-content',
                                                     title: dispLabel + ':' + dispType
                                                 });
-
-                                                if (node.auto === true) {
-                                                    itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
-                                                } else {
-                                                    itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"></i>');
+                                                
+                                                // UI-MODULE PROTO
+                                                if (node.type != 'ui_subgroup_i') {
+                                                    if (node.auto === true) {
+                                                        itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
+                                                    } else {
+                                                        itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"></i>');
+                                                    }
                                                 }
+                                                // UI-MODULE PROTO
+
                                                 itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
                                                 item.append(itemContent);
                                                 grid.addWidget(
@@ -2128,7 +2312,14 @@
                                             el = $(el);
                                             var node = el.data('_gridstack_node');
                                             var auto = (el[0].dataset.noderedsizeauto == 'true') ? true : false;
-                                            grid.resizable(el, !auto);
+
+                                            // UI-MODULE PROTO
+                                            if (el[0].dataset.noderedtype != 'ui_subgroup_i') { 
+                                                grid.resizable(el, !auto);
+                                            } else {
+                                                grid.resizable(el, false);
+                                            }
+                                            // UI-MODULE PROTO
                                         });
 
                                         // Group width change
@@ -2264,7 +2455,15 @@
                                         elementParents[widgetNode.id] = groupNode.id;
                                         var titleRow = $('<div>',{class:"nr-db-sb-list-header nr-db-sb-widget-list-header"}).appendTo(container);
                                         $('<i class="nr-db-sb-list-handle nr-db-sb-widget-list-handle fa fa-bars"></i>').appendTo(titleRow);
-                                        $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa-picture-o"></i>').click(function(e) { e.preventDefault(); RED.search.show(widgetNode.id); }).appendTo(titleRow);
+
+                                        // UI-MODULE PROTO
+                                        if (widgetNode.type === 'ui_subgroup_i') {
+                                            $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa fa-table"></i>').click(function(e) { e.preventDefault(); RED.search.show(widgetNode.id); }).appendTo(titleRow);
+                                        } else {
+                                            $('<i class="nr-db-sb-icon nr-db-sb-widget-icon fa fa-picture-o"></i>').click(function(e) { e.preventDefault(); RED.search.show(widgetNode.id); }).appendTo(titleRow);
+                                        }
+                                        // UI-MODULE PROTO
+
                                         var l = widgetNode._def.label;
                                         try {
                                             l = (typeof l === "function" ? l.call(widgetNode) : l)||"";
@@ -2288,7 +2487,15 @@
                                             RED.view.redraw();
                                         });
                                         editButton.on('click',function(evt) {
-                                            RED.editor.edit(widgetNode);
+
+                                            // UI-MODULE PROTO
+                                            if (widgetNode.type === 'ui_subgroup_i') {
+                                                RED.editor.editConfig("", "ui_subgroup_i", widgetNode.id);
+                                            } else {
+                                                RED.editor.edit(widgetNode);
+                                            }
+                                            // UI-MODULE PROTO
+
                                             evt.stopPropagation();
                                             evt.preventDefault();
                                         });
@@ -2347,7 +2554,13 @@
                                     evt.preventDefault();
                                 });
                                 group.widgets.forEach(function(widget) {
-                                    ol.editableList('addItem',widget);
+                                	
+                                	// UI-MODULE PROTO
+                                	if (!RED.nodes.subflow(widget.z)) { 
+                                        ol.editableList('addItem',widget);
+                                    }
+                                    // UI-MODULE PROTO
+
                                 })
                             },
                             sortItems: function(items) {
@@ -2610,6 +2823,23 @@
                             }
                         }
                     });
+
+
+                    // UI-MODULE PROTO
+                    RED.nodes.eachConfig(function(node) {
+                        switch (node.type) {
+                            case 'ui_subgroup_i': {
+                                // Subflow instances placed in subflows are not displayed.
+                                if (groups.hasOwnProperty(node.group) && !RED.nodes.subflow(node.z)) {
+                                    groupElements[node.group] = groupElements[node.group]||[];
+                                    groupElements[node.group].push(node);
+                                }
+                                break;
+                            }
+                        }
+                    });
+                    // UI-MODULE PROTO
+
                     for (groupId in groups) {
                         if (groups.hasOwnProperty(groupId)) {
                             group = groups[groupId];
@@ -3171,6 +3401,7 @@
                 var fixedWidth = false;
                 var fixedHeight = false;
                 var group = $(that.options.group).val();
+                var subflow = $(that.options.subflow).val();  // UI-MODULE PROTO
                 if (group) {
                     var groupNode = RED.nodes.node(group);
                     if (groupNode) {
@@ -3179,7 +3410,14 @@
                         fixedWidth = true;
                     }
                     maxHeight = Math.max(6,+height+1);
-                }
+                
+                // UI-MODULE PROTO
+                } else if (subflow) {
+                    gridWidth = Math.max(12,+width);
+                    maxWidth = gridWidth;
+                    maxHeight = height+3;
+                    fixedHeight = true;
+                } // UI-MODULE PROTO
                 else {
                     gridWidth = Math.max(12,+width);
                     maxWidth = gridWidth;

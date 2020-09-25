@@ -73,7 +73,9 @@
             "ui_link": "nodes/ui_link.js",
             "ui_tab": "nodes/ui_tab.js",
             "ui_group": "nodes/ui_group.js",
-            "ui_spacer": "nodes/ui_spacer.js"
+            "ui_spacer": "nodes/ui_spacer.js",
+            "ui_subgroup_t": "nodes/ui_subgroup_t.js",
+            "ui_subgroup_i": "nodes/ui_subgroup_i.js"
         }
     },
     "dependencies": {

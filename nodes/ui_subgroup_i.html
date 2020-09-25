@@ -1,0 +1,45 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ui_subgroup_i',{
+        category: 'config',
+        defaults: {
+            name: {value: "subgroup"},
+            group: {type: 'ui_group', required:false},
+            order: {value: 0},
+            subflow: {value: ""},
+            subgroup: {type: 'ui_subgroup_t', required:true}
+        },
+        paletteLabel: 'dashboard subgroup instance',
+        inputs:0,
+        outputs:0,
+        hasUsers: false,
+        label: function() {
+            return this.name;},
+        labelStyle: function() { return this.name?"node_label_italic":""; },
+        oneditprepare: function() {
+            var subgroup = this.subgroup;
+            $("#edit-config-template").click(function(evt) {
+                RED.editor.editConfig("", "ui_subgroup_t", subgroup);
+                evt.stopPropagation();
+                evt.preventDefault();
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="ui_subgroup_i">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-group"><i class="fa fa-table"></i> Group</label>
+        <input type="text" id="node-config-input-group">
+    </div>
+    <div class="form-row" style="text-align: center;">
+        <a href="#" class="editor-button editor-button" id="edit-config-template">Edit Subgroup Template</a>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="ui_subgroup_i">
+    <p>SubGroupIntance</p>
+</script>
