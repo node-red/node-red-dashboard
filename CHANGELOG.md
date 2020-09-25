@@ -1,4 +1,4 @@
-### 2.23.4-beta: Maintenance Release
+### 2.23.4: Maintenance Release
 
 **Fixes**
 
@@ -10,7 +10,7 @@
 
 **Fixes**
 
- - Fix regression in dropdown returning 0 value. Issue #614 
+ - Fix regression in dropdown returning 0 value. Issue #614
  - Fix ui_textinput-CR to allow any step so floats validate ok. Issue #609
  - Ensure voice option picks a unique selector. Issue #613
  - Update libraries to fix missing weather/moon icons
@@ -41,7 +41,7 @@
  - Let notification node set timeout via msg.timeout property.
 
 **Fixes**
- 
+
  - Block direct websocket connection attempts - only allow upgrades.
  - Bump angular libs to 1.8.0 for security patch.
  - Stop chart sending blank data payload on deploy.
