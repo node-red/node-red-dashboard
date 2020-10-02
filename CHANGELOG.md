@@ -1,3 +1,9 @@
+### 2.23.5: Maintenance Release
+
+**Fixes**
+
+ - Set checkbox label to be full width. Issue #622
+
 ### 2.23.4: Maintenance Release
 
 **Fixes**
