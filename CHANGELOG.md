@@ -3,6 +3,7 @@
 **Fixes**
 
  - Set checkbox label to be full width. Issue #622
+ - Add CSS for ui-list menu select to match theme.
 
 ### 2.23.4: Maintenance Release
 
