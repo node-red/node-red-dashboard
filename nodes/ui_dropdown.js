@@ -65,7 +65,6 @@ module.exports = function(RED) {
                     for (var i = 0; i < msg.options.length; i++) {
                         var opt = msg.options[i];
                         if (opt === undefined || opt === null) { continue; }
-
                         switch (typeof opt) {
                             case 'number': {
                                 opt = "" + opt;
@@ -80,7 +79,7 @@ module.exports = function(RED) {
                                 // assuming object of {label:value}
                                 for (var m in opt) {
                                     if (opt.hasOwnProperty(m)) {
-                                        emitOptions.newOptions.push({label:m, value:JSON.stringify(opt[m])});
+                                        emitOptions.newOptions.push({label:m, value:opt[m]});
                                     }
                                 }
                                 break;
@@ -172,12 +171,14 @@ module.exports = function(RED) {
 
             }
         });
+
         if (!node.pt) {
             node.on("input", function(msg) {
                 node.state[0] = msg.payload;
                 node.status({shape:"dot",fill:"grey",text:node.state[0] + " | " + node.state[1]});
             });
         }
+
         node.on("close", done);
     }
     RED.nodes.registerType("ui_dropdown", DropdownNode);
