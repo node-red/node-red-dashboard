@@ -4,6 +4,7 @@
 
  - Set checkbox label to be full width. Issue #622
  - Add CSS for ui-list menu select to match theme.
+ - Add node-id property to each md-card.
 
 ### 2.23.4: Maintenance Release
 

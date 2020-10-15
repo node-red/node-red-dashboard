@@ -1,7 +1,8 @@
-<md-card 
-    ui-card-size="{{ me.item.width }}x{{ me.item.height }}" 
-    layout-align="center center" 
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}">
+<md-card
+    ui-card-size="{{ me.item.width }}x{{ me.item.height }}"
+    layout-align="center center"
+    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    node-id="{{me.item.id}}">
     <div class="nr-dashboard-chart-container" style="width:100%; height:100%;">
         <p  class="label nr-dashboard-chart-title"
             ng-class="{'nr-dashboard-chart-titlel':(me.item.width > 3)}"
@@ -13,7 +14,7 @@
             ng-swipe-right="$event.stopPropagation();"
             ng-swipe-left="$event.stopPropagation();">
         </ui-chart-js>
-        <p  class="blank-label" 
+        <p  class="blank-label"
             ng-if="config && config.nodata">{{ me.item.nodata }}
         </p>
     </div>
