@@ -113,8 +113,8 @@
     message on the user interface.</p>
     <p>If a <code>msg.topic</code> is available it will be used as the title.</p>
     <p>If you do not set an optional border highlight colour, then it can be set dynamically by <code>msg.highlight</code>.</p>
-    <p>If you leave the timeout blank it can be set by <code>msg.timeout</code>.
-    <p>You may also configure the position and duration of the notification.</p>
+    <p>You may also configure the position and duration of the toast notifications. If you leave the timeout blank
+    it can be set by <code>msg.timeout. This does not apply to OK/Cancel dialogs.</code>.
     <p>The dialog returns a <code>msg.payload</code> string of whatever you configure
     the button label(s) to be. The second (cancel) button is optional, as is the return
     value of <code>msg.topic</code>.</p>
