@@ -173,6 +173,7 @@ md-card {
 @nrTheme: true;
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
+@wtc-light: boolean(luma(@widgetTextColor) > 50%);
 
 // define some CSS variables for user usage
 :root {
@@ -755,6 +756,10 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     border-bottom-width: 1px;
     font-family: inherit;
     padding-left: 8px;
+}
+
+.nr-dashboard-theme input[type="time"]::-webkit-calendar-picker-indicator  {
+    filter: invert(if(@wtc-light, 100%, 0%));
 }
 
 /* Text */
