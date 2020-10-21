@@ -2997,6 +2997,7 @@
                         }
                         return 0
                     });
+                    var updateList = {};
                     for (var i=0; i<pendingAdd.length; i++) {
                         var node = pendingAdd[i];
                         if (node.type === "ui_tab") {
@@ -3023,6 +3024,9 @@
                                 }
                                 if (groupLists[node.group]) {
                                     groupLists[node.group].editableList('addItem',node)
+                                    if (node.order >= 0) {
+                                        updateList[node.group] = true;
+                                    }
                                 }
                                 else {
                                     refreshOrphanedWidgets();
@@ -3030,6 +3034,12 @@
                             }
                         }
                     }
+                    Object.keys(updateList).forEach(function (group) {
+                        var list = groupLists[group];
+                        if (list) {
+                            list.editableList("sort", function(a,b){return a.order-b.order;});
+                        }
+                    });
                     pendingAdd = [];
                 }
 
