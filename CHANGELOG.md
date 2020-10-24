@@ -6,6 +6,7 @@
  - Add CSS for ui-list menu select to match theme.
  - Add node-id property to each md-card.
  - Force time picker image to contrast with background.
+ - Let slider show status even if no nodes attached to output.
 
 ### 2.23.4: Maintenance Release
 

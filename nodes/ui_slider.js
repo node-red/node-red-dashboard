@@ -50,6 +50,11 @@ module.exports = function(RED) {
                 node.status({shape:"dot",fill:"grey",text:node.state[0] + " | " + node.state[1]});
             });
         }
+        else if (node._wireCount === 0) {
+            node.on("input", function(msg) {
+                node.status({shape:"dot",fill:"grey",text:msg.payload});
+            });
+        }
         node.on("close", done);
     }
     RED.nodes.registerType("ui_slider", SliderNode);
