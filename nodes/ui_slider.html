@@ -79,7 +79,7 @@
         </select>
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, set slider to new payload value: </label>
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
@@ -112,6 +112,4 @@
     <p>The label can also be set by a message property by setting
     the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
     <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the slider output.</p>
-    <p>Note: An input msg to the slider node will not change the status information displayed unless the slider
-    node output is connected to another node.</p>
 </script>
