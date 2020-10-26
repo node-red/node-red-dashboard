@@ -125,14 +125,14 @@ module.exports = function(RED) {
                 var val = node.multiple ? [] : "";
                 for (var i=0; i<control.options.length; i++) {
                     if (!node.multiple && control.options[i].value === msg) {
-                        if (typeof control.options[i].value === "string") {
+                        if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
                             try { control.options[i].value = JSON.parse(control.options[i].value); }
                             catch(e) {}
                         }
                         val = control.options[i].value;
                         break;
                     } else if (node.multiple && Array.isArray(msg) && msg.indexOf(control.options[i].value) !== -1) {
-                        if (typeof control.options[i].value === "string") {
+                        if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
                             try { control.options[i].value = JSON.parse(control.options[i].value); }
                             catch(e) {}
                         }
@@ -168,7 +168,6 @@ module.exports = function(RED) {
                         node.status({shape:"dot",fill:"grey",text:node.state[1] + " | " + node.state[1]});
                     }
                 }
-
             }
         });
 

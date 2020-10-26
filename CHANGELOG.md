@@ -7,6 +7,7 @@
  - Add node-id property to each md-card.
  - Force time picker image to contrast with background.
  - Let slider show status even if no nodes attached to output.
+ - Fix dropdown to return correct message type.
 
 ### 2.23.4: Maintenance Release
 
