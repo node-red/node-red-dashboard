@@ -36,6 +36,9 @@
         label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'dropdown'; },
         labelStyle: function() { return this.name?"node_label_italic":""; },
         oneditprepare: function() {
+            if (this.multiple === undefined) {
+                $("#node-input-multiple").prop('checked', false);;
+            }
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
