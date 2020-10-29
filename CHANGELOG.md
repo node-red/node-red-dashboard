@@ -1,4 +1,4 @@
-### 2.23.5-beta: Maintenance Release
+### 2.23.5: Maintenance Release
 
 **Fixes**
 
