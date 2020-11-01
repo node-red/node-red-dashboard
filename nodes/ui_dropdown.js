@@ -118,6 +118,7 @@ module.exports = function(RED) {
             },
 
             beforeEmit: function (msg, newValue) {
+                if (msg.socketid) { emitOptions.socketid = msg.socketid; }
                 return emitOptions;
             },
 
