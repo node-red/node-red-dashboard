@@ -124,20 +124,28 @@ module.exports = function(RED) {
 
             convertBack: function (msg) {
                 var val = node.multiple ? [] : "";
+                var m = RED.util.cloneMessage(msg);
                 for (var i=0; i<control.options.length; i++) {
-                    if (!node.multiple && control.options[i].value === msg) {
-                        if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
-                            try { control.options[i].value = JSON.parse(control.options[i].value); }
-                            catch(e) {}
+                    if (!node.multiple) {
+                        delete m["$$mdSelectId"]
+                        if (JSON.stringify(control.options[i].value) === JSON.stringify(m)) {
+                            if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
+                                try { control.options[i].value = JSON.parse(control.options[i].value); }
+                                catch(e) {}
+                            }
+                            val = control.options[i].value;
+                            break;
                         }
-                        val = control.options[i].value;
-                        break;
-                    } else if (node.multiple && Array.isArray(msg) && msg.indexOf(control.options[i].value) !== -1) {
-                        if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
-                            try { control.options[i].value = JSON.parse(control.options[i].value); }
-                            catch(e) {}
+                    }
+                    else if (node.multiple) {
+                        m.map(x => delete x["$$mdSelectId"])
+                        if (Array.isArray(m) && JSON.stringify(m).indexOf(JSON.stringify(control.options[i].value)) !== -1) {
+                            if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
+                                try { control.options[i].value = JSON.parse(control.options[i].value); }
+                                catch(e) {}
+                            }
+                            val.push(control.options[i].value);
                         }
-                        val.push(control.options[i].value);
                     }
                 }
                 return val;
