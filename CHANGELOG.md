@@ -1,3 +1,9 @@
+### 2.23.6-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix for dropdown options being options
+
 ### 2.23.5: Maintenance Release
 
 **Fixes**
