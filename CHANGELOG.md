@@ -3,6 +3,7 @@
 **Fixes**
 
  - Fix for dropdown options being options
+ - Let iconify font have size parameter
 
 ### 2.23.5: Maintenance Release
 
