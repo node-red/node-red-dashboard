@@ -4,6 +4,7 @@ module.exports = function(RED) {
     function DatePickerNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+        ui.extra.firstDayOfWeek = config.first || 0;
 
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }

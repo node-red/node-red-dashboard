@@ -17,6 +17,7 @@
                 }
             },
             height: {value: 0},
+            first: {value: 0},
             passthru: {value: true},
             topic: {value: ''}
         },
@@ -33,6 +34,9 @@
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+            if (this.first === undefined) {
+                $("#node-input-first").val(0);
+            }
         }
     });
 </script>
@@ -51,6 +55,14 @@
     <div class="form-row">
         <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
         <input type="text" id="node-input-label">
+    </div>
+    <div class="form-row">
+        <label for="node-input-first"><i class="fa fa-calendar"></i> First Day</label>
+        <select id="node-input-first" style="width:120px;">
+            <option value=6>Saturday</option>
+            <option value=0>Sunday</option>
+            <option value=1>Monday</option>
+        </select>
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>

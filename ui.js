@@ -18,7 +18,8 @@ module.exports = function(RED) {
         ev: ev,
         getTheme: getTheme,
         getSizes: getSizes,
-        isDark: isDark
+        isDark: isDark,
+        extra: extra
     };
 };
 
@@ -42,6 +43,7 @@ var removeStateTimers = {};
 var removeStateTimeout = 1000;
 var ev = new events.EventEmitter();
 var params = {};
+var extra = {};
 ev.setMaxListeners(0);
 
 // default manifest.json to be returned as required.
@@ -435,7 +437,8 @@ function updateUi(to) {
             site: baseConfiguration.site,
             theme: baseConfiguration.theme,
             menu: menu,
-            globals: globals
+            globals: globals,
+            extra: extra
         });
         updateUiPending = false;
     });
