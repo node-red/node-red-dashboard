@@ -129,22 +129,23 @@ module.exports = function(RED) {
                     if (!node.multiple) {
                         delete m["$$mdSelectId"]
                         if (JSON.stringify(control.options[i].value) === JSON.stringify(m)) {
+                            val = control.options[i].value;
                             if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
-                                try { control.options[i].value = JSON.parse(control.options[i].value); }
+                                try { val = JSON.parse(val); }
                                 catch(e) {}
                             }
-                            val = control.options[i].value;
                             break;
                         }
                     }
                     else if (node.multiple) {
                         m.map(x => delete x["$$mdSelectId"])
                         if (Array.isArray(m) && JSON.stringify(m).indexOf(JSON.stringify(control.options[i].value)) !== -1) {
+                            var v = control.options[i].value;
                             if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
-                                try { control.options[i].value = JSON.parse(control.options[i].value); }
+                                try { v = JSON.parse(v); }
                                 catch(e) {}
                             }
-                            val.push(control.options[i].value);
+                            val.push(v);
                         }
                     }
                 }
