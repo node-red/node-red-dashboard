@@ -71,11 +71,13 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider', '
         $mdDateLocaleProvider.monthHeaderFormatter = function(date) {
             return moment(date).format("MMM YYYY");
         };
+
+        $mdDateLocaleProvider.firstDayOfWeek = moment.localeData()._week.dow;
     }
 ]);
 
-app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope', 'themeProvider', '$mdTheming', '$mdDateLocale',
-    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope, themeProvider, $mdTheming, $mdDateLocale) {
+app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$location', '$document', '$mdToast', '$mdDialog', '$rootScope', '$sce', '$timeout', '$scope', 'themeProvider', '$mdTheming',
+    function ($mdSidenav, $window, events, $location, $document, $mdToast, $mdDialog, $rootScope, $sce, $timeout, $scope, themeProvider, $mdTheming) {
         this.menu = [];
         this.headElementsAppended = [];
         this.headOriginalElements = [];
@@ -345,9 +347,6 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             main.globals = ui.globals;
             main.nothing = false;
             var name;
-            if (ui.extra && ui.extra.hasOwnProperty("firstDayOfWeek")) {
-                $mdDateLocale.firstDayOfWeek = ui.extra.firstDayOfWeek * 1;
-            }
             if (ui.site) {
                 name = main.name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
