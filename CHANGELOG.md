@@ -1,9 +1,13 @@
-### 2.23.6-beta: Maintenance Release
+### 2.24.0-beta: Maintenance Release
+
+**Enhancements**
+
+ - Let datepicker select frist day of week: Sat, Sun or Mon.
+ - Let iconify font have size parameter
 
 **Fixes**
 
  - Fix for dropdown options being options
- - Let iconify font have size parameter
 
 ### 2.23.5: Maintenance Release
 
