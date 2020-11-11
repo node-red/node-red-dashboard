@@ -4,6 +4,7 @@
 
  - Let datepicker select frist day of week: Sat, Sun or Mon.
  - Let iconify font have size parameter
+ - Let sidebar menu optionally show icons only.
 
 **Fixes**
 

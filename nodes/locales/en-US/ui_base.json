@@ -85,7 +85,8 @@
         },
         "lock" : {
             "clicked" : "Click to show side menu",
-            "locked" : "Always show side menu"
+            "locked" : "Always show side menu",
+            "locked-icon" : "Always show icons only"
         },
         "temp" : {
             "allow-theme" : "Node-RED theme everywhere",

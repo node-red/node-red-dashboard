@@ -1276,6 +1276,7 @@
                 .css("width","100%")
                 .append($('<option>', { value:"false", text:c_("lock.clicked"), selected:true }))
                 .append($('<option>', { value:"true", text:c_("lock.locked") }))
+                .append($('<option>', { value:"icon", text:c_("lock.locked-icon") }))
                 .val("false")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.lockMenu !== $(this).val()) {

@@ -86,7 +86,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.loaded = false;
         this.hideToolbar = false;
         this.allowSwipe = false;
-        this.lockMenu = false;
+        this.lockMenu = "false";
         this.allowTempTheme = true;
         var main = this;
         var audioContext;
@@ -351,7 +351,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 name = main.name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
-                main.lockMenu = (ui.site.lockMenu == "true");
+                main.lockMenu = ui.site.lockMenu;
                 if (typeof ui.site.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
                 else {
                     main.allowTempTheme = (ui.site.allowTempTheme == "true");
