@@ -1,7 +1,10 @@
 
 var inited = false;
+var nodes = {}; // UI-MODULE PROTO
 
 module.exports = function(RED) {
+    nodes = RED.nodes;  // UI-MODULE PROTO
+
     if (!inited) {
         inited = true;
         init(RED.server, RED.httpNode || RED.httpAdmin, RED.log, RED.settings);
@@ -43,6 +46,8 @@ var removeStateTimeout = 1000;
 var ev = new events.EventEmitter();
 var params = {};
 ev.setMaxListeners(0);
+
+var displayed_subgroup = []; // UI-MODULE PROTO
 
 // default manifest.json to be returned as required.
 var mani = {
@@ -122,6 +127,89 @@ options:
         if the returned msg has a property _dontSend, then it won't get sent.
 */
 function add(opt) {
+
+    // UI-MODULE PROTO
+    //console.log("\n#",opt.node.type,"/",opt.control.label,"/",opt.node.id,"/",opt.node["_alias"]);
+    var isSubgroup = false;
+    if (opt.node["_alias"]) {
+        isSubgroup = true;
+
+        var subflow = nodes.getNode(opt.node.z);
+        if (subflow) {
+            // TODO Cannot get subflow instance when subflow instance is placed in subflow.
+            //console.log("# Belongs to subflow:", subflow.path);
+        }
+    }
+
+    if (isSubgroup) {
+        //console.log("# SUBGROUP:", displayed_subgroup);
+        if (displayed_subgroup.indexOf(opt.node.z) != -1) {
+            //console.log("# ALREDY DISPLAY: subflow iinstance:", opt.node.z);
+            return;
+        }
+
+        var sg_height = 1;
+        var sg_width = 1;
+        var sg_order = 0;
+        var sg_group_id = null;
+
+        nodes.eachNode(function(node) {
+            if (node.type == 'ui_subgroup_i') {
+                if (node.subflow == opt.node.z) {
+                    sg_group_id = node.group;
+                    sg_order = node.order;
+                }
+            }
+        });
+
+        if (!sg_group_id) {
+            //console.log("# SUBGROUP-INSTANCE NOT FOUND:", opt.node.z);
+            return;
+        }
+
+        nodes.eachNode(function(node) {
+            if (node.type == 'ui_subgroup_t') {
+                var idx = node.widgetOrder.indexOf(opt.node["_alias"]);
+                if (idx != -1) {
+                    sg_height = node.height;
+                    sg_width = node.width;
+                }
+            };
+        });
+
+        var sg_group = nodes.getNode(sg_group_id);
+        if (!sg_group) {
+            //console.log("# GROUP NOT FOUND:", sg_group_id);
+            return;
+        }
+
+        var sg_tab = nodes.getNode(sg_group.config.tab);
+        if (!sg_tab) {
+            //console.log("# TAB NOT FOUND:", sg_tab);
+            return;
+        }
+
+        var sg_control = {
+            type: 'spacer',
+            order: sg_order,
+            width: sg_width,
+            height: sg_height
+        };
+
+        //console.log("# ADD SPACER FOR SUBGROUP");
+        var remove_sg = addControl(sg_tab, sg_group, sg_control);
+        displayed_subgroup.push(opt.node.z);
+
+        ev.on(updateValueEventName, function() {});
+        return function() {
+            ev.removeListener(updateValueEventName, function() {});
+            remove_sg();
+            displayed_subgroup = [];
+        };
+    }
+    // UI-MODULE PROTO
+
+
     clearTimeout(removeStateTimers[opt.node.id]);
     delete removeStateTimers[opt.node.id];
 
