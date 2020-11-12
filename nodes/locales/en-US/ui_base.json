@@ -28,7 +28,9 @@
             "spacer": "spacer",
             "layout" : "layout",
             "layout-editor" : "Dashboard layout editor",
-            "width" : "Width"
+            "width" : "Width",
+            "auto": "auto-sizing",
+            "manual": "manual resize"
         },
         "theme" : {
             "style" : "Style",

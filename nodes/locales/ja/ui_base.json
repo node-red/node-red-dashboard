@@ -28,7 +28,9 @@
             "spacer": "スペーサ",
             "layout" : "レイアウト",
             "layout-editor" : "ダッシュボードレイアウトエディタ",
-            "width" : "幅"
+            "width" : "幅",
+            "auto": "自動サイズ調整",
+            "manual": "手動サイズ変更"
         },
         "theme" : {
             "style" : "スタイル",

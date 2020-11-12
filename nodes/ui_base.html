@@ -800,11 +800,13 @@
                 var en = $(elem).find('.nr-dashboard-layout-resize-enable');
                 en.off('click');
                 en.on('click',layoutResizeEnable);
+                en[0].setAttribute("title",c_("layout.auto"));
             }
             else {
                 var ds = $(elem).find('.nr-dashboard-layout-resize-disable');
                 ds.off('click');
                 ds.on('click',layoutResizeDisable);
+                ds[0].setAttribute("title",c_("layout.manual"));
             }
         };
     }
@@ -855,6 +857,7 @@
         el.find('.nr-dashboard-layout-resize-disable').off('click');
         el.attr({'data-noderedsizeauto':'true'});
         target.removeClass().addClass('fa fa-unlock nr-dashboard-layout-resize-enable');
+        el.find('.nr-dashboard-layout-resize-enable')[0].setAttribute("title",c_("layout.auto"));
         el.find('.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
     }
 
@@ -870,6 +873,7 @@
         el.find('.nr-dashboard-layout-resize-enable').off('click');
         el.attr({'data-noderedsizeauto':'false'});
         target.removeClass().addClass('fa fa-lock nr-dashboard-layout-resize-disable');
+        el.find('.nr-dashboard-layout-resize-disable')[0].setAttribute("title",c_("layout.manual"));
         el.find('.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
     }
 
@@ -2109,9 +2113,9 @@
                                                 });
 
                                                 if (node.auto === true) {
-                                                    itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable"></i>');
+                                                    itemContent.append('<i class="fa fa-unlock nr-dashboard-layout-resize-enable" title="'+c_("layout.auto")+'"></i>');
                                                 } else {
-                                                    itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable"></i>');
+                                                    itemContent.append('<i class="fa fa-lock nr-dashboard-layout-resize-disable" title="'+c_("layout.manual")+'"></i>');
                                                 }
                                                 itemContent.append('<b>'+ dispLabel +'</b><br/>'+ dispType);
                                                 item.append(itemContent);
