@@ -845,12 +845,11 @@
         var el = target.parents('.grid-stack-item:visible');
         var grid = target.parents('.grid-stack').data('gridstack');
         var node = el.data('_gridstack_node');
-
         var id = Number(target.parents('.grid-stack').attr('id').slice(4));
         var width = Number(tabDatas.groups[id].width);
-
         var nodeID = el[0].dataset.noderedid;
         var height = getDefaultHeight(nodeID, width);
+
         grid.move(el, 0, node.y);
         grid.resize(el, width, height);
         grid.resizable(el, false);
@@ -881,33 +880,12 @@
     // Check dashboard layout tool supported
     //////////////////////////////////////////
     function isLayoutToolSupported(nodeType){
-        // if (nodeType !== "ui_spacer" &&
-        //     nodeType !== "ui_button" &&
-        //     nodeType !== "ui_dropdown" &&
-        //     nodeType !== "ui_switch" &&
-        //     nodeType !== "ui_slider" &&
-        //     nodeType !== "ui_numeric" &&
-        //     nodeType !== "ui_text_input" &&
-        //     nodeType !== "ui_date_picker" &&
-        //     nodeType !== "ui_colour_picker" &&
-        //     nodeType !== "ui_form" &&
-        //     nodeType !== "ui_text" &&
-        //     nodeType !== "ui_gauge" &&
-        //     nodeType !== "ui_chart" &&
-        //     nodeType !== "ui_template" &&
-        //     nodeType !== "ui_list" &&
-        //     nodeType !== "ui_table" &&
-        //     nodeType !== "ui_lineargauge" &&
-        //     nodeType !== "ui_my-little-ui-node" &&
-        //     nodeType !== "ui_artlessgauge" &&
-        //     nodeType !== "ui_vega") {
         if (nodeType.indexOf("ui_") !== 0) {
             return false;
         } else {
             return true;
         }
     }
-
 
     RED.nodes.registerType('ui_base',{
             category: 'config',
@@ -1406,7 +1384,6 @@
                 $('<input type="number" name="gy" min="0" id="nr-db-field-gy">').val(6).css("width","20%")
                 .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
-
 
                 // Angular Theme Tab
                 var changed = function() {
@@ -1940,9 +1917,7 @@
                                         }
                                     }
                                 ],
-                                resize: function(dimensions) {
-                                    //
-                                },
+                                resize: function(dimensions) {},
                                 open: function(tray) {
                                     // Get widget of specified tab from node information
                                     tabDatas = getTabDataFromNodes(item.node.id);
@@ -2138,7 +2113,6 @@
 
                                         // Group width change
                                         widthChange.push(new changeGroupWidth(cnt));
-
                                         // Resize widget in group (start event)
                                         widgetResize.push(new resizeGroupWidget(cnt));
                                         // Dragging widgets in a group (start event)
@@ -2147,12 +2121,9 @@
                                     $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-disable').on('click',layoutResizeDisable);
                                     $('.grid-stack>.grid-stack-item>.grid-stack-item-content>.nr-dashboard-layout-resize-enable').on('click',layoutResizeEnable);
                                 },
-                                close: function() {
-                                    //
-                                },
+                                close: function() {},
                                 show: function() {}
                             }
-
                             RED.tray.show(trayOptions);
                             evt.stopPropagation();
                             evt.preventDefault();
@@ -2795,41 +2766,6 @@
                             // i.e. has the theme been customised compared
                             // to what is stored
                             var editorObject = JSON.parse(editor.getValue());
-                            // var objectsEqual = true;
-                            // var keysEqual = true;
-                            // var editorKeys = Object.keys(editorObject);
-                            // var themeKeys = Object.keys(editorObject.theme);
-                            // var siteKeys = Object.keys(editorObject.site);
-                            // var dashNodeKeys = Object.keys(globalDashboardNode.theme.themeState);
-
-                            // // Test equality
-                            // for (var i=0; i<themeKeys.length; i++) {
-                            //     if (themeKeys[i] !== dashNodeKeys[i]) {
-                            //         keysEqual = false;
-                            //         break;
-                            //     }
-                            // }
-                            // if (keysEqual) {
-                            //     for (var j=0; j<themeKeys.length; j++) {
-                            //         var key = themeKeys[j];
-                            //         if (editorObject.theme[key] !== globalDashboardNode.theme.themeState[key]) {
-                            //             objectsEqual = false;
-                            //             break;
-                            //         }
-                            //     }
-                            // }
-                            //
-                            // if (!objectsEqual) {
-                            //     globalDashboardNode.theme.themeState = editorObject.theme;
-                            // }
-                            //
-                            // //If custom theme is chosen, update the elements and current state
-                            // if (globalDashboardNode.theme.name === 'theme-custom') {
-                            //     //globalDashboardNode.theme.customTheme.baseColor = globalDashboardNode.theme.themeState['base-color'].default;
-                            //     generateColours(globalDashboardNode.theme.customTheme.baseColor);
-                            //     //setColourPickerColour("base-color", globalDashboardNode.theme.customTheme.baseColor);
-                            //     if (!objectsEqual) { RED.nodes.dirty(true); }
-                            // }
 
                             //Update theme object if necessary
                             if (JSON.stringify(editorObject.theme) !== JSON.stringify(globalDashboardNode.theme.themeState)) {
@@ -2974,7 +2910,6 @@
                     }
                 };
                 RED.events.on("layout:update",layoutUpdateEventHandler);
-
 
                 var pendingAdd = [];
                 var pendingAddTimer = null;

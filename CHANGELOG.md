@@ -2,13 +2,13 @@
 
 **Enhancements**
 
- - Let datepicker select frist day of week: Sat, Sun or Mon.
- - Let iconify font have size parameter.
  - Let sidebar menu optionally show icons only.
+ - Let iconify font icons have size parameter.
 
 **Fixes**
 
  - Fix for dropdown options being options.
+ - Datepicker auto selects first day of week based on browser locale.
  - Add tooltips for layout fixed/not-fixed icons.
 
 ### 2.23.5: Maintenance Release
