@@ -1,4 +1,4 @@
-### 2.24.0-beta: Maintenance Release
+### 2.24.0: Maintenance Release
 
 **Enhancements**
 
@@ -10,6 +10,7 @@
  - Fix for dropdown options being options.
  - Datepicker auto selects first day of week based on browser locale.
  - Add tooltips for layout fixed/not-fixed icons.
+ - Fix layout drag between groups.
 
 ### 2.23.5: Maintenance Release
 
