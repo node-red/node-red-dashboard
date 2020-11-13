@@ -1,9 +1,15 @@
+### 2.24.1: Maintenance Release
+
+**Fixes**
+
+ - Fix  dropdown single pick search
+
 ### 2.24.0: Maintenance Release
 
 **Enhancements**
 
  - Let sidebar menu optionally show icons only.
- - Let iconify font icons have size parameter.
+ - Let iconify font icons have size parameter. eg `iconify-mdi:garage-variant 48px`
 
 **Fixes**
 
