@@ -87,70 +87,39 @@ module.exports = function(RED) {
                         converted.updatedValues = [];
                         return converted;
                     }
-                    // New style
-                    if (!value[0].hasOwnProperty("key")) {
-                        if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
-                            var flag = true;
-                            for (var dd = 0; dd < value[0].data.length; dd++ ) {
-                                if (!isNaN(value[0].data[dd][0])) { flag = false; }
-                            }
-                            if (node.chartType === "line") {
-                                if (flag) { delete value[0].labels; }
-                                if (config.removeOlderPoints) {
-                                    for (var dl=0; dl < value[0].data.length; dl++ ) {
-                                        if (value[0].data[dl].length > config.removeOlderPoints) {
-                                            value[0].data[dl] = value[0].data[dl].slice(-config.removeOlderPoints);
-                                        }
+                    if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
+                        var flag = true;
+                        for (var dd = 0; dd < value[0].data.length; dd++ ) {
+                            if (!isNaN(value[0].data[dd][0])) { flag = false; }
+                        }
+                        if (node.chartType === "line") {
+                            if (flag) { delete value[0].labels; }
+                            if (config.removeOlderPoints) {
+                                for (var dl=0; dl < value[0].data.length; dl++ ) {
+                                    if (value[0].data[dl].length > config.removeOlderPoints) {
+                                        value[0].data[dl] = value[0].data[dl].slice(-config.removeOlderPoints);
                                     }
                                 }
                             }
-                            else if (node.chartType === "bar" || node.chartType === "horizontalBar") {
-                                if (flag) {
-                                    var tmp = [];
-                                    for (var d=0; d<value[0].data.length; d++) {
-                                        tmp.push([value[0].data[d]]);
-                                    }
-                                    value[0].data = tmp;
-                                    var tmp2 = value[0].series;
-                                    value[0].series = value[0].labels;
-                                    value[0].labels = tmp2;
+                        }
+                        else if (node.chartType === "bar" || node.chartType === "horizontalBar") {
+                            if (flag) {
+                                var tmp = [];
+                                for (var d=0; d<value[0].data.length; d++) {
+                                    tmp.push([value[0].data[d]]);
                                 }
+                                value[0].data = tmp;
+                                var tmp2 = value[0].series;
+                                value[0].series = value[0].labels;
+                                value[0].labels = tmp2;
                             }
-                            value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
                         }
-                        else {
-                            node.warn("Bad data inject");
-                            value = oldValue;
-                        }
+                        value = [{ key:node.id, values:(value[0] || {series:[], data:[], labels:[]}) }];
                     }
-                    // Old style
                     else {
-                        if (node.chartType !== "line") {
-                            var nb = { series:[], data:[], labels:[] };
-                            for (var v in value) {
-                                if (value.hasOwnProperty(v)) {
-                                    nb.data.push([ value[v].values ]);
-                                    nb.series.push(value[v].key);
-                                }
-                            }
-                            value = [{key:node.id, values:nb}];
-                        }
-                        else {
-                            if (value[0] && value[0].hasOwnProperty("values")) {
-                                if (Array.isArray(value[0].values)) { // Handle "old" style data array
-                                    var na = {series:[], data:[]};
-                                    for (var n=0; n<value.length; n++) {
-                                        na.series.push(value[n].key);
-                                        na.data.push(value[n].values.map(function(i) {
-                                            return {x:i[0], y:i[1]};
-                                        }));
-                                    }
-                                    value = [{ key:node.id, values:na }];
-                                }
-                            }
-                        }
+                        node.warn("Bad data inject");
+                        value = oldValue;
                     }
-                    //console.log("RETURN",JSON.stringify(value));
                     converted.update = false;
                     converted.updatedValues = value;
                 }
@@ -202,19 +171,13 @@ module.exports = function(RED) {
                         converted.newPoint = [{ key:node.id, update:true, values:{ series:series, data:point, labels:label } }];
                         var rc = 0;
                         for (var u = 0; u < oldValue[0].values.data[s].length; u++) {
-                            if (oldValue[0].values.data[s][u].x >= limitTime) {
-                                break;  // stop as soon as we are in time window.
-                            }
-                            else {
-                                oldValue[0].values.data[s].shift();
-                                rc += 1;
-                            }
+                            if (oldValue[0].values.data[s][u].x >= limitTime) { break; } // stop as soon as we are in time window.
+                            else { rc += 1; }
                         }
+                        if (rc > 0) { console.log("RC1",rc); oldValue[0].values.data[s].splice(0,rc); }
                         if (config.removeOlderPoints) {
-                            while (oldValue[0].values.data[s].length > config.removeOlderPoints) {
-                                oldValue[0].values.data[s].shift();
-                                rc += 1;
-                            }
+                            var rc2 = oldValue[0].values.data[s].length-config.removeOlderPoints;
+                            if (rc2 > 0) { console.log("RC2",rc2); oldValue[0].values.data[s].splice(0,rc2); rc = rc2;}
                         }
                         if (rc > 0) { converted.newPoint[0].remove = rc; }
                         var swap; // insert correctly if a timestamp was earlier.
@@ -238,7 +201,7 @@ module.exports = function(RED) {
                                         break;  // stop as soon as we are in time window.
                                     }
                                     else {
-                                        oldValue[0].values.data[x].shift();
+                                        oldValue[0].values.data[x].splice(0,1);
                                         converted.newPoint = true;
                                         y = y - 1;
                                     }

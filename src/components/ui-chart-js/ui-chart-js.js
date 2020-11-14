@@ -11,14 +11,13 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var type = scope.$eval('me.item.look');
                     var useOneColor = scope.$eval('me.item.useOneColor');
 
-                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps','me.item.options'], function (newValue) {
+                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps','me.item.options','me.item.look'], function (newValue) {
                         scope.config = loadConfiguration(type, scope);
                     });
 
                     scope.$watch('me.item.look', function (newValue) {
                         if ((type === "line") || (newValue === "line")) { delete scope.config; }
                         type = newValue;
-                        scope.config = loadConfiguration(type, scope);
                     });
 
                     // Chart.Tooltip.positioners = {};
@@ -81,18 +80,16 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 // Ensure the data array is of the correct length
                                 if (seriesIndex > scope.config.data.length) { scope.config.data.push([]); }
 
+                                // Remove old data point(s)
+                                if (newValue.remove) { scope.config.data[seriesIndex].splice(0, newValue.remove); }
+
                                 // Add the data
                                 scope.config.data[seriesIndex].push(newValue.values.data);
-
-                                // Remove old data point(s)
-                                for (var a=0; a < (newValue.remove || 0); a++) {
-                                    scope.config.data[seriesIndex].shift();
-                                }
                             }
                             else {
                                 // Bar charts and non update line charts replace the data
                                 if (type === "line") {
-                                    scope.config = loadConfiguration(type, scope);
+                                    //scope.config = loadConfiguration(type, scope);
                                     if (newValue.values.data[0][0] === undefined) {
                                         var flag = false;
                                         for (var i=1; i < newValue.values.data.length; i++ ) {
@@ -121,7 +118,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                             }
                         }
                         else {
-                            // Reset config and clear data
+                            // Clear data and reset config
                             delete scope.config;
                             scope.config = loadConfiguration(type, scope);
                         }
@@ -152,7 +149,7 @@ function loadConfiguration(type,scope) {
         '#48C9B0','#7FB3D5','#F9E79F','#922B21']);
     var config = scope.config || {};
     var themeState = scope.$eval('me.item.theme.themeState');
-    var useOneColor = scope.$eval('me.item.useOneColor');
+    // var useOneColor = scope.$eval('me.item.useOneColor');
     var useUTC = scope.$eval('me.item.useUTC') || false;
     if (!scope.config) {
         config.data = [];
