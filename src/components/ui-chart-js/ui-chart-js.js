@@ -11,16 +11,6 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var type = scope.$eval('me.item.look');
                     var useOneColor = scope.$eval('me.item.useOneColor');
 
-                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps','me.item.options','me.item.look'], function (newValue) {
-                        type = newValue[11];
-                        scope.config = loadConfiguration(type, scope);
-                    });
-
-                    // scope.$watch('me.item.look', function (newValue) {
-                    //     if ((type === "line") || (newValue === "line")) { delete scope.config; }
-                    //     type = newValue;
-                    // });
-
                     // Chart.Tooltip.positioners = {};
                     // Chart.Tooltip.positioners.cursor = function(chartElements, coordinates) {
                     //     return coordinates;
@@ -54,6 +44,14 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                         },
                         afterDatasetsDraw: function(chartInstance) {
                             chartInstance.chart.ctx.restore();
+                        }
+                    });
+
+                    // Watch for any changes to controls
+                    scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps','me.item.options','me.item.look'], function (newValue, oldValue) {
+                        type = newValue[11];
+                        if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
+                            scope.config = loadConfiguration(type, scope);
                         }
                     });
 
@@ -134,6 +132,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
 ]);
 
 function loadConfiguration(type,scope) {
+    //console.log("LOAD CONFIG",type,scope);
     var config = scope.config || { data:[], series:[], labels:[], nodata:true }
     var item = scope.$eval('me.item');
     var yMin = parseFloat(item.ymin);
@@ -357,7 +356,7 @@ function loadConfiguration(type,scope) {
 
     // Configure legend
     //if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
-    if (item.legend == "true") {
+    if ((item.legend === true) || (item.legend === "true")) {
         config.overrides = [];
         config.options.legend = {
             display:true,
