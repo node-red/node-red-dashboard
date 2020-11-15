@@ -12,13 +12,14 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                     var useOneColor = scope.$eval('me.item.useOneColor');
 
                     scope.$watchGroup(['me.item.legend','me.item.interpolate','me.item.ymin','me.item.ymax','me.item.xformat','me.item.dot','me.item.cutout','me.item.nodata','me.item.animation','me.item.spanGaps','me.item.options','me.item.look'], function (newValue) {
+                        type = newValue[11];
                         scope.config = loadConfiguration(type, scope);
                     });
 
-                    scope.$watch('me.item.look', function (newValue) {
-                        if ((type === "line") || (newValue === "line")) { delete scope.config; }
-                        type = newValue;
-                    });
+                    // scope.$watch('me.item.look', function (newValue) {
+                    //     if ((type === "line") || (newValue === "line")) { delete scope.config; }
+                    //     type = newValue;
+                    // });
 
                     // Chart.Tooltip.positioners = {};
                     // Chart.Tooltip.positioners.cursor = function(chartElements, coordinates) {
@@ -133,13 +134,29 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
 ]);
 
 function loadConfiguration(type,scope) {
-    var yMin = parseFloat(scope.$eval('me.item.ymin'));
-    var yMax = parseFloat(scope.$eval('me.item.ymax'));
-    var legend = scope.$eval('me.item.legend');
-    var interpolate = scope.$eval('me.item.interpolate');
-    var xFormat = scope.$eval('me.item.xformat');
-    var showDot = scope.$eval('me.item.dot');
-    var bColours = scope.$eval('me.item.colors') || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
+    var config = scope.config || { data:[], series:[], labels:[], nodata:true }
+    var item = scope.$eval('me.item');
+    var yMin = parseFloat(item.ymin);
+    var yMax = parseFloat(item.ymax);
+    var xFormat = item.xformat;
+    var themeState = item.theme.themeState;
+    var useUTC = item.useUTC || false;
+
+    config.options = {
+        animation: item.animation,
+        spanGaps: item.spanGaps,
+        scales: {},
+        legend: false,
+        responsive: true,
+        maintainAspectRatio: false
+    };
+    if (type === 'pie') {
+        config.options.cutoutPercentage = item.cutout || 0;
+        config.options.elements = { arc: { borderWidth:0 }};
+    }
+
+    //Build colours array
+    var bColours = item.colors || ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5'];
     var baseColours = bColours.concat([
         '#7EB3C6','#BB9A61','#3F8FB9','#57A13F',
         '#BC5879','#6DC2DF','#D7D185','#91CA96',
@@ -147,30 +164,6 @@ function loadConfiguration(type,scope) {
         '#61A240','#AA3167','#9D6D5E','#3498DB',
         '#EC7063','#DAF7A6','#FFC300','#D98880',
         '#48C9B0','#7FB3D5','#F9E79F','#922B21']);
-    var config = scope.config || {};
-    var themeState = scope.$eval('me.item.theme.themeState');
-    // var useOneColor = scope.$eval('me.item.useOneColor');
-    var useUTC = scope.$eval('me.item.useUTC') || false;
-    if (!scope.config) {
-        config.data = [];
-        config.series = [];
-        config.labels = [];
-        config.nodata = true;
-    }
-    config.options = {
-        animation: scope.$eval('me.item.animation'),
-        spanGaps: scope.$eval('me.item.spanGaps'),
-        scales: {},
-        legend: false,
-        responsive: true,
-        maintainAspectRatio: false
-    };
-    if (type === 'pie') {
-        config.options.cutoutPercentage = scope.$eval('me.item.cutout') || 0;
-        config.options.elements = { arc: { borderWidth:0 }};
-    }
-
-    //Build colours array
     config.colours = config.colours || baseColours;
     scope.barColours = [];
     scope.lineColours = [];
@@ -257,11 +250,11 @@ function loadConfiguration(type,scope) {
                 fill: false
             },
             point: {
-                radius: showDot ? 2 : 0,
+                radius: item.dot ? 2 : 0,
                 hitRadius: 4,
                 hoverRadius: 4 }
         }
-        switch (interpolate) {
+        switch (item.interpolate) {
             case 'cubic': {
                 config.options.elements.line.cubicInterpolationMode = "default";
                 break;
@@ -364,7 +357,7 @@ function loadConfiguration(type,scope) {
 
     // Configure legend
     //if (type !== 'bar' && type !== 'horizontalBar' && JSON.parse(legend)) {
-    if (legend == "true") {
+    if (item.legend == "true") {
         config.overrides = [];
         config.options.legend = {
             display:true,
@@ -389,6 +382,6 @@ function loadConfiguration(type,scope) {
     }
 
     // Allow override of any options if really required.
-    config.options = Object.assign({},config.options,scope.$eval('me.item.options'));
+    config.options = Object.assign({},config.options,item.options);
     return config;
 }

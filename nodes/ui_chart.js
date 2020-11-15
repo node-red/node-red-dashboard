@@ -5,7 +5,6 @@ module.exports = function(RED) {
     function ChartNode(config) {
         RED.nodes.createNode(this, config);
         this.chartType = config.chartType || "line";
-        this.newStyle = (!config.hasOwnProperty("useOldStyle") || (config.useOldStyle === true)) ? false : true;
         var node = this;
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
@@ -45,30 +44,13 @@ module.exports = function(RED) {
                 options: {},
             },
             convertBack: function(data) {
-                if (node.newStyle) {
-                    if (data && data[0] && data[0].hasOwnProperty("values")) {
+                if (data) {
+                    if (data[0] && data[0].hasOwnProperty("values")) {
                         return [data[0].values];
                     }
-                }
-                else {
-                    if (data && data[0]) {
-                        if (data[0] && data[0].hasOwnProperty("values") && data[0].values.hasOwnProperty("series") ) {
-                            var o = [];
-                            for (var i=0; i<data[0].values.series.length; i++) {
-                                if (data[0].values.data[i] !== undefined) {
-                                    if (node.chartType !== "line") {
-                                        o.push({ key:data[0].values.series[i], values:data[0].values.data[i][0] });
-                                    }
-                                    else {
-                                        var d = data[0].values.data[i].map(function(i) { return [i.x, i.y]; });
-                                        o.push({ key:data[0].values.series[i], values:d });
-                                    }
-                                }
-                            }
-                            data = o;
-                        }
+                    if (data.length == 0) {
+                        return [];
                     }
-                    return data;
                 }
             },
             convert: function(value, oldValue, msg) {
@@ -134,7 +116,7 @@ module.exports = function(RED) {
                     var series = msg.series || msg.topic || "";
                     //if (node.chartType === "bar" || node.chartType === "horizontalBar" || node.chartType === "pie") {
                     if (node.chartType !== "line") {
-                        if (!node.newStyle || !msg.series) {
+                        if (!msg.series) {
                             label = msg.topic || msg.label || " ";
                             series = msg.series || "";
                         }
@@ -174,10 +156,10 @@ module.exports = function(RED) {
                             if (oldValue[0].values.data[s][u].x >= limitTime) { break; } // stop as soon as we are in time window.
                             else { rc += 1; }
                         }
-                        if (rc > 0) { console.log("RC1",rc); oldValue[0].values.data[s].splice(0,rc); }
+                        if (rc > 0) { oldValue[0].values.data[s].splice(0,rc); }
                         if (config.removeOlderPoints) {
                             var rc2 = oldValue[0].values.data[s].length-config.removeOlderPoints;
-                            if (rc2 > 0) { console.log("RC2",rc2); oldValue[0].values.data[s].splice(0,rc2); rc = rc2;}
+                            if (rc2 > 0) { oldValue[0].values.data[s].splice(0,rc2); rc = rc2;}
                         }
                         if (rc > 0) { converted.newPoint[0].remove = rc; }
                         var swap; // insert correctly if a timestamp was earlier.
@@ -236,9 +218,6 @@ module.exports = function(RED) {
 
         var st = setTimeout(function() {
             node.emit("input",{payload:"start"}); // trigger a redraw at start to flush out old data.
-            if (node.wires.length === 2) { // if it's an old version of the node honour it
-                node.send([null, {payload:"restore", for:node.id}]);
-            }
         }, 100);
 
         node.on("close", function() {
