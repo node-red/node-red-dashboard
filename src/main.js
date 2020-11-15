@@ -50,7 +50,9 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider', '
         $mdThemingProvider.generateThemesOnDemand(true);
         $provide.value('themeProvider', $mdThemingProvider);
 
-        //white-list all protocols
+        //white-list all protocols and turn off debug
+        $compileProvider.debugInfoEnabled(false);
+        $compileProvider.commentDirectivesEnabled(false);
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
 
         //set the locale provider
