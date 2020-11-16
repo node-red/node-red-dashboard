@@ -1888,7 +1888,7 @@
 
                     // Dashboard layout tool
                     if (item.type === 'ui_tab') {
-                        var layoutButton = $('<a href="#" id="'+item.node.id+'" class="nr-db-sb-tab-edit-layout-button-'+nodeId[0]+'-'+nodeId[1]+' editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
+                        var layoutButton = $('<a href="#" class="nr-db-sb-tab-edit-layout-button-'+nodeId[0]+'-'+nodeId[1]+' editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
                         layoutButton.on('click',function(evt) {
                             var editTabName = item.node.name ? item.node.name : item.node.id;
                             var trayOptions = {
@@ -2209,7 +2209,7 @@
                                     evt.preventDefault();
                                 });
                                 var groupId = groupNode.id.split('.')
-                                var editButton = $('<a href="#" id="'+groupNode.id+'" class="nr-db-sb-button-edit-group editor-button-'+groupId[0]+'-'+groupId[1]+' editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
+                                var editButton = $('<a href="#" id="'+groupNode.id+'" class="nr-db-sb-button-edit-group editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
                                 var content = $('<div>',{class:"nr-db-sb-widget-list-container"}).appendTo(container);
                                 if (!listStates.hasOwnProperty(groupNode.id) || !listStates[groupNode.id]) {
                                     content.hide();
