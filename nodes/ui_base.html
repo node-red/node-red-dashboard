@@ -1874,12 +1874,11 @@
                         }
                     }
                     // buttons
-                    var nodeId = item.node.id.split('.');
-                    var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                    var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group",id: item.node.id}).appendTo(titleRow);
                     if (item.type === 'ui_tab') {
-                        var addGroupButton = $('<a href="#" class="nr-db-sb-tab-add-group-button-' + nodeId[0] + '-' + nodeId[1] +' editor-button editor-button-small nr-db-sb-list-header-button" ><i class="fa fa-plus"></i> '+c_("layout.group")+'</a>').appendTo(buttonGroup);
+                        var addGroupButton = $('<a href="#" class="nr-db-sb-tab-add-group-button editor-button editor-button-small nr-db-sb-list-header-button" ><i class="fa fa-plus"></i> '+c_("layout.group")+'</a>').appendTo(buttonGroup);
                     }
-                    var editButton = $('<a href="#" id="'+item.node.id+'" class="nr-db-sb-tab-edit-button-'+nodeId[0]+'-'+nodeId[1]+' editor-button  editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
+                    var editButton = $('<a href="#" class="nr-db-sb-tab-edit-button editor-button  editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
                     editButton.on('click',function(evt) {
                         RED.editor.editConfig("", item.type, item.node.id);
                         evt.stopPropagation();
@@ -1888,7 +1887,7 @@
 
                     // Dashboard layout tool
                     if (item.type === 'ui_tab') {
-                        var layoutButton = $('<a href="#" class="nr-db-sb-tab-edit-layout-button-'+nodeId[0]+'-'+nodeId[1]+' editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
+                        var layoutButton = $('<a href="#" class="nr-db-sb-tab-edit-layout-button editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
                         layoutButton.on('click',function(evt) {
                             var editTabName = item.node.name ? item.node.name : item.node.id;
                             var trayOptions = {
@@ -2179,7 +2178,7 @@
                                 $('<i class="nr-db-sb-icon nr-db-sb-group-icon fa fa-table"></i>').appendTo(titleRow);
                                 var title = $('<span class="nr-db-sb-title">').text(groupNode.name||groupNode.id||"").appendTo(titleRow);
                                 listElements[groupNode.id] = container;
-                                var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group"}).appendTo(titleRow);
+                                var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group",id:groupNode.id}).appendTo(titleRow);
                                 var spacerButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.spacer")+'</a>').appendTo(buttonGroup);
                                 spacerButton.on('click',function(evt) {
                                     var spaceNode = {
@@ -2208,8 +2207,7 @@
                                     evt.stopPropagation();
                                     evt.preventDefault();
                                 });
-                                var groupId = groupNode.id.split('.')
-                                var editButton = $('<a href="#" id="'+groupNode.id+'" class="nr-db-sb-button-edit-group editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
+                                var editButton = $('<a href="#" class="nr-db-sb-edit-group-button editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
                                 var content = $('<div>',{class:"nr-db-sb-widget-list-container"}).appendTo(container);
                                 if (!listStates.hasOwnProperty(groupNode.id) || !listStates[groupNode.id]) {
                                     content.hide();
