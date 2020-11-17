@@ -4,8 +4,8 @@
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
         <h1 ng-show="main.len <= 1" style="width:30px"> </h1>
-        <h1 ng-show="main.lockMenu != 'false'">{{main.name}}</h1>
-        <h1 ng-show="!(main.lockMenu != 'false') && main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
+        <h1 ng-show="main.lockMenu != 'false'" node-id="{{main.id}}">{{main.name}}</h1>
+        <h1 ng-show="!(main.lockMenu != 'false') && main.loaded" node-id="{{main.selectedTab.id}}">{{main.selectedTab.header || main.selectedTab.name}}</h1>
     </div>
 </md-toolbar>
 <section layout="row" flex>
@@ -19,7 +19,7 @@
     </md-sidenav>
     <md-content flex>
         <div ui-masonry ng-show="main.selectedTab.header" id="{{'Tab_'+main.selectedTab.header | spaceToUnderscore}}">
-            <ui-card-panel ng-repeat="group in main.selectedTab.items" id="{{main.selectedTab.header+'_'+group.header.name | spaceToUnderscore}}"  ng-if="group.header && group.header.config && !group.header.config.hidden">
+            <ui-card-panel node-id="{{group.header.id}}" ng-repeat="group in main.selectedTab.items" id="{{main.selectedTab.header+'_'+group.header.name | spaceToUnderscore}}"  ng-if="group.header && group.header.config && !group.header.config.hidden">
                 <ui-component ng-repeat="control in group.items" item="control"></ui-component>
             </ui-card-panel>
         </div>
