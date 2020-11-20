@@ -31,7 +31,8 @@
                     flex>
                     <input
                         ng-model="me.searchTerm"
-                        ng-keydown="$event.stopPropagation()"
+                        ng-keydown="$event.stopPropagation();"
+                        ng-click="$event.stopPropagation();"
                         type="search"
                         aria-label="Filter"/>
                     <ng-md-icon icon="search"></ng-md-icon>

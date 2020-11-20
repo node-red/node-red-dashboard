@@ -196,7 +196,6 @@ function add(opt) {
             // the full dataset or the new value (e.g. gauges)
             fullDataset = conversion;
         }
-
         // If we have something new to emit
         if (newPoint !== undefined || !opt.emitOnlyNewValues || oldValue != fullDataset) {
             currentValues[opt.node.id] = fullDataset;
@@ -272,27 +271,24 @@ function add(opt) {
     // This is the handler for messages coming back from the UI
     var handler = function (msg) {
         if (msg.id !== opt.node.id) { return; }  // ignore if not us
-        if (settings.readOnly === true) {
-            msg.value = currentValues[msg.id];
-        } // don't accept input if we are in read only mode
-        else {
-            var converted = opt.convertBack(msg.value);
-            if (opt.storeFrontEndInputAsState === true) {
-                currentValues[msg.id] = converted;
-                if (opt.persistantFrontEndValue === true) {
-                    replayMessages[msg.id] = msg;
-                }
-            }
-            var toSend = {payload:converted};
-            toSend = opt.beforeSend(toSend, msg) || toSend;
-            if (toSend !== undefined) {
-                toSend.socketid = toSend.socketid || msg.socketid;
-                if (toSend.hasOwnProperty("topic") && (toSend.topic === undefined)) { delete toSend.topic; }
-                if (!msg.hasOwnProperty("_dontSend") && !msg.hasOwnProperty("_fromInput")) {   // TODO: deprecate _fromInput
-                    opt.node.send(toSend);      // send to following nodes
-                }
+        if (settings.readOnly === true) { return; } // don't accept input if we are in read only mode
+        var converted = opt.convertBack(msg.value);
+        if (opt.storeFrontEndInputAsState === true) {
+            currentValues[msg.id] = converted;
+            if (opt.persistantFrontEndValue === true) {
+                replayMessages[msg.id] = msg;
             }
         }
+        var toSend = {payload:converted};
+        toSend = opt.beforeSend(toSend, msg) || toSend;
+
+        if (toSend !== undefined) {
+            toSend.socketid = toSend.socketid || msg.socketid;
+            if (toSend.hasOwnProperty("topic") && (toSend.topic === undefined)) { delete toSend.topic; }
+            // send to following nodes
+            if (!msg.hasOwnProperty("_dontSend")) { opt.node.send(toSend); }
+        }
+
         if (opt.storeFrontEndInputAsState === true) {
             //fwd to all UI clients
             io.emit(updateValueEventName, msg);
