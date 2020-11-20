@@ -2,7 +2,8 @@
 
 **Fixes**
 
- - Fix  dropdown single pick search
+ - Fix dropdown single pick search.
+ - Experiment to try optimise chart updates and reloads.
 
 ### 2.24.0: Maintenance Release
 

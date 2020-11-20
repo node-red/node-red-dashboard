@@ -264,7 +264,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                     case 'date-picker': {
                         if (me.item.ddd !== undefined) {
-                            if (typeof me.item.ddd === "string") {
+                            if ((typeof me.item.ddd === "number")||(typeof me.item.ddd === "string")) {
                                 me.item.ddd = new Date(me.item.ddd);
                             }
                         }

@@ -21,7 +21,7 @@ The Node-RED-Dashboard requires [Node-RED](https://nodered.org) to be installed.
 
 ## Install
 
-To install the stable version use the `Menu - Manage palette` option and search for `node-red-dashboard`, or run the following command in your Node-RED user directory (typically `~/.node-red`):
+To install the stable version use the `Menu - Manage palette` option and search for `node-red-dashboard`, or run the following command in your Node-RED user directory - typically `~/.node-red`:
 
     npm i node-red-dashboard
 
@@ -73,7 +73,7 @@ The widget layout is managed by a `dashboard` tab in the sidebar of the Node-RED
 
 ##### Layout
 
- - **Tabs** - From here you can re-order the tabs, groups and widgets, and add and edit their properties.
+ - **Tabs** - From here you can re-order the tabs, groups and widgets, and add and edit their properties. You can also open the layout tools that may help you organise the widgets more easily than via the sidebar.
 
  - **Links** - to other web pages can also be added to the menu. They can optionally be opened in an iframe - if allowed by the target page.
 
@@ -108,11 +108,13 @@ to help pick up the theme colours.
 
 #### Widgets
 
+Don't forget there are also extra ui widgets available on the [Node-RED flows](http://flows.nodered.org) website. Search for node-ui- or contrib-ui- .
+
 Group labels are optional.
 
 Most widgets can have a label and value - both of these can be specified by properties of the incoming msg if required, and modified by angular filters. For example the label can be set to `{{msg.topic}}`, or the value could be set to `{{value | number:1}}%` to round the value to one decimal place and append a % sign.
 
-Each node may parse the `msg.payload` to make it suitable for display. This converted version is exposed as the variable called `value`, (see example above).  
+Each node may parse the `msg.payload` to make it suitable for display. This converted version is exposed as the variable called `value`, (see example above).
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
@@ -143,6 +145,42 @@ for futher details.
 
 **Tip:** The *Text* widget will accept html - so you can use it together with the *fa-icons* we
 already use to create indicator type widgets.
+
+## Icons
+
+The dashboard has 4 sets of icons built in. They are
+
+ - [Angular Material icons](https://klarsys.github.io/angular-material-icons/) : e.g. `send`
+ - [Font Awesome 4.7](https://fontawesome.com/v4.7.0/icons/) : e.g. `fa-fire fa-2x`
+ - [Weather Icons Lite](https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md) : e.g. `wi-wu-sunny`
+ - [Material Design Iconfont](https://jossef.github.io/material-design-icons-iconfont/) ; e.g. `mi-alarm_on` - note add mi- to the icon name in the iconset.
+
+And 1 that can only be used if you have a permanent connection to the internet
+
+ - [Iconify](https://iconify.design/icon-sets/) : e.g. `iconify-mdi:car-battery 48px`
+
+Again note you have to add `iconify-` to the icon name in the icon set of your choice. You may also optionally specify a size in standard px or em notation. Default is 24px.
+
+You may also create your own set of icons using [Icofont](https://icofont.com/icons). Once downloaded you can serve them locally via Node-RED and add them to the head of the dashboard page by using a ui_template node : e.g.
+
+```
+<link rel="stylesheet" href="myserver/path/icofont.css">
+```
+then you can use then as per above by adding the icofont- prefix e.g. `icofont-badge`
+
+Or just use them in a template
+
+```
+<link rel="stylesheet" href="/css/icofont.css">
+<div style="display: flex;height: 100%;justify-content: center;align-items: center;">
+<i class="icofont icofont-4x icofont-hail"></i>
+</div>
+```
+
+ And finally via an image - https://{myserver/path/image.png}
+
+You can use them in any of the Icon fields. You may also be able to use some of them for example in labels via their inline style eg `<i class="fa fa-flag"></i>`
+
 
 ## Loading the Dashboard
 
