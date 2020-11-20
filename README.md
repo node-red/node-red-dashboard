@@ -159,7 +159,11 @@ And 1 that can only be used if you have a permanent connection to the internet
 
  - [Iconify](https://iconify.design/icon-sets/) : e.g. `iconify-mdi:car-battery 48px`
 
-Again note you have to add `iconify-` to the icon name in the icon set of your choice. You may also optionally specify a size in standard px or em notation. Default is 24px.
+Again note you have to add `iconify-` to the icon name in the icon set of your choice. You may also optionally specify a size in standard px or em notation. Default is 24px. You also need to add a **ui_template** node that loads the necessary iconify library into the header of the dashboard. It should contain
+
+```
+<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+```
 
 You may also create your own set of icons using [Icofont](https://icofont.com/icons). Once downloaded you can serve them locally via Node-RED and add them to the head of the dashboard page by using a ui_template node : e.g.
 
