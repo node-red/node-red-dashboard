@@ -229,6 +229,7 @@ function add(opt) {
                                 if (Buffer.isBuffer(msg[b])) { toEmit.msg[b] = msg[b].toString("binary"); }
                                 else { toEmit.msg[b] = JSON.parse(JSON.stringify(msg[b])); }
                             }
+                            //if (Object.keys(toEmit.msg).length === 0) { delete toEmit.msg; }
                         }
                         else {
                             if (b.indexOf(".") !== -1) { b = b.split(".")[0]; }
@@ -248,6 +249,7 @@ function add(opt) {
             addField("color");
             addField("units");
             addField("tooltip");
+            addField("icon");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
             //toEmit.socketid = msg.socketid; // dcj mu

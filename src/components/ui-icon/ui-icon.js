@@ -16,15 +16,16 @@ angular.module('ui').directive('uiIcon',
             //replace: true,
             link: function (scope) {
                 scope.$watch('icon', function (newValue) {
-                    if (url.test(newValue)) {
-                        scope.iconType = 'image';
-                        scope.url = newValue;
-                    }
+                    if (newValue === "") { return; }
                     else if (fa.test(newValue)) { scope.iconType = 'fa'; }
                     else if (wi.test(newValue)) { scope.iconType = 'wi'; }
                     else if (mi.test(newValue)) { scope.iconType = 'mi'; }
                     else if (ic.test(newValue)) { scope.iconType = 'icofont'; }
                     else if (icf.test(newValue)) { scope.iconType = 'iconify'; }
+                    else if (url.test(newValue)) {
+                        scope.iconType = 'image';
+                        scope.url = newValue;
+                    }
                     else { scope.iconType = 'angular-material'; }
                 });
             }

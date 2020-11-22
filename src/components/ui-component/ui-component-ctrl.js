@@ -28,6 +28,10 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 me.item.getColor = $interpolate(me.item.color).bind(null, me.item);
             }
 
+            if (typeof me.item.icon === "string") {
+                me.item.getIcon = $interpolate(me.item.icon).bind(null, me.item);
+            }
+
             if (typeof me.item.units === "string") {
                 me.item.getUnits = $interpolate(me.item.units).bind(null, me.item);
             }
