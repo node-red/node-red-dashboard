@@ -68,8 +68,8 @@ the format should be as follows:
 
     [{
         "series": ["X", "Y", "Z" ],
-        "data": [ [5,6,9], [3,8,5], [6,7,2] ],
-        "labels": [ "Jan", "Feb", "Mar" ]
+        "data": [ [5,6,9,10], [3,8,5,10], [6,7,2,10] ],
+        "labels": [ "Jan", "Feb", "Mar", "Apr" ]
     }]
 
 ### Bar and Pie charts
@@ -95,8 +95,8 @@ and these can be mixed - you can have series and labels defined...
 
     [{
         "series": ["X", "Y", "Z" ],
-        "data": [ [5,6,9], [3,8,5], [6,7,2] ],
-        "labels": [ "Jan", "Feb", "Mar" ]
+        "data": [ [5,6,9,10], [3,8,5,11], [6,7,2,12] ],
+        "labels": [ "Jan", "Feb", "Mar", "Apr" ]
     }]
 
 ## Example
