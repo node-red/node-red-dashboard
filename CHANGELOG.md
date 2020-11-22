@@ -1,9 +1,15 @@
 ### 2.24.1: Maintenance Release
 
+**Enhancements**
+
+ - Let button icon be settable by `{{property}}`.
+
 **Fixes**
 
  - Fix dropdown single pick search.
- - Experiment to try optimise chart updates and reloads.
+ - Changes to help optimise chart updates and reloads.
+ - Fix ui_text so null msg doesn't blank text on enable and disable.
+ - Add info about Icon usage to README.
 
 ### 2.24.0: Maintenance Release
 
