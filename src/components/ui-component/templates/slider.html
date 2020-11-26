@@ -1,12 +1,22 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}"
+<md-card
+    ui-card-size="{{ me.item.width }}x{{ me.item.height }}"
     flex layout="row"
     layout-align="space-between center"
     class="nr-dashboard-slider"
     ng-class="{'nr-dashboard-disabled':me.item.disabled, 'nr-dashboard-slider-v':(me.item.width < me.item.height) }"
     ng-swipe-right="$event.stopPropagation();"
-    ng-swipe-left="$event.stopPropagation();">
-    <p ng-show="{{me.item.width >= me.item.height}}" class="label" ng-bind-html="me.item.getLabel()"></p>
-    <md-tooltip ng-if="me.item.getTooltip().length" md-delay="700" md-direction="bottom" ng-bind-html="me.item.getTooltip()"></md-tooltip>
+    ng-swipe-left="$event.stopPropagation();"
+    node-id="{{me.item.id}}">
+    <p  ng-show="{{me.item.width >= me.item.height}}"
+        class="label"
+        ng-bind-html="me.item.getLabel()">
+    </p>
+    <md-tooltip
+        ng-if="me.item.getTooltip().length"
+        md-delay="700"
+        md-direction="bottom"
+        ng-bind-html="me.item.getTooltip()">
+    </md-tooltip>
     <md-slider
         ng-if="me.item.outs==='all'"
         flex="100"
@@ -16,10 +26,11 @@
         ng-model="me.item.value"
         aria-label="{{me.item.label}}"
         ng-change="me.valueChanged(10)"
+        ng-on-wheel="me.wheel($event)"
         style="z-index:1; touch-action:none; min-width:32px;"
         ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
-        ng-attr-md-invert="{{ me.item.invert || undefined}}"
-    ></md-slider>
+        ng-attr-md-invert="{{ me.item.invert || undefined}}">
+    </md-slider>
     <md-slider
         ng-if="me.item.outs==='end'"
         md-discrete
@@ -30,12 +41,16 @@
         ng-model="me.item.value"
         aria-label="{{me.item.label}}"
         ng-change="me.mchange()"
-        ng-mousedown="me.mdown()"
+        ng-mouseup="me.mup()"
         ng-mouseleave="me.mleave()"
+        ng-mouseenter="me.menter()"
         style="z-index:1; touch-action:none; min-width:32px;"
         ng-style="(me.item.width >= me.item.height) && {'margin-top':'20px'};"
         ng-attr-md-vertical="{{ (me.item.width < me.item.height) || undefined}}"
-        ng-attr-md-invert="{{ me.item.invert || undefined}}"
-    ></md-slider>
-    <p ng-hide="{{me.item.width >= me.item.height}}" class="label-v" ng-bind-html="me.item.getLabel()"></p>
+        ng-attr-md-invert="{{ me.item.invert || undefined}}">
+    </md-slider>
+    <p  ng-hide="{{me.item.width >= me.item.height}}"
+        class="label-v"
+        ng-bind-html="me.item.getLabel()">
+    </p>
 </md-card>

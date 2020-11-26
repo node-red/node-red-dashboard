@@ -28,6 +28,7 @@ module.exports = function(RED) {
         var done = ui.add({
             forwardInputMessages: config.fwdInMessages,
             storeFrontEndInputAsState: config.storeOutMessages,
+            persistantFrontEndValue: config.resendOnRefresh,
             emitOnlyNewValues: false,
             node: node,
             tab: tab,
@@ -74,7 +75,7 @@ module.exports = function(RED) {
                 return { msg:clonedMsg };
             },
             beforeSend: function (msg, original) {
-                if (original) {
+                if (original && original.hasOwnProperty("msg") && original.msg !== null) {
                     var om = original.msg;
                     om.socketid = original.socketid;
                     return om;

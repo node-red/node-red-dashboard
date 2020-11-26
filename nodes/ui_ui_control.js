@@ -34,15 +34,21 @@ module.exports = function(RED) {
             node.send({payload:"change", tab:index, name:name, socketid:id, socketip:ip, params:p});
         }
 
+        var sendcollapse = function(group, state, id, ip) {
+            node.send({payload:"group", group:group, open:state, socketid:id, socketip:ip,});
+        }
+
         if (node.events === "connect") {
             ui.ev.on('newsocket', sendconnect);
         }
         else if (node.events === "change") {
             ui.ev.on('changetab', sendchange);
+            ui.ev.on('collapse', sendcollapse);
         }
         else {
             ui.ev.on('newsocket', sendconnect);
             ui.ev.on('changetab', sendchange);
+            ui.ev.on('collapse', sendcollapse);
             ui.ev.on('endsocket', sendlost);
         }
 
@@ -52,10 +58,12 @@ module.exports = function(RED) {
             }
             else if (node.events === "change") {
                 ui.ev.removeListener('changetab', sendchange);
+                ui.ev.removeListener('collapse', sendcollapse);
             }
             else {
                 ui.ev.removeListener('newsocket', sendconnect);
                 ui.ev.removeListener('changetab', sendchange);
+                ui.ev.removeListener('collapse', sendcollapse);
                 ui.ev.removeListener('endsocket', sendlost);
             }
         })

@@ -32,7 +32,7 @@ function init(RED) {
        * [width] - width of widget (default automatic)
        * [height] - height of widget (default automatic)
        * [order] - property to hold the placement order of the widget (default 0)
-       * [templateScope] - scope of widhget/global or local (default local)
+       * [templateScope] - scope of widget/global or local (default local)
        * [emitOnlyNewValues] - boolean (default true).
              If true, it checks if the payload changed before sending it
              to the front-end. If the payload is the same no message is sent.
@@ -40,6 +40,8 @@ function init(RED) {
              If true, forwards input messages to the output
        * [storeFrontEndInputAsState] - boolean (default true).
              If true, any message received from front-end is stored as state
+        [persistantFrontEndValue] - boolean (default true).
+             If true, last received message is send again when front end reconnect.
        * [convert] - callback to convert the value before sending it to the front-end
        * [beforeEmit] - callback to prepare the message that is emitted to the front-end
        * [convertBack] - callback to convert the message from front-end before sending it to the next connected node
@@ -94,6 +96,9 @@ function addWidget(RED, options) {
     }
     if (options.hasOwnProperty("storeFrontEndInputAsState")) {
         ui_options.storeFrontEndInputAsState = options.storeFrontEndInputAsState;
+    }
+    if (options.hasOwnProperty("persistantFrontEndValue")) {
+        ui_options.persistantFrontEndValue = options.persistantFrontEndValue;
     }
     if (options.hasOwnProperty("convert")) {
         ui_options.convert = options.convert;

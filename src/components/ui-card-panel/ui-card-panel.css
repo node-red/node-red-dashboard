@@ -18,11 +18,11 @@
 }
 
 .nr-dashboard-cardpanel > p {
-    max-height: 31px;
-    min-height: 31px;
+    max-height: 32px;
+    min-height: 32px;
     margin-left: 12px;
 	margin-top: 10px;
-	margin-bottom: 8px;
+	margin-bottom: 12px;
     font-weight: 500;
     font-size: larger;
 }

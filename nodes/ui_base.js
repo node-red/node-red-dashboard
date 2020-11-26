@@ -1,6 +1,7 @@
 module.exports = function(RED) {
     var ui = require('../ui')(RED);
     var path= require('path');
+    var gsp = require.resolve('gridstack');
     var node;
     var set = RED.settings.ui || "{}";
 
@@ -56,7 +57,7 @@ module.exports = function(RED) {
             defaultThemeState["base-color"] = {value: "#097479"};
             defaultThemeState["page-backgroundColor"] = {value: "#111111"};
             defaultThemeState["page-titlebar-backgroundColor"] = {value: "#097479"};
-            defaultThemeState["page-sidebar-backgroundColor"] = {value: "#000000"};
+            defaultThemeState["page-sidebar-backgroundColor"] = {value: "#333333"};
             defaultThemeState["group-backgroundColor"] = {value: "#333333"};
             defaultThemeState["group-textColor"] = {value: "#10cfd8"};
             defaultThemeState["group-borderColor"] = {value: "#555555"};
@@ -90,14 +91,42 @@ module.exports = function(RED) {
     RED.httpAdmin.get('/ui_base/js/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/js', req.params[0]);
         res.sendFile(filename, function (err) {
-            if (err) { node.warn(filename + " not found. Maybe running in dev mode."); }
+            if (err) {
+                if (node) {
+                    node.warn(filename + " not found. Maybe running in dev mode.");
+                }
+                else {
+                    console.log("ui_base - error:",err);
+                }
+            }
+        });
+    });
+
+    RED.httpAdmin.get('/ui_base/gs/*', function(req, res) {
+        var filename = path.join(path.dirname(gsp), req.params[0]);
+        res.sendFile(filename, function (err) {
+            if (err) {
+                if (node) {
+                    node.warn(filename + " not found. Maybe running in dev mode.");
+                }
+                else {
+                    console.log("ui_base - error:",err);
+                }
+            }
         });
     });
 
     RED.httpAdmin.get('/ui_base/css/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/css', req.params[0]);
         res.sendFile(filename, function (err) {
-            if (err) { node.warn(filename + " not found. Maybe running in dev mode."); }
+            if (err) {
+                if (node) {
+                    node.warn(filename + " not found. Maybe running in dev mode.");
+                }
+                else {
+                    console.log("ui_base - error:",err);
+                }
+            }
         });
     });
 };

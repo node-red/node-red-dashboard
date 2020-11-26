@@ -1,25 +1,25 @@
 <md-toolbar ng-show="main.hideToolbar !== true" id="toolbar">
     <div class="md-toolbar-tools" id="nr-dashboard-toolbar">
-        <md-button ng-show="!main.lockMenu && main.len > 1" ng-click="main.toggleSidenav()" class="md-icon-button" aria-label="menu button">
+        <md-button ng-show="!(main.lockMenu != 'false') && main.len > 1" ng-click="main.toggleSidenav()" class="md-icon-button" aria-label="menu button">
             <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
         <h1 ng-show="main.len <= 1" style="width:30px"> </h1>
-        <h1 ng-show="main.lockMenu">{{main.name}}</h1>
-        <h1 ng-show="!main.lockMenu && main.loaded">{{main.selectedTab.header || main.selectedTab.name}}</h1>
+        <h1 ng-show="main.lockMenu != 'false'" node-id="{{main.id}}">{{main.name}}</h1>
+        <h1 ng-show="!(main.lockMenu != 'false') && main.loaded" node-id="{{main.selectedTab.id}}">{{main.selectedTab.header || main.selectedTab.name}}</h1>
     </div>
 </md-toolbar>
 <section layout="row" flex>
-    <md-sidenav ng-hide="main.len <= 1" class="md-sidenav-left" md-component-id="left" md-is-locked-open="main.lockMenu">
+    <md-sidenav ng-hide="main.len <= 1" class="md-sidenav-left" md-component-id="left" md-is-locked-open="(main.lockMenu != 'false')">
         <md-list>
             <md-list-item ng-repeat="obj in main.menu" ng-class="{'nr-menu-item-active':location.$$path=='/'+$index}" ng-disabled="obj.disabled" ng-if="!obj.hidden" ng-click="main.open(obj, $index)">
                 <ui-icon icon="{{obj.icon}}" style="margin:5px"></ui-icon>
-                <p>{{main.getMenuName(obj)}}</p>
+                <p style="margin-right:12px; min-width:120px;" ng-show="(main.lockMenu != 'icon')">{{main.getMenuName(obj)}}</p>
             </md-list-item>
         </md-list>
     </md-sidenav>
     <md-content flex>
-        <div ui-masonry ng-show="main.selectedTab.header">
-            <ui-card-panel ng-repeat="group in main.selectedTab.items" id="{{main.selectedTab.header+'_'+group.header.name | spaceToUnderscore}}"  ng-if="group.header && group.header.config && !group.header.config.hidden">
+        <div ui-masonry ng-show="main.selectedTab.header" id="{{'Tab_'+main.selectedTab.header | spaceToUnderscore}}">
+            <ui-card-panel node-id="{{group.header.id}}" ng-repeat="group in main.selectedTab.items" id="{{main.selectedTab.header+'_'+group.header.name | spaceToUnderscore}}"  ng-if="group.header && group.header.config && !group.header.config.hidden">
                 <ui-component ng-repeat="control in group.items" item="control"></ui-component>
             </ui-card-panel>
         </div>

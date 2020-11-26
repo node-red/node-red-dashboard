@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.19.1-beta",
+    "version": "2.24.1",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -40,6 +40,9 @@
         },
         {
             "name": "Kazuhiro Ito"
+        },
+        {
+            "name": "@petslane"
         }
     ],
     "license": "Apache-2.0",
@@ -75,29 +78,29 @@
     },
     "dependencies": {
         "compression": "^1.7.4",
+        "gridstack": "^0.6.4",
         "serve-static": "^1.14.1",
         "socket.io": "^2.3.0"
     },
     "devDependencies": {
-        "angular": "~1.7.9",
-        "angular-animate": "~1.7.9",
-        "angular-aria": "~1.7.9",
+        "angular": "~1.8.2",
+        "angular-animate": "~1.8.2",
+        "angular-aria": "~1.8.2",
         "angular-chart.js": "^1.1.1",
-        "angular-material": "~1.1.20",
+        "angular-material": "~1.2.1",
         "angular-material-icons": "^0.7.1",
-        "angular-messages": "~1.7.9",
-        "angular-mocks": "~1.7.9",
-        "angular-route": "~1.7.9",
-        "angular-sanitize": "~1.7.9",
-        "angular-touch": "~1.7.9",
+        "angular-messages": "~1.8.2",
+        "angular-mocks": "~1.8.2",
+        "angular-route": "~1.8.2",
+        "angular-sanitize": "~1.8.2",
+        "angular-touch": "~1.8.2",
         "angularjs-color-picker": "^3.4.8",
         "chart.js": "~2.3.0",
         "d3": "^3.5.17",
         "font-awesome": "^4.7.0",
-        "gridstack": "^0.4.0",
         "gulp": "~4.0.2",
         "gulp-angular-templatecache": "~3.0.0",
-        "gulp-clean-css": "^4.0.0",
+        "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
         "gulp-concat-css": "^3.1.0",
         "gulp-debug": "^4.0.0",
@@ -112,21 +115,20 @@
         "gulp-manifest3": "^0.1.2",
         "gulp-rename": "^1.4.0",
         "gulp-replace": "^1.0.0",
-        "gulp-sass": "^4.0.2",
+        "gulp-sass": "^4.1.0",
         "gulp-uglify": "~3.0.2",
         "gulp-util": "^3.0.8",
-        "jquery": "^3.4.1",
-        "jshint": "^2.10.3",
-        "justgage": "~1.3.3",
+        "jquery": "~3.5.1",
+        "jshint": "~2.12.0",
+        "justgage": "~1.4.0",
         "less": "~3.9.0",
-        "lodash": "^4.17.15",
-        "moment": "~2.24.0",
+        "material-design-icons-iconfont": "~6.1.0",
+        "moment": "~2.29.1",
         "sprintf-js": "^1.1.2",
         "streamqueue": "~1.1.2",
         "svg-morpheus": "^0.3.0",
-        "tinycolor2": "^1.4.1",
-        "weather-icons-lite": "^1.1.0",
-        "webfontloader": "^1.6.28"
+        "tinycolor2": "1.4.2",
+        "weather-icons-lite": "1.3.1"
     },
     "engines": {
         "node": ">=8"

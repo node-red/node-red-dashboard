@@ -31,9 +31,6 @@ if (!String.prototype.startsWith) {
     };
 }
 
-// Start to do async load of google webfont
-WebFont.load({ google: { families: ['Material Icons'] } });
-
 var doVisualUpdates = true;
 document.addEventListener('visibilitychange', function() {
     setTimeout(function() { doVisualUpdates = !document.hidden; }, 1000);
@@ -53,7 +50,9 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider', '
         $mdThemingProvider.generateThemesOnDemand(true);
         $provide.value('themeProvider', $mdThemingProvider);
 
-        //white-list all protocols
+        //white-list all protocols and turn off debug
+        $compileProvider.debugInfoEnabled(false);
+        $compileProvider.commentDirectivesEnabled(false);
         $compileProvider.aHrefSanitizationWhitelist(/.*/);
 
         //set the locale provider
@@ -74,6 +73,8 @@ app.config(['$mdThemingProvider', '$compileProvider', '$mdDateLocaleProvider', '
         $mdDateLocaleProvider.monthHeaderFormatter = function(date) {
             return moment(date).format("MMM YYYY");
         };
+
+        $mdDateLocaleProvider.firstDayOfWeek = moment.localeData()._week.dow;
     }
 ]);
 
@@ -87,7 +88,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.loaded = false;
         this.hideToolbar = false;
         this.allowSwipe = false;
-        this.lockMenu = false;
+        this.lockMenu = "false";
         this.allowTempTheme = true;
         var main = this;
         var audioContext;
@@ -114,6 +115,22 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         $scope.onSwipeLeft = function() { if (main.allowSwipe) { moveTab(-1); } }
         $scope.onSwipeRight = function() { if (main.allowSwipe) { moveTab(1); } }
+
+        // Added as PR#587 to fix navigation history so back/forwards works ok from browser
+        $scope.$on('$locationChangeSuccess', function ($event, newUrl, oldUrl, newState, oldState) {
+            if ($location.path() === '/' + tabId) { return; }
+            var tabIdFromUrlPath = parseInt($location.path().split('/')[1], 10);
+            if (!isNaN(tabIdFromUrlPath)) {
+                var menu = main.menu[tabIdFromUrlPath];
+                if (menu) {
+                    main.open(menu, tabIdFromUrlPath);
+                }
+            }
+        });
+
+        $rootScope.$on("collapse", function(e,d,d2) {
+            events.emit('ui-collapse', {group:d, state:d2});
+        });
 
         this.toggleSidenav = function () { $mdSidenav('left').toggle(); }
 
@@ -143,10 +160,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     if (typeof main.menu[index].link === "string") {
                         main.menu[index].link = $sce.trustAsResourceUrl(main.menu[index].link);
                     }
-                    main.selectedTab = main.menu[index];
-                    tabId = index;
-                    events.emit('ui-change', tabId);
-                    $location.path(index);
+                    main.select(index);
                 }
                 $mdSidenav('left').close();
             }
@@ -339,7 +353,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 name = main.name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
                 main.allowSwipe = (ui.site.allowSwipe == "true");
-                main.lockMenu = (ui.site.lockMenu == "true");
+                main.lockMenu = ui.site.lockMenu;
                 if (typeof ui.site.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
                 else {
                     main.allowTempTheme = (ui.site.allowTempTheme == "true");
@@ -382,6 +396,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 }
                 if ((main.selectedTab !== null) && (main.selectedTab.link !== undefined)) {
                     main.selectedTab.link = $sce.trustAsResourceUrl(main.selectedTab.link);
+                }
+                if (ui.hasOwnProperty("theme")) {
+                    $('meta[name=theme-color]').attr('content', ui.theme.themeState["page-titlebar-backgroundColor"].value || "#097479");
+                } else {
+                    $('meta[name=theme-color]').attr('content','#097479');
                 }
                 $mdToast.hide();
                 processGlobals();
@@ -510,6 +529,36 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         });
 
+        // Added as PR #586 - to help cache bust aged out socket connections and force re-authentication
+        events.on('connect_error', function (error) {
+            var getRandomFromUrl = function () {
+                var matches = window.location.search.match(/[?&]random=([^&]*)/);
+                return (matches && matches[1] || 0) * 1;
+            };
+            var forceReload = function () {
+                // avoid reload loop
+                if ((new Date()).getTime() - getRandomFromUrl() < 60000) { return; }
+
+                // remove existing 'random' and add new one
+                var search = window.location.search;
+                search = search.replace(/[?&]random=([^&]*)/, '');
+                if (!search.startsWith('?')) { search = '?' + search; }
+                search += '&random=' + (new Date()).getTime();
+
+                // restore new url with updated search params
+                var url = window.location.origin;
+                url += window.location.pathname;
+                url += search;
+                url += window.location.hash;
+                window.location = url;
+            };
+
+            // force reload on Unauthorized response
+            if (error.type === 'TransportError' && error.description === 401) {
+                forceReload();
+            }
+        });
+
         events.on('show-toast', function (msg) {
             if (msg.raw !== true) {
                 var temp = document.createElement('div');
@@ -518,8 +567,18 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
             if (msg.dialog === true) {
                 var confirm;
-                if (msg.message == "") { $mdDialog.hide(); return; }
-                if (msg.cancel) {
+                if (msg.message == "") { $mdDialog.cancel(); return; }
+                if (msg.cancel && msg.prompt) {
+                    confirm = $mdDialog.prompt()
+                        .title(msg.title)
+                        .htmlContent(msg.message)
+                        .initialValue("")
+                        .ariaLabel(msg.ok + " or " + msg.cancel)
+                        .ok(msg.ok)
+                        .cancel(msg.cancel);
+                    confirm._options.focusOnOpen = false;
+                }
+                else if (msg.cancel) {
                     confirm = $mdDialog.confirm()
                         .title(msg.title)
                         .htmlContent(msg.message)
@@ -549,8 +608,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     '</md-dialog-actions>' +
                 '</md-dialog>';
                 $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
-                    function() {
+                    function(res) {
+                        console.log("RES",typeof res,res,"::",msg.ok,"::");
                         msg.msg.payload = msg.ok;
+                        if (res != true) { msg.msg.payload = res; }
+                        if (res == undefined) { msg.msg.payload = ""; }
+                        console.log("MSG",msg);
                         events.emit({ id:msg.id, value:msg });
                     },
                     function() {
@@ -669,6 +732,20 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                                             localStorage.setItem("g"+c,true);
                                         }
                                     }
+                                    if (msg.group.hasOwnProperty("close")) {
+                                        if (msg.group.close.indexOf(c) > -1) {
+                                            if (typeof localStorage !== 'undefined' && localStorage.getItem(c) == "false") {
+                                                $("#"+c+" > div > p > span > i").trigger("click");
+                                            }
+                                        }
+                                    }
+                                    if (msg.group.hasOwnProperty("open")) {
+                                        if (msg.group.open.indexOf(c) > -1) {
+                                            if (typeof localStorage !== 'undefined' && localStorage.getItem(c) == "true") {
+                                                $("#"+c+" > div > p > span > i").trigger("click");
+                                            }
+                                        }
+                                    }
                                     $(window).trigger('resize');
                                 }
                             }
@@ -714,7 +791,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     words.onerror = function(err) { events.emit('ui-audio', 'error: '+err.error); }
                     words.onend = function() { events.emit('ui-audio', 'complete'); }
                     for (var v=0; v<voices.length; v++) {
-                        if (voices[v].lang === msg.voice) {
+                        if (voices[v].voiceURI === msg.voice) {
                             words.voice = voices[v];
                             break;
                         }

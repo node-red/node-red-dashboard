@@ -26,6 +26,7 @@
             format: {value: '<div ng-bind-html="msg.payload"></div>'},
             storeOutMessages: {value: true},
             fwdInMessages: {value: true},
+            resendOnRefresh: {value: true},
             templateScope: {value: 'local'}
         },
         inputs:1,
@@ -152,7 +153,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_template">
+<script type="text/html" data-template-name="ui_template">
     <div class="form-row">
         <label for="node-input-format"><span data-i18n="ui_template.label.type"></span></label>
         <select style="width:76%" id="node-input-templateScope">
@@ -193,10 +194,14 @@
             <input type="checkbox" id="node-input-storeOutMessages" style="display:inline-block; margin-left:8px; width:auto; vertical-align:top;">
             <label for="node-input-storeOutMessages" style="width:70%;"> <span data-i18n="ui_template.label.store-state"></span></label>
         </div>
+        <div class="form-row" style="margin-bottom:0px;">
+            <input type="checkbox" id="node-input-resendOnRefresh" style="display:inline-block; margin-left:8px; width:auto; vertical-align:top;">
+            <label for="node-input-resendOnRefresh" style="width:70%;"> <span data-i18n="ui_template.label.resend"></span></label>
+        </div>
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_template">
+<script type="text/html" data-help-name="ui_template">
     <p>The template widget can contain any valid html and Angular/Angular-Material directives.</p>
     <p>This node can be used to create a dynamic user interface element that changes its appearence
     based on the input message and can send back messages to Node-RED.</p>
@@ -239,8 +244,8 @@ this.scope.action = function() { return value; }
     You can also define the template content via <code>msg.template</code>, so you can use external files for example.<br>
     Template will be reloaded on input if it has changed.<br>
     Code written in the Template field will be ignored when <code>msg.template</code> is present.</p>
-    <p>The following icon fonts are also available: <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icons</a>,
-    <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icons</a>,
-    <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md" target="_blank">Weather icons</a>.
-    You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset' but this requires internet access.</p>
+    <p>The following icon fonts are available: <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icon</a>
+    <i>(e.g. 'check', 'close')</i> or a <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icon</a>
+    <i>(e.g. 'fa-fire')</i>, or a <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">Weather icon</a>.
+    You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>
 </script>

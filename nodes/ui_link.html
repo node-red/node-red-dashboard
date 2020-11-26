@@ -34,7 +34,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_link">
+<script type="text/html" data-template-name="ui_link">
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="ui_link.label.name"></span></label>
         <input type="text" id="node-config-input-name">
@@ -59,10 +59,10 @@
     <div class="form-tips" data-i18n="[html]ui_link.tip"></div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_link">
-    <p>Adds a web link to the left side menu of the user interface.</p>
-    <p>The <b>Icon</b> field can be either <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icons</a> <i>(e.g. 'check', 'close')</i>
-    or <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icons</a> <i>(e.g. 'fa-fire')</i>.
-    You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset' but this requires internet access.</p>
+<script type="text/html" data-help-name="ui_link">
+    <p>The <b>Icon</b> can be defined, as either a <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icon</a>
+    <i>(e.g. 'check', 'close')</i> or a <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icon</a>
+    <i>(e.g. 'fa-fire')</i>, or a <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">Weather icon</a>.
+    You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>
     <p>The <b>Open in</b> field controls whether the link opens in a <i>New Tab</i>, or if the link is opened within an <i>iframe</i> on the same page. Some sites, including Google, do not allow the rendering of their page inside an iframe. If you select the <i>iframe</i> option and the site does not show, this is simply because that site forbids the use of it inside an iframe.</p>
 </script>

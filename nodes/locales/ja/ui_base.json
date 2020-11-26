@@ -28,7 +28,9 @@
             "spacer": "スペーサ",
             "layout" : "レイアウト",
             "layout-editor" : "ダッシュボードレイアウトエディタ",
-            "width" : "幅"
+            "width" : "幅",
+            "auto": "自動サイズ調整",
+            "manual": "手動サイズ変更"
         },
         "theme" : {
             "style" : "スタイル",
@@ -85,7 +87,8 @@
         },
         "lock" : {
             "clicked" : "サイドメニューをクリックで表示",
-            "locked" : "サイドメニューを表示したままにする"
+            "locked" : "サイドメニューを表示したままにする",
+            "locked-icon": "常にアイコンのみを表示"
         },
         "temp" : {
             "no-theme" : "ui_templateでテーマ設定を許可しない",

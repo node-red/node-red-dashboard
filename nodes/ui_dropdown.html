@@ -20,7 +20,12 @@
             },
             height: {value: 0},
             passthru: {value: true},
-            options: {value:[{value: '', label : ''}]},
+            multiple: {value: false},
+            options: {value:[{value: '', label : ''}],
+                validate:function(v) {
+                    var unique = new Set(v.map(function(o) {return o.value;}));
+                    return v.length == unique.size;
+                }},
             payload: {value: ''},
             topic: {value: ''}
         },
@@ -31,11 +36,17 @@
         label: function() { return this.name || (~this.label.indexOf("{{") ? null : this.label) || 'dropdown'; },
         labelStyle: function() { return this.name?"node_label_italic":""; },
         oneditprepare: function() {
+            if (this.multiple === undefined) {
+                $("#node-input-multiple").prop('checked', false);;
+            }
             $("#node-input-size").elementSizer({
                 width: "#node-input-width",
                 height: "#node-input-height",
                 group: "#node-input-group"
             });
+            var un = new Set(this.options.map(function(o) {return o.value}));
+            if (this.options.length == un.size) { $("#valWarning").hide(); }
+            else { $("#valWarning").show(); }
 
             function generateOption(i, option) {
                 var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
@@ -103,7 +114,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="ui_dropdown">
+<script type="text/html" data-template-name="ui_dropdown">
     <div class="form-row">
         <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
         <input type="text" id="node-input-group">
@@ -128,12 +139,17 @@
     </div>
     <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%">
         <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Options</label>
-        <div id="node-input-option-container-div" style="box-sizing: border-box; border-radius: 5px; height: 257px; padding: 5px; border: 1px solid #ccc; overflow-y:scroll;display: inline-block; width: calc(70% + 15px);">
-            <ol id="node-input-option-container" style=" list-style-type:none; margin: 0;"></ol>
+        <div id="node-input-option-container-div" style="box-sizing:border-box; border-radius:5px; height:257px; padding:5px; border:1px solid #ccc; overflow-y:scroll; display:inline-block; width:calc(70% + 15px);">
+            <span id="valWarning" style="color:#910000"><b>All Values must be unique.</b></span>
+            <ol id="node-input-option-container" style="list-style-type:none; margin:0;"></ol>
         </div>
     </div>
     <div class="form-row">
-        <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top: 4px; margin-left: 103px;"><i class="fa fa-plus"></i> <span>option</span></a>
+        <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top:4px; margin-left:103px;"><i class="fa fa-plus"></i> <span>option</span></a>
+    </div>
+    <div class="form-row">
+        <label style="width:auto" for="node-input-multiple"><i class="fa fa-th-list"></i> Allow multiple selections from list: </label>
+        <input type="checkbox" checked id="node-input-multiple" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, pass through to output: </label>
@@ -149,15 +165,18 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="ui_dropdown">
+<script type="text/html" data-help-name="ui_dropdown">
     <p>Adds a dropdown select box to the user interface.</p>
     <p>Multiple value / label pairs can be added as required. If the label is not specified the
     value will be used for both.</p>
     <p>The configured value of the selected item will be returned as <code>msg.payload</code>.</p>
-    <p>Setting <code>msg.payload</code> to the value will set the pre-selected choice in the dropdown.</p>
+    <p>Setting <code>msg.payload</code> to one of the item values will preset the choice in the dropdown.
+    If using the multi-select option then the payload should be an array of values.</p>
     <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
     <p>The Options may be configured by inputting <code>msg.options</code> containing an array.
     If just text then the value will be the same as the label, otherwise you can specify both by
     using an object of <code>"label":"value"</code> pairs :</p>
     <code>[ "Choice 1", "Choice 2", {"Choice 3":"3"} ]</code>
+    <p></p>
+    <p>If the "Allow multiple selections" output option is enabled - the result will be returned as an array instead of a string.</p>
 </script>

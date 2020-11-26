@@ -32,22 +32,24 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
 
                     scope.$watch('me.item.gtype', function() {
                         if (unregtype) { unregtype(); }
+                        var item = scope.$eval('me.item');
+                        var id = scope.$eval('$id');
                         // Wave type gauge
-                        if (scope.$eval('me.item.gtype') === 'wave') {
-                            document.getElementById("gauge_"+scope.$eval('$id')).innerHTML = '<svg id="gauge'+scope.$eval("$id")+'" style="width:100%; height:100%;"></svg>';
+                        if (item.gtype === 'wave') {
+                            document.getElementById("gauge_"+id).innerHTML = '<svg id="gauge'+id+'" style="width:100%; height:100%;"></svg>';
                             unregtype = scope.$watchGroup(['me.item.min','me.item.max','me.item.units','me.item.waveoptions','me.item.options'], function() {
                                 if (unreg) { unreg(); }
                                 var gaugeConfig = liquidFillGaugeDefaultSettings();
-                                gaugeConfig.minValue = scope.$eval('me.item.min');
-                                gaugeConfig.maxValue = scope.$eval('me.item.max');
-                                gaugeConfig.units = scope.$eval('me.item.units');
+                                gaugeConfig.minValue = item.min;
+                                gaugeConfig.maxValue = item.max;
+                                gaugeConfig.units = item.units;
                                 gaugeConfig.textVertPosition = 0.33;
                                 gaugeConfig.waveHeight = 0.09;
                                 //gaugeConfig.waveAnimateTime = 10000;
                                 gaugeConfig.waveRise = false;
                                 gaugeConfig.waveCount = 2;
                                 gaugeConfig.displayPercent = false;
-                                var opts = scope.$eval('me.item.waveoptions');
+                                var opts = item.waveoptions;
                                 gaugeConfig.circleColor = opts.circleColor[theme];
                                 gaugeConfig.waveColor = opts.waveColor[theme];
                                 gaugeConfig.textColor = opts.textColor[theme];
@@ -57,14 +59,16 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                 if (gaugeConfig.textColor === undefined) { gaugeConfig.textColor = fgnd; }
                                 if (gaugeConfig.waveTextColor === undefined) { gaugeConfig.waveTextColor = fgnd; }
 
-                                if (scope.$eval('me.item.options') !== null) {
-                                    //Object.assign(gaugeConfig, scope.$eval('me.item.options'));
-                                    Object.keys(scope.$eval('me.item.options')).forEach(function(key) {
-                                        gaugeConfig[key] = scope.$eval('me.item.options')[key];
+                                if (item.options !== null) {
+                                    //Object.assign(gaugeConfig, item.options'));
+                                    Object.keys(item.options).forEach(function(key) {
+                                        gaugeConfig[key] = item.options[key];
                                     });
                                 }
-                                gauge = loadLiquidFillGauge("gauge"+scope.$eval('$id'), scope.$eval('me.item.value'), gaugeConfig);
+                                gauge = loadLiquidFillGauge("gauge"+id, item.value, gaugeConfig);
                                 unreg = scope.$watch('me.item.value', function(newValue) {
+                                    newValue = item.getText();
+                                    if (isNaN(newValue) || newValue === "") { newValue = gaugeConfig.minValue; }
                                     gauge.update(newValue);
                                 });
                             });
@@ -73,29 +77,29 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         else {
                             unregtype = scope.$watchGroup(['me.item.min','me.item.max','me.item.seg1','me.item.seg2','me.item.colors','me.item.reverse','me.item.options'], function() {
                                 if (unreg) { unreg(); }
-                                document.getElementById("gauge_"+scope.$eval('$id')).innerHTML = "";
+                                document.getElementById("gauge_"+id).innerHTML = "";
                                 var gaugeOptions = {
-                                    id: 'gauge_' + scope.$eval('$id'),
-                                    value: scope.$eval('me.item.value'),
-                                    min: scope.$eval('me.item.min'),
-                                    max: scope.$eval('me.item.max'),
-                                    reverse: scope.$eval('me.item.reverse'),
-                                    hideMinMax: scope.$eval('me.item.hideMinMax'),
-                                    levelColors: (scope.$eval('me.item.reverse')) ? scope.$eval('me.item.colors').reverse() : scope.$eval('me.item.colors'),
+                                    id: 'gauge_' + id,
+                                    value: item.value,
+                                    min: item.min,
+                                    max: item.max,
+                                    reverse: item.reverse,
+                                    hideMinMax: item.hideMinMax,
+                                    levelColors: (item.reverse) ? item.colors.reverse() : item.colors,
                                     valueMinFontSize: 12,
                                     minLabelMinFontSize: 8,
                                     labelMinFontSize: 8,
                                     titleFontFamily: "inherit",
                                     valueFontFamily: "inherit",
-                                    //title: scope.$eval('me.item.title'),
-                                    label: scope.$eval('me.item.units'),
+                                    //title: item.title'),
+                                    label: item.units,
                                     pointer: true,
                                     relativeGaugeSize: false,
                                     textRenderer: function() {
-                                        return scope.$eval('me.item.getText()') || "";
+                                        return item.getText() || "";
                                     }
                                 }
-                                if (scope.$eval('me.item.gtype') === 'donut') {
+                                if (item.gtype === 'donut') {
                                     gaugeOptions.donut = true;
                                     //gaugeOptions.donutStartAngle = 270;
                                     gaugeOptions.pointer = false;
@@ -105,23 +109,23 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                 if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = "rgba(127,127,127,0.5)"; }
                                 if (gaugeOptions.pointerOptions === undefined) { gaugeOptions.pointerOptions = {color:tgnd}; }
 
-                                if (scope.$eval('me.item.gtype') === 'compass') {
+                                if (item.gtype === 'compass') {
                                     gaugeOptions.donut = true;
-                                    gaugeOptions.gaugeWidthScale = 0.2;
+                                    gaugeOptions.gaugeWidthScale = 0.3;
                                     gaugeOptions.pointer = true;
                                     gaugeOptions.refreshAnimationTime = 5;
-                                    // gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:scope.$eval('me.item.gageoptions.compassColor')};
-                                    gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:undefined};
-                                    gaugeOptions.gaugeColor = scope.$eval('me.item.gageoptions.compassColor[theme]');
-                                    gaugeOptions.levelColors = [scope.$eval('me.item.gageoptions.compassColor[theme]')];
+                                    // gaugeOptions.pointerOptions = {toplength:12, bottomlength:12, bottomwidth:5, color:item.gageoptions.compassColor')};
+                                    gaugeOptions.pointerOptions = {toplength:12, bottomlength:16, bottomwidth:8, color:undefined};
+                                    gaugeOptions.gaugeColor = item.gageoptions.compassColor[theme];
+                                    gaugeOptions.levelColors = [item.gageoptions.compassColor[theme]];
                                     if (gaugeOptions.gaugeColor === undefined) { gaugeOptions.gaugeColor = fgnd; }
                                     if (gaugeOptions.pointerOptions.color === undefined) { gaugeOptions.pointerOptions.color = fgnd; }
                                 }
                                 else {
-                                    var seg1 = scope.$eval('me.item.seg1');
-                                    var seg2 = scope.$eval('me.item.seg2');
+                                    var seg1 = item.seg1;
+                                    var seg2 = item.seg2;
                                     if ((!isNaN(parseFloat(seg1))) && (!isNaN(parseFloat(seg2)))) {
-                                        var colors = scope.$eval('me.item.colors');
+                                        var colors = item.colors;
                                         gaugeOptions.customSectors = {percents:false, ranges:[
                                             { color : colors[0], lo : gaugeOptions.min, hi : seg1 },
                                             { color : colors[1], lo : seg1, hi : seg2 },
@@ -130,10 +134,10 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                         gaugeOptions.noGradient = true;
                                     }
                                 }
-                                if (scope.$eval('me.item.options') !== null) {
-                                    //Object.assign(gaugeOptions, scope.$eval('me.item.options'));
-                                    Object.keys(scope.$eval('me.item.options')).forEach(function(key) {
-                                        gaugeOptions[key] = scope.$eval('me.item.options')[key];
+                                if (item.options !== null) {
+                                    //Object.assign(gaugeOptions, item.options'));
+                                    Object.keys(item.options).forEach(function(key) {
+                                        gaugeOptions[key] = item.options[key];
                                     });
                                 }
 
@@ -143,17 +147,17 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                 var oldUnits = "";
                                 unreg = scope.$watch('me.item.value', function(newValue) {
                                     if (typeof newValue === "object") {
-                                        newValue = scope.$eval('me.item.getText()');
+                                        newValue = item.getText();
                                     }
                                     if (isNaN(newValue = parseFloat(newValue))) {
                                         newValue = gaugeOptions.min;
                                     }
-                                    if (scope.$eval('me.item.getUnits()') !== oldUnits) {
-                                        oldUnits = scope.$eval('me.item.getUnits()');
+                                    if (item.getUnits() !== oldUnits) {
+                                        oldUnits = item.getUnits();
                                         gaugeOptions.label = oldUnits;
                                         gauge.refreshLabel(oldUnits);
                                     }
-                                    // if (scope.$eval('me.item.gtype') === 'compass') {
+                                    // if (item.gtype') === 'compass') {
                                     //     var r = gaugeOptions.max - gaugeOptions.min;
                                     //     newValue = (newValue + r) % r;
                                     // }

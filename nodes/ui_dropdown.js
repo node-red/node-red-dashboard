@@ -4,6 +4,7 @@ module.exports = function(RED) {
     function DropdownNode(config) {
         RED.nodes.createNode(this, config);
         this.pt = config.passthru;
+        this.multiple = config.multiple || false;
         this.state = [" "," "];
         var node = this;
         node.status({});
@@ -14,15 +15,16 @@ module.exports = function(RED) {
         if (!tab) { return; }
 
         var control = {
-                type: 'dropdown',
-                label: config.label,
-                tooltip: config.tooltip,
-                place: config.place || "Select option",
-                order: config.order,
-                value: config.payload || node.id,
-                width: config.width || group.config.width || 6,
-                height: config.height || 1
-            };
+            type: 'dropdown',
+            multiple: config.multiple,
+            label: config.label,
+            tooltip: config.tooltip,
+            place: config.place || "Select option",
+            order: config.order,
+            value: config.payload || node.id,
+            width: config.width || group.config.width || 6,
+            height: config.height || 1
+        };
 
         for (var o=0; o<config.options.length; o++) {
             config.options[o].label = config.options[o].label || config.options[o].value;
@@ -30,6 +32,7 @@ module.exports = function(RED) {
         control.options = config.options;
 
         var emitOptions;
+        var savedtopic;
 
         var done = ui.add({
             node: node,
@@ -62,7 +65,6 @@ module.exports = function(RED) {
                     for (var i = 0; i < msg.options.length; i++) {
                         var opt = msg.options[i];
                         if (opt === undefined || opt === null) { continue; }
-
                         switch (typeof opt) {
                             case 'number': {
                                 opt = "" + opt;
@@ -93,7 +95,7 @@ module.exports = function(RED) {
                     emitOptions.isOptionsValid = true;
                 } while (false);
                 // finally adjust msg to reflect the input
-                msg._fromInput = true;
+                msg._dontSend = true;
                 if (emitOptions.isOptionsValid) {
                     control.options = emitOptions.newOptions;
                     control.value = emitOptions.value;
@@ -103,11 +105,11 @@ module.exports = function(RED) {
                         node.error("ERR: Invalid Options", msg);
                     }
                 }
-
+                if (msg.hasOwnProperty("topic")) { savedtopic = msg.topic; }
                 if (msg.hasOwnProperty("payload")) {
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
-                    emitOptions._fromInput = true;
+                    delete emitOptions._dontSend;
                     return emitOptions;
                 }
                 // we do not overide payload here due to 'opt.emitOnlyNewValues' in ui.js
@@ -116,30 +118,76 @@ module.exports = function(RED) {
             },
 
             beforeEmit: function (msg, newValue) {
+                if (msg.socketid) { emitOptions.socketid = msg.socketid; }
                 return emitOptions;
             },
 
+            convertBack: function (msg) {
+                var val = node.multiple ? [] : "";
+                var m = RED.util.cloneMessage(msg);
+                for (var i=0; i<control.options.length; i++) {
+                    if (!node.multiple) {
+                        delete m["$$mdSelectId"]
+                        if (JSON.stringify(control.options[i].value) === JSON.stringify(m)) {
+                            val = control.options[i].value;
+                            if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
+                                try { val = JSON.parse(val); }
+                                catch(e) {}
+                            }
+                            break;
+                        }
+                    }
+                    else if (node.multiple) {
+                        m.map(x => delete x["$$mdSelectId"])
+                        if (Array.isArray(m) && JSON.stringify(m).indexOf(JSON.stringify(control.options[i].value)) !== -1) {
+                            var v = control.options[i].value;
+                            if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
+                                try { v = JSON.parse(v); }
+                                catch(e) {}
+                            }
+                            val.push(v);
+                        }
+                    }
+                }
+                return val;
+            },
+
             beforeSend: function (msg) {
-                if (msg._fromInput) {
+                if (msg.payload === undefined) { msg.payload = []; }
+                if (msg._dontSend) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
+                    delete msg._dontSend;
                 }
-                msg.topic = config.topic || msg.topic;
-                if (node.pt) {
-                    node.status({shape:"dot",fill:"grey",text:msg.payload});
-                }
+                msg.topic = config.topic || msg.topic || savedtopic;
+                if (msg.topic === undefined) { delete msg.topic; }
+                if (msg.payload === null) { node.status({}); }
                 else {
-                    node.state[1] = msg.payload;
-                    node.status({shape:"dot",fill:"grey",text:node.state[1] + " | " + node.state[1]});
+                    var stat = "";
+                    if (Array.isArray(msg.payload)) { stat = msg.payload.length + " items"; }
+                    else {
+                        if (typeof msg.payload === "object") { stat = JSON.stringify(msg.payload); }
+                        else { stat = msg.payload.toString(); }
+                        if (stat.length > 32) { stat = stat.substr(0,31)+"..."; }
+                    }
+                    if (node.pt) {
+                        node.status({shape:"dot",fill:"grey",text:stat});
+                    }
+                    else {
+                        node.state[1] = stat;
+                        node.status({shape:"dot",fill:"grey",text:node.state[1] + " | " + node.state[1]});
+                    }
                 }
             }
         });
+
         if (!node.pt) {
             node.on("input", function(msg) {
                 node.state[0] = msg.payload;
                 node.status({shape:"dot",fill:"grey",text:node.state[0] + " | " + node.state[1]});
             });
         }
+
         node.on("close", done);
     }
     RED.nodes.registerType("ui_dropdown", DropdownNode);

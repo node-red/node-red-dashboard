@@ -1,4 +1,179 @@
-### 2.19.1-beta: Maintenance Release
+### 2.24.1: Maintenance Release
+
+**Fixes**
+
+ - Fix dropdown single pick search.
+ - Changes to help optimise chart updates and reloads.
+ - Fix ui_text so null msg doesn't blank text on enable and disable.
+ - Add info about Icon usage to README.
+ - Let button icon be settable by `{{property}}`.
+
+### 2.24.0: Maintenance Release
+
+**Enhancements**
+
+ - Let sidebar menu optionally show icons only.
+ - Let iconify font icons have size parameter. eg `iconify-mdi:garage-variant 48px`
+
+**Fixes**
+
+ - Fix for dropdown options being options.
+ - Datepicker auto selects first day of week based on browser locale.
+ - Add tooltips for layout fixed/not-fixed icons.
+ - Fix layout drag between groups.
+
+### 2.23.5: Maintenance Release
+
+**Fixes**
+
+ - Set checkbox label to be full width. Issue #622
+ - Add CSS for ui-list menu select to match theme.
+ - Add node-id property to each md-card.
+ - Force time picker image to contrast with background.
+ - Let slider show status even if no nodes attached to output.
+ - Fix dropdown to return correct message type.
+
+### 2.23.4: Maintenance Release
+
+**Fixes**
+
+ - Truncate input data array if larger than number of points required. Issue #617
+ - Fix dropdown regression to handle objects
+ - PR to report correct IP address when using Nginx or proxy. PR #620
+
+### 2.23.3: Maintenance Release
+
+**Fixes**
+
+ - Fix regression in dropdown returning 0 value. Issue #614
+ - Fix ui_textinput-CR to allow any step so floats validate ok. Issue #609
+ - Ensure voice option picks a unique selector. Issue #613
+ - Update libraries to fix missing weather/moon icons
+
+ ### 2.23.2: Maintenance Release
+
+**Fixes**
+
+ - Fix dropdown to correct return values not labels
+
+ ### 2.23.1: Maintenance Release
+
+**Fixes**
+
+ - Fix date picker to return midnight on picked day. PR #600
+ - Add some validation to dropdown widget values to flag duplicates.
+ - Fix dropdown to only return valid options if options changed dynamically.
+ - Fix group spacings to align better.
+ - Fix wave gauge to also allow using random msg properties. Issue #607
+
+### 2.23.0: Milestone Release
+
+**Enhancements**
+
+ - Fix custom colour sidebar choice to actually work.
+ - Dropdown multiselect now allows select/deselect all. PR #590
+ - Add iconify- keyword to icon handling (still need to add js via template).
+ - Let notification node set timeout via msg.timeout property.
+
+**Fixes**
+
+ - Block direct websocket connection attempts - only allow upgrades.
+ - Bump angular libs to 1.8.0 for security patch.
+ - Stop chart sending blank data payload on deploy.
+ - Ensure toast dialog cancel button defaults to on when in prompt with input mode. Issue #596
+ - Remove some hardcoded CSS to help themeing support of editor.
+
+### 2.22.1: Maintenance Release
+
+**Fixes**
+
+ - Re-insert missing weather icons fonts.
+ - Fix slider logic for touch devices. Issue #589
+
+### 2.22.0: Milestone Release
+
+**Enhancements**
+
+ - Add group (open/closed) event to ui_control output.
+ - Let browser bar theme copy dashboard theme (for Android).
+ - Add id to Tab div tag so css can be targetted.
+ - Add option for multi-selects in dropdown. PR #588
+
+**Fixes**
+
+ - Document _dontSend option for beforeSend callback.
+ - Let slider repeat click work in "send at end" mode.
+ - Force client reauth when old socket connection times out and 401s. PR #586
+ - Fix navigation history, so back/formward browser buttons work. PR #587
+ - Force socket.io to use secure link when using https.
+ - Allow dropdowns to take up more space on screen for longer lists.
+ - Make sure we don't fail on a null msg from a template.
+
+### 2.21.0: Milestone Release
+
+**Enhancements**
+
+ - Let tooltip words be settable via {{msg.something}}. Issue #578
+ - Move Gridstack to v0.6.4 - thanks HiroyasuNishiyama. PR #581,580
+
+**Fixes**
+
+ - Fix Form Date input to accept inject of date correctly.
+
+### 2.20.0: Milestone Release
+
+**Enhancements**
+
+ - Add open and close options for groups to ui_control node.
+ - Add cubic and cubic-monotone to chart interpolation options.
+ - Allow ui_control msg to widgets also set .label property.
+ - Add option to try to load dist/loading,html for those that want it.
+ - Add msg.event for button clicks.
+ - Make Gridstack a normal dep so they can count installs. Bump to v0.5.5
+ - Let mousewheel change slider. Issue #575
+ - Add UTC option to Chart node X-Axis.
+ - Add no resend on refresh option to template node.
+
+ **Fixes**
+
+ - Add placeholder to ui-form date type to give a clue that yyyy-mm-dd works for Safari.
+ - Fix dropdown to save topic for input for subsequent selections. Issue #570
+ - Fix colour picker to show appropriate controls by default. Issue #572
+
+### 2.19.4: Maintenance Release
+
+**Enhancements**
+
+ - Add feedback option to dialog widget.
+ - Add persistantFrontEndValue property to addWidget options so it possible to avoid replay message to be sent when front end reconnect. PR #558
+
+ **Fixes**
+
+ - Re-add gridstack min map to reduces warnings.
+ - Added crossorigin attribute to manifest link. PR #560
+
+### 2.19.3: Maintenance Release
+
+**Enhancements**
+
+ - Let dropdown status show selected label rather than value.
+
+**Fixes**
+
+ - Fix notification to send cancel instead of OK when dismissed by blank message.
+ - Fix Angular theme reverting to light in menu. Issue #554
+
+### 2.19.2: Maintenance Release
+
+**Fixes**
+
+ - Revert dropping of angular material icons with animation. Issue #552
+
+ ### 2.19.1: Maintenance Release
+
+**Enhancements**
+
+ - Self host Material Icons Font - PR #550
 
 **Fixes**
 
@@ -18,7 +193,7 @@
 ### 2.18.0: Milestone Release
 
 **Enhancements**
- 
+
  - Update justgauge to latest (now maintained) version and drop monkeypatch. Issue #535.
  - Add engines node8 to package.json
 

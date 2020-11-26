@@ -1,13 +1,31 @@
-<md-card ui-card-size="{{ me.item.width }}x{{ me.item.height }}" layout="row" layout-align="space-between center" class="nr-dashboard-textinput" ng-class="{'nr-dashboard-disabled':me.item.disabled}">
-    <md-input-container class="md-block" flex md-is-error="false" ng-class="{'has-label':me.item.label}">
+<md-card
+    ui-card-size="{{ me.item.width }}x{{ me.item.height }}"
+    layout="row"
+    layout-align="space-between center"
+    class="nr-dashboard-textinput"
+    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    node-id="{{me.item.id}}">
+    <md-input-container
+        class="md-block"
+        flex
+        md-is-error="false"
+        ng-class="{'has-label':me.item.label}">
         <label ng-bind-html="me.item.getLabel()"></label>
-        <md-tooltip ng-if="me.item.getTooltip().length" md-delay="700" md-direction="bottom" ng-bind-html="me.item.getTooltip()"></md-tooltip>
-        <input ng-model="me.item.value"
+        <md-tooltip
+            ng-if="me.item.getTooltip().length"
+            md-delay="700"
+            md-direction="bottom"
+            ng-bind-html="me.item.getTooltip()">
+        </md-tooltip>
+        <input
+            ng-model="me.item.value"
             ng-model-options="{'timezone':'UTC'}"
             ng-keydown="me.keyPressed($event)"
             ng-blur="me.keyPressed($event)"
+            ng-trim="false"
             aria-label="{{me.item.label}}"
             type="{{me.item.mode}}"
-            style="z-index:1"/>
+            style="z-index:1"
+            step="any"/>
     </md-input-container>
 </md-card>
