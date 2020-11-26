@@ -26,10 +26,15 @@
         ng-if="!me.item.oncolor || !me.item.onicon || !me.item.offcolor || !me.item.officon"
         style="z-index:1">
 	</md-switch>
-    <ui-icon
-        icon="{{me.item.value ? me.item.onicon : me.item.officon}}"
-        ng-style="{color: me.item.value ?  me.item.oncolor : me.item.offcolor}"
-        ng-class="{'center' : !me.item.label}"
+    <ui-icon icon="{{me.item.onicon}}"
+        ng-style="{color: me.item.oncolor}"
+        ng-class="{'center' : !me.item.label, 'ng-hide': !me.item.value}"
+        ng-if="me.item.oncolor && me.item.onicon && me.item.offcolor && me.item.officon"
+        style="z-index:1">
+    </ui-icon>
+    <ui-icon icon="{{me.item.officon}}"
+        ng-style="{color:me.item.offcolor}"
+        ng-class="{'center' : !me.item.label, 'ng-hide': me.item.value}"
         ng-if="me.item.oncolor && me.item.onicon && me.item.offcolor && me.item.officon"
         style="z-index:1">
     </ui-icon>
