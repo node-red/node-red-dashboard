@@ -19,7 +19,7 @@ module.exports = function(RED) {
             multiple: config.multiple,
             label: config.label,
             tooltip: config.tooltip,
-            place: config.place || "Select option",
+            place: config.place,
             order: config.order,
             value: config.payload || node.id,
             width: config.width || group.config.width || 6,

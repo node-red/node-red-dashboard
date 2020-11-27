@@ -1,3 +1,10 @@
+### 2.24.2-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix to swap switch icons to allow iconify icoons to work. PR#597
+ - Tweak dropdown CSS to always try to show select button.
+
 ### 2.24.1: Maintenance Release
 
 **Fixes**
