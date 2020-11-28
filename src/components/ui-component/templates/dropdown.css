@@ -9,6 +9,8 @@
 
 .nr-dashboard-dropdown md-input-container>md-select {
     overflow: hidden;
+    margin-left: 4px !important;
+    margin-top: 7px;
 }
 
 .nr-dashboard-theme .nr-dashboard-dropdown md-select-value {
@@ -28,6 +30,7 @@
     padding-right: 2px;
     white-space: normal;
     overflow: hidden;
+    min-width: 20%;
 }
 
 .nr-dashboard-dropdown-header {

@@ -32141,12 +32141,16 @@ reason: https://github.com/angular/material/issues/6214
 
 .color-picker-wrapper .input-group .color-picker-input {
   position: relative;
-  width: 123px;
+  width: 122px;
   height: 20px;
   text-indent: 6px;
   text-align: center;
   font-size: smaller;
   padding-right: 4px;
+}
+
+.color-picker-input-wrapper.input-group > span {
+  border-radius: 3px;
 }
 
 .color-picker-wrapper .color-picker-swatch:not(.input-group-addon).color-picker-swatch-right {
@@ -32213,6 +32217,8 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-dropdown md-input-container>md-select {
   overflow: hidden;
+  margin-left: 4px !important;
+  margin-top: 7px;
 }
 
 .nr-dashboard-theme .nr-dashboard-dropdown md-select-value {
@@ -32232,6 +32238,7 @@ reason: https://github.com/angular/material/issues/6214
   padding-right: 2px;
   white-space: normal;
   overflow: hidden;
+  min-width: 20%;
 }
 
 .nr-dashboard-dropdown-header {
@@ -32342,6 +32349,10 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-textinput md-input-container .md-input {
   padding-top: 1px;
+}
+
+.nr-dashboard-theme .nr-dashboard-textinput input[type="color"] {
+  border: none !important;
 }
 
 .nr-dashboard-textinput md-input-container .md-errors-spacer {
