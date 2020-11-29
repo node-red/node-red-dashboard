@@ -1,0 +1,21 @@
+{
+    "ui_tab" : {
+        "label" : {
+            "home" : "Home",
+            "tab" : "Tab",
+            "name" : "Name",
+            "icon" : "Symbol",
+            "state" : "Status",
+            "navmenu" : "Nav. Menü",
+            "enabled" : "Aktiviert",
+            "disabled" : "Deaktivert",
+            "visible" : "Sichtbar",
+            "hidden" : "Versteckt"
+        },
+        "info": {
+            "disabled": " Tab ist im Dashboard inaktiv.",
+            "hidden": " Tab wird im Menü nicht angezeigt."
+        },
+        "tip" : "Das <b>Symbol</b> kann entweder ein <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material Design Symbol</a> <i>(z.B. 'check', 'close')</i> oder ein <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome Symbol</a> <i>(z.B. 'fa-fire')</i> oder ein <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Wetter Symbol</a> <i>(z.B. 'wi-wu-sunny')</i> sein.</p><p>Du kannst alle Google Material Symbole verwenden, wenn du dem Symbolnamen 'mi-' hinzufügst. z.B. 'mi-videogame_asset'.</p>"
+    }
+}

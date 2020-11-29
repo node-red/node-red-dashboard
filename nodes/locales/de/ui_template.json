@@ -1,0 +1,18 @@
+{
+    "ui_template" : {
+    	"label" : {
+    	    "category" : "dashboard",
+    	    "type" : "Vorlagentyp",
+    	    "local" : "Widget in Gruppe",
+    	    "global" : "Hinzugefügt zur <head> Sektion der Seite",
+    	    "group" : "Gruppe",
+    	    "size" : "Größe",
+    	    "name" : "Name",
+    	    "pass-through" : "Nachrichten vom Eingang weiterleiten.",
+    	    "store-state" : "Ausgehende Nachrichten speichern.",
+    	    "template" : "Vorlage",
+            "expand": "Erweitern",
+            "resend": "Letzten Wert beim Aktualisieren neuladen."
+    	}
+    }
+}

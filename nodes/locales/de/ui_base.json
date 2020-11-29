@@ -1,0 +1,99 @@
+{
+    "ui_base" : {
+        "label" : {
+            "dashboard" : "Dashboard",
+            "title" : "Titel",
+            "options" : "Optionen",
+            "date-format" : "Datumsformat",
+            "sizes" : "Größen",
+            "horizontal" : "Horizontal",
+            "vertical" : "Vertikal",
+            "widget-size" : "1x1 Widget Größe",
+            "widget-spacing" : "Widget Abstände",
+            "group-padding" : "Gruppen Innenabstände",
+            "group-spacing" : "Gruppen Abstände",
+            "layout" : "Layout",
+            "angular": "Angular",
+            "theme" : "Theme",
+            "site" : "Seite"
+        },
+        "auto" : "Auto",
+        "title" : "Node-RED Dashboard",
+        "layout" : {
+            "tab-and-link" : "Tabs & Links",
+            "tab" : "Tab",
+            "link" : "Link",
+            "group" : "Gruppe",
+            "edit" : "Bearbeiten",
+            "spacer": "Abstand",
+            "layout" : "Layout",
+            "layout-editor" : "Dashboard Layout Editor",
+            "width" : "Breite",
+            "auto": "automatische Größenanpassung",
+            "manual": "manuelle Größenänderung"
+        },
+        "theme" : {
+            "style" : "Stil",
+            "custom-profile" : "Benutzerdefiniertes Profil",
+            "custom-profile-name" : "Theme ohne Titel 1",
+            "base-settings" : "Basiseinstellungen",
+            "page-settings" : "Seiteneinstellungen",
+            "page" : {
+                "title" : "Hintergrund Titelleiste",
+                "page" : "Hintergrund Seite",
+                "side" : "Hintergrund Seitenleiste"
+            },
+            "group-settings" : "Gruppeneinstellungen",
+            "group" : {
+                "text" : "Gruppentext",
+                "border" : "Gruppenrand",
+                "background" : "Hintergrund Gruppe"
+            },
+            "widget-settings" : "Widget Einstellungen",
+            "widget" : {
+                "text" : "Widget Text",
+                "colour" : "Widget Farbe",
+                "background" : "Hintergrund Widget"
+            }
+        },
+        "style" : {
+            "light" : "Hell (Standard)",
+            "dark" : "Dunkel",
+            "custom" : "Benutzerdefiniert",
+            "primary" : "Primär",
+            "accents" : "Akzente",
+            "background" : "Hintergrund",
+            "warnings" : "Warnungen",
+            "palette": "Hell / Dunkel"
+        },
+        "base" : {
+            "colour" : "Farbe",
+            "font" : "Schriftart"
+        },
+        "font" : {
+            "system" : "System Schriftart (Standard)"
+        },
+        "site" : {
+            "title" : "Node-RED Dashboard",
+            "date-format" : "DD/MM/YYYY"
+        },
+        "title-bar" : {
+            "show" : "Zeige die Titelleiste",
+            "hide" : "Verstecke die Titelleiste"
+        },
+        "swipe" : {
+            "no-swipe" : "Kein Wischen zwischen Tabs",
+            "allow-swipe" : "Wischen zwischen Tabs zulassen"
+        },
+        "lock" : {
+            "clicked" : "Klicke um das Seitenmenü anzuzeigen",
+            "locked" : "Seitenmenü immer anzeigen",
+            "locked-icon" : "Immer nur Symbole anzeigen"
+        },
+        "temp" : {
+            "allow-theme" : "Node-RED Theme überall",
+            "no-theme" : "Angular Theme in ui_template",
+            "none" : "Angular Theme überall"
+        }
+    }
+}
