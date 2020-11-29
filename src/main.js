@@ -180,16 +180,28 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             // in camel case. e.g. 'page-backgroundColor' -> '@pageBackgroundColor'
             var configurableStyles = Object.keys(theme.themeState);
             var lessObj = {};
-
-            for (var i=0; i<configurableStyles.length; i++) {
-                //remove dash and camel case
-                var arr = configurableStyles[i].split('-');
-                for (var j=1; j<arr.length; j++) {
-                    arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
+            if (main.allowAngularTheme !== true) {
+                for (var i=0; i<configurableStyles.length; i++) {
+                    //remove dash and camel case
+                    var arr = configurableStyles[i].split('-');
+                    for (var j=1; j<arr.length; j++) {
+                        arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
+                    }
+                    var lessVariable = arr.join("");
+                    var colour = theme.themeState[configurableStyles[i]].value;
+                    lessObj["@"+lessVariable] = colour;
                 }
-                var lessVariable = arr.join("");
-                var colour = theme.themeState[configurableStyles[i]].value;
-                lessObj["@"+lessVariable] = colour;
+            }
+            else {
+                lessObj["@pageBackgroundColor"] = main.angularColors.background.name;
+                lessObj["@pageTitlebarBackgroundColor"] = main.angularColors.primary.name;
+                lessObj["@pageSidebarBackgroundColor"] = main.angularColors.background.name;
+                lessObj["@groupTextColor"] = (main.isDark === true ? "#FFFFFF" : "#000000");
+                lessObj["@groupBackgroundColor"] = main.angularColors.background.name;
+                lessObj["@groupBorderColor"] = main.angularColors.accent.name;
+                lessObj["@widgetTextColor"] = (main.isDark === true ? "#FFFFFF" : "#000000");
+                lessObj["@widgetBackgroundColor"] = main.angularColors.accent.name;
+                lessObj["@widgetBorderColor"] = main.angularColors.background.name;
             }
             if (typeof main.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
             lessObj["@nrTemplateTheme"] = main.allowTempTheme;
@@ -371,8 +383,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     .accentPalette(ui.theme.angularTheme.accents || 'blue')
                     .warnPalette(ui.theme.angularTheme.warn || 'red')
                     .backgroundPalette(ui.theme.angularTheme.background || 'grey');
-                if (ui.theme.angularTheme.palette === "dark") { themeProvider.theme('default').dark(); }
+                if (ui.theme.angularTheme.palette === "dark") {
+                    themeProvider.theme('default').dark();
+                    main.isDark = true;
+                }
                 $mdTheming.generateTheme('default');
+                main.angularColors = themeProvider._THEMES.default.colors;
             }
             $document[0].theme = ui.theme;
             if (ui.title) { name = ui.title }
@@ -609,11 +625,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 '</md-dialog>';
                 $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
                     function(res) {
-                        console.log("RES",typeof res,res,"::",msg.ok,"::");
                         msg.msg.payload = msg.ok;
                         if (res != true) { msg.msg.payload = res; }
                         if (res == undefined) { msg.msg.payload = ""; }
-                        console.log("MSG",msg);
                         events.emit({ id:msg.id, value:msg });
                     },
                     function() {
