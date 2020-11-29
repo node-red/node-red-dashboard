@@ -1,0 +1,48 @@
+<script type="text/html" data-help-name="ui_template">
+    <p>Das Vorlagen-Widget kann alle gültigen HTML- und Angular / Angular-Material-Anweisungen enthalten.</p>
+    <p>Dieser Node kann verwendet werden, um ein dynamisches Benutzeroberflächenelement zu erstellen dessen Erscheinungsbild
+    basierend auf der Eingabenachricht geändert wird und kann Nachrichten an Node-RED zurücksenden.</p>
+    <p><b>Zum Beispiel:</b><br>
+    <pre style="font-size:smaller;">&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
+  &lt;p&gt;The number is&lt;/p&gt;
+  &lt;font color=&quot;{{((msg.payload || 0) % 2 === 0) ? 'green' : 'red'}}&quot;&gt;
+    {{(msg.payload || 0) % 2 === 0 ? 'even' : 'odd'}}
+  &lt;/font&gt;
+&lt;/div&gt;</pre>
+    Wird angezeigt, wenn die als <code> msg.payload </code> empfangene Nummer gerade oder ungerade ist. Es wird auch
+    die Farbe des Textes zu grün geändert, wenn die Zahl gerade ist, oder rot, wenn ungerade. <br/>
+    Das nächste Beispiel zeigt, wie eine eindeutige ID für Ihre Vorlage erstellt werden kann, die Standardfarbe für das Theme auswählen ausgewählt wird
+    und wie auf eingehende Nachrichten geprüft werden kann.</p>
+    <pre style="font-size:smaller;">
+&lt;div id="{{'my_'+$id}}" style="{{'color:'+theme.base_color}}"&gt;Some text&lt;/div&gt;
+&lt;script&gt;
+(function(scope) {
+  scope.$watch('msg', function(msg) {
+    if (msg) {
+      // Do something when msg arrives
+      $("#my_"+scope.$id).html(msg.payload);
+    }
+  });
+})(scope);
+&lt;/script&gt;</pre>
+    <p>Auf diese Weise erstellte Vorlagen können kopiert werden und bleiben unabhängig voneinander.</p>
+    <p><b>Senden einer Nachricht:</b><br>
+    <pre style="font-size:smaller;">
+&lt;script&gt;
+var value = "hello world";
+// or overwrite value in your callback function ...
+this.scope.action = function() { return value; }
+&lt;/script&gt;
+&lt;md-button ng-click=&quot;send({payload:action()})&quot;&gt;
+    Click me to send a hello world
+&lt;/md-button&gt;</pre>
+    Zeigt einen Button an welcher, wenn geklickt, eine Nachricht mit der payload <code>'Hello world'</code> sendet.</p>
+    <p><b>Verwenden von <code>msg.template</code>:</b><br>
+    Der Vorlageninhalt kann auch über <code>msg.template</code> definiert werden. So können Sie beispielsweise externe Dateien verwenden.<br>
+    Die Vorlage wird bei eingehenden Nachrichten neu geladen, wenn sie geändert wurde.<br>
+    In das Feld Vorlage geschriebener Code wird ignoriert, wenn <code>msg.template</code> vorhanden ist.</p>
+    <p>Die folgenden Symbolschriftarten sind verfügbar: <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design Symbole</a>
+    <i>(e.g. 'check', 'close')</i>, <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome Symbole</a>
+    <i>(e.g. 'fa-fire')</i> und <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">Wetter Symbole</a>.
+    Du kannst alle Google Material Symbole verwenden, wenn du dem Symbolnamen 'mi-' hinzufügst. z.B. 'mi-videogame_asset'.</p>
+</script>

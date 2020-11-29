@@ -1,0 +1,28 @@
+<script type="text/html" data-help-name="ui_ui_control">
+    <p>Ermöglicht die dynamische Steuerung des Dashboards.</p>
+    <p>Die Standardfunktion besteht darin, den aktuell angezeigten Tab zu ändern. <code>msg.payload</code>
+    sollte entweder ein Objekt der Form <code>{"tab":"my_tab_name"}</code> sein, oder einfach der <b>Tab Name</b>
+    oder ein <b>numerischer Index</b> (ab 0) von dem Tab oder Link der angezeigt werden soll.</p>
+    <p>Das Senden eines leeren Namens "" aktualisiert die aktuell angezeigte Seite.
+    Du kannst auch "+1" für den nächsten Tab und "-1" für den vorherigen Tab senden.</p>
+    <p>Dashboard Seiten (also "Tabs") können durch senden eines <code>msg.payload</code> Objektes im Format
+    <pre>{"tabs": {"hide": "tab_name_to_hide", "disable": ["secret_tab", "unused_stuff"]}}</pre> kontrolliert werden.
+    Es sind zwei Zustände verfügbar: <b>show</b>/<b>hide</b> und <b>enable</b>/<b>disable</b></p>
+    <p>Die Sicherbarkeit von individuellen Gruppen oder Widgets können durch folgende payload kontrolliert werden:
+    <pre>{"group": {"hide": ["tab_name_group_name_with_underscores"], "show": ["reveal_another_group"], "focus": true}}</pre>
+    <b>focus</b> ist optional und sorgt dafür das zu der richtigen Gruppe gescrollt wird. 
+    Du kannst auch folgende Eigenschafen wie `open` und `close` verwenden um den Status einer Gruppe zu setzen. Die Gruppen
+    Namen sind die IDs der Gruppen und setzen sich aus <i>tab name</i> plus <i>group name</i> zusammen. Diese werden mit Unterstrichen
+    miteinander verbunden.</p>
+    <p>Wenn jemand der über den Browser verbunden ist die Verbindung aufbaut oder verliert, den Tab wechselt, oder eine Gruppe auf- bzw. zuklappt wird eine <code>msg</code> mit folgendem Inhalt gesendet:</p>
+    <ul>
+    <li><code>payload</code> - <i>connect</i>, <i>lost</i>, <i>change</i>, oder <i>group</i>.
+    <li><code>socketid</code> - die ID des Sockets (dies ändert sich jedes Mal, wenn der Browser die Seite neu lädt).
+    <li><code>socketip</code> - die IP-Adresse, von der die Verbindung stammt.
+    <li><code>tab</code> - die Nummer des Tabs. (nur für 'change' Ereignisse).
+    <li><code>name</code> - der Name des Tabs. (nur für 'change' Ereignisse).
+    <li><code>group</code> - der Name der Gruppe. (nur für 'group' Ereignisse).
+    <li><code>open</code> - der Status der Gruppe. (nur für 'group' Ereignisse).
+    </ul>
+    <p>Optional - Nur neue Verbindungen melden - nützlich, um ein erneutes Senden von Daten an einen neuen Client auszulösen, ohne dass andere Ereignisse herausgefiltert werden müssen.</p>
+</script>
