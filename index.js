@@ -58,7 +58,8 @@ function addWidget(RED, options) {
     var ui_control = {
         type: "template",
         order: options.order,
-        format: options.format
+        format: options.format,
+        class: "nr-dashboard-"+(options.node.type || "template-blank")
     };
 
     var node = options.node;
