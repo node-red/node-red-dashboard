@@ -1,3 +1,9 @@
+### 2.24.3-beta: Maintenance Release
+
+**Fixes**
+
+ - Fix dropdown to not preselect option if no passthru
+
 ### 2.24.2: Maintenance Release
 
 **Fixes**

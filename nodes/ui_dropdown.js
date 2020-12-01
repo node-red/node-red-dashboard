@@ -105,11 +105,14 @@ module.exports = function(RED) {
                         node.error("ERR: Invalid Options", msg);
                     }
                 }
+
                 if (msg.hasOwnProperty("topic")) { savedtopic = msg.topic; }
+
                 if (msg.hasOwnProperty("payload")) {
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
                     delete emitOptions._dontSend;
+                    if (!node.pt) { delete emitOptions.value; }
                     return emitOptions;
                 }
                 // we do not overide payload here due to 'opt.emitOnlyNewValues' in ui.js
