@@ -1,9 +1,10 @@
-### 2.24.2-beta: Maintenance Release
+### 2.24.2: Maintenance Release
 
 **Fixes**
 
- - Fix to swap switch icons to allow iconify icoons to work. PR#597
+ - Fix to swap switch icons to allow iconify icons to work. PR#597
  - Tweak dropdown CSS to always try to show select button.
+ - Add node.type class to template so 3rd party nodes can their tweak md-card.
 
 ### 2.24.1: Maintenance Release
 
