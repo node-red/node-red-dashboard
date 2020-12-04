@@ -47,6 +47,14 @@ angular.module('ui').controller('uiCardPanelController', ['uiSizes', '$timeout',
                         if (t.indexOf('<b') !== -1) { ch = 1; }
                         if (t.indexOf('<h') !== -1) { ch = 1; }
                         if (t.indexOf('<f') !== -1) { ch = 1; }
+                        if (t.indexOf('<iframe') !== -1) {
+                            ch = parseInt($scope.group.header.config.width* 3/4 * (sizes.cx + sizes.sx));
+                            // if (t.indexOf("width=") !== -1) {
+                            //     ch = t.split('width="')[1];
+                            //     ch = ch.split('"')[0];
+                            //     ch = parseInt(ch);
+                            // }
+                        }
                     }
                     height = Math.ceil(ch / (sizes.cy + sizes.sy));
                 }

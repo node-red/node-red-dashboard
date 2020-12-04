@@ -2,7 +2,10 @@
 
 **Fixes**
 
- - Fix dropdown to not preselect option if no passthru
+ - Fix dropdown to not preselect option if no passthru.
+ - Fix replacing iconify icons so they can be dynamic.
+ - Fix gauge angular filters with space in msg properties.
+ - Try to resize template when restored from collapse. Issue #642.
 
 ### 2.24.2: Maintenance Release
 
