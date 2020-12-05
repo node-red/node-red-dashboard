@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.24.3-beta",
+    "version": "2.24.3",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -40,6 +40,9 @@
         },
         {
             "name": "Kazuhiro Ito"
+        },
+        {
+            "name": "@fellinga"
         },
         {
             "name": "@petslane"

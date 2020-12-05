@@ -1,4 +1,4 @@
-### 2.24.3-beta: Maintenance Release
+### 2.24.3: Maintenance Release
 
 **Fixes**
 
