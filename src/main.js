@@ -180,22 +180,42 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             // in camel case. e.g. 'page-backgroundColor' -> '@pageBackgroundColor'
             var configurableStyles = Object.keys(theme.themeState);
             var lessObj = {};
-
-            for (var i=0; i<configurableStyles.length; i++) {
-                //remove dash and camel case
-                var arr = configurableStyles[i].split('-');
-                for (var j=1; j<arr.length; j++) {
-                    arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
+            if (main.allowAngularTheme !== true) {
+                for (var i=0; i<configurableStyles.length; i++) {
+                    //remove dash and camel case
+                    var arr = configurableStyles[i].split('-');
+                    for (var j=1; j<arr.length; j++) {
+                        arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1);
+                    }
+                    var lessVariable = arr.join("");
+                    var colour = theme.themeState[configurableStyles[i]].value;
+                    lessObj["@"+lessVariable] = colour;
                 }
-                var lessVariable = arr.join("");
-                var colour = theme.themeState[configurableStyles[i]].value;
-                lessObj["@"+lessVariable] = colour;
+            }
+            else {
+                lessObj["@pageBackgroundColor"] = angularColorToHex(main.angularColors.background.name);
+                lessObj["@pageTitlebarBackgroundColor"] = angularColorToHex(main.angularColors.primary.name);
+                lessObj["@pageSidebarBackgroundColor"] = angularColorToHex(main.angularColors.background.name);
+                lessObj["@groupTextColor"] = (main.isDark === true ? "#FFFFFF" : "#000000");
+                lessObj["@groupBackgroundColor"] = angularColorToHex(main.angularColors.background.name);
+                lessObj["@groupBorderColor"] = angularColorToHex(main.angularColors.accent.name);
+                lessObj["@widgetTextColor"] = (main.isDark === true ? "#FFFFFF" : "#000000");
+                lessObj["@widgetBackgroundColor"] = angularColorToHex(main.angularColors.primary.name);
+                lessObj["@widgetBorderColor"] = angularColorToHex(main.angularColors.background.name);
             }
             if (typeof main.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
             lessObj["@nrTemplateTheme"] = main.allowTempTheme;
             lessObj["@nrTheme"] = !main.allowAngularTheme;
             lessObj["@nrUnitHeight"] = (main.sizes.sy / 2)+"px";
             less.modifyVars(lessObj);
+        }
+
+        function angularColorToHex(color) {
+            var angColorValues = { red: "#F44336", pink: "#E91E63", purple: "#9C27B0", deeppurple: "#673AB7",
+                indigo: "#3F51B5", blue: "#2196F3", lightblue: "#03A9F4", cyan: "#00BCD4", teal: "#009688",
+                green: "#4CAF50", lightgreen: "#8BC34A", lime: "#CDDC39", yellow: "#FFEB3B", amber: "#FFC107",
+                orange: "#FF9800", deeporange: "#FF5722", brown: "#795548", grey: "#9E9E9E", bluegrey: "#607D8B"};
+            return angColorValues[color.replace("-","").toLowerCase()];
         }
 
         function processGlobals() {
@@ -371,8 +391,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     .accentPalette(ui.theme.angularTheme.accents || 'blue')
                     .warnPalette(ui.theme.angularTheme.warn || 'red')
                     .backgroundPalette(ui.theme.angularTheme.background || 'grey');
-                if (ui.theme.angularTheme.palette === "dark") { themeProvider.theme('default').dark(); }
+                if (ui.theme.angularTheme.palette === "dark") {
+                    themeProvider.theme('default').dark();
+                    main.isDark = true;
+                }
                 $mdTheming.generateTheme('default');
+                main.angularColors = themeProvider._THEMES.default.colors;
             }
             $document[0].theme = ui.theme;
             if (ui.title) { name = ui.title }
@@ -609,11 +633,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 '</md-dialog>';
                 $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
                     function(res) {
-                        console.log("RES",typeof res,res,"::",msg.ok,"::");
                         msg.msg.payload = msg.ok;
                         if (res != true) { msg.msg.payload = res; }
                         if (res == undefined) { msg.msg.payload = ""; }
-                        console.log("MSG",msg);
                         events.emit({ id:msg.id, value:msg });
                     },
                     function() {
