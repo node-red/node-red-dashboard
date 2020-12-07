@@ -31149,7 +31149,7 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e56b";
 }
 /*!
- * Weather Icons Lite
+ * Weather Icons Lite v1.5.0
  * Weather themed icons for Bootstrap
  * Author - Paul Reed
  * Maintained at https://github.com/Paul-Reed/weather-icons-lite
@@ -31237,31 +31237,68 @@ md-tabs-wrapper md-next-button ng-md-icon {
   width: 1.4em;
 }
 
+.wi-rotate-N {
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
 .wi-rotate-23 {
   -webkit-transform: rotate(23deg);
   -ms-transform: rotate(23deg);
   transform: rotate(23deg);
 }
 
-.wi-rotate-90 {
+.wi-rotate-45,
+.wi-rotate-NE {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.wi-rotate-90,
+.wi-rotate-E {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 
-.wi-rotate-180 {
+.wi-rotate-135,
+.wi-rotate-SE {
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.wi-rotate-180,
+.wi-rotate-S {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 
-.wi-rotate-270 {
+.wi-rotate-225,
+.wi-rotate-SW {
+  -webkit-transform: rotate(225deg);
+  -ms-transform: rotate(225deg);
+  transform: rotate(225deg);
+}
+
+.wi-rotate-270,
+.wi-rotate-W {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
+}
+
+.wi-rotate-315,
+.wi-rotate-NW {
+  -webkit-transform: rotate(315deg);
+  -ms-transform: rotate(315deg);
+  transform: rotate(315deg);
 }
 
 .wi-flip-horizontal {
