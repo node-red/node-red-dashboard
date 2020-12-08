@@ -1,4 +1,8 @@
-### 2.24.3: Maintenance Release
+### 2.25.0: Milestone Release
+
+**Enhancements**
+
+ - Update weather icons to 1.5 to include wind direction rotations.
 
 **Fixes**
 
@@ -25,7 +29,7 @@
  - Add info about Icon usage to README.
  - Let button icon be settable by `{{property}}`.
 
-### 2.24.0: Maintenance Release
+### 2.24.0: Milestone Release
 
 **Enhancements**
 
