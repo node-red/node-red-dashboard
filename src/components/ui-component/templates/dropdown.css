@@ -9,7 +9,7 @@
 
 .nr-dashboard-dropdown md-input-container>md-select {
     overflow: hidden;
-    margin-left: 4px !important;
+    margin-left: 4px;
     margin-top: 7px;
 }
 

@@ -3,16 +3,16 @@
 }
 
 .nr-dashboard-button .md-button {
-    box-shadow: none !important;
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0px !important;
-    min-width: 0px !important;
-    min-height: 0px !important;
+    box-shadow: none;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    min-width: 0px;
+    min-height: 0px;
 }
 
 md-card .nr-dashboard-button {
-    padding: 2px !important;
+    padding: 2px;
 }
 
 .nr-dashboard-button i {

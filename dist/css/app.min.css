@@ -32041,16 +32041,16 @@ mirror=1);
 }
 
 .nr-dashboard-button .md-button {
-  box-shadow: none !important;
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0px !important;
-  min-width: 0px !important;
-  min-height: 0px !important;
+  box-shadow: none;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  min-width: 0px;
+  min-height: 0px;
 }
 
 md-card .nr-dashboard-button {
-  padding: 2px !important;
+  padding: 2px;
 }
 
 .nr-dashboard-button i {
@@ -32093,8 +32093,8 @@ p.blank-label {
 
 canvas.chart.chart-line {
   /* full height - label_padding - label_height - nr-dashboard-chart_padding */
-  height: calc(100% + 22px) !important;
-  width: calc(100%) !important;
+  height: calc(100% + 22px);
+  width: calc(100%);
 }
 
 .nr-dashboard-chart {
@@ -32207,7 +32207,7 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-show-inline {
-  z-index: 77 !important;
+  z-index: 77;
 }
 .nr-dashboard-date-picker {
   padding: 0 0px;
@@ -32254,7 +32254,7 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-dropdown md-input-container>md-select {
   overflow: hidden;
-  margin-left: 4px !important;
+  margin-left: 4px;
   margin-top: 7px;
 }
 
@@ -32299,7 +32299,7 @@ reason: https://github.com/angular/material/issues/6214
   left: inherit;
 }
 .nr-dashboard-gauge text {
-  /* font-weight: 500 !important; */
+  /* font-weight: 500; */
 }
 .nr-dashboard-numeric {
   padding: 0 0 0 12px;
@@ -32336,7 +32336,7 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 md-slider[md-vertical] .md-slider-wrapper {
-  width: unset !important;
+  width: unset;
 }
 
 .nr-dashboard-switch:focus {
@@ -32389,7 +32389,7 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .nr-dashboard-theme .nr-dashboard-textinput input[type="color"] {
-  border: none !important;
+  border: none;
 }
 
 .nr-dashboard-textinput md-input-container .md-errors-spacer {
@@ -32493,7 +32493,7 @@ md-input-container.md-input-has-value label:not(.md-no-float) {
 }
 
 .nr-dashboard-form input[type="checkbox"] {
-  /* height: auto !important; */
+  /* height: auto; */
   margin-top: 0px;
   margin-bottom: 0px;
 }

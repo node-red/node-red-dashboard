@@ -24,8 +24,8 @@ p.blank-label {
 
 canvas.chart.chart-line {
     /* full height - label_padding - label_height - nr-dashboard-chart_padding */
-    height: calc(100% + 22px) !important;
-    width: calc(100%) !important;
+    height: calc(100% + 22px);
+    width: calc(100%);
 }
 
 .nr-dashboard-chart {
