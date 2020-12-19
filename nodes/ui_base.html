@@ -331,6 +331,8 @@
     var layoutUpdateEventHandler; // Dashboard layout tool
     var uip = 'ui';
     var attemptedVendorLoad = false;
+    var ensureDashboardNode;
+
     var loadTinyColor = function(path) {
         $.ajax({ url: path,
             success: function (data) {
@@ -339,12 +341,14 @@
                 jsScript.src = path;
                 document.body.appendChild(jsScript);
                 //console.log('Tiny Color Loaded:',path);
+                ensureDashboardNode(true);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 404 && !attemptedVendorLoad) {
                     loadTinyColor('/'+uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
                     attemptedVendorLoad = true;
                 }
+                //console.log('Tiny Color Failed to load:',path);
             }
         });
     }
@@ -368,9 +372,7 @@
                 jsScript.type = "application/javascript";
                 jsScript.src = path;
                 document.body.appendChild(jsScript);
-                if (callback) {
-                    callback();
-                }
+                if (callback) { callback(); }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 // TODO
@@ -883,7 +885,7 @@
         }
     }
 
-    RED.nodes.registerType('ui_base',{
+    RED.nodes.registerType('ui_base', {
             category: 'config',
             defaults: {
                 name: {},
@@ -1018,7 +1020,7 @@
                     py: 0  // padding of group's cards
                 };
 
-                function ensureDashboardNode(createMissing) {
+                ensureDashboardNode = function(createMissing) {
                     if (globalDashboardNode !== null) {
                         // Check if it has been deleted beneath us
                         var n = RED.nodes.node(globalDashboardNode.id);
@@ -1226,7 +1228,7 @@
                 $('<input type="text" id="nr-db-field-title">').val(site_name).css("width","100%")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.name = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1242,7 +1244,7 @@
                 .val("false")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.hideToolbar = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1258,7 +1260,7 @@
                 .val("false")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.lockMenu !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.lockMenu = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1273,7 +1275,7 @@
                 .val("false")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowSwipe !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.allowSwipe = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1289,7 +1291,7 @@
                 .val("true")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowTempTheme !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.allowTempTheme = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1319,7 +1321,7 @@
                 $('<input type="text" id="nr-db-field-dateFormat">').val(site_date_format).css("width","100%")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.dateFormat = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1347,38 +1349,54 @@
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-size")).appendTo(divSetSizes);
                 $('<input type="number" name="sx" min="24" id="nr-db-field-sx">').val(48).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="sy" min="24" id="nr-db-field-sy">').val(48).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="cx" min="0" id="nr-db-field-cx">').val(6).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="cy" min="0" id="nr-db-field-cy">').val(6).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-padding")).appendTo(divSetSizes);
                 $('<input type="number" name="px" min="0" id="nr-db-field-px">').val(0).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="py" min="0" id="nr-db-field-py">').val(0).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="gx" min="0" id="nr-db-field-gx">').val(6).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="gy" min="0" id="nr-db-field-gy">').val(6).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 // Angular Theme Tab
@@ -1512,7 +1530,7 @@
                 .css("width","100%")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.name !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
                         var baseFont = globalDashboardNode.theme[theme+'Theme'].baseFont;
@@ -1552,7 +1570,7 @@
                 .val(c_("theme.custom-profile-name"))
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
                         if (editor) {
                             editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
@@ -1581,7 +1599,7 @@
 
                 $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
                 .on("change", function() {
-                    ensureDashboardNode(true);
+                    //ensureDashboardNode(true);
                     var value = $(this).val();
                     var lightThemeMatch = globalDashboardNode.theme.lightTheme.baseColor === value;
                     var darkThemeMatch = globalDashboardNode.theme.darkTheme.baseColor === value;
@@ -1622,7 +1640,7 @@
                     '<option value="Verdana,Verdana,Geneva,sans-serif" style="font-family:Verdana,Verdana,Geneva,sans-serif">Verdana</option>'+
                     '</select>')
                     .on("change", function() {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         globalDashboardNode.theme[theme+'Theme'].baseFont = $(this).val();
                         globalDashboardNode.theme.themeState['base-font'] = {value:$(this).val()};
@@ -2014,7 +2032,7 @@
                                         $(gridID+'.grid-stack').css("width", groupWidth * 40);
                                         $(gridID+'.grid-stack').css("background-size", 100/groupWidth+"% 43px");
                                         $(gridID+'.grid-stack').attr("node-id", groups[cnt].id);
-                                        $(gridID+'.grid-stack').attr("grid-column", groups[cnt].width);                              
+                                        $(gridID+'.grid-stack').attr("grid-column", groups[cnt].width);
                                         grid.setColumn(groupWidth, true);
 
                                         // Determination of placement position of widget of Grid
@@ -2671,7 +2689,7 @@
                             tabContainer.editableList('addItem',tab);
                         });
                     }
-                    ensureDashboardNode(true);
+                    //ensureDashboardNode(true);
                     if (globalDashboardNode) {
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
                         $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || "false");

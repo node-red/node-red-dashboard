@@ -131,7 +131,7 @@
         "streamqueue": "~1.1.2",
         "svg-morpheus": "^0.3.0",
         "tinycolor2": "1.4.2",
-        "weather-icons-lite": "1.5.0"
+        "weather-icons-lite": "^1.6.0"
     },
     "engines": {
         "node": ">=8"

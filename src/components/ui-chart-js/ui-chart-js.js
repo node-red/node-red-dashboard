@@ -138,7 +138,8 @@ function loadConfiguration(type,scope) {
     var yMin = parseFloat(item.ymin);
     var yMax = parseFloat(item.ymax);
     var xFormat = item.xformat;
-    var themeState = item.theme.themeState;
+    var themeState = scope.$eval('main.selectedTab.theme.themeState');
+    //var themeState = item.theme ? item.theme.themeState : false;
     var useUTC = item.useUTC || false;
 
     config.options = {

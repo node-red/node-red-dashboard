@@ -31149,7 +31149,7 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e56b";
 }
 /*!
- * Weather Icons Lite v1.5.0
+ * Weather Icons Lite v1.6.0
  * Weather themed icons for Bootstrap
  * Author - Paul Reed
  * Maintained at https://github.com/Paul-Reed/weather-icons-lite
@@ -31237,68 +31237,148 @@ md-tabs-wrapper md-next-button ng-md-icon {
   width: 1.4em;
 }
 
-.wi-rotate-N {
+.wi-rotate-0,
+.wi-rotate-N,
+.wi-towards-N,
+.wi-from-S {
   -webkit-transform: rotate(0deg);
   -ms-transform: rotate(0deg);
   transform: rotate(0deg);
 }
 
-.wi-rotate-23 {
+.wi-rotate-23,
+.wi-rotate-NNE,
+.wi-towards-NNE,
+.wi-from-SSW {
   -webkit-transform: rotate(23deg);
   -ms-transform: rotate(23deg);
   transform: rotate(23deg);
 }
 
 .wi-rotate-45,
-.wi-rotate-NE {
+.wi-rotate-NE,
+.wi-towards-NE,
+.wi-from-SW {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
+.wi-rotate-68,
+.wi-rotate-ENE,
+.wi-towards-ENE,
+.wi-from-WSW {
+  -webkit-transform: rotate(68deg);
+  -ms-transform: rotate(68deg);
+  transform: rotate(68deg);
+}
+
 .wi-rotate-90,
-.wi-rotate-E {
+.wi-rotate-E,
+.wi-towards-E,
+.wi-from-W {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 
+.wi-rotate-113,
+.wi-rotate-ESE,
+.wi-towards-ESE,
+.wi-from-WNW {
+  -webkit-transform: rotate(113deg);
+  -ms-transform: rotate(113deg);
+  transform: rotate(113deg);
+}
+
 .wi-rotate-135,
-.wi-rotate-SE {
+.wi-rotate-SE,
+.wi-towards-SE,
+.wi-from-NW {
   -webkit-transform: rotate(135deg);
   -ms-transform: rotate(135deg);
   transform: rotate(135deg);
 }
 
+.wi-rotate-158,
+.wi-rotate-SSE,
+.wi-towards-SSE,
+.wi-from-NNW {
+  -webkit-transform: rotate(158deg);
+  -ms-transform: rotate(158deg);
+  transform: rotate(158deg);
+}
+
 .wi-rotate-180,
-.wi-rotate-S {
+.wi-rotate-S,
+.wi-towards-S,
+.wi-from-N {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 
+.wi-rotate-203,
+.wi-rotate-SSW,
+.wi-towards-SSW,
+.wi-from-NNE {
+  -webkit-transform: rotate(203deg);
+  -ms-transform: rotate(203deg);
+  transform: rotate(203deg);
+}
+
 .wi-rotate-225,
-.wi-rotate-SW {
+.wi-rotate-SW.wi-towards-SW,
+.wi-from-NE {
   -webkit-transform: rotate(225deg);
   -ms-transform: rotate(225deg);
   transform: rotate(225deg);
 }
 
+.wi-rotate-248,
+.wi-rotate-WSW.wi-towards-WSW,
+.wi-from-ENE {
+  -webkit-transform: rotate(248deg);
+  -ms-transform: rotate(248deg);
+  transform: rotate(248deg);
+}
+
 .wi-rotate-270,
-.wi-rotate-W {
+.wi-rotate-W,
+.wi-towards-W,
+.wi-from-E {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 
+.wi-rotate-293,
+.wi-rotate-WNW.wi-towards-WNW,
+.wi-from-ESE {
+  -webkit-transform: rotate(293deg);
+  -ms-transform: rotate(293deg);
+  transform: rotate(293deg);
+}
+
 .wi-rotate-315,
-.wi-rotate-NW {
+.wi-rotate-NW,
+.wi-towards-NW,
+.wi-from-SE {
   -webkit-transform: rotate(315deg);
   -ms-transform: rotate(315deg);
   transform: rotate(315deg);
+}
+
+.wi-rotate-338,
+.wi-rotate-NNW,
+.wi-towards-NNW,
+.wi-from-SSE {
+  -webkit-transform: rotate(338deg);
+  -ms-transform: rotate(338deg);
+  transform: rotate(338deg);
 }
 
 .wi-flip-horizontal {
@@ -31314,6 +31394,14 @@ mirror=1);
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
+}
+
+.wi-arrow:before {
+  content: "\f0d2";
+}
+
+.wi-direction:before {
+  content: "\f0d1";
 }
 
 .wi-darksky-clear-day:before {
