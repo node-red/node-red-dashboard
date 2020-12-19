@@ -4,9 +4,9 @@
     <p><b>例:</b><br>
   <pre style="font-size:smaller;">&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
   &lt;p&gt;数値は&lt;/p&gt;
-  &lt;p ng-style=&quot;{color: (msg.payload || 0) % 2 === 0 ? 'green' : 'red'}&quot;&gt;
+  &lt;font color=&quot;{{((msg.payload || 0) % 2 === 0) ? 'green' : 'red'}}&quot;&gt;
     {{(msg.payload || 0) % 2 === 0 ? '偶数' : '奇数'}}
-  &lt;/p&gt;
+  &lt;/font&gt;
 &lt;/div&gt;</pre>
     このコードは<code>msg.payload</code>で受け取った数値が偶数か奇数かを表示します。同時に、偶数であれば緑に、奇数であれば赤にテキストの色を変更します。<br/>
     次は、一意なIDをテンプレートに設定、デフォルトのテーマカラーを設定、入力メッセージの到着を監視する例です。</p>
@@ -38,7 +38,6 @@ this.scope.action = function() { return value; }
     <code>msg.template</code>によってテンプレートを定義することもできます。例えば、外部ファイルに格納したテンプレートを用いる場合に有用です。<br>
     テンプレートは入力が変化した場合に再ロードされます。<br>
     「HTMLコード」フィールドに記述したコードは、<code>msg.template</code>が存在する場合には無視されます。</p>
-    <p>以下のアイコンフォントの利用も可能です: <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icons</a>,
-    <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icons</a>,
-    <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md" target="_blank">Weather icons</a></p>
+    <p>以下のアイコンフォントの利用も可能です: <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">マテリアルデザインアイコン</a><i>(例:'check'、'close')</i>、<a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesomeアイコン</a><i>(例:'fa-fire')</i>、<a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">天気アイコン</a>。
+    アイコン名に'mi-’に追加することでGoogleマテリアルアイコン一式を利用できます。例:'mi-videogame_asset'。</p>
 </script>
