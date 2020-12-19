@@ -341,7 +341,6 @@
                 jsScript.src = path;
                 document.body.appendChild(jsScript);
                 //console.log('Tiny Color Loaded:',path);
-                ensureDashboardNode(true);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 if (xhr.status === 404 && !attemptedVendorLoad) {
@@ -1039,6 +1038,7 @@
                         // at some point we may want to make this an option to select one or the other.
                         while (bases.length > 1) {
                             var n = bases.pop();
+                            console.log("Removing ui_base node "+n.id);
                             RED.nodes.remove(n.id);
                             RED.nodes.dirty(true);
                         }
@@ -1822,6 +1822,7 @@
                 }
 
                 var addTabOrLinkItem = function(container,i,item) {
+                    ensureDashboardNode(true);
                     // create node if needed
                     if (!item.node) {
                         var defaultItem = {
