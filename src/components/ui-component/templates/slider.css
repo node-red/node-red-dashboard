@@ -20,5 +20,5 @@
 }
 
 md-slider[md-vertical] .md-slider-wrapper {
-    width: unset !important;
+    width: unset;
 }

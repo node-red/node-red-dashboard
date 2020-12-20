@@ -15,7 +15,7 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .nr-dashboard-theme .nr-dashboard-textinput input[type="color"] {
-    border: none !important;
+    border: none;
 }
 
 .nr-dashboard-textinput md-input-container .md-errors-spacer {

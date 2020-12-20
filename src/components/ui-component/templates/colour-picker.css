@@ -90,5 +90,5 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-show-inline {
-    z-index: 77 !important;
+    z-index: 77;
 }
