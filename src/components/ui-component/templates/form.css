@@ -46,3 +46,7 @@
 	width: 43%;
 	float: left;
 }
+.nr-dashboard-form form md-input-container md-checkbox .md-label {
+    position: unset;
+    top: unset;
+}

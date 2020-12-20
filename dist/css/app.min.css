@@ -32209,6 +32209,10 @@ reason: https://github.com/angular/material/issues/6214
   padding-right: 12px;
 }
 
+.color-picker-wrapper.color-picker-open {
+  border-width: 0;
+}
+
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open {
   width: 32px;
   border-width: 0px;
@@ -32476,7 +32480,12 @@ reason: https://github.com/angular/material/issues/6214
   padding-top: 1px;
 }
 
-.nr-dashboard-theme .nr-dashboard-textinput input[type="color"] {
+.nr-dashboard-textinput input {
+  border-bottom-width: 1px;
+  padding-left: 8px;
+}
+
+.nr-dashboard-textinput input[type="color"] {
   border: none;
 }
 
@@ -32506,7 +32515,7 @@ reason: https://github.com/angular/material/issues/6214
 .nr-dashboard-text p {
   margin-top: 0.1em;
   margin-bottom: 0.1em;
-  margin-left: 0.25em;
+  margin-left: 0;
   margin-right: 0.25em;
 }
 
@@ -32595,6 +32604,11 @@ md-input-container.md-input-has-value label:not(.md-no-float) {
 .nr-dashboard-form-button {
   width: 43%;
   float: left;
+}
+
+.nr-dashboard-form form md-input-container md-checkbox .md-label {
+  position: unset;
+  top: unset;
 }
 .masonry-container {
   position: relative;
