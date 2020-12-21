@@ -1,0 +1,48 @@
+<script type="text/html" data-help-name="ui_template">
+    <p>The template widget can contain any valid html and Angular/Angular-Material directives.</p>
+    <p>This node can be used to create a dynamic user interface element that changes its appearence
+    based on the input message and can send back messages to Node-RED.</p>
+    <p><b>For example:</b><br>
+    <pre style="font-size:smaller;">&lt;div layout=&quot;row&quot; layout-align=&quot;space-between&quot;&gt;
+  &lt;p&gt;The number is&lt;/p&gt;
+  &lt;font color=&quot;{{((msg.payload || 0) % 2 === 0) ? 'green' : 'red'}}&quot;&gt;
+    {{(msg.payload || 0) % 2 === 0 ? 'even' : 'odd'}}
+  &lt;/font&gt;
+&lt;/div&gt;</pre>
+    Will display if the number received as <code>msg.payload</code> is even or odd. It will also
+    change the color of the text to green if the number is even or red if odd.<br/>
+    The next example shows how to set a unique id for your template, pick up the default theme colour,
+    and watch for any incoming message.</p>
+    <pre style="font-size:smaller;">
+&lt;div id="{{'my_'+$id}}" style="{{'color:'+theme.base_color}}"&gt;Some text&lt;/div&gt;
+&lt;script&gt;
+(function(scope) {
+  scope.$watch('msg', function(msg) {
+    if (msg) {
+      // Do something when msg arrives
+      $("#my_"+scope.$id).html(msg.payload);
+    }
+  });
+})(scope);
+&lt;/script&gt;</pre>
+    <p>Templates made in this way can be copied and remain independent of each other.</p>
+    <p><b>Sending a message:</b><br>
+    <pre style="font-size:smaller;">
+&lt;script&gt;
+var value = "hello world";
+// or overwrite value in your callback function ...
+this.scope.action = function() { return value; }
+&lt;/script&gt;
+&lt;md-button ng-click=&quot;send({payload:action()})&quot;&gt;
+    Click me to send a hello world
+&lt;/md-button&gt;</pre>
+    Will display a button that when clicked will send a message with the payload <code>'Hello world'</code>.</p>
+    <p><b>Using <code>msg.template</code>:</b><br>
+    You can also define the template content via <code>msg.template</code>, so you can use external files for example.<br>
+    Template will be reloaded on input if it has changed.<br>
+    Code written in the Template field will be ignored when <code>msg.template</code> is present.</p>
+    <p>The following icon fonts are available: <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icon</a>
+    <i>(e.g. 'check', 'close')</i> or a <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icon</a>
+    <i>(e.g. 'fa-fire')</i>, or a <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">Weather icon</a>.
+    You can use the full set of Google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>
+</script>

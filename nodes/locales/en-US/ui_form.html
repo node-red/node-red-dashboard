@@ -1,0 +1,16 @@
+<script type="text/html" data-help-name="ui_form">
+    <p>Adds a form to user interface.</p>
+    <p>Helps to collect multiple value from the user on submit button click as an object in <code>msg.payload</code> </p>
+    <p>Multiple input elements can be added using add elements button</p>
+    <p>Each element contains following components:</p>
+    <ul>
+        <li> <b>Label</b> : Value that will be the label of the element in the user interface</li>
+        <li> <b>Name</b> : Represents the key (variable name) in the <code>msg.payload</code> in which the value of the corresponding element present</li>
+        <li> <b>Type</b> : Drop down option to select the type of input element</li>
+        <li> <b>Required</b> : On switching on the user has to supply the value before submitting</li>
+        <li> <b>Rows</b> : number of UI rows for multiline text input</li>
+        <li> <b>Delete</b> : To remove the current element from the form</li>
+    </ul>
+    <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+    <p>The Cancel button can be hidden by setting it's value to be blank "".</p>
+</script>
