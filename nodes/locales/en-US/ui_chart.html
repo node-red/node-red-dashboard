@@ -1,0 +1,20 @@
+<script type="text/html" data-help-name="ui_chart">
+    <p>Plots the input values on a chart. This can either be a time based line chart, a bar chart (vertical or horizontal),
+    or a pie chart.</p>
+    <p>Each input <code>msg.payload</code> value will be converted to a number. If the
+    conversion fails, the message is ignored.</p>
+    <p>Minimum and Maximum <b>Y</b> axis values are optional. The graph will auto-scale to any values received.</p>
+    <p>Multiple series can be shown on the same chart by using a different <code>msg.topic</code>
+    value on each input message. Multiple bars of the same series can be shown by using the <code>msg.label</code> property.</p>
+    <p>The <b>X</b> axis defines a time window or a maximum number of points to display. Older data will be automatically removed from the graph.
+    The axis labels can be formatted using a <a href="https://momentjs.com/docs/#/displaying/format/" target="_blank">
+    Moment.js time formatted</a> string.</p>
+    <p>Inputting a <code>msg.payload</code> containing a blank array <code>[]</code> will clear the chart.</p>
+    <p>See <b><a href="https://github.com/node-red/node-red-dashboard/blob/master/Charts.md" target="_new">this information</a></b>
+    for how to pre-format data to be passed in as a complete chart.</p>
+    <p>The <b>Blank label</b> field can be used to display some text before any valid data is received.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>The node output contains an array of the chart state that can be persisted if needed. This can be passed
+    into the chart node to re-display the persisted data.</p>
+</script>

@@ -1,0 +1,31 @@
+{
+  "ui_form": {
+    "label": {
+      "group": "Group",
+      "size": "Size",
+      "label": "Label",
+      "optionalLabel": "optional label",
+      "formElements": "Form elements",
+      "type": "Type",
+      "required": "Required",
+      "rows": "Rows",
+      "remove": "Remove",
+      "egName": "e.g. Name",
+      "egName2": "e.g. name",
+      "text": "Text",
+      "multiline": "Multiline",
+      "number": "Number",
+      "email": "E-mail",
+      "password": "Password",
+      "checkbox": "Checkbox",
+      "switch": "Switch",
+      "date": "Date",
+      "element": "element",
+      "buttons": "Buttons",
+      "submitButtonText": "submit button text",
+      "cancelButtonText": "cancel button text",
+      "topic": "Topic",
+      "optionalMsgTopic": "optional msg.topic"
+    }
+  }
+}
