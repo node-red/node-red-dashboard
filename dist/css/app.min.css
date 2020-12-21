@@ -32590,7 +32590,6 @@ md-input-container.md-input-has-value label:not(.md-no-float) {
 }
 
 .nr-dashboard-form input[type="checkbox"] {
-  /* height: auto !important; */
   margin-top: 0px;
   margin-bottom: 0px;
 }

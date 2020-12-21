@@ -1,3 +1,15 @@
+### 2.26.0: Milestone Release
+
+**Enhancements**
+
+ - Update weather icons to 1.6 to include more wind direction rotations and icons.
+
+**Fixes**
+
+ - Fix CSS to remove lots of !important flags to allow override.
+ - Fix examples in ui_template node. PR #651
+ - Ensure ui_base creation is called at more appropriate time so is there ready for nodes when needed.
+
 ### 2.25.0: Milestone Release
 
 **Enhancements**
