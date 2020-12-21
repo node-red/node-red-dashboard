@@ -3,6 +3,7 @@
 **Enhancements**
 
  - Update weather icons to 1.6 to include more wind direction rotations and icons.
+ - Add more Japanese translations for chart and form nodes. PR #653
 
 **Fixes**
 
