@@ -1,0 +1,16 @@
+<script type="text/html" data-help-name="ui_form">
+    <p>Fügt der Benutzeroberfläche ein Formular hinzu.</p>
+    <p>Hilft beim Sammeln mehrerer Werte vom Benutzer. Beim Klicken auf die Schaltfläche "Senden" wird ein Objekt als <code>msg.payload</code> versendet.</p>
+    <p>Über die Schaltfläche Elemente hinzufügen können mehrere Eingabeelemente hinzugefügt werden.</p>
+    <p>Jedes Element enthält folgende Komponenten:</p>
+    <ul>
+        <li> <b>Label</b> : Beschriftung des Elements in der Benutzeroberfläche</li>
+        <li> <b>Name</b> : Stellt den Schlüssel (Variablennamen) in <code>msg.payload</code> dar, in der der Wert des entsprechenden Elements vorhanden ist </li>
+        <li> <b>Typ</b> : Dropdown-Option zur Auswahl des Typs des Eingabeelements</li>
+        <li> <b>Erforderlich</b> : Markiert das Feld für den Benutzer als erfolderlich</li>
+        <li> <b>Zeilen</b> : Anzahl der Zeilen für die mehrzeilige Texteingabe</li>
+        <li> <b>Löschen</b> : Entfernt den ausgewählten Eintrag aus dem Formular</li>
+    </ul>
+    <p>Optional kann die Eigenschaft <b>Topic</b> verwendet werden, um die Eigenschaft <code>msg.topic</code> festzulegen. </p>
+    <p>Die Schaltfläche Abbrechen kann ausgeblendet werden, indem der Wert auf "" gesetzt wird. </p>
+</script>

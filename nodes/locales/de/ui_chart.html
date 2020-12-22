@@ -1,0 +1,21 @@
+<script type="text/html" data-help-name="ui_chart">
+    <p>Zeichnet die Eingabewerte in ein Diagramm. Dies kann entweder ein zeitbasiertes Liniendiagramm, ein Balkendiagramm 
+    (vertikal oder horizontal) oder ein Kreisdiagramm sein.</p>
+    <p>Jeder eingehende <code>msg.payload</code> Wert wird in eine Zahl konvertiert. Wenn die Konvertierung fehlschlägt, 
+    wird die Nachricht ignoriert.</p>
+    <p>Minimum und Maximum Achsenwerte für <b>Y</b> sind optional. Das Diagramm wird automatisch auf alle empfangenen 
+    Werte skaliert.</p>
+    <p>Mehrere Serien können in demselben Diagramm angezeigt werden, indem für jede Eingabenachricht ein anderer <code>msg.topic</code>
+    Wert verwendet wird. Mit der Eigenschaft <code>msg.label</code> können mehrere Balken derselben Serie angezeigt werden. </p>
+    <p>Die <b>X</b> Achse definiert ein Zeitfenster oder eine maximale Anzahl von Punkten, die angezeigt werden sollen. Ältere Daten werden automatisch aus dem Diagramm entfernt.
+    Die Achsenbeschriftungen können mit einer <a href="https://momentjs.com/docs/#/displaying/format/" target="_blank">
+    Moment.js Zeit formatierten</a> Zeichnfolge angepasst werden.</p>
+    <p>Wird eine <code>msg.payload</code> mit einem leeren Array <code>[]</code> an den Eingang gesendet, so wird das Diagram gelöscht.</p>
+    <p>Klicke <b><a href="https://github.com/node-red/node-red-dashboard/blob/master/Charts.md" target="_new">diesen Link</a></b>
+    für Informationen zum Vorformatieren von Daten, die als vollständiges Diagramm übergeben werden.</p>
+    <p>Das Feld <b>Leer Label</b> kann verwendet werden, um Text anzuzeigen, bevor gültige Daten empfangen werden.</p>
+    <p>Das Label Feld kann auch durch eine Nachrichteneigenschaft festgelegt werden, dazu muss der Name der Eigenschaft
+    in das Feld eingetragen werden, zum Beispiel <code>{{msg.topic}}</code>.</p>
+    <p>Der Node Ausgang enthält ein Array des Diagrammstatus, das bei Bedarf gespeichert werden kann. Wird dieses in den Node Eingang 
+    gesendet, so wird das gespeicherte Diagram wieder angezeigt.</p>
+</script>

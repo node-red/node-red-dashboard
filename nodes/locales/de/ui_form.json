@@ -1,0 +1,31 @@
+{
+  "ui_form": {
+    "label": {
+      "group": "Gruppe",
+      "size": "Größe",
+      "label": "Label",
+      "optionalLabel": "optionales Label",
+      "formElements": "Formular- elemente",
+      "type": "Typ",
+      "required": "Erforderlich",
+      "rows": "Zeilen",
+      "remove": "Löschen",
+      "egName": "z.B. Name",
+      "egName2": "z.B. Name",
+      "text": "Text",
+      "multiline": "Mehrzeilig",
+      "number": "Nummer",
+      "email": "Email",
+      "password": "Passwort",
+      "checkbox": "Kontrollkästchen",
+      "switch": "Schalter",
+      "date": "Datum",
+      "element": "Element",
+      "buttons": "Tasten",
+      "submitButtonText": "Absenden Schaltflächentext",
+      "cancelButtonText": "Abbrechen Schaltflächentext",
+      "topic": "Topic",
+      "optionalMsgTopic": "optional msg.topic"
+    }
+  }
+}
