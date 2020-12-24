@@ -1,3 +1,13 @@
+### 2.26.1: Maintenance Release
+
+**Enhancements**
+
+ - Add msg.level to Audio out node to set volume from 0 to 1 (0-100%).
+
+**Fixes**
+
+ - Update German translations. PR #654
+
 ### 2.26.0: Milestone Release
 
 **Enhancements**

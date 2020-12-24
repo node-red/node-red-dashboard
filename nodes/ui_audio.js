@@ -13,14 +13,17 @@ module.exports = function(RED) {
         node.status({});
 
         this.on('input', function(msg) {
+            if (msg.hasOwnProperty("level") && (isNaN(msg.level) || msg.level > 300 || msg.level < 0)) {
+                delete msg.level;
+            }
             if (msg.reset == true) {
                 ui.emit('ui-audio', { reset:true, tabname:node.tabname, always:node.always });
             }
             else if (Buffer.isBuffer(msg.payload)) {
-                ui.emit('ui-audio', { audio:msg.payload, tabname:node.tabname, always:node.always });
+                ui.emit('ui-audio', { audio:msg.payload, tabname:node.tabname, always:node.always, vol:msg.level });
             }
             else if (typeof msg.payload === "string") {
-                ui.emit('ui-audio', { tts:msg.payload, voice:(node.voice || msg.voice || 0), tabname:node.tabname, always:node.always });
+                ui.emit('ui-audio', { tts:msg.payload, voice:(node.voice || msg.voice || 0), tabname:node.tabname, always:node.always, vol:msg.level });
             }
         });
 

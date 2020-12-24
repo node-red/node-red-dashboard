@@ -17,6 +17,7 @@
     margin-top: 6px;
     white-space: nowrap;
     overflow: hidden;
+    padding-bottom: 4px;
 }
 
 md-slider[md-vertical] .md-slider-wrapper {
