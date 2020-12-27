@@ -381,6 +381,25 @@ function loadConfiguration(type,scope) {
         }
     }
 
+    // Configure custum tooltip
+    if ((type === "pie") || (type === "polar-area")) {
+        // show series instead of labels
+        config.options.tooltips = {
+            callbacks: {
+                label: function(item, data) {
+                    var ds = data.datasets[item.datasetIndex];
+                    var label = ds.label || "";
+                    if (label) {
+                        label += ": ";
+                    }
+                    label += ds.data[item.index];
+                    return label;
+                }
+            }
+        };
+    }
+
+
     // Allow override of any options if really required.
     config.options = Object.assign({},config.options,item.options);
     return config;
