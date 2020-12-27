@@ -364,10 +364,19 @@ function loadConfiguration(type,scope) {
             position:'top',
             labels: { boxWidth:10, fontSize:12, padding:8 },
             onClick: function(e, legendItem) {
-                var index = legendItem.datasetIndex;
+                var index = legendItem.datasetIndex || 0;
                 var ci = this.chart;
-                var meta = ci.getDatasetMeta(index);
-                meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                var meta;
+                if ((type === "pie") || (type === "polar-area")) {
+                    for (var l = 0; l < ci.config.data.datasets.length; l++) {
+                        meta = ci.getDatasetMeta(l);
+                        meta.data[legendItem.index].hidden = meta.data[legendItem.index].hidden === false ? true : false;
+                    }
+                }
+                else {
+                    meta = ci.getDatasetMeta(index);
+                    meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                }
                 config.overrides[index] = {hidden:meta.hidden};
                 ci.update();
             }
@@ -381,24 +390,24 @@ function loadConfiguration(type,scope) {
         }
     }
 
-    // Configure custum tooltip
+    // Configure custom tooltip
     if ((type === "pie") || (type === "polar-area")) {
         // show series instead of labels
         config.options.tooltips = {
             callbacks: {
+                title: function(item, data) {
+                    return data.labels[item[0].index];
+                },
                 label: function(item, data) {
                     var ds = data.datasets[item.datasetIndex];
                     var label = ds.label || "";
-                    if (label) {
-                        label += ": ";
-                    }
+                    if (label) { label += ": "; }
                     label += ds.data[item.index];
                     return label;
                 }
             }
         };
     }
-
 
     // Allow override of any options if really required.
     config.options = Object.assign({},config.options,item.options);

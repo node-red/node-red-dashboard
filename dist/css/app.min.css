@@ -31149,7 +31149,7 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e56b";
 }
 /*!
- * Weather Icons Lite v1.6.0
+ * Weather Icons Lite v1.6.1
  * Weather themed icons for Bootstrap
  * Author - Paul Reed
  * Maintained at https://github.com/Paul-Reed/weather-icons-lite
@@ -31330,7 +31330,8 @@ md-tabs-wrapper md-next-button ng-md-icon {
 }
 
 .wi-rotate-225,
-.wi-rotate-SW.wi-towards-SW,
+.wi-rotate-SW,
+.wi-towards-SW,
 .wi-from-NE {
   -webkit-transform: rotate(225deg);
   -ms-transform: rotate(225deg);
@@ -31338,7 +31339,8 @@ md-tabs-wrapper md-next-button ng-md-icon {
 }
 
 .wi-rotate-248,
-.wi-rotate-WSW.wi-towards-WSW,
+.wi-rotate-WSW,
+.wi-towards-WSW,
 .wi-from-ENE {
   -webkit-transform: rotate(248deg);
   -ms-transform: rotate(248deg);
@@ -31356,7 +31358,8 @@ md-tabs-wrapper md-next-button ng-md-icon {
 }
 
 .wi-rotate-293,
-.wi-rotate-WNW.wi-towards-WNW,
+.wi-rotate-WNW,
+.wi-towards-WNW,
 .wi-from-ESE {
   -webkit-transform: rotate(293deg);
   -ms-transform: rotate(293deg);
