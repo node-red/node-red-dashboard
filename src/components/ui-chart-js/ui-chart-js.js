@@ -364,6 +364,9 @@ function loadConfiguration(type,scope) {
             position:'top',
             labels: { boxWidth:10, fontSize:12, padding:8 },
             onClick: function(e, legendItem) {
+                if ((type === "pie") || (type === "polar-area")) {
+                    return;
+                }
                 var index = legendItem.datasetIndex;
                 var ci = this.chart;
                 var meta = ci.getDatasetMeta(index);
