@@ -101,6 +101,16 @@
                         $("#legend-show").show();
                         $("#hole-size-show").show();
                     }
+                    else if ($(this).val() === "polar-area") {
+                        $("#y-axis-show").show();
+                        $("#legend-show").show();
+                        $("#hole-size-show").hide();
+                    }
+                    else if ($(this).val() === "radar") {
+                        $("#y-axis-show").show();
+                        $("#legend-show").show();
+                        $("#hole-size-show").hide();
+                    }
                     else {
                         $("#y-axis-show").show();
                         $("#hole-size-show").hide();
