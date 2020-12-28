@@ -7,6 +7,7 @@
 **Fixes**
 
  - Update German translations. PR #654
+ - Ensure dropdown new options are set even when not visible. Issue #479
 
 ### 2.26.0: Milestone Release
 

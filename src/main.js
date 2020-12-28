@@ -538,6 +538,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
                     found.me.processInput(msg);
                 }
+                else if (found.hasOwnProperty("isOptionsValid") && found.hasOwnProperty("newOptions")) {
+                    found.options = found.newOptions;
+                }
             }
             $scope.$apply();
         });
