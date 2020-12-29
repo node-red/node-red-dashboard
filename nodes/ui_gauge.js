@@ -21,6 +21,7 @@ module.exports = function (RED) {
 
         var sizes = ui.getSizes();
         var theme = ui.getTheme();
+
         if (theme === undefined) {
             theme = {"group-textColor":{value:"#000"}};
             theme["widget-textColor"] = {value:"#000"};
@@ -31,13 +32,14 @@ module.exports = function (RED) {
         gageoptions.lineWidth = {'theme-dark':0.75};
         gageoptions.pointerOptions = {'theme-dark':{color:'#8e8e93'}, 'theme-custom':theme["group-textColor"].value};
         gageoptions.backgroundColor = {'theme-dark':'#515151', 'theme-custom':theme["widget-textColor"].value };
-        gageoptions.compassColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be', 'theme-custom':theme["widget-backgroundColor"].value};
+        gageoptions.compassColor = {'theme-dark':theme["widget-backgroundColor"].value, 'theme-light':theme["widget-backgroundColor"].value, 'theme-custom':theme["widget-backgroundColor"].value};
+        gageoptions.valueFontColor = {'theme-dark':'#eee', 'theme-light':'#111', 'theme-custom':theme["widget-textColor"].value};
 
         var waveoptions = {};
-        waveoptions.circleColor = {'theme-dark':'#097479', 'theme-light':'#0094ce', 'theme-custom':theme["widget-backgroundColor"].value};
-        waveoptions.waveColor = {'theme-dark':'#097479', 'theme-light':'#0094ce', 'theme-custom':theme["widget-backgroundColor"].value};
-        waveoptions.textColor = {'theme-dark':'#0b8489', 'theme-light':'#1784be', 'theme-custom':theme["widget-textColor"].value};
-        waveoptions.waveTextColor = {'theme-dark':'#0fbbc3', 'theme-light':'#a4dbf8', 'theme-custom':theme["widget-textColor"].value};
+        waveoptions.circleColor = {'theme-dark':theme["widget-backgroundColor"].value, 'theme-light':theme["widget-backgroundColor"].value, 'theme-custom':theme["widget-backgroundColor"].value};
+        waveoptions.waveColor = {'theme-dark':theme["widget-backgroundColor"].value, 'theme-light':theme["widget-backgroundColor"].value, 'theme-custom':theme["widget-backgroundColor"].value};
+        waveoptions.textColor = {'theme-dark':theme["widget-textColor"].value, 'theme-light':theme["widget-textColor"].value, 'theme-custom':theme["widget-textColor"].value};
+        waveoptions.waveTextColor = {'theme-dark':theme["widget-textColor"].value, 'theme-light':theme["widget-textColor"].value, 'theme-custom':theme["widget-textColor"].value};
 
         var done = ui.add({
             node: node,
