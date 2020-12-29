@@ -41,6 +41,7 @@ module.exports = function(RED) {
                 useUTC: config.useUTC || false,
                 animation: false,
                 spanGaps: false,
+                useDifferentColor: config.useDifferentColor || false,
                 options: {},
             },
             convertBack: function(data) {
