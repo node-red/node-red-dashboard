@@ -7,7 +7,9 @@
 **Fixes**
 
  - Update German translations. PR #654
+ - Fix level update for weathericons lite.
  - Ensure dropdown new options are set even when not visible. Issue #479
+ - Fix angular theme for gauges - and some other theme escapes. Issue #649
 
 ### 2.26.0: Milestone Release
 
