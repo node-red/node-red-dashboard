@@ -339,7 +339,7 @@ function init(server, app, log, redSettings) {
     var dashboardMiddleware = function(req, res, next) { next(); }
 
     if (uiSettings.middleware) {
-        if (typeof uiSettings.middleware === "function") {
+        if (typeof uiSettings.middleware === "function" || Array.isArray(uiSettings.middleware)) {
             dashboardMiddleware = uiSettings.middleware;
         }
     }
@@ -367,15 +367,26 @@ function init(server, app, log, redSettings) {
 
     log.info("Dashboard version " + dashboardVersion + " started at " + fullPath);
 
-    io.use(function(socket, next) {
-        if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
-            // Reject direct websocket requests
-            socket.client.conn.close();
-            return;
-        }
-        if (socket.handshake.xdomain === false) { return next(); }
-        else { socket.disconnect(true); }
-    });
+    if (typeof uiSettings.ioMiddleware === "function") {
+        io.use(uiSettings.ioMiddleware);
+    } else if (Array.isArray(uiSettings.ioMiddleware)) {
+        uiSettings.ioMiddleware.forEach(ioMiddleware => {
+            io.use(ioMiddleware);
+        });
+    } else {
+        io.use(function (socket, next) {
+            if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
+                // Reject direct websocket requests
+                socket.client.conn.close();
+                return;
+            }
+            if (socket.handshake.xdomain === false) {
+                return next();
+            } else {
+                socket.disconnect(true);
+            }
+        });
+    }
 
     io.on('connection', function(socket) {
 
