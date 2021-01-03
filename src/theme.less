@@ -16,6 +16,7 @@
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
 @wtc-light: boolean(luma(@widgetTextColor) > 50%);
+@wbc-light: boolean(luma(@widgetBackgroundColor) > 50%);
 
 // define some CSS variables for user usage
 :root {
@@ -90,6 +91,10 @@ body.nr-dashboard-theme md-toolbar {
     background-color: @pageTitlebarBackgroundColor;
     color: #fff;
 }
+body.nr-dashboard-theme md-toolbar .md-toolbar-tools {
+    color: #fff;
+    filter: invert(if(@wbc-light, 100%, 0%));
+}
 
 /*
     DASHBOARD SIDEBAR
@@ -151,6 +156,10 @@ a.md-no-style, button.md-no-style {
 .nr-dashboard-theme .nr-dashboard-button .md-button {
     background-color: @widgetBackgroundColor;
     color: white;
+}
+.nr-dashboard-theme .nr-dashboard-button .md-button > span{
+    color: white;
+    filter: invert(if(@wbc-light, 100%, 0%));
 }
 .nr-dashboard-theme .nr-dashboard-button .md-button:hover {
     background-color: lighten(@widgetBackgroundColor, 6);
@@ -364,6 +373,10 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-slider md-slider[md-discrete]:not([disabled]) .md-slider-wrapper.md-focused .md-focus-ring {
     transform: scale(0.4);
     animation: unset;
+}
+.nr-dashboard-theme .nr-dashboard-slider .md-thumb-text {
+    color: white;
+    filter: invert(if(@wbc-light, 100%, 0%));
 }
 
 /* Switch */

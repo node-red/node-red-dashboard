@@ -1,3 +1,9 @@
+### 2.26.2: Maintenance Release
+
+**Fixes**
+
+ - Fix slider text colour to better contrast with widget background. Issue #665
+
 ### 2.26.1: Maintenance Release
 
 **Enhancements**

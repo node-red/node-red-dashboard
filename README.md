@@ -155,11 +155,11 @@ The dashboard has 4 sets of icons built in. They are
  - [Weather Icons Lite](https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md) : e.g. `wi-wu-sunny`
  - [Material Design Iconfont](https://jossef.github.io/material-design-icons-iconfont/) ; e.g. `mi-alarm_on` - note add mi- to the icon name in the iconset.
 
-And 1 that can only be used if you have a permanent connection to the internet
+And one that can only be used if you have a permanent connection to the internet
 
  - [Iconify](https://iconify.design/icon-sets/) : e.g. `iconify-mdi:car-battery 48px`
 
-Again note you have to add `iconify-` to the icon name in the icon set of your choice. You may also optionally specify a size in standard px or em notation. Default is 24px. You must add a **ui_template** node that loads the necessary iconify library into the header of the dashboard. It should contain
+Again note you have to add `iconify-` to the icon name in the icon set of your choice. You may also optionally specify a size in standard px or em notation. Default is 24px. You must also add a **ui_template** node that loads the necessary iconify library into the header of the dashboard. It should contain
 
 ```
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
