@@ -88,8 +88,12 @@ module.exports = function(RED) {
         res.json(set);
     });
 
+    var dname = path.normalize(path.join(__dirname , '../dist/'));
+    var gspath = path.dirname(gsp);
+
     RED.httpAdmin.get('/ui_base/js/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/js', req.params[0]);
+        if (filename.indexOf(dname) !== 0) { res.sendStatus(404); }
         res.sendFile(filename, function (err) {
             if (err) {
                 if (node) {
@@ -104,6 +108,7 @@ module.exports = function(RED) {
 
     RED.httpAdmin.get('/ui_base/gs/*', function(req, res) {
         var filename = path.join(path.dirname(gsp), req.params[0]);
+        if (filename.indexOf(gspath) !== 0) { res.sendStatus(404); }
         res.sendFile(filename, function (err) {
             if (err) {
                 if (node) {
@@ -118,6 +123,7 @@ module.exports = function(RED) {
 
     RED.httpAdmin.get('/ui_base/css/*', function(req, res) {
         var filename = path.join(__dirname , '../dist/css', req.params[0]);
+        if (filename.indexOf(dname) !== 0) { res.sendStatus(404); }
         res.sendFile(filename, function (err) {
             if (err) {
                 if (node) {

@@ -3,6 +3,7 @@
 **Fixes**
 
  - Fix slider text colour to better contrast with widget background. Issue #665
+ - Check served endpoint to prevent path traversal. Issue #669.
 
 ### 2.26.1: Maintenance Release
 
