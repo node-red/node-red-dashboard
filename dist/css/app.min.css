@@ -19,7 +19,7 @@
  * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.2.1
+ * v1.2.2
  */
 
 body,
@@ -1124,6 +1124,10 @@ button.md-button::-moz-focus-inner {
 .md-button.md-fab.ng-hide,
 .md-button.md-fab.ng-leave {
   transition: none;
+}
+
+.md-button.md-fab[disabled] {
+  box-shadow: none;
 }
 
 .md-button:not([disabled]).md-fab.md-focused,
@@ -5028,7 +5032,7 @@ md-input-container:not([md-no-float]) .md-select-placeholder span:first-child {
   transform-origin: right top;
 }
 
-md-input-container.md-input-focused:not([md-no-float]) .md-select-placeholder span:first-child {
+md-input-container.md-input-focused:not([md-no-float]) md-select:not([placeholder]) .md-select-placeholder span:first-child {
   transform: translate(-2px,-22px) scale(.75);
 }
 
@@ -6452,7 +6456,7 @@ md-tabs[md-align-tabs=bottom] {
   padding-bottom: 48px;
 }
 
-md-tabs[md-align-tabs=bottom] md-tabs-wrapper {
+md-tabs[md-align-tabs=bottom]>md-tabs-wrapper {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -6461,7 +6465,7 @@ md-tabs[md-align-tabs=bottom] md-tabs-wrapper {
   z-index: 2;
 }
 
-md-tabs[md-align-tabs=bottom] md-tabs-content-wrapper {
+md-tabs[md-align-tabs=bottom]>md-tabs-content-wrapper {
   top: 0;
   bottom: 48px;
 }
