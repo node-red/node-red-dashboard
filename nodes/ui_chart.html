@@ -40,7 +40,8 @@
             useOneColor: {value: false},
             useUTC: {value: false},
             colors: {value: ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5']},
-            outputs: {value: 1}
+            outputs: {value: 1},
+            useDifferentColor: {value: false}
         },
         inputs:1,
         outputs:1,
@@ -66,6 +67,7 @@
             });
             $("#node-input-chartType").on("change", function() {
                 $("#legend-show").hide();
+                $("#show-useDifferentColor").hide();
                 if ($(this).val() === "horizontalBar") {
                     $("#y-label-show").hide();
                     $("#x-label-show").show();
@@ -105,6 +107,7 @@
                         $("#y-axis-show").show();
                         $("#legend-show").show();
                         $("#hole-size-show").hide();
+                        $("#show-useDifferentColor").show();
                     }
                     else if ($(this).val() === "radar") {
                         $("#y-axis-show").show();
@@ -269,6 +272,12 @@
             <input type="color" id="node-input-color8" class="series-color" style="width:100px;"/>
             <input type="color" id="node-input-color9" class="series-color" style="width:100px;"/>
         </div>
+    </div>
+    <div id="show-useDifferentColor" class="form-row">
+         <label></label>
+         <input type="checkbox" id="node-input-useDifferentColor" style="display:inline-block; width:auto; vertical-align:top;">
+             <span data-i18n="ui_chart.label.useDifferentColor"></span>
+         </input>
     </div>
     <div class="form-row">
         <label for="node-input-nodata" data-i18n="ui_chart.label.blankLabel"></label>

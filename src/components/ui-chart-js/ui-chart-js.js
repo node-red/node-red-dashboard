@@ -111,6 +111,25 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 if (type === "pie") {
                                     scope.config.colours = scope.barColours;
                                 }
+                                else if (type === "polar-area") {
+                                    if (scope.config.options &&
+                                       scope.config.options.useDifferentColor) {
+                                        scope.config.colours = scope.barColours;
+                                        var colors = [];
+                                        scope.barColours.map(function (v) {
+                                            var item = Object.assign({}, v);
+                                            var bgColor = [];
+                                            item.backgroundColor.map(function (c) {
+                                                var rgb = tinycolor(c).toRgb();
+                                                var nc = "rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.3)";
+                                                bgColor.push(nc);
+                                            });
+                                            item.backgroundColor = bgColor;
+                                            colors.push(item);
+                                        });
+                                        scope.config.colours = colors;
+                                    }
+                                }
                                 scope.config.data = newValue.values.data;
                                 scope.config.series = newValue.values.series;
                                 scope.config.labels = newValue.values.labels;
@@ -148,7 +167,8 @@ function loadConfiguration(type,scope) {
         scales: {},
         legend: false,
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        useDifferentColor: item.useDifferentColor
     };
     if (type === 'pie') {
         config.options.cutoutPercentage = item.cutout || 0;
