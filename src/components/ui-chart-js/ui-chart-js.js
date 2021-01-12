@@ -121,7 +121,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                             var bgColor = [];
                                             item.backgroundColor.map(function (c) {
                                                 var rgb = tinycolor(c).toRgb();
-                                                var nc = "rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.3)";
+                                                var nc = "rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.6)";
                                                 bgColor.push(nc);
                                             });
                                             item.backgroundColor = bgColor;
