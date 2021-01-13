@@ -112,16 +112,16 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                     scope.config.colours = scope.barColours;
                                 }
                                 else if (type === "polar-area") {
-                                    if (scope.config.options &&
-                                       scope.config.options.useDifferentColor) {
+                                    if (scope.config.options && scope.config.options.useDifferentColor) {
                                         scope.config.colours = scope.barColours;
                                         var colors = [];
                                         scope.barColours.map(function (v) {
                                             var item = Object.assign({}, v);
                                             var bgColor = [];
                                             item.backgroundColor.map(function (c) {
+                                                var op = 1 / newValue.values.series.length;
                                                 var rgb = tinycolor(c).toRgb();
-                                                var nc = "rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.6)";
+                                                var nc = "rgba("+rgb.r+","+rgb.g+","+rgb.b+","+op+")";
                                                 bgColor.push(nc);
                                             });
                                             item.backgroundColor = bgColor;
