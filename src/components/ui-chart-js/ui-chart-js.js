@@ -119,7 +119,7 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                             var item = Object.assign({}, v);
                                             var bgColor = [];
                                             item.backgroundColor.map(function (c) {
-                                                var op = 1 / newValue.values.series.length;
+                                                var op = (0.7 / newValue.values.series.length) + 0.1;
                                                 var rgb = tinycolor(c).toRgb();
                                                 var nc = "rgba("+rgb.r+","+rgb.g+","+rgb.b+","+op+")";
                                                 bgColor.push(nc);
