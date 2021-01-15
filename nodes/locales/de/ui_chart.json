@@ -14,13 +14,13 @@
       "radarChart": " &#xf200; Radarkarte",
       "enlargePoints": "Punkte vergrößern",
       "xAxis": "X-Achse",
-      "last": "letzten",
+      "last": "Letzten",
       "seconds": "Sekunden",
       "minutes": "Minuten",
       "hours": "Stunden",
       "days": "Tage",
       "weeks": "Wochen",
-      "or": "ODER",
+      "or": "oder",
       "points": "Punkte",
       "xAxisLabel": "Label X-Achse",
       "HHmmss": "HH:mm:ss",
@@ -37,17 +37,18 @@
       "legend": "Legende",
       "none": "Keine",
       "show": "Anzeigen",
-      "interpolate": "Interpolieren",
+      "interpolate": "Interpolation",
       "linear": "Linear",
-      "step": "Schritt",
+      "step": "Stufen",
       "bezier": "Bezier",
       "cubic": "Kubisch",
       "cubicMono": "Kubisch-Mono",
       "cutout": "Ausschnitt",
       "useFirstColourForAllBars": "erste Farbe für alle Balken verwenden",
       "seriesColours": "Serienfarben",
-      "blankLabel": "Leer Label",
-      "displayThisTextBeforeValidDataArrives": "Text bevor gültige Daten eintreffen"
+      "blankLabel": "Leer-Label",
+      "displayThisTextBeforeValidDataArrives": "Text bevor gültige Daten eintreffen",
+      "useDifferentColor": "Eine andere Farbe für Seriendaten verwenden"
     }
   }
 }

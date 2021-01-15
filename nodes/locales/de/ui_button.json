@@ -1,0 +1,22 @@
+{
+  "ui_button": {
+    "label": {
+      "group": "Gruppe",
+      "size": "Größe",
+      "icon": "Icon",
+      "optionalIcon": "optionales Icon",
+      "label": "Label",
+      "optionalLabel": "optional Label",
+      "tooltip": "Tooltipp",
+      "optionalTooltip": "optionaler Tooltipp",
+      "color": "Farbe",
+      "optionalColor": "optionale Text/Icon Farbe",
+      "background": "Hintergrund",
+      "optionalBackgroundColor": "optionale Hintergrundfarbe",
+      "whenClicked": "Wenn geklickt, sende:",
+      "payload": "Payload",
+      "topic": "Topic",
+      "emulateClick": "Simuliere einen Klick bei eingehenden Nachrichten:"
+    }
+  }
+}

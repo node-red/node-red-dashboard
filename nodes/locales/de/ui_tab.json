@@ -4,7 +4,7 @@
             "home" : "Home",
             "tab" : "Tab",
             "name" : "Name",
-            "icon" : "Symbol",
+            "icon" : "Icon",
             "state" : "Status",
             "navmenu" : "Nav. Menü",
             "enabled" : "Aktiviert",
@@ -13,9 +13,9 @@
             "hidden" : "Versteckt"
         },
         "info": {
-            "disabled": " Tab ist im Dashboard inaktiv.",
+            "disabled": " Tab ist im Dashboard deaktiviert.",
             "hidden": " Tab wird im Menü nicht angezeigt."
         },
-        "tip" : "Das <b>Symbol</b> kann entweder ein <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material Design Symbol</a> <i>(z.B. 'check', 'close')</i> oder ein <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome Symbol</a> <i>(z.B. 'fa-fire')</i> oder ein <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Wetter Symbol</a> <i>(z.B. 'wi-wu-sunny')</i> sein.</p><p>Du kannst alle Google Material Symbole verwenden, wenn du dem Symbolnamen 'mi-' hinzufügst. z.B. 'mi-videogame_asset'.</p>"
+        "tip" : "Das <b>Icon</b> kann entweder ein <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material Design Icon</a> <i>(z.B. 'check', 'close')</i> oder ein <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font Awesome Icon</a> <i>(z.B. 'fa-fire')</i> oder ein <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Wetter Icon</a> <i>(z.B. 'wi-wu-sunny')</i> sein.</p><p>Du kannst alle Google Material Icons verwenden, wenn du dem Iconnamen 'mi-' hinzufügst. z.B. 'mi-videogame_asset'.</p>"
     }
 }

@@ -8,8 +8,8 @@
             "sizes" : "Größen",
             "horizontal" : "Horizontal",
             "vertical" : "Vertikal",
-            "widget-size" : "1x1 Widget Größe",
-            "widget-spacing" : "Widget Abstände",
+            "widget-size" : "1x1 Widget-Größe",
+            "widget-spacing" : "Widget-Abstände",
             "group-padding" : "Gruppen Innenabstände",
             "group-spacing" : "Gruppen Abstände",
             "layout" : "Layout",
@@ -29,8 +29,8 @@
             "layout" : "Layout",
             "layout-editor" : "Dashboard Layout Editor",
             "width" : "Breite",
-            "auto": "automatische Größenanpassung",
-            "manual": "manuelle Größenänderung"
+            "auto": "Automatische Größenanpassung",
+            "manual": "Manuelle Größenanpassung"
         },
         "theme" : {
             "style" : "Stil",
@@ -49,10 +49,10 @@
                 "border" : "Gruppenrand",
                 "background" : "Hintergrund Gruppe"
             },
-            "widget-settings" : "Widget Einstellungen",
+            "widget-settings" : "Widget-Einstellungen",
             "widget" : {
-                "text" : "Widget Text",
-                "colour" : "Widget Farbe",
+                "text" : "Widget-Text",
+                "colour" : "Widget-Farbe",
                 "background" : "Hintergrund Widget"
             }
         },
@@ -75,7 +75,7 @@
         },
         "site" : {
             "title" : "Node-RED Dashboard",
-            "date-format" : "DD/MM/YYYY"
+            "date-format" : "DD.MM.YYYY"
         },
         "title-bar" : {
             "show" : "Zeige die Titelleiste",
@@ -88,7 +88,7 @@
         "lock" : {
             "clicked" : "Klicke um das Seitenmenü anzuzeigen",
             "locked" : "Seitenmenü immer anzeigen",
-            "locked-icon" : "Immer nur Symbole anzeigen"
+            "locked-icon" : "Immer nur Icons anzeigen"
         },
         "temp" : {
             "allow-theme" : "Node-RED Theme überall",
