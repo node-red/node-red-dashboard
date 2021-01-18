@@ -5,6 +5,10 @@
  - Let user configured middleware be an array. PR #664
  - Let polar area chart have diffferent colours per series item. PR #662
 
+**Fixes**
+
+ - Fix dropdown pre-select of multiple options
+
 ### 2.26.2: Maintenance Release
 
 **Fixes**
