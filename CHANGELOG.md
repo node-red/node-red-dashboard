@@ -1,4 +1,4 @@
-### 2.27.0-beta: Maintenance Release
+### 2.27.0: Maintenance Release
 
 **Enhancements**
 
@@ -8,6 +8,7 @@
 **Fixes**
 
  - Fix dropdown pre-select of multiple options
+ - Fix button text colour - dumb mistake. Issue #670
 
 ### 2.26.2: Maintenance Release
 
