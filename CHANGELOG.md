@@ -1,9 +1,9 @@
-### 2.27.0: Maintenance Release
+### 2.27.0: Milestone Release
 
 **Enhancements**
 
  - Let user configured middleware be an array. PR #664
- - Let polar area chart have diffferent colours per series item. PR #662
+ - Let polar area chart have different colours per series item. PR #662
 
 **Fixes**
 
