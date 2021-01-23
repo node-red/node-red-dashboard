@@ -1,0 +1,14 @@
+<script type="text/html" data-help-name="ui_gauge">
+    <p>Adds a gauge type widget to the user interface.</p>
+    <p>The <code>msg.payload</code> is searched for a numeric <i>value</i> and is formatted in accordance with
+    the defined <b>Value Format</b>, which can then be formatted using
+    <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_blank">Angular filters</a>.</p>
+    <p>For example : <code>{{value | number:1}}%</code> will round the value to one decimal place and append a % sign.</p>
+    <p>The colours of each of 3 sectors can be specified and the gauge will blend between them.
+    The colours should be specified in hex (#rrggbb) format.</p>
+    <p>If you specify numbers for the sectors then the colours changes per sector.
+    If not specified the colours are blended across the total range.</p>
+    <p>The gauge has several modes. Regular gauge, donut, compass and wave.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+</script>

@@ -1,0 +1,15 @@
+<script type="text/html" data-help-name="ui_text">
+    <p>Will display a non-editable text field on the user interface.</p>
+    <p>Each received <code>msg.payload</code> will update the text based on the provided <b>Value Format</b>.</p>
+    <p>The <b>Value Format</b> field can be used to change the displayed format and can contain valid HTML and
+    <a href="https://scotch.io/tutorials/all-about-the-built-in-angularjs-filters" target="_blank">Angular filters</a>.</p>
+    <p>For example: <code>{{value | uppercase}} &amp;deg;</code> will uppercase the payload text and add the degree symbol.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>The following icon fonts are also available: <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icon</a>
+        <i>(e.g. 'check', 'close')</i> or a <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icon</a>
+        <i>(e.g. 'fa-fire')</i>, or a <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">Weather icon</a>.
+        You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>
+    <p>The widget also has a class of <code>nr-dashboard-widget-{the_widget_label_with_underscores}</code> which can be used for additional 
+        styling if required. You may need to use the <i>!important</i> flag to override the theme.</p>
+</script>

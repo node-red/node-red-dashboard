@@ -1,0 +1,16 @@
+<script type="text/html" data-help-name="ui_audio">
+    <p>Plays audio or text to speech (TTS) in the dashboard.</p>
+    <p>To work the dashboard web page must be open.</p>
+    <p>Expects <code>msg.payload</code> to contain a buffer of a <b>wav</b> or <b>mp3</b> file.</p>
+    <p>If your browser has native support for Text-to-Speech then a <code>msg.payload</code>
+    can also be a <b>string</b> to be read aloud.</p>
+    <p>Optionally setting <code>msg.level</code> from 0 to 100 will change the volume from 0 to 100%. Default is 100%.
+    In audio mode you can go up to 300, but you may get distortion.</p>
+    <p>When a <code>msg.reset</code> is available with value <code>true</code>, then playback of the current audio fragment will be stopped.</p>
+    <p>The <b>node status</b> reflects the current playback status:
+    <ul>
+        <li><b>started:</b> the audio fragment playback has been started.</li>
+        <li><b>reset:</b> the audio fragment playback has been reset (i.e. stopped before completed).</li>
+    </ul>
+    As soon as the audio fragment playback is completed, the node status will be cleared automatically.</p>
+</script>

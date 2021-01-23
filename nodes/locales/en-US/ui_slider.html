@@ -1,0 +1,14 @@
+<script type="text/html" data-help-name="ui_slider">
+    <p>Adds a slider widget to the user interface.</p>
+	<p>The user can change its value between the limits (<b>min</b> and <b>max</b>). Each value change
+    will generate a message with the value set as <b>payload</b>.</p>
+    <p>A vertical slider can be created by setting the size so that the height is greater than the width.</p>
+    <p>The slider can be reversed by setting the min value larger than the max value. e.g. min 100, max 0.</p>
+    <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
+    <p>An input <code>msg.payload</code> will be converted to a number, and used to preset a value.
+    The <b>min</b> value will be used if conversion fails,
+    and it will update the user interface. If the value changes, it will also be passed to the output.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the slider output.</p>
+</script>

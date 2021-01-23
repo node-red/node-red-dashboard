@@ -1,0 +1,14 @@
+<script type="text/html" data-help-name="ui_toast">
+    <p>Shows <code>msg.payload</code> as a popup notification or OK / Cancel dialog
+    message on the user interface.</p>
+    <p>If a <code>msg.topic</code> is available it will be used as the title.</p>
+    <p>If you do not set an optional border highlight colour, then it can be set dynamically by <code>msg.highlight</code>.</p>
+    <p>You may also configure the position and duration of the toast notifications. If you leave the timeout blank
+    it can be set by <code>msg.timeout. This does not apply to OK/Cancel dialogs.</code>.
+    <p>The dialog returns a <code>msg.payload</code> string of whatever you configure
+    the button label(s) to be. The second (cancel) button is optional, as is the return
+    value of <code>msg.topic</code>.</p>
+    <p>If you select 'OK, Cancel and Input' mode then <code>msg.payload</code> will contain
+    any text input by the user, rather than the OK button text.</p>
+    <p>Sending a blank payload will remove any active dialog without sending any data.</p>
+</script>

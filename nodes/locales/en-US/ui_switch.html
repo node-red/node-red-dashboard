@@ -1,0 +1,18 @@
+<script type="text/html" data-help-name="ui_switch">
+    <p>Adds a switch to the user interface.</p>
+	<p>Each change in the state of the switch will generate
+    a <code>msg.payload</code> with the specified <b>On</b> and <b>Off</b> values.</p>
+    <p>The <b>On/Off Color</b> and <b>On/Off Icon</b> are optional fields. If they are all present, the default
+    toggle switch will be replaced with the relevant icons and their respective colors.</p>
+    <p>The <b>On/Off Icon</b> field can be either a <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icon</a>
+    <i>(e.g. 'check', 'close')</i> or a <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icon</a>
+    <i>(e.g. 'fa-fire')</i>, or a <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">Weather icon</a>.
+    You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>
+    <p>In pass through mode the switch state can be updated by an incoming <code>msg.payload</code> with the specified values,
+    that must also match the specified type (number, string, etc). When not in passthrough mode then the icon can either
+    track the state of the output - or the input msg.payload, in order to provide a closed loop feedback.</p>
+    <p>The label can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
+    <p>If a <b>Topic</b> is specified, it will be added to the output as <code>msg.topic</code>.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the switch widget.</p>
+</script>
