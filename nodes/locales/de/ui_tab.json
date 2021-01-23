@@ -10,12 +10,12 @@
       "enabled": "Aktiviert",
       "disabled": "Deaktivert",
       "visible": "Sichtbar",
-      "hidden": "Unsichtbar"
+      "hidden": "Versteckt"
     },
     "info": {
       "disabled": " Tab im Dashboard deaktiviert.",
-      "hidden": " Tab im Nav.-Menü unsichtbar."
+      "hidden": " Tab im Nav.-Menü versteckt."
     },
-  "tip": "Das <b>Icon</b> kann entweder ein <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material-Design-Icon</a> (z.B. <code>check</code> oder <code>close</code>), ein <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font-Awesome-Icon</a> (z.B. <code>fa-fire</code>) oder ein <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Wetter-Icon</a> (z.B. <code>wi-wu-sunny</code>) sein.</p><p>Des Weiteren k�nnen alle Google-Material-Icons verwendet werden, indem dem Icon-Namen <code>mi-</code> vorangestellt wird (z.B. <code>mi-videogame_asset</code>).</p>"
+  "tip": "Das <b>Icon</b> kann entweder ein <a href=\"https://klarsys.github.io/angular-material-icons/\" target=\"_blank\">Material-Design-Icon</a> (z.B. <code>check</code> oder <code>close</code>), ein <a href=\"https://fontawesome.com/v4.7.0/icons/\" target=\"_blank\">Font-Awesome-Icon</a> (z.B. <code>fa-fire</code>) oder ein <a href=\"https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md\" target=\"_blank\">Wetter-Icon</a> (z.B. <code>wi-wu-sunny</code>) sein.</p><p>Des Weiteren können alle Google-Material-Icons verwendet werden, indem dem Icon-Namen <code>mi-</code> vorangestellt wird (z.B. <code>mi-videogame_asset</code>).</p>"
   }
 }

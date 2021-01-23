@@ -10,12 +10,12 @@
             "vertical": "Vertikal",
             "widget-size": "1x1 Widget-Größe",
             "widget-spacing": "Widget-Abstände",
-            "group-padding": "Gruppen Innenabstände",
-            "group-spacing": "Gruppen Abstände",
+            "group-padding": "Gruppenabstände innen (padding)",
+            "group-spacing": "Gruppenabstände außen (spacing)",
             "layout": "Layout",
             "angular": "Angular",
-            "theme": "Erscheinungsbild",
-            "site": "Seite"
+            "theme": "Theme",
+            "site": "Site"
         },
         "auto": "Auto",
         "title": "Node-RED Dashboard",
@@ -86,14 +86,14 @@
             "allow-swipe": "Wischen zwischen Tabs zulassen"
         },
         "lock": {
-            "clicked": "Klicke um das Seitenmenü anzuzeigen",
+            "clicked": "Klicken, um das Seitenmenü anzuzeigen",
             "locked": "Seitenmenü immer anzeigen",
-            "locked-icon": "Immer nur Symbole anzeigen"
+            "locked-icon": "Nur Icons anzeigen"
         },
         "temp": {
-            "allow-theme": "Node-RED-Erscheinungsbild überall",
-            "no-theme": "Benutze Angular-Erscheinungsbild in ui_template",
-            "none": "Angular-Erscheinungsbild überall"
+            "allow-theme": "Node-RED-Erscheinungsbild",
+            "no-theme": "Angular-Erscheinungsbild in ui_template",
+            "none": "Angular-Erscheinungsbild"
         }
     }
 }

@@ -1,7 +1,7 @@
 {
   "ui_template": {
   	"label": {
-	    "category": "dashboard",
+	    "category": "Dashboard",
 	    "type": "Vorlagentyp",
 	    "local": "Widget in Gruppe",
 	    "global": "Hinzugefügt zur <head>-Sektion der Seite",

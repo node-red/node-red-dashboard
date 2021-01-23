@@ -1,0 +1,22 @@
+{
+  "ui_button": {
+    "label": {
+      "group": "Group",
+      "size": "Size",
+      "icon": "Icon",
+      "optionalIcon": "optional icon",
+      "label": "Label",
+      "optionalLabel": "optional label",
+      "tooltip": "Tooltip",
+      "optionalTooltip": "optional tooltip",
+      "color": "Color",
+      "optionalColor": "optional text/icon color",
+      "background": "Background",
+      "optionalBackgroundColor": "optional background color",
+      "whenClicked": "When clicked, send:",
+      "payload": "Payload",
+      "topic": "Topic",
+      "emulateClick": "If msg arrives on input, emulate a button click:"
+    }
+  }
+}

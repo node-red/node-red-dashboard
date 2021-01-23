@@ -1,0 +1,19 @@
+<script type="text/html" data-help-name="ui_button">
+    <p>Adds a button to the user interface.</p>
+    <p>Clicking the button generates a message with <code>msg.payload</code> set to the <b>Payload</b> field.
+    If no payload is specified, the node id is used.</p>
+	<p>The <b>Size</b> defaults to  3 by 1.</p>
+    <p>The <b>Icon</b> can be defined, as either a <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icon</a>
+    <i>(e.g. 'check', 'close')</i> or a <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icon</a>
+    <i>(e.g. 'fa-fire')</i>, or a <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">Weather icon</a>.
+    You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>
+    <p>The colours of the text and background may be set. They can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{background}}</code>.
+    You don't need to prepend the <i>msg.</i> part of the property name.</p>
+    <p>The label and icon can also be set by a message property by setting
+    the field to the name of the property, for example <code>{{topic}}</code> or <code>{{myicon}}</code>.</p>
+    <p>If set to pass through mode a message arriving on the input will act like pressing the button.
+    The output payload will be as defined in the node configuration.</p>
+    <p>The incoming <b>topic</b> field can be used to set the <code>msg.topic</code> property that is output.</p>
+    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the button.</p>
+</script>
