@@ -1,3 +1,5 @@
 /node_modules
 node-*.tgz
 package-lock.json
+sync.ffs_db
+*.bak
