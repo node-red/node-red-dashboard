@@ -3,8 +3,8 @@
     "label": {
       "group": "Gruppe",
       "size": "Größe",
-      "label": "Label",
-      "optionalChartTitle": "optionaler Diagrammtitel",
+      "label": "Beschriftung",
+      "optionalChartTitle": "Optionaler Diagrammtitel",
       "type": "Typ",
       "lineChart": " &#xf201; Liniendiagramm",
       "barChart": " &#xf080; Balkendiagramm",
@@ -20,14 +20,14 @@
       "hours": "Stunden",
       "days": "Tage",
       "weeks": "Wochen",
-      "or": "oder",
+      "or": "oder max.",
       "points": "Punkte",
-      "xAxisLabel": "Label X-Achse",
+      "xAxisLabel": "X-Beschriftung",
       "HHmmss": "HH:mm:ss",
       "HHmm": "HH:mm",
-      "yearMonthDate": "Jahr-Monat-Datum",
-      "dateMonth": "Datum/Monat",
-      "dayHHmm": "Tag HH:mm",
+      "yearMonthDate": "Jahr-Monat-Tag",
+      "dateMonth": "Tag/Monat",
+      "dayHHmm": "Wochentag HH:mm",
       "custom": "benutzerdefiniert",
       "automatic": "automatisch",
       "asUTC": "als UTC",
@@ -44,11 +44,11 @@
       "cubic": "Kubisch",
       "cubicMono": "Kubisch-Mono",
       "cutout": "Ausschnitt",
-      "useFirstColourForAllBars": "erste Farbe für alle Balken verwenden",
+      "useFirstColourForAllBars": "Erste Farbe für alle Balken verwenden",
       "seriesColours": "Serienfarben",
-      "blankLabel": "Leer-Label",
-      "displayThisTextBeforeValidDataArrives": "Text bevor gültige Daten eintreffen",
-      "useDifferentColor": "Eine andere Farbe für Seriendaten verwenden"
+      "blankLabel": "Leer-Text",
+      "displayThisTextBeforeValidDataArrives": "Anzuzeigender Text bevor gültige Daten eintreffen",
+      "useDifferentColor": "Unterschiedliche Farben für Datenserie verwenden"
     }
   }
 }

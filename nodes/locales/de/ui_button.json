@@ -4,19 +4,19 @@
       "group": "Gruppe",
       "size": "Größe",
       "icon": "Icon",
-      "optionalIcon": "optionales Icon",
-      "label": "Label",
-      "optionalLabel": "optional Label",
+      "optionalIcon": "Optionales Icon",
+      "label": "Beschriftung",
+      "optionalLabel": "Optionale Beschriftung",
       "tooltip": "Tooltipp",
-      "optionalTooltip": "optionaler Tooltipp",
+      "optionalTooltip": "Optionaler Tooltip",
       "color": "Farbe",
-      "optionalColor": "optionale Text/Icon Farbe",
+      "optionalColor": "Optionale Text/Icon-Farbe",
       "background": "Hintergrund",
-      "optionalBackgroundColor": "optionale Hintergrundfarbe",
-      "whenClicked": "Wenn geklickt, sende:",
+      "optionalBackgroundColor": "Optionale Hintergrundfarbe",
+      "whenClicked": "Sende beim Klicken:",
       "payload": "Payload",
       "topic": "Topic",
-      "emulateClick": "Simuliere einen Klick bei eingehenden Nachrichten:"
+      "emulateClick": "Emuliere einen Klick bei einer eingehenden Nachricht:"
     }
   }
 }
