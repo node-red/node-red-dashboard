@@ -1,9 +1,9 @@
 {
     "ui_ui_control": {
-    	"label": {
-            "category": "Dashboard",
-            "name": "Name"
-    	},
+	"label": {
+	    "category": "Dashboard",
+	    "name": "Name"
+	},
         "placeholder": {
             "name": "Name"
         }
