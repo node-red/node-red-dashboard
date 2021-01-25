@@ -1,14 +1,14 @@
 {
-  "ui_group": {
-    "label": {
-      "name": "Name",
-      "tab": "Tab",
-      "width": "Breite",
-      "default": "Standard",
-      "group": "Gruppe",
-      "unassigned": "nicht zugewiesen"
-    },
-    "display-name": "Gruppenname anzeigen",
-    "collapse-name": "Gruppenreduzierung zulassen"
-  }
+    "ui_group": {
+        "label": {
+            "name": "Name",
+            "tab": "Tab",
+            "width": "Breite",
+            "default": "Standard",
+            "group": "Gruppe",
+            "unassigned": "nicht zugewiesen"
+        },
+        "display-name": "Gruppenname anzeigen",
+        "collapse-name": "Gruppenreduzierung zulassen"
+    }
 }
