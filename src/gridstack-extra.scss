@@ -28,10 +28,6 @@ $gridstack-columns: 11 !default;
 }
 
 .grid-stack>.grid-stack-item>.grid-stack-item-content {
-    top: 3px;
-    left: 5px;
-    right: 5px;
-    bottom: 3px;
     overflow: hidden;
     line-height: 18px;
 }
