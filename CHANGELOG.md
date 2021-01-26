@@ -1,3 +1,9 @@
+### 2.27.1: Maintenance Release
+
+**Fixes**
+
+ - Fix CSS for layout grid to render better for some browsers
+
 ### 2.27.0: Milestone Release
 
 **Enhancements**
