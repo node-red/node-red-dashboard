@@ -91,7 +91,8 @@
                   {val : "password", text: RED._("node-red-dashboard/ui_form:ui_form.label.password")},
                   {val : "checkbox", text: RED._("node-red-dashboard/ui_form:ui_form.label.checkbox")},
                   {val : "switch", text: RED._("node-red-dashboard/ui_form:ui_form.label.switch")},
-                  {val : "date", text: RED._("node-red-dashboard/ui_form:ui_form.label.date")}
+                  {val : "date", text: RED._("node-red-dashboard/ui_form:ui_form.label.date")},
+                  {val : "time", text: RED._("node-red-dashboard/ui_form:ui_form.label.time")}
                 ];
 
                 //var sel = $('<select>').appendTo('body');
@@ -102,7 +103,7 @@
                     }
                     typeField.append($("<option>").attr('value',this.val).text(this.text).prop('selected',isSelected));
                 });
-               
+
                 //var labelForRequried = $('<span/>',{style:"margin: 10px;"}).text('Required').appendTo(row);
                 var requiredContainer= $('<div/>',{style:"display:inline-block; height:34px; width:13%; vertical-align: middle"}).appendTo(row);
                 var requiredInnerContainer= $('<div/>',{style:"left:35%; position:relative; width:30px"}).appendTo(requiredContainer);
@@ -112,13 +113,13 @@
                 var reqDiv=$("<div />",{class:"slider round"}).appendTo(reqRow);
                 var vis = option.rows ? 'visible' : 'hidden';
                 var rowsField = $('<input/>',{class:"node-input-option-rows", type:"number", style:"width:10%;", placeholder:'Rows', value:option.rows }).css('visibility',vis).appendTo(row);
-               
+
                 var finalspan = $('<div/>',{style:"display:inline-block; width:5%;"}).appendTo(row);
                 var deleteButton = $('<a/>',{href:"#",class:"editor-button", style:"font-size:1.3em; left:45%; position:relative;"}).appendTo(finalspan);
                 $('<i/>',{class:"fa fa-trash-o"}).appendTo(deleteButton);
 
                 typeField.change(function(e){
-                    if (e.target.value != 'multiline') { 
+                    if (e.target.value != 'multiline') {
                         rowsField.val(undefined)
                         option.rows = null;
                         rowsField.css('visibility','hidden')
@@ -126,7 +127,7 @@
                         rowsField.css('visibility','visible')
                         if (!rowsField[0].value) rowsField[0].value = 3;
                     }
-                    
+
                 })
 
                 deleteButton.click(function() {

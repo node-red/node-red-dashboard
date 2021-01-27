@@ -13,11 +13,16 @@
                 ng-model="me.item.formValue[opt.value]"
                 ng-required="opt.required"
                 ng-keydown="me.stop($event)">
-               <input ng-if="opt.type=='date'" type="{{opt.type}}"
+                <input ng-if="opt.type=='date'" type="{{opt.type}}"
                 ng-model="me.item.formValue[opt.value]"
                 ng-required="opt.required"
                 ng-keydown="me.stop($event)"
                 placeholder="yyyy-mm-dd">
+                <input ng-if="opt.type=='time'" type="{{opt.type}}"
+                ng-model="me.item.formValue[opt.value]"
+                ng-required="opt.required"
+                ng-keydown="me.stop($event)"
+                placeholder="HH:MM">
                <input ng-if="opt.type=='number'" type="{{opt.type}}"
                  ng-model="me.item.formValue[opt.value]"
                  ng-required="opt.required"

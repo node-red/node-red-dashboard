@@ -20,6 +20,7 @@
       "checkbox": "Checkbox",
       "switch": "Switch",
       "date": "Date",
+      "time": "Time",
       "element": "element",
       "buttons": "Buttons",
       "submitButtonText": "submit button text",

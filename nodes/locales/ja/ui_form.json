@@ -20,6 +20,7 @@
       "checkbox": "チェックボックス",
       "switch": "スイッチ",
       "date": "日付",
+      "time": "時間",
       "element": "要素",
       "buttons": "ボタン",
       "submitButtonText": "送信ボタンの文字列",

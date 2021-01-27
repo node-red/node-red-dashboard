@@ -20,6 +20,7 @@
       "checkbox": "Kontrollkästchen",
       "switch": "Schalter",
       "date": "Datum",
+      "time": "Zeit",
       "element": "Element",
       "buttons": "Tasten",
       "submitButtonText": "Absenden Schaltflächentext",

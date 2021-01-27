@@ -3,6 +3,7 @@
 **Fixes**
 
  - Fix CSS for layout grid to render better for some browsers
+ - Add time picker to ui_form options.
 
 ### 2.27.0: Milestone Release
 
