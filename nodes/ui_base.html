@@ -1186,7 +1186,7 @@
                         sftmpls.push(n);
                         var exist = false;
                         for (var cnt = 0; cnt < allNodes.length; cnt++) {
-                            if (allNodes[cnt].subflow == n.id) {
+                            if (allNodes[cnt].z == n.id && allNodes[cnt].type === 'ui_subgroup_t') {
                                 exist = true;
                                 break;
                             }
@@ -1205,7 +1205,6 @@
                                 name: "["+n.name+"]ui subgroup template",
                                 width: 6,
                                 height: 6,
-                                subflow: n.id,
                                 label: function() { return this.name ; }
                             };
                             RED.nodes.add(sgtmplNode);
@@ -1219,7 +1218,8 @@
                         if (n.type === 'ui_subgroup_t') {
                             var exist = false;
                             for (var cnt = 0; cnt < sftmpls.length; cnt++) {
-                                if (sftmpls[cnt].id == n.subflow) {
+                                //if (sftmpls[cnt].id == n.subflow) {
+                                if (sftmpls[cnt].id == n.z) { // UI-MODULE 2021/1/22
                                     exist = true;
                                     break;
                                 }
@@ -1251,7 +1251,7 @@
                                 // get subgroup template
                                 var sgId = "";
                                 RED.nodes.eachConfig(function(n) {
-                                    if (n.type == 'ui_subgroup_t' && n.subflow == subflowId) {
+                                    if (n.type == 'ui_subgroup_t' && n.z == subflowId) {
                                         sgId = n.id;
                                     }
                                 });
@@ -1314,7 +1314,7 @@
                             for (var cnt = 0; cnt < wLen; cnt++) {
                                 var wId = n.widgetOrder.shift();
                                 var wNode = RED.nodes.node(wId)
-                                if (wNode && (wNode.z === n.subflow)) {
+                                if (wNode && (wNode.z === n.z)) {
                                     n.widgetOrder.push(wId);
                                 }
                             }
@@ -1322,7 +1322,7 @@
                             // Add new widget node
                             for (var cnt = 0; cnt < allNodes.length; cnt++) {
                                 var node = allNodes[cnt];
-                                if ((n.subflow === node.z)&&(/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && node.type !== 'ui_audio' && node.type !== 'ui_base' && node.type !== 'ui_group' && node.type !== 'ui_tab' && node.type !== 'ui_subgroup_t')){
+                                if ((n.z === node.z)&&(/^ui_/.test(node.type) && node.type !== 'ui_link' && node.type !== 'ui_toast' && node.type !== 'ui_ui_control' && node.type !== 'ui_audio' && node.type !== 'ui_base' && node.type !== 'ui_group' && node.type !== 'ui_tab' && node.type !== 'ui_subgroup_t')){
                                     if (n.widgetOrder.indexOf(node.id) === -1) {
                                         n.widgetOrder.push(node.id);
                                     }
