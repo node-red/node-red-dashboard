@@ -151,13 +151,16 @@ module.exports = function(RED) {
                             if (typeof m === "string") { m = [ m ]; }
                         }
                         m.map(x => delete x["$$mdSelectId"])
-                        if (Array.isArray(m) && JSON.stringify(m).indexOf(JSON.stringify(control.options[i].value)) !== -1) {
-                            var v = control.options[i].value;
-                            if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
-                                try { v = JSON.parse(v); }
-                                catch(e) {}
+                        for (var j = 0; j < m.length; j++){
+                            if (JSON.stringify(control.options[i].value) === JSON.stringify(m[j])) {
+                                var v = control.options[i].value;
+                                if (typeof v === "string" && control.options[i].type !== "str") {
+                                    try { v = JSON.parse(v); }
+                                    catch(e) {}
+                                }
+                                val.push(v);
+                                break;
                             }
-                            val.push(v);
                         }
                     }
                 }
