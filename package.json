@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.25.0",
+    "version": "2.27.1",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -131,7 +131,7 @@
         "streamqueue": "~1.1.2",
         "svg-morpheus": "^0.3.0",
         "tinycolor2": "1.4.2",
-        "weather-icons-lite": "1.5.0"
+        "weather-icons-lite": "^1.6.1"
     },
     "engines": {
         "node": ">=8"

@@ -26,3 +26,8 @@ $gridstack-columns: 11 !default;
 @for $j from 2 through $gridstack-columns {
   @include grid-stack-items($j)
 }
+
+.grid-stack>.grid-stack-item>.grid-stack-item-content {
+    overflow: hidden;
+    line-height: 18px;
+}

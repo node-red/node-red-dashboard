@@ -1,0 +1,28 @@
+<script type="text/html" data-help-name="ui_ui_control">
+    <p>Allows dynamic control of the Dashboard.</p>
+    <p>The default function is to change the currently displayed tab. <code>msg.payload</code>
+    should either be an object of the form <code>{"tab":"my_tab_name"}</code>, or just be the <b>tab name</b>
+    or <b>numeric index</b> (from 0) of the tab or link to be displayed.</p>
+    <p>Sending a blank tab name "" will refresh the current page.
+    You can also send "+1" for next tab and "-1" for previous tab.</p>
+    <p>Dashboard pages (i.e. "tabs") can be controlled by sending a <code>msg.payload</code> object with the format
+    <pre>{"tabs": {"hide": "tab_name_to_hide", "disable": ["secret_tab", "unused_stuff"]}}</pre>.
+    There are 2 toggle states available: <b>show</b>/<b>hide</b> and <b>enable</b>/<b>disable</b></p>
+    <p>Visibility of individual groups of widgets can controlled by a payload like
+    <pre>{"group": {"hide": ["tab_name_group_name_with_underscores"], "show": ["reveal_another_group"], "focus": true}}</pre>
+    where <b>focus</b> is optional and will cause the screen to scroll to show that group if required. 
+    You can also use properties `open` and `close` to set the state of a group that can be controlled by the user. The group
+    names are the IDs of the groups and are typically formed from the <i>tab name</i> plus <i>group name</i> joined with
+    underscores replacing all spaces.</p>
+    <p>When any browser client connects or loses connection, changes tab, or expands or collapses a group this node will emit a <code>msg</code> containing:</p>
+    <ul>
+    <li><code>payload</code> - <i>connect</i>, <i>lost</i>, <i>change</i>, or <i>group</i>.
+    <li><code>socketid</code> - the ID of the socket (this will change every time the browser reloads the page).
+    <li><code>socketip</code> - the ip address from where the connection originated.
+    <li><code>tab</code> - the number of the tab. (only for 'change' event).
+    <li><code>name</code> - the name of the tab. (only for 'change' event).
+    <li><code>group</code> - the name of the group. (only for 'group' event).
+    <li><code>open</code> - the state of the group. (only for 'group' event).
+    </ul>
+    <p>Optional - report only connect events - useful to use to trigger a resend of data to a new client without needing to filter out other events.</p>
+</script>

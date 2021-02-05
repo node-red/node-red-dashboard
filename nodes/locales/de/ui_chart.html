@@ -1,0 +1,24 @@
+<script type="text/html" data-help-name="ui_chart">
+  <p>Zeichnet Eingangswerte in ein Diagramm, welches entweder ein zeitbasiertes Liniendiagramm,
+    ein Balkendiagramm (vertikal oder horizontal) oder ein Kreisdiagramm sein kann.</p>
+  <p>Jede eingehende <code>msg.payload</code>-Nachricht wird in einen Zahlenwert konvertiert.
+    Wenn die Konvertierung fehlschlägt, wird die Nachricht ignoriert.</p>
+  <p>Die Minimum- und Maximum-Werte für die <b>Y-Achse</b> sind optional.
+    Ohne diese wird das Diagramm automatisch anhand aller empfangenen Werte skaliert.</p>
+  <p>Mehrere Serien können im gleichen Diagramm angezeigt werden,
+    indem für jede Eingangsnachricht andere <code>msg.topic</code>-Werte verwendet werden.
+    Mit der Eigenschaft <code>msg.label</code> können mehrere Balken der selben Serie angezeigt werden.</p>
+  <p>Der Wertebereich der <b>X-Achse</b> wird durch ein Zeitfenster oder eine maximale Anzahl anzuzeigender Punkte vorgegeben.
+    Ältere Daten werden automatisch aus dem Diagramm entfernt.
+    Die Achsenbeschriftung kann mittels einer <a href="https://momentjs.com/docs/#/displaying/format/" target="_blank">
+    Moment.js-zeitformatierten</a> Zeichenfolge benutzerdefiniert werden (z.B. D.M.Y für 21.3.2021).</p>
+  <p>Wird eine <code>msg.payload</code>-Nachricht mit einem leeren Array <code>[]</code> an den Eingang gesendet,
+    so wird das Diagramm gelöscht.</p>
+  <p><b><a href="https://github.com/node-red/node-red-dashboard/blob/master/Charts.md" target="_new">Hier</a></b>
+    sind weitere Informationen zum Vorformatieren von Daten verfügbar, um sie als vollständiges Diagramm zu übergeben.</p>
+  <p>Das <b>Leer-Text</b>-Feld kann verwendet werden, um den Text im Diagramm anzuzeigen, bevor gültige Daten empfangen wurden.
+  <p>Der <b>Beschriftung</b> kann auch durch eine Nachrichteneigenschaft festgelegt werden.
+    Dazu muss der Name der Eigenschaft in das Feld eingetragen werden, zum Beispiel <code>{{msg.topic}}</code>.</p>
+  <p>Der Node-Ausgang enthält ein Array des Diagrammstatus, das bei Bedarf gespeichert werden kann.
+    Wird dieses zum <code>ui_chart</code>-Node gesendet, so werden die gespeicherten Daten erneut angezeigt.</p>
+</script>

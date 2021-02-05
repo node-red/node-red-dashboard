@@ -331,6 +331,8 @@
     var layoutUpdateEventHandler; // Dashboard layout tool
     var uip = 'ui';
     var attemptedVendorLoad = false;
+    var ensureDashboardNode;
+
     var loadTinyColor = function(path) {
         $.ajax({ url: path,
             success: function (data) {
@@ -345,6 +347,7 @@
                     loadTinyColor('/'+uip+'/vendor/tinycolor2/dist/tinycolor-min.js');
                     attemptedVendorLoad = true;
                 }
+                //console.log('Tiny Color Failed to load:',path);
             }
         });
     }
@@ -368,9 +371,7 @@
                 jsScript.type = "application/javascript";
                 jsScript.src = path;
                 document.body.appendChild(jsScript);
-                if (callback) {
-                    callback();
-                }
+                if (callback) { callback(); }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 // TODO
@@ -441,7 +442,7 @@
                 };
                 group.widgets.push(widget);
 
-                if (!isLayoutToolSupported(nodes[cnt].type)){
+                if (!isLayoutToolSupported(nodes[cnt].type)) {
                     console.log("LayoutTool warning: Unsupported widget. Widget="+JSON.stringify(widget));
                 }
             }
@@ -461,7 +462,7 @@
         }
 
         var t_groups = tabDatas.groups;
-        for (var cnt1 = 0; cnt1 < t_groups.length; cnt1++){
+        for (var cnt1 = 0; cnt1 < t_groups.length; cnt1++) {
             var n_group = RED.nodes.node(t_groups[cnt1].id);
             n_group.width = t_groups[cnt1].width;
             var t_widgets = t_groups[cnt1].widgets;
@@ -545,7 +546,7 @@
     ///////////////////////////////////////////////////////
     // Placeable location search (placed in the upper left)
     ///////////////////////////////////////////////////////
-    function search_point(width, height, maxWidth, maxHeight, tbl){
+    function search_point(width, height, maxWidth, maxHeight, tbl) {
         for (var y=0; y < maxHeight; y++) {
             for (var x=0; x < maxWidth; x++) {
                 if (check_matrix(x, y, width, height, maxWidth, tbl)) {
@@ -557,7 +558,7 @@
         return false;
     }
     // Check placement position
-    function check_matrix(px, py, width, height, maxWidth, tbl){
+    function check_matrix(px, py, width, height, maxWidth, tbl) {
         if (px+width > maxWidth) return false;
         for (var y=py; y < py+height; y++) {
             for (var x=px; x<px+width; x++) {
@@ -567,7 +568,7 @@
         return true;
     }
     // Mark the placement position
-    function fill_matrix(px, py, width, height, maxWidth, tbl){
+    function fill_matrix(px, py, width, height, maxWidth, tbl) {
         for (var y=py; y < py+height; y++) {
             for (var x=px; x < px+width; x++) {
                 tbl[maxWidth*y+x] = 1;
@@ -578,7 +579,7 @@
     ////////////////////////////////////////////////////
     // Apply edit result to tab information for editing
     ////////////////////////////////////////////////////
-    function saveGridDatas(){
+    function saveGridDatas() {
         var groups = tabDatas.groups;
         for (var cnt = 0; cnt < groups.length; cnt++) {
             // Get layout editing results
@@ -603,7 +604,7 @@
             var height = 0;
 
             // Search group height
-            for (var i=0; i < serializedData.length; i++){
+            for (var i=0; i < serializedData.length; i++) {
                 var wd = serializedData[i];
                 if (height < wd.y + wd.height) {
                     height = wd.y + wd.height;
@@ -612,22 +613,22 @@
 
             // Place widget on table
             var tbl = new Array(width * height);
-            for (var i = 0; i< tbl.length; i++){
+            for (var i = 0; i< tbl.length; i++) {
                 tbl[i]=0;
             }
-            for (var i = 0; i < serializedData.length; i++){
+            for (var i = 0; i < serializedData.length; i++) {
                 var wd = serializedData[i];
-                for (var y = wd.y; y < wd.y+wd.height; y++){
-                    for (var x = wd.x; x < wd.x+wd.width; x++){
+                for (var y = wd.y; y < wd.y+wd.height; y++) {
+                    for (var x = wd.x; x < wd.x+wd.width; x++) {
                         tbl[width*y+x]=1;
                     }
                 }
             }
 
             // Add Spacer to Blank
-            for (var y = 0; y < height; y++){
+            for (var y = 0; y < height; y++) {
                 var spacerAdded = false;
-                for (var x = 0; x < width; x++){
+                for (var x = 0; x < width; x++) {
                     if (tbl[width*y+x]===0) {
                         if (!spacerAdded) {
                             // Add 1x1 spacer
@@ -729,7 +730,7 @@
         $(widthID).spinner( {
             min: 1,
             max: MAX_GROUP_WIDTH,
-            spin: function(event, ui){
+            spin: function(event, ui) {
                 // Search current maximum width
                 var serializedData = [];
                 $(gridID+'.grid-stack > .grid-stack-item:visible').each( function (index) {
@@ -742,7 +743,7 @@
                     });
                 });
                 var maxWidth = 0;
-                for (var i=0; i < serializedData.length; i++){
+                for (var i=0; i < serializedData.length; i++) {
                     var wd = serializedData[i];
                     if (wd.auto == false) {
                         if (maxWidth < wd.x + wd.width) {
@@ -858,7 +859,7 @@
     //////////////////////////////////////////
     // Layout resize Enable (Auto:true)
     //////////////////////////////////////////
-    var layoutResizeEnable = function(e){
+    var layoutResizeEnable = function(e) {
         var target = $(e.target);
         var el = target.parents('.grid-stack-item:visible');
         var grid = target.parents('.grid-stack').data('gridstack');
@@ -883,7 +884,7 @@
         }
     }
 
-    RED.nodes.registerType('ui_base',{
+    RED.nodes.registerType('ui_base', {
             category: 'config',
             defaults: {
                 name: {},
@@ -1018,7 +1019,7 @@
                     py: 0  // padding of group's cards
                 };
 
-                function ensureDashboardNode(createMissing) {
+                ensureDashboardNode = function(createMissing) {
                     if (globalDashboardNode !== null) {
                         // Check if it has been deleted beneath us
                         var n = RED.nodes.node(globalDashboardNode.id);
@@ -1037,6 +1038,7 @@
                         // at some point we may want to make this an option to select one or the other.
                         while (bases.length > 1) {
                             var n = bases.pop();
+                            console.log("Removing ui_base node "+n.id);
                             RED.nodes.remove(n.id);
                             RED.nodes.dirty(true);
                         }
@@ -1226,7 +1228,7 @@
                 $('<input type="text" id="nr-db-field-title">').val(site_name).css("width","100%")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.name = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1242,7 +1244,7 @@
                 .val("false")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.hideToolbar = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1258,7 +1260,7 @@
                 .val("false")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.lockMenu !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.lockMenu = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1273,7 +1275,7 @@
                 .val("false")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowSwipe !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.allowSwipe = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1289,7 +1291,7 @@
                 .val("true")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowTempTheme !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.allowTempTheme = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1319,7 +1321,7 @@
                 $('<input type="text" id="nr-db-field-dateFormat">').val(site_date_format).css("width","100%")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.site.dateFormat = $(this).val();
                         RED.nodes.dirty(true);
                     }
@@ -1347,38 +1349,54 @@
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-size")).appendTo(divSetSizes);
                 $('<input type="number" name="sx" min="24" id="nr-db-field-sx">').val(48).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.sx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="sy" min="24" id="nr-db-field-sy">').val(48).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.sy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.widget-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="cx" min="0" id="nr-db-field-cx">').val(6).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.cx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="cy" min="0" id="nr-db-field-cy">').val(6).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.cy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-padding")).appendTo(divSetSizes);
                 $('<input type="number" name="px" min="0" id="nr-db-field-px">').val(0).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.px=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="py" min="0" id="nr-db-field-py">').val(0).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.py=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 $('<br/><span style="width:45%; display:inline-block">').text(c_("label.group-spacing")).appendTo(divSetSizes);
                 $('<input type="number" name="gx" min="0" id="nr-db-field-gx">').val(6).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.gx=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
                 $('<span style="width:5%; display:inline-block">').text(' ').appendTo(divSetSizes);
                 $('<input type="number" name="gy" min="0" id="nr-db-field-gy">').val(6).css("width","20%")
-                .on("change", function() { ensureDashboardNode(true); globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
+                .on("change", function() {
+                    //ensureDashboardNode(true);
+                    globalDashboardNode.site.sizes.gy=Number($(this).val()); RED.nodes.dirty(true); } )
                 .appendTo(divSetSizes);
 
                 // Angular Theme Tab
@@ -1512,7 +1530,7 @@
                 .css("width","100%")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.name !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         var baseColour = globalDashboardNode.theme[theme+'Theme'].baseColor;
                         var baseFont = globalDashboardNode.theme[theme+'Theme'].baseFont;
@@ -1552,7 +1570,7 @@
                 .val(c_("theme.custom-profile-name"))
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.theme.customTheme.name !== $(this).val()) {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         globalDashboardNode.theme.customTheme.name = $(this).val();
                         if (editor) {
                             editor.setValue(JSON.stringify({theme:globalDashboardNode.theme.themeState, site:globalDashboardNode.site}),1);
@@ -1581,7 +1599,7 @@
 
                 $('<input id="base-color" class="nr-db-field-themeColor" type="color" value="#ffffff"/>')
                 .on("change", function() {
-                    ensureDashboardNode(true);
+                    //ensureDashboardNode(true);
                     var value = $(this).val();
                     var lightThemeMatch = globalDashboardNode.theme.lightTheme.baseColor === value;
                     var darkThemeMatch = globalDashboardNode.theme.darkTheme.baseColor === value;
@@ -1622,7 +1640,7 @@
                     '<option value="Verdana,Verdana,Geneva,sans-serif" style="font-family:Verdana,Verdana,Geneva,sans-serif">Verdana</option>'+
                     '</select>')
                     .on("change", function() {
-                        ensureDashboardNode(true);
+                        //ensureDashboardNode(true);
                         var theme = globalDashboardNode.theme.name.split('-')[1];
                         globalDashboardNode.theme[theme+'Theme'].baseFont = $(this).val();
                         globalDashboardNode.theme.themeState['base-font'] = {value:$(this).val()};
@@ -1804,6 +1822,7 @@
                 }
 
                 var addTabOrLinkItem = function(container,i,item) {
+                    ensureDashboardNode(true);
                     // create node if needed
                     if (!item.node) {
                         var defaultItem = {
@@ -2014,7 +2033,7 @@
                                         $(gridID+'.grid-stack').css("width", groupWidth * 40);
                                         $(gridID+'.grid-stack').css("background-size", 100/groupWidth+"% 43px");
                                         $(gridID+'.grid-stack').attr("node-id", groups[cnt].id);
-                                        $(gridID+'.grid-stack').attr("grid-column", groups[cnt].width);                              
+                                        $(gridID+'.grid-stack').attr("grid-column", groups[cnt].width);
                                         grid.setColumn(groupWidth, true);
 
                                         // Determination of placement position of widget of Grid
@@ -2671,7 +2690,7 @@
                             tabContainer.editableList('addItem',tab);
                         });
                     }
-                    ensureDashboardNode(true);
+                    //ensureDashboardNode(true);
                     if (globalDashboardNode) {
                         $("#nr-db-field-title").val(globalDashboardNode.site.name);
                         $("#nr-db-field-allowSwipe").val(globalDashboardNode.site.allowSwipe || "false");
@@ -2888,11 +2907,11 @@
                                 if (groupLists[node.group]) {
                                     groupLists[node.group].editableList('removeItem',node)
                                     groupLists[node.group].editableList('addItem',node);
-                                    groupLists[node.group].editableList('sort',function(a,b){return a.order-b.order;});
+                                    groupLists[node.group].editableList('sort',function(a,b) {return a.order-b.order;});
                                 }
                             }
                             else {
-                                groupLists[node.group].editableList('sort',function(a,b){return a.order-b.order;});
+                                groupLists[node.group].editableList('sort',function(a,b) {return a.order-b.order;});
                             }
                         }
                     }
@@ -2965,7 +2984,7 @@
                     Object.keys(updateList).forEach(function (group) {
                         var list = groupLists[group];
                         if (list) {
-                            list.editableList("sort", function(a,b){return a.order-b.order;});
+                            list.editableList("sort", function(a,b) {return a.order-b.order;});
                         }
                     });
                     pendingAdd = [];
@@ -3287,7 +3306,4 @@
         <br/>If you have no dashboard you can delete this node.<br/>
         It will be re-created automatically if required.<br/>
     </div>
-</script>
-
-<script type="text/html" data-help-name="ui_base">
 </script>

@@ -109,6 +109,11 @@ module.exports = function(RED) {
                 if (msg.hasOwnProperty("topic")) { savedtopic = msg.topic; }
 
                 if (msg.hasOwnProperty("payload")) {
+                    if (node.multiple) {
+                        if (typeof msg.payload === "string") {
+                            msg.payload = msg.payload.split(',');
+                        }
+                    }
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
                     delete emitOptions._dontSend;
@@ -141,6 +146,10 @@ module.exports = function(RED) {
                         }
                     }
                     else if (node.multiple) {
+                        if (!Array.isArray(m)) {
+                            if (m.hasOwnProperty("value")) { m = m.value; }
+                            if (typeof m === "string") { m = [ m ]; }
+                        }
                         m.map(x => delete x["$$mdSelectId"])
                         if (Array.isArray(m) && JSON.stringify(m).indexOf(JSON.stringify(control.options[i].value)) !== -1) {
                             var v = control.options[i].value;

@@ -16,6 +16,7 @@
 @nrTemplateTheme: true;
 @nrUnitHeight: 24px;
 @wtc-light: boolean(luma(@widgetTextColor) > 50%);
+@wbc-light: boolean(luma(@widgetBackgroundColor) > 50%);
 
 // define some CSS variables for user usage
 :root {
@@ -89,6 +90,10 @@ body.nr-dashboard-theme .nr-dashboard-dim { opacity: 0.5 !important; }
 body.nr-dashboard-theme md-toolbar {
     background-color: @pageTitlebarBackgroundColor;
     color: #fff;
+}
+body.nr-dashboard-theme md-toolbar .md-toolbar-tools {
+    color: #fff;
+    filter: invert(if(@wbc-light, 100%, 0%));
 }
 
 /*
@@ -207,7 +212,7 @@ a.md-no-style, button.md-no-style {
 }
 .nr-dashboard-theme .nr-dashboard-chart-titlel  {
     font-size: larger;
-    font-weight: 500 !important;
+    font-weight: 500;
 }
 
 /* Colour Picker */
@@ -224,13 +229,6 @@ a.md-no-style, button.md-no-style {
 .nr-dashboard-theme .color-picker-wrapper .color-picker-panel.color-picker-panel-round .color-picker-grid-wrapper .color-picker-row .color-picker-grid .color-picker-grid-inner {
     background-color: @widgetBorderColor;
 }
-.nr-dashboard-theme .color-picker-wrapper.color-picker-open {
-    border-width:0;
-}
-// .nr-dashboard-theme .color-picker-wrapper .color-picker-panel.color-picker-panel-round .color-picker-grid-wrapper .color-picker-row .color-picker-grid .color-picker-overlay {
-//     background-image: url("./wheel.png");
-//     border-radius: 50%;
-// }
 
 /* Dropdown */
 
@@ -301,11 +299,11 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 }
 .nr-dashboard-theme .nr-dashboard-gauge-titlel {
     font-size: larger;
-    font-weight: 500 !important;
+    font-weight: 500;
     z-index: 1;
 }
 .nr-dashboard-theme .nr-dashboard-gauge-titlem {
-    font-weight: 500 !important;
+    font-weight: 500;
     margin: 2px 0px 14px 0px;
     z-index: 1;
 }
@@ -371,6 +369,10 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-slider md-slider[md-discrete]:not([disabled]) .md-slider-wrapper.md-focused .md-focus-ring {
     transform: scale(0.4);
     animation: unset;
+}
+.nr-dashboard-theme .nr-dashboard-slider .md-thumb-text {
+    color: white;
+    filter: invert(if(@wbc-light, 100%, 0%));
 }
 
 /* Switch */
@@ -532,13 +534,12 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
         margin-top: @nrUnitHeight * 3 / 4;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button {
+        background-color: @widgetBackgroundColor;
     	margin: 0;
-    	//padding: 0px 12px;
+    	// padding: 0px 12px;
     	min-height: @nrUnitHeight * 3 / 2;
     	min-width: unset;
     	line-height: unset;
-        background-color: @widgetBackgroundColor;
-
     	&.md-fab.md-mini {
     		padding: unset;
     	}
@@ -597,20 +598,14 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme .nr-dashboard-textinput input {
     border-color: @widgetTextColor;
     color: @widgetTextColor;
-    border-bottom-width: 1px;
     font-family: inherit;
-    padding-left: 8px;
 }
-
 .nr-dashboard-theme input[type="time"]::-webkit-calendar-picker-indicator  {
     filter: invert(if(@wtc-light, 100%, 0%));
 }
 
 /* Text */
 .nr-dashboard-theme .nr-dashboard-text {}
-.nr-dashboard-theme .nr-dashboard-text p {
-    margin-left:0;
-}
 
 /* Dialog */
 .nr-dashboard-theme md-dialog {
@@ -670,16 +665,16 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
 .nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-checkbox.md-checked .md-icon {
     background-color: lighten(@widgetBackgroundColor, 10);
 }
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-checkbox .md-icon{
-    border-color: @widgetTextColor;;
+.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-checkbox .md-icon {
+    border-color: @widgetTextColor;
 }
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch .md-bar{
+.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch .md-bar {
     background-color: rgba(111, 111, 111, 0.5);
 }
 .nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch .md-thumb {
     background-color: rgb(148, 148, 148);
 }
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-bar{
+.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-bar {
     background-color: lighten(@widgetBackgroundColor, 10);
 }
 .nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-thumb {

@@ -1,0 +1,17 @@
+<script type="text/html" data-help-name="ui_form">
+  <p>Fügt dem Dashboard ein Eingabeformular hinzu.</p>
+  <p>Der <code>ui_form</code>-Node ermöglicht die Eingabe mehrerer Werte durch den Benutzer.
+    Beim Klicken auf die Schaltfläche <b>Senden</b> wird ein Objekt als <code>msg.payload</code> versendet.</p>
+  <p>Über die Schaltfläche <b>+Element</b> können Eingabeelemente hinzugefügt werden.</p>
+  <p>Jedes Element enthält folgende Einstellmöglichkeiten:</p>
+  <ul>
+    <li><b>Beschriftung:</b> Beschriftung des Elements in der Benutzeroberfläche</li>
+    <li><b>Name:</b> Schlüssel (Variablennamen), mit dem der Eingabewert in <code>msg.payload</code> abgelegt wird</li>
+    <li><b>Typ:</b> Typ des Eingabeelements</li>
+    <li><b>Erforderlich:</b> Markierund des Eingabefeldes als erfolderliche Benutzereingabe</li>
+    <li><b>Zeilen:</b> Zeilenanzahl bei mehrzeiligen Texteingabefeldern</li>
+    <li><b>Entfernen:</b> Entfernung des Elements aus dem Formular</li>
+  </ul>
+  <p>Über <b>Topic</b> kann die Eigenschaft <code>msg.topic</code> optional festgelegt werden.</p>
+  <p>Die Schaltfläche <b>Abbrechen</b> kann ausgeblendet werden, indem sein Feld leer gelassen wird.</p>
+</script>

@@ -11,6 +11,10 @@ reason: https://github.com/angular/material/issues/6214
     padding-right: 12px;
 }
 
+.color-picker-wrapper.color-picker-open {
+    border-width:0;
+}
+
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open {
     width: 32px;
     border-width: 0px;
@@ -90,5 +94,5 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-show-inline {
-    z-index: 77 !important;
+    z-index: 77;
 }

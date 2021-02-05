@@ -15,7 +15,6 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                         fgnd = themeState['widget-backgroundColor'].value;
                         tgnd = themeState['widget-textColor'].value;
                     }
-
                     //Backwards compatability for background and foreground
                     if (!bgnd || !fgnd) {
                         if (theme === 'theme-dark') {
@@ -58,7 +57,6 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                 if (gaugeConfig.waveColor === undefined) { gaugeConfig.waveColor = bgnd; }
                                 if (gaugeConfig.textColor === undefined) { gaugeConfig.textColor = fgnd; }
                                 if (gaugeConfig.waveTextColor === undefined) { gaugeConfig.waveTextColor = fgnd; }
-
                                 if (item.options !== null) {
                                     //Object.assign(gaugeConfig, item.options'));
                                     Object.keys(item.options).forEach(function(key) {
@@ -134,6 +132,8 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                         gaugeOptions.noGradient = true;
                                     }
                                 }
+                                gaugeOptions.valueFontColor = item.gageoptions.valueFontColor[theme];
+                                gaugeOptions.labelFontColor = item.gageoptions.valueFontColor[theme];
                                 if (item.options !== null) {
                                     //Object.assign(gaugeOptions, item.options'));
                                     Object.keys(item.options).forEach(function(key) {

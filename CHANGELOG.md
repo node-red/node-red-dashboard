@@ -1,3 +1,55 @@
+### 2.27.1: Maintenance Release
+
+**Fixes**
+
+ - Fix CSS for layout grid to render better for some browsers
+ - Add time picker to ui_form options.
+
+### 2.27.0: Milestone Release
+
+**Enhancements**
+
+ - Let user configured middleware be an array. PR #664
+ - Let polar area chart have different colours per series item. PR #662
+
+**Fixes**
+
+ - Fix dropdown pre-select of multiple options
+ - Fix button text colour - dumb mistake. Issue #670
+
+### 2.26.2: Maintenance Release
+
+**Fixes**
+
+ - Fix slider text colour to better contrast with widget background. Issue #665
+ - Check served endpoint to prevent path traversal. Issue #669.
+
+### 2.26.1: Maintenance Release
+
+**Enhancements**
+
+ - Add msg.level to Audio out node to set volume from 0 to 1 (0-100%).
+
+**Fixes**
+
+ - Update German translations. PR #654
+ - Fix level update for weathericons lite.
+ - Ensure dropdown new options are set even when not visible. Issue #479
+ - Fix angular theme for gauges - and some other theme escapes. Issue #649
+
+### 2.26.0: Milestone Release
+
+**Enhancements**
+
+ - Update weather icons to 1.6 to include more wind direction rotations and icons.
+ - Add more Japanese translations for chart and form nodes. PR #653
+
+**Fixes**
+
+ - Fix CSS to remove lots of !important flags to allow override.
+ - Fix examples in ui_template node. PR #651
+ - Ensure ui_base creation is called at more appropriate time so is there ready for nodes when needed.
+
 ### 2.25.0: Milestone Release
 
 **Enhancements**

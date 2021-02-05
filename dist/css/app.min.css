@@ -19,7 +19,7 @@
  * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.2.1
+ * v1.2.2
  */
 
 body,
@@ -1124,6 +1124,10 @@ button.md-button::-moz-focus-inner {
 .md-button.md-fab.ng-hide,
 .md-button.md-fab.ng-leave {
   transition: none;
+}
+
+.md-button.md-fab[disabled] {
+  box-shadow: none;
 }
 
 .md-button:not([disabled]).md-fab.md-focused,
@@ -5028,7 +5032,7 @@ md-input-container:not([md-no-float]) .md-select-placeholder span:first-child {
   transform-origin: right top;
 }
 
-md-input-container.md-input-focused:not([md-no-float]) .md-select-placeholder span:first-child {
+md-input-container.md-input-focused:not([md-no-float]) md-select:not([placeholder]) .md-select-placeholder span:first-child {
   transform: translate(-2px,-22px) scale(.75);
 }
 
@@ -6452,7 +6456,7 @@ md-tabs[md-align-tabs=bottom] {
   padding-bottom: 48px;
 }
 
-md-tabs[md-align-tabs=bottom] md-tabs-wrapper {
+md-tabs[md-align-tabs=bottom]>md-tabs-wrapper {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -6461,7 +6465,7 @@ md-tabs[md-align-tabs=bottom] md-tabs-wrapper {
   z-index: 2;
 }
 
-md-tabs[md-align-tabs=bottom] md-tabs-content-wrapper {
+md-tabs[md-align-tabs=bottom]>md-tabs-content-wrapper {
   top: 0;
   bottom: 48px;
 }
@@ -31149,7 +31153,7 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e56b";
 }
 /*!
- * Weather Icons Lite v1.5.0
+ * Weather Icons Lite v1.6.1
  * Weather themed icons for Bootstrap
  * Author - Paul Reed
  * Maintained at https://github.com/Paul-Reed/weather-icons-lite
@@ -31237,68 +31241,151 @@ md-tabs-wrapper md-next-button ng-md-icon {
   width: 1.4em;
 }
 
-.wi-rotate-N {
+.wi-rotate-0,
+.wi-rotate-N,
+.wi-towards-N,
+.wi-from-S {
   -webkit-transform: rotate(0deg);
   -ms-transform: rotate(0deg);
   transform: rotate(0deg);
 }
 
-.wi-rotate-23 {
+.wi-rotate-23,
+.wi-rotate-NNE,
+.wi-towards-NNE,
+.wi-from-SSW {
   -webkit-transform: rotate(23deg);
   -ms-transform: rotate(23deg);
   transform: rotate(23deg);
 }
 
 .wi-rotate-45,
-.wi-rotate-NE {
+.wi-rotate-NE,
+.wi-towards-NE,
+.wi-from-SW {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
+.wi-rotate-68,
+.wi-rotate-ENE,
+.wi-towards-ENE,
+.wi-from-WSW {
+  -webkit-transform: rotate(68deg);
+  -ms-transform: rotate(68deg);
+  transform: rotate(68deg);
+}
+
 .wi-rotate-90,
-.wi-rotate-E {
+.wi-rotate-E,
+.wi-towards-E,
+.wi-from-W {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 
+.wi-rotate-113,
+.wi-rotate-ESE,
+.wi-towards-ESE,
+.wi-from-WNW {
+  -webkit-transform: rotate(113deg);
+  -ms-transform: rotate(113deg);
+  transform: rotate(113deg);
+}
+
 .wi-rotate-135,
-.wi-rotate-SE {
+.wi-rotate-SE,
+.wi-towards-SE,
+.wi-from-NW {
   -webkit-transform: rotate(135deg);
   -ms-transform: rotate(135deg);
   transform: rotate(135deg);
 }
 
+.wi-rotate-158,
+.wi-rotate-SSE,
+.wi-towards-SSE,
+.wi-from-NNW {
+  -webkit-transform: rotate(158deg);
+  -ms-transform: rotate(158deg);
+  transform: rotate(158deg);
+}
+
 .wi-rotate-180,
-.wi-rotate-S {
+.wi-rotate-S,
+.wi-towards-S,
+.wi-from-N {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 
+.wi-rotate-203,
+.wi-rotate-SSW,
+.wi-towards-SSW,
+.wi-from-NNE {
+  -webkit-transform: rotate(203deg);
+  -ms-transform: rotate(203deg);
+  transform: rotate(203deg);
+}
+
 .wi-rotate-225,
-.wi-rotate-SW {
+.wi-rotate-SW,
+.wi-towards-SW,
+.wi-from-NE {
   -webkit-transform: rotate(225deg);
   -ms-transform: rotate(225deg);
   transform: rotate(225deg);
 }
 
+.wi-rotate-248,
+.wi-rotate-WSW,
+.wi-towards-WSW,
+.wi-from-ENE {
+  -webkit-transform: rotate(248deg);
+  -ms-transform: rotate(248deg);
+  transform: rotate(248deg);
+}
+
 .wi-rotate-270,
-.wi-rotate-W {
+.wi-rotate-W,
+.wi-towards-W,
+.wi-from-E {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 
+.wi-rotate-293,
+.wi-rotate-WNW,
+.wi-towards-WNW,
+.wi-from-ESE {
+  -webkit-transform: rotate(293deg);
+  -ms-transform: rotate(293deg);
+  transform: rotate(293deg);
+}
+
 .wi-rotate-315,
-.wi-rotate-NW {
+.wi-rotate-NW,
+.wi-towards-NW,
+.wi-from-SE {
   -webkit-transform: rotate(315deg);
   -ms-transform: rotate(315deg);
   transform: rotate(315deg);
+}
+
+.wi-rotate-338,
+.wi-rotate-NNW,
+.wi-towards-NNW,
+.wi-from-SSE {
+  -webkit-transform: rotate(338deg);
+  -ms-transform: rotate(338deg);
+  transform: rotate(338deg);
 }
 
 .wi-flip-horizontal {
@@ -31314,6 +31401,14 @@ mirror=1);
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
+}
+
+.wi-arrow:before {
+  content: "\f0d2";
+}
+
+.wi-direction:before {
+  content: "\f0d1";
 }
 
 .wi-darksky-clear-day:before {
@@ -32041,16 +32136,16 @@ mirror=1);
 }
 
 .nr-dashboard-button .md-button {
-  box-shadow: none !important;
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0px !important;
-  min-width: 0px !important;
-  min-height: 0px !important;
+  box-shadow: none;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  min-width: 0px;
+  min-height: 0px;
 }
 
 md-card .nr-dashboard-button {
-  padding: 2px !important;
+  padding: 2px;
 }
 
 .nr-dashboard-button i {
@@ -32119,6 +32214,10 @@ reason: https://github.com/angular/material/issues/6214
 
 .color-picker-wrapper {
   padding-right: 12px;
+}
+
+.color-picker-wrapper.color-picker-open {
+  border-width: 0;
 }
 
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open {
@@ -32207,7 +32306,7 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .color-picker-show-inline {
-  z-index: 77 !important;
+  z-index: 77;
 }
 .nr-dashboard-date-picker {
   padding: 0 0px;
@@ -32299,7 +32398,7 @@ reason: https://github.com/angular/material/issues/6214
   left: inherit;
 }
 .nr-dashboard-gauge text {
-  /* font-weight: 500 !important; */
+  /* font-weight: 500;*/
 }
 .nr-dashboard-numeric {
   padding: 0 0 0 12px;
@@ -32333,10 +32432,11 @@ reason: https://github.com/angular/material/issues/6214
   margin-top: 6px;
   white-space: nowrap;
   overflow: hidden;
+  padding-bottom: 4px;
 }
 
 md-slider[md-vertical] .md-slider-wrapper {
-  width: unset !important;
+  width: unset;
 }
 
 .nr-dashboard-switch:focus {
@@ -32388,8 +32488,13 @@ reason: https://github.com/angular/material/issues/6214
   padding-top: 1px;
 }
 
-.nr-dashboard-theme .nr-dashboard-textinput input[type="color"] {
-  border: none !important;
+.nr-dashboard-textinput input {
+  border-bottom-width: 1px;
+  padding-left: 8px;
+}
+
+.nr-dashboard-textinput input[type="color"] {
+  border: none;
 }
 
 .nr-dashboard-textinput md-input-container .md-errors-spacer {
@@ -32418,7 +32523,7 @@ reason: https://github.com/angular/material/issues/6214
 .nr-dashboard-text p {
   margin-top: 0.1em;
   margin-bottom: 0.1em;
-  margin-left: 0.25em;
+  margin-left: 0;
   margin-right: 0.25em;
 }
 
@@ -32493,7 +32598,6 @@ md-input-container.md-input-has-value label:not(.md-no-float) {
 }
 
 .nr-dashboard-form input[type="checkbox"] {
-  /* height: auto !important; */
   margin-top: 0px;
   margin-bottom: 0px;
 }
@@ -32507,6 +32611,11 @@ md-input-container.md-input-has-value label:not(.md-no-float) {
 .nr-dashboard-form-button {
   width: 43%;
   float: left;
+}
+
+.nr-dashboard-form form md-input-container md-checkbox .md-label {
+  position: unset;
+  top: unset;
 }
 .masonry-container {
   position: relative;

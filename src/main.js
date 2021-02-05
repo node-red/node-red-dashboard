@@ -538,6 +538,9 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (found.hasOwnProperty("me") && found.me.hasOwnProperty("processInput")) {
                     found.me.processInput(msg);
                 }
+                else if (found.hasOwnProperty("isOptionsValid") && found.hasOwnProperty("newOptions")) {
+                    found.options = found.newOptions;
+                }
             }
             $scope.$apply();
         });
@@ -819,6 +822,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         }
                     }
                     events.emit('ui-audio', 'playing');
+                    console.log("VOL",msg.vol)
+                    words.volume = msg.vol/100 || 1;
                     window.speechSynthesis.speak(words);
                 }
                 else {
@@ -839,11 +844,20 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         events.emit('ui-audio', 'complete');
                     }
                     var buffer = new Uint8Array(msg.audio);
+
                     audioContext.decodeAudioData(
                         buffer.buffer,
                         function(buffer) {
                             audioSource.buffer = buffer;
-                            audioSource.connect(audioContext.destination);
+                            if (msg.vol) {
+                                var volume = audioContext.createGain();
+                                volume.gain.value = msg.vol/100;
+                                volume.connect(audioContext.destination);
+                                audioSource.connect(volume);
+                            }
+                            else {
+                                audioSource.connect(audioContext.destination);
+                            }
                             audioSource.start(0);
                             events.emit('ui-audio', 'playing');
                         },

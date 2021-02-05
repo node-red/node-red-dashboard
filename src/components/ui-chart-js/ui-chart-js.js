@@ -111,6 +111,25 @@ angular.module('ui').directive('uiChartJs', [ '$timeout', '$interpolate',
                                 if (type === "pie") {
                                     scope.config.colours = scope.barColours;
                                 }
+                                else if (type === "polar-area") {
+                                    if (scope.config.options && scope.config.options.useDifferentColor) {
+                                        scope.config.colours = scope.barColours;
+                                        var colors = [];
+                                        scope.barColours.map(function (v) {
+                                            var item = Object.assign({}, v);
+                                            var bgColor = [];
+                                            item.backgroundColor.map(function (c) {
+                                                var op = (0.7 / newValue.values.series.length) + 0.1;
+                                                var rgb = tinycolor(c).toRgb();
+                                                var nc = "rgba("+rgb.r+","+rgb.g+","+rgb.b+","+op+")";
+                                                bgColor.push(nc);
+                                            });
+                                            item.backgroundColor = bgColor;
+                                            colors.push(item);
+                                        });
+                                        scope.config.colours = colors;
+                                    }
+                                }
                                 scope.config.data = newValue.values.data;
                                 scope.config.series = newValue.values.series;
                                 scope.config.labels = newValue.values.labels;
@@ -138,7 +157,8 @@ function loadConfiguration(type,scope) {
     var yMin = parseFloat(item.ymin);
     var yMax = parseFloat(item.ymax);
     var xFormat = item.xformat;
-    var themeState = item.theme.themeState;
+    var themeState = scope.$eval('main.selectedTab.theme.themeState');
+    //var themeState = item.theme ? item.theme.themeState : false;
     var useUTC = item.useUTC || false;
 
     config.options = {
@@ -147,7 +167,8 @@ function loadConfiguration(type,scope) {
         scales: {},
         legend: false,
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        useDifferentColor: item.useDifferentColor
     };
     if (type === 'pie') {
         config.options.cutoutPercentage = item.cutout || 0;
@@ -363,10 +384,19 @@ function loadConfiguration(type,scope) {
             position:'top',
             labels: { boxWidth:10, fontSize:12, padding:8 },
             onClick: function(e, legendItem) {
-                var index = legendItem.datasetIndex;
+                var index = legendItem.datasetIndex || 0;
                 var ci = this.chart;
-                var meta = ci.getDatasetMeta(index);
-                meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                var meta;
+                if ((type === "pie") || (type === "polar-area")) {
+                    for (var l = 0; l < ci.config.data.datasets.length; l++) {
+                        meta = ci.getDatasetMeta(l);
+                        meta.data[legendItem.index].hidden = meta.data[legendItem.index].hidden === false ? true : false;
+                    }
+                }
+                else {
+                    meta = ci.getDatasetMeta(index);
+                    meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+                }
                 config.overrides[index] = {hidden:meta.hidden};
                 ci.update();
             }
@@ -378,6 +408,25 @@ function loadConfiguration(type,scope) {
         if (themeState) {
             config.options.legend.labels.fontColor = themeState['widget-textColor'].value;
         }
+    }
+
+    // Configure custom tooltip
+    if ((type === "pie") || (type === "polar-area")) {
+        // show series instead of labels
+        config.options.tooltips = {
+            callbacks: {
+                title: function(item, data) {
+                    return data.labels[item[0].index];
+                },
+                label: function(item, data) {
+                    var ds = data.datasets[item.datasetIndex];
+                    var label = ds.label || "";
+                    if (label) { label += ": "; }
+                    label += ds.data[item.index];
+                    return label;
+                }
+            }
+        };
     }
 
     // Allow override of any options if really required.

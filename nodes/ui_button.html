@@ -52,73 +52,53 @@
 
 <script type="text/html" data-template-name="ui_button">
 	<div class="form-row">
-        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <label for="node-input-group"><i class="fa fa-table"></i> <span data-i18n="ui_button.label.group"></label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label><i class="fa fa-object-group"></i> Size</label>
+        <label><i class="fa fa-object-group"></i> <span data-i18n="ui_button.label.size"></label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-icon"><i class="fa fa-picture-o"></i> Icon</label>
-        <input type="text" id="node-input-icon" placeholder="optional icon ">
+        <label for="node-input-icon"><i class="fa fa-picture-o"></i> <span data-i18n="ui_button.label.icon"></label>
+        <input type="text" id="node-input-icon" data-i18n="[placeholder]ui_button.label.optionalIcon">
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
-        <input type="text" id="node-input-label" placeholder="optional label">
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> <span data-i18n="ui_button.label.label"></label>
+        <input type="text" id="node-input-label" data-i18n="[placeholder]ui_button.label.optionalLabel">
     </div>
     <div class="form-row">
-        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> Tooltip</label>
-        <input type="text" id="node-input-tooltip" placeholder="optional tooltip">
+        <label for="node-input-tooltip"><i class="fa fa-info-circle"></i> <span data-i18n="ui_button.label.tooltip"></label>
+        <input type="text" id="node-input-tooltip" data-i18n="[placeholder]ui_button.label.optionalTooltip">
     </div>
     <div class="form-row">
-        <label for="node-input-color"><i class="fa fa-tint"></i>  Colour</label>
-        <input type="text" id="node-input-color" placeholder="optional text/icon color">
+        <label for="node-input-color"><i class="fa fa-tint"></i> <span data-i18n="ui_button.label.color"></label>
+        <input type="text" id="node-input-color" data-i18n="[placeholder]ui_button.label.optionalColor">
     </div>
     <div class="form-row">
-        <label for="node-input-bgcolor"><i class="fa fa-tint"></i>  Background</label>
-        <input type="text" id="node-input-bgcolor" placeholder="optional background color">
+        <label for="node-input-bgcolor"><i class="fa fa-tint"></i>  <span data-i18n="ui_button.label.background"></label>
+        <input type="text" id="node-input-bgcolor" data-i18n="[placeholder]ui_button.label.optionalBackgroundColor">
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When clicked, send:</label>
+        <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> <span data-i18n="ui_button.label.whenClicked"></label>
     </div>
     <div class="form-row">
-        <label for="node-input-payload" style="padding-left: 25px; margin-right: -25px">Payload</label>
+        <label for="node-input-payload" style="padding-left: 25px; margin-right: -25px"><span data-i18n="ui_button.label.payload"></label>
         <input type="text" id="node-input-payload" style="width:70%">
         <input type="hidden" id="node-input-payloadType">
     </div>
     <div class="form-row">
-        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
+        <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px"><span data-i18n="ui_button.label.topic"></label>
         <input type="text" id="node-input-topic">
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> If <code>msg</code> arrives on input, emulate a button click: </label>
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> <span data-i18n="ui_button.label.emulateClick"></label>
         <input type="checkbox" id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
     </div>
-</script>
-
-<script type="text/html" data-help-name="ui_button">
-    <p>Adds a button to the user interface.</p>
-    <p>Clicking the button generates a message with <code>msg.payload</code> set to the <b>Payload</b> field.
-    If no payload is specified, the node id is used.</p>
-	<p>The <b>Size</b> defaults to  3 by 1.</p>
-    <p>The <b>Icon</b> can be defined, as either a <a href="https://klarsys.github.io/angular-material-icons/" target="_blank">Material Design icon</a>
-    <i>(e.g. 'check', 'close')</i> or a <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome icon</a>
-    <i>(e.g. 'fa-fire')</i>, or a <a href="https://github.com/Paul-Reed/weather-icons-lite/blob/master/css_mappings.md">Weather icon</a>.
-    You can use the full set of google material icons if you add 'mi-' to the icon name. e.g. 'mi-videogame_asset'.</p>
-    <p>The colours of the text and background may be set. They can also be set by a message property by setting
-    the field to the name of the property, for example <code>{{background}}</code>.
-    You don't need to prepend the <i>msg.</i> part of the property name.</p>
-    <p>The label and icon can also be set by a message property by setting
-    the field to the name of the property, for example <code>{{topic}}</code> or <code>{{myicon}}</code>.</p>
-    <p>If set to pass through mode a message arriving on the input will act like pressing the button.
-    The output payload will be as defined in the node configuration.</p>
-    <p>The incoming <b>topic</b> field can be used to set the <code>msg.topic</code> property that is output.</p>
-    <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the button.</p>
 </script>

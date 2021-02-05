@@ -65,10 +65,10 @@
 
                 $('<i style="cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
-                var labelField = $('<input/>',{class:"node-input-option-label", type:"text", style:"margin-left:7px; width:20%;", placeholder: 'e.g. Name', value:option.label}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
+                var labelField = $('<input/>',{class:"node-input-option-label", type:"text", style:"margin-left:7px; width:20%;", placeholder: RED._("node-red-dashboard/ui_form:ui_form.label.egName"), value:option.label}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
                 var valueClass ="node-input-option-value"
                 if (!option.value) { valueClass ="node-input-option-value input-error"; }
-                var valueField = $('<input/>',{class:valueClass, type:"text", style:"margin-left:7px; width:20%;", placeholder: 'e.g. name', value:option.value}).appendTo(row);//.typedInput({default:'str',types:['str','num','bool']});
+                var valueField = $('<input/>',{class:valueClass, type:"text", style:"margin-left:7px; width:20%;", placeholder: RED._("node-red-dashboard/ui_form:ui_form.label.egName2"), value:option.value}).appendTo(row);//.typedInput({default:'str',types:['str','num','bool']});
                 valueField.keyup(function() {
                     if ($(this).val() && $(this).hasClass('input-error')) {
                         $(this).removeClass('input-error')
@@ -84,14 +84,15 @@
                 var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left:7px; width:16%"}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
 
                 var arr = [
-                  {val : "text", text: 'Text'},
-                  {val : "multiline", text: 'Multiline'},
-                  {val : "number", text: 'Number'},
-                  {val : "email", text: 'E-mail'},
-                  {val : "password", text: 'Password'},
-                  {val : "checkbox", text: 'Checkbox'},
-                  {val : "switch", text: 'Switch'},
-                  {val : "date", text: 'Date'}
+                  {val : "text", text: RED._("node-red-dashboard/ui_form:ui_form.label.text")},
+                  {val : "multiline", text: RED._("node-red-dashboard/ui_form:ui_form.label.multiline")},
+                  {val : "number", text: RED._("node-red-dashboard/ui_form:ui_form.label.number")},
+                  {val : "email", text: RED._("node-red-dashboard/ui_form:ui_form.label.email")},
+                  {val : "password", text: RED._("node-red-dashboard/ui_form:ui_form.label.password")},
+                  {val : "checkbox", text: RED._("node-red-dashboard/ui_form:ui_form.label.checkbox")},
+                  {val : "switch", text: RED._("node-red-dashboard/ui_form:ui_form.label.switch")},
+                  {val : "date", text: RED._("node-red-dashboard/ui_form:ui_form.label.date")},
+                  {val : "time", text: RED._("node-red-dashboard/ui_form:ui_form.label.time")}
                 ];
 
                 //var sel = $('<select>').appendTo('body');
@@ -102,7 +103,7 @@
                     }
                     typeField.append($("<option>").attr('value',this.val).text(this.text).prop('selected',isSelected));
                 });
-               
+
                 //var labelForRequried = $('<span/>',{style:"margin: 10px;"}).text('Required').appendTo(row);
                 var requiredContainer= $('<div/>',{style:"display:inline-block; height:34px; width:13%; vertical-align: middle"}).appendTo(row);
                 var requiredInnerContainer= $('<div/>',{style:"left:35%; position:relative; width:30px"}).appendTo(requiredContainer);
@@ -112,13 +113,13 @@
                 var reqDiv=$("<div />",{class:"slider round"}).appendTo(reqRow);
                 var vis = option.rows ? 'visible' : 'hidden';
                 var rowsField = $('<input/>',{class:"node-input-option-rows", type:"number", style:"width:10%;", placeholder:'Rows', value:option.rows }).css('visibility',vis).appendTo(row);
-               
+
                 var finalspan = $('<div/>',{style:"display:inline-block; width:5%;"}).appendTo(row);
                 var deleteButton = $('<a/>',{href:"#",class:"editor-button", style:"font-size:1.3em; left:45%; position:relative;"}).appendTo(finalspan);
                 $('<i/>',{class:"fa fa-trash-o"}).appendTo(deleteButton);
 
                 typeField.change(function(e){
-                    if (e.target.value != 'multiline') { 
+                    if (e.target.value != 'multiline') {
                         rowsField.val(undefined)
                         option.rows = null;
                         rowsField.css('visibility','hidden')
@@ -126,7 +127,7 @@
                         rowsField.css('visibility','visible')
                         if (!rowsField[0].value) rowsField[0].value = 3;
                     }
-                    
+
                 })
 
                 deleteButton.click(function() {
@@ -246,30 +247,30 @@ input:checked + .slider:before {
 </style>
 
     <div class="form-row">
-        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <label for="node-input-group"><i class="fa fa-table"></i> <span data-i18n="ui_form.label.group"></label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label><i class="fa fa-object-group"></i> Size</label>
+        <label><i class="fa fa-object-group"></i> <span data-i18n="ui_form.label.size"></label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-tag"></i> Label</label>
-        <input type="text" id="node-input-label" placeholder="optional label">
+        <label for="node-input-label"><i class="fa fa-tag"></i> <span data-i18n="ui_form.label.label"></label>
+        <input type="text" id="node-input-label" data-i18n="[placeholder]ui_form.label.optionalLabel">
     </div>
     <div class="form-row node-input-option-container-row" style="margin-bottom:0px; width:100%; min-width:520px">
-        <label style="vertical-align:top;"><i class="fa fa-list-alt"></i> Form elements</label>
+        <label style="vertical-align:top;"><i class="fa fa-list-alt"></i> <span data-i18n="ui_form.label.formElements"></label>
         <div style="display:inline-block; width:78%; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
           <div class="red-ui-tray-header" style="width:100%; display: inline-block; padding-top:10px; padding-buttom:10px; border-top:0px solid; border-radius:5px 5px 0 0; border-bottom:1px solid #ccc;">
               <div style="width:94%; display:inline-block; margin-left:27px">
-                <div style="width:20%; text-align:center; float:left;">Label</div>
-                <div style="width:20%; text-align:center; float:left; margin-left:9px">Name</div>
-                <div style="margin-left:7px; width:16%; text-align:center; float:left; margin-left:9px">Type</div>
-                <div style="width:16%; text-align:center; float:left;">Required</div>
-                <div style="width:10%; text-align:center; float:left;">Rows</div>
-                <div style="width:12%; text-align:center; float:left;">Remove</div>
+                <div style="width:20%; text-align:center; float:left;" data-i18n="ui_form.label.label"></span></div>
+                <div style="width:20%; text-align:center; float:left; margin-left:9px" data-i18n="node-red:common.label.name"></div>
+                <div style="margin-left:7px; width:16%; text-align:center; float:left; margin-left:9px" data-i18n="ui_form.label.type"></div>
+                <div style="width:16%; text-align:center; float:left;" data-i18n="ui_form.label.required"></div>
+                <div style="width:10%; text-align:center; float:left;" data-i18n="ui_form.label.rows"></div>
+                <div style="width:12%; text-align:center; float:left;" data-i18n="ui_form.label.remove"></div>
               </div>
           </div>
           <div id="node-input-option-container-div" style=" height: 257px; padding: 5px; overflow-y:scroll;">
@@ -278,37 +279,20 @@ input:checked + .slider:before {
         </div>
     </div>
     <div class="form-row">
-        <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top: 4px; margin-left: 103px;"><i class="fa fa-plus"></i> <span>element</span></a>
+        <a href="#" class="editor-button editor-button-small" id="node-input-add-option" style="margin-top: 4px; margin-left: 103px;"><i class="fa fa-plus"></i> <span data-i18n="ui_form.label.element"></span></a>
     </div>
     <div class="form-row">
-        <label for="node-input-submit"><i class="fa fa-square"></i> Buttons</label>
-        <i class="fa fa-thumbs-o-up"></i> <input type="text" id="node-input-submit" placeholder="submit button text" style="width:35%;">
+        <label for="node-input-submit"><i class="fa fa-square"></i> <span data-i18n="ui_form.label.buttons"></label>
+        <i class="fa fa-thumbs-o-up"></i> <input type="text" id="node-input-submit" data-i18n="[placeholder]ui_form.label.submitButtonText" style="width:35%;">
         <span style="margin-left:16px"><i class="fa fa-thumbs-o-down"></i></span>
-        <input type="text" id="node-input-cancel" placeholder="cancel button text" style="width:35%;">
+        <input type="text" id="node-input-cancel" data-i18n="[placeholder]ui_form.label.cancelButtonText" style="width:35%;">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="optional msg.topic">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> <span data-i18n="ui_form.label.topic"></label>
+        <input type="text" id="node-input-topic" data-i18n="[placeholder]ui_form.label.optionalMsgTopic">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
     </div>
-</script>
-
-<script type="text/html" data-help-name="ui_form">
-    <p>Adds a form to user interface.</p>
-    <p>Helps to collect multiple value from the user on submit button click as an object in <code> msg.payload</code> </p>
-    <p>Multiple input elements can be added using add elements button</p>
-    <p>Each element contains following components:</p>
-    <ul>
-        <li> <b>Label</b> : Value that will be the label of the element in the user interface</li>
-        <li> <b>Name</b> : Represents the key (variable name) in the <code>msg.payload</code> in which the value of the corresponding element present</li>
-        <li> <b>Type</b> : Drop drown option to select the type of input element</li>
-        <li> <b>Required</b> : On switching on the user has to supply the value before submitting</li>
-        <li> <b>Rows</b> : number of UI rows for multiline text input</li>
-        <li> <b>Delete</b> : To remove the current element form the form</li>
-    </ul>
-    <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
-    <p>The Cancel button can be hidden by setting it's value to be blank "".</p>
 </script>

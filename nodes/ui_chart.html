@@ -40,7 +40,8 @@
             useOneColor: {value: false},
             useUTC: {value: false},
             colors: {value: ['#1F77B4', '#AEC7E8', '#FF7F0E', '#2CA02C', '#98DF8A', '#D62728', '#FF9896', '#9467BD', '#C5B0D5']},
-            outputs: {value: 1}
+            outputs: {value: 1},
+            useDifferentColor: {value: false}
         },
         inputs:1,
         outputs:1,
@@ -66,6 +67,7 @@
             });
             $("#node-input-chartType").on("change", function() {
                 $("#legend-show").hide();
+                $("#show-useDifferentColor").hide();
                 if ($(this).val() === "horizontalBar") {
                     $("#y-label-show").hide();
                     $("#x-label-show").show();
@@ -101,6 +103,17 @@
                         $("#legend-show").show();
                         $("#hole-size-show").show();
                     }
+                    else if ($(this).val() === "polar-area") {
+                        $("#y-axis-show").show();
+                        $("#legend-show").show();
+                        $("#hole-size-show").hide();
+                        $("#show-useDifferentColor").show();
+                    }
+                    else if ($(this).val() === "radar") {
+                        $("#y-axis-show").show();
+                        $("#legend-show").show();
+                        $("#hole-size-show").hide();
+                    }
                     else {
                         $("#y-axis-show").show();
                         $("#hole-size-show").hide();
@@ -128,13 +141,13 @@
             if (oval === "D/M") { odef = oval; }
             if (oval === "dd HH:mm") { odef = oval; }
             if (oval === "auto") { odef = oval; }
-            var ohms = {value:"HH:mm:ss", label:"HH:mm:ss", hasValue:false};
-            var ohm = {value:"HH:mm", label:"HH:mm", hasValue:false};
-            var oymd = {value:"Y-M-D", label:"Year-Month-Date", hasValue:false};
-            var odm = {value:"D/M", label:"Date/Month", hasValue:false};
-            var oahm = {value:"dd HH:mm", label:"Day HH:mm", hasValue:false};
-            var ocus = {value:"custom", label:"custom", icon:"red/images/typedInput/az.png"};
-            var oaut = {value:"auto", label:"automatic", hasValue:false};
+            var ohms = {value: "HH:mm:ss", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.HHmmss"), hasValue: false};
+            var ohm = {value: "HH:mm", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.HHmm"), hasValue: false};
+            var oymd = {value: "Y-M-D", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.yearMonthDate"), hasValue: false};
+            var odm = {value: "D/M", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.dateMonth"), hasValue: false};
+            var oahm = {value: "dd HH:mm", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.dayHHmm"), hasValue: false};
+            var ocus = {value: "custom", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.custom"), icon: "red/images/typedInput/az.png"};
+            var oaut = {value: "auto", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.automatic"), hasValue: false};
             $("#node-input-xformat").typedInput({
                 default: odef,
                 types:[ ohms, ohm, oahm, odm, oymd, ocus, oaut ]
@@ -167,85 +180,85 @@
 
 <script type="text/html" data-template-name="ui_chart">
     <div class="form-row">
-        <label for="node-input-group"><i class="fa fa-table"></i> Group</label>
+        <label for="node-input-group"><i class="fa fa-table"></i> <span data-i18n="ui_chart.label.group"></label>
         <input type="text" id="node-input-group">
     </div>
     <div class="form-row">
-        <label><i class="fa fa-object-group"></i> Size</label>
+        <label><i class="fa fa-object-group"></i> <span data-i18n="ui_chart.label.size"></label>
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
     </div>
     <div class="form-row">
-        <label for="node-input-label"><i class="fa fa-i-cursor"></i> Label</label>
-        <input type="text" id="node-input-label" placeholder="optional chart title">
+        <label for="node-input-label"><i class="fa fa-i-cursor"></i> <span data-i18n="ui_chart.label.label"></label>
+        <input type="text" id="node-input-label" data-i18n="[placeholder]ui_chart.label.optionalChartTitle">
     </div>
     <div class="form-row">
-        <label for="node-input-removeOlder"><i class="fa fa-line-chart"></i> Type</label>
+        <label for="node-input-removeOlder"><i class="fa fa-line-chart"></i> <span data-i18n="ui_chart.label.type"></label>
         <select id="node-input-chartType" style="width:159px; font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif">
-            <option value="line"> &#xf201; Line chart</option>
-            <option value="bar"> &#xf080; Bar chart</option>
-            <option value="horizontalBar"> &#xf080; Bar chart (H)</option>
-            <option value="pie"> &#xf200; Pie chart</option>
-            <option value="polar-area"> &#xf200; Polar area chart</option>
-            <option value="radar"> &#xf200; Radar chart</option>
+            <option value="line" data-i18n="[html]ui_chart.label.lineChart"></option>
+            <option value="bar" data-i18n="[html]ui_chart.label.barChart"></option>
+            <option value="horizontalBar" data-i18n="[html]ui_chart.label.barChartH"></option>
+            <option value="pie" data-i18n="[html]ui_chart.label.pieChart"></option>
+            <option value="polar-area" data-i18n="[html]ui_chart.label.polarAreaChart"></option>
+            <option value="radar" data-i18n="[html]ui_chart.label.radarChart"></option>
         </select>
         <div id="show-dot-field" style="display:inline-block;">
-            <input type="checkbox" id="node-input-dot" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:40px; margin-right:5px;">enlarge points
+            <input type="checkbox" id="node-input-dot" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:40px; margin-right:5px;"><span data-i18n="ui_chart.label.enlargePoints">
         </div>
     </div>
     <div class="form-row" id="x-axis-show">
-        <label for="node-input-removeOlder">X-axis</label>
-        <label for="node-input-removeOlder" style="width:auto">last</label>
+        <label for="node-input-removeOlder" data-i18n="ui_chart.label.xAxis"></label>
+        <label for="node-input-removeOlder" style="width:auto" data-i18n="ui_chart.label.last"></label>
         <input type="text" id="node-input-removeOlder" style="width:50px;">
         <select id="node-input-removeOlderUnit" style="width:80px;">
-            <option value="1">seconds</option>
-            <option value="60">minutes</option>
-            <option value="3600">hours</option>
-            <option value="86400">days</option>
-            <option value="604800">weeks</option>
+            <option value="1" data-i18n="ui_chart.label.seconds"></option>
+            <option value="60" data-i18n="ui_chart.label.minutes"></option>
+            <option value="3600" data-i18n="ui_chart.label.hours"></option>
+            <option value="86400" data-i18n="ui_chart.label.days"></option>
+            <option value="604800" data-i18n="ui_chart.label.weeks"></option>
         </select>
-        <label for="node-input-removeOlderPoints" style="width:auto; margin-left:10px; margin-right:10px;">OR</label>
+        <label for="node-input-removeOlderPoints" style="width:auto; margin-left:10px; margin-right:10px;" data-i18n="ui_chart.label.or"></label>
         <input type="text" id="node-input-removeOlderPoints" style="width:60px;" placeholder="1000">
-        <span style="margin-left:5px;">points</span>
+        <span style="margin-left:5px;" data-i18n="ui_chart.label.points"></span>
     </div>
     <div class="form-row" id="x-axis-label-show">
-        <label for="node-input-xformat">X-axis Label</label>
+        <label for="node-input-xformat" data-i18n="ui_chart.label.xAxisLabel"></label>
         <input type="text" id="node-input-xformat" style="width:250px;">
-        <input type="checkbox" id="node-input-useUTC" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:8px; margin-right:4px;"> as UTC
+        <input type="checkbox" id="node-input-useUTC" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:8px; margin-right:4px;"> <span data-i18n="ui_chart.label.asUTC"></span>
     </div>
     <div class="form-row" id="y-axis-show">
-        <label id="y-label-show" for="node-input-ymin">Y-axis</label>
-        <label id="x-label-show" for="node-input-ymin">X-axis</label>
-        <label for="node-input-ymin" style="width:auto">min</label>
+        <label id="y-label-show" for="node-input-ymin" data-i18n="ui_chart.label.yAxis"></label>
+        <label id="x-label-show" for="node-input-ymin" data-i18n="ui_chart.label.xAxis"></label>
+        <label for="node-input-ymin" style="width:auto" data-i18n="ui_chart.label.min"></label>
         <input type="text" id="node-input-ymin" style="width:92px">
-        <label for="node-input-ymax" style="width:auto; margin-left:20px;">max</label>
+        <label for="node-input-ymax" style="width:auto; margin-left:20px;" data-i18n="ui_chart.label.max"></label>
         <input type="text" id="node-input-ymax" style="width:92px">
     </div>
     <div class="form-row" id="legend-show">
-        <label for="node-input-legend">Legend</label>
+        <label for="node-input-legend" data-i18n="ui_chart.label.legend"></label>
         <select id="node-input-legend" style="width:120px;">
-            <option value="false">None</option>
-            <option value="true">Show</option>
+            <option value="false" data-i18n="ui_chart.label.none"></option>
+            <option value="true" data-i18n="ui_chart.label.show"></option>
         </select>
-        <span id="interpolate-show">&nbsp;&nbsp;&nbsp;&nbsp;Interpolate
+        <span id="interpolate-show">&nbsp;&nbsp;&nbsp;&nbsp;<span data-i18n="ui_chart.label.interpolate"></span>
             <select id="node-input-interpolate" style="width:120px;">
-                <option value="linear">linear</option>
-                <option value="step">step</option>
-                <option value="bezier">bezier</option>
-                <option value="cubic">cubic</option>
-                <option value="monotone">cubic-mono</option>
+                <option value="linear" data-i18n="ui_chart.label.linear"></option>
+                <option value="step" data-i18n="ui_chart.label.step"></option>
+                <option value="bezier" data-i18n="ui_chart.label.bezier"></option>
+                <option value="cubic" data-i18n="ui_chart.label.cubic"></option>
+                <option value="monotone" data-i18n="ui_chart.label.cubicMono"></option>
             </select>
         </span>
-        <span id="hole-size-show">&nbsp;&nbsp;&nbsp;&nbsp;Cutout
+        <span id="hole-size-show">&nbsp;&nbsp;&nbsp;&nbsp;<span data-i18n="ui_chart.label.cutout"></span>
             <input type="text" id="node-input-cutout" style="width:35px"> %
         </span>
     </div>
     <div id="show-useOneColor" style="display:none; height:24px;">
-        <input type="checkbox" id="node-input-useOneColor" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:105px; margin-right:5px;">Use first colour for all bars
+        <input type="checkbox" id="node-input-useOneColor" style="display:inline-block; width:auto; vertical-align:baseline; margin-left:105px; margin-right:5px;"><span data-i18n="ui_chart.label.useFirstColourForAllBars"></span>
     </div>
     <div class="form-row" id="ui-chart-colours">
-        <label for="node-input-color1">Series Colours</label>
+        <label for="node-input-color1" data-i18n="ui_chart.label.seriesColours"></label>
         <input type="color" id="node-input-color1" class="series-color" style="width:100px;"/>
         <input type="color" id="node-input-color2" class="series-color" style="width:100px;"/>
         <input type="color" id="node-input-color3" class="series-color" style="width:100px;"/>
@@ -260,33 +273,18 @@
             <input type="color" id="node-input-color9" class="series-color" style="width:100px;"/>
         </div>
     </div>
-    <div class="form-row">
-        <label for="node-input-nodata">Blank label</label>
-        <input type="text" id="node-input-nodata" placeholder="display this text before valid data arrives">
+    <div id="show-useDifferentColor" class="form-row">
+         <label></label>
+         <input type="checkbox" id="node-input-useDifferentColor" style="display:inline-block; width:auto; vertical-align:top;">
+             <span data-i18n="ui_chart.label.useDifferentColor"></span>
+         </input>
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name">
+        <label for="node-input-nodata" data-i18n="ui_chart.label.blankLabel"></label>
+        <input type="text" id="node-input-nodata" data-i18n="[placeholder]ui_chart.label.displayThisTextBeforeValidDataArrives">
     </div>
-</script>
-
-<script type="text/html" data-help-name="ui_chart">
-    <p>Plots the input values on a chart. This can either be a time based line chart, a bar chart (vertical or horizontal),
-    or a pie chart.</p>
-    <p>Each input <code>msg.payload</code> value will be converted to a number. If the
-    conversion fails, the message is ignored.</p>
-    <p>Minimum and Maximum <b>Y</b> axis values are optional. The graph will auto-scale to any values received.</p>
-    <p>Multiple series can be shown on the same chart by using a different <code>msg.topic</code>
-    value on each input message. Multiple bars of the same series can be shown by using the <code>msg.label</code> property.</p>
-    <p>The <b>X</b> axis defines a time window or a maximum number of points to display. Older data will be automatically removed from the graph.
-    The axis labels can be formatted using a <a href="https://momentjs.com/docs/#/displaying/format/" target="_blank">
-    Moment.js time formatted</a> string.</p>
-    <p>Inputting a <code>msg.payload</code> containing a blank array <code>[]</code> will clear the chart.</p>
-    <p>See <b><a href="https://github.com/node-red/node-red-dashboard/blob/master/Charts.md" target="_new">this information</a></b>
-    for how to pre-format data to be passed in as a complete chart.</p>
-    <p>The <b>Blank label</b> field can be used to display some text before any valid data is received.</p>
-    <p>The label can also be set by a message property by setting
-    the field to the name of the property, for example <code>{{msg.topic}}</code>.</p>
-    <p>The node output contains an array of the chart state that can be persisted if needed. This can be passed
-    into the chart node to re-display the persisted data.</p>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
 </script>

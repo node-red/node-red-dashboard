@@ -1,0 +1,15 @@
+<script type="text/html" data-help-name="ui_dropdown">
+    <p>Adds a dropdown select box to the user interface.</p>
+    <p>Multiple value / label pairs can be added as required. If the label is not specified the
+    value will be used for both.</p>
+    <p>The configured value of the selected item will be returned as <code>msg.payload</code>.</p>
+    <p>Setting <code>msg.payload</code> to one of the item values will preset the choice in the dropdown.
+    If using the multi-select option then the payload should be an array of values.</p>
+    <p>Optionally the <b>Topic</b> field can be used to set the <code>msg.topic</code> property.</p>
+    <p>The Options may be configured by inputting <code>msg.options</code> containing an array.
+    If just text then the value will be the same as the label, otherwise you can specify both by
+    using an object of <code>"label":"value"</code> pairs :</p>
+    <code>[ "Choice 1", "Choice 2", {"Choice 3":"3"} ]</code>
+    <p></p>
+    <p>If the "Allow multiple selections" output option is enabled - the result will be returned as an array instead of a string.</p>
+</script>

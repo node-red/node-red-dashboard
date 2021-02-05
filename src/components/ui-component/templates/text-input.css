@@ -14,8 +14,13 @@ reason: https://github.com/angular/material/issues/6214
 	padding-top: 1px;
 }
 
-.nr-dashboard-theme .nr-dashboard-textinput input[type="color"] {
-    border: none !important;
+.nr-dashboard-textinput input {
+    border-bottom-width: 1px;
+    padding-left: 8px;
+}
+
+.nr-dashboard-textinput input[type="color"] {
+    border: none;
 }
 
 .nr-dashboard-textinput md-input-container .md-errors-spacer {

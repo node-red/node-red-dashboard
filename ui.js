@@ -339,7 +339,7 @@ function init(server, app, log, redSettings) {
     var dashboardMiddleware = function(req, res, next) { next(); }
 
     if (uiSettings.middleware) {
-        if (typeof uiSettings.middleware === "function") {
+        if (typeof uiSettings.middleware === "function" || Array.isArray(uiSettings.middleware)) {
             dashboardMiddleware = uiSettings.middleware;
         }
     }
@@ -367,15 +367,26 @@ function init(server, app, log, redSettings) {
 
     log.info("Dashboard version " + dashboardVersion + " started at " + fullPath);
 
-    io.use(function(socket, next) {
-        if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
-            // Reject direct websocket requests
-            socket.client.conn.close();
-            return;
-        }
-        if (socket.handshake.xdomain === false) { return next(); }
-        else { socket.disconnect(true); }
-    });
+    if (typeof uiSettings.ioMiddleware === "function") {
+        io.use(uiSettings.ioMiddleware);
+    } else if (Array.isArray(uiSettings.ioMiddleware)) {
+        uiSettings.ioMiddleware.forEach(ioMiddleware => {
+            io.use(ioMiddleware);
+        });
+    } else {
+        io.use(function (socket, next) {
+            if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
+                // Reject direct websocket requests
+                socket.client.conn.close();
+                return;
+            }
+            if (socket.handshake.xdomain === false) {
+                return next();
+            } else {
+                socket.disconnect(true);
+            }
+        });
+    }
 
     io.on('connection', function(socket) {
 
@@ -568,9 +579,20 @@ function addBaseConfig(config) {
     updateUi();
 }
 
+function angularColorToHex(color) {
+    var angColorValues = { red: "#F44336", pink: "#E91E63", purple: "#9C27B0", deeppurple: "#673AB7",
+        indigo: "#3F51B5", blue: "#2196F3", lightblue: "#03A9F4", cyan: "#00BCD4", teal: "#009688",
+        green: "#4CAF50", lightgreen: "#8BC34A", lime: "#CDDC39", yellow: "#FFEB3B", amber: "#FFC107",
+        orange: "#FF9800", deeporange: "#FF5722", brown: "#795548", grey: "#9E9E9E", bluegrey: "#607D8B"};
+    return angColorValues[color.replace("-","").toLowerCase()];
+}
+
 function getTheme() {
     if (baseConfiguration && baseConfiguration.site && baseConfiguration.site.allowTempTheme && baseConfiguration.site.allowTempTheme === "none") {
-        return baseConfiguration.theme.angularTheme;
+        baseConfiguration.theme.name = "theme-custom";
+        baseConfiguration.theme.themeState["widget-backgroundColor"].value = angularColorToHex(baseConfiguration.theme.angularTheme.primary);
+        baseConfiguration.theme.themeState["widget-textColor"].value = (baseConfiguration.theme.angularTheme.palette === "dark") ? "#fff" : "#000";
+        return baseConfiguration.theme.themeState;
     }
     else if (baseConfiguration && baseConfiguration.hasOwnProperty("theme") && (typeof baseConfiguration.theme !== "undefined") ) {
         return baseConfiguration.theme.themeState;

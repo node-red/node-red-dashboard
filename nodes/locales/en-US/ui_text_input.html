@@ -1,0 +1,15 @@
+<script type="text/html" data-help-name="ui_text_input">
+  <p>Adds a text input field to the user interface. Mode can be regular text, email or color picker.</p>
+  <p>Any input is sent as <code>msg.payload</code>. If set to ‘pass through mode’ an arriving <code>msg.payload</code>
+      will be used if it is different from the existing text in the input field. This allows you to preset
+      the text of the input field.</p>
+  <p>The <b>Delay</b> <i>(default : 300ms)</i> sets the amount of time in milliseconds before the output is sent.
+  Setting to <code>0</code> waits for "Enter" or "Tab" key to send. Enter will send payload but remain in focus.
+  Tab will send payload and move to next field. Clicking elsewhere will also send the payload.</p>
+  <p>The email mode will color in red if it is not a valid address and will return undefined.</p>
+  <p>The time input type returns a number of milliseconds from midnight.</p>
+  <p>Not all browsers support the <i>week</i> and <i>month</i> input types, and may return <i>undefined</i>.
+  Please test your target browser(s) before use.</p>
+  <p>If a <b>Topic</b> is specified, it will be added as <code>msg.topic</code>.</p>
+  <p>Setting <code>msg.enabled</code> to <code>false</code> will disable the input.</p>
+</script>
