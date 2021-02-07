@@ -75,14 +75,14 @@ module.exports = function(RED) {
                                 break;
                             }
                             case 'string': {
-                                emitOptions.newOptions.push({label:opt, value:opt});
+                                emitOptions.newOptions.push({label:opt, value:opt, type:"string"});
                                 break;
                             }
                             case 'object': {
                                 // assuming object of {label:value}
                                 for (var m in opt) {
                                     if (opt.hasOwnProperty(m)) {
-                                        emitOptions.newOptions.push({label:m, value:opt[m]});
+                                        emitOptions.newOptions.push({label:m, value:opt[m], type:typeof(opt[m])});
                                     }
                                 }
                                 break;
@@ -139,7 +139,7 @@ module.exports = function(RED) {
                         delete m["$$mdSelectId"]
                         if (JSON.stringify(control.options[i].value) === JSON.stringify(m)) {
                             val = control.options[i].value;
-                            if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
+                            if (typeof val === "string" && control.options[i].type !== "string") {
                                 try { val = JSON.parse(val); }
                                 catch(e) {}
                             }
@@ -149,13 +149,15 @@ module.exports = function(RED) {
                     else if (node.multiple) {
                         if (!Array.isArray(m)) {
                             if (m.hasOwnProperty("value")) { m = m.value; }
-                            if (typeof m === "string") { m = [ m ]; }
+                            // if (typeof m === "string") { m = [ m ]; }
+                            if (m == null) { m = []; }
+                            else { m = [ m ]; }
                         }
                         m.map(x => delete x["$$mdSelectId"])
                         for (var j = 0; j < m.length; j++) {
                             if (JSON.stringify(control.options[i].value) === JSON.stringify(m[j])) {
                                 var v = control.options[i].value;
-                                if (typeof v === "string" && control.options[i].type !== "str") {
+                                if (typeof v === "string" && control.options[i].type !== "string") {
                                     try { v = JSON.parse(v); }
                                     catch(e) {}
                                 }
