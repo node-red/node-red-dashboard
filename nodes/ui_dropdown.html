@@ -27,7 +27,8 @@
                     return v.length == unique.size;
                 }},
             payload: {value: ''},
-            topic: {value: ''}
+            topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
+            topicType: {value: 'msg'}
         },
         inputs:1,
         outputs:1,
@@ -87,6 +88,12 @@
                 axis: "y",
                 handle:".node-input-option-handle",
                 cursor: "move"
+            });
+
+            $('#node-input-topic').typedInput({
+                default: 'str',
+                typeField: $("#node-input-topicType"),
+                types: ['str','msg','flow','global']
             });
         },
         oneditsave: function() {
@@ -158,6 +165,7 @@
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
         <input type="text" id="node-input-topic" placeholder="optional msg.topic">
+        <input type="hidden" id="node-input-topicType">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

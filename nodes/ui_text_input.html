@@ -21,7 +21,8 @@
             passthru: {value: true},
             mode: {value: 'text', required: true},
             delay: {value: 300, validate: RED.validators.number()},
-            topic: {value: ''}
+            topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
+            topicType: {value: 'msg'}
         },
         inputs:1,
         outputs:1,
@@ -35,6 +36,11 @@
                 width: "#node-input-width",
                 height: "#node-input-height",
                 group: "#node-input-group"
+            });
+            $('#node-input-topic').typedInput({
+                default: 'str',
+                typeField: $("#node-input-topicType"),
+                types: ['str','msg','flow','global']
             });
         }
     });
@@ -89,6 +95,7 @@
     <div class="form-row">
         <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
         <input type="text" id="node-input-topic">
+        <input type="hidden" id="node-input-topicType">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

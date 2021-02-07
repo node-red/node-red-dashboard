@@ -13,6 +13,10 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(group.config.tab);
         if (!tab) { return; }
 
+        node.on("input", function(msg) {
+            node.topi = msg.topic;
+        });
+
         var done = ui.add({
             node: node,
             tab: tab,
@@ -43,7 +47,8 @@ module.exports = function(RED) {
                     if (node.format === 'hsl') { msg.payload = pay.toHsl(); }
                     if (node.format === 'hsv') { msg.payload = pay.toHsv(); }
                 }
-                msg.topic = config.topic || msg.topic;
+                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
+                msg.topic = t || node.topi;
             },
             convert: function(p,o,m) {
                 if (m.payload === undefined || m.payload === null) { return; }

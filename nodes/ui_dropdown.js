@@ -32,7 +32,10 @@ module.exports = function(RED) {
         control.options = config.options;
 
         var emitOptions;
-        var savedtopic;
+
+        node.on("input", function(msg) {
+            node.topi = msg.topic;
+        });
 
         var done = ui.add({
             node: node,
@@ -106,8 +109,6 @@ module.exports = function(RED) {
                     }
                 }
 
-                if (msg.hasOwnProperty("topic")) { savedtopic = msg.topic; }
-
                 if (msg.hasOwnProperty("payload")) {
                     if (node.multiple) {
                         if (typeof msg.payload === "string") {
@@ -151,7 +152,7 @@ module.exports = function(RED) {
                             if (typeof m === "string") { m = [ m ]; }
                         }
                         m.map(x => delete x["$$mdSelectId"])
-                        for (var j = 0; j < m.length; j++){
+                        for (var j = 0; j < m.length; j++) {
                             if (JSON.stringify(control.options[i].value) === JSON.stringify(m[j])) {
                                 var v = control.options[i].value;
                                 if (typeof v === "string" && control.options[i].type !== "str") {
@@ -174,8 +175,8 @@ module.exports = function(RED) {
                     msg.payload = emitOptions.value;
                     delete msg._dontSend;
                 }
-                msg.topic = config.topic || msg.topic || savedtopic;
-                if (msg.topic === undefined) { delete msg.topic; }
+                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
+                msg.topic = t || node.topi;
                 if (msg.payload === null) { node.status({}); }
                 else {
                     var stat = "";

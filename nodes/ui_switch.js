@@ -61,6 +61,10 @@ module.exports = function(RED) {
             }
         }
 
+        node.on("input", function(msg) {
+            node.topi = msg.topic;
+        });
+
         var done = ui.add({
             node: node,
             tab: tab,
@@ -120,7 +124,8 @@ module.exports = function(RED) {
                 return value;
             },
             beforeSend: function (msg) {
-                msg.topic = config.topic || msg.topic;
+                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
+                msg.topic = t || node.topi;
             }
         });
 
@@ -132,6 +137,7 @@ module.exports = function(RED) {
                 node.status({fill:col, shape:shp, text:txt});
             });
         }
+
         node.on("close", done);
     }
     RED.nodes.registerType("ui_switch", SwitchNode);

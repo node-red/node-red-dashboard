@@ -20,7 +20,8 @@
             height: {value: 0},
             passthru: {value: true},
             outs: {value: 'all'},
-            topic: {value: ''},
+            topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
+            topicType: {value: 'msg'},
             min: {value: 0, required:true, validate:RED.validators.number()},
             max: {value: 10, required:true, validate:RED.validators.number()},
             step: {value: 1}
@@ -37,6 +38,11 @@
                 width: "#node-input-width",
                 height: "#node-input-height",
                 group: "#node-input-group"
+            });
+            $('#node-input-topic').typedInput({
+                default: 'str',
+                typeField: $("#node-input-topicType"),
+                types: ['str','msg','flow','global']
             });
             if (!$("#node-input-outs").val()) { $("#node-input-outs").val("all") }
         }
@@ -96,5 +102,6 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
+        <input type="hidden" id="node-input-topicType">
     </div>
 </script>

@@ -1,9 +1,21 @@
+### 2.28.0-beta: Maintenance Release
+
+**Enhancements**
+
+ - Let topic setting be a typed input for nodes that output topic
+
+**Fixes**
+
+ - Fix msg.vol for tts out
+ - Fix dropdown again to display input value when in  not passing though mode. Issue #675
+
 ### 2.27.1: Maintenance Release
 
 **Fixes**
 
  - Fix CSS for layout grid to render better for some browsers
  - Add time picker to ui_form options.
+ - Add better German translations. PR #673
 
 ### 2.27.0: Milestone Release
 
