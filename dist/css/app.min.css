@@ -32353,8 +32353,8 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-dropdown md-input-container>md-select {
   overflow: hidden;
-  margin-left: 4px !important;
-  margin-top: 7px;
+  /* margin-left: 4px !important; */
+  margin-top: 6px;
 }
 
 .nr-dashboard-theme .nr-dashboard-dropdown md-select-value {
@@ -32370,7 +32370,7 @@ reason: https://github.com/angular/material/issues/6214
   margin: 0px;
   line-height: 34px;
   margin-right: 4px;
-  margin-top: 6px;
+  margin-top: 3px;
   padding-right: 2px;
   white-space: normal;
   overflow: hidden;
@@ -32396,6 +32396,13 @@ reason: https://github.com/angular/material/issues/6214
 .nr-dashboard-dropdown-header ng-md-icon {
   right: 0px;
   left: inherit;
+}
+
+.nr-dashboard-dropdown .layout-row>.flex-100 {
+  flex: 1 1 50%;
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
 }
 .nr-dashboard-gauge text {
   /* font-weight: 500;*/

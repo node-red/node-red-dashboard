@@ -6,7 +6,8 @@
     ng-class="{'nr-dashboard-disabled':me.item.disabled}"
     node-id="{{me.item.id}}">
 	<md-input-container flex layout="row">
-        <p  class="label"
+        <p  ng-if="me.item.width>1"
+            class="label"
             ng-if="me.item.label"
             ng-bind-html="me.item.getLabel()">
         </p>
