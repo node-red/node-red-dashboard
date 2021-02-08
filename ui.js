@@ -265,7 +265,7 @@ function add(opt) {
                 msg.payload = opt.convertBack(fullDataset);
                 msg = opt.beforeSend(msg) || msg;
                 //if (settings.verbose) { console.log("UI-SEND",JSON.stringify(msg)); }
-                opt.node.send(msg);
+                if (!msg._dontSend) { opt.node.send(msg); }
             }
         }
     });

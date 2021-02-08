@@ -117,8 +117,7 @@ module.exports = function(RED) {
                     }
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
-                    delete emitOptions._dontSend;
-                    if (!node.pt) { delete emitOptions.value; }
+                    delete msg._dontSend;
                     return emitOptions;
                 }
                 // we do not overide payload here due to 'opt.emitOnlyNewValues' in ui.js
@@ -134,10 +133,11 @@ module.exports = function(RED) {
             convertBack: function (msg) {
                 var val = node.multiple ? [] : "";
                 var m = RED.util.cloneMessage(msg);
+                var mm = (m.hasOwnProperty("id")) ? m.value : m;
                 for (var i=0; i<control.options.length; i++) {
                     if (!node.multiple) {
-                        delete m["$$mdSelectId"]
-                        if (JSON.stringify(control.options[i].value) === JSON.stringify(m)) {
+                        delete m["$$mdSelectId"];
+                        if (JSON.stringify(control.options[i].value) == JSON.stringify(mm)) {
                             val = control.options[i].value;
                             if (typeof val === "string" && control.options[i].type !== "string") {
                                 try { val = JSON.parse(val); }
@@ -146,16 +146,16 @@ module.exports = function(RED) {
                             break;
                         }
                     }
-                    else if (node.multiple) {
-                        if (!Array.isArray(m)) {
-                            if (m.hasOwnProperty("value")) { m = m.value; }
+                    else if (node.multiple && mm !== null) {
+                        if (!Array.isArray(mm)) {
+                            if (mm.hasOwnProperty("value")) { mm = mm.value; }
                             // if (typeof m === "string") { m = [ m ]; }
-                            if (m == null) { m = []; }
-                            else { m = [ m ]; }
+                            if (mm == null) { mm = []; }
+                            else { mm = [ mm ]; }
                         }
-                        m.map(x => delete x["$$mdSelectId"])
-                        for (var j = 0; j < m.length; j++) {
-                            if (JSON.stringify(control.options[i].value) === JSON.stringify(m[j])) {
+                        mm.map(x => delete x["$$mdSelectId"])
+                        for (var j = 0; j < mm.length; j++) {
+                            if (JSON.stringify(control.options[i].value) === JSON.stringify(mm[j])) {
                                 var v = control.options[i].value;
                                 if (typeof v === "string" && control.options[i].type !== "string") {
                                     try { v = JSON.parse(v); }
@@ -172,14 +172,14 @@ module.exports = function(RED) {
 
             beforeSend: function (msg) {
                 if (msg.payload === undefined) { msg.payload = []; }
+                if (msg.payload === "") { msg._dontSend = true; }
                 if (msg._dontSend) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
-                    delete msg._dontSend;
                 }
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
-                msg.topic = t || node.topi;
-                if (msg.payload === null) { node.status({}); }
+                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
+                if (t) { msg.topic = t; }
+                if (msg.payload === null || msg._dontSend) { node.status({}); }
                 else {
                     var stat = "";
                     if (Array.isArray(msg.payload)) { stat = msg.payload.length + " items"; }
