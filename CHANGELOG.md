@@ -7,7 +7,9 @@
 **Fixes**
 
  - Fix msg.vol for tts out
- - Fix dropdown again to display input value when in  not passing though mode. Issue #675
+ - Fix dropdown again to display input value when in not passing though mode. Issue #675
+ - Fix dropdown to allow clearing/resetting by sending an empty message (part of fix above)
+ - Add option to switch custom icons to animate (a bit) - works with more icon types now.
 
 ### 2.27.1: Maintenance Release
 

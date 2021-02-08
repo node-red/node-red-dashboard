@@ -41,8 +41,8 @@ module.exports = function(RED) {
             },
             beforeSend: function (msg) {
                 msg.payload = parseFloat(msg.payload);
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
-                msg.topic = t || node.topi;
+                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
+                if (t) { msg.topic = t; }
                 if (node.pt) {
                     node.status({shape:"dot",fill:"grey",text:msg.payload});
                 }

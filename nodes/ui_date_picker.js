@@ -42,8 +42,8 @@ module.exports = function(RED) {
                 return d;
             },
             beforeSend: function (msg) {
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
-                msg.topic = t || node.topi;
+                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
+                if (t) { msg.topic = t; }
             }
         });
         node.on("close", done);

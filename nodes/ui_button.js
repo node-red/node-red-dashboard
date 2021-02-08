@@ -55,8 +55,8 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             beforeSend: function (msg,m2) {
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
-                msg.topic = t || node.topi;
+                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
+                if (t) { msg.topic = t; }
                 if (m2 !== undefined) { msg.event = m2.event; }
             },
             convertBack: function (value) {
