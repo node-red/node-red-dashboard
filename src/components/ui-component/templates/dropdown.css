@@ -9,8 +9,8 @@
 
 .nr-dashboard-dropdown md-input-container>md-select {
     overflow: hidden;
-    /* margin-left: 4px !important; */
-    margin-top: 6px;
+    margin-left: 4px !important;
+    margin-top: 7px;
 }
 
 .nr-dashboard-theme .nr-dashboard-dropdown md-select-value {
@@ -20,13 +20,6 @@
 .nr-dashboard-theme .nr-dashboard-dropdown .md-select-value .md-select-icon {
     margin: 0px;
     width: 12px;
-}
-
-.nr-dashboard-dropdown .layout-row>.flex-100 {
-    flex: 1 1 50%;
-    max-width: 100%;
-    max-height: 100%;
-    box-sizing: border-box;
 }
 
 .nr-dashboard-dropdown p.label {

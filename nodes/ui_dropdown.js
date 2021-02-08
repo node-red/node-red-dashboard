@@ -32,10 +32,7 @@ module.exports = function(RED) {
         control.options = config.options;
 
         var emitOptions;
-
-        node.on("input", function(msg) {
-            node.topi = msg.topic;
-        });
+        var savedtopic;
 
         var done = ui.add({
             node: node,
@@ -75,14 +72,14 @@ module.exports = function(RED) {
                                 break;
                             }
                             case 'string': {
-                                emitOptions.newOptions.push({label:opt, value:opt, type:"string"});
+                                emitOptions.newOptions.push({label:opt, value:opt});
                                 break;
                             }
                             case 'object': {
                                 // assuming object of {label:value}
                                 for (var m in opt) {
                                     if (opt.hasOwnProperty(m)) {
-                                        emitOptions.newOptions.push({label:m, value:opt[m], type:typeof(opt[m])});
+                                        emitOptions.newOptions.push({label:m, value:opt[m]});
                                     }
                                 }
                                 break;
@@ -109,6 +106,8 @@ module.exports = function(RED) {
                     }
                 }
 
+                if (msg.hasOwnProperty("topic")) { savedtopic = msg.topic; }
+
                 if (msg.hasOwnProperty("payload")) {
                     if (node.multiple) {
                         if (typeof msg.payload === "string") {
@@ -117,7 +116,8 @@ module.exports = function(RED) {
                     }
                     emitOptions.value = msg.payload;
                     control.value = emitOptions.value;
-                    delete msg._dontSend;
+                    delete emitOptions._dontSend;
+                    if (!node.pt) { delete emitOptions.value; }
                     return emitOptions;
                 }
                 // we do not overide payload here due to 'opt.emitOnlyNewValues' in ui.js
@@ -133,31 +133,28 @@ module.exports = function(RED) {
             convertBack: function (msg) {
                 var val = node.multiple ? [] : "";
                 var m = RED.util.cloneMessage(msg);
-                var mm = (m.hasOwnProperty("id")) ? m.value : m;
                 for (var i=0; i<control.options.length; i++) {
                     if (!node.multiple) {
-                        delete m["$$mdSelectId"];
-                        if (JSON.stringify(control.options[i].value) == JSON.stringify(mm)) {
+                        delete m["$$mdSelectId"]
+                        if (JSON.stringify(control.options[i].value) === JSON.stringify(m)) {
                             val = control.options[i].value;
-                            if (typeof val === "string" && control.options[i].type !== "string") {
+                            if (typeof control.options[i].value === "string" && control.options[i].type !== "str") {
                                 try { val = JSON.parse(val); }
                                 catch(e) {}
                             }
                             break;
                         }
                     }
-                    else if (node.multiple && mm !== null) {
-                        if (!Array.isArray(mm)) {
-                            if (mm.hasOwnProperty("value")) { mm = mm.value; }
-                            // if (typeof m === "string") { m = [ m ]; }
-                            if (mm == null) { mm = []; }
-                            else { mm = [ mm ]; }
+                    else if (node.multiple) {
+                        if (!Array.isArray(m)) {
+                            if (m.hasOwnProperty("value")) { m = m.value; }
+                            if (typeof m === "string") { m = [ m ]; }
                         }
-                        mm.map(x => delete x["$$mdSelectId"])
-                        for (var j = 0; j < mm.length; j++) {
-                            if (JSON.stringify(control.options[i].value) === JSON.stringify(mm[j])) {
+                        m.map(x => delete x["$$mdSelectId"])
+                        for (var j = 0; j < m.length; j++){
+                            if (JSON.stringify(control.options[i].value) === JSON.stringify(m[j])) {
                                 var v = control.options[i].value;
-                                if (typeof v === "string" && control.options[i].type !== "string") {
+                                if (typeof v === "string" && control.options[i].type !== "str") {
                                     try { v = JSON.parse(v); }
                                     catch(e) {}
                                 }
@@ -172,14 +169,14 @@ module.exports = function(RED) {
 
             beforeSend: function (msg) {
                 if (msg.payload === undefined) { msg.payload = []; }
-                if (msg.payload === "") { msg._dontSend = true; }
                 if (msg._dontSend) {
                     delete msg.options;
                     msg.payload = emitOptions.value;
+                    delete msg._dontSend;
                 }
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
-                if (t) { msg.topic = t; }
-                if (msg.payload === null || msg._dontSend) { node.status({}); }
+                msg.topic = config.topic || msg.topic || savedtopic;
+                if (msg.topic === undefined) { delete msg.topic; }
+                if (msg.payload === null) { node.status({}); }
                 else {
                     var stat = "";
                     if (Array.isArray(msg.payload)) { stat = msg.payload.length + " items"; }

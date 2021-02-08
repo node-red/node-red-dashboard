@@ -26,7 +26,8 @@
       "submitButtonText": "Text Absenden-Schaltfläche",
       "cancelButtonText": "Text Abbrechen-Schaltfläche",
       "topic": "Topic",
-      "optionalMsgTopic": "Optionaler msg.topic"
+      "optionalMsgTopic": "Optionaler msg.topic",
+      "splitLayout":"Place the form elements in two columns"
     }
   }
 }

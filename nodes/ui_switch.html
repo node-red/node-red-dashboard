@@ -20,8 +20,7 @@
             height: {value: 0},
             passthru: {value: true},
             decouple: {value: "false"},
-            topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
-            topicType: {value: 'msg'},
+            topic: {value: ''},
             style: {value: ''},
             onvalue: {value: true, required:true, validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('onvalueType'):function(v) { return true})},
             onvalueType: {value: 'bool'},
@@ -31,7 +30,6 @@
             offvalueType: {value: 'bool'},
             officon: {value: ''},
             offcolor: {value: ''},
-            animate: {value: false}
         },
         inputs:1,
         outputs:1,
@@ -72,12 +70,6 @@
                 default: 'str',
                 typeField: $("#node-input-offvalueType"),
                 types: ['str','num','bool','json','bin','date','flow','global']
-            });
-
-            $('#node-input-topic').typedInput({
-                default: 'str',
-                typeField: $("#node-input-topicType"),
-                types: ['str','msg','flow','global']
             });
 
             $('#node-input-passthru').on("change", function() {
@@ -122,12 +114,10 @@
     </div>
     <div class="form-row">
         <label for="node-input-custom-icons"><i class="fa fa-picture-o"></i> Icon</label>
-        <select id="node-input-custom-icons" style="width:35%">
+        <select id="node-input-custom-icons">
             <option value="default">Default</option>
             <option value="custom">Custom</option>
         </select>
-        <span style="width:auto; padding-left:20px" class="form-row-custom-icons" for="node-input-animate"> Animate
-        <input type="checkbox" checked id="node-input-animate" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
     </div>
     <div class="form-row form-row-custom-icons">
         <label for="node-input-onicon" style="text-align:right;"><i class="fa fa-toggle-on"></i> On Icon</label>
@@ -168,7 +158,6 @@
     <div class="form-row">
         <label for="node-input-topic" style="padding-left:25px; margin-right:-25px">Topic</label>
         <input type="text" id="node-input-topic">
-        <input type="hidden" id="node-input-topicType">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

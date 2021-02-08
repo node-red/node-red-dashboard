@@ -13,10 +13,6 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(group.config.tab);
         if (!tab) { return; }
 
-        node.on("input", function(msg) {
-            node.topi = msg.topic;
-        });
-
         var done = ui.add({
             node: node,
             tab: tab,
@@ -37,8 +33,7 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             beforeSend: function (msg) {
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
-                if (t) { msg.topic = t; }
+                msg.topic = config.topic || msg.topic;
                 if (node.pt) {
                     node.status({shape:"dot",fill:"grey",text:msg.payload});
                 }

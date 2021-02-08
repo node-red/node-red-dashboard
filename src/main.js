@@ -822,9 +822,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         }
                     }
                     events.emit('ui-audio', 'playing');
-                    if ((msg.vol !== undefined) && !isNaN(parseInt(msg.vol))) {
-                        words.volume = parseInt(msg.vol)/100 || 1;
-                    }
+                    console.log("VOL",msg.vol)
+                    words.volume = msg.vol/100 || 1;
                     window.speechSynthesis.speak(words);
                 }
                 else {

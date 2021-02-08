@@ -30,10 +30,6 @@ module.exports = function(RED) {
             payload = payload || node.id;
         }
 
-        node.on("input", function(msg) {
-            node.topi = msg.topic;
-        });
-
         var done = ui.add({
             node: node,
             tab: tab,
@@ -55,8 +51,7 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             beforeSend: function (msg,m2) {
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
-                if (t) { msg.topic = t; }
+                msg.topic = config.topic || msg.topic;
                 if (m2 !== undefined) { msg.event = m2.event; }
             },
             convertBack: function (value) {

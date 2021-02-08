@@ -10,10 +10,6 @@ module.exports = function(RED) {
         var tab = RED.nodes.getNode(group.config.tab);
         if (!tab) { return; }
 
-        node.on("input", function(msg) {
-            node.topi = msg.topic;
-        });
-
         var done = ui.add({
             node: node,
             tab: tab,
@@ -38,8 +34,7 @@ module.exports = function(RED) {
                 }
                 // if (config.mode === "week") { msg.payload = Date.parse(msg.payload); }
                 // if (config.mode === "month") { msg.payload = Date.parse(msg.payload); }
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
-                if (t) { msg.topic = t; }
+                msg.topic = config.topic || msg.topic;
             }
         });
         node.on("close", done);
