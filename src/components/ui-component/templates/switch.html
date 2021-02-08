@@ -29,12 +29,14 @@
     <ui-icon icon="{{me.item.onicon}}"
         ng-style="{color: me.item.oncolor}"
         ng-class="{'center' : !me.item.label, 'ng-hide': !me.item.value}"
+        class="{{me.item.animate}}"
         ng-if="me.item.oncolor && me.item.onicon && me.item.offcolor && me.item.officon"
         style="z-index:1">
     </ui-icon>
     <ui-icon icon="{{me.item.officon}}"
         ng-style="{color:me.item.offcolor}"
         ng-class="{'center' : !me.item.label, 'ng-hide': me.item.value}"
+        class="{{me.item.animate}}"
         ng-if="me.item.oncolor && me.item.onicon && me.item.offcolor && me.item.officon"
         style="z-index:1">
     </ui-icon>

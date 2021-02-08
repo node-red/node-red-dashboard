@@ -136,6 +136,19 @@ md-card {
 	}
 }
 
+.flip-icon {
+    animation: flip-icon 0.3s linear both;
+}
+
+@keyframes flip-icon {
+    0% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
 @supports (-ms-overflow-style: none) {
     overflow: auto !important;
 }

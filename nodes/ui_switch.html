@@ -31,6 +31,7 @@
             offvalueType: {value: 'bool'},
             officon: {value: ''},
             offcolor: {value: ''},
+            animate: {value: false}
         },
         inputs:1,
         outputs:1,
@@ -121,10 +122,12 @@
     </div>
     <div class="form-row">
         <label for="node-input-custom-icons"><i class="fa fa-picture-o"></i> Icon</label>
-        <select id="node-input-custom-icons">
+        <select id="node-input-custom-icons" style="width:35%">
             <option value="default">Default</option>
             <option value="custom">Custom</option>
         </select>
+        <span style="width:auto; padding-left:20px" class="form-row-custom-icons" for="node-input-animate"> Animate
+        <input type="checkbox" checked id="node-input-animate" style="display:inline-block; width:auto; vertical-align:baseline;"></span>
     </div>
     <div class="form-row form-row-custom-icons">
         <label for="node-input-onicon" style="text-align:right;"><i class="fa fa-toggle-on"></i> On Icon</label>

@@ -83,6 +83,7 @@ module.exports = function(RED) {
                 officon: config.officon,
                 oncolor: config.oncolor,
                 offcolor: config.offcolor,
+                animate: config.animate?"flip-icon":"",
                 width: config.width || group.config.width || 6,
                 height: config.height || 1
             },
@@ -124,8 +125,8 @@ module.exports = function(RED) {
                 return value;
             },
             beforeSend: function (msg) {
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
-                msg.topic = t || node.topi;
+                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
+                if (t) { msg.topic = t; }
             }
         });
 
