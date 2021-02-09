@@ -1,13 +1,13 @@
 <md-card
-    ui-card-size="{{ me.item.width }}x{{ (( parseInt(me.item.height)||me.item.options.length)+(me.item.label? 2 : 1)) + me.item.extraRows }}"
+    ui-card-size="{{ me.item.width }}x{{ (parseInt(me.item.height)||me.item.rowCount)}}"
     layout="row"
     layout-align="space-between center"
     class="nr-dashboard-form"
     node-id="{{me.item.id}}">
-  <form name ="form" ng-submit="me.submit(form)" style="margin-top: 10px">
-       <p class="formlabel" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
-       <div layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
-           <md-input-container class="md-block" style="height:{{me.item.sy * (opt.type=='multiline' ? opt.rows : 1) }}px" flex>
+  <form name ="form" ng-submit="me.submit(form)" style="margin-top:{{(me.item.label ? 0 : me.item.rowCount < 3 ? me.item.rowHeight/6 : me.item.rowHeight/2.5)}}px">
+       <p class="formlabel" style="margin-bottom:{{(me.item.rowHeight/9)}}px" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
+       <div class="formElement" ng-class="{'formElementSplit':(me.item.splitLayout)}" layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
+           <md-input-container class="md-block" style="height:{{(me.item.rowHeight * (opt.type=='multiline' ? opt.rows : 1)) }}px" flex>
                <label ng-if="(opt.type=='text' || opt.type=='number' || opt.type=='email' || opt.type=='multiline' || opt.type=='password' || opt.type=='date') && opt.label">{{opt.label}}</label>
                <input ng-if="opt.type=='text' || opt.type=='email' || opt.type=='password'" type="{{opt.type}}"
                 ng-model="me.item.formValue[opt.value]"
@@ -32,15 +32,16 @@
                  md-no-autogrow
                  ng-required="opt.required"
                  ng-model="me.item.formValue[opt.value]"
-                 style="height:{{opt.rows * me.item.sy}}px"></textarea>
+                 style="height:{{(opt.rows * me.item.sy) - 10}}px"></textarea>
                <md-switch ng-if="opt.type=='switch'" md-no-ink ng-model="me.item.formValue[opt.value]">{{opt.label}}</md-switch>
                <md-checkbox ng-if="opt.type=='checkbox'" md-no-ink aria-label="Checkbox No Ink" ng-model="me.item.formValue[opt.value]"> {{opt.label}}</md-checkbox>
            </md-input-container>
            <!-- <md-datepicker ng-if="opt.type=='date'" ng-model="me.item.formValue[opt.value]"></md-datepicker> -->
        </div>
-       <div layout-gt-sm="row" style="margin-top:0px">
-           <md-button class="md-raised nr-dashboard-form-button" type="submit">{{me.item.submit}}</md-button>
-           <md-button  ng-if="me.item.cancel != ''" class="md-raised nr-dashboard-form-button" ng-click="me.reset()">{{me.item.cancel}}</md-button>
+       <div class="form-control"  ng-class="{'form-control-single':me.item.cancel == '','form-control-no-label':me.item.label == ''}" style="margin-top:{{( me.item.label =='' ? me.item.rowCount < 3 ? me.item.rowHeight * 0.4 : me.item.rowHeight * 0.2 : me.item.rowHeight * -0.1)}}px;">
+           <md-button class="md-raised nr-dashboard-form-button" type="submit" style="height:{{(me.item.sy -4)}}px;line-height:{{(me.item.sy -4)}}px">{{me.item.submit}}</md-button>
+           <md-button  ng-if="me.item.cancel != ''" class="md-raised nr-dashboard-form-button" style="height:{{(me.item.sy -4)}}px;line-height:{{(me.item.sy -4)}}px"  ng-click="me.reset()">{{me.item.cancel}}</md-button>
        </div>
    </form>
 </md-card>
+cancel
