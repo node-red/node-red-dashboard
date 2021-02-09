@@ -27,7 +27,7 @@
       "cancelButtonText": "キャンセルボタンの文字列",
       "topic": "トピック",
       "optionalMsgTopic": "任意のmsg.topic",
-      "splitLayout": "フォーム要素を2列に配置します"
+      "splitLayout": "フォーム要素を2列に配置"
     }
   }
 }
