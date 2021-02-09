@@ -12,7 +12,8 @@
 }
 
 .nr-dashboard-form .formlabel {
-    font-size: larger;
+    font-size: large;
+    font-weight: 500;
     margin-top: 8px;
     margin-bottom: 20px;
     padding: 0 6px;
@@ -45,10 +46,14 @@
 }
 .nr-dashboard-form md-input-container {
 	display: inline-block;
-    margin-top: 0px;
+    margin-top: 4px;
     margin-bottom: 0px;
     padding-top: 1px;
     padding-bottom: 1px;
+}
+
+.nr-dashboard-form form md-input-container input {
+    margin-top: 2px;
 }
 
 .nr-dashboard-form md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
