@@ -34,7 +34,8 @@
             payload: {value: ''},
             submit: {value: "submit"},
             cancel: {value: "cancel"},
-            topic: {value: ''}
+            topic: {value: ''},
+            splitLayout: {value:''}
         },
         inputs:1,
         outputs:1,
@@ -286,6 +287,11 @@ input:checked + .slider:before {
         <i class="fa fa-thumbs-o-up"></i> <input type="text" id="node-input-submit" data-i18n="[placeholder]ui_form.label.submitButtonText" style="width:35%;">
         <span style="margin-left:16px"><i class="fa fa-thumbs-o-down"></i></span>
         <input type="text" id="node-input-cancel" data-i18n="[placeholder]ui_form.label.cancelButtonText" style="width:35%;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-splitLayout"></label>
+        <input type="checkbox" id="node-input-splitLayout" style="display:inline-block; width:auto; vertical-align:top;">
+        <span data-i18n="ui_form.label.splitLayout">
     </div>
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> <span data-i18n="ui_form.label.topic"></label>
