@@ -2,6 +2,7 @@
 
 **Enhancements**
 
+ - Add two column option to ui_form widget. PR #680
  - Let topic setting be a typed input for nodes that output topic
 
 **Fixes**

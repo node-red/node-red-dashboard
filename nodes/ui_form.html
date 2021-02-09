@@ -34,7 +34,8 @@
             payload: {value: ''},
             submit: {value: "submit"},
             cancel: {value: "cancel"},
-            topic: {value: ''},
+            topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
+            topicType: {value: 'msg'},
             splitLayout: {value:''}
         },
         inputs:1,
@@ -151,6 +152,12 @@
                 var option = this.options[i];
                 generateOption(i+1,option);
             }
+
+            $('#node-input-topic').typedInput({
+                default: 'str',
+                typeField: $("#node-input-topicType"),
+                types: ['str','msg','flow','global']
+            });
 
             $( "#node-input-option-container" ).sortable({
                 axis: "y",
@@ -296,6 +303,7 @@ input:checked + .slider:before {
     <div class="form-row">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> <span data-i18n="ui_form.label.topic"></label>
         <input type="text" id="node-input-topic" data-i18n="[placeholder]ui_form.label.optionalMsgTopic">
+        <input type="hidden" id="node-input-topicType">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></label>

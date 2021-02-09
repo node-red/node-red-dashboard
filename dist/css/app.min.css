@@ -32568,20 +32568,58 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .nr-dashboard-form form {
-  padding: 0px 6px 0px 12px;
+  padding: 0px 6px 0px 6px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .nr-dashboard-form .formlabel {
   font-size: larger;
   margin-top: 8px;
   margin-bottom: 20px;
-  margin-left: -4px;
+  padding: 0 6px;
+  width: 100%;
+}
+
+.nr-dashboard-form .formElement {
+  width: calc(100% - 12px);
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.nr-dashboard-form .formElementSplit {
+  width: calc(50% - 12px);
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.nr-dashboard-form .form-control {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -20px;
+}
+
+.nr-dashboard-form .form-control-single {
+  justify-content: space-around;
+}
+
+.nr-dashboard-form .form-control-single > .nr-dashboard-form-button {
+  width: 100%;
+}
+
+.nr-dashboard-form .form-control-no-label {
+  margin-top: -10px;
 }
 
 .nr-dashboard-form md-input-container {
   display: inline-block;
-  margin-top: 1px;
-  margin-bottom: 1px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
 .nr-dashboard-form md-input-container.md-input-focused label:not(.md-no-float),
@@ -32616,8 +32654,10 @@ md-input-container.md-input-has-value label:not(.md-no-float) {
 }
 
 .nr-dashboard-form-button {
-  width: 43%;
-  float: left;
+  width: 50%;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  min-height: 28px;
 }
 
 .nr-dashboard-form form md-input-container md-checkbox .md-label {
