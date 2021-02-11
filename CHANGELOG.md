@@ -1,9 +1,9 @@
-### 2.28.0-beta: Maintenance Release
+### 2.28.0: Milestone Release
 
 **Enhancements**
 
  - Add two column option to ui_form widget. PR #680
- - Let topic setting be a typed input for nodes that output topic
+ - Let topic setting be a typed input for nodes that output topic.
 
 **Fixes**
 
