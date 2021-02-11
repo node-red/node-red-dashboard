@@ -243,7 +243,7 @@ function add(opt) {
                 }
             }
 
-            // if label, format or color field is set to a msg property, emit that as well
+            // if label, format, color, units, tooltip or icon fields are set to a msg property, emit that as well
             addField("label");
             addField("format");
             addField("color");
