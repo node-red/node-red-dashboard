@@ -32617,10 +32617,17 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-form md-input-container {
   display: inline-block;
-  margin-top: 4px;
+  margin-top: 0px;
   margin-bottom: 0px;
   padding-top: 1px;
   padding-bottom: 1px;
+}
+
+md-input-container label:not(.md-container-ignore) {
+  position: absolute;
+  bottom: 94%;
+  left: 0;
+  right: auto;
 }
 
 .nr-dashboard-form form md-input-container input {

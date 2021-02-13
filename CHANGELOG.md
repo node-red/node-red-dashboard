@@ -1,3 +1,9 @@
+### 2.28.1: Maintenance Release
+
+**Fixes**
+
+ - Fix ui-form sizing issue.
+
 ### 2.28.0: Milestone Release
 
 **Enhancements**
