@@ -32578,8 +32578,8 @@ reason: https://github.com/angular/material/issues/6214
 .nr-dashboard-form .formlabel {
   font-size: large;
   font-weight: 500;
-  margin-top: 8px;
-  margin-bottom: 20px;
+  margin-top: 12px;
+  margin-bottom: 6px;
   padding: 0 6px;
   width: 100%;
 }

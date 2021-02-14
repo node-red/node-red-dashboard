@@ -701,12 +701,13 @@
         } else if (redNode.type === 'ui_chart') {
             height = Math.floor(groupWidth/2)+1;
         } else if (redNode.type === 'ui_form') {
-            var optNum = redNode.options.length; // Sub widget number
-            if (redNode.label) {
-                height = optNum + 2; // Label and Button
-            } else {
-                height = optNum + 1; // Button only
-            }
+            // var optNum = redNode.options.length; // Sub widget number
+            // if (redNode.label) {
+            //     height = optNum + 2; // Label and Button
+            // } else {
+            //     height = optNum + 1; // Button only
+            // }
+            height = redNode.rowCount
         } else if (redNode.type === 'ui_lineargauge') {
             if (redNode.unit && redNode.name) {
                 height = 5;

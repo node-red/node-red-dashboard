@@ -24,7 +24,7 @@ module.exports = function(RED) {
                 order: config.order,
                 value: config.payload || node.id,
                 width: config.width || group.config.width || 6,
-                height: config.height || config.options.length ,
+                height: config.height || config.splitLayout == true ? Math.ceil(config.options.length/2) : config.options.length,
                 options: config.options,
                 formValue: config.formValue,
                 submit: config.submit,
