@@ -375,11 +375,11 @@ function init(server, app, log, redSettings) {
         });
     } else {
         io.use(function (socket, next) {
-            if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
-                // Reject direct websocket requests
-                socket.client.conn.close();
-                return;
-            }
+            // if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
+            //     // Reject direct websocket requests
+            //     socket.client.conn.close();
+            //     return;
+            // }
             if (socket.handshake.xdomain === false) {
                 return next();
             } else {
