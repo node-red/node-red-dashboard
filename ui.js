@@ -320,6 +320,7 @@ function join() {
 
 function init(server, app, log, redSettings) {
     var uiSettings = redSettings.ui || {};
+    console.log("UIS",uiSettings)
     if ((uiSettings.hasOwnProperty("path")) && (typeof uiSettings.path === "string")) {
         settings.path = uiSettings.path;
     }
@@ -369,23 +370,24 @@ function init(server, app, log, redSettings) {
 
     if (typeof uiSettings.ioMiddleware === "function") {
         io.use(uiSettings.ioMiddleware);
-    } else if (Array.isArray(uiSettings.ioMiddleware)) {
-        uiSettings.ioMiddleware.forEach(ioMiddleware => {
+    }
+    else if (Array.isArray(uiSettings.ioMiddleware)) {
+        uiSettings.ioMiddleware.forEach(function(ioMiddleware) {
             io.use(ioMiddleware);
         });
-    } else {
-        io.use(function (socket, next) {
-            // if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
-            //     // Reject direct websocket requests
-            //     socket.client.conn.close();
-            //     return;
-            // }
-            if (socket.handshake.xdomain === false) {
-                return next();
-            } else {
-                socket.disconnect(true);
-            }
-        });
+    }
+    else {
+        if (uiSettings.allowCrossDomain !== true) {
+            io.use(function (socket, next) {
+                if (socket.client.conn.request.url.indexOf("transport=websocket") !== -1) {
+                    // Reject direct websocket requests
+                    socket.client.conn.close();
+                    return;
+                }
+                if (socket.handshake.xdomain === false) { return next(); }
+                else { socket.disconnect(true); }
+            });
+        }
     }
 
     io.on('connection', function(socket) {
