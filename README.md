@@ -34,12 +34,16 @@ If you want to try the latest version from github, you can install it by
 
 ## Settings
 
-The default url for the dashboard is based off your existing Node-RED httpRoot path with /ui added. This can be changed in your Node-RED settings.js file - `ui: { path: "ui" },`
-
-You can also add your own express middleware to handle requests by using the `ui: { middleware: your_function }` property in settings.js. For example
+The default url for the dashboard is based off your existing Node-RED httpRoot path with /ui added. This can be changed in your Node-RED settings.js file.
 
 ```
-ui: { path: 'ui', middleware: function (req, res, next) {
+ui: { path: "ui" },
+```
+
+You can also add your own express middleware to handle the http requests by using the `ui: { middleware: your_function }` property in settings.js. For example
+
+```
+ui: { middleware: function (req, res, next) {
             // Do something more interesting here.
             console.log('LOGGED')
             next()
@@ -47,7 +51,29 @@ ui: { path: 'ui', middleware: function (req, res, next) {
     },
 ```
 
+You can also add middleware to the websocket connection using
+
+```
+ui: { ioMiddleware: function (socket, next) {
+            // Do something more interesting here.
+            console.log('HELLO')
+            next()
+        }
+    },
+```
+
+**Note**: both of these also accept an array of functions if you need to pass in multiple middleware actions.
+
+Setting your own ioMiddleware will disable the default cross domain origin check.
+
 You can also set the dashboard to be read only by `ui: { readOnly: true }`. This does not stop the user interacting with the dashboard but does ignore all updates coming from the dashboard.
+
+Finally you can customise the default Group name (for i18n) by setting
+```
+ui: { defaultGroup: "Better Default" }
+```
+
+You can of course combine any combination of these properties
 
 ## Layout
 
