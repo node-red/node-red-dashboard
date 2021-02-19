@@ -31,7 +31,7 @@ module.exports = function(RED) {
         }
         control.options = config.options;
 
-        var emitOptions;
+        var emitOptions = { value:undefined };
 
         node.on("input", function(msg) {
             node.topi = msg.topic;
