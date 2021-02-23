@@ -1,3 +1,9 @@
+### 2.28.2: Maintenance Release
+
+**Fixes**
+
+ - Fix empty dropdown causing crash on select. PR #686
+
 ### 2.28.1: Maintenance Release
 
 **Fixes**
