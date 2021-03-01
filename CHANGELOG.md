@@ -3,6 +3,7 @@
 **Fixes**
 
  - Fix empty dropdown causing crash on select. PR #686
+ - Fix button not sending blank string. Issue #687
 
 ### 2.28.1: Maintenance Release
 
