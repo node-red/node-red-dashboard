@@ -58,6 +58,7 @@ module.exports = function(RED) {
                 var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg)
                 if (typeof t === "undefined") { t = node.topi; }
                 if (t !== undefined) { msg.topic = t; }
+                if (((config.topicType || "str") === "str") && t == "") { delete msg.topic; }
                 if (m2 !== undefined) { msg.event = m2.event; }
             },
             convertBack: function (value) {
