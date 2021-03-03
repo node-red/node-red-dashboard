@@ -31,7 +31,7 @@ module.exports = function(RED) {
         }
 
         node.on("input", function(msg) {
-            node.topi = msg.topic;
+            node.topi = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
         });
 
         var done = ui.add({
