@@ -286,6 +286,9 @@ function add(opt) {
 
         if (toSend !== undefined) {
             toSend.socketid = toSend.socketid || msg.socketid;
+            if(msg.hasOwnProperty("meta")) {
+                toSend.meta = msg.meta;
+            }
             if (toSend.hasOwnProperty("topic") && (toSend.topic === undefined)) { delete toSend.topic; }
             // send to following nodes
             if (!msg.hasOwnProperty("_dontSend")) { opt.node.send(toSend); }
