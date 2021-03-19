@@ -4,7 +4,7 @@
 
  - Fix empty dropdown causing crash on select. PR #686
  - Fix button not sending blank string. Issue #687
- - Fix dropdown not returning numers of type string. Issue #691
+ - Fix dropdown not returning numbers of type string. Issue #691
 
 ### 2.28.1: Maintenance Release
 
