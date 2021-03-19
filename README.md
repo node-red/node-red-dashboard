@@ -191,6 +191,11 @@ Again note you have to add `iconify-` to the icon name in the icon set of your c
 <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 ```
 
+Once you have done that then you can also use them more generally, for example
+```
+<span class="iconify icon:wi:sunset icon-inline:false"></span>
+```
+
 You may also create your own set of icons using [Icofont](https://icofont.com/icons). Once downloaded you can serve them locally via Node-RED and add them to the head of the dashboard page by using a ui_template node : e.g.
 
 ```
