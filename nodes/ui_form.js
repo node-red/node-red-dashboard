@@ -18,6 +18,7 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             forwardInputMessages: false,
+            storeFrontEndInputAsState: false,
             control: {
                 type: 'form',
                 label: config.label,
