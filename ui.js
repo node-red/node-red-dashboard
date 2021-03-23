@@ -136,8 +136,32 @@ function add(opt) {
 
         var subflow = nodes.getNode(opt.node.z);
         if (subflow) {
+            var widget = opt.node["_alias"];
+            console.log("# Widget:", widget, opt.node.type);
+            console.log("  Belongs to Subflow instalce :", subflow.path);
+
+            var subflows = subflow.path.split('/');
+
+            // Get orders for all layers by repeating for each layer
+            var sf_inst_id = subflows.pop(); // Get the trailing subflow instance
+            while(sf_inst_id) {
+                var order = -1;
+                if (subflows.length > 0) {
+                    sg_inst = getSubgroupInstance(sf_inst_id); // Get a subgroup instance
+                    order = getOrderBySubgroup(sg_inst, widget); // Get order value for subgroup
+                    console.log("  subflow instance=",sf_inst_id);
+                    console.log("  widget or subgroup instance=", widget);
+                    console.log("  order=", order);
+                } else {
+                    console.log("  subgroup instance=", widget);
+                    console.log("  order=", sg_inst.order);
+                }
+                widget = sg_inst.id; // Get the order value of the obtained subgroup instance
+                sf_inst_id = subflows.pop();
+            }
+        } else {
             // TODO Cannot get subflow instance when subflow instance is placed in subflow.
-            //console.log("# Belongs to subflow:", subflow.path);
+            console.log("  The subflow instance was not found.");
         }
     }
 
@@ -397,6 +421,28 @@ function add(opt) {
             delete replayMessages[opt.node.id];
         }, removeStateTimeout);
     };
+}
+
+// Get subgroup instance definition from subflow instance ID
+function getSubgroupInstance(sf_inst_id) {
+    var sg_inst = null;
+    nodes.eachNode(function(node) {
+        if (node.type == 'ui_subgroup_i' && node.subflow == sf_inst_id) {
+            sg_inst = node;
+        }
+    });
+    return sg_inst;
+}
+
+// Get order value from subgroup instance definition
+function getOrderBySubgroup(sg_inst, widget) {
+    var order = -1;
+    nodes.eachNode(function(node) {
+        if (node.type == 'ui_subgroup_t' && node.id == sg_inst.subgroup) {
+            order = node.widgetOrder.indexOf(widget);
+        }
+    });
+    return order;
 }
 
 //from: https://stackoverflow.com/a/28592528/3016654
