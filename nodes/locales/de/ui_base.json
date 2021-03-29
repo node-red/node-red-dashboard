@@ -2,6 +2,7 @@
     "ui_base": {
         "label": {
             "dashboard": "Dashboard",
+            "category": "Dashboard",
             "title": "Titel",
             "options": "Optionen",
             "date-format": "Datumsformat",
