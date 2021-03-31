@@ -1,7 +1,6 @@
 {
     "ui_template" : {
     	"label" : {
-    	    "category" : "dashboard",
     	    "type" : "コード種別",
     	    "local" : "グループ内のWidget",
     	    "global" : "<head>ヘッドセクションへ追加",

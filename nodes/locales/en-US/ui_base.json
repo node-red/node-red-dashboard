@@ -1,99 +1,100 @@
 {
-    "ui_base" : {
-        "label" : {
-            "dashboard" : "dashboard",
-            "title" : "Title",
-            "options" : "Options",
-            "date-format" : "Date Format",
-            "sizes" : "Sizes",
-            "horizontal" : "Horizontal",
-            "vertical" : "Vertical",
-            "widget-size" : "1x1 Widget Size",
-            "widget-spacing" : "Widget Spacing",
-            "group-padding" : "Group Padding",
-            "group-spacing" : "Group Spacing",
-            "layout" : "Layout",
+    "ui_base": {
+        "label": {
+            "dashboard": "dashboard",
+            "category": "dashboard",
+            "title": "Title",
+            "options": "Options",
+            "date-format": "Date Format",
+            "sizes": "Sizes",
+            "horizontal": "Horizontal",
+            "vertical": "Vertical",
+            "widget-size": "1x1 Widget Size",
+            "widget-spacing": "Widget Spacing",
+            "group-padding": "Group Padding",
+            "group-spacing": "Group Spacing",
+            "layout": "Layout",
             "angular": "Angular",
-            "theme" : "Theme",
-            "site" : "Site"
+            "theme": "Theme",
+            "site": "Site"
         },
-        "auto" : "auto",
-        "title" : "Node-RED Dashboard",
-        "layout" : {
-            "tab-and-link" : "Tabs & Links",
-            "tab" : "tab",
-            "link" : "link",
-            "group" : "group",
-            "edit" : "edit",
+        "auto": "auto",
+        "title": "Node-RED Dashboard",
+        "layout": {
+            "tab-and-link": "Tabs & Links",
+            "tab": "tab",
+            "link": "link",
+            "group": "group",
+            "edit": "edit",
             "spacer": "spacer",
-            "layout" : "layout",
-            "layout-editor" : "Dashboard layout editor",
-            "width" : "Width",
+            "layout": "layout",
+            "layout-editor": "Dashboard layout editor",
+            "width": "Width",
             "auto": "auto-sizing",
             "manual": "manual resize"
         },
-        "theme" : {
-            "style" : "Style",
-            "custom-profile" : "Custom Profile",
-            "custom-profile-name" : "Untitled Theme 1",
-            "base-settings" : "Base Settings",
-            "page-settings" : "Page Settings",
-            "page" : {
-                "title" : "Title Bar Background",
-                "page" : "Page Background",
-                "side" : "Side Bar Background"
+        "theme": {
+            "style": "Style",
+            "custom-profile": "Custom Profile",
+            "custom-profile-name": "Untitled Theme 1",
+            "base-settings": "Base Settings",
+            "page-settings": "Page Settings",
+            "page": {
+                "title": "Title Bar Background",
+                "page": "Page Background",
+                "side": "Side Bar Background"
             },
-            "group-settings" : "Group Settings",
-            "group" : {
-                "text" : "Group Text",
-                "border" : "Group Border",
-                "background" : "Group Background"
+            "group-settings": "Group Settings",
+            "group": {
+                "text": "Group Text",
+                "border": "Group Border",
+                "background": "Group Background"
             },
-            "widget-settings" : "Widget Settings",
-            "widget" : {
-                "text" : "Widget Text",
-                "colour" : "Widget Colour",
-                "background" : "Widget Background"
+            "widget-settings": "Widget Settings",
+            "widget": {
+                "text": "Widget Text",
+                "colour": "Widget Colour",
+                "background": "Widget Background"
             }
         },
-        "style" : {
-            "light" : "Light (default)",
-            "dark" : "Dark",
-            "custom" : "Custom",
-            "primary" : "Primary",
-            "accents" : "Accents",
-            "background" : "Background",
-            "warnings" : "Warnings",
+        "style": {
+            "light": "Light (default)",
+            "dark": "Dark",
+            "custom": "Custom",
+            "primary": "Primary",
+            "accents": "Accents",
+            "background": "Background",
+            "warnings": "Warnings",
             "palette": "Light / Dark"
         },
-        "base" : {
-            "colour" : "Colour",
-            "font" : "Font"
+        "base": {
+            "colour": "Colour",
+            "font": "Font"
         },
-        "font" : {
-            "system" : "System Font (default)"
+        "font": {
+            "system": "System Font (default)"
         },
-        "site" : {
-            "title" : "Node-RED Dashboard",
-            "date-format" : "DD/MM/YYYY"
+        "site": {
+            "title": "Node-RED Dashboard",
+            "date-format": "DD/MM/YYYY"
         },
-        "title-bar" : {
-            "show" : "Show the title bar",
-            "hide" : "Hide the title bar"
+        "title-bar": {
+            "show": "Show the title bar",
+            "hide": "Hide the title bar"
         },
-        "swipe" : {
-            "no-swipe" : "No swipe between tabs",
-            "allow-swipe" : "Allow swipe between tabs"
+        "swipe": {
+            "no-swipe": "No swipe between tabs",
+            "allow-swipe": "Allow swipe between tabs"
         },
-        "lock" : {
-            "clicked" : "Click to show side menu",
-            "locked" : "Always show side menu",
-            "locked-icon" : "Always show icons only"
+        "lock": {
+            "clicked": "Click to show side menu",
+            "locked": "Always show side menu",
+            "locked-icon": "Always show icons only"
         },
-        "temp" : {
-            "allow-theme" : "Node-RED theme everywhere",
-            "no-theme" : "Use Angular theme in ui_template",
-            "none" : "Angular theme everywhere"
+        "temp": {
+            "allow-theme": "Node-RED theme everywhere",
+            "no-theme": "Use Angular theme in ui_template",
+            "none": "Angular theme everywhere"
         }
     }
 }

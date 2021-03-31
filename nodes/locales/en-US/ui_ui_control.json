@@ -1,11 +1,10 @@
 {
-    "ui_ui_control" : {
-	"label" : {
-	    "category" : "dashboard",
-	    "name" : "Name"
-	},
-        "placeholder" : {
-            "name" : "Name"
+    "ui_ui_control": {
+        "label": {
+            "name": "Name"
+        },
+        "placeholder": {
+            "name": "Name"
         }
     }
 }
