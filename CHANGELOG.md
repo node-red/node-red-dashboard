@@ -1,3 +1,9 @@
+### 2.28.3: Maintenance Release
+
+**Enhancements**
+
+ - Allow incoming msg.meta from UI. PR #690
+
 ### 2.28.2: Maintenance Release
 
 **Fixes**
