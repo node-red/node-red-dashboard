@@ -1,3 +1,10 @@
+### 3.0.0-beta: Milestone Release
+
+**Enhancements**
+
+ - Set minimum requirement to be Node12
+ - Bump libraries to latest including socketIO - this drops node 8 support, Node10 is also EOL
+
 ### 2.29.0: Maintenance Release
 
 **Enhancements**
