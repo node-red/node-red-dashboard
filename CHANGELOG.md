@@ -1,9 +1,9 @@
-### 3.0.0-beta: Milestone Release
 
-**Enhancements**
+### 2.29.1: Maintenance Release
 
- - Set minimum requirement to be Node12
- - Bump libraries to latest including socketIO - this drops node 8 support, Node10 is also EOL
+**Fixes**
+
+ - Fix dropdown to send strings when requied to do so. Issue #700
 
 ### 2.29.0: Maintenance Release
 
