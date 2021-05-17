@@ -139,7 +139,7 @@ module.exports = function(RED) {
                         delete m["$$mdSelectId"];
                         if (JSON.stringify(control.options[i].value) == JSON.stringify(mm)) {
                             val = control.options[i].value;
-                            if (typeof val === "string" && control.options[i].type !== "str") {
+                            if (typeof val === "string" && control.options[i].type !== "string") {
                                 try { val = JSON.parse(val); }
                                 catch(e) {}
                             }
@@ -157,7 +157,7 @@ module.exports = function(RED) {
                         for (var j = 0; j < mm.length; j++) {
                             if (JSON.stringify(control.options[i].value) === JSON.stringify(mm[j])) {
                                 var v = control.options[i].value;
-                                if (typeof v === "string" && control.options[i].type !== "str") {
+                                if (typeof v === "string" && control.options[i].type !== "string") {
                                     try { v = JSON.parse(v); }
                                     catch(e) {}
                                 }
