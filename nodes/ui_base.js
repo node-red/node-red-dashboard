@@ -27,7 +27,8 @@ module.exports = function(RED) {
             primary:'indigo',
             accents:'teal',
             warn: "red",
-            background:'grey'
+            background:'grey',
+            palette:'light'
         };
 
         // Setup theme name

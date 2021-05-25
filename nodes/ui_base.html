@@ -912,7 +912,7 @@
                 'group-textColor', 'group-borderColor', 'group-backgroundColor',
                 'widget-textColor', 'widget-backgroundColor','widget-borderColor'];
                 var baseFontName = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif";
-                var aTheme = {primary:"indigo", accents:"blue", warn:"red", background:"grey"};
+                var aTheme = {primary:"indigo", accents:"blue", warn:"red", background:"grey", palette:"light"};
                 // tiny colour implementation
                 var colours = {
                     leastReadable: function(base, colours) {
@@ -1492,7 +1492,7 @@
                 lightdark += '<option value="dark">' +c_("style.dark")+ '</option>';
                 $('<select id="nr-db-field-angLook">'+lightdark+'</select>')
                     .css("width","100%")
-                    .val(aTheme.palette || "light")
+                    .val(aTheme.palette)
                     .on("change", function() { aTheme.palette = $(this).val(); changed(); })
                     .appendTo(divPalStyle);
 

@@ -1,5 +1,11 @@
 
-### 2.29.1: Maintenance Release
+### 2.29.2-beta: Maintenance Release
+
+**Fixes**
+
+ - Try to ensure angular palletet state really is saved. Issue #554
+
+ ### 2.29.1: Maintenance Release
 
 **Fixes**
 
