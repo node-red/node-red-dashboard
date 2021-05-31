@@ -4,6 +4,7 @@
 **Fixes**
 
  - Try to ensure angular palletet state really is saved. Issue #554
+ - Let form time type show correct label. Issue #702
 
  ### 2.29.1: Maintenance Release
 

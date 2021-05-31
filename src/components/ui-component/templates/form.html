@@ -8,7 +8,7 @@
        <p class="formlabel" style="margin-bottom:{{(me.item.rowHeight/9)}}px" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>
        <div class="formElement" ng-class="{'formElementSplit':(me.item.splitLayout)}" layout-gt-sm="row" ng-repeat="opt in me.item.options track by $index">
            <md-input-container class="md-block" style="height:{{(me.item.rowHeight * (opt.type=='multiline' ? opt.rows : 1)) }}px" flex>
-               <label ng-if="(opt.type=='text' || opt.type=='number' || opt.type=='email' || opt.type=='multiline' || opt.type=='password' || opt.type=='date') && opt.label">{{opt.label}}</label>
+               <label ng-if="(opt.type=='text' || opt.type=='number' || opt.type=='email' || opt.type=='multiline' || opt.type=='password' || opt.type=='date' || opt.type=='time') && opt.label">{{opt.label}}</label>
                <input ng-if="opt.type=='text' || opt.type=='email' || opt.type=='password'" type="{{opt.type}}"
                 ng-model="me.item.formValue[opt.value]"
                 ng-required="opt.required"
