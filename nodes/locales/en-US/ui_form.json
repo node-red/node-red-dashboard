@@ -8,7 +8,7 @@
       "formElements": "Form elements",
       "type": "Type",
       "required": "Required",
-      "rows": "Rows",
+      "rows": "UiRows",
       "remove": "Remove",
       "egName": "e.g. Name",
       "egName2": "e.g. name",

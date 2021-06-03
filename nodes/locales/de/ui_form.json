@@ -8,7 +8,7 @@
       "formElements": "Formular- elemente",
       "type": "Typ",
       "required": "Erforderlich",
-      "rows": "Zeilen",
+      "rows": "UiZeilen",
       "remove": "Entfernen",
       "egName": "z.B. Name",
       "egName2": "z.B. Name",

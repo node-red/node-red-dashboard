@@ -32,7 +32,7 @@
                  md-no-autogrow
                  ng-required="opt.required"
                  ng-model="me.item.formValue[opt.value]"
-                 style="height:{{(opt.rows * me.item.sy) - 10}}px"></textarea>
+                 style="height:{{(opt.rows * me.item.sy) - 10}}px; padding:10px 2px 1px 0;"></textarea>
                <md-switch ng-if="opt.type=='switch'" md-no-ink ng-model="me.item.formValue[opt.value]">{{opt.label}}</md-switch>
                <md-checkbox ng-if="opt.type=='checkbox'" md-no-ink aria-label="Checkbox No Ink" ng-model="me.item.formValue[opt.value]"> {{opt.label}}</md-checkbox>
            </md-input-container>
