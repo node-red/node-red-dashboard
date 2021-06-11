@@ -1,10 +1,11 @@
 
-### 2.29.2-beta: Maintenance Release
+### 2.29.2: Maintenance Release
 
 **Fixes**
 
- - Try to ensure angular palletet state really is saved. Issue #554
+ - Try to ensure angular palette state really is saved. Issue #554
  - Let form time type show correct label. Issue #702
+ - Adjust CSS for better alignment of icons in ui-list
 
  ### 2.29.1: Maintenance Release
 
