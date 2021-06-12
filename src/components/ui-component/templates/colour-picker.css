@@ -93,6 +93,6 @@ reason: https://github.com/angular/material/issues/6214
     border-width: 0px;
 }
 
-.color-picker-show-inline {
-    z-index: 77;
+color-picker {
+    z-index:2;
 }
