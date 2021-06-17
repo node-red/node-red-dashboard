@@ -1,4 +1,10 @@
 
+### 2.29.4-beta: Maintenance Release
+
+**Fixes**
+
+ - fix dropdown to allow use of id property if selecting an object. Issue #707
+
 ### 2.29.3: Maintenance Release
 
 **Fixes**
