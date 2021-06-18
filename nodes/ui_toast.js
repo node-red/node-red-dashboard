@@ -11,6 +11,7 @@ module.exports = function(RED) {
         this.highlight = config.highlight;
         this.ok = config.ok;
         this.cancel = config.cancel;
+        this.className = config.className;
         this.topic = config.topic;
         if (config.sendall === undefined) { this.sendall = true; }
         else { this.sendall = config.sendall; }
@@ -45,6 +46,7 @@ module.exports = function(RED) {
             //msg.payload = noscript(msg.payload);
             ui.emitSocket('show-toast', {
                 title: node.topic || msg.topic,
+                toastClass: node.className || msg.className,
                 message: msg.payload,
                 highlight: node.highlight || msg.highlight,
                 displayTime: dt,

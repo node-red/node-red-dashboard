@@ -16,7 +16,8 @@
       "whenClicked": "When clicked, send:",
       "payload": "Payload",
       "topic": "Topic",
-      "emulateClick": "If msg arrives on input, emulate a button click:"
+      "emulateClick": "If msg arrives on input, emulate a button click:",
+      "className": "Class"
     }
   }
 }

@@ -3,7 +3,7 @@
     layout="{{ me.item.layout }}"
     layout-align="{{ me.item.layoutAlign }}"
     class="nr-dashboard-text"
-    ng-class="[ me.item.safeLabel, {'nr-dashboard-disabled':me.item.disabled}]"
+    ng-class="[ me.item.safeLabel, {'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
     <p class="label" ng-bind-html="me.item.getLabel()"></p>
     <p class="value" ng-bind-html="me.item.getText()"></p>

@@ -38,7 +38,8 @@ module.exports = function(RED) {
                 order: config.order,
                 value: '',
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                className: config.className || '',
             },
             beforeSend: function (msg) {
                 if (node.outformat === 'object') {

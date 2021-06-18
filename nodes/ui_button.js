@@ -47,6 +47,7 @@ module.exports = function(RED) {
                 tooltip: config.tooltip,
                 color: config.color,
                 bgcolor: config.bgcolor,
+                className: config.className,
                 icon: config.icon,
                 order: config.order,
                 value: payload,
