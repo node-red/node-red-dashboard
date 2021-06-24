@@ -1232,8 +1232,8 @@
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.name = $(this).val();
-                        RED.nodes.dirty(true);
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divTitle);
 
@@ -1248,8 +1248,8 @@
                     if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.hideToolbar = $(this).val();
-                        RED.nodes.dirty(true);
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divHideToolbar);
 
@@ -1264,8 +1264,8 @@
                     if (!globalDashboardNode || globalDashboardNode.site.lockMenu !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.lockMenu = $(this).val();
-                        RED.nodes.dirty(true);
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divLockMenu);
 
@@ -1295,7 +1295,6 @@
                     if (!globalDashboardNode || globalDashboardNode.site.allowTempTheme !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.allowTempTheme = $(this).val();
-                        RED.nodes.dirty(true);
                     }
                     if ($('#nr-db-field-allowTempTheme').val() === "none") {
                         ulDashboardTabs.children().eq(2).addClass("hidden");
@@ -1305,6 +1304,7 @@
                         ulDashboardTabs.children().eq(2).removeClass("hidden");
                         ulDashboardTabs.children().eq(3).addClass("hidden");
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divAllowTempTheme);
 
@@ -1325,8 +1325,8 @@
                     if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.dateFormat = $(this).val();
-                        RED.nodes.dirty(true);
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divDateFormat);
 
