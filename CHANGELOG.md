@@ -3,7 +3,9 @@
 
 **Fixes**
 
- - fix dropdown to allow use of id property if selecting an object. Issue #707
+ - Fix dropdown to allow use of id property if selecting an object. Issue #707
+ - Activate deploy button on any change to site options (even a non-change)
+ - Fix spacer node to be on tab so can be exported as part of the tab (needs NRv2)
 
 ### 2.29.3: Maintenance Release
 

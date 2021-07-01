@@ -510,6 +510,7 @@
                             name: "spacer",
                             width: t_widgets[cnt2].width,
                             height: t_widgets[cnt2].height,
+                            z: RED.workspaces.active(),
                             label: function() { return this.name + " " + this.width + "x" + this.height; }
                         };
                         RED.nodes.add(spaceNode);
@@ -636,6 +637,7 @@
                             serializedData.push({
                                 x: x,
                                 y: y,
+                                z: RED.workspaces.active(),
                                 width: 1,
                                 height: 1,
                                 name: 'spacer',
@@ -2214,6 +2216,7 @@
                                         name: "spacer",
                                         width: 1,
                                         height:1,
+                                        z: RED.workspaces.active(),
                                         label: function() { return "spacer " + this.width + "x" + this.height; }
                                     };
                                     RED.nodes.add(spaceNode);

@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('ui_spacer', {
         category: 'config',
-        color: '#45ADB4',
+        color: '#D4F0F8',
         defaults: {
             name: {value: "spacer"},
             group: {type: 'ui_group', required:true},
@@ -17,6 +17,7 @@
             },
             height: {value: 0}
         },
+        z: RED.workspaces.active(),
         inputs:0,
         outputs:0,
         hasUsers: false,
