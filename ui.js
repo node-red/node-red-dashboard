@@ -495,6 +495,7 @@ function addControl(tab, groupHeader, control) {
             if (tab && tab.hasOwnProperty("id")) { return t.id === tab.id }
         });
         if (!foundTab) {
+            if (tab === null) { return; }
             foundTab = {
                 id: tab.id,
                 header: tab.config.name,
