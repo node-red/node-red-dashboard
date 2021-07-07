@@ -7,6 +7,7 @@
  - Activate deploy button on any change to site options (even a non-change)
  - Fix spacer node to be on tab so can be exported as part of the tab (needs NRv2)
  - Try to handle disabled groups and tabs more cleanly.
+ - Disable mouse for swipe actions - only use touch events.
 
 ### 2.29.3: Maintenance Release
 

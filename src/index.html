@@ -67,7 +67,8 @@
     style="background: {{main.backgroundColor}}"
     class="nr-dashboard-theme"
     ng-swipe-right="onSwipeRight();"
-    ng-swipe-left="onSwipeLeft();">
+    ng-swipe-left="onSwipeLeft();"
+    ng-swipe-disable-mouse >
 <md-content ng-if="main.loaded" ng-include="'partials/main.html'" layout="column" flex></md-content>
 <div ng-if="!main.loaded && !main.nothing" ng-include="'loading.html'" class="node-red-ui--loading"></div>
 <div ng-if="main.nothing" class="node-red-ui--notabs">
