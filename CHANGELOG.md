@@ -1,11 +1,15 @@
 
-### 2.29.4: Maintenance Release
+### 2.30.0: Milestone Release
+
+**Enhancements**
+
+ - Add site option to allow swipe to open/close side menu, instead of moving tabs.
 
 **Fixes**
 
  - Fix dropdown to allow use of id property if selecting an object. Issue #707
  - Activate deploy button on any change to site options (even a non-change)
- - Fix spacer node to be on tab so can be exported as part of the tab (needs NRv2)
+ - Fix spacer node to be on tab so can be exported as part of the tab (needs Node-RED v2)
  - Try to handle disabled groups and tabs more cleanly.
  - Disable mouse for swipe actions - only use touch events.
 
