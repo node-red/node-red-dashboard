@@ -1,5 +1,5 @@
 
-### 2.29.4-beta: Maintenance Release
+### 2.29.4: Maintenance Release
 
 **Fixes**
 

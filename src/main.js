@@ -87,7 +87,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         this.selectedTab = null;
         this.loaded = false;
         this.hideToolbar = false;
-        this.allowSwipe = false;
+        this.allowSwipe = "false";
         this.lockMenu = "false";
         this.allowTempTheme = true;
         var main = this;
@@ -113,8 +113,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         }
 
-        $scope.onSwipeLeft = function() { if (main.allowSwipe) { moveTab(-1); } }
-        $scope.onSwipeRight = function() { if (main.allowSwipe) { moveTab(1); } }
+        $scope.onSwipeLeft = function() {
+            if (main.allowSwipe === "menu") { $mdSidenav('left').close(); }
+            else if (main.allowSwipe === "true") { moveTab(-1); }
+        }
+        $scope.onSwipeRight = function() {
+            if (main.allowSwipe === "menu") { $mdSidenav('left').open(); }
+            else if (main.allowSwipe === "true") { moveTab(1); }
+        }
 
         // Added as PR#587 to fix navigation history so back/forwards works ok from browser
         $scope.$on('$locationChangeSuccess', function ($event, newUrl, oldUrl, newState, oldState) {
@@ -372,7 +378,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             if (ui.site) {
                 name = main.name = ui.site.name;
                 main.hideToolbar = (ui.site.hideToolbar == "true");
-                main.allowSwipe = (ui.site.allowSwipe == "true");
+                main.allowSwipe = ui.site.allowSwipe;
                 main.lockMenu = ui.site.lockMenu;
                 if (typeof ui.site.allowTempTheme === 'undefined') { main.allowTempTheme = true; }
                 else {
