@@ -85,6 +85,7 @@
         "swipe": {
             "no-swipe": "No swipe between tabs",
             "allow-swipe": "Allow swipe between tabs",
+            "allow-swipe-mouse": "Allow swipe (+mouse) between tabs",
             "show-menu": "Swipe to open/close menu"
         },
         "lock": {

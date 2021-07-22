@@ -115,11 +115,11 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         $scope.onSwipeLeft = function() {
             if (main.allowSwipe === "menu") { $mdSidenav('left').close(); }
-            else if (main.allowSwipe === "true") { moveTab(-1); }
+            else if (main.allowSwipe === "true" || main.allowSwipe === "mouse") { moveTab(-1); }
         }
         $scope.onSwipeRight = function() {
             if (main.allowSwipe === "menu") { $mdSidenav('left').open(); }
-            else if (main.allowSwipe === "true") { moveTab(1); }
+            else if (main.allowSwipe === "true" || main.allowSwipe === "mouse") { moveTab(1); }
         }
 
         // Added as PR#587 to fix navigation history so back/forwards works ok from browser
