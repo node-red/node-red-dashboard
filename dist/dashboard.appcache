@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Thu Jul 22 2021 10:11:57 GMT+0100 (British Summer Time)
+# Time: Fri Jul 30 2021 22:28:30 GMT+0200 (GMT+02:00)
 
 CACHE:
 i18n.js
@@ -26,4 +26,4 @@ loading.html
 NETWORK:
 *
 
-# hash: 8ead11a2ea635357c03dd743a0a5a76e735ef3cbd36adcc195b726a11d85e016
+# hash: 3fd6ffc286004ea6d72c2a788cddfae390811b998231ca3976f04bedf57a48ae

@@ -14,13 +14,18 @@ module.exports = function(RED) {
             node.topi = msg.topic;
         });
 
+        var setInputType = function(cfg) {
+            if (!cfg.sendonblur) { return 'text-input-CR-no-blur'; }
+            return (config.delay <= 0 ? 'text-input-CR' : 'text-input');
+        }
+
         var done = ui.add({
             node: node,
             tab: tab,
             group: group,
             forwardInputMessages: config.passthru,
             control: {
-                type: (config.delay <= 0 ? 'text-input-CR' : 'text-input'),
+                type: setInputType(config),
                 label: config.label,
                 tooltip: config.tooltip,
                 mode: config.mode,
