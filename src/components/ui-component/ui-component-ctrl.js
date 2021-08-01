@@ -221,8 +221,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                     }
 
                     case 'text-input':
-                    case 'text-input-CR':
-                    case 'text-input-CR-no-blur': {
+                    case 'text-input-CR': {
                         if (me.item.mode == "time") {
                             me.processInput = function (msg) {
                                 var dtmval = new Date(msg.value);

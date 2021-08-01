@@ -22,7 +22,7 @@
             mode: {value: 'text', required: true},
             delay: {value: 300, validate: RED.validators.number()},
             topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
-            sendonblur: {value: true},
+            sendOnBlur: {value: true},
             topicType: {value: 'msg'}
         },
         inputs:1,
@@ -88,8 +88,8 @@
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-sendonblur">Send value on focus leave: </label>
-        <input type="checkbox" checked id="node-input-sendonblur" style="display:inline-block; width:auto; vertical-align:top;">
+        <label style="width:auto" for="node-input-sendOnBlur">Send value on focus leave: </label>
+        <input type="checkbox" checked id="node-input-sendOnBlur" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When changed, send:</label>

@@ -14,18 +14,13 @@ module.exports = function(RED) {
             node.topi = msg.topic;
         });
 
-        var setInputType = function(cfg) {
-            if (!cfg.sendonblur) { return 'text-input-CR-no-blur'; }
-            return (config.delay <= 0 ? 'text-input-CR' : 'text-input');
-        }
-
         var done = ui.add({
             node: node,
             tab: tab,
             group: group,
             forwardInputMessages: config.passthru,
             control: {
-                type: setInputType(config),
+                type: (config.delay <= 0 ? 'text-input-CR' : 'text-input'),
                 label: config.label,
                 tooltip: config.tooltip,
                 mode: config.mode,
@@ -33,7 +28,8 @@ module.exports = function(RED) {
                 order: config.order,
                 value: '',
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                sendOnBlur: config.sendOnBlur
             },
             beforeSend: function (msg) {
                 if (config.mode === "time") {
