@@ -28,7 +28,8 @@ module.exports = function(RED) {
                 order: config.order,
                 value: '',
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                sendOnBlur: config.sendOnBlur
             },
             beforeSend: function (msg) {
                 if (config.mode === "time") {
