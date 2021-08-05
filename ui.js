@@ -135,7 +135,7 @@ function add(opt) {
         opt.storeFrontEndInputAsState = true;
     }
     if (typeof opt.persistantFrontEndValue === 'undefined') {
-        opt.persistantFrontEndValue = true;
+        opt.persistantFrontEndValue = false;
     }
     opt.convert = opt.convert || noConvert;
     opt.beforeEmit = opt.beforeEmit || beforeEmit;
@@ -149,7 +149,7 @@ function add(opt) {
             var state = replayMessages[opt.node.id];
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.disabled = !msg.enabled;
-            io.emit(updateValueEventName, state); // dcj mu
+            //io.emit(updateValueEventName, state); // dcj mu
         }
 
         // remove res and req as they are often circular
@@ -256,9 +256,9 @@ function add(opt) {
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             emitSocket(updateValueEventName, toEmit);
-            if (opt.persistantFrontEndValue === true) {
-                replayMessages[opt.node.id] = toStore;
-            }
+            //if (opt.persistantFrontEndValue === true) {
+            //    replayMessages[opt.node.id] = toStore;
+            //}
 
             // Handle the node output
             if (opt.forwardInputMessages && opt.node._wireCount && fullDataset !== undefined) {
