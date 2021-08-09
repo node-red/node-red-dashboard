@@ -6,6 +6,11 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         this.chartType = config.chartType || "line";
         var node = this;
+        //if the settings.js ui : disableFeedbackToAllSessions is true then set storeFrontEndInputAsStateValue as false
+        var storeFrontEndInputAsStateBoolean = true;
+        if (RED.settings.hasOwnProperty("ui") && RED.settings.ui.hasOwnProperty("disableFeedbackToAllSessions") && RED.settings.ui.disableFeedbackToAllSessions == true) {
+            storeFrontEndInputAsStateBoolean = false;
+        }
         var group = RED.nodes.getNode(config.group);
         if (!group) { return; }
         var tab = RED.nodes.getNode(group.config.tab);
@@ -18,6 +23,7 @@ module.exports = function(RED) {
         var dnow = Date.now();
         var options = {
             emitOnlyNewValues: true,
+            storeFrontEndInputAsState: storeFrontEndInputAsStateBoolean,
             node: node,
             tab: tab,
             group: group,

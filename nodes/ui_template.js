@@ -4,7 +4,12 @@ module.exports = function(RED) {
     function TemplateNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
-
+        //Needed for settings.js ui : disableFeedbackToAllSessions is true then create new Map
+        const socketIdVsHeaders = new Map();
+        var disableFeedbackToAllSessions = false;
+        if (RED.settings.hasOwnProperty("ui") && RED.settings.ui.hasOwnProperty("disableFeedbackToAllSessions") && RED.settings.ui.disableFeedbackToAllSessions == true) {
+            disableFeedbackToAllSessions = true;
+        }
         var group = RED.nodes.getNode(config.group);
         if (!group && config.templateScope !== 'global') { return; }
         var tab = null;
@@ -74,15 +79,78 @@ module.exports = function(RED) {
 
                 return { msg:clonedMsg };
             },
+
             beforeSend: function (msg, original) {
-                if (original && original.hasOwnProperty("msg") && original.msg !== null) {
-                    var om = original.msg;
-                    om.socketid = original.socketid;
-                    return om;
+                if (disableFeedbackToAllSessions === false) {
+                    if (original && original.hasOwnProperty("msg") && original.msg !== null) {
+                        var om = original.msg;
+                        om.socketid = original.socketid;
+                        return om;
+                    }
+                }
+                if (disableFeedbackToAllSessions === true) {
+                    if (original && original.hasOwnProperty("msg") && original.msg !== null) {
+                        const headers = socketIdVsHeaders.get(original.socketid);
+                        //clean up map, the max size is over 16million entires (16,777,216 1GB of ram) but a user might have a pi with 256MB
+                        // so shoot for 0.5million(32MB) If they have more than 0.5million users on at the same time IT SHOULD NOT BE ON DASHBOARD
+                        const mapSize = socketIdVsHeaders.size;
+                        if (mapSize > 500000) {
+                            var i = 0;
+                            for (var key of socketIdVsHeaders.keys()) {
+                                if (i++ > 100000) { //delete the first(oldest) 100,000 socketid's. Why so many at a time .... expensive to get the 500,000 keys just to delete a few.
+                                    break;
+                                }
+                                socketIdVsHeaders.delete(key);
+                            }
+                        }
+                        var om = original.msg;
+                        if (om.socketid) {
+                            om.socketid = original.socketid;
+                        }
+                        if (headers) {
+                            om.headers = headers;
+                        }
+                        return om;
+                    }
                 }
             }
         });
         node.on("close", done);
+
+        if (disableFeedbackToAllSessions === true) {
+            var sendconnect = function(socketid, socketip, headers, queryParams) {
+                if (socketid && headers) {
+                    socketIdVsHeaders.set(socketid, headers);
+                }
+                node.send({
+                    session:{
+                        state: "connect"
+                    },
+                    socketid,
+                    socketip,
+                    headers
+                });
+            };
+            ui.ev.on('newsocket', sendconnect);
+            var sendlost = function(socketid, socketip, headers, queryParams) {
+                if (socketid) {
+                    socketIdVsHeaders.delete(socketid);
+                }
+                node.send({
+                    session:{
+                        state: "disconnect"
+                    },
+                    socketid,
+                    socketip,
+                    headers
+                });
+            };
+            ui.ev.on('endsocket', sendlost);
+            this.on('close', function() {
+                ui.ev.removeListener('newsocket', sendconnect);
+                ui.ev.removeListener('endsocket', sendlost);
+            })
+        }
     }
     RED.nodes.registerType("ui_template", TemplateNode);
     RED.library.register("uitemplates");

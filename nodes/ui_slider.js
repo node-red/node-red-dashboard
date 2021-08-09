@@ -6,6 +6,11 @@ module.exports = function(RED) {
         this.pt = config.passthru;
         this.state = [" "," "];
         var node = this;
+        //if the settings.js ui : disableFeedbackToAllSessions is true then set storeFrontEndInputAsStateValue as false
+        var storeFrontEndInputAsStateBoolean = true;
+        if (RED.settings.hasOwnProperty("ui") && RED.settings.ui.hasOwnProperty("disableFeedbackToAllSessions") && RED.settings.ui.disableFeedbackToAllSessions == true) {
+            storeFrontEndInputAsStateBoolean = false;
+        }
         node.status({});
 
         var group = RED.nodes.getNode(config.group);
@@ -22,6 +27,7 @@ module.exports = function(RED) {
             tab: tab,
             group: group,
             forwardInputMessages: config.passthru,
+            storeFrontEndInputAsState: storeFrontEndInputAsStateBoolean,
             control: {
                 type: 'slider',
                 label: config.label,
