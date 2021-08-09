@@ -237,6 +237,11 @@ This Dashboard does NOT support multiple individual users. It is a view of the s
 Node-RED flow, which itself is single user. If the state of the flow changes then all clients will get
 notified of that change.
 
+If you wish to disable feedback to all sessions and allow multiple users input/trigger data without all clients getting
+notified of that change, you can edit your settings.js file to set the dashboard to disable feedback to all sessions:
+`ui: {disableFeedbackToAllSessions: true}`.
+When disableFeedbackToAllSessions is set to true the widget state is emitted only to the socket origin that caused the change.
+
 Messages coming from the dashboard **do** have a `msg.socketid`, and updates like change of tab,
 notifications, and audio alerts will be directed only to that session. Delete the `msg.sessionid` to send
 to all sessions.
