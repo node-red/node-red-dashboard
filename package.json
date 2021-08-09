@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.30.0",
+    "version": "2.30.1",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -49,6 +49,9 @@
         },
         {
             "name": "@hotNipi"
+        },
+        {
+            "name": "David Burrows"
         }
     ],
     "license": "Apache-2.0",
