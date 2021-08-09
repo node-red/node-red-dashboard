@@ -136,6 +136,9 @@ function add(opt) {
     }
     if (typeof opt.persistantFrontEndValue === 'undefined') {
         opt.persistantFrontEndValue = true;
+        if (settings.disableFeedbackToAllSessions === true) {
+            opt.persistantFrontEndValue = false;
+        }
     }
     opt.convert = opt.convert || noConvert;
     opt.beforeEmit = opt.beforeEmit || beforeEmit;
@@ -149,7 +152,10 @@ function add(opt) {
             var state = replayMessages[opt.node.id];
             if (!state) { replayMessages[opt.node.id] = state = {id: opt.node.id}; }
             state.disabled = !msg.enabled;
-            io.emit(updateValueEventName, state); // dcj mu
+            if (settings.disableFeedbackToAllSessions === false) {
+                io.emit(updateValueEventName, state); // dcj mu
+            }
+
         }
 
         // remove res and req as they are often circular
@@ -252,11 +258,13 @@ function add(opt) {
             addField("icon");
             if (msg.hasOwnProperty("enabled")) { toEmit.disabled = !msg.enabled; }
             toEmit.id = toStore.id = opt.node.id;
-            //toEmit.socketid = msg.socketid; // dcj mu
+            if (settings.disableFeedbackToAllSessions === true) {
+              toEmit.socketid = msg.socketid; // dcj mu
+            }
             // Emit and Store the data
             //if (settings.verbose) { console.log("UI-EMIT",JSON.stringify(toEmit)); }
             emitSocket(updateValueEventName, toEmit);
-            if (opt.persistantFrontEndValue === true) {
+            if (opt.persistantFrontEndValue === true && settings.disableFeedbackToAllSessions === false) {
                 replayMessages[opt.node.id] = toStore;
             }
 
@@ -277,7 +285,10 @@ function add(opt) {
         var converted = opt.convertBack(msg.value);
         if (opt.storeFrontEndInputAsState === true) {
             currentValues[msg.id] = converted;
-            if (opt.persistantFrontEndValue === true) {
+            if (settings.disableFeedbackToAllSessions === true) {
+                replayMessages[msg.id] = msg;
+            }
+            else if (opt.persistantFrontEndValue === true && settings.disableFeedbackToAllSessions === false) {
                 replayMessages[msg.id] = msg;
             }
         }
@@ -329,6 +340,10 @@ function init(server, app, log, redSettings) {
         settings.readOnly = uiSettings.readOnly;
     }
     else { settings.readOnly = false; }
+    if ((uiSettings.hasOwnProperty("disableFeedbackToAllSessions")) && (typeof uiSettings.disableFeedbackToAllSessions === "boolean")) {
+        settings.disableFeedbackToAllSessions = uiSettings.disableFeedbackToAllSessions;
+      }
+    else { settings.disableFeedbackToAllSessions = false; }
     settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
     settings.verbose = redSettings.verbose || false;
 
@@ -353,6 +368,8 @@ function init(server, app, log, redSettings) {
         }
         else {
             log.info("[Dashboard] Dashboard using development folder");
+            //log.info("settings.disableFeedbackToAllSessions="+settings.disableFeedbackToAllSessions); // meeki007@gmail.com used for testing ....remove this line for production
+
             app.use(join(settings.path), dashboardMiddleware, serveStatic(path.join(__dirname, "src")));
             var vendor_packages = [
                 'angular', 'angular-sanitize', 'angular-animate', 'angular-aria', 'angular-material', 'angular-touch',
