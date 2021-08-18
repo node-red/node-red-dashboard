@@ -70,6 +70,7 @@ function addWidget(RED, options) {
 
     if (is_local) {
         group = RED.nodes.getNode(options.group);
+        if (group === null) { return; }
         tab = RED.nodes.getNode(group.config.tab);
         ui_control.width = options.hasOwnProperty("width") ? options.width : group.config.width;
         ui_control.height = options.hasOwnProperty("height") ? options.height : 0;
