@@ -133,7 +133,7 @@ module.exports = function(RED) {
             convertBack: function (msg) {
                 var val = node.multiple ? [] : "";
                 var m = RED.util.cloneMessage(msg);
-                var mm = (m.hasOwnProperty("id")) ? m.value : m;
+                var mm = (m.hasOwnProperty("id") && m.hasOwnProperty("value")) ? m.value : m;
                 for (var i=0; i<control.options.length; i++) {
                     if (!node.multiple) {
                         delete m["$$mdSelectId"];

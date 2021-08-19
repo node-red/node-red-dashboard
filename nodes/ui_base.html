@@ -510,6 +510,7 @@
                             name: "spacer",
                             width: t_widgets[cnt2].width,
                             height: t_widgets[cnt2].height,
+                            z: RED.workspaces.active(),
                             label: function() { return this.name + " " + this.width + "x" + this.height; }
                         };
                         RED.nodes.add(spaceNode);
@@ -636,6 +637,7 @@
                             serializedData.push({
                                 x: x,
                                 y: y,
+                                z: RED.workspaces.active(),
                                 width: 1,
                                 height: 1,
                                 name: 'spacer',
@@ -1232,8 +1234,8 @@
                     if (!globalDashboardNode || globalDashboardNode.site.name !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.name = $(this).val();
-                        RED.nodes.dirty(true);
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divTitle);
 
@@ -1248,8 +1250,8 @@
                     if (!globalDashboardNode || globalDashboardNode.site.hideToolbar !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.hideToolbar = $(this).val();
-                        RED.nodes.dirty(true);
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divHideToolbar);
 
@@ -1264,8 +1266,8 @@
                     if (!globalDashboardNode || globalDashboardNode.site.lockMenu !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.lockMenu = $(this).val();
-                        RED.nodes.dirty(true);
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divLockMenu);
 
@@ -1274,6 +1276,8 @@
                 .css("width","100%")
                 .append($('<option>', { value:"false", text:c_("swipe.no-swipe"), selected:true }))
                 .append($('<option>', { value:"true", text:c_("swipe.allow-swipe") }))
+                .append($('<option>', { value:"mouse", text:c_("swipe.allow-swipe-mouse") }))
+                .append($('<option>', { value:"menu", text:c_("swipe.show-menu") }))
                 .val("false")
                 .on("change", function() {
                     if (!globalDashboardNode || globalDashboardNode.site.allowSwipe !== $(this).val()) {
@@ -1295,7 +1299,6 @@
                     if (!globalDashboardNode || globalDashboardNode.site.allowTempTheme !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.allowTempTheme = $(this).val();
-                        RED.nodes.dirty(true);
                     }
                     if ($('#nr-db-field-allowTempTheme').val() === "none") {
                         ulDashboardTabs.children().eq(2).addClass("hidden");
@@ -1305,6 +1308,7 @@
                         ulDashboardTabs.children().eq(2).removeClass("hidden");
                         ulDashboardTabs.children().eq(3).addClass("hidden");
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divAllowTempTheme);
 
@@ -1325,8 +1329,8 @@
                     if (!globalDashboardNode || globalDashboardNode.site.dateFormat !== $(this).val()) {
                         //ensureDashboardNode(true);
                         globalDashboardNode.site.dateFormat = $(this).val();
-                        RED.nodes.dirty(true);
                     }
+                    RED.nodes.dirty(true);
                 })
                 .appendTo(divDateFormat);
 
@@ -2214,6 +2218,7 @@
                                         name: "spacer",
                                         width: 1,
                                         height:1,
+                                        z: RED.workspaces.active(),
                                         label: function() { return "spacer " + this.width + "x" + this.height; }
                                     };
                                     RED.nodes.add(spaceNode);
@@ -3061,7 +3066,7 @@
             width = (width > 0) ? width : 1;
             height = (height > 0) ? height : 1;
             var in0 = $('<input type="number" min="1" '+max_w+'>')
-                .css("width", has_height ? "45%" : "100%")
+                .css("width", has_height ? "40%" : "100%")
                 .val(width)
                 .appendTo(box0);
             if(has_height) {
@@ -3069,7 +3074,7 @@
                     .text(" x ")
                     .appendTo(box0);
                 var in1 = $('<input type="number" min="1">')
-                    .css("width", "45%")
+                    .css("width", "40%")
                     .val(height)
                     .appendTo(box0);
             }

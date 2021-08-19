@@ -491,8 +491,11 @@ function addControl(tab, groupHeader, control) {
         groupHeader = groupHeader || settings.defaultGroupHeader;
         control.order = parseFloat(control.order);
 
-        var foundTab = find(menu, function (t) {return t.id === tab.id });
+        var foundTab = find(menu, function (t) {
+            if (tab && tab.hasOwnProperty("id")) { return t.id === tab.id }
+        });
         if (!foundTab) {
+            if (tab === null) { return; }
             foundTab = {
                 id: tab.id,
                 header: tab.config.name,
