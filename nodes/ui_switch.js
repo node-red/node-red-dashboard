@@ -85,7 +85,8 @@ module.exports = function(RED) {
                 offcolor: config.offcolor,
                 animate: config.animate?"flip-icon":"",
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                className: config.className || '',
             },
             convert: function (payload, oldval, msg) {
                 var myOnValue,myOffValue;

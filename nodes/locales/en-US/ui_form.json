@@ -27,7 +27,8 @@
       "cancelButtonText": "cancel button text",
       "topic": "Topic",
       "optionalMsgTopic": "optional msg.topic",
-      "splitLayout":"Place the form elements in two columns"
+      "splitLayout":"Place the form elements in two columns",
+      "className": "Class"
     }
   }
 }

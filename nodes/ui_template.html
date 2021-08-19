@@ -27,7 +27,8 @@
             storeOutMessages: {value: true},
             fwdInMessages: {value: true},
             resendOnRefresh: {value: true},
-            templateScope: {value: 'local'}
+            templateScope: {value: 'local'},
+            className: {value: ''}
         },
         inputs:1,
         outputs:1,
@@ -66,11 +67,11 @@
 
             $('#node-input-templateScope').on('change', function() {
                 if ($('#node-input-templateScope').val() === 'global') {
-                    $('#template-row-group, #template-row-size, #template-pass-store').hide();
+                    $('#template-row-group, #template-row-size, #template-pass-store, #template-row-class').hide();
                     that._def.defaults.group.required = false;
                 }
                 else {
-                    $('#template-row-group, #template-row-size, #template-pass-store').show();
+                    $('#template-row-group, #template-row-size, #template-pass-store, #template-row-class').show();
                     that._def.defaults.group.required = true;
                 }
 
@@ -170,6 +171,10 @@
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
+    </div>
+    <div class="form-row" id="template-row-class">
+        <label for="node-input-className"><i class="fa fa-code"></i>  <span data-i18n="ui_template.label.className"></label>
+        <input type="text" id="node-input-className" data-i18n="[placeholder]ui_template.label.className"/>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>

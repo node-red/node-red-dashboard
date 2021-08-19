@@ -48,7 +48,8 @@
       "seriesColours": "配色",
       "blankLabel": "初期ラベル",
       "displayThisTextBeforeValidDataArrives": "有効なデータが届く前に本文字列を表示",
-      "useDifferentColor": "シリーズに別の色を使用"
+      "useDifferentColor": "シリーズに別の色を使用",
+      "className": "種類"
     }
   }
 }

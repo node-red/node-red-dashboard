@@ -6,7 +6,8 @@
             "width" : "Width",
             "default" : "Default",
             "group" : "Group",
-            "unassigned" : "unassigned"
+            "unassigned" : "unassigned",
+            "className": "Class"
         },
         "display-name" : "Display group name",
         "collapse-name" : "Allow group to be collapsed"

@@ -40,7 +40,8 @@ module.exports = function(RED) {
                 height: hei,
                 format: config.format,
                 templateScope: config.templateScope,
-                theme: colortheme
+                theme: colortheme,
+                className: config.className || '',
             },
             beforeEmit: function(msg) {
                 var properties = Object.getOwnPropertyNames(msg).filter(function (p) { return p[0] != '_'; });

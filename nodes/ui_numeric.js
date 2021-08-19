@@ -37,7 +37,8 @@ module.exports = function(RED) {
                 wrap: config.wrap || false,
                 width: config.width || group.config.width || 6,
                 height: config.height || 1,
-                ed: (config.format.includes("value") ? false : true)
+                ed: (config.format.includes("value") ? false : true),
+                className: config.className || '',
             },
             beforeSend: function (msg) {
                 msg.payload = parseFloat(msg.payload);

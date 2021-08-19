@@ -1,4 +1,7 @@
-<div layout="column" class="nr-dashboard-cardpanel">
+<div layout="column" class="nr-dashboard-cardpanel" 
+    ng-class="[group.header.config && group.header.config.className]"
+    node-className="{{group.header.config.className}}"
+>
     <p class="nr-dashboard-cardtitle" ng-style="{width:ctrl.width-12}" ng-if="group.header && group.header.config.disp && group.header[group.header.length-1]!='!'">{{group.header.name}}
         <span ng-if="group.header.config.collapse" ng-model="collapsed" ng-click="collapseCard()" class="nr-dashboard-cardcarat">
             <i ng-class="{ 'fa fa-caret-down':collapsed, 'fa fa-caret-up':!collapsed }"></i>
