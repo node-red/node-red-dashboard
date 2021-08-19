@@ -33,7 +33,8 @@
             max: {value: 10, required: true, validate: RED.validators.number()},
             colors: {value: ["#00B500","#E6E600","#CA3838"]},
             seg1: {value: ""},
-            seg2: {value: ""}
+            seg2: {value: ""},
+            className: {value: ''}
         },
         inputs:1,
         outputs:0,
@@ -155,6 +156,10 @@
         <input type="text" id="node-input-seg2" style="text-align:center; width:87px;" placeholder="optional"> ...
         <span id="seg-max" style="display:inline-block; width:40px; text-align:right">10</span>
     </div>
+    <div class="form-row">
+        <label for="node-input-className"><i class="fa fa-code"></i>  Class</label>
+        <input type="text" id="node-input-className" placeholder="Class"/>
+    </div>    
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">

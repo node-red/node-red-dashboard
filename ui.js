@@ -244,6 +244,7 @@ function add(opt) {
             }
 
             // if label, format, color, units, tooltip or icon fields are set to a msg property, emit that as well
+            addField("className");
             addField("label");
             addField("format");
             addField("color");
@@ -553,13 +554,14 @@ function addControl(tab, groupHeader, control) {
     }
 }
 
-function addLink(name, link, icon, order, target) {
+function addLink(name, link, icon, order, target, className) {
     var newLink = {
         name: name,
         link: link,
         icon: icon,
         order: order || 1,
-        target: target
+        target: target,
+        className: className
     };
 
     menu.push(newLink);

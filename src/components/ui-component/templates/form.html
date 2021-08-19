@@ -3,6 +3,7 @@
     layout="row"
     layout-align="space-between center"
     class="nr-dashboard-form"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
   <form name ="form" ng-submit="me.submit(form)" style="margin-top:{{(me.item.label ? 0 : me.item.rowCount < 3 ? me.item.rowHeight/6 : me.item.rowHeight/2.5)}}px">
        <p class="formlabel" style="margin-bottom:{{(me.item.rowHeight/9)}}px" ng-if="me.item.label" ng-bind-html="me.item.getLabel()"></p>

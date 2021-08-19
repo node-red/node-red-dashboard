@@ -27,7 +27,8 @@
       "cancelButtonText": "Text Abbrechen-Schaltfläche",
       "topic": "Topic",
       "optionalMsgTopic": "Optionaler msg.topic",
-      "splitLayout": "Platzieren sie die formularelemente in 2 spalten"
+      "splitLayout": "Platzieren sie die formularelemente in 2 spalten",
+      "className": "Klasse"
     }
   }
 }

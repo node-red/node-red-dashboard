@@ -48,7 +48,8 @@
       "seriesColours": "Serienfarben",
       "blankLabel": "Leer-Text",
       "displayThisTextBeforeValidDataArrives": "Anzuzeigender Text bevor gültige Daten eintreffen",
-      "useDifferentColor": "Unterschiedliche Farben für Datenserie verwenden"
+      "useDifferentColor": "Unterschiedliche Farben für Datenserie verwenden",
+      "className": "Klasse"
     }
   }
 }

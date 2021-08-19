@@ -48,7 +48,8 @@
       "seriesColours": "Series Colours",
       "blankLabel": "Blank label",
       "displayThisTextBeforeValidDataArrives": "display this text before valid data arrives",
-      "useDifferentColor": "Use different colour for series data"
+      "useDifferentColor": "Use different colour for series data",
+      "className": "Class"
     }
   }
 }

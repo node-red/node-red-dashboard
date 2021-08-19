@@ -15,7 +15,8 @@
                     return valid;
                 }
             },
-            height: {value: 0}
+            height: {value: 0},
+            className: {value: ''}
         },
         z: RED.workspaces.active(),
         inputs:0,
@@ -45,5 +46,9 @@
         <input type="hidden" id="node-input-width">
         <input type="hidden" id="node-input-height">
         <button class="editor-button" id="node-input-size"></button>
+    </div>
+    <div class="form-row">
+        <label for="node-input-className"><i class="fa fa-code"></i>  Class</label>
+        <input type="text" id="node-input-className" placeholder="Class"/>
     </div>
 </script>

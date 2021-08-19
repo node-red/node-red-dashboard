@@ -6,7 +6,8 @@
             "width": "Breite",
             "default": "Standard",
             "group": "Gruppe",
-            "unassigned": "nicht zugewiesen"
+            "unassigned": "nicht zugewiesen",
+            "className": "Klasse"
         },
         "display-name": "Gruppenname anzeigen",
         "collapse-name": "Gruppenreduzierung zulassen"

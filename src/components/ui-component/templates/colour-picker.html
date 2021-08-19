@@ -3,7 +3,7 @@
     flex layout="row"
     layout-align="space-between center"
     class="nr-dashboard-colour-picker"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
     <p>
         <span ng-hide="(me.item.width < 2) || (me.item.width < 5 && (me.item.inline || me.item.textValue))"

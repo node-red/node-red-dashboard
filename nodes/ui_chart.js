@@ -43,6 +43,7 @@ module.exports = function(RED) {
                 spanGaps: false,
                 useDifferentColor: config.useDifferentColor || false,
                 options: {},
+                className: config.className || '',
             },
             convertBack: function(data) {
                 if (data) {

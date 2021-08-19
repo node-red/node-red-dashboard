@@ -18,7 +18,8 @@ module.exports = function(RED) {
                 type: 'spacer',
                 order: config.order,
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                className: config.className || '',
             }
         });
         node.on("close", done);

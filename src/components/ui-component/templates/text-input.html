@@ -3,7 +3,7 @@
     layout="row"
     layout-align="space-between center"
     class="nr-dashboard-textinput"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
     <md-input-container
         class="md-block"

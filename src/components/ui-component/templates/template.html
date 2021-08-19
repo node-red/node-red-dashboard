@@ -2,7 +2,7 @@
     ui-template="me.item.format"
     ui-card-size="{{ me.item.width }}x{{ me.item.height }}"
     class="nr-dashboard-template {{ me.item.class }}"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     ng-show="{{me.item.height >= 0}}"
     node-id="{{me.item.id}}"
 >

@@ -14,6 +14,7 @@ node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 |                       |icon               |string     | on refresh
 |                       |format             |string     | not needed
 |                       |tooltip            |string     | on refresh
+|                       |className          |string     | (Note 4)
 |ui_chart               |look               |string     |"line","bar","horizontalBar","pie","polar-area","radar"
 |                       |legend             |boolean    |&nbsp;
 |                       |interpolate        |string     |"linear","step","bezier"
@@ -28,14 +29,17 @@ node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 |                       |spanGaps           |boolean    | n/a
 |                       |animation          |string     | (Note 1), {duration:1000, easing:"easeInOutSine"}
 |                       |options            |object     | (Note 2), {scales: {yAxes: [{ticks: {fontSize: 20}}]}}
+|                       |className          |string     | (Note 4)
 |ui_colour_picker       |format             |string     | on refresh
 |                       |showPicker         |boolean    | on refresh
 |                       |showSwatch         |boolean    | on refresh
 |                       |showValue          |boolean    | on refresh
 |                       |showAlpha          |boolean    | on refresh
 |                       |showLightness      |boolean    | on refresh
+|                       |className          |string     | (Note 4)
 |ui_dropdown            |place              |string     |"placeholder text"
 |                       |options            |array      |[{"label":"foo","value":"0","type":"str"}]
+|                       |className          |string     | (Note 4)
 |ui_gauge               |gtype              |string     |"gage", "donut", "compass", "wave"
 |                       |min                |number     |&nbsp;
 |                       |seg1               |number     |segment 1 limit
@@ -43,23 +47,30 @@ node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 |                       |max                |number     |&nbsp;
 |                       |colors             |array      |["blue","#00ff00","#f00"]
 |                       |options            |object     |(see Note 3 below)
+|                       |className          |string     | (Note 4)
 |ui_numeric             |min                |number     |&nbsp;
 |                       |max                |number     |&nbsp;
 |                       |step               |number     |&nbsp;
 |                       |format             |string     |"{{value}}"
+|                       |className          |string     | (Note 4)
 |ui_slider              |min                |number     |&nbsp;
 |                       |max                |number     |&nbsp;
 |                       |step               |number     |&nbsp;
+|                       |className          |string     | (Note 4)
 |ui_switch              |onicon             |string     | all or nothing
 |                       |officon            |string     | all or nothing
 |                       |oncolor            |string     | all or nothing
 |                       |offcolor           |string     | all or nothing
+|                       |className          |string     | (Note 4)
 |ui_template            |format             |string     | the script
 |                       |templateScope      |string     | "local" or "global"
+|                       |className          |string     | (Note 4)
 |ui_text                |format             |string     |"{{value}}"
 |                       |layout             |string     | "row-left", "row-right", etc
+|                       |className          |string     | (Note 4)
 |ui_text_input          |mode               |string     | "text", "email", "password", "color"
 |                       |delay              |number     |&nbsp;
+|                       |className          |string     | (Note 4)
 
 **Notes**:
 
@@ -71,6 +82,9 @@ node to set msg.ui_control to JSON `{ "min":10, "max":50 }`
 
          {"options":{"pointer":false,"gaugeWidthScale":1.5}}
          {"options":{"pointer":true,"gaugeWidthScale":0.4,"reverse":true}}
+
+4. when a className is specified, it is added to the parent element. E.g for a button, the class is added to the `md-card`
+    This permits overriding of styles in all sub elements e.g. `md-card.my-button button { color: red }`
 
 Likewise the Wave type gauge can accept [liquidfillgauge config](http://bl.ocks.org/brattonc/5e5ce9beee483220e2f6) options for example:
 

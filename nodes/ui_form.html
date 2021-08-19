@@ -36,7 +36,8 @@
             cancel: {value: "cancel"},
             topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
             topicType: {value: 'msg'},
-            splitLayout: {value:''}
+            splitLayout: {value:''},
+            className: {value: ''}
         },
         inputs:1,
         outputs:1,
@@ -304,6 +305,10 @@ input:checked + .slider:before {
         <label for="node-input-topic"><i class="fa fa-tasks"></i> <span data-i18n="ui_form.label.topic"></label>
         <input type="text" id="node-input-topic" data-i18n="[placeholder]ui_form.label.optionalMsgTopic">
         <input type="hidden" id="node-input-topicType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-className"><i class="fa fa-code"></i>  <span data-i18n="ui_form.label.className"></label>
+        <input type="text" id="node-input-className" data-i18n="[placeholder]ui_form.label.className"/>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></label>
