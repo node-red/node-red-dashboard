@@ -12,7 +12,8 @@
             "template": "Template",
             "expand": "Expand",
             "resend": "Reload last value on refresh.",
-            "className": "Class"
+            "className": "Class",
+      "classNamePlaceholder": "Optional CSS class name(s) for widget"
         }
     }
 }

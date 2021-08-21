@@ -12,7 +12,8 @@
             "template": "Vorlage",
             "expand": "Erweitern",
             "resend": "Letzten Wert beim Aktualisieren neuladen",
-            "className": "Klasse"
+            "className": "Klasse",
+      "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) für das Widget"
         }
     }
 }
