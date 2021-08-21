@@ -49,7 +49,8 @@
       "blankLabel": "初期ラベル",
       "displayThisTextBeforeValidDataArrives": "有効なデータが届く前に本文字列を表示",
       "useDifferentColor": "シリーズに別の色を使用",
-      "className": "種類"
+      "className": "種類",
+      "classNamePlaceholder": "ウィジェット用のCSSクラス名（オプション）"
     }
   }
 }

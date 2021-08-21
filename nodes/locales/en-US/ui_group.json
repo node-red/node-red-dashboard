@@ -7,7 +7,8 @@
             "default" : "Default",
             "group" : "Group",
             "unassigned" : "unassigned",
-            "className": "Class"
+            "className": "Class",
+            "classNamePlaceholder": "Optional CSS class name(s) for widget"
         },
         "display-name" : "Display group name",
         "collapse-name" : "Allow group to be collapsed"

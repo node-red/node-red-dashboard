@@ -28,7 +28,8 @@
       "topic": "トピック",
       "optionalMsgTopic": "任意のmsg.topic",
       "splitLayout": "フォーム要素を2列に配置",
-      "className": "種類"
+      "className": "種類",
+      "classNamePlaceholder": "ウィジェット用のCSSクラス名（オプション）"
     }
   }
 }
