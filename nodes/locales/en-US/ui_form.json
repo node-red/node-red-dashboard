@@ -28,7 +28,8 @@
       "topic": "Topic",
       "optionalMsgTopic": "optional msg.topic",
       "splitLayout":"Place the form elements in two columns",
-      "className": "Class"
+      "className": "Class",
+      "classNamePlaceholder": "Optional CSS class name(s) for widget"
     }
   }
 }

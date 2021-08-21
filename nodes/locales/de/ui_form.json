@@ -28,7 +28,8 @@
       "topic": "Topic",
       "optionalMsgTopic": "Optionaler msg.topic",
       "splitLayout": "Platzieren sie die formularelemente in 2 spalten",
-      "className": "Klasse"
+      "className": "Klasse",
+      "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) für das Widget"
     }
   }
 }
