@@ -1,17 +1,11 @@
 
-### 2.30.0: Milestone Release
+### 3.0.0-beta: Milestone Release
 
 **Enhancements**
 
- - Add site option to allow swipe to open/close side menu, instead of moving tabs.
-
-**Fixes**
-
- - Fix dropdown to allow use of id property if selecting an object. Issue #707
- - Activate deploy button on any change to site options (even a non-change)
- - Fix spacer node to be on tab so can be exported as part of the tab (needs Node-RED v2)
- - Try to handle disabled groups and tabs more cleanly.
- - Disable mouse for swipe actions - only use touch events.
+ - Set minimum requirement to be Node12
+ - Bump libraries to latest including socketIO - this drops node 8 support, Node10 is also EOL
+ - Add Class field to widgets
 
 ### 2.29.3: Maintenance Release
 
@@ -22,7 +16,7 @@
  - Adjust CSS for better alignment of icons in ui-list
  - Fix color-picker z layer to be behind dropdown if necessary
 
- ### 2.29.1: Maintenance Release
+### 2.29.1: Maintenance Release
 
 **Fixes**
 

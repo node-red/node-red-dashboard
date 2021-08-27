@@ -30,7 +30,8 @@ module.exports = function(RED) {
                 order: config.order,
                 ddd : new Date().setUTCHours(0,0,0,0),
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                className: config.className || '',
             },
             convert: function (p,o,m) {
                 var d = new Date(m.payload);

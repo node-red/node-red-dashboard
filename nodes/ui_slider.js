@@ -40,7 +40,8 @@ module.exports = function(RED) {
                 step: Math.abs(config.step) || 1,
                 outs: config.outs || "all",
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                className: config.className || '',
             },
             beforeSend: function (msg) {
                 var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;

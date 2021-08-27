@@ -662,7 +662,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         scope: toastScope,
                         templateUrl: 'partials/toast.html',
                         hideDelay: msg.displayTime,
-                        position: msg.position
+                        position: msg.position,
+                        toastClass: msg.toastClass
                     };
                     $mdToast.show(opts);
                 }

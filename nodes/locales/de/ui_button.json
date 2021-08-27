@@ -16,7 +16,9 @@
       "whenClicked": "Sende beim Klicken:",
       "payload": "Payload",
       "topic": "Topic",
-      "emulateClick": "Emuliere einen Klick bei einer eingehenden Nachricht:"
+      "emulateClick": "Emuliere einen Klick bei einer eingehenden Nachricht:",
+      "className": "Klasse",
+      "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) für das Widget"
     }
   }
 }

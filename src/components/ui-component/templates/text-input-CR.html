@@ -3,7 +3,7 @@
     layout="row"
     layout-align="space-between center"
     class="nr-dashboard-textinput"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
     <md-input-container
         class="md-block"
@@ -21,7 +21,7 @@
             ng-model="me.item.value"
             ng-model-options="{'timezone':'UTC'}"
             ng-keydown="me.keyPressed($event)"
-            ng-blur="me.keyPressed($event)"
+            ng-blur="me.item.sendOnBlur ? me.keyPressed($event) : false"
             ng-trim="false"
             aria-label="{{me.item.label}}"
             type="{{me.item.mode}}"

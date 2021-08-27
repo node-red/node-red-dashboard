@@ -4,7 +4,7 @@
     layout="row"
     layout-align="space-between center"
     class="nr-dashboard-date-picker"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
     <md-input-container flex layout="row">
         <p  class="nr-dashboard-date-picker-label"

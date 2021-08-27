@@ -3,7 +3,7 @@
     flex layout="row"
     layout-align="space-between center"
     class="nr-dashboard-slider"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled, 'nr-dashboard-slider-v':(me.item.width < me.item.height) }"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, {'nr-dashboard-slider-v':(me.item.width < me.item.height)}, me.item.className]"
     ng-swipe-right="$event.stopPropagation();"
     ng-swipe-left="$event.stopPropagation();"
     node-id="{{me.item.id}}">

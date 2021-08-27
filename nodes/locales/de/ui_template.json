@@ -11,7 +11,9 @@
             "store-state": "Ausgehende Nachrichten speichern",
             "template": "Vorlage",
             "expand": "Erweitern",
-            "resend": "Letzten Wert beim Aktualisieren neuladen"
+            "resend": "Letzten Wert beim Aktualisieren neuladen",
+            "className": "Klasse",
+      "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) für das Widget"
         }
     }
 }

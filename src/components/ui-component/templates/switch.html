@@ -4,7 +4,7 @@
     layout-align="space-between center"
     class="nr-dashboard-switch"
     ng-click="me.switchClick()"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
     <p  ng-if="me.item.label && (me.item.width !== 1)"
         class="label"
@@ -25,7 +25,7 @@
         ng-class="{'center' : !me.item.label}"
         ng-if="!me.item.oncolor || !me.item.onicon || !me.item.offcolor || !me.item.officon"
         style="z-index:1">
-	</md-switch>
+    </md-switch>
     <ui-icon icon="{{me.item.onicon}}"
         ng-style="{color: me.item.oncolor}"
         ng-class="{'center' : !me.item.label, 'ng-hide': !me.item.value}"

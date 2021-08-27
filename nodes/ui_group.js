@@ -8,7 +8,8 @@ module.exports = function(RED) {
             width: config.width,
             order: config.order,
             tab: config.tab,
-            collapse: config.collapse || false
+            collapse: config.collapse || false,
+            className: config.className || ''
         };
         if (!this.config.hasOwnProperty("disp")) { this.config.disp = true; }
         if (this.config.disp !== false) { this.config.disp = true; }

@@ -28,7 +28,8 @@ module.exports = function(RED) {
             order: config.order,
             value: config.payload || node.id,
             width: config.width || group.config.width || 6,
-            height: config.height || 1
+            height: config.height || 1,
+            className: config.className || '',
         };
 
         for (var o=0; o<config.options.length; o++) {

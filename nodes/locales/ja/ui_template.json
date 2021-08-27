@@ -11,7 +11,9 @@
     	    "store-state" : "出力メッセージを状態として保存",
     	    "template" : "HTMLコード",
             "expand": "展開する",
-            "resend": "更新時に最後の値を再度読み込む"
+            "resend": "更新時に最後の値を再度読み込む",
+			"className": "種類",
+      		"classNamePlaceholder": "ウィジェット用のCSSクラス名（オプション）"
     	}
     }
 }
