@@ -21,7 +21,7 @@
             ng-model="me.item.value"
             ng-model-options="{'timezone':'UTC'}"
             ng-keydown="me.keyPressed($event)"
-            ng-blur="me.keyPressed($event)"
+            ng-blur="me.item.sendOnBlur ? me.keyPressed($event) : false"
             ng-trim="false"
             aria-label="{{me.item.label}}"
             type="{{me.item.mode}}"

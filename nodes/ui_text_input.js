@@ -29,7 +29,7 @@ module.exports = function(RED) {
                 value: '',
                 width: config.width || group.config.width || 6,
                 height: config.height || 1,
-                className: config.className || '',
+                sendOnBlur: config.sendOnBlur
             },
             beforeSend: function (msg) {
                 if (config.mode === "time") {
