@@ -319,7 +319,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         };
                         me.reset = function () {
                             for (var x in me.item.options) {
-                                if (me.item.options[x].type === "boolean") {
+                                if (me.item.options[x].type === "checkbox" || me.item.options[x].type === "switch") {
                                     me.item.formValue[me.item.options[x].value] = false;
                                 }
                                 else {
