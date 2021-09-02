@@ -122,7 +122,15 @@ module.exports = function(RED) {
                 var payloadType = value ? onvalueType : offvalueType;
 
                 if (payloadType === "date") { value = Date.now(); }
-                else { value = RED.util.evaluateNodeProperty(payload,payloadType,node); }
+                else {
+                    try {
+                        value = RED.util.evaluateNodeProperty(payload,payloadType,node);
+                    }
+                    catch(e) {
+                        if (payloadType === "bin") { node.error("Badly formatted buffer"); }
+                        else { node.error(e,payload); }
+                    }
+                }
                 return value;
             },
             beforeSend: function (msg) {
