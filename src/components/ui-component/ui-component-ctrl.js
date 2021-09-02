@@ -289,7 +289,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                             for ( var key in msg.value ) {
                                 if (!me.item.formValue.hasOwnProperty(key)) { continue; }
                                 for (var x in me.item.options) {
-                                    if (me.item.options[x].type === "date" && me.item.options[x].value === key) {
+                                    if ((me.item.options[x].type === "date" || me.item.options[x].type === "time") && me.item.options[x].value === key) {
                                         msg.value[key] = new Date(msg.value[key]);
                                     }
                                     me.item.formValue[key] = msg.value[key];
