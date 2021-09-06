@@ -1,11 +1,18 @@
 
-### 3.0.0-beta: Milestone Release
+### 3.0.3-beta: Milestone Release
 
 **Enhancements**
 
  - Set minimum requirement to be Node12
  - Bump libraries to latest including socketIO - this drops node 8 support, Node10 is also EOL
  - Add Class field to widgets
+
+ **Fixes**
+
+  - Fix dropdown string types (again)
+  - Fix button and switch invalid buffer to not crash NR
+  - Fix form to correctly send false on reset of checkbox and switch
+  - Better position for 1x1 colour picker
 
 ### 2.29.3: Maintenance Release
 
