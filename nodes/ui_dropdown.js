@@ -140,7 +140,7 @@ module.exports = function(RED) {
                         delete m["$$mdSelectId"];
                         if (JSON.stringify(control.options[i].value) == JSON.stringify(mm)) {
                             val = control.options[i].value;
-                            if (typeof val === "string" && control.options[i].type !== "string") {
+                            if (typeof val === "string" && control.options[i].type.indexOf("str") !== 0) {
                                 try { val = JSON.parse(val); }
                                 catch(e) {}
                             }
