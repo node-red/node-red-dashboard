@@ -1,11 +1,11 @@
 
-### 3.0.3-beta: Milestone Release
+### 3.0.3-beta: Major Release
 
 **Enhancements**
 
- - Set minimum requirement to be Node12
- - Bump libraries to latest including socketIO - this drops node 8 support, Node10 is also EOL
- - Add Class field to widgets
+ - Set minimum requirement to be Node12 (in line with core)
+ - Bump libraries to latest including socketIO - this also drops node 8 support, Node10 is also EOL
+ - Add optional CSS Class field to core widgets
 
  **Fixes**
 
