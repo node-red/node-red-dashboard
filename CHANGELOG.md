@@ -1,5 +1,5 @@
 
-### 3.0.3-beta: Major Release
+### 3.0.4: Major Release
 
 **Enhancements**
 
