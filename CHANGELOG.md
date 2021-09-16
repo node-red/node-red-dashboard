@@ -1,17 +1,18 @@
 
-### 2.30.0: Milestone Release
+### 3.0.4: Major Release
 
 **Enhancements**
 
- - Add site option to allow swipe to open/close side menu, instead of moving tabs.
+ - Set minimum requirement to be Node12 (in line with core)
+ - Bump libraries to latest including socketIO - this also drops node 8 support, Node10 is also EOL
+ - Add optional CSS Class field to core widgets
 
-**Fixes**
+ **Fixes**
 
- - Fix dropdown to allow use of id property if selecting an object. Issue #707
- - Activate deploy button on any change to site options (even a non-change)
- - Fix spacer node to be on tab so can be exported as part of the tab (needs Node-RED v2)
- - Try to handle disabled groups and tabs more cleanly.
- - Disable mouse for swipe actions - only use touch events.
+  - Fix dropdown string types (again)
+  - Fix button and switch invalid buffer to not crash NR
+  - Fix form to correctly send false on reset of checkbox and switch
+  - Better position for 1x1 colour picker
 
 ### 2.29.3: Maintenance Release
 
@@ -22,7 +23,7 @@
  - Adjust CSS for better alignment of icons in ui-list
  - Fix color-picker z layer to be behind dropdown if necessary
 
- ### 2.29.1: Maintenance Release
+### 2.29.1: Maintenance Release
 
 **Fixes**
 

@@ -6,7 +6,9 @@
             "width": "Breite",
             "default": "Standard",
             "group": "Gruppe",
-            "unassigned": "nicht zugewiesen"
+            "unassigned": "nicht zugewiesen",
+            "className": "Klasse",
+      "classNamePlaceholder": "Optionale(r) CSS-Klassenname(n) für das Widget"
         },
         "display-name": "Gruppenname anzeigen",
         "collapse-name": "Gruppenreduzierung zulassen"

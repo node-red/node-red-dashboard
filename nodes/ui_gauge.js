@@ -67,7 +67,8 @@ module.exports = function (RED) {
                 colors: node.colors,
                 gageoptions: gageoptions,
                 waveoptions: waveoptions,
-                options: null
+                options: null,
+                className: config.className || '',
             },
             convert: function(p,o,m) {
                 var form = config.format.replace(/{{/g,"").replace(/}}/g,"").replace(/\s/g,"") || "_zzz_zzz_zzz_";

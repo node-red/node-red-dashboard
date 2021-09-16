@@ -85,7 +85,8 @@ module.exports = function(RED) {
                 offcolor: config.offcolor,
                 animate: config.animate?"flip-icon":"",
                 width: config.width || group.config.width || 6,
-                height: config.height || 1
+                height: config.height || 1,
+                className: config.className || '',
             },
             convert: function (payload, oldval, msg) {
                 var myOnValue,myOffValue;
@@ -121,7 +122,15 @@ module.exports = function(RED) {
                 var payloadType = value ? onvalueType : offvalueType;
 
                 if (payloadType === "date") { value = Date.now(); }
-                else { value = RED.util.evaluateNodeProperty(payload,payloadType,node); }
+                else {
+                    try {
+                        value = RED.util.evaluateNodeProperty(payload,payloadType,node);
+                    }
+                    catch(e) {
+                        if (payloadType === "bin") { node.error("Badly formatted buffer"); }
+                        else { node.error(e,payload); }
+                    }
+                }
                 return value;
             },
             beforeSend: function (msg) {

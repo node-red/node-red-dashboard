@@ -32,7 +32,8 @@ module.exports = function(RED) {
                 cancel: config.cancel,
                 splitLayout: config.splitLayout || false,
                 sy: ui.getSizes().sy,
-                cy: ui.getSizes().cy
+                cy: ui.getSizes().cy,
+                className: config.className || '',
             },
             beforeSend: function (msg) {
                 var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;

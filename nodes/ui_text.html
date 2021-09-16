@@ -18,7 +18,8 @@
             name: {value: ''},
             label: {value: 'text'},
             format: {value: '{{msg.payload}}'},
-            layout: {value:'row-spread'}
+            layout: {value:'row-spread'},
+            className: {value: ''}
         },
         inputs:1,
         outputs:0,
@@ -102,6 +103,10 @@
             </a>
         </div>
         </div>
+    </div>
+    <div class="form-row">
+        <label for="node-input-className"><i class="fa fa-code"></i>  Class</label>
+        <input type="text" id="node-input-className" placeholder="Optional CSS class name(s) for widget"/>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

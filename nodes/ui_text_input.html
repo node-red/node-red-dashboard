@@ -22,6 +22,7 @@
             mode: {value: 'text', required: true},
             delay: {value: 300, validate: RED.validators.number()},
             topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
+            sendOnBlur: {value: true},
             topicType: {value: 'msg'}
         },
         inputs:1,
@@ -87,6 +88,10 @@
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row">
+        <label style="width:auto" for="node-input-sendOnBlur">Send value on focus leave: </label>
+        <input type="checkbox" checked id="node-input-sendOnBlur" style="display:inline-block; width:auto; vertical-align:top;">
+    </div>
+    <div class="form-row">
         <label style="width:auto" for="node-input-payload"><i class="fa fa-envelope-o"></i> When changed, send:</label>
     </div>
     <div class="form-row">
@@ -97,6 +102,10 @@
         <label for="node-input-topic" style="padding-left: 25px; margin-right: -25px">Topic</label>
         <input type="text" id="node-input-topic">
         <input type="hidden" id="node-input-topicType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-className"><i class="fa fa-code"></i>  Class</label>
+        <input type="text" id="node-input-className" placeholder="Optional CSS class name(s) for widget"/>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>

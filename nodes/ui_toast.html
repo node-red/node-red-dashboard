@@ -11,6 +11,7 @@
             ok: {value: 'OK', required: true},
             cancel: {value: ''},
             raw: {value: false},
+            className: {value: ''},
             topic: {value: ''},
             name: {value: ''}
         },
@@ -95,6 +96,10 @@
     <div class="form-row" id="node-toast-raw">
         <label style="width:auto" for="node-input-raw"><i class="fa fa-exclamation-triangle"></i> Accept raw HTML/JavaScript input in msg.payload to format popup.</label>
         <input type="checkbox" id="node-input-raw" style="display:inline-block; width:auto; vertical-align:baseline;">
+    </div>
+    <div class="form-row" id="node-dialog-className">
+        <label for="node-input-className"><i class="fa fa-code"></i> Class</label>
+        <input type="text" id="node-input-className" placeholder="[msg.className]">
     </div>
     <div class="form-row" id="node-dialog-topic">
         <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>

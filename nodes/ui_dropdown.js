@@ -23,7 +23,8 @@ module.exports = function(RED) {
             order: config.order,
             value: config.payload || node.id,
             width: config.width || group.config.width || 6,
-            height: config.height || 1
+            height: config.height || 1,
+            className: config.className || '',
         };
 
         for (var o=0; o<config.options.length; o++) {
@@ -139,7 +140,7 @@ module.exports = function(RED) {
                         delete m["$$mdSelectId"];
                         if (JSON.stringify(control.options[i].value) == JSON.stringify(mm)) {
                             val = control.options[i].value;
-                            if (typeof val === "string" && control.options[i].type !== "string") {
+                            if (typeof val === "string" && control.options[i].type.indexOf("str") !== 0) {
                                 try { val = JSON.parse(val); }
                                 catch(e) {}
                             }

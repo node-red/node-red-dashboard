@@ -1,7 +1,8 @@
 <md-card
     ui-card-size="{{ me.item.width }}x{{ me.item.height }}"
     class="nr-dashboard-button"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    node-class="{{ me.item.className }}"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
     <md-button
         class="md-raised"

@@ -21,6 +21,7 @@
             tooltip: {value: ''},
             color: {value: ''},
             bgcolor: {value: ''},
+            className: {value: ''},
             icon: {value: ''},
             payload: {value: '',validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('payloadType'):function(v) { return true})},
             payloadType: { value: 'str'},
@@ -103,6 +104,10 @@
     <div class="form-row">
         <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> <span data-i18n="ui_button.label.emulateClick"></label>
         <input type="checkbox" id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-className"><i class="fa fa-code"></i>  <span data-i18n="ui_button.label.className"></label>
+        <input type="text" id="node-input-className" data-i18n="[placeholder]ui_button.label.classNamePlaceholder"/>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></label>

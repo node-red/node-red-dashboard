@@ -47,6 +47,7 @@ module.exports = function(RED) {
                 tooltip: config.tooltip,
                 color: config.color,
                 bgcolor: config.bgcolor,
+                className: config.className,
                 icon: config.icon,
                 order: config.order,
                 value: payload,
@@ -66,7 +67,13 @@ module.exports = function(RED) {
                     value = Date.now();
                 }
                 else {
-                    value = RED.util.evaluateNodeProperty(payload,payloadType,node);
+                    try {
+                        value = RED.util.evaluateNodeProperty(payload,payloadType,node);
+                    }
+                    catch(e) {
+                        if (payloadType === "bin") { node.error("Badly formatted buffer"); }
+                        else { node.error(e,payload); }
+                    }
                 }
                 return value;
             }

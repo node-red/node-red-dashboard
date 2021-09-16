@@ -93,6 +93,10 @@ reason: https://github.com/angular/material/issues/6214
     border-width: 0px;
 }
 
+.color-picker-wrapper .color-picker-input-wrapper {
+    display: flex;
+}
+
 color-picker {
     z-index:2;
 }

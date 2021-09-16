@@ -14,7 +14,8 @@
             width: {value: 6},
             collapse: {value: false},
             disabled: {value: false},
-            hidden: {value: false}
+            hidden: {value: false},
+            className: {value: ''},
         },
         sort: function(A,B) {
             if (A.tab !== B.tab) {
@@ -67,6 +68,10 @@
     <div class="form-row">
         <label for="node-config-input-tab"><i class="fa fa-table"></i> <span data-i18n="ui_group.label.tab"></span></label>
         <input type="text" id="node-config-input-tab">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-className"><i class="fa fa-code"></i>  <span data-i18n="ui_group.label.className"></label>
+        <input type="text" id="node-config-input-className" data-i18n="[placeholder]ui_group.label.classNamePlaceholder"/>
     </div>
     <div class="form-row">
         <label for="node-config-input-width"><i class="fa fa-arrows-h"></i> <span data-i18n="ui_group.label.width"></span></label>

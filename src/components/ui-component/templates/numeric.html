@@ -4,7 +4,7 @@
     layout="row"
     layout-align="space-between center"
     class="nr-dashboard-numeric"
-    ng-class="{'nr-dashboard-disabled':me.item.disabled}"
+    ng-class="[{'nr-dashboard-disabled':me.item.disabled}, me.item.className]"
     node-id="{{me.item.id}}">
     <p  class="label"
         ng-bind-html="me.item.getLabel()">

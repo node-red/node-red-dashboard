@@ -31,7 +31,8 @@ module.exports = function(RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || 1,
                 layout: angLayout,
-                layoutAlign: angLayoutAlign
+                layoutAlign: angLayoutAlign,
+                className: config.className || '',
             },
             convert: function(value,oldValue,msg) {
                 if (value !== undefined && value !== null) {

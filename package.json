@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "2.30.0",
+    "version": "3.0.4",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -49,6 +49,9 @@
         },
         {
             "name": "@hotNipi"
+        },
+        {
+            "name": "@Steve-Mcl"
         }
     ],
     "license": "Apache-2.0",
@@ -57,7 +60,7 @@
         "url": "https://github.com/node-red/node-red-dashboard.git"
     },
     "node-red": {
-        "version": ">=0.14.0",
+        "version": ">=1.0.0",
         "nodes": {
             "ui_base": "nodes/ui_base.js",
             "ui_button": "nodes/ui_button.js",
@@ -86,7 +89,7 @@
         "compression": "^1.7.4",
         "gridstack": "^0.6.4",
         "serve-static": "^1.14.1",
-        "socket.io": "~2.4.1"
+        "socket.io": "~4.2.0"
     },
     "devDependencies": {
         "angular": "~1.8.2",
@@ -137,6 +140,6 @@
         "weather-icons-lite": "^1.6.1"
     },
     "engines": {
-        "node": ">=8"
+        "node": ">=12"
     }
 }

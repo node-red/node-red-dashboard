@@ -11,7 +11,9 @@
             "store-state": "Add output messages to stored state.",
             "template": "Template",
             "expand": "Expand",
-            "resend": "Reload last value on refresh."
+            "resend": "Reload last value on refresh.",
+            "className": "Class",
+            "classNamePlaceholder": "Optional CSS class name(s) for widget"
         }
     }
 }

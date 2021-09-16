@@ -144,8 +144,26 @@ Each node may parse the `msg.payload` to make it suitable for display. This conv
 
 Any widget can be disabled by passing in a `msg.enabled` property set to `false;`. *Note:* this doesn't stop the widget receiving messages but does stop inputs being active and does re-style the widget.
 
+Most widgets and the ui **group** can have a CSS class or multiple CSS class names. This permits the user to override styles one or more widgets and their inner contents. e.g to colourise a warning toast, add the CSS class `notification-warn` to the **notification** widget and add a **ui-template** (set to "Add to site head section")...
+```html
+<style>
+  md-toast.notification-warn {
+    border-width: 10px;
+    border-color: darkorange;
+  }
+  md-toast.notification-warn > h3 {
+    background-color: orange;
+  }
+  md-toast.notification-warn > div {
+    background: rgba(245, 173, 66, 0.5);
+    color: darkorange;
+  }
+</style>  
+```
+Additionally, any widget that has a Class field can be dynamically updated by passing in a `msg.className` string property set to one or more class names.
+
 Most ui widgets can also be configured by using a `msg.ui_control` message - see **[config-fields.md](https://github.com/node-red/node-red-dashboard/blob/master/config-fields.md)**
-for futher details.
+for further details.
 
   - **Audio out** - a widget that will let you play audio (wav or mp3) or send Text to Speech (TTS) to the client.
   - **Button** - the icon can be set using either Material or fa-icons - the colour and background colour may also be set. If the widget is sized to 1 wide the icon has precedence.

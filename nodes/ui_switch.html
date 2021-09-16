@@ -31,7 +31,8 @@
             offvalueType: {value: 'bool'},
             officon: {value: ''},
             offcolor: {value: ''},
-            animate: {value: false}
+            animate: {value: false},
+            className: {value: ''}
         },
         inputs:1,
         outputs:1,
@@ -142,7 +143,7 @@
         <input type="text" id="node-input-offcolor" style="width:120px">
     </div>
     <div class="form-row">
-        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> Pass through <code>msg</code> if payload matches new state: </label>
+        <label style="width:auto" for="node-input-passthru"><i class="fa fa-arrow-right"></i> Pass through <code>msg</code> if payload matches valid state: </label>
         <input type="checkbox" checked id="node-input-passthru" style="display:inline-block; width:auto; vertical-align:top;">
     </div>
     <div class="form-row form-row-decouple">
@@ -169,6 +170,10 @@
         <label for="node-input-topic" style="padding-left:25px; margin-right:-25px">Topic</label>
         <input type="text" id="node-input-topic">
         <input type="hidden" id="node-input-topicType">
+    </div>
+    <div class="form-row">
+        <label for="node-input-className"><i class="fa fa-code"></i>  Class</label>
+        <input type="text" id="node-input-className" placeholder="Optional CSS class name(s) for widget"/>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
