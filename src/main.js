@@ -671,7 +671,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         });
 
         events.on('ui-control', function(msg) {
-            if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
+            // if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
             if (msg.hasOwnProperty("control")) { // if it's a request to modify a control
                 var found = findControl(msg.id, main.menu);
                 for (var property in msg.control) {
