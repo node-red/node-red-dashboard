@@ -26,6 +26,7 @@ module.exports = function(RED) {
                 mode: config.mode,
                 delay: config.delay,
                 order: config.order,
+                className: config.className || '',
                 value: '',
                 width: config.width || group.config.width || 6,
                 height: config.height || 1,
