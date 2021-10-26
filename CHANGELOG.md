@@ -1,4 +1,12 @@
 
+### 3.1.0: Maintenance Release
+
+**Fixes**
+
+ - Bump socket.io to 4.3.x
+ - Remove ui_control messages weird feedback block (not sure why it was ever there...)
+ - Fix bad class field in text_input. PR #783
+
 ### 3.0.4: Major Release
 
 **Enhancements**
