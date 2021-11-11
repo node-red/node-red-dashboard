@@ -643,7 +643,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 $mdDialog.show(confirm, { panelClass:'nr-dashboard-dialog' }).then(
                     function(res) {
                         msg.msg.payload = msg.ok;
-                        if (res != true) { msg.msg.payload = res; }
+                        if (res !== true) { msg.msg.payload = res; }
                         if (res == undefined) { msg.msg.payload = ""; }
                         events.emit({ id:msg.id, value:msg });
                     },
