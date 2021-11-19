@@ -1,5 +1,14 @@
 
-### 3.1.1: Maintenance Release
+### 3.1.2: Maintenance Release
+
+**Fixes**
+
+ - Fix dialogue notification to be able to return 1. Issue #736
+ - Force saving of spacer size. Forum Issue
+
+ ### 3.1.1: Maintenance Release
+
+ **Fixes**
 
  - Replace ui_control messages feedback block (found out why it was there...)
 

@@ -19,7 +19,7 @@ module.exports = function(RED) {
                 order: config.order,
                 width: config.width || group.config.width || 6,
                 height: config.height || 1,
-                className: config.className || '',
+                className: config.className || ''
             }
         });
         node.on("close", done);
