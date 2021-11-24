@@ -1,4 +1,11 @@
 
+### 3.1.3: Maintenance Release
+
+**Fixes**
+
+ - Allow ui-dropdown to accept single string for one valid option.
+ - Fix socketid back to be in sync with reality. Issue #738
+
 ### 3.1.2: Maintenance Release
 
 **Fixes**

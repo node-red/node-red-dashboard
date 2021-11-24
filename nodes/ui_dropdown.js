@@ -59,7 +59,9 @@ module.exports = function(RED) {
 
                 emitOptions = {isOptionsValid:false, value:undefined, newOptions:undefined};
                 do {
-                    if (!msg.options || !Array.isArray(msg.options)) { break; }
+                    if (!msg.options) { break; }
+                    if (typeof msg.options === "string" ) { msg.options = [ msg.options ]; }
+                    if (!Array.isArray(msg.options)) { break; }
                     emitOptions.newOptions = [];
                     if (msg.options.length === 0) {
                         emitOptions.isOptionsValid = true;
