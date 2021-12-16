@@ -1,4 +1,11 @@
 
+### 3.1.4: Maintenance Release
+
+**Fixes**
+
+ - Remove main entry from package.json. Issue #740
+ - Let Date-picker send repeated existing values.
+
 ### 3.1.3: Maintenance Release
 
 **Fixes**
