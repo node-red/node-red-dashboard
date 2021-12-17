@@ -5,6 +5,7 @@
 
  - Remove main entry from package.json. Issue #740
  - Let Date-picker send repeated existing values.
+ - Warn if Node.js version not 12+.
 
 ### 3.1.3: Maintenance Release
 
