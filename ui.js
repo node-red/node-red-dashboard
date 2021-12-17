@@ -25,6 +25,7 @@ module.exports = function(RED) {
 var fs = require('fs');
 var path = require('path');
 var events = require('events');
+var process = require('process');
 var socketio = require('socket.io');
 var serveStatic = require('serve-static');
 var compression = require('compression');
@@ -368,7 +369,12 @@ function init(server, app, log, redSettings) {
         }
     });
 
-    log.info("Dashboard version " + dashboardVersion + " started at " + fullPath);
+    if ( process.versions.node.split('.')[0] < 12 ) {
+        log.error("Dashboard version "+dashboardVersion+" requires Nodejs 12 or more recent");
+    }
+    else {
+        log.info("Dashboard version " + dashboardVersion + " started at " + fullPath);
+    }
 
     if (typeof uiSettings.ioMiddleware === "function") {
         io.use(uiSettings.ioMiddleware);
