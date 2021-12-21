@@ -6,7 +6,7 @@
 
 This module provides a set of nodes in Node-RED to quickly create a live data dashboard.
 
-These nodes require node.js version 8. The last version to support node v6 was 2.9.5.
+These nodes require node.js version 12 or more recent. The last version to support node v8 was 2.30.0.
 
 From version 2.10.0 you can create and install widget nodes like other Node-RED nodes.
 See the [Wiki](https://github.com/node-red/node-red-dashboard/wiki/Creating-New-Dashboard-Widgets) for more information.
@@ -158,7 +158,7 @@ Most widgets and the ui **group** can have a CSS class or multiple CSS class nam
     background: rgba(245, 173, 66, 0.5);
     color: darkorange;
   }
-</style>  
+</style>
 ```
 Additionally, any widget that has a Class field can be dynamically updated by passing in a `msg.className` string property set to one or more class names.
 

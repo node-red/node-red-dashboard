@@ -1,16 +1,11 @@
 
-### 3.1.4: Maintenance Release
+### 3.1.3: Maintenance Release
 
 **Fixes**
 
  - Remove main entry from package.json. Issue #740
  - Let Date-picker send repeated existing values.
  - Warn if Node.js version not 12+.
-
-### 3.1.3: Maintenance Release
-
-**Fixes**
-
  - Allow ui-dropdown to accept single string for one valid option.
  - Fix socketid back to be in sync with reality. Issue #738
 
