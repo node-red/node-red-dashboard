@@ -1,4 +1,11 @@
 
+### 3.1.4: Maintenance Release
+
+**Fixes**
+
+ - Fix colorpicker swatch overlapping colorpicker dial. Issue #746
+ - Let multiselect dropdown "select all" only select those in search. Issue #747
+
 ### 3.1.3: Maintenance Release
 
 **Fixes**

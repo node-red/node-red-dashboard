@@ -81,6 +81,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                         me.checkAll = function () {
                             me.item.value = me.selectAll ? me.item.options.map(function(o) {return o.value}) : []
+                            me.item.value = me.item.value.filter(function(o) { return o.includes(me.searchTerm)} );
                             me.valueChanged(0);
                         }
 

@@ -32647,9 +32647,9 @@ reason: https://github.com/angular/material/issues/6214
   display: flex;
 }
 
-color-picker-wrapper {
-  z-index: 2;
-}
+/* color-picker {
+    z-index:2;
+} */
 .nr-dashboard-date-picker {
   padding: 0 0px;
   width: 100%;
