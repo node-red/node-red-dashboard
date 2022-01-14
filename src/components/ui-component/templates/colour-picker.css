@@ -97,6 +97,6 @@ reason: https://github.com/angular/material/issues/6214
     display: flex;
 }
 
-color-picker {
+/* color-picker {
     z-index:2;
-}
+} */

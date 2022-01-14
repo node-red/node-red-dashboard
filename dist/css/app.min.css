@@ -15,13 +15,11 @@
 /* See the License for the specific language governing permissions and      */
 /* limitations under the License. */
 /* */
-@charset "UTF-8";
-
 /*!
  * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.2.4
+ * v1.2.3
  */
 
 body,
@@ -911,8 +909,8 @@ md-bottom-sheet.md-grid md-list-item {
 
 @media (max-width:960px) {
   md-bottom-sheet.md-grid md-list-item {
-    flex: 1 1 33.3333333333%;
-    max-width: 33.3333333333%;
+    flex: 1 1 33.33333%;
+    max-width: 33.33333%;
   }
 
   md-bottom-sheet.md-grid md-list-item:nth-of-type(3n+1) {
@@ -933,15 +931,15 @@ md-bottom-sheet.md-grid md-list-item {
 
 @media (min-width:1280px) and (max-width:1919px) {
   md-bottom-sheet.md-grid md-list-item {
-    flex: 1 1 16.6666666667%;
-    max-width: 16.6666666667%;
+    flex: 1 1 16.66667%;
+    max-width: 16.66667%;
   }
 }
 
 @media (min-width:1920px) {
   md-bottom-sheet.md-grid md-list-item {
-    flex: 1 1 14.2857142857%;
-    max-width: 14.2857142857%;
+    flex: 1 1 14.28571%;
+    max-width: 14.28571%;
   }
 }
 
@@ -2690,7 +2688,7 @@ md-fab-speed-dial.md-fling.md-animations-waiting .md-fab-action-item {
 md-fab-speed-dial.md-scale .md-fab-action-item {
   transform: scale(0);
   transition: all .3s cubic-bezier(.55,0,.55,.2);
-  transition-duration: .1428571429s;
+  transition-duration: .14286s;
 }
 
 md-fab-toolbar {
@@ -4243,7 +4241,7 @@ md-menu-content.md-menu-bar-menu.md-dense .md-menu>.md-button {
 
 md-menu-content.md-menu-bar-menu.md-dense .md-menu>.md-button:after {
   speak: none;
-  content: "▼";
+  content: "\25BC";
   display: block;
   position: absolute;
   right: 28px;
@@ -4519,14 +4517,14 @@ md-progress-linear .md-container.md-mode-buffer .md-dashed:before {
   }
 
   36.6% {
-    -webkit-animation-timing-function: cubic-bezier(.334731432,.124819821,.785843996,1);
-    animation-timing-function: cubic-bezier(.334731432,.124819821,.785843996,1);
+    -webkit-animation-timing-function: cubic-bezier(.33473,.12482,.78584,1);
+    animation-timing-function: cubic-bezier(.33473,.12482,.78584,1);
     transform: scaleX(.1);
   }
 
   69.15% {
-    -webkit-animation-timing-function: cubic-bezier(.225732004,0,.233648906,1.3709798);
-    animation-timing-function: cubic-bezier(.225732004,0,.233648906,1.3709798);
+    -webkit-animation-timing-function: cubic-bezier(.22573,0,.23365,1.37098);
+    animation-timing-function: cubic-bezier(.22573,0,.23365,1.37098);
     transform: scaleX(.83);
   }
 
@@ -4543,14 +4541,14 @@ md-progress-linear .md-container.md-mode-buffer .md-dashed:before {
   }
 
   36.6% {
-    -webkit-animation-timing-function: cubic-bezier(.334731432,.124819821,.785843996,1);
-    animation-timing-function: cubic-bezier(.334731432,.124819821,.785843996,1);
+    -webkit-animation-timing-function: cubic-bezier(.33473,.12482,.78584,1);
+    animation-timing-function: cubic-bezier(.33473,.12482,.78584,1);
     transform: scaleX(.1);
   }
 
   69.15% {
-    -webkit-animation-timing-function: cubic-bezier(.225732004,0,.233648906,1.3709798);
-    animation-timing-function: cubic-bezier(.225732004,0,.233648906,1.3709798);
+    -webkit-animation-timing-function: cubic-bezier(.22573,0,.23365,1.37098);
+    animation-timing-function: cubic-bezier(.22573,0,.23365,1.37098);
     transform: scaleX(.83);
   }
 
@@ -4563,23 +4561,23 @@ md-progress-linear .md-container.md-mode-buffer .md-dashed:before {
   0% {
     -webkit-animation-timing-function: linear;
     animation-timing-function: linear;
-    left: -105.1666666667%;
+    left: -105.16667%;
   }
 
   20% {
-    -webkit-animation-timing-function: cubic-bezier(.5,0,.701732,.495818703);
-    animation-timing-function: cubic-bezier(.5,0,.701732,.495818703);
-    left: -105.1666666667%;
+    -webkit-animation-timing-function: cubic-bezier(.5,0,.70173,.49582);
+    animation-timing-function: cubic-bezier(.5,0,.70173,.49582);
+    left: -105.16667%;
   }
 
   69.15% {
-    -webkit-animation-timing-function: cubic-bezier(.302435,.38135197,.55,.956352125);
-    animation-timing-function: cubic-bezier(.302435,.38135197,.55,.956352125);
+    -webkit-animation-timing-function: cubic-bezier(.30244,.38135,.55,.95635);
+    animation-timing-function: cubic-bezier(.30244,.38135,.55,.95635);
     left: 21.5%;
   }
 
   to {
-    left: 95.4444444444%;
+    left: 95.44444%;
   }
 }
 
@@ -4587,42 +4585,42 @@ md-progress-linear .md-container.md-mode-buffer .md-dashed:before {
   0% {
     -webkit-animation-timing-function: linear;
     animation-timing-function: linear;
-    left: -105.1666666667%;
+    left: -105.16667%;
   }
 
   20% {
-    -webkit-animation-timing-function: cubic-bezier(.5,0,.701732,.495818703);
-    animation-timing-function: cubic-bezier(.5,0,.701732,.495818703);
-    left: -105.1666666667%;
+    -webkit-animation-timing-function: cubic-bezier(.5,0,.70173,.49582);
+    animation-timing-function: cubic-bezier(.5,0,.70173,.49582);
+    left: -105.16667%;
   }
 
   69.15% {
-    -webkit-animation-timing-function: cubic-bezier(.302435,.38135197,.55,.956352125);
-    animation-timing-function: cubic-bezier(.302435,.38135197,.55,.956352125);
+    -webkit-animation-timing-function: cubic-bezier(.30244,.38135,.55,.95635);
+    animation-timing-function: cubic-bezier(.30244,.38135,.55,.95635);
     left: 21.5%;
   }
 
   to {
-    left: 95.4444444444%;
+    left: 95.44444%;
   }
 }
 
 @-webkit-keyframes md-progress-linear-indeterminate-scale-2 {
   0% {
-    -webkit-animation-timing-function: cubic-bezier(.205028172,.057050836,.57660995,.453970841);
-    animation-timing-function: cubic-bezier(.205028172,.057050836,.57660995,.453970841);
+    -webkit-animation-timing-function: cubic-bezier(.20503,.05705,.57661,.45397);
+    animation-timing-function: cubic-bezier(.20503,.05705,.57661,.45397);
     transform: scaleX(.1);
   }
 
   19.15% {
-    -webkit-animation-timing-function: cubic-bezier(.152312994,.196431957,.648373778,1.00431535);
-    animation-timing-function: cubic-bezier(.152312994,.196431957,.648373778,1.00431535);
+    -webkit-animation-timing-function: cubic-bezier(.15231,.19643,.64837,1.00432);
+    animation-timing-function: cubic-bezier(.15231,.19643,.64837,1.00432);
     transform: scaleX(.57);
   }
 
   44.15% {
-    -webkit-animation-timing-function: cubic-bezier(.25775882,-.003163357,.211761916,1.38178961);
-    animation-timing-function: cubic-bezier(.25775882,-.003163357,.211761916,1.38178961);
+    -webkit-animation-timing-function: cubic-bezier(.25776,-.00316,.21176,1.38179);
+    animation-timing-function: cubic-bezier(.25776,-.00316,.21176,1.38179);
     transform: scaleX(.91);
   }
 
@@ -4633,20 +4631,20 @@ md-progress-linear .md-container.md-mode-buffer .md-dashed:before {
 
 @keyframes md-progress-linear-indeterminate-scale-2 {
   0% {
-    -webkit-animation-timing-function: cubic-bezier(.205028172,.057050836,.57660995,.453970841);
-    animation-timing-function: cubic-bezier(.205028172,.057050836,.57660995,.453970841);
+    -webkit-animation-timing-function: cubic-bezier(.20503,.05705,.57661,.45397);
+    animation-timing-function: cubic-bezier(.20503,.05705,.57661,.45397);
     transform: scaleX(.1);
   }
 
   19.15% {
-    -webkit-animation-timing-function: cubic-bezier(.152312994,.196431957,.648373778,1.00431535);
-    animation-timing-function: cubic-bezier(.152312994,.196431957,.648373778,1.00431535);
+    -webkit-animation-timing-function: cubic-bezier(.15231,.19643,.64837,1.00432);
+    animation-timing-function: cubic-bezier(.15231,.19643,.64837,1.00432);
     transform: scaleX(.57);
   }
 
   44.15% {
-    -webkit-animation-timing-function: cubic-bezier(.25775882,-.003163357,.211761916,1.38178961);
-    animation-timing-function: cubic-bezier(.25775882,-.003163357,.211761916,1.38178961);
+    -webkit-animation-timing-function: cubic-bezier(.25776,-.00316,.21176,1.38179);
+    animation-timing-function: cubic-bezier(.25776,-.00316,.21176,1.38179);
     transform: scaleX(.91);
   }
 
@@ -4657,49 +4655,49 @@ md-progress-linear .md-container.md-mode-buffer .md-dashed:before {
 
 @-webkit-keyframes md-progress-linear-indeterminate-2 {
   0% {
-    -webkit-animation-timing-function: cubic-bezier(.15,0,.5150584,.409684966);
-    animation-timing-function: cubic-bezier(.15,0,.5150584,.409684966);
-    left: -54.8888888889%;
+    -webkit-animation-timing-function: cubic-bezier(.15,0,.51506,.40968);
+    animation-timing-function: cubic-bezier(.15,0,.51506,.40968);
+    left: -54.88889%;
   }
 
   25% {
-    -webkit-animation-timing-function: cubic-bezier(.3103299,.284057684,.8,.733718979);
-    animation-timing-function: cubic-bezier(.3103299,.284057684,.8,.733718979);
+    -webkit-animation-timing-function: cubic-bezier(.31033,.28406,.8,.73372);
+    animation-timing-function: cubic-bezier(.31033,.28406,.8,.73372);
     left: -17.25%;
   }
 
   48.35% {
-    -webkit-animation-timing-function: cubic-bezier(.4,.627034903,.6,.902025796);
-    animation-timing-function: cubic-bezier(.4,.627034903,.6,.902025796);
+    -webkit-animation-timing-function: cubic-bezier(.4,.62703,.6,.90203);
+    animation-timing-function: cubic-bezier(.4,.62703,.6,.90203);
     left: 29.5%;
   }
 
   to {
-    left: 117.3888888889%;
+    left: 117.38889%;
   }
 }
 
 @keyframes md-progress-linear-indeterminate-2 {
   0% {
-    -webkit-animation-timing-function: cubic-bezier(.15,0,.5150584,.409684966);
-    animation-timing-function: cubic-bezier(.15,0,.5150584,.409684966);
-    left: -54.8888888889%;
+    -webkit-animation-timing-function: cubic-bezier(.15,0,.51506,.40968);
+    animation-timing-function: cubic-bezier(.15,0,.51506,.40968);
+    left: -54.88889%;
   }
 
   25% {
-    -webkit-animation-timing-function: cubic-bezier(.3103299,.284057684,.8,.733718979);
-    animation-timing-function: cubic-bezier(.3103299,.284057684,.8,.733718979);
+    -webkit-animation-timing-function: cubic-bezier(.31033,.28406,.8,.73372);
+    animation-timing-function: cubic-bezier(.31033,.28406,.8,.73372);
     left: -17.25%;
   }
 
   48.35% {
-    -webkit-animation-timing-function: cubic-bezier(.4,.627034903,.6,.902025796);
-    animation-timing-function: cubic-bezier(.4,.627034903,.6,.902025796);
+    -webkit-animation-timing-function: cubic-bezier(.4,.62703,.6,.90203);
+    animation-timing-function: cubic-bezier(.4,.62703,.6,.90203);
     left: 29.5%;
   }
 
   to {
-    left: 117.3888888889%;
+    left: 117.38889%;
   }
 }
 
@@ -5089,7 +5087,7 @@ md-input-container md-select .md-select-value.md-select-placeholder {
 
 .md-select-value .md-select-icon:after {
   speak: none;
-  content: "▼";
+  content: "\25BC";
   display: block;
   font-size: 13px;
   left: auto;
@@ -5323,13 +5321,13 @@ md-select-menu[multiple] md-option.md-checkbox-enabled.md-indeterminate .md-icon
 }
 
 md-select-menu[multiple] md-option.md-checkbox-enabled .md-container {
-  margin-left: 10.6666666667px;
+  margin-left: 10.66667px;
   margin-right: auto;
 }
 
 [dir=rtl] md-select-menu[multiple] md-option.md-checkbox-enabled .md-container {
   margin-left: auto;
-  margin-right: 10.6666666667px;
+  margin-right: 10.66667px;
 }
 
 md-sidenav {
@@ -7786,14 +7784,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
 .layout-margin .flex-offset-33,
 .layout-margin .offset-33,
 .offset-33 {
-  margin-left: 33.3333333333%;
+  margin-left: 33.33333%;
 }
 
 .flex-offset-66,
 .layout-margin .flex-offset-66,
 .layout-margin .offset-66,
 .offset-66 {
-  margin-left: 66.6666666667%;
+  margin-left: 66.66667%;
 }
 
 [dir=rtl] .flex-offset-66,
@@ -7801,7 +7799,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
 [dir=rtl] .layout-margin .offset-66,
 [dir=rtl] .offset-66 {
   margin-left: auto;
-  margin-right: 66.6666666667%;
+  margin-right: 66.66667%;
 }
 
 .layout-align,
@@ -8880,14 +8878,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-xs-33,
   .layout-margin .offset-xs-33,
   .offset-xs-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-xs-66,
   .layout-margin .flex-offset-xs-66,
   .layout-margin .offset-xs-66,
   .offset-xs-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-xs-66,
@@ -8895,7 +8893,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-xs-66,
   [dir=rtl] .offset-xs-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-xs,
@@ -10179,14 +10177,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-gt-xs-33,
   .layout-margin .offset-gt-xs-33,
   .offset-gt-xs-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-gt-xs-66,
   .layout-margin .flex-offset-gt-xs-66,
   .layout-margin .offset-gt-xs-66,
   .offset-gt-xs-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-gt-xs-66,
@@ -10194,7 +10192,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-gt-xs-66,
   [dir=rtl] .offset-gt-xs-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-gt-xs,
@@ -11477,14 +11475,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-sm-33,
   .layout-margin .offset-sm-33,
   .offset-sm-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-sm-66,
   .layout-margin .flex-offset-sm-66,
   .layout-margin .offset-sm-66,
   .offset-sm-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-sm-66,
@@ -11492,7 +11490,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-sm-66,
   [dir=rtl] .offset-sm-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-sm,
@@ -12776,14 +12774,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-gt-sm-33,
   .layout-margin .offset-gt-sm-33,
   .offset-gt-sm-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-gt-sm-66,
   .layout-margin .flex-offset-gt-sm-66,
   .layout-margin .offset-gt-sm-66,
   .offset-gt-sm-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-gt-sm-66,
@@ -12791,7 +12789,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-gt-sm-66,
   [dir=rtl] .offset-gt-sm-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-gt-sm,
@@ -14075,14 +14073,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-md-33,
   .layout-margin .offset-md-33,
   .offset-md-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-md-66,
   .layout-margin .flex-offset-md-66,
   .layout-margin .offset-md-66,
   .offset-md-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-md-66,
@@ -14090,7 +14088,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-md-66,
   [dir=rtl] .offset-md-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-md,
@@ -15374,14 +15372,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-gt-md-33,
   .layout-margin .offset-gt-md-33,
   .offset-gt-md-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-gt-md-66,
   .layout-margin .flex-offset-gt-md-66,
   .layout-margin .offset-gt-md-66,
   .offset-gt-md-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-gt-md-66,
@@ -15389,7 +15387,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-gt-md-66,
   [dir=rtl] .offset-gt-md-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-gt-md,
@@ -16674,14 +16672,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-lg-33,
   .layout-margin .offset-lg-33,
   .offset-lg-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-lg-66,
   .layout-margin .flex-offset-lg-66,
   .layout-margin .offset-lg-66,
   .offset-lg-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-lg-66,
@@ -16689,7 +16687,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-lg-66,
   [dir=rtl] .offset-lg-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-lg,
@@ -17973,14 +17971,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-gt-lg-33,
   .layout-margin .offset-gt-lg-33,
   .offset-gt-lg-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-gt-lg-66,
   .layout-margin .flex-offset-gt-lg-66,
   .layout-margin .offset-gt-lg-66,
   .offset-gt-lg-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-gt-lg-66,
@@ -17988,7 +17986,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-gt-lg-66,
   [dir=rtl] .offset-gt-lg-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-gt-lg,
@@ -19263,14 +19261,14 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   .layout-margin .flex-offset-xl-33,
   .layout-margin .offset-xl-33,
   .offset-xl-33 {
-    margin-left: 33.3333333333%;
+    margin-left: 33.33333%;
   }
 
   .flex-offset-xl-66,
   .layout-margin .flex-offset-xl-66,
   .layout-margin .offset-xl-66,
   .offset-xl-66 {
-    margin-left: 66.6666666667%;
+    margin-left: 66.66667%;
   }
 
   [dir=rtl] .flex-offset-xl-66,
@@ -19278,7 +19276,7 @@ md-toolbar~md-content>md-list md-list-item:last-child md-divider {
   [dir=rtl] .layout-margin .offset-xl-66,
   [dir=rtl] .offset-xl-66 {
     margin-left: auto;
-    margin-right: 66.6666666667%;
+    margin-right: 66.66667%;
   }
 
   .layout-align-xl,
@@ -32649,7 +32647,7 @@ reason: https://github.com/angular/material/issues/6214
   display: flex;
 }
 
-color-picker {
+color-picker-wrapper {
   z-index: 2;
 }
 .nr-dashboard-date-picker {
