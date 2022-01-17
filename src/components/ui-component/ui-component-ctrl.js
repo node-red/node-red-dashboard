@@ -80,8 +80,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         };
 
                         me.checkAll = function () {
-                            me.item.value = me.selectAll ? me.item.options.map(function(o) {return o.value}) : []
-                            me.item.value = me.item.value.filter(function(o) { return o.includes(me.searchTerm)} );
+                            var srch = me.item.options.filter(function(o) { return o.label.toLowerCase().includes(me.searchTerm.toLowerCase())} );
+                            me.item.value = me.selectAll ? srch.map(function(o) {return o.value}) : []
                             me.valueChanged(0);
                         }
 
