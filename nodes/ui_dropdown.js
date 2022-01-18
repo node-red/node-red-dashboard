@@ -74,7 +74,7 @@ module.exports = function(RED) {
                         switch (typeof opt) {
                             case 'number': {
                                 opt = "" + opt;
-                                emitOptions.newOptions.push({label:opt, value:opt});
+                                emitOptions.newOptions.push({label:opt, value:opt, type:"number"});
                                 break;
                             }
                             case 'string': {

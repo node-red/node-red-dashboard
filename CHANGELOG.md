@@ -1,17 +1,24 @@
 
+### 3.1.5: Maintenance Release
+
+**Fixes**
+
+ - Fix dropdown multiselect to search on labels and handle upper/lower case. Issue #749
+ - Fix dropdown multiselect to not exit on mixed string and numerics. Issue #748
+
 ### 3.1.4: Maintenance Release
 
 **Fixes**
 
  - Fix colorpicker swatch overlapping colorpicker dial. Issue #746
- - Let multiselect dropdown "select all" only select those in search. Issue #747
+ - Let dropdown multiselect "select all" only select those in search. Issue #747
 
 ### 3.1.3: Maintenance Release
 
 **Fixes**
 
  - Remove main entry from package.json. Issue #740
- - Let Date-picker send repeated existing values.
+ - Let date-picker send repeated existing values.
  - Warn if Node.js version not 12+.
  - Allow ui-dropdown to accept single string for one valid option.
  - Fix socketid back to be in sync with reality. Issue #738
