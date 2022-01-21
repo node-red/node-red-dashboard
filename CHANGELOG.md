@@ -4,7 +4,7 @@
 **Fixes**
 
  - Fix dropdown multiselect to search on labels and handle upper/lower case. Issue #749
- - Fix dropdown multiselect to not exit on mixed string and numerics. Issue #748
+ - Fix dropdown to not exit on mixed string and numerics. Issue #748
 
 ### 3.1.4: Maintenance Release
 
