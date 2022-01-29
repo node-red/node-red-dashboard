@@ -1,3 +1,8 @@
+### 3.1.6-beta: Maintenance Release
+
+**Fixes**
+
+- Really fix date picker to always send selected date. Issue #753
 
 ### 3.1.5: Maintenance Release
 
