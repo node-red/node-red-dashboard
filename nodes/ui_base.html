@@ -514,6 +514,7 @@
                             label: function() { return this.name + " " + this.width + "x" + this.height; }
                         };
                         RED.nodes.add(spaceNode);
+                        RED.editor.validateNode(spaceNode);
                         RED.nodes.dirty(true);
                         RED.view.redraw(true);
                     }
@@ -1130,6 +1131,7 @@
                                     users: []
                                 }
                                 RED.nodes.add(globalDashboardNode);
+                                RED.editor.validateNode(globalDashboardNode);
                             }
                             else {
                                 globalDashboardNode["_def"] = RED.nodes.getType("ui_base");
@@ -1857,6 +1859,7 @@
                             item.groups = [];
                         }
                         RED.nodes.add(item.node);
+                        RED.editor.validateNode(item.node);
                         RED.history.push({
                             t:'add',
                             nodes:[item.node.id],
@@ -2179,6 +2182,7 @@
                                     };
                                     listElements[group.node.id] = container;
                                     RED.nodes.add(group.node);
+                                    RED.editor.validateNode(group.node);
                                     group.widgets = [];
                                     RED.history.push({
                                         t:'add',
@@ -2467,6 +2471,7 @@
                             icon: "dashboard"
                         };
                         RED.nodes.add(tab);
+                        RED.editor.validateNode(tab);
                         hev.push(tab.id);
                     }
                     for (var groupId in unknownGroups) {
