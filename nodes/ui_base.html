@@ -2959,6 +2959,9 @@
                     var updateList = {};
                     for (var i=0; i<pendingAdd.length; i++) {
                         var node = pendingAdd[i];
+                        if (listElements[node.id]) {
+                            continue;
+                        }
                         if (node.type === "ui_tab") {
                             tabContainer.editableList('addItem',{node:node,groups:[]});
                         }
