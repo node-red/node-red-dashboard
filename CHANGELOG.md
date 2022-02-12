@@ -2,7 +2,10 @@
 
 **Fixes**
 
+- Add PR to deduplicate layput list entries. PR #752
 - Really fix date picker to always send selected date. Issue #753
+- Add PR to fix validity checks of node config. PR #755
+- Add datetime option to text input
 
 ### 3.1.5: Maintenance Release
 
