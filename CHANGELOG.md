@@ -1,4 +1,4 @@
-### 3.1.6-beta: Maintenance Release
+### 3.1.6: Maintenance Release
 
 **Fixes**
 
