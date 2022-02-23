@@ -1,3 +1,9 @@
+### 3.1.7: Maintenance Release
+
+**Fixes**
+
+ - Fix text-input datetime mode to accept setting time input. Issue #757
+
 ### 3.1.6: Maintenance Release
 
 **Fixes**

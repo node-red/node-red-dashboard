@@ -33,7 +33,7 @@ module.exports = function(RED) {
                 sendOnBlur: config.sendOnBlur
             },
             beforeSend: function (msg) {
-                if (config.mode === "time") {
+                if (config.mode.indexOf("time") != -1) {
                     if (typeof msg.payload === "string") {
                         msg.payload = Date.parse(msg.payload);
                     }
