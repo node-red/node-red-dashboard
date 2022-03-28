@@ -33,7 +33,7 @@
         </p>
         <span ng-if="(me.item.ed === true)">
             <span class="value" ng-bind-html="me.item.pre"></span>
-            <input ng-model="me.item.value" ng-change="me.newValue()" class="value" style="max-width:{{me.item.minWidth}}px;">
+            <input ng-model="me.item.value" ng-change="me.newValue()" class="value" ng-disabled="me.item.disabled" style="max-width:{{me.item.minWidth}}px;">
             <span class="value" ng-bind-html="me.item.post"></span>
         </span>
         </center>

@@ -20,6 +20,7 @@
         <md-select
             ng-if="!me.item.multiple"
             ng-change="me.itemChanged()"
+            ng-disabled="me.item.disabled"
             ng-model="me.item.value"
             placeholder="{{ me.item.place }}"
             flex="100">
@@ -47,6 +48,7 @@
         <md-select
             ng-if="me.item.multiple"
             ng-change="me.itemChanged()"
+            ng-disabled="me.item.disabled"
             md-on-close="me.closed()"
             multiple
             ng-model="me.item.value"

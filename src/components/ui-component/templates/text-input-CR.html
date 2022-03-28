@@ -23,6 +23,7 @@
             ng-keydown="me.keyPressed($event)"
             ng-blur="me.item.sendOnBlur ? me.keyPressed($event) : false"
             ng-trim="false"
+            ng-disabled="me.item.disabled"
             aria-label="{{me.item.label}}"
             type="{{me.item.mode}}"
             style="z-index:1"

@@ -22,6 +22,7 @@
             ng-model-options="{'timezone':'UTC'}"
             ng-change="me.valueChanged({{me.item.delay}})"
             ng-trim="false"
+            ng-disabled="me.item.disabled"
             aria-label="{{me.item.label}}"
             type="{{me.item.mode}}"
             style="z-index:1"
