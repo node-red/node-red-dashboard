@@ -7,6 +7,7 @@
     <md-button
         class="md-raised"
         ng-click="me.buttonClick($event)"
+        ng-disabled="me.item.disabled"
         aria-label="{{'button' + me.item.label}}"
         ng-style="{'background-color':me.item.getText(), 'color':me.item.getColor(), 'z-index':1, 'padding':'0px'}">
         <ui-icon
