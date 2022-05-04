@@ -3,6 +3,9 @@
 **Fixes**
 
  - Fix text-input datetime mode to accept setting time input. Issue #757
+ - Fix ng-disabled for text, numeric and dropdown inputs
+ - Fix disabling button
+ - Fix numeric input width calculation
 
 ### 3.1.6: Maintenance Release
 

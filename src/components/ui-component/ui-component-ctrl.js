@@ -132,8 +132,8 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
 
                         //var regex = /({{([^}}]+)}})/ig
                         //var fl = me.item.format.replace(regex, "").length * 9.5;
-                        var mnw = (me.item.min + me.item.step).toString().length * 9.5;
-                        var mxw = (me.item.max + me.item.step).toString().length * 9.5;
+                        var mnw = (Math.round((me.item.min + me.item.step)*10000)/10000).toString().length * 9.5;
+                        var mxw = (Math.round((me.item.max + me.item.step)*10000)/10000).toString().length * 9.5;
                         me.item.minWidth = (mnw > mxw ? mnw : mxw); //+ fl;
                         var promise = null;
                         me.newValue = function() {
