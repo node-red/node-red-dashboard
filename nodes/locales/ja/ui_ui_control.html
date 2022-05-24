@@ -3,13 +3,23 @@
     <p>表示されているタブの切り替えが可能です。<code>msg.payload</code>に
 The default function is to change the currently displayed tab. <code>msg.payload</code>に表示対象のタブもしくはリンクの<code>{tab:"タブ名"}</code>、<b>タブ名</b>、もしくは、<b>添字</b> (0起点)を指定します。</p>
     <p>空のタブ名("")を送信すると、表示されているページを更新します。また、"+1"を送ると次のタブ、"-1"を送ると前のタブに切り替えられます。</p>
+    <p>次の形式のオブジェクトを<code>msg.payload</code>で送付すると
+ダッシュボードページ(タブ)を制御できます。<pre>{"tabs": {"hide": "非表示タブ", "disable": ["秘密タブ", "未使用"]}}</pre>
+    ここでは、次の2つの状態が利用できます: <b>show</b>/<b>hide</b> および <b>enable</b>/<b>disable</b></p>
     <p>widgetグループの表示を次のようなペイロードで制御できます。<br/>
-<code>{group:{hide:["タブ名_グループ名"], show:["他_グループ_表示"], focus:true}}</code><br/>
-    <b>focus</b>は、グループが表示されるよう必要に応じて画面をスクロールするためのパラメータで、省略可能です。グループの指定は<i>タブ名</i>と<i>グループ名</i>を下線(_)で結合したものを用います。空白は下線で置き換えます。</p>
-    <p>クライアントのブラウザが接続もしくは切断した場合、次のプロパティを持つメッセージを送信します:</p>
+<pre>{group:{hide:["タブ名_グループ名"], show:["他_グループ_表示"], focus:true}}</pre>
+    <b>focus</b>は、グループが表示されるよう必要に応じて画面をスクロールするためのパラメータで、省略可能です。
+また、`open`および`close`プロパティを用いてグループの状態をユーザが制御できます。
+グループ名の指定は<i>タブ名</i>と<i>グループ名</i>を下線(_)で結合したものを用います。空白は下線で置き換えます。</p>
+    <p>クライアントのブラウザが接続もしくは切断した場合、タブが変更された場合、グループを拡大もしくは縮小した場合、次のプロパティを持つメッセージを送信します:</p>
     <ul>
-    <li><code>payload</code> - <i>connect</i>もしくは<i>lost</i>,
-    <li><code>socketid</code> - ソケットID(ブラウザがページを再ロードする毎に変化します),
-    <li><code>socketip</code> - 接続元のIPアドレス。
+    <li><code>payload</code> - <i>connect</i>、<i>lost</i>、<i>change</i>、もしくは<i>group</i>
+    <li><code>socketid</code> - ソケットID(ブラウザがページを再ロードする毎に変化します)
+    <li><code>socketip</code> - 接続元のIPアドレス,
+    <li><code>tab</code> - タブ番号 ('change'イベントのみ)
+    <li><code>name</code> - タブ名 ('change'イベントのみ)
+    <li><code>group</code> - グループ名 ('group'イベントのみ)
+    <li><code>open</code> - グループの状態 ('group'イベントのみ)
     </ul>
+    <p>追加 - 「Connectイベントのみ」は新しいクライアントへのデータの再送を他のイベントをフィルタしないで行う場合に有用です。</p>
 </script>
