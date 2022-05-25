@@ -40,31 +40,31 @@
     }
     .nr-db-sb-tab-list-item {
         border-radius: 4px;
-        color: var(--nr-db-dark-text);
+        color: var(--red-ui-primary-text-color, var(--nr-db-dark-text));
     }
     .nr-db-sb-list-header {
         cursor: pointer;
         position:relative;
-        color: var(--nr-db-dark-text);
+        color: var(--red-ui-header-text-color, var(--nr-db-dark-text));
         padding:3px;
         white-space: nowrap;
     }
     .nr-db-sb-list-header:hover {
-        color: var(--nr-db-dark-text);
+        color: var(--red-ui-secondary-text-color-hover, var(--nr-db-dark-text));
     }
     .nr-db-sb-title-hidden {
         text-decoration: line-through;
     }
     .nr-db-sb-title-disabled {
-        color: var(--nr-db-disabled-text);
+        color: var(--red-ui-secondary-text-color-disabled, var(--nr-db-disabled-text));
     }
     .nr-db-sb-tab-list-header {
-        background: var(--nr-db-light-text);
+        background: var(--red-ui-secondary-background-selected, var(--nr-db-light-text));
         padding:5px;
     }
     .nr-db-sb-group-list-header:hover,
     .nr-db-sb-widget-list-header:hover {
-        background: var(--nr-db-light-text);
+        background: var(--red-ui-secondary-background-hover, var(--nr-db-light-text));
     }
     .nr-db-sb-list-chevron {
         width: 15px;
@@ -90,7 +90,7 @@
         opacity: 0;
     }
     .nr-db-sb-list-handle  {
-        color: var(--nr-db-light-text);
+        color: var(--red-ui-tertiary-text-color, var(--nr-db-light-text));
         padding:5px;
     }
     .nr-db-sb-tab-list-header>.nr-db-sb-list-chevron  {
@@ -105,10 +105,10 @@
         min-height: 10px;
     }
     .nr-db-sb-group-list li {
-        border-bottom-color: var(--nr-db-light-text);
+        border-bottom-color: var(--red-ui-secondary-border-color, var(--nr-db-light-text));
     }
     .nr-db-sb-group-list>li.ui-sortable-helper {
-        border-top: 1px solid var(--nr-db-light-text);
+        border-top: 1px solid var(--red-ui-secondary-border-color, var(--nr-db-light-text));
     }
     .nr-db-sb-group-list>li:last-child {
         border-bottom: none;
@@ -151,7 +151,7 @@
     }
     .nr-db-sb-link-url {
         font-size: 0.8em;
-        color: var(--nr-db-mid-grey);
+        color: var(--red-ui-secondary-text-color, var(--nr-db-mid-grey));
     }
     span.nr-db-color-pick-container {
         max-width: 50px;
@@ -206,7 +206,7 @@
     .nr-db-resetIcon {
         margin: 3px 6px 0px 6px;
         float: right;
-        color: var(--nr-db-mid-grey);
+        color: var(--red-ui-secondary-text-color, var(--nr-db-mid-grey));
         opacity: 0.8;
         display: block;
     }
