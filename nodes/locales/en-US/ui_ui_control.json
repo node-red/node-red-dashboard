@@ -1,10 +1,16 @@
 {
     "ui_ui_control": {
         "label": {
-            "name": "Name"
+            "name": "Name",
+	    "output": "Output"
         },
         "placeholder": {
             "name": "Name"
-        }
+        },
+	"events": {
+	  "all": "Connect, lost, change tab or group events",
+	  "change": "Change tab or group events only",
+	  "connect": "Connect event only"
+	}
     }
 }

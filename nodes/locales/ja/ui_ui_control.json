@@ -1,10 +1,16 @@
 {
     "ui_ui_control" : {
         "label" : {
-            "name" : "名前"
+            "name" : "名前",
+	    "output": "出力"
         },
         "placeholder" : {
             "name" : "名前"
-        }
+        },
+	"events": {
+	  "all": "connect, lost, タブ変更もしくはグループイベント",
+	  "change": "タブ変更もしくはグループイベントのみ",
+	  "connect": "Connectイベントのみ"
+	}
     }
 }
