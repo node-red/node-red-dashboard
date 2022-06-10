@@ -2,6 +2,7 @@
 ### 3.1.8: Maintenance Release
 
  - Use Node-RED CSS vars for ui-bas to help themeing. PR #763
+ - Let spacer also have custom class
 
 ### 3.1.7: Maintenance Release
 

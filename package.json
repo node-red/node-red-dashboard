@@ -88,7 +88,7 @@
         "compression": "^1.7.4",
         "gridstack": "^0.6.4",
         "serve-static": "^1.14.2",
-        "socket.io": "~4.4.1"
+        "socket.io": "^4.4.1"
     },
     "devDependencies": {
         "angular": "~1.8.2",
@@ -130,7 +130,7 @@
         "jshint": "~2.13.3",
         "justgage": "~1.4.3",
         "less": "^3.13.1",
-        "material-design-icons-iconfont": "~6.4.2",
+        "material-design-icons-iconfont": "^6.4.2",
         "moment": "~2.29.1",
         "sprintf-js": "^1.1.2",
         "streamqueue": "~1.1.2",
