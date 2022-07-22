@@ -1,11 +1,11 @@
 <script type="text/javascript">
     // convert to i18 text
     function c_(x) {
-        return RED._("node-red-dashboard/ui_template:ui_template."+x);
+        return RED._("@mayahq/maya-red-dashboard/ui_template:ui_template."+x);
     }
 
     RED.nodes.registerType('ui_template',{
-        category: RED._("node-red-dashboard/ui_base:ui_base.label.category"),
+        category: RED._("@mayahq/maya-red-dashboard/ui_base:ui_base.label.category"),
         color: 'rgb( 63, 173, 181)',
         defaults: {
             group: {type: 'ui_group', required:false},

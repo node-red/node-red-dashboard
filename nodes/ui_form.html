@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('ui_form',{
-        category: RED._("node-red-dashboard/ui_base:ui_base.label.category"),
+        category: RED._("@mayahq/maya-red-dashboard/ui_base:ui_base.label.category"),
         color: 'rgb(176, 223, 227)',
         defaults: {
             name: {value: ''},
@@ -68,10 +68,10 @@
 
                 $('<i style="cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
-                var labelField = $('<input/>',{class:"node-input-option-label", type:"text", style:"margin-left:7px; width:20%;", placeholder: RED._("node-red-dashboard/ui_form:ui_form.label.egName"), value:option.label}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
+                var labelField = $('<input/>',{class:"node-input-option-label", type:"text", style:"margin-left:7px; width:20%;", placeholder: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.egName"), value:option.label}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
                 var valueClass ="node-input-option-value"
                 if (!option.value) { valueClass ="node-input-option-value input-error"; }
-                var valueField = $('<input/>',{class:valueClass, type:"text", style:"margin-left:7px; width:20%;", placeholder: RED._("node-red-dashboard/ui_form:ui_form.label.egName2"), value:option.value}).appendTo(row);//.typedInput({default:'str',types:['str','num','bool']});
+                var valueField = $('<input/>',{class:valueClass, type:"text", style:"margin-left:7px; width:20%;", placeholder: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.egName2"), value:option.value}).appendTo(row);//.typedInput({default:'str',types:['str','num','bool']});
                 valueField.keyup(function() {
                     if ($(this).val() && $(this).hasClass('input-error')) {
                         $(this).removeClass('input-error')
@@ -87,15 +87,15 @@
                 var typeField = $('<select/>',{class:"node-input-option-type",type:"text",style:"margin-left:7px; width:16%"}).appendTo(row);//.typedInput({default:'str',types:['str', 'num']});
 
                 var arr = [
-                  {val : "text", text: RED._("node-red-dashboard/ui_form:ui_form.label.text")},
-                  {val : "multiline", text: RED._("node-red-dashboard/ui_form:ui_form.label.multiline")},
-                  {val : "number", text: RED._("node-red-dashboard/ui_form:ui_form.label.number")},
-                  {val : "email", text: RED._("node-red-dashboard/ui_form:ui_form.label.email")},
-                  {val : "password", text: RED._("node-red-dashboard/ui_form:ui_form.label.password")},
-                  {val : "checkbox", text: RED._("node-red-dashboard/ui_form:ui_form.label.checkbox")},
-                  {val : "switch", text: RED._("node-red-dashboard/ui_form:ui_form.label.switch")},
-                  {val : "date", text: RED._("node-red-dashboard/ui_form:ui_form.label.date")},
-                  {val : "time", text: RED._("node-red-dashboard/ui_form:ui_form.label.time")}
+                  {val : "text", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.text")},
+                  {val : "multiline", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.multiline")},
+                  {val : "number", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.number")},
+                  {val : "email", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.email")},
+                  {val : "password", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.password")},
+                  {val : "checkbox", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.checkbox")},
+                  {val : "switch", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.switch")},
+                  {val : "date", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.date")},
+                  {val : "time", text: RED._("@mayahq/maya-red-dashboard/ui_form:ui_form.label.time")}
                 ];
 
                 //var sel = $('<select>').appendTo('body');

@@ -9,7 +9,7 @@
 </style>
 <script type="text/javascript">
     RED.nodes.registerType('ui_chart',{
-        category: RED._("node-red-dashboard/ui_base:ui_base.label.category"),
+        category: RED._("@mayahq/maya-red-dashboard/ui_base:ui_base.label.category"),
         color: 'rgb(119, 198, 204)',
         defaults: {
             name: {value: ''},
@@ -142,13 +142,13 @@
             if (oval === "D/M") { odef = oval; }
             if (oval === "dd HH:mm") { odef = oval; }
             if (oval === "auto") { odef = oval; }
-            var ohms = {value: "HH:mm:ss", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.HHmmss"), hasValue: false};
-            var ohm = {value: "HH:mm", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.HHmm"), hasValue: false};
-            var oymd = {value: "Y-M-D", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.yearMonthDate"), hasValue: false};
-            var odm = {value: "D/M", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.dateMonth"), hasValue: false};
-            var oahm = {value: "dd HH:mm", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.dayHHmm"), hasValue: false};
-            var ocus = {value: "custom", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.custom"), icon: "red/images/typedInput/az.png"};
-            var oaut = {value: "auto", label: RED._("node-red-dashboard/ui_chart:ui_chart.label.automatic"), hasValue: false};
+            var ohms = {value: "HH:mm:ss", label: RED._("@mayahq/maya-red-dashboard/ui_chart:ui_chart.label.HHmmss"), hasValue: false};
+            var ohm = {value: "HH:mm", label: RED._("@mayahq/maya-red-dashboard/ui_chart:ui_chart.label.HHmm"), hasValue: false};
+            var oymd = {value: "Y-M-D", label: RED._("@mayahq/maya-red-dashboard/ui_chart:ui_chart.label.yearMonthDate"), hasValue: false};
+            var odm = {value: "D/M", label: RED._("@mayahq/maya-red-dashboard/ui_chart:ui_chart.label.dateMonth"), hasValue: false};
+            var oahm = {value: "dd HH:mm", label: RED._("@mayahq/maya-red-dashboard/ui_chart:ui_chart.label.dayHHmm"), hasValue: false};
+            var ocus = {value: "custom", label: RED._("@mayahq/maya-red-dashboard/ui_chart:ui_chart.label.custom"), icon: "red/images/typedInput/az.png"};
+            var oaut = {value: "auto", label: RED._("@mayahq/maya-red-dashboard/ui_chart:ui_chart.label.automatic"), hasValue: false};
             $("#node-input-xformat").typedInput({
                 default: odef,
                 types:[ ohms, ohm, oahm, odm, oymd, ocus, oaut ]
