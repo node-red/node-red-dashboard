@@ -1,10 +1,31 @@
+/** 
+Copyright 2016,2020 JS Foundation and other contributors, https://js.foundation/
+Copyright 2016 IBM Corp.
+Copyright 2015 Andrei Tatar
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.-->
+*/
+
+/**
+NOTICE: This file was modified within the bounds of the Apache 2.0 licence for distribution by Maya Labs
+*/
 .nr-dashboard-form {
 	display: inline-block;
 	width: 100%;
 	overflow-y: auto;
 }
 .nr-dashboard-form form {
-    padding: 0px 6px 0px 6px;
+    /* padding: 0px 6px 0px 6px; */ /* maya-style remove extra padding in form */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -21,8 +42,8 @@
 }
 .nr-dashboard-form .formElement {
     width: calc(100% - 12px);
-    margin-left: 6px;
-    margin-right: 6px
+    /* margin-left: 6px; */ /* maya-style remove extra margin from left of form input */
+    /* margin-right: 6px */ /* maya-style remove extra margin from right of form input */
 }
 .nr-dashboard-form .formElementSplit {
     width: calc(50% - 12px);
@@ -35,6 +56,21 @@
     justify-content:flex-start;
     margin-top:-20px;
 }
+
+.nr-dashboard-form .form-control button {
+    background-color: #4A304B;
+    margin: 0px 8px;
+}
+
+.nr-dashboard-form .form-control button:first-of-type {
+    margin-left: 0px;
+}
+
+.nr-dashboard-form .form-control button:hover {
+    background-color: #4A304B;
+}
+
+
 .nr-dashboard-form .form-control-single {
     justify-content:space-around;
 }
