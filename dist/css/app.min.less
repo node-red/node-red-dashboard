@@ -15,177 +15,228 @@
 /* See the License for the specific language governing permissions and      */
 /* limitations under the License. */
 /* */
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
 
-@media(max-width: 959px) {
-    .md-sidenav-left, md-sidenav {
-        top: 48px !important;
-        z-index: 99;
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+
+@media (max-width: 959px) {
+    .md-sidenav-left,
+    md-sidenav {
+      top: 48px !important;
+      z-index: 99;
     }
-}
-@media (max-width: 959px) and (min-width: 0) and (orientation: portrait) {
+  }
+  @media (max-width: 959px) and (min-width: 0) and (orientation: portrait) {
     md-toolbar {
-        min-height: 48px;
-        height: 48px;
-        max-height: 48px;
+      min-height: 48px;
+      height: 48px;
+      max-height: 48px;
     }
-}
-@media(min-width: 960px) {
-    .md-sidenav-left, md-sidenav {
-        top: 64px;
-        z-index: 99;
+  }
+  @media (min-width: 960px) {
+    .md-sidenav-left,
+    md-sidenav {
+      top: 64px;
+      z-index: 99;
     }
-}
-@media(max-width: 660px) {
+  }
+  @media (max-width: 660px) {
     md-sidenav,
     md-sidenav.md-locked-open,
     md-sidenav.md-closed.md-locked-open-add-active {
-    	min-width: 64px !important;
-        width: auto;
-    	max-width: 200px !important;
+      min-width: 64px !important;
+      width: auto;
+      max-width: 200px !important;
     }
-}
-@media(min-width: 661px) {
+  }
+  @media (min-width: 661px) {
     md-sidenav,
     md-sidenav.md-locked-open,
     md-sidenav.md-closed.md-locked-open-add-active {
-    	min-width: 64px !important;
-        width: auto;
-    	max-width: 320px !important;
+      min-width: 64px !important;
+      width: auto;
+      max-width: 320px !important;
     }
-}
-md-sidenav ng-md-icon {
+  }
+  md-sidenav ng-md-icon {
     padding-right: 4px;
-}
-md-sidenav i {
+  }
+  md-sidenav i {
     padding-right: 4px;
-}
-md-sidenav md-list-item .md-list-item-inner>p {
+  }
+  md-sidenav md-list-item .md-list-item-inner > p {
     line-height: 20px;
-}
-md-card > md-list > md-list-item > div > md-icon > ui-icon > ng-md-icon {
-    vertical-align:unset !important;
-}
-
-md-toast .md-toast-content {
-	height: auto;
-}
-md-toast .md-toast-error {
-	color: rgba(255, 64, 41, 0.84);
-    font-weight: 500;
-    font-size: large;
-}
-md-backdrop.md-sidenav-backdrop  {
+  }
+  md-card > md-list > md-list-item > div > md-icon > ui-icon > ng-md-icon {
+    vertical-align: unset !important;
+  }
+  
+  md-toast .md-toast-content {
+    height: auto;
+    background-color: #431c41 !important;
+    border: none !important;
+    margin-top: 10px !important;
+  }
+  md-toast .md-toast-error {
+    font-family: "Ubuntu", sans-serif;
+    color: white !important;
+    font-weight: 400;
+  }
+  md-backdrop.md-sidenav-backdrop {
     z-index: 80;
-}
-md-card {
+  }
+  md-card {
     box-shadow: none;
-}
-
-.md-button {
+  }
+  
+  .md-button {
     min-width: 64px;
-}
-.md-tooltip {
+  }
+  .md-tooltip {
     background-color: #888 !important;
     color: #fff !important;
     border-radius: 3px;
     opacity: 1 !important;
-}
-.md-tooltip.md-origin-bottom {
+  }
+  .md-tooltip.md-origin-bottom {
     margin-top: -6px;
     margin-left: -8px;
-}
-
-.node-red-ui--notabs {
-    color: #888;
-    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  }
+  
+  .node-red-ui--notabs {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    display: flex;
+    color: #787575 !important;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2.5s;
+  }
+  
+  .node-red-ui--notabs h2 {
+    color: #4b4b4b !important;
+    font-weight: 500 !important;
+  }
+  
+  .node-red-ui--loading {
+    color: #4b4b4b;
+    font-family: "Ubuntu", sans-serif;
     display: flex;
     height: 100%;
     width: 100%;
     align-items: center;
     justify-content: center;
-	opacity: 1;
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 2.5s;
-}
-
-.node-red-ui--loading {
-    color: #888;
-    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    display: flex;
-    height: 100%;
+  }
+  
+  .node-red-ui--inline-link {
     width: 100%;
-    align-items: center;
-    justify-content: center;
-}
-
-.node-red-ui--inline-link {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-}
-.node-red-ui--inline-link iframe {
-	width: 100%;
-	height: 100%;
-}
-
-.material-icons {
+    height: 100%;
+    position: absolute;
+  }
+  .node-red-ui--inline-link iframe {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .material-icons {
     vertical-align: middle;
-}
-
-.ie9 img[src$=".svg"] {
+  }
+  
+  .ie9 img[src$=".svg"] {
     width: 100%;
-}
-
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  }
+  
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     img[src$=".svg"] {
-        width: 100%;
+      width: 100%;
     }
-}
-
-@keyframes fadeInOpacity {
+  }
+  
+  @keyframes fadeInOpacity {
     0% {
-		opacity: 0;
-	}
+      opacity: 0;
+    }
     30% {
-        opacity: 0;
-    }
-	100% {
-		opacity: 1;
-	}
-}
-
-.flip-icon {
-    animation: flip-icon 0.3s linear both;
-}
-
-@keyframes flip-icon {
-    0% {
-        transform: rotateY(180deg);
+      opacity: 0;
     }
     100% {
-        transform: rotateY(0deg);
+      opacity: 1;
     }
-}
+  }
+  
+  .flip-icon {
+    animation: flip-icon 0.3s linear both;
+  }
+  
+  @keyframes flip-icon {
+    0% {
+      transform: rotateY(180deg);
+    }
+    100% {
+      transform: rotateY(0deg);
+    }
+  }
+  
+  @supports (-ms-overflow-style: none) {
+    overflow: auto !important;
+  }
+  
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
 
-@supports (-ms-overflow-style: none) {
-    overflow:auto !important;
-}
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
 
 /*
     ALL COMPONENTS/CONTENT
 */
-@baseFont: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+@baseFont: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans,
+  Ubuntu, Cantarell, Helvetica Neue, sans-serif;
 @baseColor: #fff;
 @pageBackgroundColor: #eee;
 @pageSidebarBackgroundColor: #eee;
 @pageTitlebarBackgroundColor: red;
 @groupBackgroundColor: #fff;
-@groupTextColor: #00A4DE;
+@groupTextColor: #00a4de;
 @groupBorderColor: #fff;
 @widgetTextColor: #000;
-@widgetBackgroundColor: #4FBAE4;
+@widgetBackgroundColor: #4fbae4;
 @widgetBorderColor: #fff;
 @nrTheme: true;
 @nrTemplateTheme: true;
@@ -195,547 +246,674 @@ md-card {
 
 // define some CSS variables for user usage
 :root {
-    --nr-dashboard-pageBackgroundColor: @pageBackgroundColor;
-    --nr-dashboard-pageTitlebarBackgroundColor: @pageTitlebarBackgroundColor;
-    --nr-dashboard-pageSidebarBackgroundColor: @pageSidebarBackgroundColor;
-    --nr-dashboard-groupTextColor: @groupTextColor;
-    --nr-dashboard-groupBackgroundColor: @groupBackgroundColor;
-    --nr-dashboard-groupBorderColor: @groupBorderColor;
-    --nr-dashboard-widgetTextColor: @widgetTextColor;
-    --nr-dashboard-widgetBackgroundColor: @widgetBackgroundColor; // deprecated - will be removed at some point
-    --nr-dashboard-widgetBorderColor: @widgetBorderColor; // deprecated - will be removed at some point
-    --nr-dashboard-widgetColor: @widgetBackgroundColor;
-    --nr-dashboard-widgetBgndColor: @widgetBorderColor;
+  --nr-dashboard-pageBackgroundColor: @pageBackgroundColor;
+  --nr-dashboard-pageTitlebarBackgroundColor: @pageTitlebarBackgroundColor;
+  --nr-dashboard-pageSidebarBackgroundColor: @pageSidebarBackgroundColor;
+  --nr-dashboard-groupTextColor: @groupTextColor;
+  --nr-dashboard-groupBackgroundColor: @groupBackgroundColor;
+  --nr-dashboard-groupBorderColor: @groupBorderColor;
+  --nr-dashboard-widgetTextColor: @widgetTextColor;
+  --nr-dashboard-widgetBackgroundColor: @widgetBackgroundColor; // deprecated - will be removed at some point
+  --nr-dashboard-widgetBorderColor: @widgetBorderColor; // deprecated - will be removed at some point
+  --nr-dashboard-widgetColor: @widgetBackgroundColor;
+  --nr-dashboard-widgetBgndColor: @widgetBorderColor;
 }
 
 .nr-dashboard-disabled {
-    opacity: 0.4 !important;
-    pointer-events: none !important;
+  opacity: 0.4 !important;
+  pointer-events: none !important;
 }
 
 & when (@nrTheme = false) {
-    .nr-menu-item-active div button {
-        border-right: 4px solid #888;
-    }
+  .nr-menu-item-active div button {
+    border-right: 4px solid #888;
+  }
 }
 
 & when (@nrTheme = true) {
-
-body.nr-dashboard-theme {
+  body.nr-dashboard-theme {
     background-color: @pageBackgroundColor;
     font-family: @baseFont;
-}
+  }
 
-body.nr-dashboard-theme md-content {
+  body.nr-dashboard-theme md-content {
     background: transparent;
     height: 100%;
     & when (@nrTemplateTheme = true) {
-        color: @groupTextColor;
+      color: @groupTextColor;
     }
-}
+  }
 
-// body.nr-dashboard-theme md-select-menu md-content {
-//     max-height: 80%;
-// }
+  // body.nr-dashboard-theme md-select-menu md-content {
+  //     max-height: 80%;
+  // }
 
-body.nr-dashboard-theme md-input-container.md-input-focused:not([md-no-float]) .md-select-placeholder span:first-child {
-    -webkit-transform: translateY(-28px) scale(.75);
-    transform: translateY(-28px) scale(.75);
-}
-body.nr-dashboard-theme md-input-container.md-input-focused:not(.md-input-has-value) md-select .md-select-value.md-select-placeholder {
+  body.nr-dashboard-theme
+    md-input-container.md-input-focused:not([md-no-float])
+    .md-select-placeholder
+    span:first-child {
+    -webkit-transform: translateY(-28px) scale(0.75);
+    transform: translateY(-28px) scale(0.75);
+  }
+  body.nr-dashboard-theme
+    md-input-container.md-input-focused:not(.md-input-has-value)
+    md-select
+    .md-select-value.md-select-placeholder {
     color: @widgetTextColor;
-}
+  }
 
-body.nr-dashboard-theme md-content md-card {
+  body.nr-dashboard-theme md-content md-card {
     background-color: @widgetBorderColor;
     color: @widgetTextColor;
-}
+  }
 
-/* Some colour classes */
-body.nr-dashboard-theme .nr-dashboard-color { color: @groupTextColor; }
-body.nr-dashboard-theme .nr-dashboard-error { color: #ff2929; }
-body.nr-dashboard-theme .nr-dashboard-warning { color: #eaf42f; }
-body.nr-dashboard-theme .nr-dashboard-ok { color: #49db3c; }
-body.nr-dashboard-theme .nr-dashboard-dim { opacity: 0.5 !important; }
+  /* Some colour classes */
+  body.nr-dashboard-theme .nr-dashboard-color {
+    color: @groupTextColor;
+  }
+  body.nr-dashboard-theme .nr-dashboard-error {
+    color: #ff2929;
+  }
+  body.nr-dashboard-theme .nr-dashboard-warning {
+    color: #eaf42f;
+  }
+  body.nr-dashboard-theme .nr-dashboard-ok {
+    color: #49db3c;
+  }
+  body.nr-dashboard-theme .nr-dashboard-dim {
+    opacity: 0.5 !important;
+  }
 
-
-/*
+  /*
     DASHBOARD HEADER
 */
-body.nr-dashboard-theme md-toolbar {
+  body.nr-dashboard-theme md-toolbar {
     background-color: @pageTitlebarBackgroundColor;
     color: #fff;
-}
-body.nr-dashboard-theme md-toolbar .md-toolbar-tools {
+  }
+  body.nr-dashboard-theme md-toolbar .md-toolbar-tools {
     color: #fff;
     filter: invert(if(@wbc-light, 100%, 0%));
-}
+  }
 
-/*
+  /*
     DASHBOARD SIDEBAR
 */
-body.nr-dashboard-theme md-sidenav {
-    color: @groupTextColor;
-    background-color: @pageSidebarBackgroundColor;
-}
-body.nr-dashboard-theme md-sidenav md-list-item._md-button-wrap > div.md-button:first-child {
+  body.nr-dashboard-theme md-sidenav {
+    color: #787575 !important;
+    background-color: white !important;
+    border: #d8d8d7 !important;
+  }
+  body.nr-dashboard-theme
+    md-sidenav
+    md-list-item._md-button-wrap
+    > div.md-button:first-child {
     background-color: transparent;
-}
-body.nr-dashboard-theme md-sidenav div.md-list-item-inner {
-    color: @groupTextColor;
+  }
+  body.nr-dashboard-theme md-sidenav div.md-list-item-inner {
+    color: #4b4b4b !important;
     background-color: transparent;
-}
-a.md-no-style, button.md-no-style {
+  }
+  a.md-no-style,
+  button.md-no-style {
     background-color: transparent;
-}
-.nr-menu-item-active div button {
-    border-right: 4px solid @groupTextColor;
-}
+  }
+  .nr-menu-item-active div button {
+    color: #4b4b4b !important;
+  }
 
-
-/*
+  /*
     GROUP SPECIFIC
 */
-.nr-dashboard-theme ui-card-panel {
+  .nr-dashboard-theme ui-card-panel {
     background-color: @groupBackgroundColor;
     // border: 1px solid @groupBorderColor;
     // margin: 16px;
     & p.nr-dashboard-cardtitle {
-        color: @groupTextColor;
+      color: @groupTextColor;
     }
-}
+  }
 
-/*
+  /*
     COMPONENT-SPECIFIC
 */
 
-.nr-dashboard-theme .nr-dashboard-spacer {
+  .nr-dashboard-theme .nr-dashboard-spacer {
     opacity: 0;
-}
+  }
 
-.md-button.md-default-theme.md-primary, .md-button.md-primary {
+  .md-button.md-default-theme.md-primary,
+  .md-button.md-primary {
     background-color: @widgetBackgroundColor !important;
     color: white;
-}
-// .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
-//     filter: grayscale(75%);
-// }
-// .nr-dashboard-theme .md-button.md-primary {
-//     color: lighten(@widgetBackgroundColor, 8);
-// }
-.nr-dashboard-theme .md-button[disabled] {
-    color: rgba(0,0,0,0.38);
+  }
+  // .md-button.md-default-theme:not([disabled]):hover, .md-button:not([disabled]):hover {
+  //     filter: grayscale(75%);
+  // }
+  // .nr-dashboard-theme .md-button.md-primary {
+  //     color: lighten(@widgetBackgroundColor, 8);
+  // }
+  .nr-dashboard-theme .md-button[disabled] {
+    color: rgba(0, 0, 0, 0.38);
     cursor: default;
-}
+  }
 
-/* Button */
-.nr-dashboard-theme .nr-dashboard-button .md-button {
+  /* Button */
+  .nr-dashboard-theme .nr-dashboard-button .md-button {
     background-color: @widgetBackgroundColor;
     color: white;
-}
-.nr-dashboard-theme .nr-dashboard-button .md-button:hover {
+  }
+  .nr-dashboard-theme .nr-dashboard-button .md-button:hover {
     background-color: lighten(@widgetBackgroundColor, 6);
-}
-.nr-dashboard-theme .nr-dashboard-template .md-button[disabled] {
+  }
+  .nr-dashboard-theme .nr-dashboard-template .md-button[disabled] {
     color: #888;
-}
-.nr-dashboard-theme .nr-dashboard-button .md-button.md-primary {
+  }
+  .nr-dashboard-theme .nr-dashboard-button .md-button.md-primary {
     color: white;
     background-color: lighten(@widgetBackgroundColor, 4);
-}
-.nr-dashboard-theme .nr-dashboard-button .md-button.md-raised:not([disabled]).md-focused {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-button
+    .md-button.md-raised:not([disabled]).md-focused {
     background-color: @widgetBackgroundColor;
-}
+  }
 
-/* Date picker */
-.nr-dashboard-theme .nr-dashboard-date-picker md-input-container .md-input {
+  /* Date picker */
+  .nr-dashboard-theme .nr-dashboard-date-picker md-input-container .md-input {
     color: @widgetTextColor;
     border-bottom-color: @widgetBackgroundColor;
     font-family: inherit;
-}
-.nr-dashboard-theme .nr-dashboard-date-picker md-input-container .md-input::-webkit-input-placeholder {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-date-picker
+    md-input-container
+    .md-input::-webkit-input-placeholder {
     color: @widgetTextColor;
-}
-.nr-dashboard-theme .nr-dashboard-date-picker .md-button.md-icon-button {
+  }
+  .nr-dashboard-theme .nr-dashboard-date-picker .md-button.md-icon-button {
     /* background-color: @widgetBackgroundColor; */
-}
-.nr-dashboard-theme .nr-dashboard-date-picker .md-button.md-icon-button md-icon {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-date-picker
+    .md-button.md-icon-button
+    md-icon {
     color: @widgetBackgroundColor;
-}
-.nr-dashboard-theme .nr-dashboard-date-picker .md-datepicker-triangle-button .md-datepicker-expand-triangle {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-date-picker
+    .md-datepicker-triangle-button
+    .md-datepicker-expand-triangle {
     border-top-color: @widgetTextColor;
-}
+  }
 
-.md-default-theme .md-calendar-day-header, .md-calendar-day-header {
+  .md-default-theme .md-calendar-day-header,
+  .md-calendar-day-header {
     color: contrast(@pageTitlebarBackgroundColor);
     background-color: @pageTitlebarBackgroundColor;
-}
-.md-default-theme .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator, .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator, .md-default-theme .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator, .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator {
+  }
+  .md-default-theme
+    .md-calendar-date.md-calendar-selected-date
+    .md-calendar-date-selection-indicator,
+  .md-calendar-date.md-calendar-selected-date
+    .md-calendar-date-selection-indicator,
+  .md-default-theme
+    .md-calendar-date.md-focus.md-calendar-selected-date
+    .md-calendar-date-selection-indicator,
+  .md-calendar-date.md-focus.md-calendar-selected-date
+    .md-calendar-date-selection-indicator {
     background: @widgetBackgroundColor;
     color: contrast(@widgetBackgroundColor);
     border-color: transparent;
-}
-.md-default-theme .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator, .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator {
+  }
+  .md-default-theme
+    .md-calendar-date.md-calendar-date-today
+    .md-calendar-date-selection-indicator,
+  .md-calendar-date.md-calendar-date-today
+    .md-calendar-date-selection-indicator {
     border: 1px solid @widgetBackgroundColor;
-}
-.md-datepicker-calendar-pane.md-pane-open {
+  }
+  .md-datepicker-calendar-pane.md-pane-open {
     width: 345px;
     background-color: @groupBackgroundColor;
-}
+  }
 
-/* Chart */
-.nr-dashboard-theme .nr-dashboard-chart-title {
-}
-.nr-dashboard-theme .nr-dashboard-chart-titlel {
+  /* Chart */
+  .nr-dashboard-theme .nr-dashboard-chart-title {
+  }
+  .nr-dashboard-theme .nr-dashboard-chart-titlel {
+    /* maya-style :: changed the title color of chart*/
+    color: #4b4b4b !important;
     font-size: larger;
     font-weight: 500;
-}
+  }
 
-/* Colour Picker */
-.nr-dashboard-theme .color-picker-panel {
+  /* Colour Picker */
+  .nr-dashboard-theme .color-picker-panel {
     background-color: @groupBackgroundColor;
     border-color: @groupBorderColor;
-    box-shadow: 0 0 1px rgba(255,255,255,.5);
-}
-.nr-dashboard-theme .color-picker-input-wrapper > input {
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+  .nr-dashboard-theme .color-picker-input-wrapper > input {
     color: @widgetTextColor;
     background-color: @widgetBorderColor;
     font-family: inherit;
-}
-.nr-dashboard-theme .color-picker-wrapper .color-picker-panel.color-picker-panel-round .color-picker-grid-wrapper .color-picker-row .color-picker-grid .color-picker-grid-inner {
+  }
+  .nr-dashboard-theme
+    .color-picker-wrapper
+    .color-picker-panel.color-picker-panel-round
+    .color-picker-grid-wrapper
+    .color-picker-row
+    .color-picker-grid
+    .color-picker-grid-inner {
     background-color: @widgetBorderColor;
-}
+  }
 
-/* Dropdown */
+  /* Dropdown */
 
-.nr-dashboard-theme .nr-dashboard-dropdown md-select .md-select-value,
-.nr-dashboard-theme .nr-dashboard-dropdown md-select .md-select-value.md-select-placeholder {
-    color: @widgetTextColor;
-    border-color: @widgetTextColor;
+  .nr-dashboard-theme .nr-dashboard-dropdown md-select .md-select-value,
+  .nr-dashboard-theme
+    .nr-dashboard-dropdown
+    md-select
+    .md-select-value.md-select-placeholder {
+    color: #777574;
+    border-color: #777574;
+    font-weight: 500 !important;
     border-bottom-width: 1px;
     padding: 0px 2px;
-}
-.nr-dashboard-theme .nr-dashboard-dropdown .md-select-icon {
-    color: @widgetTextColor;
-}
-.nr-dashboard-theme .md-select-menu-container {
+  }
+  .nr-dashboard-theme .nr-dashboard-dropdown .md-select-icon {
+    color: #777574 !important;
+    font-weight: 500 !important;
+  }
+  .nr-dashboard-theme .md-select-menu-container {
     max-height: 85%;
     overflow-y: auto;
-    border: 1px solid @pageTitlebarBackgroundColor;
-}
-.nr-dashboard-theme md-select-menu {
+    // border: 1px solid #787575 !important;
+    /* maya-style :: adding border to the dropdown container*/
+  }
+  .nr-dashboard-theme md-select-menu {
     margin-left: -2px;
     max-height: 85%;
-}
-.nr-dashboard-theme md-select-menu md-content {
+  }
+  .nr-dashboard-theme md-select-menu md-content {
     padding: 0px;
     max-height: 85%;
-}
-.nr-dashboard-theme md-select-menu, .nr-dashboard-theme md-select-menu md-option {
+  }
+  .nr-dashboard-theme md-select-menu,
+  .nr-dashboard-theme md-select-menu md-option {
+    background-color: white !important;
+    color: #777574 !important;
+    font-weight: 500 !important;
+    border-bottom: 1px solid #d8d8d7 !important;
+    /* maya-style :: changed the color and background and gave border when opening dropdown menu*/
+  }
+  .nr-dashboard-theme md-select-menu md-option[selected] {
+    color: #4b4b4b !important;
+    background-color: white !important;
+  }
+  .nr-dashboard-theme
+    md-select-menu[multiple]
+    md-option.md-checkbox-enabled[selected]
+    .md-icon {
+    background-color: #c2c2c1 !important;
+    /* changed the color of tick in dialog box*/
+  }
+  .nr-dashboard-theme
+    md-select-menu[multiple]
+    md-option.md-checkbox-enabled
+    .md-icon {
+    background-color: #c2c2c1 !important;
+    /* changed the background of tick in dialog box*/
+  }
+  .nr-dashboard-theme
+    md-select-menu.md-default-theme
+    md-option:focus:not([disabled]):not([selected]),
+  md-select-menu md-option:focus:not([disabled]):not([selected]) {
     background-color: @groupBackgroundColor;
-    color: @widgetTextColor;
-}
-.nr-dashboard-theme md-select-menu md-option[selected] {
-    color: @groupTextColor !important;
-    background-color: @groupBackgroundColor !important;
-}
-.nr-dashboard-theme md-select-menu[multiple] md-option.md-checkbox-enabled[selected] .md-icon {
-    background-color: lighten(@widgetBackgroundColor, 10) !important;
-    border-color: transparent !important;
-}
-.nr-dashboard-theme md-select-menu[multiple] md-option.md-checkbox-enabled .md-icon {
-    border-color: @widgetBackgroundColor !important;
-}
-.nr-dashboard-theme md-select-menu.md-default-theme md-option:focus:not([disabled]):not([selected]),
-md-select-menu md-option:focus:not([disabled]):not([selected]) {
+  }
+  .nr-dashboard-theme md-select-menu md-option:hover {
+    background-color: #d8d8d7 !important;
+    color: #777574 !important;
+    /* changed the hover color and background*/
+  }
+  .nr-dashboard-theme md-menu-content {
     background-color: @groupBackgroundColor;
-}
-.nr-dashboard-theme md-select-menu md-option:hover {
-    background-color: lighten(@widgetBackgroundColor, 4) !important;
-}
-.nr-dashboard-theme md-menu-content {
+    color: #4b4b4b;
+  }
+  .nr-dashboard-theme md-menu-content md-menu-item {
     background-color: @groupBackgroundColor;
-    color: @widgetTextColor;
-}
-.nr-dashboard-theme md-menu-content md-menu-item {
-    background-color: @groupBackgroundColor;
-    color: @widgetTextColor;
-}
+    color: #4b4b4b !important;
+  }
 
-
-/* Gauge */
-.nr-dashboard-theme .nr-dashboard-gauge {}
-.nr-dashboard-theme .nr-dashboard-gauge text {
+  /* Gauge */
+  .nr-dashboard-theme .nr-dashboard-gauge {
+  }
+  .nr-dashboard-theme .nr-dashboard-gauge text {
     fill: @widgetTextColor;
     margin: 8px;
-}
-.nr-dashboard-theme .nr-dashboard-gauge-title {
+  }
+  .nr-dashboard-theme .nr-dashboard-gauge-title {
     margin: 6px 0px 20px 0px;
     z-index: 1;
-}
-.nr-dashboard-theme .nr-dashboard-gauge-titlel {
+  }
+  .nr-dashboard-theme .nr-dashboard-gauge-titlel {
     font-size: larger;
     font-weight: 500;
     z-index: 1;
-}
-.nr-dashboard-theme .nr-dashboard-gauge-titlem {
+  }
+  .nr-dashboard-theme .nr-dashboard-gauge-titlem {
     font-weight: 500;
     margin: 2px 0px 14px 0px;
     z-index: 1;
-}
-.nr-dashboard-theme .nr-dashboard-gauge-titles {
+  }
+  .nr-dashboard-theme .nr-dashboard-gauge-titles {
     font-size: x-small;
     margin-top: 2px;
     height: 10px;
     padding-bottom: 14px;
     z-index: 1;
-}
+  }
 
-/* Numeric */
-.nr-dashboard-theme .nr-dashboard-numeric .value {
+  /* Numeric */
+  .nr-dashboard-theme .nr-dashboard-numeric .value {
     background-color: @widgetBorderColor;
     color: @widgetTextColor;
-}
+  }
 
-/* Slider */
-.nr-dashboard-theme .nr-dashboard-slider {}
-.nr-dashboard-theme .nr-dashboard-slider .md-track {
+  /* Slider */
+  .nr-dashboard-theme .nr-dashboard-slider {
+    color: #4b4b4b !important;
+    font-weight: 500;
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-track {
     background-color: rgba(111, 111, 111, 0.5);
-}
-.nr-dashboard-theme .nr-dashboard-slider .md-track-fill {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-track-fill {
     background-color: @widgetBackgroundColor;
-}
-.nr-dashboard-theme .nr-dashboard-slider .md-thumb:after {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-thumb:after {
     background-color: @widgetBackgroundColor;
     border-color: @widgetBackgroundColor;
-}
-.nr-dashboard-theme .nr-dashboard-slider .md-focus-ring {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-focus-ring {
     background-color: @widgetBackgroundColor;
-    transform: scale(.4);
+    transform: scale(0.4);
     opacity: 1;
-}
-.nr-dashboard-theme .nr-dashboard-slider .md-sign {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-sign {
     background-color: @widgetBackgroundColor;
-}
-.nr-dashboard-theme .nr-dashboard-slider .md-sign:after {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-sign:after {
     border-top-color: @widgetBackgroundColor !important;
-}
-.nr-dashboard-theme .nr-dashboard-slider .md-min[md-discrete] .md-sign {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-min[md-discrete] .md-sign {
     background-color: @widgetBackgroundColor;
-}
-.nr-dashboard-theme .nr-dashboard-slider  md-slider[md-discrete] .md-sign,
-.nr-dashboard-theme .nr-dashboard-slider  md-slider[md-discrete] .md-sign:after {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider md-slider[md-discrete] .md-sign,
+  .nr-dashboard-theme
+    .nr-dashboard-slider
+    md-slider[md-discrete]
+    .md-sign:after {
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0) scale(1);
     transform: translate3d(0, 0, 0) scale(1);
-}
-.nr-dashboard-theme .nr-dashboard-slider .md-sign:after {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-sign:after {
     border-top-color: @widgetBackgroundColor;
-}
-.nr-dashboard-theme md-slider.md-default-theme[md-vertical] .md-sign:after, .nr-dashboard-theme md-slider[md-vertical] .md-sign:after {
-    content: none;;
-}
-.nr-dashboard-theme .nr-dashboard-slider md-slider.md-default-theme.md-min[md-discrete] .md-thumb:after, md-slider.md-min[md-discrete] .md-thumb:after {
+  }
+  .nr-dashboard-theme md-slider.md-default-theme[md-vertical] .md-sign:after,
+  .nr-dashboard-theme md-slider[md-vertical] .md-sign:after {
+    content: none;
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-slider
+    md-slider.md-default-theme.md-min[md-discrete]
+    .md-thumb:after,
+  md-slider.md-min[md-discrete] .md-thumb:after {
     background-color: @widgetBackgroundColor;
     border-color: transparent;
-}
-.nr-dashboard-theme .nr-dashboard-slider md-slider .md-track-ticks {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider md-slider .md-track-ticks {
     color: transparent;
-}
-.nr-dashboard-theme .nr-dashboard-slider md-slider[md-discrete]:not([disabled]) .md-slider-wrapper.md-focused .md-focus-ring {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-slider
+    md-slider[md-discrete]:not([disabled])
+    .md-slider-wrapper.md-focused
+    .md-focus-ring {
     transform: scale(0.4);
     animation: unset;
-}
-.nr-dashboard-theme .nr-dashboard-slider .md-thumb-text {
+  }
+  .nr-dashboard-theme .nr-dashboard-slider .md-thumb-text {
     color: white;
     filter: invert(if(@wbc-light, 100%, 0%));
-}
+  }
 
-/* Switch */
-.nr-dashboard-theme .nr-dashboard-switch {}
-.nr-dashboard-theme .nr-dashboard-switch md-switch .md-bar {
+  /* Switch */
+  .nr-dashboard-theme .nr-dashboard-switch {
+  }
+  .nr-dashboard-theme .nr-dashboard-switch md-switch .md-bar {
     background-color: rgba(111, 111, 111, 0.5);
-}
-.nr-dashboard-theme .nr-dashboard-switch md-switch.md-checked .md-bar {
-    background-color: rgba(red(@widgetBackgroundColor), green(@widgetBackgroundColor), blue(@widgetBackgroundColor), 0.5);
-}
-.nr-dashboard-theme .nr-dashboard-switch md-switch .md-thumb {
+  }
+  .nr-dashboard-theme .nr-dashboard-switch md-switch.md-checked .md-bar {
+    background-color: rgba(
+      red(@widgetBackgroundColor),
+      green(@widgetBackgroundColor),
+      blue(@widgetBackgroundColor),
+      0.5
+    );
+  }
+  .nr-dashboard-theme .nr-dashboard-switch md-switch .md-thumb {
     background-color: rgb(148, 148, 148);
-}
-.nr-dashboard-theme .nr-dashboard-switch md-switch.md-checked .md-thumb {
-    background-color: rgba(red(@widgetBackgroundColor), green(@widgetBackgroundColor), blue(@widgetBackgroundColor), 1);
-}
+  }
+  .nr-dashboard-theme .nr-dashboard-switch md-switch.md-checked .md-thumb {
+    background-color: rgba(
+      red(@widgetBackgroundColor),
+      green(@widgetBackgroundColor),
+      blue(@widgetBackgroundColor),
+      1
+    );
+  }
 
-/* Template */
-& when (@nrTemplateTheme = true) {
+  /* Template */
+  & when (@nrTemplateTheme = true) {
     md-list {
-        padding: unset;
+      padding: unset;
     }
     md-list-item[disabled] {
-        color: #888;
-        // text-decoration: line-through;
+      color: #888;
+      // text-decoration: line-through;
     }
     md-list-item {
-        min-height: @nrUnitHeight * 2;
-        height: @nrUnitHeight * 2;
+      min-height: @nrUnitHeight * 2;
+      height: @nrUnitHeight * 2;
     }
-    md-list-item._md-button-wrap>div.md-button:first-child {
-        background-color: @widgetBorderColor;
-        height: inherit;
-        padding: 0 6px;
+    md-list-item._md-button-wrap > div.md-button:first-child {
+      background-color: @widgetBorderColor;
+      height: inherit;
+      padding: 0 6px;
     }
     md-list-item.md-2-line {
-        height: @nrUnitHeight * 2;
-        min-height: @nrUnitHeight * 2;
+      height: @nrUnitHeight * 2;
+      min-height: @nrUnitHeight * 2;
     }
     md-list-item.md-3-line {
-        height: @nrUnitHeight * 3;
-        min-height: @nrUnitHeight * 3;
+      height: @nrUnitHeight * 3;
+      min-height: @nrUnitHeight * 3;
     }
     md-list-item .md-list-item-inner {
-        background: @widgetBorderColor;
-        //color: @widgetTextColor;
-        padding-left: 8px;
-        width: 100%;
-        height: 100%;
+      background: @widgetBorderColor;
+      //color: @widgetTextColor;
+      padding-left: 8px;
+      width: 100%;
+      height: 100%;
     }
-    div > md-list-item.md-2-line, md-list-item.md-2-line>.md-no-style {
-        height: 48px;
-        min-height: 48px;
-        width: 100px;
+    div > md-list-item.md-2-line,
+    md-list-item.md-2-line > .md-no-style {
+      height: 48px;
+      min-height: 48px;
+      width: 100px;
     }
 
     md-progress-linear {
-        padding-top: 4px !important;
+      padding-top: 4px !important;
     }
     md-progress-linear .md-container {
-        margin-top: @nrUnitHeight / 2;
-        background-color: @pageBackgroundColor;
+      margin-top: @nrUnitHeight / 2;
+      background-color: @pageBackgroundColor;
     }
     md-progress-linear .md-container .md-bar {
-        background-color: lighten(@widgetBackgroundColor, 5);
+      background-color: lighten(@widgetBackgroundColor, 5);
     }
 
     md-checkbox {
-        min-height: @nrUnitHeight * 2;
-        margin-left: 6px;
-        margin-bottom: 0px;
-        width: 100%;
+      min-height: @nrUnitHeight * 2;
+      margin-left: 6px;
+      margin-bottom: 0px;
+      width: 100%;
     }
     md-checkbox .md-icon {
-        border-color: @widgetBackgroundColor !important;
+      border-color: @widgetBackgroundColor !important;
     }
     md-checkbox[disabled] .md-icon {
-        border-color: #888 !important;
+      border-color: #888 !important;
     }
     md-checkbox.md-checked .md-icon {
-        background-color: lighten(@widgetBackgroundColor, 5);
-        border-color: transparent !important;
+      background-color: lighten(@widgetBackgroundColor, 5);
+      border-color: transparent !important;
     }
     md-checkbox .md-label {
-        position: absolute;
-        top: 32%;
+      position: absolute;
+      top: 32%;
     }
     md-checkbox[disabled] .md-label {
-        color: #888;
+      color: #888;
     }
     md-checkbox:last-of-type {
-        margin-left: 6px;
+      margin-left: 6px;
     }
 
     .nr-dashboard-theme .nr-dashboard-template {
-        // padding: 0;
-        background-color: @widgetBorderColor;
+      // padding: 0;
+      background-color: @widgetBorderColor;
     }
     .nr-dashboard-theme .nr-dashboard-template md-switch .md-thumb {
-        background-color: rgb(148, 148, 148);
+      background-color: rgb(148, 148, 148);
     }
     .nr-dashboard-theme .nr-dashboard-template md-switch .md-bar {
-        background-color: rgba(111, 111, 111, 0.5);
+      background-color: rgba(111, 111, 111, 0.5);
     }
-    .nr-dashboard-theme .nr-dashboard-template md-switch.md-checked:not([disabled]) .md-thumb {
-        background-color: lighten(@widgetBackgroundColor, 5);
+    .nr-dashboard-theme
+      .nr-dashboard-template
+      md-switch.md-checked:not([disabled])
+      .md-thumb {
+      background-color: lighten(@widgetBackgroundColor, 5);
     }
-    .nr-dashboard-theme .nr-dashboard-template md-switch.md-checked:not([disabled]) .md-bar {
-        background-color: rgba(red(@widgetBackgroundColor), green(@widgetBackgroundColor), blue(@widgetBackgroundColor), 0.5);
+    .nr-dashboard-theme
+      .nr-dashboard-template
+      md-switch.md-checked:not([disabled])
+      .md-bar {
+      background-color: rgba(
+        red(@widgetBackgroundColor),
+        green(@widgetBackgroundColor),
+        blue(@widgetBackgroundColor),
+        0.5
+      );
     }
 
     md-radio-button {
-        min-height: @nrUnitHeight * 2;
-        margin-left: 6px;
-        margin-bottom: 0px;
+      min-height: @nrUnitHeight * 2;
+      margin-left: 6px;
+      margin-bottom: 0px;
     }
-    md-radio-button .md-off, md-radio-button .md-on {
-        border-color: @widgetBackgroundColor !important;
+    md-radio-button .md-off,
+    md-radio-button .md-on {
+      border-color: @widgetBackgroundColor !important;
     }
-    md-radio-button[disabled] .md-off, md-radio-button[disabled] .md-on {
-        border-color: #888 !important;
+    md-radio-button[disabled] .md-off,
+    md-radio-button[disabled] .md-on {
+      border-color: #888 !important;
     }
     md-radio-button.md-checked .md-on {
-        background-color: @widgetBackgroundColor !important;
+      background-color: @widgetBackgroundColor !important;
     }
     md-radio-button .md-label {
-        position: absolute;
-        top: 32%;
+      position: absolute;
+      top: 32%;
     }
     md-radio-button[disabled] .md-label {
-        color: #888;
+      color: #888;
     }
     md-divider {
-        border-color: @widgetBackgroundColor !important;
+      border-color: @widgetBackgroundColor !important;
     }
     .nr-dashboard-theme .nr-dashboard-template path {
-        fill: @widgetBackgroundColor;
+      fill: @widgetBackgroundColor;
     }
     .nr-dashboard-template {
-        padding: (@nrUnitHeight / 8) 6px;
-        p, h1, h2, h3, h4 {
-            color: @widgetTextColor !important;
-            background-color : @widgetBorderColor !important;
-        }
+      padding: (@nrUnitHeight / 8) 6px;
+      p,
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: @widgetTextColor !important;
+        background-color: @widgetBorderColor !important;
+      }
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button .md-no-style {
-        background: initial !important;
-        color: initial !important;
+      background: initial !important;
+      color: initial !important;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button[disabled] {
-        color: #ccc;
+      color: #ccc;
     }
-    .nr-dashboard-theme .nr-dashboard-template .md-button.md-primary:not([disabled]) {
-        color: @widgetTextColor;
-        background-color: lighten(@widgetBackgroundColor, 5);
+    .nr-dashboard-theme
+      .nr-dashboard-template
+      .md-button.md-primary:not([disabled]) {
+      color: @widgetTextColor;
+      background-color: lighten(@widgetBackgroundColor, 5);
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button .ng-scope {
-        color: unset;
+      color: unset;
     }
     .nr-dashboard-template .md-button {
-        color: white;
+      color: white;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button:not(:first-of-type) {
-        margin-top: @nrUnitHeight * 3 / 4;
+      margin-top: @nrUnitHeight * 3 / 4;
     }
     .nr-dashboard-theme .nr-dashboard-template .md-button {
-        background-color: @widgetBackgroundColor;
-    	margin: 0;
-    	// padding: 0px 12px;
-    	min-height: @nrUnitHeight * 3 / 2;
-    	min-width: unset;
-    	line-height: unset;
-    	&.md-fab.md-mini {
-    		padding: unset;
-    	}
+      background-color: @widgetBackgroundColor;
+      margin: 0;
+      // padding: 0px 12px;
+      min-height: @nrUnitHeight * 3 / 2;
+      min-width: unset;
+      line-height: unset;
+      &.md-fab.md-mini {
+        padding: unset;
+      }
     }
-    .nr-dashboard-theme .nr-dashboard-template .md-button:not([disabled]):hover {
-    	background-color: lighten(@widgetBackgroundColor, 4);
+    .nr-dashboard-theme
+      .nr-dashboard-template
+      .md-button:not([disabled]):hover {
+      background-color: lighten(@widgetBackgroundColor, 4);
     }
-    .nr-dashboard-theme .nr-dashboard-template .md-button.md-primary:not([disabled]):hover {
-        background-color: lighten(@widgetBackgroundColor, 4);
+    .nr-dashboard-theme
+      .nr-dashboard-template
+      .md-button.md-primary:not([disabled]):hover {
+      background-color: lighten(@widgetBackgroundColor, 4);
     }
-    .nr-dashboard-theme .nr-dashboard-template .md-button.md-primary.md-raised:not([disabled]) {
-        background-color: lighten(@widgetBackgroundColor, 2);
+    .nr-dashboard-theme
+      .nr-dashboard-template
+      .md-button.md-primary.md-raised:not([disabled]) {
+      background-color: lighten(@widgetBackgroundColor, 2);
     }
-    .nr-dashboard-theme .nr-dashboard-template .md-button.md-primary.md-raised:not([disabled]):hover {
-        background-color: lighten(@widgetBackgroundColor, 4);
+    .nr-dashboard-theme
+      .nr-dashboard-template
+      .md-button.md-primary.md-raised:not([disabled]):hover {
+      background-color: lighten(@widgetBackgroundColor, 4);
     }
 
     // .md-button:disabled {
@@ -743,147 +921,237 @@ md-select-menu md-option:focus:not([disabled]):not([selected]) {
     // }
 
     .nr-dashboard-theme .nr-dashboard-template {
-        ::-webkit-scrollbar {
-            height: 12px;
-            width: 12px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: @baseColor;
-            -webkit-border-radius: 1ex;
-            -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
-        }
-        ::-webkit-scrollbar-track {
-            background-color: @pageBackgroundColor;
-        }
+      ::-webkit-scrollbar {
+        height: 12px;
+        width: 12px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: @baseColor;
+        -webkit-border-radius: 1ex;
+        -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+      }
+      ::-webkit-scrollbar-track {
+        background-color: @pageBackgroundColor;
+      }
     }
-}
+  }
 
-/* Text-Input */
-.nr-dashboard-theme .nr-dashboard-textinput {}
-.nr-dashboard-theme .nr-dashboard-textinput label {
+  /* Text-Input */
+  .nr-dashboard-theme .nr-dashboard-textinput {
+  }
+  .nr-dashboard-theme .nr-dashboard-textinput label {
     color: @widgetTextColor;
-}
-.nr-dashboard-theme .nr-dashboard-textinput md-input-container.md-input-has-value label {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-textinput
+    md-input-container.md-input-has-value
+    label {
     color: @widgetTextColor;
-}
-.nr-dashboard-theme .nr-dashboard-textinput md-input-container.md-input-focused label {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-textinput
+    md-input-container.md-input-focused
+    label {
     color: @groupTextColor;
-}
-.nr-dashboard-theme .nr-dashboard-textinput md-input-container.md-input-focused input {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-textinput
+    md-input-container.md-input-focused
+    input {
     border-color: @groupTextColor;
     font-family: inherit;
-}
-.nr-dashboard-theme .nr-dashboard-textinput md-input-container .md-input:invalid {
-    color: #DA5252;
-}
-.nr-dashboard-theme .nr-dashboard-textinput input {
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-textinput
+    md-input-container
+    .md-input:invalid {
+    color: #da5252;
+  }
+  .nr-dashboard-theme .nr-dashboard-textinput input {
     border-color: @widgetTextColor;
     color: @widgetTextColor;
     font-family: inherit;
-}
-.nr-dashboard-theme input[type="time"]::-webkit-calendar-picker-indicator {
+  }
+  .nr-dashboard-theme input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(if(@wtc-light, 100%, 0%));
-}
-.nr-dashboard-theme input[type="date"]::-webkit-calendar-picker-indicator {
+  }
+  .nr-dashboard-theme input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(if(@wtc-light, 100%, 0%));
-}
+  }
 
-/* Text */
-.nr-dashboard-theme .nr-dashboard-text {}
+  /* Text */
+  .nr-dashboard-theme .nr-dashboard-text {
+  }
 
-/* Dialog */
-.nr-dashboard-theme md-dialog {
+  /* Dialog */
+  .nr-dashboard-theme md-dialog {
     color: @widgetTextColor;
     background-color: @groupBackgroundColor;
     border: 3px solid @groupBorderColor;
-}
-.nr-dashboard-theme .md-dialog-content {
+  }
+  .nr-dashboard-theme .md-dialog-content {
     padding: 24px;
-}
-.nr-dashboard-theme md-input-container.md-default-theme .md-input, md-input-container .md-input {
+  }
+  .nr-dashboard-theme md-input-container.md-default-theme .md-input,
+  md-input-container .md-input {
     color: @widgetTextColor;
     border-color: @pageTitlebarBackgroundColor !important;
-}
+  }
 
-
-/* Form */
-.nr-dashboard-theme .nr-dashboard-form md-input-container {
+  /* Form */
+  .nr-dashboard-theme .nr-dashboard-form md-input-container {
     display: block;
-}
-.nr-dashboard-theme .nr-dashboard-form-button {
+  }
+  .nr-dashboard-theme .nr-dashboard-form-button {
     background-color: @widgetBackgroundColor;
     color: white;
-}
-.nr-dashboard-theme .nr-dashboard-form-button:hover {
+  }
+  .nr-dashboard-theme .nr-dashboard-form-button:hover {
     background-color: lighten(@widgetBackgroundColor, 10) !important;
-}
-.nr-dashboard-theme .nr-dashboard-form-button:focus {
+  }
+  .nr-dashboard-theme .nr-dashboard-form-button:focus {
     background-color: lighten(@widgetBackgroundColor, 10) !important;
-}
-.nr-dashboard-theme .nr-dashboard-form {
-    color: @widgetTextColor;
-}
-.nr-dashboard-theme .nr-dashboard-form form md-input-container input {
+  }
+  .nr-dashboard-theme .nr-dashboard-form {
+    color: #4b4b4b;
+  }
+  .nr-dashboard-theme .nr-dashboard-form form md-input-container input {
     border-color: @widgetTextColor;
     color: @widgetTextColor;
     font-family: inherit;
-}
-.nr-dashboard-theme .nr-dashboard-form form md-input-container label {
-    color: @widgetTextColor;;
-}
-.nr-dashboard-theme .nr-dashboard-form form md-input-container.md-input-has-value:not(.md-input-invalid) label {
-    color: @widgetTextColor;;
-}
-.nr-dashboard-theme .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused input {
-    border-color: @groupTextColor ;
-}
-.nr-dashboard-theme .nr-dashboard-form form md-input-container:not(.md-input-invalid).md-input-focused label {
-    color: @groupTextColor ;
-}
-.nr-dashboard-theme .nr-dashboard-form form .md-input-invalid input {
-    border-color: #d00 !important;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form .md-input-invalid label {
-    color: #d00 !important;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-checkbox.md-checked .md-icon {
+  }
+  .nr-dashboard-theme .nr-dashboard-form form md-input-container label {
+    color: #787575 !important;
+    /* maya-style :: changed the color of placeholder in form */
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-form
+    form
+    md-input-container.md-input-has-value:not(.md-input-invalid)
+    label {
+    color: @widgetTextColor;
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-form
+    form
+    md-input-container:not(.md-input-invalid).md-input-focused
+    input {
+    border-color: @groupTextColor;
+  }
+  .nr-dashboard-theme
+    .nr-dashboard-form
+    form
+    md-input-container:not(.md-input-invalid).md-input-focused
+    label {
+    color: @groupTextColor;
+  }
+  .nr-dashboard-theme .nr-dashboard-form form .md-input-invalid input {
+    border-bottom: 1px solid #d40101 !important;
+    /* maya-style :: added border bottom to required text in form */
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    .md-input-invalid
+    label {
+    color: #d40101 !important;
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    md-input-container
+    md-checkbox.md-checked
+    .md-icon {
     background-color: lighten(@widgetBackgroundColor, 10);
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-checkbox .md-icon {
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    md-input-container
+    md-checkbox
+    .md-icon {
     border-color: @widgetTextColor;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch .md-bar {
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    md-input-container
+    md-switch
+    .md-bar {
     background-color: rgba(111, 111, 111, 0.5);
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch .md-thumb {
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    md-input-container
+    md-switch
+    .md-thumb {
     background-color: rgb(148, 148, 148);
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-bar {
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    md-input-container
+    md-switch.md-checked
+    .md-bar {
     background-color: lighten(@widgetBackgroundColor, 10);
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container md-switch.md-checked .md-thumb {
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    md-input-container
+    md-switch.md-checked
+    .md-thumb {
     background-color: @widgetBackgroundColor;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form md-datepicker {
+  }
+  .nr-dashboard-theme md-content .nr-dashboard-form form md-datepicker {
     background-color: inherit;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form .md-datepicker-calendar-icon {
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    .md-datepicker-calendar-icon {
     fill: @groupTextColor;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form .md-datepicker-open .md-datepicker-calendar-icon {
-    fill: @widgetBackgroundColor ;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form .md-datepicker-input {
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    .md-datepicker-open
+    .md-datepicker-calendar-icon {
+    fill: @widgetBackgroundColor;
+  }
+  .nr-dashboard-theme md-content .nr-dashboard-form form .md-datepicker-input {
     color: @widgetTextColor;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form .md-datepicker-input-container {
-    border-color: @widgetTextColor;;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form .md-datepicker-expand-triangle{
-    border-top-color: @widgetBackgroundColor ;
-}
-.nr-dashboard-theme md-content .nr-dashboard-form form md-input-container .md-input {
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    .md-datepicker-input-container {
+    border-color: @widgetTextColor;
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    .md-datepicker-expand-triangle {
+    border-top-color: @widgetBackgroundColor;
+  }
+  .nr-dashboard-theme
+    md-content
+    .nr-dashboard-form
+    form
+    md-input-container
+    .md-input {
     color: @widgetTextColor;
-}
-
+  }
 }

@@ -1,25 +1,45 @@
-.nr-dashboard-slider {
-    padding: 0 12px;
-}
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
 
-.nr-dashboard-slider-v {
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+.nr-dashboard-slider {
+    padding: 0 12px 0px 0px;
+  }
+  
+  .nr-dashboard-slider-v {
     flex-direction: column;
     padding: 0;
     font-size: small;
-}
-
-.nr-dashboard-slider p.label {
+  }
+  
+  .nr-dashboard-slider p.label {
     margin-right: 15px;
     white-space: nowrap;
-}
-
-.nr-dashboard-slider p.label-v {
+  }
+  
+  .nr-dashboard-slider p.label-v {
     margin-top: 6px;
     white-space: nowrap;
     overflow: hidden;
     padding-bottom: 4px;
-}
-
-md-slider[md-vertical] .md-slider-wrapper {
+  }
+  
+  md-slider[md-vertical] .md-slider-wrapper {
     width: unset;
-}
+  }
+  

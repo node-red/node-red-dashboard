@@ -33118,12 +33118,35 @@ mirror=1);
   height: 18px;
   margin-top: 0;
 }
+/** 
+Copyright 2016,2020 JS Foundation and other contributors, https://js.foundation/
+Copyright 2016 IBM Corp.
+Copyright 2015 Andrei Tatar
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.-->
+*/
+
+/**
+NOTICE: This file was modified within the bounds of the Apache 2.0 licence for distribution by Maya Labs
+*/
+
 .nr-dashboard-button {
   background: none;
 }
 
 .nr-dashboard-button .md-button {
-  box-shadow: none;
+  /* maya-style :: removed box-shadow from button */
+  box-shadow: none !important;
   width: 100%;
   height: 100%;
   margin: 0px;
@@ -33337,16 +33360,35 @@ reason: https://github.com/angular/material/issues/6214
   width: 40px;
   top: -5px;
 }
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+
 .nr-dashboard-dropdown md-input-container {
   width: 100%;
   height: 90%;
-  padding-left: 8px;
   padding-right: 4px;
   margin: 0px;
   margin-right: 4px;
 }
 
-.nr-dashboard-dropdown md-input-container>md-select {
+.nr-dashboard-dropdown md-input-container > md-select {
   overflow: hidden;
   /* margin-left: 4px !important; */
   margin-top: 6px;
@@ -33361,7 +33403,7 @@ reason: https://github.com/angular/material/issues/6214
   width: 12px;
 }
 
-.nr-dashboard-dropdown .layout-row>.flex-100 {
+.nr-dashboard-dropdown .layout-row > .flex-100 {
   flex: 1 1 50%;
   max-width: 100%;
   max-height: 100%;
@@ -33377,11 +33419,14 @@ reason: https://github.com/angular/material/issues/6214
   white-space: normal;
   overflow: hidden;
   min-width: 20%;
+  color: #4b4b4b !important;
+  font-weight: 500 !important;
 }
 
 .nr-dashboard-dropdown-header {
   padding-top: 6px;
-  padding-left: 6px;
+  /* padding-left: 6px; */
+  /* maya-style :: removed padding left from the label of dropdown*/
   padding-right: 8px;
   height: 34px;
   cursor: pointer;
@@ -33402,21 +33447,64 @@ reason: https://github.com/angular/material/issues/6214
 .nr-dashboard-gauge text {
   /* font-weight: 500;*/
 }
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+
 .nr-dashboard-numeric {
-  padding: 0 0 0 12px;
+  color: #4b4b4b !important;
+  font-weight: 500;
 }
 
 .nr-dashboard-numeric .value {
   font-weight: bold;
   text-align: center;
   border: 0px;
+  color: #4b4b4b !important;
 }
 
 .nr-dashboard-numeric .md-button {
   margin: 0;
+  color: #4b4b4b !important;
 }
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+
 .nr-dashboard-slider {
-  padding: 0 12px;
+  padding: 0 12px 0px 0px;
 }
 
 .nr-dashboard-slider-v {
@@ -33441,6 +33529,26 @@ md-slider[md-vertical] .md-slider-wrapper {
   width: unset;
 }
 
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+
 .nr-dashboard-switch:focus {
   outline: 0px;
 }
@@ -33451,7 +33559,8 @@ md-slider[md-vertical] .md-slider-wrapper {
 }
 
 .nr-dashboard-switch p {
-  padding: 0 0 0 12px;
+  font-weight: 500;
+  color: #4b4b4b !important;
 }
 
 .nr-dashboard-switch md-switch {
@@ -33474,6 +33583,26 @@ md-slider[md-vertical] .md-slider-wrapper {
 .nr-dashboard-switch ui-icon.center {
   margin: 0px auto;
 }
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+
 /*
 overwrite the default md-errors-spacer min-height
 reason: https://github.com/angular/material/issues/6214
@@ -33488,6 +33617,7 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-textinput md-input-container .md-input {
   padding-top: 1px;
+  color: #4b4b4b !important;
 }
 
 .nr-dashboard-textinput input {
@@ -33504,13 +33634,20 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .nr-dashboard-textinput md-input-container .md-placeholder,
-.nr-dashboard-textinput md-input-container label:not(.md-no-float):not(.md-container-ignore) {
-  padding-left: 12px;
+.nr-dashboard-textinput
+  md-input-container
+  label:not(.md-no-float):not(.md-container-ignore) {
+  color: #4b4b4b !important;
+  font-weight: 500 !important;
   margin-bottom: 3px;
 }
 
-.nr-dashboard-textinput md-input-container.md-input-focused.has-label label:not(.md-no-float):not(.md-container-ignore),
-.nr-dashboard-textinput md-input-container.md-input-has-value.has-label label:not(.md-no-float):not(.md-container-ignore) {
+.nr-dashboard-textinput
+  md-input-container.md-input-focused.has-label
+  label:not(.md-no-float):not(.md-container-ignore),
+.nr-dashboard-textinput
+  md-input-container.md-input-has-value.has-label
+  label:not(.md-no-float):not(.md-container-ignore) {
   margin-bottom: -2px;
 }
 
@@ -33556,6 +33693,28 @@ reason: https://github.com/angular/material/issues/6214
 .nr-dashboard-template h1 {
   margin: 0.4em 0;
 }
+/** 
+Copyright 2016,2020 JS Foundation and other contributors, https://js.foundation/
+Copyright 2016 IBM Corp.
+Copyright 2015 Andrei Tatar
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.-->
+*/
+
+/**
+NOTICE: This file was modified within the bounds of the Apache 2.0 licence for distribution by Maya Labs
+*/
+
 .nr-dashboard-form {
   display: inline-block;
   width: 100%;
@@ -33582,9 +33741,16 @@ reason: https://github.com/angular/material/issues/6214
 
 .nr-dashboard-form .formElement {
   width: calc(100% - 12px);
+  border: 1px solid #d8d8d8;
+  border-radius: 2px;
+  padding-left: 6px;
+  padding-bottom: 6px;
+  color: #787575;
+  font-weight: 500;
+  margin-bottom: 10px;
   /* margin-left: 6px; */
   /* maya-style remove extra margin from left of form input */
-  /* margin-right: 6px */
+  margin-right: 6px;
   /* maya-style remove extra margin from right of form input */
 }
 
@@ -33602,8 +33768,10 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .nr-dashboard-form .form-control button {
-  background-color: #4A304B;
+  background-color: #4a304b;
   margin: 0px 8px;
+  box-shadow: none !important;
+  /* maya-style :: changed color for from button */
 }
 
 .nr-dashboard-form .form-control button:first-of-type {
@@ -33611,7 +33779,8 @@ reason: https://github.com/angular/material/issues/6214
 }
 
 .nr-dashboard-form .form-control button:hover {
-  background-color: #4A304B;
+  background-color: #39213a !important;
+  /* maya-style :: added hover color for from button */
 }
 
 .nr-dashboard-form .form-control-single {
@@ -33648,12 +33817,17 @@ md-input-container label:not(.md-container-ignore) {
 .nr-dashboard-form md-input-container.md-input-focused label:not(.md-no-float),
 md-input-container.md-input-has-placeholder label:not(.md-no-float),
 md-input-container.md-input-has-value label:not(.md-no-float) {
-  -webkit-transform: translate3d(0,10px,0) scale(.75);
-  transform: translate3d(0,10px,0) scale(.75);
-  -webkit-transition: width .4s cubic-bezier(.25,.8,.25,1),-webkit-transform .4s cubic-bezier(.25,.8,.25,1);
-  transition: width .4s cubic-bezier(.25,.8,.25,1),-webkit-transform .4s cubic-bezier(.25,.8,.25,1);
-  transition: transform .4s cubic-bezier(.25,.8,.25,1),width .4s cubic-bezier(.25,.8,.25,1);
-  transition: transform .4s cubic-bezier(.25,.8,.25,1),width .4s cubic-bezier(.25,.8,.25,1),-webkit-transform .4s cubic-bezier(.25,.8,.25,1);
+  -webkit-transform: translate3d(0, 10px, 0) scale(0.75);
+  transform: translate3d(0, 10px, 0) scale(0.75);
+  -webkit-transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .nr-dashboard-form md-datepicker {
@@ -33687,6 +33861,28 @@ md-input-container.md-input-has-value label:not(.md-no-float) {
   position: unset;
   top: unset;
 }
+/** 
+Copyright 2016,2020 JS Foundation and other contributors, https://js.foundation/
+Copyright 2016 IBM Corp.
+Copyright 2015 Andrei Tatar
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.-->
+*/
+
+/**
+NOTICE: This file was modified within the bounds of the Apache 2.0 licence for distribution by Maya Labs
+*/
+
 .masonry-container {
   position: relative;
   width: 100%;

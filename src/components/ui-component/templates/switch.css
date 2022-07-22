@@ -1,33 +1,55 @@
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+
 .nr-dashboard-switch:focus {
-	outline: 0px;
-}
-
-.nr-dashboard-switch:hover {
+    outline: 0px;
+  }
+  
+  .nr-dashboard-switch:hover {
     cursor: -webkit-grab;
     cursor: grab;
-}
-
-.nr-dashboard-switch p {
-    padding: 0 0 0 12px;
-}
-
-.nr-dashboard-switch md-switch {
+  }
+  
+  .nr-dashboard-switch p {
+    font-weight: 500;
+    color: #4b4b4b !important;
+  }
+  
+  .nr-dashboard-switch md-switch {
     padding: 0 8px 0 8px;
-}
-
-.nr-dashboard-switch md-switch:hover {
+  }
+  
+  .nr-dashboard-switch md-switch:hover {
     cursor: -webkit-grab;
     cursor: grab;
-}
-
-.nr-dashboard-switch md-switch.center{
+  }
+  
+  .nr-dashboard-switch md-switch.center {
     margin: 0px auto;
-}
-
-.nr-dashboard-switch ui-icon {
+  }
+  
+  .nr-dashboard-switch ui-icon {
     padding: 0 8px;
-}
-
-.nr-dashboard-switch ui-icon.center{
+  }
+  
+  .nr-dashboard-switch ui-icon.center {
     margin: 0px auto;
-}
+  }
+  

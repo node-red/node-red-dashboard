@@ -21,36 +21,38 @@ NOTICE: This file was modified within the bounds of the Apache 2.0 licence for d
 */
 
 .nr-dashboard-button {
-	background: none;
-}
-
-.nr-dashboard-button .md-button {
-    box-shadow: none;
+    background: none;
+  }
+  
+  .nr-dashboard-button .md-button {
+    /* maya-style :: removed box-shadow from button */
+    box-shadow: none !important;
     width: 100%;
     height: 100%;
     margin: 0px;
     min-width: 0px;
     min-height: 0px;
-}
-
-md-card .nr-dashboard-button {
+  }
+  
+  md-card .nr-dashboard-button {
     padding: 2px;
-}
-
-.nr-dashboard-button i {
+  }
+  
+  .nr-dashboard-button i {
     vertical-align: middle;
     width: unset;
-}
-
-.nr-dashboard-button:hover {
+  }
+  
+  .nr-dashboard-button:hover {
     color: blueviolet;
-}
-.nr-dashboard-button .fa-2x {
+  }
+  .nr-dashboard-button .fa-2x {
     vertical-align: middle;
     padding-bottom: 2px;
-}
-
-.nr-dashboard-button .fa-3x {
+  }
+  
+  .nr-dashboard-button .fa-3x {
     vertical-align: middle;
     padding-bottom: 1px;
-}
+  }
+  

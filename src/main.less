@@ -1,157 +1,188 @@
+/**
+ * Copyright JS Foundation and other contributors, http://js.foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
 
-@media(max-width: 959px) {
-    .md-sidenav-left, md-sidenav {
-        top: 48px !important;
-        z-index: 99;
+/**
+ * NOTICE: This file was modified under the bounds of Apache 2.0 licence for dsitribution by Maya Labs
+*/
+
+@media (max-width: 959px) {
+    .md-sidenav-left,
+    md-sidenav {
+      top: 48px !important;
+      z-index: 99;
     }
-}
-@media (max-width: 959px) and (min-width: 0) and (orientation: portrait) {
+  }
+  @media (max-width: 959px) and (min-width: 0) and (orientation: portrait) {
     md-toolbar {
-        min-height: 48px;
-        height: 48px;
-        max-height: 48px;
+      min-height: 48px;
+      height: 48px;
+      max-height: 48px;
     }
-}
-@media(min-width: 960px) {
-    .md-sidenav-left, md-sidenav {
-        top: 64px;
-        z-index: 99;
+  }
+  @media (min-width: 960px) {
+    .md-sidenav-left,
+    md-sidenav {
+      top: 64px;
+      z-index: 99;
     }
-}
-@media(max-width: 660px) {
+  }
+  @media (max-width: 660px) {
     md-sidenav,
     md-sidenav.md-locked-open,
     md-sidenav.md-closed.md-locked-open-add-active {
-    	min-width: 64px !important;
-        width: auto;
-    	max-width: 200px !important;
+      min-width: 64px !important;
+      width: auto;
+      max-width: 200px !important;
     }
-}
-@media(min-width: 661px) {
+  }
+  @media (min-width: 661px) {
     md-sidenav,
     md-sidenav.md-locked-open,
     md-sidenav.md-closed.md-locked-open-add-active {
-    	min-width: 64px !important;
-        width: auto;
-    	max-width: 320px !important;
+      min-width: 64px !important;
+      width: auto;
+      max-width: 320px !important;
     }
-}
-md-sidenav ng-md-icon {
+  }
+  md-sidenav ng-md-icon {
     padding-right: 4px;
-}
-md-sidenav i {
+  }
+  md-sidenav i {
     padding-right: 4px;
-}
-md-sidenav md-list-item .md-list-item-inner>p {
+  }
+  md-sidenav md-list-item .md-list-item-inner > p {
     line-height: 20px;
-}
-md-card > md-list > md-list-item > div > md-icon > ui-icon > ng-md-icon {
-    vertical-align:unset !important;
-}
-
-md-toast .md-toast-content {
-	height: auto;
-}
-md-toast .md-toast-error {
-	color: rgba(255, 64, 41, 0.84);
-    font-weight: 500;
-    font-size: large;
-}
-md-backdrop.md-sidenav-backdrop  {
+  }
+  md-card > md-list > md-list-item > div > md-icon > ui-icon > ng-md-icon {
+    vertical-align: unset !important;
+  }
+  
+  md-toast .md-toast-content {
+    height: auto;
+    background-color: #431c41 !important;
+    border: none !important;
+    margin-top: 10px !important;
+  }
+  md-toast .md-toast-error {
+    font-family: "Ubuntu", sans-serif;
+    color: white !important;
+    font-weight: 400;
+  }
+  md-backdrop.md-sidenav-backdrop {
     z-index: 80;
-}
-md-card {
+  }
+  md-card {
     box-shadow: none;
-}
-
-.md-button {
+  }
+  
+  .md-button {
     min-width: 64px;
-}
-.md-tooltip {
+  }
+  .md-tooltip {
     background-color: #888 !important;
     color: #fff !important;
     border-radius: 3px;
     opacity: 1 !important;
-}
-.md-tooltip.md-origin-bottom {
+  }
+  .md-tooltip.md-origin-bottom {
     margin-top: -6px;
     margin-left: -8px;
-}
-
-.node-red-ui--notabs {
-    color: #888;
-    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  }
+  
+  .node-red-ui--notabs {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    display: flex;
+    color: #787575 !important;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2.5s;
+  }
+  
+  .node-red-ui--notabs h2 {
+    color: #4b4b4b !important;
+    font-weight: 500 !important;
+  }
+  
+  .node-red-ui--loading {
+    color: #4b4b4b;
+    font-family: "Ubuntu", sans-serif;
     display: flex;
     height: 100%;
     width: 100%;
     align-items: center;
     justify-content: center;
-	opacity: 1;
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 2.5s;
-}
-
-.node-red-ui--loading {
-    color: #888;
-    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    display: flex;
-    height: 100%;
+  }
+  
+  .node-red-ui--inline-link {
     width: 100%;
-    align-items: center;
-    justify-content: center;
-}
-
-.node-red-ui--inline-link {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-}
-.node-red-ui--inline-link iframe {
-	width: 100%;
-	height: 100%;
-}
-
-.material-icons {
+    height: 100%;
+    position: absolute;
+  }
+  .node-red-ui--inline-link iframe {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .material-icons {
     vertical-align: middle;
-}
-
-.ie9 img[src$=".svg"] {
+  }
+  
+  .ie9 img[src$=".svg"] {
     width: 100%;
-}
-
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  }
+  
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     img[src$=".svg"] {
-        width: 100%;
+      width: 100%;
     }
-}
-
-@keyframes fadeInOpacity {
+  }
+  
+  @keyframes fadeInOpacity {
     0% {
-		opacity: 0;
-	}
+      opacity: 0;
+    }
     30% {
-        opacity: 0;
-    }
-	100% {
-		opacity: 1;
-	}
-}
-
-.flip-icon {
-    animation: flip-icon 0.3s linear both;
-}
-
-@keyframes flip-icon {
-    0% {
-        transform: rotateY(180deg);
+      opacity: 0;
     }
     100% {
-        transform: rotateY(0deg);
+      opacity: 1;
     }
-}
-
-@supports (-ms-overflow-style: none) {
-    overflow:auto !important;
-}
+  }
+  
+  .flip-icon {
+    animation: flip-icon 0.3s linear both;
+  }
+  
+  @keyframes flip-icon {
+    0% {
+      transform: rotateY(180deg);
+    }
+    100% {
+      transform: rotateY(0deg);
+    }
+  }
+  
+  @supports (-ms-overflow-style: none) {
+    overflow: auto !important;
+  }
+  

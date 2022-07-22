@@ -20,116 +20,133 @@ limitations under the License.-->
 NOTICE: This file was modified within the bounds of the Apache 2.0 licence for distribution by Maya Labs
 */
 .nr-dashboard-form {
-	display: inline-block;
-	width: 100%;
-	overflow-y: auto;
-}
-.nr-dashboard-form form {
+    display: inline-block;
+    width: 100%;
+    overflow-y: auto;
+  }
+  .nr-dashboard-form form {
     /* padding: 0px 6px 0px 6px; */ /* maya-style remove extra padding in form */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
-}
-
-.nr-dashboard-form .formlabel {
+  }
+  
+  .nr-dashboard-form .formlabel {
     font-size: large;
     font-weight: 500;
     margin-top: 12px;
     margin-bottom: 6px;
     padding: 0 6px;
     width: 100%;
-}
-.nr-dashboard-form .formElement {
+  }
+  .nr-dashboard-form .formElement {
     width: calc(100% - 12px);
+    border: 1px solid #d8d8d8;
+    border-radius: 2px;
+    padding-left: 6px;
+    padding-bottom: 6px;
+    color: #787575;
+    font-weight: 500;
+    margin-bottom: 10px;
     /* margin-left: 6px; */ /* maya-style remove extra margin from left of form input */
-    /* margin-right: 6px */ /* maya-style remove extra margin from right of form input */
-}
-.nr-dashboard-form .formElementSplit {
+    margin-right: 6px; /* maya-style remove extra margin from right of form input */
+  }
+  .nr-dashboard-form .formElementSplit {
     width: calc(50% - 12px);
     margin-left: 6px;
-    margin-right: 6px
-}
-.nr-dashboard-form .form-control {
+    margin-right: 6px;
+  }
+  .nr-dashboard-form .form-control {
     width: 100%;
     display: flex;
-    justify-content:flex-start;
-    margin-top:-20px;
-}
-
-.nr-dashboard-form .form-control button {
-    background-color: #4A304B;
+    justify-content: flex-start;
+    margin-top: -20px;
+  }
+  
+  .nr-dashboard-form .form-control button {
+    background-color: #4a304b;
     margin: 0px 8px;
-}
-
-.nr-dashboard-form .form-control button:first-of-type {
+    box-shadow: none !important;
+    /* maya-style :: changed color for from button */
+  }
+  
+  .nr-dashboard-form .form-control button:first-of-type {
     margin-left: 0px;
-}
-
-.nr-dashboard-form .form-control button:hover {
-    background-color: #4A304B;
-}
-
-
-.nr-dashboard-form .form-control-single {
-    justify-content:space-around;
-}
-.nr-dashboard-form .form-control-single > .nr-dashboard-form-button {
-    width:100%
-}
-.nr-dashboard-form .form-control-no-label {
-    margin-top:-10px;
-}
-.nr-dashboard-form md-input-container {
-	display: inline-block;
+  }
+  
+  .nr-dashboard-form .form-control button:hover {
+    background-color: #39213a !important;
+    /* maya-style :: added hover color for from button */
+  }
+  
+  .nr-dashboard-form .form-control-single {
+    justify-content: space-around;
+  }
+  .nr-dashboard-form .form-control-single > .nr-dashboard-form-button {
+    width: 100%;
+  }
+  .nr-dashboard-form .form-control-no-label {
+    margin-top: -10px;
+  }
+  .nr-dashboard-form md-input-container {
+    display: inline-block;
     margin-top: 0px;
     margin-bottom: 0px;
     padding-top: 1px;
     padding-bottom: 1px;
-}
-
-md-input-container label:not(.md-container-ignore) {
+  }
+  
+  md-input-container label:not(.md-container-ignore) {
     position: absolute;
     bottom: 94%;
     left: 0;
     right: auto;
-}
-
-.nr-dashboard-form form md-input-container input {
+  }
+  
+  .nr-dashboard-form form md-input-container input {
     margin-top: 2px;
-}
-
-.nr-dashboard-form md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-placeholder label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float) {
-    -webkit-transform: translate3d(0,10px,0) scale(.75);
-    transform: translate3d(0,10px,0) scale(.75);
-    -webkit-transition: width .4s cubic-bezier(.25,.8,.25,1),-webkit-transform .4s cubic-bezier(.25,.8,.25,1);
-    transition: width .4s cubic-bezier(.25,.8,.25,1),-webkit-transform .4s cubic-bezier(.25,.8,.25,1);
-    transition: transform .4s cubic-bezier(.25,.8,.25,1),width .4s cubic-bezier(.25,.8,.25,1);
-    transition: transform .4s cubic-bezier(.25,.8,.25,1),width .4s cubic-bezier(.25,.8,.25,1),-webkit-transform .4s cubic-bezier(.25,.8,.25,1);
-}
-.nr-dashboard-form md-datepicker {
-	padding-bottom: 10px;
-}
-.nr-dashboard-form md-switch {
-	margin-top: 0px;
-    margin-bottom: 0px;
-}
-.nr-dashboard-form input[type="checkbox"] {
+  }
+  
+  .nr-dashboard-form md-input-container.md-input-focused label:not(.md-no-float),
+  md-input-container.md-input-has-placeholder label:not(.md-no-float),
+  md-input-container.md-input-has-value label:not(.md-no-float) {
+    -webkit-transform: translate3d(0, 10px, 0) scale(0.75);
+    transform: translate3d(0, 10px, 0) scale(0.75);
+    -webkit-transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+      -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .nr-dashboard-form md-datepicker {
+    padding-bottom: 10px;
+  }
+  .nr-dashboard-form md-switch {
     margin-top: 0px;
     margin-bottom: 0px;
-}
-.nr-dashboard-form md-input-container .md-errors-spacer {
+  }
+  .nr-dashboard-form input[type="checkbox"] {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  .nr-dashboard-form md-input-container .md-errors-spacer {
     float: right;
     min-height: 0px;
     min-width: 1px;
-}
-.nr-dashboard-form-button {
+  }
+  .nr-dashboard-form-button {
     width: 50%;
     margin-bottom: 0px;
     margin-top: 0px;
     min-height: 28px;
-}
-.nr-dashboard-form form md-input-container md-checkbox .md-label {
+  }
+  .nr-dashboard-form form md-input-container md-checkbox .md-label {
     position: unset;
     top: unset;
-}
+  }
+  
