@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.loader {
+  border: 5px solid #431c41;
+  border-radius: 50%;
+  border-top: 5px solid #d8d8d8;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+body{
+    background: #f7f6f3 !important;
+}
+
+*{
+    background: #f7f6f3 !important;
+
+}
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+
+<div class="loader"></div>
+
+</body>
+</html>
