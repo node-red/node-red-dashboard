@@ -1,4 +1,8 @@
 
+### 3.1.9: Maintenance Release
+
+ - Fix Cross site scripting for ui_text format input. Issue #772
+
 ### 3.1.8: Maintenance Release
 
  - Use Node-RED CSS vars for ui-bas to help themeing. PR #763

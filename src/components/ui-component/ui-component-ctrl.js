@@ -12,28 +12,58 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
             var me = this;
 
             if (typeof me.item.format === "string") {
-                me.item.getText = $interpolate(me.item.format).bind(null, me.item);
+                if (me.item.format.indexOf("constructor") === -1) {
+                    me.item.getText = $interpolate(me.item.format).bind(null, me.item);
+                }
+                else {
+                    me.item.getText = function() { return me.item.format };
+                }
             }
 
             if (typeof me.item.label === "string") {
-                me.item.getLabel = $interpolate(me.item.label).bind(null, me.item);
-                me.item.safeLabel = "nr-dashboard-widget-" + (me.item.label).replace(/\W/g,'_');
+                if (me.item.label.indexOf("constructor") === -1) {
+                    me.item.getLabel = $interpolate(me.item.label).bind(null, me.item);
+                    me.item.safeLabel = "nr-dashboard-widget-" + (me.item.label).replace(/\W/g,'_');
+                }
+                else {
+                    me.item.getText = function() { return me.item.label };
+                }
             }
 
             if (typeof me.item.tooltip === "string") {
-                me.item.getTooltip = $interpolate(me.item.tooltip).bind(null, me.item);
+                if (me.item.tooltip.indexOf("constructor") === -1) {
+                    me.item.getTooltip = $interpolate(me.item.tooltip).bind(null, me.item);
+                }
+                else {
+                    me.item.getText = function() { return me.item.tooltip };
+                }
             }
 
             if (typeof me.item.color === "string") {
-                me.item.getColor = $interpolate(me.item.color).bind(null, me.item);
+                if (me.item.color.indexOf("constructor") === -1) {
+                    me.item.getColor = $interpolate(me.item.color).bind(null, me.item);
+                }
+                else {
+                    me.item.getText = function() { return me.item.color };
+                }
             }
 
             if (typeof me.item.icon === "string") {
-                me.item.getIcon = $interpolate(me.item.icon).bind(null, me.item);
+                if (me.item.icon.indexOf("constructor") === -1) {
+                    me.item.getIcon = $interpolate(me.item.icon).bind(null, me.item);
+                }
+                else {
+                    me.item.getText = function() { return me.item.icon };
+                }
             }
 
             if (typeof me.item.units === "string") {
-                me.item.getUnits = $interpolate(me.item.units).bind(null, me.item);
+                if (me.item.units.indexOf("constructor") === -1) {
+                    me.item.getUnits = $interpolate(me.item.units).bind(null, me.item);
+                }
+                else {
+                    me.item.getText = function() { return me.item.units };
+                }
             }
 
             me.init = function () {
