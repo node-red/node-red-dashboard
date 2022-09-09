@@ -72,6 +72,8 @@ module.exports = function(RED) {
                         return converted;
                     }
                     if (value[0].hasOwnProperty("series") && value[0].hasOwnProperty("data")) {
+                        if (!Array.isArray(value[0].series)) { node.error("series not array",msg); return; }
+                        if (!Array.isArray(value[0].data)) { node.error("Data not array",msg); return; }
                         var flag = true;
                         for (var dd = 0; dd < value[0].data.length; dd++ ) {
                             if (!isNaN(value[0].data[dd][0])) { flag = false; }
