@@ -21,7 +21,7 @@
  * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.2.4
+ * v1.2.5
  */
 
 body,
@@ -23406,6 +23406,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e959";
 }
 
+.material-icons._18_up_rating:before {
+  content: "\f8fd";
+}
+
 .material-icons._18mp:before {
   content: "\e95a";
 }
@@ -23704,6 +23708,14 @@ md-tabs-wrapper md-next-button ng-md-icon {
 
 .material-icons.add_comment:before {
   content: "\e266";
+}
+
+.material-icons.add_home:before {
+  content: "\f8eb";
+}
+
+.material-icons.add_home_work:before {
+  content: "\f8ed";
 }
 
 .material-icons.add_ic_call:before {
@@ -24586,6 +24598,14 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e1ae";
 }
 
+.material-icons.broadcast_on_home:before {
+  content: "\f8f8";
+}
+
+.material-icons.broadcast_on_personal:before {
+  content: "\f8f9";
+}
+
 .material-icons.broken_image:before {
   content: "\e3ad";
 }
@@ -25410,6 +25430,14 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e1af";
 }
 
+.material-icons.dataset:before {
+  content: "\f8ee";
+}
+
+.material-icons.dataset_linked:before {
+  content: "\f8ef";
+}
+
 .material-icons.date_range:before {
   content: "\e916";
 }
@@ -25472,6 +25500,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
 
 .material-icons.design_services:before {
   content: "\f10a";
+}
+
+.material-icons.desk:before {
+  content: "\f8f4";
 }
 
 .material-icons.desktop_access_disabled:before {
@@ -26416,6 +26448,14 @@ md-tabs-wrapper md-next-button ng-md-icon {
 
 .material-icons.fire_hydrant:before {
   content: "\f1a3";
+}
+
+.material-icons.fire_hydrant_alt:before {
+  content: "\f8f1";
+}
+
+.material-icons.fire_truck:before {
+  content: "\f8f2";
 }
 
 .material-icons.fireplace:before {
@@ -27878,6 +27918,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e899";
 }
 
+.material-icons.lock_person:before {
+  content: "\f8f3";
+}
+
 .material-icons.lock_reset:before {
   content: "\eade";
 }
@@ -28504,6 +28548,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
 
 .material-icons.no_accounts:before {
   content: "\f03e";
+}
+
+.material-icons.no_adult_content:before {
+  content: "\f8fe";
 }
 
 .material-icons.no_backpack:before {
@@ -29390,6 +29438,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\ea4a";
 }
 
+.material-icons.psychology_alt:before {
+  content: "\f8ea";
+}
+
 .material-icons.public:before {
   content: "\e80b";
 }
@@ -29628,6 +29680,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
 
 .material-icons.reorder:before {
   content: "\e8fe";
+}
+
+.material-icons.repartition:before {
+  content: "\f8e8";
 }
 
 .material-icons.repeat:before {
@@ -31310,6 +31366,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\e571";
 }
 
+.material-icons.transcribe:before {
+  content: "\f8ec";
+}
+
 .material-icons.transfer_within_a_station:before {
   content: "\e572";
 }
@@ -31420,6 +31480,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
 
 .material-icons.two_wheeler:before {
   content: "\e9f9";
+}
+
+.material-icons.type_specimen:before {
+  content: "\f8f0";
 }
 
 .material-icons.u_turn_left:before {
@@ -31750,6 +31814,10 @@ md-tabs-wrapper md-next-button ng-md-icon {
   content: "\f082";
 }
 
+.material-icons.wallet:before {
+  content: "\f8ff";
+}
+
 .material-icons.wallet_giftcard:before {
   content: "\e8f6";
 }
@@ -31904,6 +31972,18 @@ md-tabs-wrapper md-next-button ng-md-icon {
 
 .material-icons.widgets:before {
   content: "\e1bd";
+}
+
+.material-icons.width_full:before {
+  content: "\f8f5";
+}
+
+.material-icons.width_normal:before {
+  content: "\f8f6";
+}
+
+.material-icons.width_wide:before {
+  content: "\f8f7";
 }
 
 .material-icons.wifi:before {

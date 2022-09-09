@@ -1,7 +1,9 @@
 
-### 3.1.9: Maintenance Release
+### 3.2.0: Milestone Release
 
  - Fix Cross site scripting for ui_text format input. Issue #772
+ - Don't accept obviously bad chart data. Issue #713
+ - Bump libraries to latest
 
 ### 3.1.8: Maintenance Release
 
