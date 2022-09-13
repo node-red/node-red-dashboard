@@ -35,6 +35,12 @@
         z-index: 99;
     }
 }
+@media(max-width: 959px) {
+    .md-sidenav-right, md-sidenav {
+        top: 48px !important;
+        z-index: 99;
+    }
+}
 @media(max-width: 660px) {
     md-sidenav,
     md-sidenav.md-locked-open,
@@ -42,6 +48,18 @@
     	min-width: 64px !important;
         width: auto;
     	max-width: 200px !important;
+    }
+}
+@media(min-width: 960px) {
+    .md-sidenav-right, md-sidenav {
+        top: 64px;
+        z-index: 99;
+    }
+}
+@media(min-width: 960px) {
+    .md-sidenav-right, md-sidenav {
+        top: 64px;
+        z-index: 99;
     }
 }
 @media(min-width: 661px) {
@@ -171,6 +189,9 @@ md-card {
 
 @supports (-ms-overflow-style: none) {
     overflow:auto !important;
+}
+fill-space {
+    flex: 1 1 auto;
 }
 
 /*
