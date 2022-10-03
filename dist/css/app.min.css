@@ -4918,7 +4918,7 @@ md-input-container.md-input-focused:not([md-no-float]) md-select:not([placeholde
   position: fixed;
   top: 0;
   transform: translateY(-1px);
-  z-index: 90;
+  z-index: 99;
 }
 
 .md-select-menu-container:not(.md-clickable) {
