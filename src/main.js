@@ -627,7 +627,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .ariaLabel(msg.ok)
                         .ok(msg.ok)
                 }
-                confirm._options.template = '<md-dialog md-theme="{{ dialog.theme || dialog.defaultTheme }}" aria-label="{{ dialog.ariaLabel }}" >' +
+                confirm._options.template = '<md-dialog md-theme="{{ dialog.theme || dialog.defaultTheme }}" aria-label="{{ dialog.ariaLabel }}" class="' + msg.toastClass + ' >' +
                     '<md-dialog-content class="md-dialog-content" role="document" tabIndex="-1">' +
                         '<h2 class="md-title">{{ dialog.title }}</h2>' +
                         '<div ng-if="::dialog.mdHtmlContent" class="md-dialog-content-body"ng-bind-html="::dialog.mdHtmlContent | trusted"></div>' +

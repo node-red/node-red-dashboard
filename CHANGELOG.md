@@ -1,4 +1,9 @@
 
+### 3.2.1: Maintenance Release
+
+ - Fix notification toast class. Issue #776
+ - Fix z-index of dropdown items. Issue #775
+
 ### 3.2.0: Milestone Release
 
  - Fix Cross site scripting for ui_text format input. Issue #772

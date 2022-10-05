@@ -19,7 +19,7 @@ var
     gmanifest = require('gulp-manifest3'),
     rename = require('gulp-rename'),
     replace = require('gulp-replace'),
-    sass = require('gulp-sass'),
+    sass = require('gulp-sass')(require('node-sass')),
     uglify = require('gulp-uglify'),
     gutil = require('gulp-util'),
     path = require('path'),
