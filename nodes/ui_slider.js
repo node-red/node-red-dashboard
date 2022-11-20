@@ -39,7 +39,7 @@ module.exports = function(RED) {
             },
             beforeSend: function (msg) {
                 var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
-                if (t) { msg.topic = t; }
+                if (t !== undefined) { msg.topic = t; }
                 if (node.pt) {
                     node.status({shape:"dot",fill:"grey",text:msg.payload});
                 }

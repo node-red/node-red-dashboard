@@ -181,7 +181,7 @@ module.exports = function(RED) {
                     msg.payload = emitOptions.value;
                 }
                 var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
-                if (t) { msg.topic = t; }
+                if (t !== undefined) { msg.topic = t; }
                 if (msg.payload === null || msg._dontSend) { node.status({}); }
                 else {
                     var stat = "";

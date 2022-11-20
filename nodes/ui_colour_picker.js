@@ -49,7 +49,7 @@ module.exports = function(RED) {
                     if (node.format === 'hsv') { msg.payload = pay.toHsv(); }
                 }
                 var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
-                if (t) { msg.topic = t; }
+                if (t !== undefined) { msg.topic = t; }
             },
             convert: function(p,o,m) {
                 if (m.payload === undefined || m.payload === null) { return; }

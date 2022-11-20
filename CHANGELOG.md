@@ -1,6 +1,7 @@
 
 ### 3.2.1: Maintenance Release
 
+ - Fix topic return when topic is falsey. Issue #784
  - Fix notification toast class. Issue #776
  - Fix z-index of dropdown items. Issue #775
 

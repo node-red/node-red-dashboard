@@ -41,7 +41,7 @@ module.exports = function(RED) {
                 // if (config.mode === "week") { msg.payload = Date.parse(msg.payload); }
                 // if (config.mode === "month") { msg.payload = Date.parse(msg.payload); }
                 var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
-                if (t) { msg.topic = t; }
+                if (t !== undefined) { msg.topic = t; }
             }
         });
         node.on("close", done);
