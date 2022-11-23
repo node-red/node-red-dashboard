@@ -1,5 +1,5 @@
 
-### 3.2.1: Maintenance Release
+### 3.2.2: Maintenance Release
 
  - Fix topic return when topic is falsey. Issue #784
  - Fix notification toast class. Issue #776
