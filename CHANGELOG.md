@@ -1,4 +1,8 @@
 
+### 3.2.3: Maintenance Release
+
+ - Re-do package to omit node-sass (not required for prod)
+
 ### 3.2.2: Maintenance Release
 
  - Fix topic return when topic is falsey. Issue #784

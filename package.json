@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "3.2.2",
+    "version": "3.2.3",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -87,7 +87,6 @@
     "dependencies": {
         "compression": "^1.7.4",
         "gridstack": "^0.6.4",
-        "node-sass": "~7.0.3",
         "serve-static": "^1.15.0",
         "socket.io": "^4.5.2"
     },
