@@ -685,6 +685,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 if (typeof msg.tabs === 'object') {
                     for (var ta in main.menu) {
                         if (main.menu.hasOwnProperty(ta)) {
+                            if (main.menu[ta].name) { main.menu[ta].header = main.menu[ta].name; }
                             if (msg.tabs.hasOwnProperty("show")) {
                                 if (arrayIncludesName(msg.tabs.show, main.menu[ta].header)) {
                                     main.menu[ta].hidden = false;

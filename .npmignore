@@ -4,5 +4,6 @@ gulpfile.js
 .gitignore
 .npmignore
 node*.tgz
+ang*.tgz
 *.bak
 package-lock.json

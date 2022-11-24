@@ -1,4 +1,8 @@
 
+### 3.2.4: Maintenance Release
+
+ - Let Link Tabs also be hideable. Issue #785
+
 ### 3.2.3: Maintenance Release
 
  - Re-do package to omit node-sass (not required for prod)
