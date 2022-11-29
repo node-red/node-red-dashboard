@@ -13,6 +13,8 @@ See the [Wiki](https://github.com/node-red/node-red-dashboard/wiki/Creating-New-
 
 For the latest updates see the [CHANGELOG.md](https://github.com/node-red/node-red-dashboard/blob/master/CHANGELOG.md)
 
+**NOTE:** This project is based on Angular v1 - As that is now no longer maintained, this project should be considered to be on "life support". Small patches will be applied on a best can do basis, but there will be no major feature upgrades, and underlying security breakage may occur.
+
 ![Dashboard example](http://nodered.org/images/dashboarde.png)
 
 ## Pre-requisites
