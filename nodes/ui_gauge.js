@@ -65,6 +65,7 @@ module.exports = function (RED) {
                 width: config.width || group.config.width || 6,
                 height: config.height || node.autoheight,
                 colors: node.colors,
+                diff: config.diff || false,
                 gageoptions: gageoptions,
                 waveoptions: waveoptions,
                 options: null,

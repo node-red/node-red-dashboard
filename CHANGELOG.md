@@ -1,4 +1,10 @@
 
+
+### 3.3.0: Milestone Release
+
+ - Update justgage library to include and expose differential mode (either side of a centre point).
+ - Fix initial drawing of gauge not registering value correctly. Issue #788
+
 ### 3.2.4: Maintenance Release
 
  - Let Link Tabs also be hideable. Issue #785

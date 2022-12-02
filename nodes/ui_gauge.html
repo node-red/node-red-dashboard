@@ -34,6 +34,7 @@
             colors: {value: ["#00B500","#E6E600","#CA3838"]},
             seg1: {value: ""},
             seg2: {value: ""},
+            diff: {value: false},
             className: {value: ''}
         },
         inputs:1,
@@ -88,6 +89,10 @@
                     $("#ui-gauge-colours").show();
                     $("#ui-gauge-segments").show();
                 }
+                if ($(this).val() === "gage") {
+                    $("#ui-gauge-diff").show();
+                }
+                else { $("#ui-gauge-diff").hide(); }
             });
             $("#node-input-min").on("change", function() {
                 $("#seg-min").text($(this).val());
@@ -156,10 +161,14 @@
         <input type="text" id="node-input-seg2" style="text-align:center; width:87px;" placeholder="optional"> ...
         <span id="seg-max" style="display:inline-block; width:40px; text-align:right">10</span>
     </div>
+    <div class="form-row" id="ui-gauge-diff">
+        <label style="width:auto" for="node-input-diff"><i class="fa fa-arrows-h"></i> Differential style </label>
+        <input type="checkbox" id="node-input-diff" style="display:inline-block; width:auto; vertical-align:top;">
+    </div>
     <div class="form-row">
         <label for="node-input-className"><i class="fa fa-code"></i>  Class</label>
         <input type="text" id="node-input-className" placeholder="Optional CSS class name(s) for widget"/>
-    </div>    
+    </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name">
