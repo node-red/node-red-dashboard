@@ -83,6 +83,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                                     max: item.max,
                                     reverse: item.reverse,
                                     hideMinMax: item.hideMinMax,
+                                    differential: item.diff,
                                     levelColors: (item.reverse) ? item.colors.reverse() : item.colors,
                                     valueMinFontSize: 12,
                                     minLabelMinFontSize: 8,
@@ -166,7 +167,7 @@ angular.module('ui').directive('uiGauge', [ '$timeout', '$interpolate',
                             });
                         }
                     });
-                }, 0);
+                }, 5);
             }
         }
     }]);
