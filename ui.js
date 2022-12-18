@@ -332,6 +332,9 @@ function init(server, app, log, redSettings) {
         settings.readOnly = uiSettings.readOnly;
     }
     else { settings.readOnly = false; }
+    if ((uiSettings.hasOwnProperty("display")) && (typeof uiSettings.display === "string")) {
+        mani.display = uiSettings.display;
+    }
     settings.defaultGroupHeader = uiSettings.defaultGroup || 'Default';
     settings.verbose = redSettings.verbose || false;
 

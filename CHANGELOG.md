@@ -1,4 +1,7 @@
 
+### 3.4.0: Milestone Release
+
+ - Expose manifest.json display property in settingsjs ui section so can be set fullscreen if desired.
 
 ### 3.3.0: Milestone Release
 
