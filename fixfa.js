@@ -41,3 +41,20 @@ fs.readFile('node_modules/material-design-icons-iconfont/dist/material-design-ic
         });
     }
 });
+
+// GridStack layout css patches for sass
+fs.readFile('src/gridstack-extra.scss', 'utf8', function (err, file) {
+    if (err) { return; }
+    else {
+        console.log('Fixing up GridStack scss');
+        const res1 = file
+            .replace(/ \(100% \/ \$columns\)/g, ' calc(100% \/ \$columns)')
+        fs.writeFile('src/gridstack-extra.scss', res1, 'utf8', function (err) {
+            if (err) {
+                console.log('Failed to re-write file.');
+            } else {
+                console.log('Fixed  up GridStack scss');
+            }
+        });
+    }
+});

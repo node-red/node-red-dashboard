@@ -19,8 +19,8 @@ var
     gmanifest = require('gulp-manifest3'),
     rename = require('gulp-rename'),
     replace = require('gulp-replace'),
-    sass = require('gulp-sass')(require('node-sass')),
-    uglify = require('gulp-uglify'),
+    sass = require('gulp-sass')(require('sass')),
+    terser = require('gulp-terser'),
     gutil = require('gulp-util'),
     path = require('path'),
     streamqueue = require('streamqueue');
@@ -81,7 +81,7 @@ function js() {
         .pipe(gulp.dest('dist/'));
 
     return streamqueue({ objectMode:true }, scripts, templates)
-        .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
+        .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), terser()))
         .pipe(concat('app.min.js'))
         .pipe(header(fs.readFileSync('license.js')))
         .pipe(eol('\n'))

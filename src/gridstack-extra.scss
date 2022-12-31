@@ -11,13 +11,13 @@ $gridstack-columns: 11 !default;
   .grid-stack.grid-stack-#{$columns} {
 
     > .grid-stack-item {
-      min-width: 100% / $columns;
+      min-width: calc(100% / $columns);
 
       @for $i from 1 through $columns {
-        &[data-gs-width='#{$i}'] { width: (100% / $columns) * $i; }
-        &[data-gs-x='#{$i}'] { left: (100% / $columns) * $i; }
-        &[data-gs-min-width='#{$i}'] { min-width: (100% / $columns) * $i; }
-        &[data-gs-max-width='#{$i}'] { max-width: (100% / $columns) * $i; }
+        &[data-gs-width='#{$i}'] { width: calc(100% / $columns) * $i; }
+        &[data-gs-x='#{$i}'] { left: calc(100% / $columns) * $i; }
+        &[data-gs-min-width='#{$i}'] { min-width: calc(100% / $columns) * $i; }
+        &[data-gs-max-width='#{$i}'] { max-width: calc(100% / $columns) * $i; }
       }
     }
   }

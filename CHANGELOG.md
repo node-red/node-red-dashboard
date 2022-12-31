@@ -1,4 +1,9 @@
 
+### 3.4.1: Maintenance Release
+
+ - Change gulp build tool to use gulp-terser for later nodejs version support
+ - Fix datepicker to use chaneg not blur to stop Safari sending double messages
+
 ### 3.4.0: Milestone Release
 
  - Expose manifest.json display property in settingsjs ui section so can be set fullscreen if desired.
