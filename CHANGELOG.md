@@ -1,9 +1,13 @@
 
+### 3.3.1: Maintenance Release
+
+ - Revert to uglify (for now) to fix color-picker failure. Issue #791
+
 ### 3.3.0: Milestone Release
 
  - Expose manifest.json display property in settingsjs ui section so can be set fullscreen if desired.
  - Change gulp build tool to use gulp-terser for later nodejs version support
- - Fix datepicker to use chaneg not blur to stop Safari sending double messages
+ - Fix datepicker to use change not blur to stop Safari sending double messages
  - Update justgage library to include and expose differential mode (either side of a centre point).
  - Fix initial drawing of gauge not registering value correctly. Issue #788
 
