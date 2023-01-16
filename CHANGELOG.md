@@ -1,4 +1,8 @@
 
+### 3.4.0-beta: Milestone Release
+
+ -  Add ability to specify to start page by tab name in url
+
 ### 3.3.1: Maintenance Release
 
  - Revert to uglify (for now) to fix color-picker failure. Issue #791

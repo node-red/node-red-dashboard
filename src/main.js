@@ -128,9 +128,19 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             var tabIdFromUrlPath = parseInt($location.path().split('/')[1], 10);
             if (!isNaN(tabIdFromUrlPath)) {
                 var menu = main.menu[tabIdFromUrlPath];
-                if (menu) {
-                    main.open(menu, tabIdFromUrlPath);
-                }
+                if (menu) { main.open(menu, tabIdFromUrlPath); }
+            }
+            else {
+                main.menu.forEach(function(e,i) {
+                    if ($location.path().split('/')[1] === e.header) {
+                        var menu = main.menu[i];
+                        if (menu && menu.disabled !== true) {
+                            main.open(menu, i);
+                            main.select(i);
+                            return;
+                        }
+                    }
+                })
             }
         });
 
