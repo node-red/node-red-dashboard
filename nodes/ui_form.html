@@ -61,7 +61,7 @@
             }
 
             function generateOption(i, option) {
-                var container = $('<li/>',{style:"margin:0; padding:8px 0px 0px; border-bottom:1px solid #ccc;"});
+                var container = $('<li/>',{style:"margin:0; padding:8px 0px 0px; border-bottom:1px solid var(--red-ui-form-input-border-color, #ccc);"});
                 var row = $('<div/>').appendTo(container);
                 var row2 = $('<div/>',{style:"padding-top:5px; padding-left:175px;"}).appendTo(container);
                 var row3 = $('<div/>',{style:"padding-top:5px; padding-left:120px;"}).appendTo(container);
@@ -135,7 +135,7 @@
 
                 deleteButton.click(function() {
                     container.find(".node-input-option-value").removeAttr('required')
-                    container.css({"background":"#fee"});
+                    container.css({"background":"var(--red-ui-secondary-background-inactive, #fee)"});
                     container.fadeOut(300, function() {
                         $(this).remove();
                     });
@@ -214,7 +214,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: var(--red-ui-tertiary-border-color, #ccc);
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -226,7 +226,7 @@
     width: 15px;
     left: 2px;
     bottom: 2px;
-    background-color: white;
+    background-color: var(--red-ui-secondary-background, white);
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -271,8 +271,8 @@ input:checked + .slider:before {
     </div>
     <div class="form-row node-input-option-container-row" style="margin-bottom:0px; width:100%; min-width:520px">
         <label style="vertical-align:top;"><i class="fa fa-list-alt"></i> <span data-i18n="ui_form.label.formElements"></label>
-        <div style="display:inline-block; width:78%; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
-          <div class="red-ui-tray-header" style="width:100%; display: inline-block; padding-top:10px; padding-bottom:10px; border-top:0px solid; border-radius:5px 5px 0 0; border-bottom:1px solid #ccc;">
+        <div style="display:inline-block; width:78%; border:1px solid var(--red-ui-form-input-border-color, #ccc); border-radius:5px; box-sizing:border-box;">
+          <div class="red-ui-tray-header" style="width:100%; display: inline-block; padding-top:10px; padding-bottom:10px; border-top:0px solid; border-radius:5px 5px 0 0; border-bottom:1px solid var(--red-ui-form-input-border-color, #ccc);">
               <div style="width:94%; display:inline-block; margin-left:27px">
                 <div style="width:20%; text-align:center; float:left;" data-i18n="ui_form.label.label"></span></div>
                 <div style="width:20%; text-align:center; float:left; margin-left:9px" data-i18n="node-red:common.label.name"></div>

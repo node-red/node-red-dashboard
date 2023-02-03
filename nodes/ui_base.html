@@ -166,7 +166,7 @@
         position: absolute;
         right: 36px;
         border-radius: 3px !important;
-        border: solid 1px #ccc;
+        border: solid 1px var(--red-ui-form-input-border-color, #ccc);
         -webkit-appearance: none;
         font-size: smaller;
         text-align: center;
@@ -230,13 +230,13 @@
 <link rel="stylesheet" href="./ui_base/css/gridstack-extra.min.css">
 <style>
 .grid-stack {
-    background-color: #f8f8f8;
-    border: solid 2px #C0C0C0;
+    background-color: var(--red-ui-primary-background, #f8f8f8);
+    border: solid 2px var(--red-ui-tertiary-border-color, #C0C0C0);
     margin: auto;
     min-height: 42px;
     display: table-cell;
-    background-image: linear-gradient(#C0C0C0 1px, transparent 0),
-                      linear-gradient(90deg, #C0C0C0 1px, transparent 0);
+    background-image: linear-gradient(var(--red-ui-tertiary-border-color, #C0C0C0) 1px, transparent 0),
+                      linear-gradient(90deg, var(--red-ui-tertiary-border-color, #C0C0C0) 1px, transparent 0);
     background-size: 40px 43px;
 }
 .grid-stack>.grid-stack-item>.grid-stack-item-content {
@@ -1321,7 +1321,7 @@
                 .css("width","80%")
                 .css("display","inline-block")
                 .appendTo(divDateFormat);
-                $('<div>').html("<a href='https://momentjs.com/docs/#/displaying/format/' target='_new'><i class='fa fa-info-circle' style='color:grey;'></i></a>")
+                $('<div>').html("<a href='https://momentjs.com/docs/#/displaying/format/' target='_new'><i class='fa fa-info-circle' style='color:var(--red-ui-secondary-text-color, grey);'></i></a>")
                 .css("display","inline-block")
                 .css("margin-right","6px")
                 .css("float","right")
@@ -3049,9 +3049,9 @@
             var c_width = has_height ? '15%' : '6%';
             var container = $('<div>').css({
                 position: 'absolute',
-                background: 'white',
+                background: 'var(--red-ui-secondary-background, white)',
                 padding: '10px 10px 10px 10px',
-                border: '1px solid grey',
+                border: '1px solid var(--red-ui-primary-border-color, grey)',
                 zIndex: '20',
                 borderRadius: "4px",
                 display:"none",
@@ -3059,7 +3059,7 @@
             }).appendTo(document.body);
             var box0 = $("<div>").css({
                 fontSize: '13px',
-                color: '#aaa',
+                color: 'var(--red-ui-tertiary-text-color, #aaa)',
                 float: 'left',
                 paddingTop: '1px'
             }).appendTo(container);
@@ -3162,9 +3162,9 @@
                 var pos = $(this).offset();
                 var container = $('<div>').css({
                     position: 'absolute',
-                    background: 'white',
+                    background: 'var(--red-ui-secondary-background, white)',
                     padding: '5px 10px 10px 10px',
-                    border: '1px solid grey',
+                    border: '1px solid var(--red-ui-primary-border-color, grey)',
                     zIndex: '20',
                     borderRadius: "4px",
                     display:"none"
@@ -3182,7 +3182,7 @@
 
                 var label = $("<div>").css({
                     fontSize: '13px',
-                    color: '#aaa',
+                    color: 'var(--red-ui-tertiary-text-color, #aaa)',
                     float: 'left',
                     paddingTop: '1px'
                 }).appendTo(container).text((width === 0 && height === 0)?auto_text:(width+(that.options.hasOwnProperty('height')?" x "+height:"")));
@@ -3231,9 +3231,9 @@
                     });
                 }
 
-                var cellBorder = "1px dashed lightGray";
+                var cellBorder = "1px dashed var(--red-ui-secondary-border-color, lightGray)";
                 var cellBorderExisting = "1px solid gray";
-                var cellBorderHighlight = "1px dashed black";
+                var cellBorderHighlight = "1px dashed var(--red-ui-primary-border-color, black)";
                 var rows = [];
                 function addRow(i) {
                     var row = $('<div>').css({padding:0,margin:0,height:"25px","box-sizing":"border-box"}).appendTo(container);
@@ -3253,7 +3253,7 @@
                         borderBottom: (i===(height-1)&&j<width)?cellBorderExisting:cellBorder,
                         boxSizing: "border-box",
                         cursor:"pointer",
-                        background: (j<maxWidth)?"#fff":"#eee"
+                        background: (j<maxWidth)?"var(--red-ui-secondary-background, #fff)" : "var(--red-ui-node-background-placeholder, #eee)"
                     }).appendTo(row);
                     cells[i].push(cell);
                     if (j===0) {
@@ -3278,7 +3278,7 @@
                             for (var y = 0; y<maxHeight; y++) {
                                 for (var x = 0; x<maxWidth; x++) {
                                     cells[y][x].css({
-                                        background: (y<=h && x<=w)?'#ddd':'#fff',
+                                        background: (y<=h && x<=w)?'var(--red-ui-secondary-background-selected, #ddd)' : 'var(--red-ui-secondary-background, #fff)',
                                         borderLeft: (x===0&&y<=h)?cellBorderHighlight:(x===0)?((y<=height-1)?cellBorderExisting:cellBorder):'',
                                         borderTop: (y===0&&x<=w)?cellBorderHighlight:(y===0)?((x<=width-1)?cellBorderExisting:cellBorder):'',
                                         borderRight: (x===w&&y<=h)?cellBorderHighlight:((x===width-1&&y<=height-1)?cellBorderExisting:cellBorder),
