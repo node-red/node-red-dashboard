@@ -617,8 +617,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .htmlContent(msg.message)
                         .initialValue("")
                         .ariaLabel(msg.ok + " or " + msg.cancel)
-                        .ok(msg.ok)
-                        .cancel(msg.cancel);
+                        .ok(msg.msg.ok || msg.ok)
+                        .cancel(msg.msg.cancel || msg.cancel);
                     confirm._options.focusOnOpen = false;
                 }
                 else if (msg.cancel) {
@@ -626,8 +626,8 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .title(msg.title)
                         .htmlContent(msg.message)
                         .ariaLabel(msg.ok + " or " + msg.cancel)
-                        .ok(msg.ok)
-                        .cancel(msg.cancel);
+                        .ok(msg.msg.ok || msg.ok)
+                        .cancel(msg.msg.cancel || msg.cancel);
                     confirm._options.focusOnOpen = false;
                 }
                 else {
@@ -635,7 +635,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                         .title(msg.title)
                         .htmlContent(msg.message)
                         .ariaLabel(msg.ok)
-                        .ok(msg.ok)
+                        .ok(msg.msg.ok || msg.ok)
                 }
                 confirm._options.template = '<md-dialog md-theme="{{ dialog.theme || dialog.defaultTheme }}" aria-label="{{ dialog.ariaLabel }}" class="' + msg.toastClass + ' >' +
                     '<md-dialog-content class="md-dialog-content" role="document" tabIndex="-1">' +
