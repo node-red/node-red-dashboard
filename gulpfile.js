@@ -13,17 +13,17 @@ var
     htmlreplace = require('gulp-html-replace'),
     ghtmlSrc = require('gulp-html-src'),
     minifyHTML = require('gulp-htmlmin'),
-    gulpif = require('gulp-if'),
     gjscs = require('gulp-jscs'),
     jshint = require('gulp-jshint'),
     gmanifest = require('gulp-manifest3'),
     rename = require('gulp-rename'),
     replace = require('gulp-replace'),
     sass = require('gulp-sass')(require('sass')),
-    uglify = require('gulp-uglify'),
     gutil = require('gulp-util'),
     path = require('path'),
-    streamqueue = require('streamqueue');
+    streamqueue = require('streamqueue'),
+    map = require("map-stream"),
+    terser = require("terser");
 
 var vendorPrefix = "vendor/";
 function getFileName(attr, node) {
@@ -81,7 +81,26 @@ function js() {
         .pipe(gulp.dest('dist/'));
 
     return streamqueue({ objectMode:true }, scripts, templates)
-        .pipe(gulpif(/[.]min[.]js$/, gutil.noop(), uglify()))
+        .pipe(map((data, cb) => {
+            const path = data.path;
+            const contents = data.contents;
+            if (/\.min\.js$/.test(path)) {
+                cb(null, data);
+            }
+            else {
+                (async () => {
+                    try {
+                        const code = await terser.minify(contents.toString('utf8'));
+                        const result = Buffer.from(code.code);
+                        data.contents = result;
+                        cb(null, data);
+                    }
+                    catch (e) {
+                        cb("error: " +e.toString());
+                    }
+                })();
+            }
+        }))
         .pipe(concat('app.min.js'))
         .pipe(header(fs.readFileSync('license.js')))
         .pipe(eol('\n'))
