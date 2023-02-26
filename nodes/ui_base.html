@@ -1164,7 +1164,7 @@
                 // Link out to dashboard
                 $.getJSON('uisettings',function(data) {
                     if (data.hasOwnProperty("path")) { uip = data.path; }
-                    var lnk = document.location.host+document.location.pathname+RED.settings.httpNodeRoot+"/"+uip;
+                    var lnk = document.location.host+RED.settings.httpNodeRoot+"/"+uip;
                     var re = new RegExp('\/{1,}','g');
                     lnk = lnk.replace(re,'/');
                     if (!RED.hasOwnProperty("actions")) {
