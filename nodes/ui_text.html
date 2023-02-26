@@ -122,15 +122,15 @@
         width: 90px;
         height: 60px;
         border-radius:3px;
-        border:1px solid #bbb;
+        border:1px solid var(--red-ui-form-input-border-color, #bbb);
         cursor:pointer;
         color: #666;
         margin-right: 10px;
         margin-bottom: 10px;
     }
     .nr-db-text-layout.selected, .nr-db-text-layout:hover {
-        border-color: #333;
-        color: #333;
+        border-color: var(--red-ui-form-input-border-selected-color, #333);
+        color: var(--red-ui-secondary-text-color-selected, #333);
     }
     .nr-db-text-layout span {
         position: absolute;
@@ -156,11 +156,11 @@
         width: 10px;
         height: 10px;
         border-radius: 10px;
-        border: 1px solid #bbb;
+        border: 1px solid var(--red-ui-primary-border-color, #bbb);
         position: absolute;
         right: -5px;
         top: -5px;
-        background: #fff;
+        background: var(--red-ui-secondary-background, #fff);
     }
     .nr-db-text-layout.selected .nr-db-text-layout-checkbox {
         display:inline-block;

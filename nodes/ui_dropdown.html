@@ -51,12 +51,12 @@
             else { $("#valWarning").show(); }
 
             function generateOption(i, option) {
-                var container = $('<li/>',{style:"background: #fff; margin:0; padding:8px 0px 0px; border-bottom: 1px solid #ccc;"});
+                var container = $('<li/>',{style:"background: var(--red-ui-secondary-background, #fff); margin:0; padding:8px 0px 0px; border-bottom: 1px solid var(--red-ui-form-input-border-color, #ccc);"});
                 var row = $('<div/>').appendTo(container);
                 var row2 = $('<div/>',{style:"padding-top:5px; padding-left:175px;"}).appendTo(container);
                 var row3 = $('<div/>',{style:"padding-top:5px; padding-left:120px;"}).appendTo(container);
 
-                $('<i style="color:#eee; cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
+                $('<i style="color: var(--red-ui-form-text-color, #eee); cursor:move; margin-left:3px;" class="node-input-option-handle fa fa-bars"></i>').appendTo(row);
 
                 var valueField = $('<input/>',{class:"node-input-option-value",type:"text",style:"margin-left:7px; width:calc(50% - 32px);", placeholder: 'Value',value:option.value}).appendTo(row).typedInput({default:option.type||'str',types:['str','num','bool']});
                 var labelField = $('<input/>',{class:"node-input-option-label",type:"text",style:"margin-left:7px; width:calc(50% - 32px);", placeholder: 'Label', value:option.label}).appendTo(row);
@@ -66,7 +66,7 @@
                 $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
 
                 deleteButton.click(function() {
-                    container.css({"background":"#fee"});
+                    container.css({"background":"var(--red-ui-secondary-background-inactive, #fee)"});
                     container.fadeOut(300, function() {
                         $(this).remove();
                     });
@@ -147,8 +147,8 @@
     </div>
     <div class="form-row node-input-option-container-row" style="margin-bottom: 0px;width: 100%">
         <label for="node-input-width" style="vertical-align:top"><i class="fa fa-list-alt"></i> Options</label>
-        <div id="node-input-option-container-div" style="box-sizing:border-box; border-radius:5px; height:257px; padding:5px; border:1px solid #ccc; overflow-y:scroll; display:inline-block; width:calc(70% + 15px);">
-            <span id="valWarning" style="color:#910000"><b>All Values must be unique.</b></span>
+        <div id="node-input-option-container-div" style="box-sizing:border-box; border-radius:5px; height:257px; padding:5px; border:1px solid var(--red-ui-form-input-border-color, #ccc); overflow-y:scroll; display:inline-block; width:calc(70% + 15px);">
+            <span id="valWarning" style="color: var(--red-ui-text-color-error, #910000)"><b>All Values must be unique.</b></span>
             <ol id="node-input-option-container" style="list-style-type:none; margin:0;"></ol>
         </div>
     </div>
