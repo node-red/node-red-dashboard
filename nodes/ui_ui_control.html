@@ -1,4 +1,5 @@
 <script type="text/javascript">
+(function () {
     // convert to i18 text
     function c_(x) {
         return RED._("node-red-dashboard/ui_ui_control:ui_ui_control."+x);
@@ -19,16 +20,23 @@
         label: function() { return this.name || "ui control"; },
         labelStyle: function() { return this.name?"node_label_italic":""; },
         outputLabels: function() { return this.events; },
+        oneditprepare: function() {
+            var node = this;
+            var sel = $("#node-input-events");
+            for (var name of ["all", "change", "connect"]) {
+                var text = c_("events."+name);
+                $("<option/>").val(name).text(text).appendTo(sel);
+            }
+            $(sel).val(node.events);
+        },
     });
+})();
 </script>
 
 <script type="text/html" data-template-name="ui_ui_control">
     <div class="form-row">
-        <label for="node-input-events"><i class="fa fa-sign-out"></i> Output</label>
+        <label for="node-input-events"><i class="fa fa-sign-out"></i> <span data-i18n="ui_ui_control.label.output"></span></label>
         <select id="node-input-events" style="width:70%;">
-            <option value="all">Connect, lost, change tab or group events</option>
-            <option value="change">Change tab or group events only</option>
-            <option value="connect">Connect event only</option>
         </select>
     </div>
     <div class="form-row">
