@@ -3,6 +3,9 @@
 
  - Add ability to specify to start page by tab name in url
  - Let dialog popup ok and cancel labels be settable by msg.
+ - Fix CSS variable names. PR #778, #795
+ - Fix Ja translations. PR #764
+ - Fix gulp build errors. PR #797
 
 ### 3.3.1: Maintenance Release
 
