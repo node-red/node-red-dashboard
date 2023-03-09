@@ -1,6 +1,6 @@
 {
     "name": "node-red-dashboard",
-    "version": "3.4.0-beta",
+    "version": "3.4.0",
     "description": "A set of dashboard nodes for Node-RED",
     "keywords": [
         "node-red"
@@ -124,7 +124,7 @@
         "gulp-replace": "^1.1.4",
         "gulp-sass": "^5.1.0",
         "gulp-util": "^3.0.8",
-        "jquery": "~3.6.2",
+        "jquery": "~3.6.4",
         "jshint": "~2.13.6",
         "justgage": "~1.6.1",
         "less": "^3.13.1",
@@ -135,7 +135,7 @@
         "sprintf-js": "^1.1.2",
         "streamqueue": "~1.1.2",
         "svg-morpheus": "^0.3.0",
-        "terser": "^5.16.5",
+        "terser": "^5.16.6",
         "tinycolor2": "^1.6.0",
         "weather-icons-lite": "^1.6.1"
     },

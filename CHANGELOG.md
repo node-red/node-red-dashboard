@@ -1,5 +1,5 @@
 
-### 3.4.0-beta: Milestone Release
+### 3.4.0: Milestone Release
 
  - Add ability to specify to start page by tab name in url
  - Let dialog popup ok and cancel labels be settable by msg.
