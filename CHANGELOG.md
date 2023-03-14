@@ -1,4 +1,8 @@
 
+### 3.4.1: Maintenance Release
+
+ - Catch bad evaluation of non existent properties. Issue #800
+
 ### 3.4.0: Milestone Release
 
  - Add ability to specify to start page by tab name in url

@@ -31,7 +31,10 @@ module.exports = function(RED) {
         }
 
         node.on("input", function(msg) {
-            node.topi = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
+            try {
+                node.topi = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg);
+            }
+            catch(e) { }
         });
 
         var done = ui.add({
@@ -56,7 +59,11 @@ module.exports = function(RED) {
                 height: config.height || 1
             },
             beforeSend: function (msg,m2) {
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg)
+                var t = undefined;
+                try {
+                    t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg)
+                }
+                catch(e) { }
                 if (typeof t === "undefined") { t = node.topi; }
                 if (t !== undefined) { msg.topic = t; }
                 if (((config.topicType || "str") === "str") && t == "") { delete msg.topic; }

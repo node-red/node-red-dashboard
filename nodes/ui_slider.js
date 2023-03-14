@@ -38,7 +38,11 @@ module.exports = function(RED) {
                 className: config.className || '',
             },
             beforeSend: function (msg) {
-                var t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
+                var t = undefined;
+                try {
+                    t = RED.util.evaluateNodeProperty(config.topic,config.topicType || "str",node,msg) || node.topi;
+                }
+                catch(e) { }
                 if (t !== undefined) { msg.topic = t; }
                 if (node.pt) {
                     node.status({shape:"dot",fill:"grey",text:msg.payload});
