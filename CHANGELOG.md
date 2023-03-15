@@ -2,6 +2,7 @@
 ### 3.4.1: Maintenance Release
 
  - Catch bad evaluation of non existent properties. Issue #800
+ - Fix missing " in toast node
 
 ### 3.4.0: Milestone Release
 
