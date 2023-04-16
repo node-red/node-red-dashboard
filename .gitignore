@@ -1,3 +1,4 @@
 /node_modules
 node-*.tgz
 package-lock.json
+.DS_Store
