@@ -23,7 +23,7 @@
             delay: {value: 300, validate: RED.validators.number()},
             topic: {value: 'topic', validate: (RED.validators.hasOwnProperty('typedInput')?RED.validators.typedInput('topicType'):function(v) { return true})},
             sendOnBlur: {value: true},
-	    className: {value: ''},
+	        className: {value: ''},
             topicType: {value: 'msg'}
         },
         inputs:1,
