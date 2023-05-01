@@ -18,6 +18,18 @@ module.exports = function(RED) {
         else if (layout === "row-center") { angLayout = 'row'; angLayoutAlign = 'center center'}
         else if (layout === "row-right") { angLayout = 'row'; angLayoutAlign = 'end center'}
         else if (layout === "col-center") { angLayout = 'column'; angLayoutAlign = 'center center'}
+        let style = "";
+        if (config.style) {
+            if (config.color) {
+                style += `color: ${config.color};`
+            }
+            if (config.fontSize) {
+                style += `font-size: ${config.fontSize}px;`
+            }
+            if (config.font) {
+                style += `font-family: ${config.font};`
+            }
+        }        
         var done = ui.add({
             emitOnlyNewValues: false,
             node: node,
@@ -33,6 +45,7 @@ module.exports = function(RED) {
                 layout: angLayout,
                 layoutAlign: angLayoutAlign,
                 className: config.className || '',
+                style: style,
             },
             convert: function(value,oldValue,msg) {
                 if (value !== undefined && value !== null) {

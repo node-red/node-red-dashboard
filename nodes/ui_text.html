@@ -1,4 +1,72 @@
 <script type="text/javascript">
+    const fonts = [
+        {
+            value: "Arial,Arial,Helvetica,sans-serif",
+            name: "Arial" 
+        },
+        {
+            value: "Arial Black,Arial Black,Gadget,sans-serif",
+            name: "Arial Black" 
+        },
+        {
+            value: "Arial Narrow,Nimbus Sans L,sans-serif",
+            name: "Arial Narrow" 
+        },
+        {
+            value: "Century Gothic,CenturyGothic,AppleGothic,sans-serif",
+            name: "Century Gothic" 
+        },
+        {
+            value: "Copperplate,Copperplate Gothic Light,fantasy",
+            name: "Copperplate" 
+        },
+        {
+            value: "Courier,monospace",
+            name: "Courier" 
+        },
+        {
+            value: "Georgia,Georgia,serif",
+            name: "Georgia" 
+        },
+        {
+            value: "Gill Sans,Geneva,sans-serif",
+            name: "Gill Sans" 
+        },
+        {
+            value: "Impact,Impact,Charcoal,sans-serif",
+            name: "Impact" 
+        },
+        {
+            value: "Lucida Sans Typewriter,Lucida Console,Monaco,monospace", 
+            name: "Lucida Console" 
+        },
+        {
+            value: "Lucida Sans Unicode,Lucida Grande,sans-serif",
+            name: "Lucida Sans" 
+        },
+        {
+            value: "Palatino Linotype,Palatino,Book Antiqua,serif", 
+            name: "Palatino Linotype" 
+        },
+        {
+            value: "Tahoma,Geneva,sans-serif",
+            name: "Tahoma" 
+        },
+        {
+            value: "Times New Roman,Times,serif",
+            name: "Times New Roman" 
+        },
+        {
+            value: "Trebuchet MS,Helvetica,sans-serif",
+            name: "Trebuchet MS" 
+        },
+        {
+            value: "Verdana,Verdana,Geneva,sans-serif",
+            name: "Verdana" 
+        },
+    ];
+
+
     RED.nodes.registerType('ui_text',{
         category: RED._("node-red-dashboard/ui_base:ui_base.label.category"),
         color: 'rgb(119, 198, 204)',
@@ -19,7 +87,12 @@
             label: {value: 'text'},
             format: {value: '{{msg.payload}}'},
             layout: {value:'row-spread'},
-            className: {value: ''}
+            className: {value: ''},
+
+            style: { value: false },
+            font: { value: "" },
+            fontSize: { value: 16 },
+            color: { value: "#000" },
         },
         inputs:1,
         outputs:0,
@@ -45,7 +118,65 @@
                         $('#node-input-layout').val(id.substring(".nr-db-text-layout-".length));
                         e.preventDefault();
                     })
-                })
+              });
+
+            const select = $("#node-select-font");
+            fonts.forEach((font) => {
+                var name = font.name;
+                var val = font.value;
+                $("<option/>", {
+                    value: val,
+                }).text(name).appendTo(select);
+            });
+            $(select).change(() => {
+                const val = $("#node-select-font").val();
+                $("#node-input-font").val(val);
+                $("#node-test-text").css({
+                    "font-family": val,
+                }); 
+            });
+            $(select).val(this.font);
+            $(select).change();
+
+            $("#node-input-fontSize").spinner({
+                min: 1,
+                max: 100,
+                spin: () => {
+                    const val = $("#node-input-fontSize").val();
+                    $("#node-test-text").css({
+                        "font-size": val +"px",
+                    }); 
+                }
+            });
+            if (this.fontSize) {
+                $("#node-test-text").css({
+                    "font-size": this.fontSize +"px",
+                }); 
+            }
+
+            $("#node-input-color").change(() => {
+                const val = $("#node-input-color").val();
+                $("#node-test-text").css({
+                    "color": val,
+                }); 
+            });
+            if (this.color) {
+                $("#node-test-text").css({
+                    "color": this.color
+                }); 
+            }
+
+            $("#node-input-style").change(() => {
+                const val = $("#node-input-style").prop("checked");
+                if (val) {
+                    $("#node-styles").show();
+                }
+                else {
+                    $("#node-styles").hide();
+                }
+            });
+            $("#node-input-style").change();
+
         }
     });
 </script>
@@ -104,6 +235,34 @@
         </div>
         </div>
     </div>
+
+    <div class="form-row">
+        <label><i class="fa fa-cog"></i> Style</label>
+        <input type="checkbox" id="node-input-style" style="display: inline-block; width: auto; vertical-align: top;"/>
+        <label for="node-input-style" style="width: 70%;"> Apply Style</label>
+    </div>
+
+    <div id="node-styles">
+        <div class="form-row">
+            <label for="node-input-font"><i class="fa fa-font"></i>  Font</label>
+            <select id="node-select-font">
+            </select>
+            <input type="hidden" id="node-input-font"/>
+        </div>
+        <div class="form-row">
+            <label for="node-input-fontSize"><i class="fa fa-text-height"></i>  Text Size</label>
+            <input id="node-input-fontSize" value="16" style="width: 50px;"/>
+        </div>
+        <div class="form-row">
+            <label for="node-input-color"><i class="fa fa-tint"></i>  Text Color</label>
+            <input type="color" id="node-input-color" style="width: 50px;"/>
+        </div>
+        <div class="form-row">
+            <label>&nbsp;</label>
+            <input id="node-test-text" value="Enter Sample Here"/ style="width: 280px;">
+        </div>
+    </div>
+
     <div class="form-row">
         <label for="node-input-className"><i class="fa fa-code"></i>  Class</label>
         <input type="text" id="node-input-className" placeholder="Optional CSS class name(s) for widget"/>
