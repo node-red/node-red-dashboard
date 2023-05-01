@@ -29,7 +29,7 @@ module.exports = function(RED) {
             if (config.font) {
                 style += `font-family: ${config.font};`
             }
-        }        
+        }
         var done = ui.add({
             emitOnlyNewValues: false,
             node: node,

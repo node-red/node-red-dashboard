@@ -1,4 +1,9 @@
 
+### 3.5.0: Milestone Release
+
+ - Add text styling feature to ui_text. PR #805
+ - Fix to support locking flow tab. PR #799
+
 ### 3.4.1: Maintenance Release
 
  - Catch bad evaluation of non existent properties. Issue #800
