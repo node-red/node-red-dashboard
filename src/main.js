@@ -680,6 +680,141 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
             }
         });
 
+        events.on('show-dialog', function (msg) {
+            if (msg.raw !== true) {
+                var temp = document.createElement('div');
+                temp.textContent = msg.message;
+                msg.message = temp.innerHTML;
+            }
+            if (msg.message == "") { $mdDialog.cancel(); return; }
+
+            let fnConfirm = function(res) {
+                msg.msg.payload = msg.ok;
+                let oResult = {};
+                let bError = false;
+                msg.fields.forEach( oField => {
+                    if ( oField.required && !oField.value && oField.typ !== 'switch' && oField.typ !== 'checkbox' ) {
+                        bError = true;
+                    } else {
+                        oResult[oField.label] = null;
+                        switch (oField.type) {
+                            case "time":
+                                if ( oField.value ) {
+                                    let dDateTime = new Date(oField.value);
+                                    oResult[oField.label] = dDateTime.toLocaleString().substring(10,15);
+                                }
+                                break;
+                            case "date":
+                                if ( oField.value ) {
+                                    let dDate = new Date(oField.value);
+                                    dDate.setHours(dDate.getHours()+12);
+                                    oResult[oField.label] = dDate.toISOString().substring(0,10) || "";
+                                }
+                                break;
+                            case "switch":
+                            case "checkbox":
+                                oResult[oField.label] = ( oField.value ) ? true : false;
+                                break;
+                            default:
+                                oResult[oField.label] = oField.value;
+                        }
+                    }
+                });
+                if (!bError) {
+                    msg.msg.payload = oResult;
+                    if (oResult === {}) { msg.msg.payload = ""; }
+                    events.emit({ id: msg.id, value:msg.msg });
+                }
+            };
+            let getTemplate = function(config) {
+                config.fields.forEach( oField => {oField.value = "";});
+                let sTemplate = String.raw`<md-dialog md-theme="{{ dialog.theme || dialog.defaultTheme }}" aria-label="{{ dialog.ariaLabel }}" ng-class="dialog.css" style="height: {{ dialog.dialogHeight }}px; width: {{ dialog.dialogWidth }}px">
+                    <md-dialog-content class="md-dialog-content nr-dashboard-form" role="document" tabIndex="-1" style="left: 0px; top: -10px; height: {{ dialog.dialogContentHeight }}px; width: {{ dialog.dialogContentWidth }}px">
+                        <h2 class="md-title">{{dialog.title}}</h2>
+                        <div class="md-dialog-content-body"><p>{{::dialog.textContent}}</p></div>
+                        <form name ="form" ng-submit="dialog.submit(form)" style="margin-top:22px" style="left: 0px; top: 0px;">
+                            <div class="{{ dialog.formClass }}" ng-class="{'formElementSplit':(dialog.splitLayout)}" layout-gt-sm="row" ng-repeat="item in dialog.fields track by $index" style="height:{{ dialog.rowHeight }}px">
+                                <md-input-container class="md-block md-auto-horizontal-margin flex" flex>
+                                    <label ng-if="(item.type=='text' || item.type=='number' || item.type=='email' || item.type=='password' || item.type=='date' || item.type=='time')  && item.label">{{item.label}}</label>
+                                    <input ng-if="item.type=='text' || item.type=='email' || item.type=='password'" type="{{item.type}}"
+                                        ng-model="item.value"
+                                        ng-required="item.required" 
+                                        ng-keydown="dialog.stop($event)">
+                                    <input ng-if="item.type=='date'" type="{{item.type}}"
+                                        ng-model="item.value"
+                                        ng-required="item.required"
+                                        ng-keydown="dialog.stop($event)"
+                                        placeholder="yyyy-mm-dd">
+                                    <input ng-if="item.type=='time'" type="{{item.type}}"
+                                        ng-model="item.value"
+                                        ng-required="item.required"
+                                        placeholder="HH:MM"
+                                        ng-keydown="dialog.stop($event)">
+                                    <input ng-if="item.type=='number'" type="{{item.type}}"
+                                        ng-model="item.value"
+                                        ng-required="item.required"
+                                        step="any"
+                                        ng-keydown="dialog.stop($event)">
+                                    <md-switch ng-if="item.type=='switch'" md-no-ink ng-model="item.value">{{item.label}}</md-switch>
+                                    <md-checkbox ng-if="item.type=='checkbox'" md-no-ink aria-label="Checkbox No Ink" ng-model="item.value"> {{item.label}}</md-checkbox>
+                                </md-input-container>
+                            </div>
+                            <div class="form-control" ng-class="{'form-control-single':dialog.cancel == '','form-control-no-label':dialog.label == ''}" style="margin-top:{{(dialog.rowHeight * 0.25)}}px;">
+                                <md-button class="md-raised nr-dashboard-form-button" type="submit" ng-click="dialog.submit()">{{dialog.ok}}</md-button>
+                                <md-button class="md-raised nr-dashboard-form-button" ng-click="dialog.abort()">{{dialog.cancel}}</md-button>
+                            </div>
+                        </form>
+                    </md-dialog-content>    
+                </md-dialog>`;
+                return sTemplate;
+            };
+
+            let dialog = $mdDialog.prompt()
+                .title(msg.title || msg.topic)
+                .htmlContent(msg.message)
+                .initialValue("")
+                .ariaLabel(msg.ok + " or " + msg.cancel)
+                .ok(msg.msg.ok || msg.ok)
+                .cancel(msg.msg.cancel || msg.cancel);
+
+            dialog._options.focusOnOpen = false;
+            dialog._options.fields = msg.fields;
+            dialog._options.rowHeight = msg.rowHeight;
+            dialog._options.splitLayout = msg.splitLayout;
+            dialog._options.dialogHeight = msg.dialogHeight,
+            dialog._options.dialogWidth = msg.dialogWidth;
+            dialog._options.dialogContentHeight = msg.dialogContentHeight;
+            dialog._options.dialogContentWidth = msg.dialogContentWidth;
+            dialog._options.ariaLabel = msg.ariaLabel;
+            dialog._options.formClass = msg.formClass;
+            dialog._options.template = getTemplate(msg);
+            dialog._options.submit = function () {
+                let bError = false;
+                this.fields.forEach( oField => {
+                    if ( oField.required && !oField.value && oField.typ !== 'switch' && oField.typ !== 'checkbox' ) {
+                        bError = true;
+                    }
+                });
+                if (!bError) {
+                    this.hide();
+                }
+            };
+            dialog._options.stop = function(event) {
+                if ((event.charCode === 13) || (event.which === 13)) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            };
+
+            $mdDialog.show(dialog, { panelClass:'nr-dashboard-dialog' }).then(
+                fnConfirm,
+                function() {
+                    msg.msg.payload = msg.cancel;
+                    events.emit({ id:msg.id, value:msg.msg });
+                }
+            );
+        });
+
         events.on('ui-control', function(msg) {
             if (msg.hasOwnProperty("socketid") && (msg.socketid !== events.id) ) { return; }
             if (msg.hasOwnProperty("control")) { // if it's a request to modify a control
