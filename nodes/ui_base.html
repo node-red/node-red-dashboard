@@ -334,6 +334,40 @@
     var attemptedVendorLoad = false;
     var ensureDashboardNode;
 
+    var isTabLockSupported = ((typeof RED.workspaces.isLocked) === "function"); // check for new Node-RED version
+
+    function notifyLocked() {
+        RED.notify("Can't change tab with nodes in locked tab");
+    }
+
+    // check if specified tab is locked
+    function isLockedTab(id) {
+        if (!isTabLockSupported) {
+            return false;
+        }
+        return (RED.workspaces.isLocked(id));
+    }
+
+    // check if some node in tab placed on locked tab
+    function isLocked(id) {
+        if (!isTabLockSupported) {
+            return false;
+        }
+        const tab = getTabDataFromNodes(id);
+        const groups = tab.groups;
+        for (let i = 0; i < groups.length; i++) {
+            const group = groups[i];
+            const widgets = group.widgets;
+            for (let j = 0; j < widgets.length; j++) {
+                const widget = RED.nodes.node(widgets[j].id);
+                if (RED.workspaces.isLocked(widget.z)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     var loadTinyColor = function(path) {
         $.ajax({ url: path,
             success: function (data) {
@@ -1908,6 +1942,12 @@
                     }
                     var editButton = $('<a href="#" class="nr-db-sb-tab-edit-button editor-button  editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.edit")+'</a>').appendTo(buttonGroup);
                     editButton.on('click',function(evt) {
+                        if (isLocked(item.node.id)) {
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                            notifyLocked();
+                            return;
+                        }
                         RED.editor.editConfig("", item.type, item.node.id);
                         evt.stopPropagation();
                         evt.preventDefault();
@@ -1917,6 +1957,12 @@
                     if (item.type === 'ui_tab') {
                         var layoutButton = $('<a href="#" class="nr-db-sb-tab-edit-layout-button editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-pencil"></i> '+c_("layout.layout")+'</a>').appendTo(buttonGroup);
                         layoutButton.on('click',function(evt) {
+                            if (isLocked(item.node.id)) {
+                                evt.stopPropagation();
+                                evt.preventDefault();
+                                notifyLocked();
+                                return;
+                            }
                             var editTabName = item.node.name ? item.node.name : item.node.id;
                             var trayOptions = {
                                 title: c_("layout.layout-editor") + " : " + editTabName,
@@ -2139,7 +2185,7 @@
                                 },
                                 close: function() {},
                                 show: function() {}
-                            }
+                            };
                             RED.tray.show(trayOptions);
                             evt.stopPropagation();
                             evt.preventDefault();
@@ -2210,6 +2256,12 @@
                                 var buttonGroup = $('<div>',{class:"nr-db-sb-list-header-button-group",id:groupNode.id}).appendTo(titleRow);
                                 var spacerButton = $('<a href="#" class="editor-button editor-button-small nr-db-sb-list-header-button"><i class="fa fa-plus"></i> '+c_("layout.spacer")+'</a>').appendTo(buttonGroup);
                                 spacerButton.on('click',function(evt) {
+                                    if (isLocked(item.node.id)) {
+                                        evt.stopPropagation();
+                                        evt.preventDefault();
+                                        notifyLocked();
+                                        return;
+                                    }
                                     var spaceNode = {
                                         _def: RED.nodes.getType("ui_spacer"),
                                         type: "ui_spacer",
@@ -2282,12 +2334,23 @@
                                             RED.view.redraw();
                                         });
                                         editButton.on('click',function(evt) {
+                                            if (isLockedTab(widgetNode.z)) {
+                                                evt.stopPropagation();
+                                                evt.preventDefault();
+                                                notifyLocked();
+                                                return;
+                                            }
                                             RED.editor.edit(widgetNode);
                                             evt.stopPropagation();
                                             evt.preventDefault();
                                         });
                                     },
                                     sortItems: function(items) {
+                                        if (isLocked(item.node.id)) {
+                                            $(ol).editableList("cancel");
+                                            notifyLocked();
+                                            return;
+                                        }
                                         var historyEvents = [];
                                         items.each(function(i,el) {
                                             var node = el.data('data');
@@ -2336,6 +2399,12 @@
                                 }
                                 titleRow.click(titleToggle(groupNode.id,content,chevron));
                                 editButton.on('click',function(evt) {
+                                    if (isLocked(item.node.id)) {
+                                        evt.stopPropagation();
+                                        evt.preventDefault();
+                                        notifyLocked();
+                                        return;
+                                    }
                                     RED.editor.editConfig("", groupNode.type, groupNode.id);
                                     evt.stopPropagation();
                                     evt.preventDefault();
@@ -2391,6 +2460,12 @@
                         tabLists[item.node.id] = ol;
 
                         addGroupButton.click(function(evt) {
+                            if (isLocked(item.node.id)) {
+                                evt.stopPropagation();
+                                evt.preventDefault();
+                                notifyLocked();
+                                return;
+                            }
                             ol.editableList('addItem',{});
                             evt.stopPropagation();
                             evt.preventDefault();
