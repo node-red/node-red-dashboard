@@ -3,6 +3,7 @@
 
  - Add text styling feature to ui_text. PR #805
  - Fix to support locking flow tab. PR #799
+ - Fix Sidebar to not obscure toast. Issue #803
 
 ### 3.4.1: Maintenance Release
 
