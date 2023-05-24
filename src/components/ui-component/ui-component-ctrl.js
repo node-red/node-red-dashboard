@@ -314,6 +314,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         me.item.me = me;
                         break;
                     }
+
                     case 'form': {
                         me.processInput = function(msg) {
                             if (typeof(msg.value) != 'object') { return; }

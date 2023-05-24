@@ -4,7 +4,8 @@
  - Add text styling feature to ui_text. PR #805
  - Fix to support locking flow tab. PR #799
  - Fix sidebar to not obscure toast. Issue #803
- - Fix ui_audio to be socket specific. Issue #807
+ - Fix ui_audio to be socket specific. Issue #807\
+ - Fix date-picker to send even if valkue is reselected.
 
 ### 3.4.1: Maintenance Release
 

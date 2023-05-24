@@ -16,7 +16,7 @@
             md-placeholder="{{me.item.getLabel()}}"
             md-open-on-focus
             ng-model="me.item.ddd"
-            ng-change="me.setDate()">
+            ng-blur="me.setDate()">
         </md-datepicker>
     </md-input-container>
 </md-card>
