@@ -5,7 +5,7 @@
  - Fix to support locking flow tab. PR #799
  - Fix sidebar to not obscure toast. Issue #803
  - Fix ui_audio to be socket specific. Issue #807\
- - Fix date-picker to send even if valkue is reselected.
+ - Fix date-picker to send even if value is reselected.
 
 ### 3.4.1: Maintenance Release
 
