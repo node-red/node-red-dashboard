@@ -111,7 +111,9 @@ module.exports = function(RED) {
                         node.error("ERR: Invalid Options", msg);
                     }
                 }
-
+                if (msg.hasOwnProperty("resetSearch") && msg.resetSearch) {
+                    emitOptions.resetSearch = true;
+                }
                 if (msg.hasOwnProperty("payload")) {
                     if (node.multiple) {
                         if (typeof msg.payload === "string") {
