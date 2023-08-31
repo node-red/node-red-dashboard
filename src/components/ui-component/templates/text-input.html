@@ -19,6 +19,7 @@
         </md-tooltip>
         <input
             ng-model="me.item.value"
+            ng-model-options="{'timezone':'GMT'}"
             ng-change="me.valueChanged({{me.item.delay}})"
             ng-trim="false"
             ng-disabled="me.item.disabled"

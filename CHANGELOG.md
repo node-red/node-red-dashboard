@@ -1,4 +1,9 @@
 
+### 3.6.0: Milestone Release
+
+ - Let dropdown be clearable. PR #816
+ - Unfix datetime (revert regression)
+
 ### 3.5.0: Milestone Release
 
  - Add text styling feature to ui_text. PR #805

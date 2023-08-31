@@ -438,7 +438,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                 // If resetSearch is present, clear user searchTerm input
                 if (msg && msg.resetSearch) {
                     me.searchTerm = "";
-                }                
+                }
                 // options should have the correct format see beforeEmit in ui-dropdown.js
                 if (msg && msg.isOptionsValid) {
                     me.item.options = msg.newOptions;

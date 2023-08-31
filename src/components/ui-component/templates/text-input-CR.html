@@ -19,6 +19,7 @@
         </md-tooltip>
         <input
             ng-model="me.item.value"
+            ng-model-options="{'timezone':'GMT'}"
             ng-keydown="me.keyPressed($event)"
             ng-blur="me.item.sendOnBlur ? me.keyPressed($event) : false"
             ng-trim="false"
