@@ -1,4 +1,8 @@
 
+### 3.6.1: Maintenance Release
+
+ - Fix links not being editable. Issue #819
+
 ### 3.6.0: Milestone Release
 
  - Let dropdown be clearable. PR #816

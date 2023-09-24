@@ -434,15 +434,17 @@
         var tab = {};
         // Tab information
         for (var cnt = 0; cnt < nodes.length; cnt++) {
-            if (nodes[cnt].type == "ui_tab" && nodes[cnt].id == tabID) {
-                tab = {
-                    id: nodes[cnt].id,
-                    name: nodes[cnt].name,
-                    type: nodes[cnt].type,
-                    order: nodes[cnt].order,
-                    groups: []
-                };
-                break;
+            if (nodes[cnt].id == tabID) {
+                if (nodes[cnt].type == "ui_tab" || nodes[cnt].type == "ui_link") {
+                    tab = {
+                        id: nodes[cnt].id,
+                        name: nodes[cnt].name,
+                        type: nodes[cnt].type,
+                        order: nodes[cnt].order,
+                        groups: []
+                    };
+                    break;
+                }
             }
         }
         // Group information
