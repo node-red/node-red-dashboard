@@ -1,4 +1,9 @@
 
+### 3.6.2: Maintenance Release
+
+ - Fix colour picker floating in front of dropdown list. Issue #821
+ - Let form display with no buttons if required.
+
 ### 3.6.1: Maintenance Release
 
  - Fix links not being editable. Issue #819
