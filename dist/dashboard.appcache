@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Time: Thu Oct 19 2023 11:28:56 GMT+0100 (British Summer Time)
+# Time: Wed Dec 06 2023 11:08:36 GMT+0000 (Greenwich Mean Time)
 
 CACHE:
 i18n.js
@@ -26,4 +26,4 @@ loading.html
 NETWORK:
 *
 
-# hash: 418014d7a1fbfe2efcab3913f619a292b9b2f9059280671ec0b58fc302afa420
+# hash: e9dccfa90ec237dfcc3ff33a82c03d3c3811a6cae1ff1c55e60a701aa087f880

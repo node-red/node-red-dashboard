@@ -336,6 +336,7 @@ angular.module('ui').controller('uiComponentController', ['$scope', 'UiEvents', 
                         })
                         me.item.rowCount = me.item.splitLayout == true ? Math.ceil(me.item.options.length/2) : me.item.options.length;
                         me.item.rowCount += me.item.label == '' ? 1 : 2
+                        me.item.rowCount += (me.item.submit !== '' || me.item.cancel !== '') ? 0 : -1
                         me.item.rowCount += me.item.extraRows;
                         me.item.rowHeight = (((me.item.rowCount -1) * me.item.sy) + (me.item.label == '' ? me.item.sy * 0.3 : 1.2 * me.item.sy) + ((me.item.rowCount - 1) * me.item.cy))/me.item.rowCount;
                         me.stop = function(event) {
