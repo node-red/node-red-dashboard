@@ -33210,7 +33210,12 @@ reason: https://github.com/angular/material/issues/6214
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open {
   width: 32px;
   border-width: 0px;
+  z-index: 2;
 }
+
+/* color-picker {
+    z-index:2;
+} */
 
 .color-picker-wrapper.color-picker-swatch-only.color-picker-open .color-picker-panel.color-picker-panel-right.color-picker-show-inline {
   right: 121px;
@@ -33295,10 +33300,6 @@ reason: https://github.com/angular/material/issues/6214
 .color-picker-wrapper .color-picker-input-wrapper {
   display: flex;
 }
-
-/* color-picker {
-    z-index:2;
-} */
 .nr-dashboard-date-picker {
   padding: 0 0px;
   width: 100%;
