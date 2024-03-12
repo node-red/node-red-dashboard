@@ -1,5 +1,5 @@
 
-### 3.6.4: Maintenance Release
+### 3.6.5: Maintenance Release
 
  - Remove old jquery versons from gridstack dist dir to stop vuln triggering. Issue #833
 
