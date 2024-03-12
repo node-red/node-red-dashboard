@@ -58,13 +58,3 @@ fs.readFile('src/gridstack-extra.scss', 'utf8', function (err, file) {
         });
     }
 });
-
-// Remove jquery old versions from gridstack dist
-try { fs.unlinkSync('node_modules/gridstack/dist/jquery-ui.js'); }
-catch(e) {};
-try { fs.unlinkSync('node_modules/gridstack/dist/jquery-ui.min.js');}
-catch(e) {};
-try { fs.unlinkSync('node_modules/gridstack/dist/jquery.js'); }
-catch(e) {};
-try { fs.unlinkSync('node_modules/gridstack/dist/jquery.min.js'); }
-catch(e) {};
