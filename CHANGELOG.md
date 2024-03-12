@@ -1,4 +1,8 @@
 
+### 3.6.3: Maintenance Release
+
+ - Remove old jquery versons from gridstack dist dir to stop vuln triggering. Issue #833
+
 ### 3.6.2: Maintenance Release
 
  - Fix colour picker floating in front of dropdown list. Issue #821
