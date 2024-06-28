@@ -4,7 +4,7 @@
 ![NPM version](https://badge.fury.io/js/node-red-dashboard.svg)
 ![NPM](https://img.shields.io/npm/l/node-red-dashboard)
 
-** ANNOUNCEMENT ** As of 27th June 2024 this project should be considered deprecated. We will leave it here so it can still be installed if necessary, but no new development will take place. For production use you should consider one of the other alternatives The most direct replacement is the [Flowfuse Dashboard](https://github.com/FlowFuse/node-red-dashboard) - but [UIBUILDER](https://flows.nodered.org/node/node-red-contrib-uibuilder) may also be a good alternative.
+**ANNOUNCEMENT** - As of 27th June 2024 this project should be considered deprecated. We will leave it here so it can still be installed if necessary, but no new development will take place. For production use you should consider one of the other alternatives The most direct replacement is the [Flowfuse Dashboard](https://github.com/FlowFuse/node-red-dashboard) - but [UIBUILDER](https://flows.nodered.org/node/node-red-contrib-uibuilder) may also be a good alternative.
 
 This module provides a set of nodes in Node-RED to quickly create a live data dashboard.
 
@@ -15,7 +15,7 @@ See the [Wiki](https://github.com/node-red/node-red-dashboard/wiki/Creating-New-
 
 For the latest updates see the [CHANGELOG.md](https://github.com/node-red/node-red-dashboard/blob/master/CHANGELOG.md)
 
-**NOTE:** This project is based on Angular v1 - As that is now no longer maintained, this project should be considered to be on "life support". Small patches will be applied on a best can do basis, but there will be no major feature upgrades, and underlying security breakage may occur.
+**NOTE:** - This project is based on Angular v1 - As that is now no longer maintained, this project should be considered to be on "life support". Small patches will be applied on a best can do basis, but there will be no major feature upgrades, and underlying security breakage may occur.
 
 ![Dashboard example](http://nodered.org/images/dashboarde.png)
 
