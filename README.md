@@ -4,6 +4,8 @@
 ![NPM version](https://badge.fury.io/js/node-red-dashboard.svg)
 ![NPM](https://img.shields.io/npm/l/node-red-dashboard)
 
+** ANNOUNCEMENT ** As of 27th June 2024 this project should be considered deprecated. We will leave it here so it can still be installed if necessary, but no new development will take place. For production use you should consider one of the other alternatives The most direct replacement is the [Flowfuse Dashboard](https://github.com/FlowFuse/node-red-dashboard) - but [UIBUILDER](https://flows.nodered.org/node/node-red-contrib-uibuilder) may also be a good alternative.
+
 This module provides a set of nodes in Node-RED to quickly create a live data dashboard.
 
 These nodes require node.js version 12 or more recent. The last version to support node v8 was 2.30.0.
