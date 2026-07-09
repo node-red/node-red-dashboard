@@ -820,6 +820,14 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                     });
                 audioSources = [];
 
+                // For troublesome Chrome versions: Destroy the context completely to force a clean slate
+                if (audioContext) {
+                    try {
+                        audioContext.close();
+                        audioContext = null; // Forces recreation on next audio packet arrival
+                    } catch(e) {}
+                }
+
                 if (audioSource) {
                     // Stop the current audio source immediately
                     audioSource.disconnect();
