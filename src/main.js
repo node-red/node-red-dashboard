@@ -93,6 +93,7 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
         var main = this;
         var audioContext;
         var audioSource;
+        var audioSources = []; // Array to track all concurrent streams
         var voices = [];
         var tabId = 0;
         var disc = true;
@@ -807,6 +808,26 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
 
         events.on('ui-audio', function(msg) {
             if (msg.reset) {
+                console.log("Audio Reset triggered. Current active stream count: " + audioSources.length);
+                audioSources.forEach(function(source) {
+                        try {
+                            console.log("Force-disconnecting orphaned audio source node instance:", source);
+                            source.disconnect();
+                            source.stop(0);
+                        } catch (e) {
+                            console.log("Source was already dead or naturally completed.");
+                        }
+                    });
+                audioSources = [];
+
+                // For troublesome Chrome versions: Destroy the context completely to force a clean slate
+                if (audioContext) {
+                    try {
+                        audioContext.close();
+                        audioContext = null; // Forces recreation on next audio packet arrival
+                    } catch(e) {}
+                }
+
                 if (audioSource) {
                     // Stop the current audio source immediately
                     audioSource.disconnect();
@@ -859,7 +880,12 @@ app.controller('MainController', ['$mdSidenav', '$window', 'UiEvents', '$locatio
                 try {
                     audioContext = audioContext || new AudioContext();
                     audioSource = audioContext.createBufferSource();
+                    audioSources.push(audioSource); // Track instance for cross-talk reset
                     audioSource.onended = function() {
+                        var idx = audioSources.indexOf(audioSource);
+                        if (idx > -1) {
+                            audioSources.splice(idx, 1);
+                        }
                         events.emit('ui-audio', 'complete');
                     }
                     var buffer = new Uint8Array(msg.audio);
